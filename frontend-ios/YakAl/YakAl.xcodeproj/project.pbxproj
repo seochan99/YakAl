@@ -17,6 +17,8 @@
 		98C12D662A5E487300175EB8 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D5D2A5E487200175EB8 /* Pretendard-Bold.otf */; };
 		98C12D672A5E487300175EB8 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D5E2A5E487300175EB8 /* Pretendard-Regular.otf */; };
 		98C12D692A5E564E00175EB8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D682A5E564E00175EB8 /* MainViewController.swift */; };
+		98C12D6C2A5E59DA00175EB8 /* SUIT-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D6A2A5E59DA00175EB8 /* SUIT-Bold.otf */; };
+		98C12D6D2A5E59DA00175EB8 /* SUIT-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D6B2A5E59DA00175EB8 /* SUIT-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		98C12D5D2A5E487200175EB8 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		98C12D5E2A5E487300175EB8 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
 		98C12D682A5E564E00175EB8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		98C12D6A2A5E59DA00175EB8 /* SUIT-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Bold.otf"; sourceTree = "<group>"; };
+		98C12D6B2A5E59DA00175EB8 /* SUIT-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-Medium.otf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +147,8 @@
 		98C12D552A5E484B00175EB8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				98C12D6A2A5E59DA00175EB8 /* SUIT-Bold.otf */,
+				98C12D6B2A5E59DA00175EB8 /* SUIT-Medium.otf */,
 				98C12D5D2A5E487200175EB8 /* Pretendard-Bold.otf */,
 				98C12D5C2A5E487200175EB8 /* Pretendard-Light.otf */,
 				98C12D582A5E487200175EB8 /* Pretendard-Medium.otf */,
@@ -212,10 +218,12 @@
 				98C12D662A5E487300175EB8 /* Pretendard-Bold.otf in Resources */,
 				98C12D672A5E487300175EB8 /* Pretendard-Regular.otf in Resources */,
 				98C12D462A5E3B8B00175EB8 /* LaunchScreen.storyboard in Resources */,
+				98C12D6D2A5E59DA00175EB8 /* SUIT-Medium.otf in Resources */,
 				98C12D432A5E3B8B00175EB8 /* Assets.xcassets in Resources */,
 				98C12D652A5E487300175EB8 /* Pretendard-Light.otf in Resources */,
 				98C12D412A5E3B8B00175EB8 /* Main.storyboard in Resources */,
 				98C12D612A5E487300175EB8 /* Pretendard-Medium.otf in Resources */,
+				98C12D6C2A5E59DA00175EB8 /* SUIT-Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
