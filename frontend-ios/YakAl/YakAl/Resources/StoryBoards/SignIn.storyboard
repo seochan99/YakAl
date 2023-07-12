@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SUIT-Medium.otf">
+            <string>SUIT-Medium</string>
+        </array>
+        <array key="SUIT-SemiBold.otf">
+            <string>SUIT-SemiBold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Sign In View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="SignInScreen_1" id="Y6W-OH-hqX" customClass="SignInViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.29999999999999999" translatesAutoresizingMaskIntoConstraints="NO" id="81C-3q-7Dh">
+                                <rect key="frame" x="151.66666666666666" y="99" width="90" height="4"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="NEN-uF-M6C"/>
+                                </constraints>
+                            </progressView>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="실제 이름을 입력해주세요 (예. 홍길동)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MCB-jx-Uqf">
+                                <rect key="frame" x="32" y="285" width="331" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="bJx-IU-bg4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1U-sN-7he">
+                                <rect key="frame" x="32" y="261" width="26.333333333333329" height="19"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
+                                <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwZ-zc-9KY" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="32.000000000000014" y="153" width="194.33333333333337" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="meJ-Gi-OX1"/>
+                                </constraints>
+                                <string key="text">본인확인을 위한 
+이름을 입력해주세요</string>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7M-GN-TIB">
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
+                                <color key="backgroundColor" name="MainColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="s3I-4E-FuX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="다음">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="5Rd-WO-dWp"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="tintColor" name="MainColor"/>
+                        <constraints>
+                            <constraint firstItem="p1U-sN-7he" firstAttribute="top" secondItem="iwZ-zc-9KY" secondAttribute="bottom" constant="40" id="0UU-rD-CsH"/>
+                            <constraint firstItem="MCB-jx-Uqf" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="0sW-rF-6gJ"/>
+                            <constraint firstItem="81C-3q-7Dh" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="40" id="AM2-bd-q97"/>
+                            <constraint firstItem="iwZ-zc-9KY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="AVw-7L-isg"/>
+                            <constraint firstItem="iwZ-zc-9KY" firstAttribute="top" secondItem="81C-3q-7Dh" secondAttribute="bottom" constant="50" id="GLO-83-iAH"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="MCB-jx-Uqf" secondAttribute="trailing" constant="30" id="IVX-o3-LzW"/>
+                            <constraint firstItem="p1U-sN-7he" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="MS2-tc-9mm"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="C7M-GN-TIB" secondAttribute="bottom" constant="32" id="Mnw-Ft-UAB"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="C7M-GN-TIB" secondAttribute="trailing" constant="20" id="ZK5-7r-oBt"/>
+                            <constraint firstItem="MCB-jx-Uqf" firstAttribute="top" secondItem="p1U-sN-7he" secondAttribute="bottom" constant="5" id="pAe-BX-RgQ"/>
+                            <constraint firstItem="C7M-GN-TIB" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="rwD-WL-CJE"/>
+                            <constraint firstItem="81C-3q-7Dh" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="xOq-DV-fLP"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="siginInHeaderText" destination="iwZ-zc-9KY" id="bQM-hP-MBR"/>
+                        <outlet property="siginInInputField" destination="MCB-jx-Uqf" id="Fa5-GP-e96"/>
+                        <outlet property="siginInNextButton" destination="C7M-GN-TIB" id="5hF-bF-8Io"/>
+                        <outlet property="siginInTitleText" destination="p1U-sN-7he" id="pFO-ip-qKb"/>
+                        <outlet property="signInProgressBar" destination="81C-3q-7Dh" id="y9B-rc-qIK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="135.1145038167939" y="3.5211267605633805"/>
+        </scene>
+    </scenes>
+    <resources>
+        <namedColor name="MainColor">
+            <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
