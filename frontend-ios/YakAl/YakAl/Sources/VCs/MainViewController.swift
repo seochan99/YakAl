@@ -20,7 +20,7 @@ extension UIButton {
 class MainViewController: UIViewController {
     
     // 회원가입 여부
-    var isSignedUp: Bool = true
+    var isSignedUp: Bool = false
 
 
     // IBOutlet 연결
@@ -54,7 +54,7 @@ class MainViewController: UIViewController {
         // StoryBoard
         let storyboardName = isSignedUp ? "Home" : "SignIn"
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen" : "SignInScreen") as? UIViewController {
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen" : "SignInScreen_1") as? UIViewController {
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 sceneDelegate.window?.rootViewController = initialViewController
             }

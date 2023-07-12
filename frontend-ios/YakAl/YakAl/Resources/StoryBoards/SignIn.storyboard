@@ -12,6 +12,9 @@
         <array key="SUIT-Medium.otf">
             <string>SUIT-Medium</string>
         </array>
+        <array key="SUIT-SemiBold.otf">
+            <string>SUIT-SemiBold</string>
+        </array>
     </customFonts>
     <scenes>
         <!--Sign In View Controller-->
@@ -53,6 +56,24 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C7M-GN-TIB">
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
+                                <color key="backgroundColor" name="MainColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="s3I-4E-FuX"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="다음">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -64,12 +85,22 @@
                             <constraint firstItem="iwZ-zc-9KY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="AVw-7L-isg"/>
                             <constraint firstItem="iwZ-zc-9KY" firstAttribute="top" secondItem="81C-3q-7Dh" secondAttribute="bottom" constant="50" id="GLO-83-iAH"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="MCB-jx-Uqf" secondAttribute="trailing" constant="30" id="IVX-o3-LzW"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="C7M-GN-TIB" secondAttribute="bottom" constant="32" id="Mnw-Ft-UAB"/>
                             <constraint firstItem="iwZ-zc-9KY" firstAttribute="leading" secondItem="p1U-sN-7he" secondAttribute="trailing" constant="-32" id="YE1-fh-vhl"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="C7M-GN-TIB" secondAttribute="trailing" constant="20" id="ZK5-7r-oBt"/>
                             <constraint firstItem="MCB-jx-Uqf" firstAttribute="leading" secondItem="p1U-sN-7he" secondAttribute="trailing" constant="-32" id="i3N-Dh-Hn2"/>
                             <constraint firstItem="MCB-jx-Uqf" firstAttribute="top" secondItem="p1U-sN-7he" secondAttribute="bottom" constant="5" id="pAe-BX-RgQ"/>
+                            <constraint firstItem="C7M-GN-TIB" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="rwD-WL-CJE"/>
                             <constraint firstItem="81C-3q-7Dh" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="xOq-DV-fLP"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="siginInHeaderText" destination="iwZ-zc-9KY" id="bQM-hP-MBR"/>
+                        <outlet property="siginInInputField" destination="MCB-jx-Uqf" id="Fa5-GP-e96"/>
+                        <outlet property="siginInNextButton" destination="C7M-GN-TIB" id="5hF-bF-8Io"/>
+                        <outlet property="siginInTitleText" destination="p1U-sN-7he" id="pFO-ip-qKb"/>
+                        <outlet property="signInProgressBar" destination="81C-3q-7Dh" id="y9B-rc-qIK"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -78,7 +109,7 @@
     </scenes>
     <resources>
         <namedColor name="MainColor">
-            <color red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

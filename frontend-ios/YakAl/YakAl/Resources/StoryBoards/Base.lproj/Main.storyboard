@@ -17,13 +17,13 @@
         </array>
     </customFonts>
     <scenes>
-        <!--SignInScreen-->
+        <!--SignInScreen_1-->
         <scene sceneID="QYD-HB-zNR">
             <objects>
-                <viewControllerPlaceholder storyboardName="SignIn" referencedIdentifier="SignInScreen" id="ILd-3N-lRF" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <viewControllerPlaceholder storyboardName="SignIn" referencedIdentifier="SignInScreen_1" id="ILd-3N-lRF" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Yjk-UD-iSz"/>
                 </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="763" y="-235"/>
         </scene>
@@ -125,7 +125,7 @@
     <resources>
         <image name="MainLogo" width="380" height="220"/>
         <namedColor name="MainColor">
-            <color red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
