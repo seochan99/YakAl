@@ -17,43 +17,91 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-d7-xxe">
-                                <rect key="frame" x="0.0" y="331" width="413" height="220"/>
+                                <rect key="frame" x="0.0" y="330.33333333333331" width="413" height="219.99999999999994"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ai를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po1-5U-gcn">
-                                <rect key="frame" x="32" y="209" width="198" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AI를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po1-5U-gcn">
+                                <rect key="frame" x="32" y="209" width="198" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 알" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-1R-XaB">
-                                <rect key="frame" x="32" y="236" width="79" height="48"/>
+                                <rect key="frame" x="32" y="235.33333333333337" width="79" height="48"/>
                                 <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="40"/>
                                 <color key="textColor" name="MainColor"/>
                                 <color key="highlightedColor" red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQ1-yI-VvJ">
+                                <rect key="frame" x="0.0" y="600.33333333333337" width="393" height="267.66666666666663"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESN-O1-BOc">
+                                        <rect key="frame" x="30" y="30" width="333" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="kj3-eJ-h3u"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="카카오로 로그인">
+                                            <color key="baseForegroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="baseBackgroundColor" red="0.99607843137254903" green="0.89803921568627454" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhH-zR-nsw">
+                                        <rect key="frame" x="30" y="114" width="333" height="64"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="tdg-Ob-BaF"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Google 계정으로 로그인">
+                                            <color key="baseForegroundColor" red="0.08235294118" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                            <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </buttonConfiguration>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="top" secondItem="ESN-O1-BOc" secondAttribute="bottom" constant="20" id="1aC-fd-PVC"/>
+                                    <constraint firstAttribute="trailing" secondItem="NhH-zR-nsw" secondAttribute="trailing" constant="30" id="BoV-LP-Vtd"/>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="FGE-pQ-gzb"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="top" secondItem="PQ1-yI-VvJ" secondAttribute="top" constant="30" id="Na4-FO-qws"/>
+                                    <constraint firstAttribute="trailing" secondItem="ESN-O1-BOc" secondAttribute="trailing" constant="30" id="XZt-1E-8ys"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="eBo-qF-NhS"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="7aD-1R-XaB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="8N5-kh-ihQ"/>
                             <constraint firstItem="po1-5U-gcn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="150" id="9fV-Uk-gJa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PQ1-yI-VvJ" secondAttribute="trailing" id="IGL-0t-ypq"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="50" id="IRb-ZE-7WW"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L0G-O5-zFM"/>
                             <constraint firstItem="7aD-1R-XaB" firstAttribute="top" secondItem="po1-5U-gcn" secondAttribute="bottom" constant="6" id="OWn-yE-K1z"/>
                             <constraint firstItem="po1-5U-gcn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="lLB-Aa-Ohq"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="top" secondItem="o4w-d7-xxe" secondAttribute="bottom" constant="50" id="mal-Qw-6Fu"/>
                             <constraint firstItem="o4w-d7-xxe" firstAttribute="top" secondItem="7aD-1R-XaB" secondAttribute="bottom" constant="47" id="oGa-IR-cSf"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="po1-5U-gcn" secondAttribute="trailing" constant="163" id="qcy-cL-Evb"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="o4w-d7-xxe" secondAttribute="leading" id="vZy-X8-FZ1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="o4w-d7-xxe" secondAttribute="trailing" constant="-20" id="y2U-YV-pye"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="GoogleLoginButton" destination="NhH-zR-nsw" id="2MX-pm-Lbt"/>
+                        <outlet property="KakaoLoginButton" destination="NhH-zR-nsw" id="wIa-F6-oFX"/>
+                        <outlet property="googleLoginButton" destination="NhH-zR-nsw" id="2uk-Hn-Lqe"/>
+                        <outlet property="kakaoLoginButton" destination="ESN-O1-BOc" id="7cM-qC-J0T"/>
+                        <outlet property="subTitleText" destination="po1-5U-gcn" id="kFY-g7-fP4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

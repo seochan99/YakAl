@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */; };
 		98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */; };
-		98C12D3E2A5E3B8B00175EB8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D3D2A5E3B8B00175EB8 /* ViewController.swift */; };
 		98C12D412A5E3B8B00175EB8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D3F2A5E3B8B00175EB8 /* Main.storyboard */; };
 		98C12D432A5E3B8B00175EB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D422A5E3B8B00175EB8 /* Assets.xcassets */; };
 		98C12D462A5E3B8B00175EB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D442A5E3B8B00175EB8 /* LaunchScreen.storyboard */; };
@@ -17,13 +16,13 @@
 		98C12D652A5E487300175EB8 /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D5C2A5E487200175EB8 /* Pretendard-Light.otf */; };
 		98C12D662A5E487300175EB8 /* Pretendard-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D5D2A5E487200175EB8 /* Pretendard-Bold.otf */; };
 		98C12D672A5E487300175EB8 /* Pretendard-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D5E2A5E487300175EB8 /* Pretendard-Regular.otf */; };
+		98C12D692A5E564E00175EB8 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D682A5E564E00175EB8 /* MainViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		98C12D362A5E3B8A00175EB8 /* YakAl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YakAl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		98C12D3D2A5E3B8B00175EB8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		98C12D402A5E3B8B00175EB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		98C12D422A5E3B8B00175EB8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		98C12D452A5E3B8B00175EB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -32,6 +31,7 @@
 		98C12D5C2A5E487200175EB8 /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		98C12D5D2A5E487200175EB8 /* Pretendard-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Bold.otf"; sourceTree = "<group>"; };
 		98C12D5E2A5E487300175EB8 /* Pretendard-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Regular.otf"; sourceTree = "<group>"; };
+		98C12D682A5E564E00175EB8 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,7 +114,7 @@
 		98C12D512A5E3C7E00175EB8 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				98C12D3D2A5E3B8B00175EB8 /* ViewController.swift */,
+				98C12D682A5E564E00175EB8 /* MainViewController.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -226,7 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98C12D3E2A5E3B8B00175EB8 /* ViewController.swift in Sources */,
+				98C12D692A5E564E00175EB8 /* MainViewController.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 			);
