@@ -17,6 +17,16 @@
         </array>
     </customFonts>
     <scenes>
+        <!--SignInScreen-->
+        <scene sceneID="QYD-HB-zNR">
+            <objects>
+                <viewControllerPlaceholder storyboardName="SignIn" referencedIdentifier="SignInScreen" id="ILd-3N-lRF" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Yjk-UD-iSz"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="763" y="-235"/>
+        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -53,6 +63,10 @@
                                             <color key="baseForegroundColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="baseBackgroundColor" red="0.99607843137254903" green="0.89803921568627454" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="LoginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eqb-rB-r88"/>
+                                            <segue destination="ILd-3N-lRF" kind="show" id="BcO-Nw-4oG"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhH-zR-nsw">
                                         <rect key="frame" x="30" y="114" width="333" height="64"/>

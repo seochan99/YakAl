@@ -18,6 +18,10 @@ extension UIButton {
 
 //MARK: - Main UIViewController
 class MainViewController: UIViewController {
+    
+    // 회원가입 여부
+    var isSignedUp: Bool = true
+
 
     // IBOutlet 연결
     @IBOutlet weak var subTitleText: UILabel!
@@ -46,4 +50,17 @@ class MainViewController: UIViewController {
            
            subTitleText.attributedText = attributedString
     }
+    @IBAction func LoginButtonTapped(_ sender: UIButton) {
+        // StoryBoard
+        let storyboardName = isSignedUp ? "Home" : "SignIn"
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen" : "SignInScreen") as? UIViewController {
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = initialViewController
+            }
+        }
+        
+
+    }
+    
 }
