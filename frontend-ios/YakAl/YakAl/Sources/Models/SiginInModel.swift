@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 회원가입 모델
 struct SignUpModel {
     let headerText: String
     let titleText: String
