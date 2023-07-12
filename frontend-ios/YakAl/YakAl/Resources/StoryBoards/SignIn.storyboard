@@ -40,7 +40,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1U-sN-7he">
-                                <rect key="frame" x="37.666666666666664" y="261" width="26.333333333333336" height="19"/>
+                                <rect key="frame" x="32" y="261" width="26.333333333333329" height="19"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
                                 <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -73,6 +73,9 @@
                                         <integer key="value" value="0"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="nextButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="5Rd-WO-dWp"/>
+                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
@@ -85,10 +88,9 @@
                             <constraint firstItem="iwZ-zc-9KY" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="AVw-7L-isg"/>
                             <constraint firstItem="iwZ-zc-9KY" firstAttribute="top" secondItem="81C-3q-7Dh" secondAttribute="bottom" constant="50" id="GLO-83-iAH"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="MCB-jx-Uqf" secondAttribute="trailing" constant="30" id="IVX-o3-LzW"/>
+                            <constraint firstItem="p1U-sN-7he" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="32" id="MS2-tc-9mm"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="C7M-GN-TIB" secondAttribute="bottom" constant="32" id="Mnw-Ft-UAB"/>
-                            <constraint firstItem="iwZ-zc-9KY" firstAttribute="leading" secondItem="p1U-sN-7he" secondAttribute="trailing" constant="-32" id="YE1-fh-vhl"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="C7M-GN-TIB" secondAttribute="trailing" constant="20" id="ZK5-7r-oBt"/>
-                            <constraint firstItem="MCB-jx-Uqf" firstAttribute="leading" secondItem="p1U-sN-7he" secondAttribute="trailing" constant="-32" id="i3N-Dh-Hn2"/>
                             <constraint firstItem="MCB-jx-Uqf" firstAttribute="top" secondItem="p1U-sN-7he" secondAttribute="bottom" constant="5" id="pAe-BX-RgQ"/>
                             <constraint firstItem="C7M-GN-TIB" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="rwD-WL-CJE"/>
                             <constraint firstItem="81C-3q-7Dh" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="xOq-DV-fLP"/>
