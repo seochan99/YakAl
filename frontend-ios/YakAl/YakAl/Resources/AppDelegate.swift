@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // 딜레이
-        sleep(1)
+        sleep(3)
         return true
     }
 

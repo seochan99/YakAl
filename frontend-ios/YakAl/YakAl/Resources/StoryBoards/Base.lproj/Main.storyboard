@@ -9,11 +9,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Pretendard-Bold.otf">
-            <string>Pretendard-Bold</string>
+        <array key="SUIT-Bold.otf">
+            <string>SUIT-Bold</string>
         </array>
-        <array key="Pretendard-Medium.otf">
-            <string>Pretendard-Medium</string>
+        <array key="SUIT-Medium.otf">
+            <string>SUIT-Medium</string>
         </array>
     </customFonts>
     <scenes>
@@ -26,24 +26,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-d7-xxe">
-                                <rect key="frame" x="0.0" y="330.33333333333331" width="413" height="219.99999999999994"/>
+                                <rect key="frame" x="0.0" y="332.33333333333331" width="413" height="219.99999999999994"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AI를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po1-5U-gcn">
                                 <rect key="frame" x="32" y="209" width="198" height="20.333333333333343"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 알" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-1R-XaB">
-                                <rect key="frame" x="32" y="235.33333333333337" width="79" height="48"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="40"/>
+                                <rect key="frame" x="31.999999999999993" y="235.33333333333337" width="79.333333333333314" height="50"/>
+                                <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="40"/>
                                 <color key="textColor" name="MainColor"/>
                                 <color key="highlightedColor" red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQ1-yI-VvJ">
-                                <rect key="frame" x="0.0" y="600.33333333333337" width="393" height="267.66666666666663"/>
+                                <rect key="frame" x="0.0" y="602.33333333333337" width="393" height="265.66666666666663"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESN-O1-BOc">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESN-O1-BOc">
                                         <rect key="frame" x="30" y="30" width="333" height="64"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="64" id="kj3-eJ-h3u"/>

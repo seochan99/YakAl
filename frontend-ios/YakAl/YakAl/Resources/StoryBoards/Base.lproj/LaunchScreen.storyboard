@@ -1,57 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Pretendard-Bold.otf">
-            <string>Pretendard-Bold</string>
-        </array>
-        <array key="Pretendard-Medium.otf">
-            <string>Pretendard-Medium</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--View Controller-->
         <scene sceneID="EHf-IW-A2E">
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ai를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yay-jk-V7K">
-                                <rect key="frame" x="32" y="209" width="198" height="21"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Medium" family="Pretendard" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 알" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iIo-Zh-O7f">
-                                <rect key="frame" x="32" y="236" width="79" height="48"/>
-                                <fontDescription key="fontDescription" name="Pretendard-Bold" family="Pretendard" pointSize="40"/>
-                                <color key="textColor" name="MainColor"/>
-                                <color key="highlightedColor" red="0.14901960784313725" green="0.41176470588235292" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                            </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="fkY-AW-k6Y">
-                                <rect key="frame" x="0.0" y="331" width="413" height="220"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="g2w-Gk-Cuh">
+                                <rect key="frame" x="0.0" y="428" width="395" height="220"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchHeader" translatesAutoresizingMaskIntoConstraints="NO" id="A4p-yW-f8f">
+                                <rect key="frame" x="32" y="134" width="228" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="228" id="Pr5-Ex-cUM"/>
+                                    <constraint firstAttribute="height" constant="34" id="Ugc-cD-RLz"/>
+                                </constraints>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchTitle" translatesAutoresizingMaskIntoConstraints="NO" id="zgS-rJ-0eP">
+                                <rect key="frame" x="32" y="174" width="80" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="1vh-Qk-s7B"/>
+                                    <constraint firstAttribute="width" constant="80" id="AfL-Sj-y47"/>
+                                </constraints>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="Yay-jk-V7K" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="150" id="1be-9t-8cF"/>
-                            <constraint firstItem="fkY-AW-k6Y" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="SGr-0d-x1H"/>
-                            <constraint firstItem="iIo-Zh-O7f" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="aFV-mT-znY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="fkY-AW-k6Y" secondAttribute="trailing" constant="-20" id="dIC-rc-WLc"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Yay-jk-V7K" secondAttribute="trailing" constant="163" id="jSx-tI-vwN"/>
-                            <constraint firstItem="iIo-Zh-O7f" firstAttribute="top" secondItem="Yay-jk-V7K" secondAttribute="bottom" constant="6" id="ly3-87-uu6"/>
-                            <constraint firstItem="fkY-AW-k6Y" firstAttribute="top" secondItem="iIo-Zh-O7f" secondAttribute="bottom" constant="47" id="oKk-xL-1IZ"/>
-                            <constraint firstItem="Yay-jk-V7K" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="ovO-Dr-6uH"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="g2w-Gk-Cuh" secondAttribute="leading" id="Eio-Sz-gv4"/>
+                            <constraint firstItem="g2w-Gk-Cuh" firstAttribute="top" secondItem="zgS-rJ-0eP" secondAttribute="bottom" constant="190" id="FjY-8w-cTj"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="g2w-Gk-Cuh" secondAttribute="bottom" constant="130" id="Klm-wM-hvF"/>
+                            <constraint firstItem="zgS-rJ-0eP" firstAttribute="top" secondItem="A4p-yW-f8f" secondAttribute="bottom" constant="6" id="SrN-Xh-rog"/>
+                            <constraint firstItem="A4p-yW-f8f" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="WtE-pB-Gr9"/>
+                            <constraint firstItem="g2w-Gk-Cuh" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="20" id="i4r-AQ-Zml"/>
+                            <constraint firstItem="zgS-rJ-0eP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="vwL-Pw-JrK"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -61,10 +53,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="LaunchHeader" width="226" height="18.333333969116211"/>
+        <image name="LaunchTitle" width="77.333335876464844" height="36.333332061767578"/>
         <image name="MainLogo" width="380" height="220"/>
-        <namedColor name="MainColor">
-            <color red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
