@@ -7,6 +7,15 @@ import org.springframework.http.HttpStatus;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorCode {
+    // Not Found Error
+    NOT_FOUND_USER("4040", HttpStatus.NOT_FOUND, "Not Exist User"),
+
+    // Bad Request Error
+    NOT_END_POINT("4000",HttpStatus.BAD_REQUEST , "Not Exist End Point Error"),
+
+    // Server
+    SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
+
     // Access Denied Error
     ACCESS_DENIED_ERROR("4010", HttpStatus.UNAUTHORIZED, "Access Denied Token Error"),
 
