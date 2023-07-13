@@ -1,5 +1,7 @@
 package com.viewpharm.yakal.security.jwt;
 
+import com.viewpharm.yakal.common.ErrorCode;
+import com.viewpharm.yakal.common.exception.UserException;
 import com.viewpharm.yakal.domain.UserRole;
 import com.viewpharm.yakal.repository.UserRepository;
 import io.jsonwebtoken.*;
@@ -83,9 +85,9 @@ public class JwtProvider implements InitializingBean {
         Claims claims = validateToken(refreshToken);
 
         UserRepository.UserLoginForm user = userRepository.findByIdAndRefreshToken(Long.valueOf(claims.get("id").toString()), refreshToken)
-                .orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND_USER));
+                .orElseThrow(() -> new UserException(ErrorCode.NOT_FOUND_USER));
 
-        return createToken(user.getId(), user.getUserRoleType(), true);
+        return createToken(user.getId(), user.getRole(), true);
     }
 
     public String getUserId(String token) {

@@ -26,12 +26,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     private LoginProvider provider;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "introduction")
-    private String introduction;
-
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;
@@ -45,13 +39,12 @@ public class User {
     @Column(name = "device_Token")
     private String deviceToken;
 
-    @Column(name = "isIOS", columnDefinition = "TINYINT(1)")
+    @Column(name = "is_ios", columnDefinition = "TINYINT(1)")
     private Boolean isIos;
 
 
     @Builder
-    public User(String socialId, LoginProvider provider, String name, UserRole role,
-                String refreshToken) {
+    public User(String socialId, LoginProvider provider, UserRole role, String refreshToken) {
         this.socialId = socialId;
         this.provider = provider;
         this.role = role;

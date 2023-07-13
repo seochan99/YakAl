@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.repository;
 
+import com.viewpharm.yakal.domain.LoginProvider;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.domain.UserRole;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
+    Optional<User> findBySocialIdAndProvider(String socialId, LoginProvider loginProvider);
 
     @Query("SELECT u.id AS id, u.role AS role FROM User u WHERE u.id = :userId AND u.isLogin = true AND u.refreshToken = :refreshToken")
     Optional<UserLoginForm> findByIdAndRefreshToken(@Param("userId") Long userId, @Param("refreshToken") String refreshToken);
