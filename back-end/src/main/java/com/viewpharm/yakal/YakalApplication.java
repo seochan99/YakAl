@@ -1,4 +1,4 @@
-package com.view_paharm.yakal;
+package com.viewpharm.yakal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
