@@ -2,7 +2,6 @@
 //  MainViewController.swift
 //  YakAl
 //
-//  Created by 서희찬 on 2023/07/12.
 //
 
 import UIKit
@@ -50,6 +49,7 @@ class MainViewController: UIViewController {
            
            subTitleText.attributedText = attributedString
     }
+    
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
         // StoryBoard
         let storyboardName = isSignedUp ? "Home" : "SignIn"
@@ -59,8 +59,5 @@ class MainViewController: UIViewController {
                 sceneDelegate.window?.rootViewController = initialViewController
             }
         }
-        
-
     }
-    
 }

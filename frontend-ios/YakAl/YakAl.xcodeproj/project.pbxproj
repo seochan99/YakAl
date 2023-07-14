@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */; };
 		98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */; };
 		98C12D412A5E3B8B00175EB8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D3F2A5E3B8B00175EB8 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
 		98C12D362A5E3B8A00175EB8 /* YakAl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YakAl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -126,8 +128,8 @@
 		98C12D512A5E3C7E00175EB8 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				98C12D682A5E564E00175EB8 /* MainViewController.swift */,
 				98C12D742A5E67D200175EB8 /* SignInViewController.swift */,
+				98C12D682A5E564E00175EB8 /* MainViewController.swift */,
 				98C12D782A5E6C8E00175EB8 /* HomeViewController.swift */,
 			);
 			path = VCs;
@@ -136,6 +138,7 @@
 		98C12D522A5E3C8300175EB8 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				980BF8F12A61015100ADE034 /* ProgressNavController.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -246,6 +249,7 @@
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
 				98C12D752A5E67D200175EB8 /* SignInViewController.swift in Sources */,
+				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 				98C12D792A5E6C8E00175EB8 /* HomeViewController.swift in Sources */,
@@ -408,7 +412,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seochan99.YakAl;
+				PRODUCT_BUNDLE_IDENTIFIER = com.viewpharm.yakal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -436,7 +440,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.seochan99.YakAl;
+				PRODUCT_BUNDLE_IDENTIFIER = com.viewpharm.yakal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
