@@ -20,12 +20,12 @@
         <!--SignInScreen_1-->
         <scene sceneID="QYD-HB-zNR">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <viewControllerPlaceholder storyboardName="SignIn" referencedIdentifier="SignInScreen_1" id="ILd-3N-lRF" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="Yjk-UD-iSz"/>
                 </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="763" y="-235"/>
+            <point key="canvasLocation" x="706" y="-451"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -36,22 +36,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-d7-xxe">
-                                <rect key="frame" x="0.0" y="332.33333333333331" width="413" height="219.99999999999994"/>
+                                <rect key="frame" x="0.0" y="333.33333333333331" width="413" height="219.99999999999994"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AI를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po1-5U-gcn">
-                                <rect key="frame" x="32" y="209" width="198" height="20.333333333333343"/>
+                                <rect key="frame" x="32" y="209" width="198" height="21.333333333333343"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 알" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-1R-XaB">
-                                <rect key="frame" x="31.999999999999993" y="235.33333333333337" width="79.333333333333314" height="50"/>
+                                <rect key="frame" x="31.999999999999993" y="236.33333333333337" width="80.333333333333314" height="50"/>
                                 <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="40"/>
                                 <color key="textColor" name="MainColor"/>
                                 <color key="highlightedColor" red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQ1-yI-VvJ">
-                                <rect key="frame" x="0.0" y="602.33333333333337" width="393" height="265.66666666666663"/>
+                                <rect key="frame" x="0.0" y="603.33333333333337" width="393" height="264.66666666666663"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESN-O1-BOc">
                                         <rect key="frame" x="30" y="30" width="333" height="64"/>
@@ -68,27 +68,39 @@
                                             <segue destination="ILd-3N-lRF" kind="show" id="BcO-Nw-4oG"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhH-zR-nsw">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhH-zR-nsw" userLabel="Platform Login Button">
                                         <rect key="frame" x="30" y="114" width="333" height="64"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="64" id="tdg-Ob-BaF"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Google 계정으로 로그인">
+                                        <buttonConfiguration key="configuration" style="filled" title="Apple 계정으로 로그인">
                                             <color key="baseForegroundColor" red="0.08235294118" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                             <color key="baseBackgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                     </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakaoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lC8-t0-FOf">
+                                        <rect key="frame" x="50" y="30" width="36" height="64"/>
+                                    </imageView>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakaoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="acl-32-Rap" userLabel="appleIcon">
+                                        <rect key="frame" x="50" y="114" width="36" height="64"/>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <constraints>
                                     <constraint firstItem="NhH-zR-nsw" firstAttribute="top" secondItem="ESN-O1-BOc" secondAttribute="bottom" constant="20" id="1aC-fd-PVC"/>
+                                    <constraint firstItem="lC8-t0-FOf" firstAttribute="bottom" secondItem="ESN-O1-BOc" secondAttribute="bottom" id="1tQ-6q-cWr"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="leading" secondItem="lC8-t0-FOf" secondAttribute="trailing" constant="-56" id="5eh-JI-K1A"/>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="leading" secondItem="acl-32-Rap" secondAttribute="trailing" constant="-56" id="Ase-Qj-dB4"/>
                                     <constraint firstAttribute="trailing" secondItem="NhH-zR-nsw" secondAttribute="trailing" constant="30" id="BoV-LP-Vtd"/>
                                     <constraint firstItem="NhH-zR-nsw" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="FGE-pQ-gzb"/>
+                                    <constraint firstItem="lC8-t0-FOf" firstAttribute="top" secondItem="ESN-O1-BOc" secondAttribute="top" id="HFs-LD-D3r"/>
                                     <constraint firstItem="ESN-O1-BOc" firstAttribute="top" secondItem="PQ1-yI-VvJ" secondAttribute="top" constant="30" id="Na4-FO-qws"/>
+                                    <constraint firstItem="acl-32-Rap" firstAttribute="bottom" secondItem="NhH-zR-nsw" secondAttribute="bottom" id="Tg2-mG-RaX"/>
                                     <constraint firstAttribute="trailing" secondItem="ESN-O1-BOc" secondAttribute="trailing" constant="30" id="XZt-1E-8ys"/>
                                     <constraint firstItem="ESN-O1-BOc" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="eBo-qF-NhS"/>
+                                    <constraint firstItem="acl-32-Rap" firstAttribute="top" secondItem="NhH-zR-nsw" secondAttribute="top" id="vQJ-XC-89d"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -119,11 +131,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-225" y="-227"/>
+            <point key="canvasLocation" x="-225.19083969465649" y="-227.46478873239437"/>
         </scene>
     </scenes>
     <resources>
         <image name="MainLogo" width="380" height="220"/>
+        <image name="kakaoIcon" width="36" height="36"/>
         <namedColor name="MainColor">
             <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
