@@ -21,22 +21,22 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
         super.init(coder: aDecoder)
         commonInit()
     }
+    
     private func commonInit() {
         
-        // for this example, we're using a simple
-        //    green view inside a red view
-        //    as our "progress view"
-        
-        // we set it up here, but we don't add it as a subview
-        //    until we navigate to a MyBaseVC
+
         
         // we know we're setting
         //    outerView height to 20
         //    innerView height to 12 (4-points top/bottom "padding")
         // so let's round the ends of the innerView
-        innerView.layer.cornerRadius = 8.0
+        // corner Radius
+//        innerView.layer.cornerRadius = 8.0
         
-        innerView.backgroundColor = .systemBlue
+        // 색상
+        innerView.backgroundColor = UIColor(red: 0.333, green: 0.533, blue: 0.992, alpha: 1.0)
+        outerView.backgroundColor = UIColor(red: 0.945, green: 0.961, blue: 0.996, alpha: 1.0)
+
         
         
         outerView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,9 +48,12 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
         pctConstraint = innerView.widthAnchor.constraint(equalTo: outerView.widthAnchor, multiplier: .leastNonzeroMagnitude)
 
         NSLayoutConstraint.activate([
-            innerView.topAnchor.constraint(equalTo: outerView.topAnchor, constant: 4.0),
-            innerView.leadingAnchor.constraint(equalTo: outerView.leadingAnchor, constant: 4.0),
-            innerView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor, constant: -4.0),
+            // 이너뷰 top
+            innerView.topAnchor.constraint(equalTo: outerView.topAnchor, constant: 0),
+            // 이너뷰 leading
+            innerView.leadingAnchor.constraint(equalTo: outerView.leadingAnchor, constant: 0.0),
+            // 이너뷰 bottom
+            innerView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor, constant: 0.0),
             pctConstraint,
         ])
 
@@ -72,10 +75,18 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
                 let g = view.safeAreaLayoutGuide
                 NSLayoutConstraint.activate([
                     
-                    outerView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 4.0),
-                    outerView.leadingAnchor.constraint(equalTo: g.leadingAnchor, constant: 20.0),
-                    outerView.trailingAnchor.constraint(equalTo: g.trailingAnchor, constant: -20.0),
-                    outerView.heightAnchor.constraint(equalToConstant: 20.0),
+                    
+                    // top
+                    outerView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 24.0),
+                    
+                    // leading
+                    outerView.leadingAnchor.constraint(equalTo: g.leadingAnchor, constant: 145.0),
+                    
+                    // trailing
+                    outerView.trailingAnchor.constraint(equalTo: g.trailingAnchor, constant: -145.0),
+                    
+                    // height
+                    outerView.heightAnchor.constraint(equalToConstant: 10.0),
                     
                 ])
                 

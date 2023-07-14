@@ -25,8 +25,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약간 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="32.000000000000014" y="196" width="206.33333333333337" height="50"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="32.000000000000014" y="133" width="206.33333333333337" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="CQ3-eb-hbv"/>
                                 </constraints>
@@ -52,26 +52,65 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Y6W-OH-hqX" kind="show" id="3F0-OW-cNW"/>
+                                    <segue destination="Y6W-OH-hqX" kind="show" id="3om-SI-vrq"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
+                                <rect key="frame" x="32" y="203" width="325" height="367"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="367" id="fT8-ic-q7F"/>
+                                </constraints>
+                                <mutableString key="text">Ⅰ. 개인정보의 수집 및 이용 동의서
+ - 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
+① 개인정보 수집 항목 및 수집·이용 목적
+ 가) 수집 항목 (필수항목)
+- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전화), 사진, 이메일, 나이, 재학정보, 병역사항,
+외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원
+신청서에 기재된 정보 또는 신청자가 제공한 정보
+ 나) 수집 및 이용 목적
+ ② 개인정보 보유 및 이용기간
+ - 수집·이용 동의일로부터 개인정보의 수집·이용목적을 달성할 때까지
+ ③ 동의거부관리
+ - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만,
+귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 장학생 선발 과정에 있어 불이익이 발생할 수
+있음을 알려드립니다.</mutableString>
+                                <color key="textColor" systemColor="labelColor"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
+                                <rect key="frame" x="295" y="590" width="51" height="31"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I7W-XA-Ais"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lvG-Dy-vtm" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="0lG-td-wUf"/>
+                            <constraint firstItem="tPE-IU-Rfo" firstAttribute="top" secondItem="OdA-Kz-aIJ" secondAttribute="bottom" constant="20" id="1np-XC-lbQ"/>
+                            <constraint firstItem="tPE-IU-Rfo" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32" id="AZj-20-oUo"/>
+                            <constraint firstItem="VXu-aU-dvM" firstAttribute="top" secondItem="tPE-IU-Rfo" secondAttribute="bottom" constant="20" id="BQh-nu-CLg"/>
                             <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="OdA-Kz-aIJ" secondAttribute="trailing" constant="154.66666666666663" id="IKA-YD-HRm"/>
                             <constraint firstItem="lvG-Dy-vtm" firstAttribute="centerX" secondItem="BA6-U6-MUC" secondAttribute="centerX" id="OTW-jq-tKF"/>
+                            <constraint firstItem="VXu-aU-dvM" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="295" id="VC8-p1-oQP"/>
                             <constraint firstItem="OdA-Kz-aIJ" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32" id="dFp-Uv-PMO"/>
-                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="top" secondItem="I7W-XA-Ais" secondAttribute="top" constant="93" id="iUv-Ix-aEX"/>
+                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="top" secondItem="I7W-XA-Ais" secondAttribute="top" constant="30" id="iUv-Ix-aEX"/>
                             <constraint firstItem="I7W-XA-Ais" firstAttribute="bottom" secondItem="lvG-Dy-vtm" secondAttribute="bottom" constant="30" id="wKC-3D-m5G"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="tPE-IU-Rfo" secondAttribute="trailing" constant="36" id="zDO-Vd-6l3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4bX-ul-Bx9"/>
+                    <connections>
+                        <outlet property="agreeButton" destination="lvG-Dy-vtm" id="Nc7-ev-jNB"/>
+                        <outlet property="agreeSwitch" destination="VXu-aU-dvM" id="BKp-7H-980"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LCY-Nn-0sT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-492" y="1108"/>
+            <point key="canvasLocation" x="-492.36641221374043" y="1107.7464788732395"/>
         </scene>
         <!--Step1VC-->
         <scene sceneID="s0d-6b-0kx">
@@ -350,6 +389,9 @@
         <namedColor name="MainColor">
             <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

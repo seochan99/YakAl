@@ -8,14 +8,15 @@
 import UIKit
 
 class SignInViewController: UIViewController {
-    @IBOutlet weak var siginInInputField: UITextField!
 //
-    var bottomConstraint: NSLayoutConstraint?
-    var currentStep: Int = 0
+    @IBOutlet weak var agreeButton: UIButton!
+    @IBOutlet weak var agreeSwitch: UISwitch!
     
+    
+    var bottomConstraint: NSLayoutConstraint?
     // this will be read by ProgressNavController
     //    to calculate the "progress percentage"
-    public let numSteps: Int = 3
+    public let numSteps: Int = 4
     
     // this will be set by each MyBaseVC subclass,
     //    and will be read by ProgressNavController
@@ -26,12 +27,6 @@ class SignInViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // 둥글게 만들기
-//        siginInNextButton.makeCircular()
-        
-        // 비활성화
-//        siginInNextButton.isEnabled = false
-//        siginInNextButton.backgroundColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0)
 //        // 변화 감지
 //        siginInInputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
 //
@@ -43,28 +38,58 @@ class SignInViewController: UIViewController {
 //         let safeArea = self.view.safeAreaLayoutGuide
 //         bottomConstraint = siginInNextButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0)
 //         bottomConstraint?.isActive = true
-//
-//        // Update initial progress
-//         updateProgress()
+        
+        // Set initial button state
+        // IBOutlet이 올바르게 연결되었는지 확인
+        assert(agreeButton != nil, "agreeButton IBOutlet is not connected")
+        assert(agreeSwitch != nil, "agreeSwitch IBOutlet is not connected")
+        
+        // Set initial button state
+        if let agreeSwitch = agreeSwitch {
+            setAgreeButtonState(agreeButton, isOn: agreeSwitch.isOn)
+        }
+        print()
     }
     
+    // 개인정보 동의 여부 확인
+    private func setAgreeButtonState(_ button: UIButton, isOn: Bool) {
+        
+        if isOn {
+            print("isON")
+            button.isEnabled = true
+            button.backgroundColor = UIColor(red: 38/255, green: 102/255, blue: 246/255, alpha: 1.0)
+            button.setTitleColor(.white, for: .normal)
+        } else {
+            print("isOff")
+            button.isEnabled = false
+            button.backgroundColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0)
+            button.setTitleColor(UIColor(red: 198/255, green: 198/255, blue: 207/255, alpha: 1.0), for: .disabled)
+        }
+    }
+
     
     
-//    // 키보드 보이게
-//   @objc private func keyboardWillShow(_ notification: NSNotification) {
-//       if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-//               let keyboardHeight = keyboardSize.height - self.view.safeAreaInsets.bottom
-//               bottomConstraint?.constant = -(keyboardHeight+15)
-//               self.view.layoutIfNeeded()
-//           }
-//       }
-//    // 키보드 가리기
-//       @objc private func keyboardWillHide(_ notification: NSNotification) {
-//           bottomConstraint?.constant = 0
-//           self.view.layoutIfNeeded()
-//       }
-//
-//
+    
+    
+    // 키보드 보이게
+   @objc private func keyboardWillShow(_ notification: NSNotification) {
+       if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+               let keyboardHeight = keyboardSize.height - self.view.safeAreaInsets.bottom
+               bottomConstraint?.constant = -(keyboardHeight+15)
+               self.view.layoutIfNeeded()
+           }
+       }
+    // 키보드 가리기
+       @objc private func keyboardWillHide(_ notification: NSNotification) {
+           bottomConstraint?.constant = 0
+           self.view.layoutIfNeeded()
+       }
+    
+    @IBAction func switchValueChanged(_ sender: UISwitch) {
+        setAgreeButtonState(agreeButton, isOn: sender.isOn)
+    }
+
+
     
     
     
@@ -103,14 +128,20 @@ class SignInViewController: UIViewController {
 //    }
     
 }
+
+
+
+// 
 class Step1VC: SignInViewController {
-    
+    @IBOutlet weak var siginInInputField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 1
         
         // maybe some other stuff specific to this "step"
     }
+    
+    
     
 }
 class Step2VC: SignInViewController {
