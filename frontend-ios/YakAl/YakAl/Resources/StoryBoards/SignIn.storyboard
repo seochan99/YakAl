@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JM6-Ar-eMD">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -52,10 +53,10 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Y6W-OH-hqX" kind="show" id="3om-SI-vrq"/>
+                                    <action selector="agreeButtonTapped:" destination="1uB-E8-el7" eventType="touchUpInside" id="V4c-bF-ELf"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
                                 <rect key="frame" x="32" y="203" width="325" height="367"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
@@ -79,7 +80,7 @@
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
                                 <rect key="frame" x="295" y="590" width="51" height="31"/>
                                 <connections>
                                     <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
@@ -104,7 +105,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="4bX-ul-Bx9"/>
                     <connections>
-                        <outlet property="agreeButton" destination="lvG-Dy-vtm" id="Nc7-ev-jNB"/>
+                        <outlet property="agreeButton" destination="lvG-Dy-vtm" id="RVH-K3-5MI"/>
                         <outlet property="agreeSwitch" destination="VXu-aU-dvM" id="BKp-7H-980"/>
                     </connections>
                 </viewController>
@@ -121,7 +122,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="실제 이름을 입력해주세요 (예. 홍길동)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MCB-jx-Uqf">
-                                <rect key="frame" x="32" y="329" width="331" height="64"/>
+                                <rect key="frame" x="32" y="285" width="331" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="bJx-IU-bg4"/>
                                 </constraints>
@@ -129,13 +130,13 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="이름" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p1U-sN-7he">
-                                <rect key="frame" x="32" y="305" width="26.333333333333329" height="19"/>
+                                <rect key="frame" x="32" y="261" width="26.333333333333329" height="19"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
                                 <color key="textColor" red="0.56470588235294117" green="0.56470588235294117" blue="0.62352941176470589" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iwZ-zc-9KY" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="32.000000000000014" y="197" width="194.33333333333337" height="68"/>
+                                <rect key="frame" x="32.000000000000014" y="153" width="194.33333333333337" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="meJ-Gi-OX1"/>
                                 </constraints>
@@ -184,6 +185,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zkU-me-Ndf"/>
+                    <connections>
+                        <outlet property="siginInInputField" destination="MCB-jx-Uqf" id="5od-rT-ndR"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -194,11 +198,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_4" id="Jln-Lh-gx5" customClass="Step2VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pTe-BW-i3x">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="생년 월일을 입력해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-dB-VwZ" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="41" y="164" width="242" height="68"/>
+                                <rect key="frame" x="41" y="61" width="242" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="wcF-TJ-Ez5"/>
                                 </constraints>
@@ -207,7 +211,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgh-dN-zjn">
-                                <rect key="frame" x="20" y="730" width="353" height="56"/>
+                                <rect key="frame" x="20" y="754" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="FNM-c8-dCU"/>
@@ -249,11 +253,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_5" id="ARD-DM-Ydt" customClass="Step3VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gN0-LN-eqw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호를 입력해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxK-pO-AZL" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="27.000000000000014" y="158" width="236.33333333333337" height="68"/>
+                                <rect key="frame" x="27.000000000000014" y="55" width="236.33333333333337" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="bPy-ie-XbI"/>
                                 </constraints>
@@ -262,7 +266,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CJ-2D-Nz5">
-                                <rect key="frame" x="20" y="728" width="353" height="56"/>
+                                <rect key="frame" x="20" y="752" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="OsL-0V-c5H"/>
@@ -304,11 +308,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_6" id="W8Z-2m-NLt" customClass="Step4VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0GC-Gl-J2S">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDp-yR-bNl" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="26" y="183" width="298" height="68"/>
+                                <rect key="frame" x="26" y="80" width="298" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="6nr-uK-3Q9"/>
                                 </constraints>
@@ -319,7 +323,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zU-CX-w8d">
-                                <rect key="frame" x="20" y="732" width="353" height="56"/>
+                                <rect key="frame" x="20" y="756" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="XAr-Uq-WOJ"/>
