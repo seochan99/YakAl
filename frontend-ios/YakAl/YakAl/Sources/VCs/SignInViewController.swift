@@ -173,7 +173,9 @@ class Step3VC: SignInViewController
     // DropDown UI 커스텀
     func initUI() {
         // DropDown View의 배경
-        dropView.layer.borderColor = UIColor.black.cgColor
+        dropView.layer.borderWidth = 1.0
+        dropView.layer.borderColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0).cgColor
+
         dropView.layer.cornerRadius = 8
         
         DropDown.appearance().textColor = UIColor.black // 아이템 텍스트 색상
@@ -236,5 +238,11 @@ class Step4VC: SignInViewController {
         // maybe some other stuff specific to this "step"
     }
     
+    @IBAction func goMainButton(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+           let homeScreen1VC = storyboard.instantiateViewController(withIdentifier: "HomeScreen_1")
+           navigationController?.setNavigationBarHidden(true, animated: false)
+           navigationController?.pushViewController(homeScreen1VC, animated: true)
+    }
 }
 
