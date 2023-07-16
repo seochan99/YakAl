@@ -7,6 +7,7 @@
 
 import UIKit
 
+//MARK: - 개인정보동의
 class SignInViewController: UIViewController {
 //
     
@@ -92,39 +93,47 @@ class SignInViewController: UIViewController {
         navigationController?.pushViewController(signInScreen3VC, animated: true)
     }
     
-    
-    
-    
-    
-    
-    
 }
 
 
 
-// 
+//MARK: - 본인이름
 class Step1VC: SignInViewController {
+    
     @IBOutlet weak var siginInInputField: UITextField!
+    @IBOutlet weak var nextButton: UIButton!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 1
         
         // maybe some other stuff specific to this "step"
     }
+    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+    }
 }
 
 
+//MARK: - 생년월일
 class Step2VC: SignInViewController {
+    @IBOutlet weak var birthPicker: UIDatePicker!
     
+    @IBOutlet weak var nextButton: UIButton!
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 2
         
         // maybe some other stuff specific to this "step"
     }
-    
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+    }
 }
+
+//MARK: - 전화번호 입력
 class Step3VC: SignInViewController {
+    @IBOutlet weak var nextButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,8 +141,11 @@ class Step3VC: SignInViewController {
         
         // maybe some other stuff specific to this "step"
     }
+    @IBAction func nextButtonTapped(_ sender: UIButton) {
+    }
     
 }
+//MARK: - 문자인증
 class Step4VC: SignInViewController {
     
     override func viewDidLoad() {

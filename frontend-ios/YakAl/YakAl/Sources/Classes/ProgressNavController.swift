@@ -86,7 +86,7 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
                     outerView.trailingAnchor.constraint(equalTo: g.trailingAnchor, constant: -145.0),
                     
                     // height
-                    outerView.heightAnchor.constraint(equalToConstant: 10.0),
+                    outerView.heightAnchor.constraint(equalToConstant: 6.0),
                     
                 ])
                 

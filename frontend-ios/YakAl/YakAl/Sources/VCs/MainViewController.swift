@@ -50,6 +50,7 @@ class MainViewController: UIViewController {
            subTitleText.attributedText = attributedString
     }
     
+    // 로그인 버튼 클릭 시 처리
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
         // StoryBoard
         let storyboardName = isSignedUp ? "Home" : "SignIn"

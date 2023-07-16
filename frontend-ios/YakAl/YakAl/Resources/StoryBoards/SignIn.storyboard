@@ -164,7 +164,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="Jln-Lh-gx5" kind="show" id="pcb-qe-d6s"/>
+                                    <action selector="nextButtonTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="oQ6-3m-4O5"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -186,6 +186,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="zkU-me-Ndf"/>
                     <connections>
+                        <outlet property="nextButton" destination="C7M-GN-TIB" id="Kws-7V-ZBm"/>
                         <outlet property="siginInInputField" destination="MCB-jx-Uqf" id="5od-rT-ndR"/>
                     </connections>
                 </viewController>
@@ -198,20 +199,11 @@
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_4" id="Jln-Lh-gx5" customClass="Step2VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="pTe-BW-i3x">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="생년 월일을 입력해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-dB-VwZ" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="41" y="61" width="242" height="68"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="68" id="wcF-TJ-Ez5"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rgh-dN-zjn">
-                                <rect key="frame" x="20" y="754" width="353" height="56"/>
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="FNM-c8-dCU"/>
@@ -228,9 +220,25 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="ARD-DM-Ydt" kind="show" id="oL3-x2-3vO"/>
+                                    <action selector="nextButtonTapped:" destination="Jln-Lh-gx5" eventType="touchUpInside" id="wvo-Fw-II2"/>
                                 </connections>
                             </button>
+                            <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="OcC-U0-yRi">
+                                <rect key="frame" x="0.0" y="231" width="393" height="230"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <date key="maximumDate" timeIntervalSinceReferenceDate="725713200">
+                                    <!--2023-12-31 11:00:00 +0000-->
+                                </date>
+                            </datePicker>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="생년 월일을 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-dB-VwZ" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="41" y="120" width="242" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="wcF-TJ-Ez5"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PL7-bH-P4u"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -243,21 +251,25 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="2Eh-2Z-WeP"/>
+                    <connections>
+                        <outlet property="birthPicker" destination="OcC-U0-yRi" id="ZvV-mC-7Vr"/>
+                        <outlet property="nextButton" destination="rgh-dN-zjn" id="M7y-gv-obV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BWA-ay-BXJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1593" y="1108"/>
+            <point key="canvasLocation" x="1591.6030534351144" y="1107.7464788732395"/>
         </scene>
         <!--Step3VC-->
         <scene sceneID="BQo-mi-hBC">
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_5" id="ARD-DM-Ydt" customClass="Step3VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gN0-LN-eqw">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호를 입력해주세요" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UxK-pO-AZL" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="27.000000000000014" y="55" width="236.33333333333337" height="68"/>
+                                <rect key="frame" x="27.000000000000014" y="114" width="236.33333333333337" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="bPy-ie-XbI"/>
                                 </constraints>
@@ -266,7 +278,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8CJ-2D-Nz5">
-                                <rect key="frame" x="20" y="752" width="353" height="56"/>
+                                <rect key="frame" x="20" y="728" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="OsL-0V-c5H"/>
@@ -283,36 +295,66 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="W8Z-2m-NLt" kind="show" id="BJA-Js-HSc"/>
+                                    <action selector="nextButtonTapped:" destination="ARD-DM-Ydt" eventType="touchUpInside" id="X6g-6Q-zd6"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="010-0000-0000" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0F7-ak-rya">
+                                <rect key="frame" x="32" y="252" width="331" height="64"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="64" id="1fJ-0e-8rS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                <textInputTraits key="textInputTraits" textContentType="tel"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4aL-LX-ELh">
+                                <rect key="frame" x="31" y="228" width="80" height="19"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
+                                <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="통신사" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FL3-Yc-SSo">
+                                <rect key="frame" x="31" y="332" width="80" height="19"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
+                                <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Ygo-TY-bmp"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="8CJ-2D-Nz5" firstAttribute="centerX" secondItem="gN0-LN-eqw" secondAttribute="centerX" id="0fb-of-Wha"/>
+                            <constraint firstItem="0F7-ak-rya" firstAttribute="leading" secondItem="Ygo-TY-bmp" secondAttribute="leading" constant="32" id="Frp-hy-p2w"/>
+                            <constraint firstItem="0F7-ak-rya" firstAttribute="top" secondItem="4aL-LX-ELh" secondAttribute="bottom" constant="5" id="PkP-EP-rlY"/>
+                            <constraint firstItem="0F7-ak-rya" firstAttribute="top" secondItem="gN0-LN-eqw" secondAttribute="top" constant="252" id="Rtn-Tu-dPq"/>
+                            <constraint firstItem="Ygo-TY-bmp" firstAttribute="trailing" secondItem="0F7-ak-rya" secondAttribute="trailing" constant="30" id="SRt-js-zW5"/>
+                            <constraint firstItem="4aL-LX-ELh" firstAttribute="leading" secondItem="Ygo-TY-bmp" secondAttribute="leading" constant="31" id="ZBr-ZW-caR"/>
                             <constraint firstItem="UxK-pO-AZL" firstAttribute="leading" secondItem="Ygo-TY-bmp" secondAttribute="leading" constant="27" id="amd-zD-gQE"/>
                             <constraint firstItem="UxK-pO-AZL" firstAttribute="top" secondItem="Ygo-TY-bmp" secondAttribute="top" constant="55" id="hw2-vA-7uu"/>
                             <constraint firstItem="Ygo-TY-bmp" firstAttribute="bottom" secondItem="8CJ-2D-Nz5" secondAttribute="bottom" constant="34" id="r3m-KY-Dov"/>
                             <constraint firstItem="8CJ-2D-Nz5" firstAttribute="leading" secondItem="Ygo-TY-bmp" secondAttribute="leading" constant="20" id="sI5-eN-Mzf"/>
+                            <constraint firstItem="Ygo-TY-bmp" firstAttribute="trailing" secondItem="4aL-LX-ELh" secondAttribute="trailing" constant="282" id="vdl-hy-OUA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="RNs-qc-0O6"/>
+                    <connections>
+                        <outlet property="nextButton" destination="8CJ-2D-Nz5" id="k4x-Mk-Yxd"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEe-Ok-Sls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2570" y="1108"/>
+            <point key="canvasLocation" x="2568.7022900763359" y="1107.7464788732395"/>
         </scene>
         <!--Step4VC-->
         <scene sceneID="nmV-Ut-o3Z">
             <objects>
                 <viewController storyboardIdentifier="SignInScreen_6" id="W8Z-2m-NLt" customClass="Step4VC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0GC-Gl-J2S">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GDp-yR-bNl" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="26" y="80" width="298" height="68"/>
+                                <rect key="frame" x="26" y="139" width="298" height="68"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="68" id="6nr-uK-3Q9"/>
                                 </constraints>
@@ -323,7 +365,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zU-CX-w8d">
-                                <rect key="frame" x="20" y="756" width="353" height="56"/>
+                                <rect key="frame" x="20" y="732" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="56" id="XAr-Uq-WOJ"/>
@@ -339,9 +381,6 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <segue destination="7qM-rs-Tic" kind="show" id="N6Z-0F-JZ3"/>
-                                </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jrN-xM-cqn"/>
