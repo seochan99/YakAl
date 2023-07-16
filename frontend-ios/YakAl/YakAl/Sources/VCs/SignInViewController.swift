@@ -15,12 +15,7 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var agreeSwitch: UISwitch!
     @IBOutlet weak var agreeButton: UIButton!
     
-    // this will be read by ProgressNavController
-    //    to calculate the "progress percentage"
     public let numSteps: Int = 4
-    
-    // this will be set by each MyBaseVC subclass,
-    //    and will be read by ProgressNavController
     public var myStepNumber: Int = 0
     
     
@@ -353,7 +348,7 @@ class Step3VC: SignInViewController,UITextFieldDelegate
        
        // Update the state of the nextButton based on the text field's content
        private func updateNextButtonState() {
-           if let text = siginInInputField.text, !text.isEmpty,  let inputText = tfInput.text, !inputText.isEmpty {
+           if let text = siginInInputField.text, !text.isEmpty, text.count==11, let inputText = tfInput.text, !inputText.isEmpty {
                nextButton.isEnabled = true
                nextButton.backgroundColor = UIColor(red: 38/255, green: 102/255, blue: 246/255, alpha: 1.0)
                nextButton.setTitleColor(.white, for: .normal)
@@ -444,7 +439,7 @@ class Step4VC: SignInViewController,UITextFieldDelegate {
     
     @IBAction func goMainButton(_ sender: UIButton) {
         user.step4Input = siginInInputField.text!
-        print(user)
+        print(user!)
 
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
            let homeScreen1VC = storyboard.instantiateViewController(withIdentifier: "HomeScreen_1")

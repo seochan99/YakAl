@@ -23,43 +23,39 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
     }
     
     private func commonInit() {
-        
-
-        
-        // we know we're setting
-        //    outerView height to 20
-        //    innerView height to 12 (4-points top/bottom "padding")
-        // so let's round the ends of the innerView
-        // corner Radius
-//        innerView.layer.cornerRadius = 8.0
-        
-        // 색상
+        // Color
         innerView.backgroundColor = UIColor(red: 0.333, green: 0.533, blue: 0.992, alpha: 1.0)
         outerView.backgroundColor = UIColor(red: 0.945, green: 0.961, blue: 0.996, alpha: 1.0)
 
-        
-        
         outerView.translatesAutoresizingMaskIntoConstraints = false
         innerView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         outerView.addSubview(innerView)
-        
-        // initialize pctConstraint
+
+        // Initialize pctConstraint
         pctConstraint = innerView.widthAnchor.constraint(equalTo: outerView.widthAnchor, multiplier: .leastNonzeroMagnitude)
 
+        let leadingConstraint = innerView.leadingAnchor.constraint(equalTo: outerView.leadingAnchor)
+        leadingConstraint.priority = .defaultHigh
+
+        let trailingConstraint = innerView.trailingAnchor.constraint(equalTo: outerView.trailingAnchor)
+        trailingConstraint.priority = .defaultHigh
+
         NSLayoutConstraint.activate([
-            // 이너뷰 top
-            innerView.topAnchor.constraint(equalTo: outerView.topAnchor, constant: 0),
-            // 이너뷰 leading
-            innerView.leadingAnchor.constraint(equalTo: outerView.leadingAnchor, constant: 0.0),
-            // 이너뷰 bottom
-            innerView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor, constant: 0.0),
+            // Inner view top
+            innerView.topAnchor.constraint(equalTo: outerView.topAnchor),
+            // Inner view leading
+            leadingConstraint,
+            // Inner view bottom
+            innerView.bottomAnchor.constraint(equalTo: outerView.bottomAnchor),
+            // Inner view width
             pctConstraint,
         ])
 
         self.delegate = self
-        
     }
+
+
     
     func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         

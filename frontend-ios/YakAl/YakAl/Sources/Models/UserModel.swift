@@ -12,7 +12,7 @@ struct User {
 
     
     var step1Input: String = ""
-    var step2Input: Date?
+    var step2Input: Date=Date()
     var step3Input: String = ""
     var step4Input: String = ""
     

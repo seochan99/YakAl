@@ -29,21 +29,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
                                 <rect key="frame" x="32.000000000000014" y="133" width="206.33333333333337" height="50"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="CQ3-eb-hbv"/>
-                                </constraints>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-Dy-vtm">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-Dy-vtm">
                                 <rect key="frame" x="20" y="732" width="353" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" name="MainColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="WXR-1t-nFD"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="다음">
@@ -59,12 +55,10 @@
                                     <action selector="agreeButtonTapped:" destination="1uB-E8-el7" eventType="touchUpInside" id="V4c-bF-ELf"/>
                                 </connections>
                             </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
                                 <rect key="frame" x="32" y="203" width="325" height="367"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="367" id="fT8-ic-q7F"/>
-                                </constraints>
                                 <string key="text">Ⅰ. 개인정보의 수집 및 이용 동의서
  - 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
 ① 개인정보 수집 항목 및 수집·이용 목적
@@ -83,8 +77,9 @@
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
                                 <rect key="frame" x="295" y="590" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
                                 </connections>
@@ -92,19 +87,6 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I7W-XA-Ais"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="lvG-Dy-vtm" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="0lG-td-wUf"/>
-                            <constraint firstItem="tPE-IU-Rfo" firstAttribute="top" secondItem="OdA-Kz-aIJ" secondAttribute="bottom" constant="20" id="1np-XC-lbQ"/>
-                            <constraint firstItem="tPE-IU-Rfo" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32" id="AZj-20-oUo"/>
-                            <constraint firstItem="VXu-aU-dvM" firstAttribute="top" secondItem="tPE-IU-Rfo" secondAttribute="bottom" constant="20" id="BQh-nu-CLg"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="OdA-Kz-aIJ" secondAttribute="trailing" constant="154.66666666666663" id="IKA-YD-HRm"/>
-                            <constraint firstItem="lvG-Dy-vtm" firstAttribute="centerX" secondItem="BA6-U6-MUC" secondAttribute="centerX" id="OTW-jq-tKF"/>
-                            <constraint firstItem="VXu-aU-dvM" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="295" id="VC8-p1-oQP"/>
-                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32" id="dFp-Uv-PMO"/>
-                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="top" secondItem="I7W-XA-Ais" secondAttribute="top" constant="30" id="iUv-Ix-aEX"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="bottom" secondItem="lvG-Dy-vtm" secondAttribute="bottom" constant="30" id="wKC-3D-m5G"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="tPE-IU-Rfo" secondAttribute="trailing" constant="36" id="zDO-Vd-6l3"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4bX-ul-Bx9"/>
                     <connections>
