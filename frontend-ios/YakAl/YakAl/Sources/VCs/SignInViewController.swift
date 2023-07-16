@@ -11,7 +11,6 @@ import DropDown
 //MARK: - 개인정보동의
 class SignInViewController: UIViewController {
     
-    var user = User()
     
     @IBOutlet weak var agreeSwitch: UISwitch!
     @IBOutlet weak var agreeButton: UIButton!
@@ -60,6 +59,10 @@ class SignInViewController: UIViewController {
     @IBAction func agreeButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
         let signInScreen3VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_3") as! Step1VC
+        
+        signInScreen3VC.user = User.shared
+
+        
         navigationController?.pushViewController(signInScreen3VC, animated: true)
     }
     
@@ -73,6 +76,10 @@ class Step1VC: SignInViewController {
     
     @IBOutlet weak var siginInInputField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
+    
+    // Add 'user' property
+     var user: User!
+     
     
     var bottomConstraint: NSLayoutConstraint?
     
@@ -98,9 +105,16 @@ class Step1VC: SignInViewController {
        
        
        @IBAction func nextButtonTapped(_ sender: UIButton) {
-           user.step1Input = siginInInputField.text ?? ""
+           print("이전 \(user.step1Input)")
+           user.step1Input = siginInInputField.text!
+           print("이후 \(user.step1Input)")
+           print("이후 \(user)")
+           
            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
            let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
+           
+           signInScreen4VC.user = user
+           
            navigationController?.pushViewController(signInScreen4VC, animated: true)
        }
        
@@ -151,6 +165,11 @@ class Step2VC: SignInViewController {
     @IBOutlet weak var birthPicker: UIDatePicker!
     
     @IBOutlet weak var nextButton: UIButton!
+    
+    // Add 'user' property
+     var user: User!
+     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 2
@@ -158,14 +177,18 @@ class Step2VC: SignInViewController {
         // maybe some other stuff specific to this "step"
     }
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        user.step2Input = birthPicker.date
+
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
         let signInScreen5VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_5") as! Step3VC
+        
+        signInScreen5VC.user = user
         navigationController?.pushViewController(signInScreen5VC, animated: true)
     }
 }
 
 //MARK: - 전화번호 입력
-class Step3VC: SignInViewController
+class Step3VC: SignInViewController,UITextFieldDelegate
 {
     @IBOutlet weak var nextButton: UIButton!
     @IBOutlet weak var dropView: UIView!
@@ -175,7 +198,9 @@ class Step3VC: SignInViewController
     @IBOutlet weak var siginInInputField: UITextField!
     
     var bottomConstraint: NSLayoutConstraint?
-    
+    // Add 'user' property
+     var user: User!
+     
     // dropdown 객체 생성
     let dropdown = DropDown()
     
@@ -190,7 +215,8 @@ class Step3VC: SignInViewController
         initUI();
         setDropdown();
         // maybe some other stuff specific to this "step"
-        
+        siginInInputField.delegate = self
+
         
         // Set bottom constraint for button
         let safeArea = self.view.safeAreaLayoutGuide
@@ -208,11 +234,42 @@ class Step3VC: SignInViewController
         updateNextButtonState()
         
     }
+    // Implement UITextFieldDelegate method
+      func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+          // Check if the input is a number
+          let numberCharacterSet = CharacterSet(charactersIn: "0123456789")
+          let stringCharacterSet = CharacterSet(charactersIn: string)
+          if !stringCharacterSet.isSubset(of: numberCharacterSet) {
+              return false
+          }
+
+          // Calculate the new length of the text after replacement
+          guard let text = textField.text else {
+              return true
+          }
+          let newLength = text.count + string.count - range.length
+
+          // Check if the new length exceeds the maximum length (6)
+          if newLength > 11 {
+              return false
+          }
+
+          return true
+      }
+
     
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        if let phoneNumber = siginInInputField.text {
+               let numericPhoneNumber = formatPhoneNumber(phoneNumber)
+               user.step3Input = numericPhoneNumber
+           }
+
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
         let signInScreen6VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_6") as! Step4VC
+        
+        signInScreen6VC.user = user
+        
         navigationController?.pushViewController(signInScreen6VC, animated: true)
     }
     
@@ -240,6 +297,9 @@ class Step3VC: SignInViewController
         // dataSource로 ItemList를 연결
         dropdown.dataSource = itemList
         
+
+
+        
         // anchorView를 통해 UI와 연결
         dropdown.anchorView = self.dropView
         
@@ -251,8 +311,11 @@ class Step3VC: SignInViewController
             //선택한 Item을 TextField에 넣어준다.
             self!.tfInput.text = item
             self!.ivIcon.image = UIImage.init(systemName: "chevron.down")
+            
+            self?.updateNextButtonState()
         }
-        
+        tfInput.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+
         // 취소 시 처리
         dropdown.cancelAction = { [weak self] in
             //빈 화면 터치 시 DropDown이 사라지고 아이콘을 원래대로 변경
@@ -278,11 +341,13 @@ class Step3VC: SignInViewController
             siginInInputField.layer.borderWidth = 2.0
             siginInInputField.layer.cornerRadius = 8
             siginInInputField.layer.borderColor = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1.0).cgColor
-        } else {
-//            siginInInputField.layer.borderWidth = 2.0
-//            siginInInputField.layer.cornerRadius = 8
-//            siginInInputField.layer.borderColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0).cgColor
         }
+//        else {
+//           // siginInInputField.layer.borderWidth = 2.0
+//           // siginInInputField.layer.cornerRadius = 8
+//           // siginInInputField.layer.borderColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0).cgColor
+//       }
+        
         updateNextButtonState()
     }
        
@@ -314,18 +379,27 @@ class Step3VC: SignInViewController
            self.view.layoutIfNeeded()
        }
     
+    private func formatPhoneNumber(_ phoneNumber: String) -> String {
+        let numericPhoneNumber = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        return numericPhoneNumber
+    }
 }
 //MARK: - 문자인증
-class Step4VC: SignInViewController {
+class Step4VC: SignInViewController,UITextFieldDelegate {
     
     @IBOutlet weak var siginInInputField: UITextField!
     
     @IBOutlet weak var nextButton: UIButton!
+    // Add 'user' property
+     var user: User!
+     
     var bottomConstraint: NSLayoutConstraint?
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 4
         
+        siginInInputField.delegate = self
+
         // maybe some other stuff specific to this "step"
         // Set bottom constraint for button
         let safeArea = self.view.safeAreaLayoutGuide
@@ -343,7 +417,35 @@ class Step4VC: SignInViewController {
         updateNextButtonState()
     }
     
+    // Implement UITextFieldDelegate method
+      func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+          // Check if the input is a number
+          let numberCharacterSet = CharacterSet(charactersIn: "0123456789")
+          let stringCharacterSet = CharacterSet(charactersIn: string)
+          if !stringCharacterSet.isSubset(of: numberCharacterSet) {
+              return false
+          }
+
+          // Calculate the new length of the text after replacement
+          guard let text = textField.text else {
+              return true
+          }
+          let newLength = text.count + string.count - range.length
+
+          // Check if the new length exceeds the maximum length (6)
+          if newLength > 6 {
+              return false
+          }
+
+          return true
+      }
+
+    
+    
     @IBAction func goMainButton(_ sender: UIButton) {
+        user.step4Input = siginInInputField.text!
+        print(user)
+
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
            let homeScreen1VC = storyboard.instantiateViewController(withIdentifier: "HomeScreen_1")
            navigationController?.setNavigationBarHidden(true, animated: false)
@@ -369,7 +471,7 @@ class Step4VC: SignInViewController {
        
        // Update the state of the nextButton based on the text field's content
        private func updateNextButtonState() {
-           if let text = siginInInputField.text, !text.isEmpty {
+           if let text = siginInInputField.text, text.count == 6 {
                nextButton.isEnabled = true
                nextButton.backgroundColor = UIColor(red: 38/255, green: 102/255, blue: 246/255, alpha: 1.0)
                nextButton.setTitleColor(.white, for: .normal)

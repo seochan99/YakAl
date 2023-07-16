@@ -130,7 +130,7 @@
                                     <constraint firstAttribute="height" constant="64" id="bJx-IU-bg4"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="17"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" textContentType="name"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                         <integer key="value" value="2"/>
@@ -248,6 +248,9 @@
                             </label>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" datePickerMode="date" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="OcC-U0-yRi">
                                 <rect key="frame" x="32" y="220" width="331" height="216"/>
+                                <date key="minimumDate" timeIntervalSinceReferenceDate="-2556190800">
+                                    <!--1920-01-01 11:00:00 +0000-->
+                                </date>
                                 <date key="maximumDate" timeIntervalSinceReferenceDate="725713200">
                                     <!--2023-12-31 11:00:00 +0000-->
                                 </date>
@@ -301,7 +304,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="다음">
+                                <state key="normal" title="인증번호 보내기">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <userDefinedRuntimeAttributes>
@@ -314,13 +317,13 @@
                                     <action selector="nextButtonTapped:" destination="ARD-DM-Ydt" eventType="touchUpInside" id="X6g-6Q-zd6"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="010-0000-0000" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0F7-ak-rya">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="00000000000" textAlignment="natural" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0F7-ak-rya">
                                 <rect key="frame" x="32" y="252" width="331" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="1fJ-0e-8rS"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" textContentType="tel"/>
+                                <textInputTraits key="textInputTraits" spellCheckingType="no" keyboardType="numberPad" textContentType="tel"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                         <integer key="value" value="2"/>
@@ -348,8 +351,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pdN-8N-zKE">
                                 <rect key="frame" x="27" y="359" width="336" height="64"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qYa-7s-c48">
-                                        <rect key="frame" x="8" y="8" width="323" height="64"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qYa-7s-c48">
+                                        <rect key="frame" x="8" y="8" width="311" height="64"/>
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
@@ -481,7 +484,7 @@
                                     <constraint firstAttribute="height" constant="64" id="RpH-TF-NcD"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                <textInputTraits key="textInputTraits" textContentType="tel"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
                                         <integer key="value" value="2"/>
@@ -494,7 +497,7 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전화번호" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ck2-HW-Bhz">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="인증번호" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ck2-HW-Bhz">
                                 <rect key="frame" x="30" y="223" width="80" height="19"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="15"/>
                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.62352941179999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
