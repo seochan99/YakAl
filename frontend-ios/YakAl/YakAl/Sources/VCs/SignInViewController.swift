@@ -10,12 +10,10 @@ import DropDown
 
 //MARK: - 개인정보동의
 class SignInViewController: UIViewController {
-//
     
     @IBOutlet weak var agreeSwitch: UISwitch!
     @IBOutlet weak var agreeButton: UIButton!
     
-    var bottomConstraint: NSLayoutConstraint?
     // this will be read by ProgressNavController
     //    to calculate the "progress percentage"
     public let numSteps: Int = 4
@@ -25,22 +23,8 @@ class SignInViewController: UIViewController {
     public var myStepNumber: Int = 0
     
     
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        // 변화 감지
-//        siginInInputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-//
-//        // Keyboard notifications
-//         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-//
-//         // Set bottom constraint for button
-//         let safeArea = self.view.safeAreaLayoutGuide
-//         bottomConstraint = siginInNextButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0)
-//         bottomConstraint?.isActive = true
-        
         // Set initial button state
         // IBOutlet이 올바르게 연결되었는지 확인
 
@@ -65,24 +49,6 @@ class SignInViewController: UIViewController {
         }
     }
 
-    
-    
-    
-    
-    // 키보드 보이게
-   @objc private func keyboardWillShow(_ notification: NSNotification) {
-       if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
-               let keyboardHeight = keyboardSize.height - self.view.safeAreaInsets.bottom
-               bottomConstraint?.constant = -(keyboardHeight+15)
-               self.view.layoutIfNeeded()
-           }
-       }
-    // 키보드 가리기
-       @objc private func keyboardWillHide(_ notification: NSNotification) {
-           bottomConstraint?.constant = 0
-           self.view.layoutIfNeeded()
-       }
-    
     @IBAction func switchValueChanged(_ sender: UISwitch) {
         setAgreeButtonState(agreeButton, isOn: sender.isOn)
     }
@@ -103,21 +69,70 @@ class Step1VC: SignInViewController {
     
     @IBOutlet weak var siginInInputField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
-    
+    var bottomConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        myStepNumber = 1
+          super.viewDidLoad()
+          myStepNumber = 1
+          
+          // Set bottom constraint for button
+          let safeArea = self.view.safeAreaLayoutGuide
+          bottomConstraint = nextButton.bottomAnchor.constraint(equalTo: safeArea.bottomAnchor, constant: 0)
+          bottomConstraint?.isActive = true
+          
+          // Register for keyboard notifications
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+          NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+          
+          // Add target for text field's editing changed event
+          siginInInputField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         
-        // maybe some other stuff specific to this "step"
-    }
+        
+        // Set initial state of the nextButton
+        updateNextButtonState()
+      }
+      
+      @IBAction func nextButtonTapped(_ sender: UIButton) {
+          let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+          let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
+          navigationController?.pushViewController(signInScreen4VC, animated: true)
+      }
+      
+    // Handle text field editing changed event
+     @objc private func textFieldDidChange(_ textField: UITextField) {
+         updateNextButtonState()
+     }
     
-    @IBAction func nextButtonTapped(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-        let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
-        navigationController?.pushViewController(signInScreen4VC, animated: true)
+    private func updateNextButtonState() {
+        if let text = siginInInputField.text, !text.isEmpty {
+            nextButton.isEnabled = true
+            nextButton.backgroundColor = UIColor(red: 38/255, green: 102/255, blue: 246/255, alpha: 1.0)
+            nextButton.setTitleColor(.white, for: .normal)
+        } else {
+            nextButton.isEnabled = false
+            nextButton.backgroundColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0)
+            nextButton.setTitleColor(UIColor(red: 198/255, green: 198/255, blue: 207/255, alpha: 1.0), for: .disabled)
+        }
     }
+      
+      // Show the keyboard
+      @objc private func keyboardWillShow(_ notification: NSNotification) {
+          if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
+              let keyboardHeight = keyboardSize.height - self.view.safeAreaInsets.bottom
+              bottomConstraint?.constant = -(keyboardHeight + 15)
+              self.view.layoutIfNeeded()
+          }
+      }
+      
+      // Hide the keyboard
+      @objc private func keyboardWillHide(_ notification: NSNotification) {
+          bottomConstraint?.constant = 0
+          self.view.layoutIfNeeded()
+      }
 }
+
+
+
 
 
 //MARK: - 생년월일
@@ -147,6 +162,8 @@ class Step3VC: SignInViewController
     @IBOutlet weak var ivIcon: UIImageView!
     @IBOutlet weak var btnSelect: UIButton!
     
+    var bottomConstraint: NSLayoutConstraint?
+    
     // dropdown 객체 생성
     let dropdown = DropDown()
     
@@ -154,6 +171,8 @@ class Step3VC: SignInViewController
     let itemList = ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"]
     
     override func viewDidLoad() {
+        
+        
         super.viewDidLoad()
         myStepNumber = 3
         
