@@ -11,6 +11,8 @@ import DropDown
 //MARK: - 개인정보동의
 class SignInViewController: UIViewController {
     
+    var user = User()
+    
     @IBOutlet weak var agreeSwitch: UISwitch!
     @IBOutlet weak var agreeButton: UIButton!
     
@@ -47,6 +49,8 @@ class SignInViewController: UIViewController {
             button.setTitleColor(UIColor(red: 198/255, green: 198/255, blue: 207/255, alpha: 1.0), for: .disabled)
         }
     }
+    
+    
 
     @IBAction func switchValueChanged(_ sender: UISwitch) {
         setAgreeButtonState(agreeButton, isOn: sender.isOn)
@@ -60,6 +64,7 @@ class SignInViewController: UIViewController {
     }
     
 }
+
 
 
 
@@ -93,6 +98,7 @@ class Step1VC: SignInViewController {
        
        
        @IBAction func nextButtonTapped(_ sender: UIButton) {
+           user.step1Input = siginInInputField.text ?? ""
            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
            let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
            navigationController?.pushViewController(signInScreen4VC, animated: true)
@@ -140,7 +146,7 @@ class Step1VC: SignInViewController {
            self.view.layoutIfNeeded()
        }
 }
-//MARK: - 생년월일
+//MARK: - STEP 2 생년월일
 class Step2VC: SignInViewController {
     @IBOutlet weak var birthPicker: UIDatePicker!
     
