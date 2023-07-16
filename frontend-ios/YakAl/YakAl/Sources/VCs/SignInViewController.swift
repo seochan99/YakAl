@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import DropDown
 
 //MARK: - 개인정보동의
 class SignInViewController: UIViewController {
@@ -112,6 +113,9 @@ class Step1VC: SignInViewController {
     }
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+        let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
+        navigationController?.pushViewController(signInScreen4VC, animated: true)
     }
 }
 
@@ -128,22 +132,99 @@ class Step2VC: SignInViewController {
         // maybe some other stuff specific to this "step"
     }
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+        let signInScreen5VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_5") as! Step3VC
+        navigationController?.pushViewController(signInScreen5VC, animated: true)
     }
 }
 
 //MARK: - 전화번호 입력
-class Step3VC: SignInViewController {
+class Step3VC: SignInViewController
+{
     @IBOutlet weak var nextButton: UIButton!
+    @IBOutlet weak var dropView: UIView!
+    @IBOutlet weak var tfInput: UITextField!
+    @IBOutlet weak var ivIcon: UIImageView!
+    @IBOutlet weak var btnSelect: UIButton!
+    
+    // dropdown 객체 생성
+    let dropdown = DropDown()
+    
+    // DropDown 아이템 리스트
+    let itemList = ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 3
         
+        // UI 초기화
+        initUI();
+        setDropdown();
         // maybe some other stuff specific to this "step"
     }
+    
+    
     @IBAction func nextButtonTapped(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
+        let signInScreen6VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_6") as! Step4VC
+        navigationController?.pushViewController(signInScreen6VC, animated: true)
     }
     
+    // DropDown UI 커스텀
+    func initUI() {
+        // DropDown View의 배경
+        dropView.layer.borderColor = UIColor.black.cgColor
+        dropView.layer.cornerRadius = 8
+        
+        DropDown.appearance().textColor = UIColor.black // 아이템 텍스트 색상
+        
+        DropDown.appearance().selectedTextColor = UIColor.white // 선택된 아이템 텍스트 색상
+        DropDown.appearance().backgroundColor = UIColor.white // 아이템 팝업 배경 색상
+        DropDown.appearance().selectionBackgroundColor = UIColor.lightGray // 선택한 아이템 배경 색상
+        DropDown.appearance().setupCornerRadius(8)
+        dropdown.dismissMode = .automatic // 팝업을 닫을 모드 설정
+        
+        tfInput.isUserInteractionEnabled = false
+        ivIcon.tintColor = UIColor.gray
+        
+    }
+    
+    func setDropdown() {
+        // dataSource로 ItemList를 연결
+        dropdown.dataSource = itemList
+        
+        // anchorView를 통해 UI와 연결
+        dropdown.anchorView = self.dropView
+        
+        // View를 갖리지 않고 View아래에 Item 팝업이 붙도록 설정
+        dropdown.bottomOffset = CGPoint(x: 0, y: dropView.bounds.height)
+        
+        // Item 선택 시 처리
+        dropdown.selectionAction = { [weak self] (index, item) in
+            //선택한 Item을 TextField에 넣어준다.
+            self!.tfInput.text = item
+            self!.ivIcon.image = UIImage.init(systemName: "chevron.down")
+        }
+        
+        // 취소 시 처리
+        dropdown.cancelAction = { [weak self] in
+            //빈 화면 터치 시 DropDown이 사라지고 아이콘을 원래대로 변경
+            self?.ivIcon.image = UIImage(systemName: "chevron.down")
+
+        }
+    }
+    // View 클릭 시 Action
+    @IBAction func dropdownClicked(_ sender: Any) {
+        dropdown.show() // 아이템 팝업을 보여준다.
+        
+        // 아이콘 이미지를 변경하여 DropDown이 펼쳐진 것을 표현
+        if dropdown.isHidden {
+            ivIcon.image = UIImage(systemName: "chevron.down")
+        } else {
+            ivIcon.image = UIImage(systemName: "chevron.up")
+        }
+    }
+
 }
 //MARK: - 문자인증
 class Step4VC: SignInViewController {
