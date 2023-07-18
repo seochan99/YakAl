@@ -25,15 +25,15 @@ class MainViewController: UIViewController {
     // IBOutlet 연결
     @IBOutlet weak var subTitleText: UILabel!
     @IBOutlet weak var kakaoLoginButton: UIButton!
-    @IBOutlet weak var googleLoginButton: UIButton!
     
+    @IBOutlet weak var appleLoginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 로그인 버튼 둥글게
         kakaoLoginButton.makeCircular()
-        googleLoginButton.makeCircular()
+        appleLoginButton.makeCircular()
         
         let attributedString = NSMutableAttributedString(string: "AI를 이용한 ")
            
@@ -52,13 +52,28 @@ class MainViewController: UIViewController {
     
     // 로그인 버튼 클릭 시 처리
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
-        // StoryBoard
+        
+        
+      
+    }
+    @IBAction func appleLoginButtonTapped(_ sender: UIButton) {
+        
+        
+        
+        
+        // 만약 처음온 상태라면 회원가입으로
+        // isSignedUp이 true라면 Home으로
         let storyboardName = isSignedUp ? "Home" : "SignIn"
+        
+        
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen" : "SignInScreen_1") as? UIViewController {
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 sceneDelegate.window?.rootViewController = initialViewController
             }
         }
+        
     }
+    
+    
 }

@@ -72,6 +72,7 @@ class Step1VC: SignInViewController {
     @IBOutlet weak var siginInInputField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
+    @IBOutlet weak var headerTextLabel: UILabel!
     // Add 'user' property
      var user: User!
      
@@ -79,8 +80,28 @@ class Step1VC: SignInViewController {
     var bottomConstraint: NSLayoutConstraint?
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.topItem?.title = "약관 동의"
+
+
            super.viewDidLoad()
            myStepNumber = 1
+        
+        let text = headerTextLabel.text ?? ""
+        let attributedText = NSMutableAttributedString(string: text)
+
+        let boldFont = UIFont.boldSystemFont(ofSize: headerTextLabel.font.pointSize)
+        let mediumFont = UIFont.systemFont(ofSize: headerTextLabel.font.pointSize, weight: .medium)
+
+        let boldRange = (text as NSString).range(of: "이름")
+        let mediumRange = NSRange(location: 0, length: text.count)
+
+        attributedText.addAttribute(.font, value: mediumFont, range: mediumRange)
+        attributedText.addAttribute(.font, value: boldFont, range: boldRange)
+
+        headerTextLabel.attributedText = attributedText
+
+
+
            
            // Set bottom constraint for button
            let safeArea = self.view.safeAreaLayoutGuide
@@ -167,6 +188,7 @@ class Step2VC: SignInViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.topItem?.title = "이름"
         myStepNumber = 2
         
         // maybe some other stuff specific to this "step"
@@ -181,6 +203,8 @@ class Step2VC: SignInViewController {
         navigationController?.pushViewController(signInScreen5VC, animated: true)
     }
 }
+
+
 
 //MARK: - 전화번호 입력
 class Step3VC: SignInViewController,UITextFieldDelegate
@@ -205,6 +229,7 @@ class Step3VC: SignInViewController,UITextFieldDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 3
+        self.navigationController?.navigationBar.topItem?.title = "생년월일"
         
         // UI 초기화
         initUI();
@@ -392,7 +417,7 @@ class Step4VC: SignInViewController,UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 4
-        
+        self.navigationController?.navigationBar.topItem?.title = "전화번호"
         siginInInputField.delegate = self
 
         // maybe some other stuff specific to this "step"

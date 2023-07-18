@@ -55,8 +55,15 @@
                                     <action selector="agreeButtonTapped:" destination="1uB-E8-el7" eventType="touchUpInside" id="V4c-bF-ELf"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
+                                <rect key="frame" x="295" y="590" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
+                                </connections>
+                            </switch>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
-                                <rect key="frame" x="32" y="203" width="325" height="367"/>
+                                <rect key="frame" x="32" y="181" width="325" height="367"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <string key="text">Ⅰ. 개인정보의 수집 및 이용 동의서
@@ -77,13 +84,6 @@
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
-                                <rect key="frame" x="295" y="590" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
-                                </connections>
-                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I7W-XA-Ais"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -182,6 +182,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="zkU-me-Ndf"/>
                     <connections>
+                        <outlet property="headerTextLabel" destination="iwZ-zc-9KY" id="V83-Pc-hXN"/>
                         <outlet property="nextButton" destination="C7M-GN-TIB" id="Kws-7V-ZBm"/>
                         <outlet property="siginInInputField" destination="MCB-jx-Uqf" id="5od-rT-ndR"/>
                     </connections>
@@ -236,6 +237,7 @@
                                 <date key="maximumDate" timeIntervalSinceReferenceDate="725713200">
                                     <!--2023-12-31 11:00:00 +0000-->
                                 </date>
+                                <locale key="locale" localeIdentifier="ko"/>
                             </datePicker>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PL7-bH-P4u"/>
@@ -412,7 +414,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEe-Ok-Sls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2568.7022900763359" y="1107.7464788732395"/>
+            <point key="canvasLocation" x="2616" y="1108"/>
         </scene>
         <!--Step4VC-->
         <scene sceneID="nmV-Ut-o3Z">
