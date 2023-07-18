@@ -182,7 +182,6 @@
 				2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */,
 				BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};

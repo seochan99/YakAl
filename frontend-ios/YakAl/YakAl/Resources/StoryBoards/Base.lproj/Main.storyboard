@@ -69,7 +69,6 @@
                                         </state>
                                         <connections>
                                             <action selector="LoginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eqb-rB-r88"/>
-                                            <segue destination="ILd-3N-lRF" kind="show" id="BcO-Nw-4oG"/>
                                         </connections>
                                     </button>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakaoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lC8-t0-FOf">

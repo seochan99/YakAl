@@ -4,6 +4,8 @@
 //
 //
 
+import KakaoSDKUser
+
 import UIKit
 
 
@@ -52,6 +54,31 @@ class MainViewController: UIViewController {
     
     // 로그인 버튼 클릭 시 처리
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
+        // 카카오톡 설치 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.")
+                    _ = oauthToken
+                    
+                    // 만약 처음온 상태라면 회원가입으로
+                    // isSignedUp이 true라면 Home으로
+                    let storyboardName = self.isSignedUp ? "Home" : "SignIn"
+                    
+                    
+                    let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+                    if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
+                        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                            sceneDelegate.window?.rootViewController = initialViewController
+                        }
+                    }
+                    
+                }
+            }
+        }
         
         
       
