@@ -15,6 +15,12 @@ class SignInViewController: UIViewController {
     @IBOutlet weak var agreeSwitch: UISwitch!
     @IBOutlet weak var agreeButton: UIButton!
     
+    
+    @IBOutlet weak var overallCheckbox: UIButton!
+    @IBOutlet weak var serviceTermsCheckbox: UIButton!
+    @IBOutlet weak var marketingCheckbox: UIButton!
+    
+    
     public let numSteps: Int = 4
     public var myStepNumber: Int = 0
     

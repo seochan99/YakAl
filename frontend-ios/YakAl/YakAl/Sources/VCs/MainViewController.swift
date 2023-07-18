@@ -63,6 +63,10 @@ class MainViewController: UIViewController {
                 else {
                     print("loginWithKakaoTalk() success.")
                     _ = oauthToken
+                
+                    print(oauthToken)
+                    
+                    // 만약 oauthToken으로 jwt가 있다면, 로그인으로
                     
                     // 만약 처음온 상태라면 회원가입으로
                     // isSignedUp이 true라면 Home으로

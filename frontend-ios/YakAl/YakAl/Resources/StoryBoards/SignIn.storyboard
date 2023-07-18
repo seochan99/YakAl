@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -29,17 +30,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="32.000000000000014" y="133" width="206.33333333333337" height="50"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="32.000000000000014" y="153" width="194.33333333333337" height="30"/>
                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-Dy-vtm">
-                                <rect key="frame" x="20" y="732" width="353" height="56"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-Dy-vtm">
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
                                 <color key="backgroundColor" name="MainColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="0RM-c1-ePN"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="다음">
@@ -55,38 +57,151 @@
                                     <action selector="agreeButtonTapped:" destination="1uB-E8-el7" eventType="touchUpInside" id="V4c-bF-ELf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcB-27-fri">
+                                <rect key="frame" x="20" y="255" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="D9d-ns-2cN"/>
+                                    <constraint firstAttribute="height" constant="36" id="bNs-iE-DVt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0R-BJ-MPv" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="72" y="260.66666666666669" width="74.666666666666686" height="25"/>
+                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyM-RO-4NR">
+                                <rect key="frame" x="20" y="323" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="36" id="YIh-gA-ihw"/>
+                                    <constraint firstAttribute="height" constant="36" id="iae-co-fN6"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-bX-Fmy" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="72" y="328.66666666666669" width="182" height="25"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-LM-rTC">
+                                <rect key="frame" x="20" y="383" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="Vjq-AZ-HFS"/>
+                                    <constraint firstAttribute="width" constant="36" id="yU0-Md-kIM"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQj-S8-q8f" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="72" y="388.66666666666669" width="183" height="25"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHI-wt-i86">
+                                <rect key="frame" x="20" y="443" width="36" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="G5a-Kq-1it"/>
+                                    <constraint firstAttribute="width" constant="36" id="dH0-lQ-FIe"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="(선택) 마케팅 정보 수신 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Em9-Kw-Pnw" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                <rect key="frame" x="72" y="448.66666666666669" width="227" height="25"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWi-Gq-FRg">
+                                <rect key="frame" x="326" y="325.66666666666669" width="37" height="31"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l07-W2-QEN">
+                                <rect key="frame" x="326" y="385.66666666666669" width="37" height="31"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8B-ij-sHu">
+                                <rect key="frame" x="326" y="445.66666666666669" width="37" height="31"/>
+                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="chevron.right" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="pointSize" pointSize="14"/>
+                                </buttonConfiguration>
+                            </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
-                                <rect key="frame" x="295" y="590" width="51" height="31"/>
+                                <rect key="frame" x="295" y="515" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
                                 </connections>
                             </switch>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tPE-IU-Rfo">
-                                <rect key="frame" x="32" y="181" width="325" height="367"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <string key="text">Ⅰ. 개인정보의 수집 및 이용 동의서
- - 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
-① 개인정보 수집 항목 및 수집·이용 목적
- 가) 수집 항목 (필수항목)
-- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전화), 사진, 이메일, 나이, 재학정보, 병역사항,
-외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원
-신청서에 기재된 정보 또는 신청자가 제공한 정보
- 나) 수집 및 이용 목적
- ② 개인정보 보유 및 이용기간
- - 수집·이용 동의일로부터 개인정보의 수집·이용목적을 달성할 때까지
- ③ 동의거부관리
- - 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하여 동의를 거부하실 권리가 있습니다. 다만,
-귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우에 장학생 선발 과정에 있어 불이익이 발생할 수
-있음을 알려드립니다.</string>
-                                <color key="textColor" systemColor="labelColor"/>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="I7W-XA-Ais"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Em9-Kw-Pnw" firstAttribute="centerY" secondItem="FHI-wt-i86" secondAttribute="centerY" id="4dP-PE-N4g"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="l07-W2-QEN" secondAttribute="trailing" constant="30" id="D81-vG-EPD"/>
+                            <constraint firstItem="QyM-RO-4NR" firstAttribute="leading" secondItem="EcB-27-fri" secondAttribute="leading" id="DX0-hh-lWq"/>
+                            <constraint firstItem="WQj-S8-q8f" firstAttribute="centerY" secondItem="K0f-LM-rTC" secondAttribute="centerY" id="IRG-6n-XBL"/>
+                            <constraint firstItem="WQj-S8-q8f" firstAttribute="leading" secondItem="K0f-LM-rTC" secondAttribute="trailing" constant="16" id="Ivi-Fr-GD6"/>
+                            <constraint firstItem="B8B-ij-sHu" firstAttribute="centerY" secondItem="Em9-Kw-Pnw" secondAttribute="centerY" id="Ix5-X2-X6W"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="bottom" secondItem="lvG-Dy-vtm" secondAttribute="bottom" constant="32" id="PDs-g4-s2r"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="fWi-Gq-FRg" secondAttribute="trailing" constant="30" id="R1j-Et-QHH"/>
+                            <constraint firstItem="h1s-bX-Fmy" firstAttribute="centerY" secondItem="QyM-RO-4NR" secondAttribute="centerY" id="Ruc-Kd-2oi"/>
+                            <constraint firstItem="FHI-wt-i86" firstAttribute="top" secondItem="K0f-LM-rTC" secondAttribute="bottom" constant="24" id="UKo-Uc-fzh"/>
+                            <constraint firstItem="l07-W2-QEN" firstAttribute="centerY" secondItem="WQj-S8-q8f" secondAttribute="centerY" id="UQo-i4-LuD"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="B8B-ij-sHu" secondAttribute="trailing" constant="30" id="Vbh-WF-hqp"/>
+                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32.000000000000014" id="aFJ-7P-EXk"/>
+                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="lvG-Dy-vtm" secondAttribute="trailing" constant="20" id="aHy-PG-x20"/>
+                            <constraint firstItem="lvG-Dy-vtm" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="alv-uz-6DG"/>
+                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="top" secondItem="I7W-XA-Ais" secondAttribute="top" constant="50" id="eqY-J2-2M1"/>
+                            <constraint firstItem="EcB-27-fri" firstAttribute="top" secondItem="OdA-Kz-aIJ" secondAttribute="bottom" constant="72" id="eut-bZ-hyw"/>
+                            <constraint firstItem="h1s-bX-Fmy" firstAttribute="leading" secondItem="QyM-RO-4NR" secondAttribute="trailing" constant="16" id="mge-yY-2Vy"/>
+                            <constraint firstItem="K0f-LM-rTC" firstAttribute="top" secondItem="QyM-RO-4NR" secondAttribute="bottom" constant="24" id="oy0-RI-gCd"/>
+                            <constraint firstItem="S0R-BJ-MPv" firstAttribute="centerY" secondItem="EcB-27-fri" secondAttribute="centerY" id="pWW-6V-cR3"/>
+                            <constraint firstItem="fWi-Gq-FRg" firstAttribute="centerY" secondItem="h1s-bX-Fmy" secondAttribute="centerY" id="qBY-jw-rjG"/>
+                            <constraint firstItem="QyM-RO-4NR" firstAttribute="top" secondItem="EcB-27-fri" secondAttribute="bottom" constant="32" id="qdr-6U-rqs"/>
+                            <constraint firstItem="Em9-Kw-Pnw" firstAttribute="leading" secondItem="FHI-wt-i86" secondAttribute="trailing" constant="16" id="wRA-u1-F1R"/>
+                            <constraint firstItem="S0R-BJ-MPv" firstAttribute="leading" secondItem="EcB-27-fri" secondAttribute="trailing" constant="16" id="ykL-MB-wpO"/>
+                            <constraint firstItem="EcB-27-fri" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="zb8-bg-dht"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="4bX-ul-Bx9"/>
                     <connections>
@@ -546,13 +661,12 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
+        <image name="chevron.right" catalog="system" width="97" height="128"/>
         <namedColor name="MainColor">
             <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
-        <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
