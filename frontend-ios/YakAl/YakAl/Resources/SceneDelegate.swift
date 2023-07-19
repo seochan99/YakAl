@@ -6,18 +6,29 @@
 //
 
 import UIKit
+import KakaoSDKAuth
+import AuthenticationServices
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
 
 
-    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
-    }
+//    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+//        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
+//        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
+//        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
+//        guard let _ = (scene as? UIWindowScene) else { return }
+//    }
+    
+    
+    func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
+          if let url = URLContexts.first?.url {
+              if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                  _ = AuthController.handleOpenUrl(url: url)
+              }
+          }
+      }
 
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
@@ -29,6 +40,27 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneDidBecomeActive(_ scene: UIScene) {
         // Called when the scene has moved from an inactive state to an active state.
         // Use this method to restart any tasks that were paused (or not yet started) when the scene was inactive.
+//        let appleIDProvider = ASAuthorizationAppleIDProvider()
+//        appleIDProvider.getCredentialState(forUserID: "/*user의 고유 ID값(xxxxx.xxxxxxxxxx.xxxx)*/") { (credentialState, error) in
+//            switch credentialState {
+//                case .authorized:
+//                   print("authorized")
+//                   // The Apple ID credential is valid.
+//                   DispatchQueue.main.async {
+//                     //authorized된 상태이므로 바로 로그인 완료 화면으로 이동
+//                     self.window?.rootViewController = SignValidViewController()
+//                   }
+//                case .revoked:
+//                   print("revoked")
+//                case .notFound:
+//                   // The Apple ID credential is either revoked or was not found, so show the sign-in UI.
+//
+//                   print("notFound")
+//
+//                default:
+//                    break
+//            }
+//        }
     }
 
     func sceneWillResignActive(_ scene: UIScene) {

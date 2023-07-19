@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8CE80EF4604FC4229A794C5E /* Pods_YakAl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */; };
 		98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */; };
@@ -26,7 +27,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.debug.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.debug.xcconfig"; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
+		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		98C12D362A5E3B8A00175EB8 /* YakAl.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YakAl.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		98C12D392A5E3B8A00175EB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		98C12D3B2A5E3B8B00175EB8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -44,6 +47,8 @@
 		98C12D782A5E6C8E00175EB8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		98C12D7A2A5E7ADB00175EB8 /* SUIT-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-SemiBold.otf"; sourceTree = "<group>"; };
 		98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiginInModel.swift; sourceTree = "<group>"; };
+		BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.release.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.release.xcconfig"; sourceTree = "<group>"; };
+		F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YakAl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8CE80EF4604FC4229A794C5E /* Pods_YakAl.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,6 +68,8 @@
 			children = (
 				98C12D382A5E3B8A00175EB8 /* YakAl */,
 				98C12D372A5E3B8A00175EB8 /* Products */,
+				BA76A499F4600E78623F8D51 /* Pods */,
+				CBD72444E1453294EEDE6D88 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -76,6 +84,7 @@
 		98C12D382A5E3B8A00175EB8 /* YakAl */ = {
 			isa = PBXGroup;
 			children = (
+				981C933B2A67B1A600F428E5 /* YakAl.entitlements */,
 				98C12D502A5E3C7700175EB8 /* Sources */,
 				98C12D4D2A5E3C2B00175EB8 /* Resources */,
 				98C12D472A5E3B8B00175EB8 /* Info.plist */,
@@ -169,6 +178,23 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		BA76A499F4600E78623F8D51 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */,
+				BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		CBD72444E1453294EEDE6D88 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -176,9 +202,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 98C12D4A2A5E3B8B00175EB8 /* Build configuration list for PBXNativeTarget "YakAl" */;
 			buildPhases = (
+				A623FF111C2FC71E4C8F7E34 /* [CP] Check Pods Manifest.lock */,
 				98C12D322A5E3B8A00175EB8 /* Sources */,
 				98C12D332A5E3B8A00175EB8 /* Frameworks */,
 				98C12D342A5E3B8A00175EB8 /* Resources */,
+				42E6E6751761956676665534 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -239,6 +267,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		42E6E6751761956676665534 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YakAl/Pods-YakAl-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-YakAl/Pods-YakAl-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-YakAl/Pods-YakAl-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A623FF111C2FC71E4C8F7E34 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-YakAl-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		98C12D322A5E3B8A00175EB8 /* Sources */ = {
@@ -394,25 +464,29 @@
 		};
 		98C12D4B2A5E3B8B00175EB8 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = YakAl/YakAl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y2M459JK4X;
+				DEVELOPMENT_TEAM = 4HZC2Z3WWS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YakAl/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "약알";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.viewpharm.yakal;
+				PRODUCT_BUNDLE_IDENTIFIER = "-HZC2Z3WWS.viewpharm.yakal2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -422,25 +496,29 @@
 		};
 		98C12D4C2A5E3B8B00175EB8 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = YakAl/YakAl.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Y2M459JK4X;
+				DEVELOPMENT_TEAM = 4HZC2Z3WWS;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = YakAl/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "약알";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.viewpharm.yakal;
+				PRODUCT_BUNDLE_IDENTIFIER = "-HZC2Z3WWS.viewpharm.yakal2";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

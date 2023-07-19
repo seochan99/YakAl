@@ -4,6 +4,8 @@
 //
 //
 
+import KakaoSDKUser
+import AuthenticationServices
 import UIKit
 
 
@@ -25,15 +27,15 @@ class MainViewController: UIViewController {
     // IBOutlet 연결
     @IBOutlet weak var subTitleText: UILabel!
     @IBOutlet weak var kakaoLoginButton: UIButton!
-    @IBOutlet weak var googleLoginButton: UIButton!
     
+    @IBOutlet weak var appleLoginButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // 로그인 버튼 둥글게
         kakaoLoginButton.makeCircular()
-        googleLoginButton.makeCircular()
+        appleLoginButton.makeCircular()
         
         let attributedString = NSMutableAttributedString(string: "AI를 이용한 ")
            
@@ -50,14 +52,119 @@ class MainViewController: UIViewController {
            subTitleText.attributedText = attributedString
     }
     
+    // 로그인 버튼 클릭 시 처리
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
-        // StoryBoard
+        // 카카오톡 설치 여부 확인
+        if (UserApi.isKakaoTalkLoginAvailable()) {
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print(error)
+                }
+                else {
+                    print("loginWithKakaoTalk() success.")
+                    _ = oauthToken
+                
+                    print(oauthToken)
+                    
+                    // 만약 oauthToken으로 jwt가 있다면, 로그인으로
+                    
+                    // 만약 처음온 상태라면 회원가입으로
+                    // isSignedUp이 true라면 Home으로
+                    let storyboardName = self.isSignedUp ? "Home" : "SignIn"
+                    
+                    
+                    let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+                    if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
+                        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                            sceneDelegate.window?.rootViewController = initialViewController
+                        }
+                    }
+                    
+                }
+            }
+        }
+        
+        
+      
+    }
+    @IBAction func appleLoginButtonTapped(_ sender: UIButton) {
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email] //유저로 부터 알 수 있는 정보들(name, email)
+               
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.presentationContextProvider = self
+        authorizationController.performRequests()
+    }
+}
+
+extension MainViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding{
+  func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        return self.view.window!
+    }
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        //로그인 성공
+        
+        
+        
+        // 만약 처음온 상태라면 회원가입으로
+        // isSignedUp이 true라면 Home으로
         let storyboardName = isSignedUp ? "Home" : "SignIn"
+        
+        
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen" : "SignInScreen_1") as? UIViewController {
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 sceneDelegate.window?.rootViewController = initialViewController
             }
         }
+        
+        switch authorization.credential {
+        case let appleIDCredential as ASAuthorizationAppleIDCredential:
+            
+            // You can create an account in your system.
+            let userIdentifier = appleIDCredential.user
+            let fullName = appleIDCredential.fullName
+            let email = appleIDCredential.email
+            
+            if  let authorizationCode = appleIDCredential.authorizationCode,
+                let identityToken = appleIDCredential.identityToken,
+                let authCodeString = String(data: authorizationCode, encoding: .utf8),
+                let identifyTokenString = String(data: identityToken, encoding: .utf8) {
+                print("authorizationCode: \(authorizationCode)")
+                print("identityToken: \(identityToken)")
+                print("authCodeString: \(authCodeString)")
+                print("identifyTokenString: \(identifyTokenString)")
+            }
+            
+            print("useridentifier: \(userIdentifier)")
+            print("fullName: \(String(describing: fullName))")
+            print("email: \(email)")
+            
+            //Move to MainPage
+            //let validVC = SignValidViewController()
+            //validVC.modalPresentationStyle = .fullScreen
+            //present(validVC, animated: true, completion: nil)
+            
+        case let passwordCredential as ASPasswordCredential:
+            // Sign in using an existing iCloud Keychain credential.
+            let username = passwordCredential.user
+            let password = passwordCredential.password
+            
+            print("username: \(username)")
+            print("password: \(password)")
+            
+        default:
+            break
+        }
+    }
+    
+
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        // 로그인 실패(유저의 취소도 포함)
+        print("login failed - \(error.localizedDescription)")
     }
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KakaoSDKCommon
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // 딜레이
         sleep(1)
+        KakaoSDK.initSDK(appKey: "8a8f852ab345e575c11f8b2bc655c989")
+
         return true
     }
 
