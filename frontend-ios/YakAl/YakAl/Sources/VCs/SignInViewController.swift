@@ -17,19 +17,25 @@ class SignInViewController: UIViewController {
     
     
     @IBOutlet weak var overallCheckbox: UIButton!
-    @IBOutlet weak var serviceTermsCheckbox: UIButton!
+    @IBOutlet weak var serviceTermsCheckbox1: UIButton!
+    @IBOutlet weak var serviceTermsCheckbox2: UIButton!
     @IBOutlet weak var marketingCheckbox: UIButton!
     
     
     public let numSteps: Int = 4
     public var myStepNumber: Int = 0
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = " " // 원하는 타이틀을 설정
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Set initial button state
         // IBOutlet이 올바르게 연결되었는지 확인
 
+        self.navigationItem.title=" "
         
         // Set initial button state
         if let agreeSwitch = agreeSwitch {
@@ -67,6 +73,7 @@ class SignInViewController: UIViewController {
         navigationController?.pushViewController(signInScreen3VC, animated: true)
     }
     
+    
 }
 
 
@@ -84,7 +91,11 @@ class Step1VC: SignInViewController {
      
     
     var bottomConstraint: NSLayoutConstraint?
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = " " // 원하는 타이틀을 설정
+    }
     override func viewDidLoad() {
         self.navigationController?.navigationBar.topItem?.title = "약관 동의"
 
@@ -190,7 +201,11 @@ class Step2VC: SignInViewController {
     
     // Add 'user' property
      var user: User!
-     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = " " // 원하는 타이틀을 설정
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -231,7 +246,11 @@ class Step3VC: SignInViewController,UITextFieldDelegate
     
     // DropDown 아이템 리스트
     let itemList = ["SKT", "KT", "LG U+", "SKT 알뜰폰", "KT 알뜰폰", "LG U+ 알뜰폰"]
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = " " // 원하는 타이틀을 설정
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 3
@@ -420,6 +439,12 @@ class Step4VC: SignInViewController,UITextFieldDelegate {
      var user: User!
      
     var bottomConstraint: NSLayoutConstraint?
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationItem.title = " " // 원하는 타이틀을 설정
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 4

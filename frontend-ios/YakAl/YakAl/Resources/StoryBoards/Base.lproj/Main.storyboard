@@ -20,16 +20,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--SignInScreen_1-->
-        <scene sceneID="QYD-HB-zNR">
-            <objects>
-                <viewControllerPlaceholder storyboardName="SignIn" referencedIdentifier="SignInScreen_1" id="ILd-3N-lRF" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Yjk-UD-iSz"/>
-                </viewControllerPlaceholder>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="guK-lU-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="706" y="-451"/>
-        </scene>
         <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
