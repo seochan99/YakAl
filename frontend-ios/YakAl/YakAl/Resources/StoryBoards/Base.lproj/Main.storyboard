@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SUIT-Bold.otf">
+            <string>SUIT-Bold</string>
+        </array>
+        <array key="SUIT-Medium.otf">
+            <string>SUIT-Medium</string>
+        </array>
+        <array key="SUIT-SemiBold.otf">
+            <string>SUIT-SemiBold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--Main View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="o4w-d7-xxe">
+                                <rect key="frame" x="0.0" y="333.33333333333331" width="413" height="219.99999999999994"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AI를 이용한 복약도움 플랫폼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="po1-5U-gcn">
+                                <rect key="frame" x="32" y="209" width="198" height="21.333333333333343"/>
+                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 알" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aD-1R-XaB">
+                                <rect key="frame" x="31.999999999999993" y="236.33333333333337" width="80.333333333333314" height="50"/>
+                                <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="40"/>
+                                <color key="textColor" name="MainColor"/>
+                                <color key="highlightedColor" red="0.14901960780000001" green="0.41176470590000003" blue="0.96078431369999995" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PQ1-yI-VvJ">
+                                <rect key="frame" x="0.0" y="603.33333333333337" width="393" height="264.66666666666663"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ESN-O1-BOc">
+                                        <rect key="frame" x="30" y="30" width="333" height="64"/>
+                                        <color key="backgroundColor" red="0.99607843139999996" green="0.8980392157" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="kj3-eJ-h3u"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="카카오로 로그인">
+                                            <color key="titleColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="LoginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="eqb-rB-r88"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="kakaoIcon" translatesAutoresizingMaskIntoConstraints="NO" id="lC8-t0-FOf">
+                                        <rect key="frame" x="50" y="45" width="36" height="34"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NhH-zR-nsw" userLabel="Platform Login Button">
+                                        <rect key="frame" x="30" y="114" width="333" height="64"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="64" id="tdg-Ob-BaF"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="18"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="Apple 계정으로 로그인">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="appleLoginButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ehg-c7-WBj"/>
+                                        </connections>
+                                    </button>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="apple.logo" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="acl-32-Rap" userLabel="appleIcon">
+                                        <rect key="frame" x="50" y="128.33333333333334" width="36" height="34.333333333333343"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="36" id="Wdk-3K-7MY"/>
+                                            <constraint firstAttribute="height" constant="36" id="ooP-Nl-Bij"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <color key="tintColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="top" secondItem="ESN-O1-BOc" secondAttribute="bottom" constant="20" id="1aC-fd-PVC"/>
+                                    <constraint firstItem="lC8-t0-FOf" firstAttribute="bottom" secondItem="ESN-O1-BOc" secondAttribute="bottom" constant="-15" id="1tQ-6q-cWr"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="leading" secondItem="lC8-t0-FOf" secondAttribute="trailing" constant="-56" id="5eh-JI-K1A"/>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="leading" secondItem="acl-32-Rap" secondAttribute="trailing" constant="-56" id="65s-u4-jN3"/>
+                                    <constraint firstAttribute="trailing" secondItem="NhH-zR-nsw" secondAttribute="trailing" constant="30" id="BoV-LP-Vtd"/>
+                                    <constraint firstItem="NhH-zR-nsw" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="FGE-pQ-gzb"/>
+                                    <constraint firstItem="lC8-t0-FOf" firstAttribute="top" secondItem="ESN-O1-BOc" secondAttribute="top" constant="15" id="HFs-LD-D3r"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="top" secondItem="PQ1-yI-VvJ" secondAttribute="top" constant="30" id="Na4-FO-qws"/>
+                                    <constraint firstAttribute="trailing" secondItem="ESN-O1-BOc" secondAttribute="trailing" constant="30" id="XZt-1E-8ys"/>
+                                    <constraint firstItem="ESN-O1-BOc" firstAttribute="leading" secondItem="PQ1-yI-VvJ" secondAttribute="leading" constant="30" id="eBo-qF-NhS"/>
+                                    <constraint firstItem="acl-32-Rap" firstAttribute="leading" secondItem="lC8-t0-FOf" secondAttribute="leading" id="fW4-9r-fCd"/>
+                                    <constraint firstItem="acl-32-Rap" firstAttribute="centerY" secondItem="NhH-zR-nsw" secondAttribute="centerY" id="jSe-rM-igj"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="7aD-1R-XaB" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="8N5-kh-ihQ"/>
+                            <constraint firstItem="po1-5U-gcn" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="150" id="9fV-Uk-gJa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="PQ1-yI-VvJ" secondAttribute="trailing" id="IGL-0t-ypq"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="50" id="IRb-ZE-7WW"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="L0G-O5-zFM"/>
+                            <constraint firstItem="7aD-1R-XaB" firstAttribute="top" secondItem="po1-5U-gcn" secondAttribute="bottom" constant="6" id="OWn-yE-K1z"/>
+                            <constraint firstItem="po1-5U-gcn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="32" id="lLB-Aa-Ohq"/>
+                            <constraint firstItem="PQ1-yI-VvJ" firstAttribute="top" secondItem="o4w-d7-xxe" secondAttribute="bottom" constant="50" id="mal-Qw-6Fu"/>
+                            <constraint firstItem="o4w-d7-xxe" firstAttribute="top" secondItem="7aD-1R-XaB" secondAttribute="bottom" constant="47" id="oGa-IR-cSf"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="po1-5U-gcn" secondAttribute="trailing" constant="163" id="qcy-cL-Evb"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="o4w-d7-xxe" secondAttribute="leading" id="vZy-X8-FZ1"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="o4w-d7-xxe" secondAttribute="trailing" constant="-20" id="y2U-YV-pye"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="appleLoginButton" destination="NhH-zR-nsw" id="nYA-yY-g7G"/>
+                        <outlet property="kakaoLoginButton" destination="ESN-O1-BOc" id="7cM-qC-J0T"/>
+                        <outlet property="subTitleText" destination="po1-5U-gcn" id="kFY-g7-fP4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-225.19083969465649" y="-227.46478873239437"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="MainLogo" width="380" height="220"/>
+        <image name="apple.logo" catalog="system" width="105" height="128"/>
+        <image name="kakaoIcon" width="36" height="36"/>
+        <namedColor name="MainColor">
+            <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+    </resources>
+</document>
