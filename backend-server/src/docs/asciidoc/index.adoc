@@ -1,0 +1,135 @@
+= Yakal REST API 문서
+v0.0.1-SNAPSHOT, 2023-07-10
+:doctype: book
+:icons: font
+:source-highlighter: coderay
+:toc: auto
+:toc-title: 목차
+:toclevels: 3
+:sectlinks:
+:sectnums:
+
+== 개요
+
+본 문서는 View Pharm 팀이 개발하는 약알(Yak-al) 서비스의 REST API 문서입니다.
+
+=== API 서버 경로
+
+[cols="2,5,3"]
+|====
+|환경|DNS|비고
+|개발(Dev)|link:[]|API 문서 제공
+|베타(Beta)|link:[]|API 문서 제공
+|운영(Prod)|link:[]|API 문서 미제공
+|====
+
+[NOTE]
+====
+해당 프로젝트의 API 문서는 개발 환경까지 노출됩니다. +
+운영 환경에 노출될 시 보안 관련 문제가 발생할 우려가 있기 때문입니다.
+====
+
+=== 응답 형식
+
+본 REST API는 다음과 같은 응답 바디 형식을 가집니다.
+
+==== 성공(`2xx`)
+
+|====
+|응답 데이터가 있는 경우|응답 데이터가 없는 경우
+
+a|
+[source,json]
+----
+{
+  "success": true,
+  "data": {
+    "user": {
+      "name": "Gil Dong Hong"
+    }
+  },
+  "error": null
+}
+----
+
+a|
+[source,json]
+----
+{
+  "success": true,
+  "data": null,
+  "error": null
+}
+----
+|====
+
+==== 실패(`4xx`, `5xx`)
+
+아래는 기한이 만료된 토큰으로 요청을 보냈을 때의 응답 바디의 예입니다.
+
+[source,json]
+----
+{
+  "success": false,
+  "data": null,
+  "error": {
+    "code": "4013",
+    "message": "Expired Token Error"
+  }
+}
+----
+
+==== 에러 코드(Error Code)
+
+본 REST API는 요청 처리에 실패하였을 경우 자체 에러 코드를 삽입하여 반환합니다. +
+에러 정보는 4자리 정수로 이루어진 에러 코드와 이를 설명하는 메시지로 이루어져 있으며 에러 코드의 앞 세 자리는 Http 응답 상태 코드입니다. +
+아래는 본 서비스가 응답할 수 있는 모든 에러 코드와 그 설명입니다.
+
+[cols="1,1,1,1"]
+|====
+|HTTP Status|에러 코드|메시지|설명
+|NOT FOUND("404")|"4040"|"Not Exist User"|해당하는 유저 정보 없음
+| ... | ... | ... | ...
+|====
+
+== API
+
+include::auth.adoc[]
+
+include::user.adoc[]
+
+include::admin.adoc[]
+
+include::take.adoc[]
+
+include::diagnosis.adoc[]
+
+include::medicine.adoc[]
+
+include::notification.adoc[]
+
+include::community.adoc[]
+
+include::register.adoc[]
+
+include::location-based.adoc[]
+
+== 추후 서비스 예정
+
+=== 채팅( `/chat` )
+
+회원간 채팅, 전문가 채팅
+
+=== 영상 자료( `/video` )
+
+환자의 영상 자료 업로드, 조회 +
+Clova Voice로 환자의 영상 정보 전처리, 전처리 결과 저장, 전문가에게 제공
+
+=== 건강 정보 칼럼( `/health` )
+
+다제약물, 질병, 건강기능식품 칼럼 기제, 조회, 검색
+
+=== AI 진단( `/future` )
+
+예상 가능한 질병 목록 예측 +
+건강기능식품 추천, 도움이 되는 운동 추천, 식단 추천
