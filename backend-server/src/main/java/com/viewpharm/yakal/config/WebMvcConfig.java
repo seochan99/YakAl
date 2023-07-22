@@ -2,7 +2,7 @@ package com.viewpharm.yakal.config;
 
 import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.interceptor.LoggerInterceptor;
-import com.viewpharm.yakal.interceptor.ConvertJwtToUserIdInterceptor;
+import com.viewpharm.yakal.interceptor.UserIdInterceptor;
 import com.viewpharm.yakal.interceptor.UserIdArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
         registry.addInterceptor(new LoggerInterceptor()).addPathPatterns("/api/**");
-        registry.addInterceptor(new ConvertJwtToUserIdInterceptor())
+        registry.addInterceptor(new UserIdInterceptor())
                 .addPathPatterns("/api/**")
                 .excludePathPatterns(Constants.NO_NEED_AUTH_URLS);
     }
