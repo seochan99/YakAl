@@ -43,4 +43,17 @@ public class NotificationService {
         }
         return notificationDtoList;
     }
+
+    public Boolean updateNotification(Long userId, Long notificationId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND_USER));
+        Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new RestApiException(ErrorCode.NOT_FOUND_NOTIFICATION));
+
+        if (user.getId() != notification.getUser().getId()) {
+            throw new RestApiException(ErrorCode.NOT_EQUAL);
+        }
+
+        notification.builder().isRead(Boolean.TRUE).build();
+
+        return Boolean.TRUE;
+    }
 }
