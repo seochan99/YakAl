@@ -3,8 +3,8 @@ package com.viewpharm.yakal.dto.request;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-//메시지 제목, 내용, 유저Id용 dto
-//내만산 코드 다시 읽어보니 얘 필요없음;;
+//메시지 제목, 내용, 유저 아이디용 dto
+//알림을 누구한테 보내는지에 대한 정보 필요할때
 @Getter
 @NoArgsConstructor
 public class NotificationUserRequestDto {
