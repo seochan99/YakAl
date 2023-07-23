@@ -1,14 +1,12 @@
 package com.viewpharm.yakal.utils;
 
-import com.nimbusds.jose.shaded.gson.JsonElement;
 import com.nimbusds.jose.shaded.gson.JsonParser;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.type.ErrorCode;
+import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.exception.ErrorCode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Slf4j
