@@ -34,11 +34,8 @@ public class Dose {
     private Long id;
 
     // 도훈: 개인적으로 약명과 성분명은 이름보다 코드가 더 다루기 편할 것 같다.
-    @Column(name="medicine", nullable = false)
-    private String medicine;
-
-    @Column(name="ingredient", nullable = false)
-    private String ingredient;
+    @Column(name="pill_name", nullable = false)
+    private String pillName;
 
     @Column(name="date", nullable = false)
     private LocalDate date;
@@ -50,9 +47,12 @@ public class Dose {
     @Column(name="is_taken", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isTaken;
 
-    // 도훈: 0.5정 처방에 대응하기 위해 Float 을 넣기보다 0.5정의 개수를 넣는 방안
-    @Column(name="half_pill_count", nullable = false)
-    private Integer halfPillCount;
+    @Column(name="pill_cnt", nullable = false)
+    private int pillCnt;
+
+    // 반알을 먹어야 하면 True
+    @Column(name="is_half", columnDefinition = "TINYINT(1)", nullable = false)
+    private Boolean isHalf;
 
     /* -------------------------------------------------- */
 
@@ -60,21 +60,18 @@ public class Dose {
     @JoinColumn(name="prescription_id", nullable = false)
     private Prescription prescription;
 
-    /* -------------------------------------------------- */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="user_id", nullable = false)
+    private User user;
 
+    /* -------------------------------------------------- */
     @Builder
-    public Dose(final Prescription prescription,
-                final String medicine,
-                final String ingredient,
-                final LocalDate date,
-                final EDosingTime time,
-                final Integer halfPillCount) {
-        this.prescription = prescription;
-        this.medicine = medicine;
-        this.ingredient = ingredient;
+    public Dose(String pillName, LocalDate date, EDosingTime time, int pillCnt, Boolean isHalf, Prescription prescription) {
+        this.pillName = pillName;
         this.date = date;
         this.time = time;
-        this.isTaken = false;
-        this.halfPillCount = halfPillCount;
+        this.pillCnt = pillCnt;
+        this.isHalf = isHalf;
+        this.prescription = prescription;
     }
 }

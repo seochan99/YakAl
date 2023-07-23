@@ -21,7 +21,7 @@ import java.sql.Timestamp;
 @Setter
 @DynamicUpdate
 @NoArgsConstructor
-@Table(name = "doses")
+@Table(name = "notifications")
 public class Notification {
 
     @Id

@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
@@ -37,11 +38,16 @@ public class Prescription {
     @Column(name = "pharmacy_name", nullable = false)
     private String pharmacyName;
 
-    @Column(name = "prescribed", nullable = false)
-    private LocalDate prescribed;
+    //처방 날짜
+    @Column(name = "prescribed_date", nullable = false)
+    private LocalDate prescribedDate;
 
-    @Column(name = "finished")
-    private LocalDate finished;
+    @CreationTimestamp
+    @Column(name = "created_date", nullable = false)
+    private LocalDate createdDate;
+
+    @Column(name = "is_default")
+    private Boolean isDefault;
 
     /* -------------------------------------------------- */
 
@@ -57,9 +63,10 @@ public class Prescription {
     /* -------------------------------------------------- */
 
     @Builder
-    public Prescription(final User user, final String pharmacyName, final LocalDate prescribed) {
+    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate, final Boolean isDefault) {
         this.user = user;
         this.pharmacyName = pharmacyName;
-        this.prescribed = prescribed;
+        this.prescribedDate = prescribedDate;
+        this.isDefault = isDefault;
     }
 }

@@ -14,6 +14,7 @@ public enum ErrorCode {
     NOT_FOUND_ADVERTISEMENT("4043", HttpStatus.NOT_FOUND, "Not Exist Advertisement"),
     NOT_FOUND_NOTICE("4044", HttpStatus.NOT_FOUND, "Not Exist Notice"),
     NOT_FOUND_DEVICE_TOKEN("4045", HttpStatus.NOT_FOUND, "Not Exist Device Token"),
+    NOT_FOUND_DOSE("4046", HttpStatus.NOT_FOUND, "Not Exist Dose"),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),
@@ -48,6 +49,7 @@ public enum ErrorCode {
     TOKEN_UNSUPPORTED_ERROR("4015", HttpStatus.UNAUTHORIZED, "Unsupported Token Error"),
     TOKEN_GENERATION_ERROR("4016", HttpStatus.UNAUTHORIZED, "Failed To Generate Token"),
     TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "Unknown Error");
+
 
     private final String code;
     private final HttpStatus httpStatus;
