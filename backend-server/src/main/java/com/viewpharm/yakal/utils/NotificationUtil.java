@@ -8,11 +8,12 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.google.gson.JsonParseException;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.type.ErrorCode;
+
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.MessageDto;
 import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
+import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.UserRepository;
 import javapns.Push;
 import javapns.communication.exceptions.CommunicationException;
