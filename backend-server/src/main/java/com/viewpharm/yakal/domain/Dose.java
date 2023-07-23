@@ -66,12 +66,14 @@ public class Dose {
 
     /* -------------------------------------------------- */
     @Builder
-    public Dose(String pillName, LocalDate date, EDosingTime time, int pillCnt, Boolean isHalf, Prescription prescription) {
+    public Dose(String pillName, LocalDate date, EDosingTime time, int pillCnt, Boolean isHalf, Prescription prescription,User user) {
         this.pillName = pillName;
         this.date = date;
         this.time = time;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
         this.prescription = prescription;
+        this.user=user;
+        this.isTaken = false;
     }
 }

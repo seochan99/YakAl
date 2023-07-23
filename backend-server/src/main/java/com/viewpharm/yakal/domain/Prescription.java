@@ -46,8 +46,8 @@ public class Prescription {
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
-    @Column(name = "is_default")
-    private Boolean isDefault;
+    @Column(name = "rec_num")
+    private int recNum;
 
     /* -------------------------------------------------- */
 
@@ -63,10 +63,10 @@ public class Prescription {
     /* -------------------------------------------------- */
 
     @Builder
-    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate, final Boolean isDefault) {
+    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate, final int recNum) {
         this.user = user;
         this.pharmacyName = pharmacyName;
         this.prescribedDate = prescribedDate;
-        this.isDefault = isDefault;
+        this.recNum = recNum;
     }
 }

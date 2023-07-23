@@ -3,13 +3,16 @@ package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Dose;
 
+import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.dto.DoesRequestDto;
 import com.viewpharm.yakal.dto.DoseDto;
 import com.viewpharm.yakal.dto.PercentDto;
 import com.viewpharm.yakal.dto.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
+import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EDosingTime;
 import lombok.extern.slf4j.Slf4j;
@@ -29,11 +32,16 @@ public class DoseService {
     private final UserRepository userRepository;
     private final DoseRepository doseRepository;
 
+    private final PrescriptionRepository prescriptionRepository;
     @Autowired
-    public DoseService(UserRepository userRepository, DoseRepository doseRepository) {
+    public DoseService(UserRepository userRepository, DoseRepository doseRepository, PrescriptionRepository prescriptionRepository) {
         this.userRepository = userRepository;
         this.doseRepository = doseRepository;
+        this.prescriptionRepository = prescriptionRepository;
     }
+
+
+
 
 
     public ResponseDto<DoseDto> getDayDoseSchedule(final Long userId, final LocalDate date){
@@ -129,6 +137,44 @@ public class DoseService {
         userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
         Dose dose = doseRepository.findByUserIdAndDateAndTimeAndPillName(userId,date,time,pillName).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
         dose.setIsTaken(true);
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
+    public ResponseDto<Boolean> createSchedule(final Long userId, final DoesRequestDto doesRequestDto){
+        User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        Prescription pre = prescriptionRepository.findByUserAndRecNum(user,doesRequestDto.getRecNum()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        doseRepository.save(Dose.builder()
+                        .date(doesRequestDto.getDate())
+                        .time(doesRequestDto.getTime())
+                        .pillName(doesRequestDto.getPillName())
+                        .isHalf(doesRequestDto.getIsHalf())
+                        .pillCnt(doesRequestDto.getPillCnt())
+                        .prescription(pre)
+                        .user(user)
+                .build());
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
+    public ResponseDto<Boolean> createSchedules(final Long userId, final List<DoesRequestDto> doesRequestDtoList){
+        User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        Prescription pre = prescriptionRepository.findByUserAndRecNum(user, doesRequestDtoList.get(0).getRecNum())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        List<Dose> doses = new ArrayList<>();
+        for (DoesRequestDto doesRequestDto : doesRequestDtoList) {
+
+            Dose dose = Dose.builder()
+                    .date(doesRequestDto.getDate())
+                    .time(doesRequestDto.getTime())
+                    .pillName(doesRequestDto.getPillName())
+                    .isHalf(doesRequestDto.getIsHalf())
+                    .pillCnt(doesRequestDto.getPillCnt())
+                    .prescription(pre)
+                    .user(user)
+                    .build();
+            doses.add(dose);
+        }
+
+        doseRepository.saveAll(doses);
         return new ResponseDto<>(HttpStatus.OK,true, true,null);
     }
 

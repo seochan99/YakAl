@@ -2,6 +2,7 @@ package com.viewpharm.yakal.controller;
 
 
 import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.dto.DoesRequestDto;
 import com.viewpharm.yakal.dto.DoseDto;
 import com.viewpharm.yakal.dto.PercentDto;
 import com.viewpharm.yakal.dto.ResponseDto;
@@ -23,80 +24,76 @@ import java.util.List;
 public class DoseController {
 
     private final DoseService doseService;
-    @GetMapping("/schedule/{yyyy}/{MM}/{dd}")
+    @GetMapping("/schedule")
     @Operation(summary = "복용 스케줄 가져오기", description = "환자가 지정한 날짜에 복용해야 하는 약 목록을 가져온다.")
     public ResponseDto<DoseDto> getOneDayDoseSchedule(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date) {
+            @RequestBody DoesRequestDto doesRequestDto) {
 
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        System.out.println(specificDate);
-        return doseService.getDayDoseSchedule(1L,specificDate);
+        return doseService.getDayDoseSchedule(1L,doesRequestDto.getDate());
     }
 
-    @GetMapping("/percent/{yyyy}/{MM}/{dd}")
+    @GetMapping("/percent")
     @Operation(summary = "복용 퍼센트 하루 가져오기", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 가져온다.")
     public ResponseDto<PercentDto> getOneDayDosePercent(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date) {
-
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        return doseService.getDayDosePercent(1L,specificDate);
+            @RequestBody DoesRequestDto doesRequestDto) {
+        return doseService.getDayDosePercent(1L,doesRequestDto.getDate());
     }
 
-    @GetMapping("/percent/{yyyy}/{MM}/{dd}/week")
+    @GetMapping("/percent/week")
     @Operation(summary = "복용 퍼센트 일주일 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 일주일 치 가져온다.")
     public ResponseDto<List<PercentDto>> getWeekDosePercent(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date) {
+            @RequestBody DoesRequestDto doesRequestDto) {
 
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        return doseService.getDayWeekPercent(1L,specificDate);
+        return doseService.getDayWeekPercent(1L,doesRequestDto.getDate());
     }
 
-    @GetMapping("/percent/{yyyy}/{MM}/{dd}/month")
+    @GetMapping("/percent/month")
     @Operation(summary = "복용 퍼센트 한달 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 한달 치 가져온다.")
     public ResponseDto<List<PercentDto>> getMonthDosePercent(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date) {
+            @RequestBody DoesRequestDto doesRequestDto) {
 
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        return doseService.getDayMonthPercent(1L,specificDate);
+        return doseService.getDayMonthPercent(1L,doesRequestDto.getDate());
     }
 
-    @PutMapping("/{yyyy}/{MM}/{dd}/{dosingTime}")
+    @PutMapping("/")
     @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "아침시간대에 5개의 약이 존재할 때 모두완료를 눌러 약의 복용여부를 전부 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByTime(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date,
-            @PathVariable EDosingTime dosingTime){
+            @RequestBody DoesRequestDto doesRequestDto){
 
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        return doseService.updateDoseTakeByTime(1L,specificDate,dosingTime);
+        return doseService.updateDoseTakeByTime(1L,doesRequestDto.getDate(),doesRequestDto.getTime());
     }
 
-    @PutMapping("/{yyyy}/{MM}/{dd}/{dosingTime}/{pillName}")
-    @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "아침시간대에 5개의 약이 존재할 때 모두완료를 눌러 약의 복용여부를 전부 True로 바꾼다")
+    @PutMapping("/{pillName}")
+    @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "특정 시간대의 약의 복용 여부를 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByPill(
             //@UserId Long id,
-            @PathVariable("yyyy") Integer year,
-            @PathVariable("MM") Integer month,
-            @PathVariable("dd") Integer date,
-            @PathVariable EDosingTime dosingTime,
+            @RequestBody DoesRequestDto doesRequestDto,
             @PathVariable String pillName){
 
-        LocalDate specificDate = LocalDate.of(year, month, date);
-        return doseService.updateDoseTakeByTimeAndPillName(1L,specificDate,dosingTime,pillName);
+        return doseService.updateDoseTakeByTimeAndPillName(1L,doesRequestDto.getDate(),doesRequestDto.getTime(),pillName);
+    }
+
+    @PostMapping("/schedule")
+    @Operation(summary = "스케쥴 추가",description = "한가지의 약을 추가한다")
+    public ResponseDto<Boolean> createSchedule(
+            //@UserId Long id,
+            @RequestBody DoesRequestDto doesRequestDto){
+
+        return doseService.createSchedule(1L,doesRequestDto);
+    }
+
+    @PostMapping("/schedules")
+    @Operation(summary = "스케쥴 추가",description = "여러가지 약을 추가한다")
+    public ResponseDto<Boolean> createSchedules(
+            //@UserId Long id,
+            @RequestBody List<DoesRequestDto> doesRequestDtoList){
+
+        return doseService.createSchedules(1L,doesRequestDtoList);
     }
 
 
