@@ -177,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="460" y="1108"/>
+            <point key="canvasLocation" x="-28" y="1108"/>
         </scene>
         <!--Step2VC-->
         <scene sceneID="qiQ-nn-Nll">
@@ -561,15 +561,8 @@
                                     <action selector="agreeButtonTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="Sej-N6-1Wn"/>
                                 </connections>
                             </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9al-ek-hbd">
-                                <rect key="frame" x="324" y="555" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="switchValueChanged:" destination="yNq-V8-vyC" eventType="valueChanged" id="pKM-SV-Dme"/>
-                                </connections>
-                            </switch>
                             <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="234" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="mr1-3e-L8T">
-                                <rect key="frame" x="20" y="246" width="343" height="284"/>
+                                <rect key="frame" x="20" y="297" width="343" height="284"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qSn-QY-CoQ">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
@@ -620,7 +613,7 @@
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbS-e6-v6u" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
-                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -660,7 +653,7 @@
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 위치기반 서비스 이용약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6j8-eZ-fEL" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
-                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -700,7 +693,7 @@
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 개인정보 수집 및 이용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dir-ef-hxa" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
-                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -738,12 +731,27 @@
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
                                                     </button>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(선택) 마케팅 정보 활용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vB-w6-Hjz" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVf-Cu-U3g">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
-                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
-                                                        <nil key="textColor"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(선택)" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ncA-7b-DRt" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                                <rect key="frame" x="0.0" y="0.0" width="45" height="36"/>
+                                                                <color key="tintColor" red="0.33333333333333331" green="0.53333333333333333" blue="0.99215686274509807" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="45" id="Txv-4h-oSG"/>
+                                                                </constraints>
+                                                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
+                                                                <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="마케팅 정보 활용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlJ-0Z-SZo" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                                <rect key="frame" x="45" y="0.0" width="218" height="36"/>
+                                                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yo-1W-W3d">
                                                         <rect key="frame" x="331" y="0.0" width="12" height="36"/>
                                                         <constraints>
@@ -765,7 +773,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="286-6P-FLf">
-                                <rect key="frame" x="20" y="146" width="194.66666666666666" height="30"/>
+                                <rect key="frame" x="20" y="197" width="194.66666666666666" height="30"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dq-6R-7u0">
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="30"/>
@@ -781,17 +789,24 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9al-ek-hbd">
+                                <rect key="frame" x="314" y="642" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="yNq-V8-vyC" eventType="valueChanged" id="pKM-SV-Dme"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0CM-Kf-17L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="286-6P-FLf" firstAttribute="top" secondItem="0CM-Kf-17L" secondAttribute="top" constant="94" id="0e1-4M-STH"/>
                             <constraint firstItem="mr1-3e-L8T" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="45X-SD-M5l"/>
                             <constraint firstItem="286-6P-FLf" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="8Lb-zm-9EB"/>
                             <constraint firstItem="0CM-Kf-17L" firstAttribute="trailing" secondItem="mr1-3e-L8T" secondAttribute="trailing" constant="30" id="Ape-nO-wce"/>
-                            <constraint firstItem="mr1-3e-L8T" firstAttribute="top" secondItem="286-6P-FLf" secondAttribute="bottom" constant="70" id="G0m-Vy-HVz"/>
                             <constraint firstItem="0CM-Kf-17L" firstAttribute="trailing" secondItem="7X9-Vg-mWv" secondAttribute="trailing" constant="20" id="fRI-eq-4a6"/>
                             <constraint firstItem="0CM-Kf-17L" firstAttribute="bottom" secondItem="7X9-Vg-mWv" secondAttribute="bottom" constant="32" id="i42-ZA-CvK"/>
-                            <constraint firstItem="7X9-Vg-mWv" firstAttribute="top" secondItem="mr1-3e-L8T" secondAttribute="bottom" constant="200" id="ogP-pi-Xtg"/>
+                            <constraint firstItem="mr1-3e-L8T" firstAttribute="top" secondItem="286-6P-FLf" secondAttribute="bottom" constant="70" id="j4Y-5r-2bI"/>
                             <constraint firstItem="7X9-Vg-mWv" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="t8h-kL-jBW"/>
                         </constraints>
                     </view>
