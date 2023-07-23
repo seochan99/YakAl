@@ -22,212 +22,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--Sign In View Controller-->
-        <scene sceneID="TLN-Iy-n9Y">
-            <objects>
-                <viewController storyboardIdentifier="SignInScreen_2" id="1uB-E8-el7" customClass="SignInViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="BA6-U6-MUC">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OdA-Kz-aIJ" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="32.000000000000014" y="203" width="194.33333333333337" height="30"/>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lvG-Dy-vtm">
-                                <rect key="frame" x="20" y="730" width="353" height="56"/>
-                                <color key="backgroundColor" name="MainColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="0RM-c1-ePN"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="다음">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="agreeButtonTapped:" destination="1uB-E8-el7" eventType="touchUpInside" id="V4c-bF-ELf"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EcB-27-fri">
-                                <rect key="frame" x="20" y="305" width="36" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="D9d-ns-2cN"/>
-                                    <constraint firstAttribute="height" constant="36" id="bNs-iE-DVt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S0R-BJ-MPv" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="72" y="310.66666666666669" width="75" height="25"/>
-                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QyM-RO-4NR">
-                                <rect key="frame" x="20" y="373" width="36" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="36" id="YIh-gA-ihw"/>
-                                    <constraint firstAttribute="height" constant="36" id="iae-co-fN6"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h1s-bX-Fmy" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="72" y="378.66666666666669" width="182" height="25"/>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="K0f-LM-rTC">
-                                <rect key="frame" x="20" y="433" width="36" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="Vjq-AZ-HFS"/>
-                                    <constraint firstAttribute="width" constant="36" id="yU0-Md-kIM"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WQj-S8-q8f" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="72" y="438.66666666666669" width="182" height="25"/>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHI-wt-i86">
-                                <rect key="frame" x="20" y="493" width="36" height="36"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="G5a-Kq-1it"/>
-                                    <constraint firstAttribute="width" constant="36" id="dH0-lQ-FIe"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal">
-                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
-                                </state>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(선택) 마케팅 정보 수신 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Em9-Kw-Pnw" userLabel="본인확인을 위한  이름을 입력해주세요">
-                                <rect key="frame" x="72.000000000000014" y="498.66666666666669" width="226.33333333333337" height="25.000000000000057"/>
-                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fWi-Gq-FRg">
-                                <rect key="frame" x="352.33333333333331" y="380" width="10.666666666666686" height="22"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="chevron.right" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
-                                </state>
-                                <connections>
-                                    <segue destination="007-1e-kwe" kind="show" id="CM4-bz-Lqq"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l07-W2-QEN">
-                                <rect key="frame" x="352.33333333333331" y="440" width="10.666666666666686" height="22"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="chevron.right" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
-                                </state>
-                                <connections>
-                                    <segue destination="aw2-yK-xz0" kind="show" id="Dw6-Tb-hlj"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B8B-ij-sHu">
-                                <rect key="frame" x="352.33333333333331" y="500" width="10.666666666666686" height="22"/>
-                                <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="chevron.right" catalog="system">
-                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
-                                </state>
-                                <connections>
-                                    <segue destination="U5Z-0F-iBD" kind="show" id="WkZ-cn-3Ma"/>
-                                </connections>
-                            </button>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="VXu-aU-dvM">
-                                <rect key="frame" x="324" y="555" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="switchValueChanged:" destination="1uB-E8-el7" eventType="valueChanged" id="Fyi-x1-GlD"/>
-                                </connections>
-                            </switch>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="I7W-XA-Ais"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="Em9-Kw-Pnw" firstAttribute="centerY" secondItem="FHI-wt-i86" secondAttribute="centerY" id="4dP-PE-N4g"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="l07-W2-QEN" secondAttribute="trailing" constant="30" id="D81-vG-EPD"/>
-                            <constraint firstItem="QyM-RO-4NR" firstAttribute="leading" secondItem="EcB-27-fri" secondAttribute="leading" id="DX0-hh-lWq"/>
-                            <constraint firstItem="WQj-S8-q8f" firstAttribute="centerY" secondItem="K0f-LM-rTC" secondAttribute="centerY" id="IRG-6n-XBL"/>
-                            <constraint firstItem="WQj-S8-q8f" firstAttribute="leading" secondItem="K0f-LM-rTC" secondAttribute="trailing" constant="16" id="Ivi-Fr-GD6"/>
-                            <constraint firstItem="B8B-ij-sHu" firstAttribute="centerY" secondItem="Em9-Kw-Pnw" secondAttribute="centerY" id="Ix5-X2-X6W"/>
-                            <constraint firstItem="FHI-wt-i86" firstAttribute="centerX" secondItem="K0f-LM-rTC" secondAttribute="centerX" id="MSV-RW-0Sz"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="bottom" secondItem="lvG-Dy-vtm" secondAttribute="bottom" constant="32" id="PDs-g4-s2r"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="fWi-Gq-FRg" secondAttribute="trailing" constant="30" id="R1j-Et-QHH"/>
-                            <constraint firstItem="h1s-bX-Fmy" firstAttribute="centerY" secondItem="QyM-RO-4NR" secondAttribute="centerY" id="Ruc-Kd-2oi"/>
-                            <constraint firstItem="FHI-wt-i86" firstAttribute="top" secondItem="K0f-LM-rTC" secondAttribute="bottom" constant="24" id="UKo-Uc-fzh"/>
-                            <constraint firstItem="l07-W2-QEN" firstAttribute="centerY" secondItem="WQj-S8-q8f" secondAttribute="centerY" id="UQo-i4-LuD"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="B8B-ij-sHu" secondAttribute="trailing" constant="30" id="Vbh-WF-hqp"/>
-                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="32.000000000000014" id="aFJ-7P-EXk"/>
-                            <constraint firstItem="I7W-XA-Ais" firstAttribute="trailing" secondItem="lvG-Dy-vtm" secondAttribute="trailing" constant="20" id="aHy-PG-x20"/>
-                            <constraint firstItem="lvG-Dy-vtm" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="alv-uz-6DG"/>
-                            <constraint firstItem="OdA-Kz-aIJ" firstAttribute="top" secondItem="I7W-XA-Ais" secondAttribute="top" constant="100" id="eqY-J2-2M1"/>
-                            <constraint firstItem="EcB-27-fri" firstAttribute="top" secondItem="OdA-Kz-aIJ" secondAttribute="bottom" constant="72" id="eut-bZ-hyw"/>
-                            <constraint firstItem="h1s-bX-Fmy" firstAttribute="leading" secondItem="QyM-RO-4NR" secondAttribute="trailing" constant="16" id="mge-yY-2Vy"/>
-                            <constraint firstItem="K0f-LM-rTC" firstAttribute="top" secondItem="QyM-RO-4NR" secondAttribute="bottom" constant="24" id="oy0-RI-gCd"/>
-                            <constraint firstItem="S0R-BJ-MPv" firstAttribute="centerY" secondItem="EcB-27-fri" secondAttribute="centerY" id="pWW-6V-cR3"/>
-                            <constraint firstItem="fWi-Gq-FRg" firstAttribute="centerY" secondItem="h1s-bX-Fmy" secondAttribute="centerY" id="qBY-jw-rjG"/>
-                            <constraint firstItem="K0f-LM-rTC" firstAttribute="centerX" secondItem="QyM-RO-4NR" secondAttribute="centerX" id="qVk-8D-80u"/>
-                            <constraint firstItem="QyM-RO-4NR" firstAttribute="top" secondItem="EcB-27-fri" secondAttribute="bottom" constant="32" id="qdr-6U-rqs"/>
-                            <constraint firstItem="Em9-Kw-Pnw" firstAttribute="leading" secondItem="FHI-wt-i86" secondAttribute="trailing" constant="16" id="wRA-u1-F1R"/>
-                            <constraint firstItem="S0R-BJ-MPv" firstAttribute="leading" secondItem="EcB-27-fri" secondAttribute="trailing" constant="16" id="ykL-MB-wpO"/>
-                            <constraint firstItem="EcB-27-fri" firstAttribute="leading" secondItem="I7W-XA-Ais" secondAttribute="leading" constant="20" id="zb8-bg-dht"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="4bX-ul-Bx9"/>
-                    <connections>
-                        <outlet property="agreeButton" destination="lvG-Dy-vtm" id="RVH-K3-5MI"/>
-                        <outlet property="agreeSwitch" destination="VXu-aU-dvM" id="BKp-7H-980"/>
-                        <outlet property="marketingCheckbox" destination="FHI-wt-i86" id="hnr-nd-6Dd"/>
-                        <outlet property="overallCheckbox" destination="EcB-27-fri" id="fKy-p6-A5n"/>
-                        <outlet property="serviceTermsCheckbox1" destination="QyM-RO-4NR" id="vOT-Bk-D3h"/>
-                        <outlet property="serviceTermsCheckbox2" destination="K0f-LM-rTC" id="aPu-3r-oXH"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="LCY-Nn-0sT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-492.36641221374043" y="1107.7464788732395"/>
-        </scene>
         <!--View Controller-->
         <scene sceneID="6p2-G2-VGn">
             <objects>
@@ -242,7 +36,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7WC-up-H47" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1382" y="2035"/>
+            <point key="canvasLocation" x="-2585" y="1915"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Pdc-LY-hdz">
@@ -258,7 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z0M-Zz-P6h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-521" y="2035"/>
+            <point key="canvasLocation" x="-1700" y="1915"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="wBw-1H-fBK">
@@ -274,7 +68,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZFZ-HK-nm2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="398" y="2035"/>
+            <point key="canvasLocation" x="-892" y="1915"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="YEn-RR-dgX">
+            <objects>
+                <viewController id="7aM-5B-AKI" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="MSx-rM-HKR">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="fAZ-BF-nk3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="b0D-sC-5JP"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MY5-SF-2mT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-59" y="1915"/>
         </scene>
         <!--Step1VC-->
         <scene sceneID="s0d-6b-0kx">
@@ -367,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="541" y="1108"/>
+            <point key="canvasLocation" x="460" y="1108"/>
         </scene>
         <!--Step2VC-->
         <scene sceneID="qiQ-nn-Nll">
@@ -439,7 +249,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BWA-ay-BXJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1591.6030534351144" y="1107.7464788732395"/>
+            <point key="canvasLocation" x="2885" y="1472"/>
         </scene>
         <!--Step3VC-->
         <scene sceneID="BQo-mi-hBC">
@@ -592,7 +402,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OEe-Ok-Sls" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2616" y="1108"/>
+            <point key="canvasLocation" x="3624" y="438"/>
         </scene>
         <!--Step4VC-->
         <scene sceneID="nmV-Ut-o3Z">
@@ -715,12 +525,290 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="1uB-E8-el7" kind="relationship" relationship="rootViewController" id="CWc-aJ-hEE"/>
+                        <segue destination="yNq-V8-vyC" kind="relationship" relationship="rootViewController" id="Egh-jN-pRZ"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F0G-0t-HlI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-492.36641221374043" y="306.33802816901408"/>
+        </scene>
+        <!--Sign In View Controller-->
+        <scene sceneID="eQP-WV-vep">
+            <objects>
+                <viewController storyboardIdentifier="SignInScreen_2" id="yNq-V8-vyC" customClass="SignInViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="nvM-Us-WTM">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7X9-Vg-mWv">
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
+                                <color key="backgroundColor" name="MainColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="56" id="dz3-oY-yFQ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="다음">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="agreeButtonTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="Sej-N6-1Wn"/>
+                                </connections>
+                            </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9al-ek-hbd">
+                                <rect key="frame" x="324" y="555" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="switchValueChanged:" destination="yNq-V8-vyC" eventType="valueChanged" id="pKM-SV-Dme"/>
+                                </connections>
+                            </switch>
+                            <stackView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="234" axis="vertical" spacing="32" translatesAutoresizingMaskIntoConstraints="NO" id="mr1-3e-L8T">
+                                <rect key="frame" x="20" y="246" width="343" height="284"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="qSn-QY-CoQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7La-X7-Mdd">
+                                                <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="36" id="5yd-Za-Sc0"/>
+                                                    <constraint firstAttribute="height" constant="36" id="o4x-V9-jDO"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                <state key="normal">
+                                                    <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                </state>
+                                            </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZq-zf-yIo" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                <rect key="frame" x="52" y="0.0" width="291" height="36"/>
+                                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="24" translatesAutoresizingMaskIntoConstraints="NO" id="H5v-QI-t1F">
+                                        <rect key="frame" x="0.0" y="68" width="343" height="216"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="F2y-cd-R5V">
+                                                <rect key="frame" x="0.0" y="0.0" width="343" height="36"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xlY-E4-Iwe">
+                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="36" id="IEX-kL-Knq"/>
+                                                            <constraint firstAttribute="width" constant="36" id="bn7-2r-pqK"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                        <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                        </state>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbS-e6-v6u" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                        <rect key="frame" x="52" y="0.0" width="263" height="36"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gb0-av-gnJ">
+                                                        <rect key="frame" x="331" y="0.0" width="12" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="12" id="UZp-z5-aaK"/>
+                                                        </constraints>
+                                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="chevron.right" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="007-1e-kwe" kind="show" id="GP8-AL-V7L"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="uZP-1y-H1s">
+                                                <rect key="frame" x="0.0" y="60" width="343" height="36"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPY-63-5KR">
+                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="36" id="3GM-iN-cwR"/>
+                                                            <constraint firstAttribute="height" constant="36" id="j4N-W6-Sbx"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                        <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                        </state>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 위치기반 서비스 이용약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6j8-eZ-fEL" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                        <rect key="frame" x="52" y="0.0" width="263" height="36"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D48-hc-zWy">
+                                                        <rect key="frame" x="331" y="0.0" width="12" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="12" id="bCh-5i-Qa4"/>
+                                                        </constraints>
+                                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="chevron.right" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="aw2-yK-xz0" kind="show" id="UZm-h4-NmD"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="Lel-ge-W9s">
+                                                <rect key="frame" x="0.0" y="120" width="343" height="36"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfu-dH-a2u">
+                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="36" id="j9Q-f3-0lx"/>
+                                                            <constraint firstAttribute="width" constant="36" id="p9p-Au-4aw"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                        <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                        </state>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 개인정보 수집 및 이용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dir-ef-hxa" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                        <rect key="frame" x="52" y="0.0" width="263" height="36"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5K-dD-ECG">
+                                                        <rect key="frame" x="331" y="0.0" width="12" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="12" id="CST-E3-YR0"/>
+                                                        </constraints>
+                                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="chevron.right" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="U5Z-0F-iBD" kind="show" id="NfY-V3-Hf7"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="QTE-Wp-veM">
+                                                <rect key="frame" x="0.0" y="180" width="343" height="36"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bW7-SB-0BM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="36" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="36" id="1fY-au-CSO"/>
+                                                            <constraint firstAttribute="height" constant="36" id="bUR-6E-pcz"/>
+                                                        </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                                        <color key="tintColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal">
+                                                            <color key="titleColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
+                                                        </state>
+                                                    </button>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(선택) 마케팅 정보 활용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1vB-w6-Hjz" userLabel="본인확인을 위한  이름을 입력해주세요">
+                                                        <rect key="frame" x="52" y="0.0" width="263" height="36"/>
+                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5yo-1W-W3d">
+                                                        <rect key="frame" x="331" y="0.0" width="12" height="36"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="12" id="NKa-hT-Os3"/>
+                                                        </constraints>
+                                                        <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" image="chevron.right" catalog="system">
+                                                            <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="14"/>
+                                                        </state>
+                                                        <connections>
+                                                            <segue destination="7aM-5B-AKI" kind="show" id="BiS-ai-t88"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="286-6P-FLf">
+                                <rect key="frame" x="20" y="146" width="194.66666666666666" height="30"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1dq-6R-7u0">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="30"/>
+                                        <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJx-R4-Bhs">
+                                        <rect key="frame" x="42" y="0.0" width="152.66666666666666" height="30"/>
+                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="0CM-Kf-17L"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mr1-3e-L8T" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="45X-SD-M5l"/>
+                            <constraint firstItem="286-6P-FLf" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="8Lb-zm-9EB"/>
+                            <constraint firstItem="0CM-Kf-17L" firstAttribute="trailing" secondItem="mr1-3e-L8T" secondAttribute="trailing" constant="30" id="Ape-nO-wce"/>
+                            <constraint firstItem="mr1-3e-L8T" firstAttribute="top" secondItem="286-6P-FLf" secondAttribute="bottom" constant="70" id="G0m-Vy-HVz"/>
+                            <constraint firstItem="0CM-Kf-17L" firstAttribute="trailing" secondItem="7X9-Vg-mWv" secondAttribute="trailing" constant="20" id="fRI-eq-4a6"/>
+                            <constraint firstItem="0CM-Kf-17L" firstAttribute="bottom" secondItem="7X9-Vg-mWv" secondAttribute="bottom" constant="32" id="i42-ZA-CvK"/>
+                            <constraint firstItem="7X9-Vg-mWv" firstAttribute="top" secondItem="mr1-3e-L8T" secondAttribute="bottom" constant="200" id="ogP-pi-Xtg"/>
+                            <constraint firstItem="7X9-Vg-mWv" firstAttribute="leading" secondItem="0CM-Kf-17L" secondAttribute="leading" constant="20" id="t8h-kL-jBW"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="TRd-Kq-RvD"/>
+                    <connections>
+                        <outlet property="agreeButton" destination="7X9-Vg-mWv" id="8K7-LN-oUC"/>
+                        <outlet property="agreeSwitch" destination="9al-ek-hbd" id="KYS-5m-Ycu"/>
+                        <outlet property="marketingCheckbox" destination="bW7-SB-0BM" id="oVR-AP-ZfL"/>
+                        <outlet property="overallCheckbox" destination="7La-X7-Mdd" id="582-c3-0bI"/>
+                        <outlet property="serviceTermsCheckbox1" destination="xlY-E4-Iwe" id="Ne8-di-soP"/>
+                        <outlet property="serviceTermsCheckbox2" destination="FPY-63-5KR" id="7gt-Ya-5gy"/>
+                        <outlet property="serviceTermsCheckbox3" destination="yfu-dH-a2u" id="Grz-sb-xfE"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f5h-xK-Vtg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1483.206106870229" y="1107.7464788732395"/>
         </scene>
     </scenes>
     <resources>
