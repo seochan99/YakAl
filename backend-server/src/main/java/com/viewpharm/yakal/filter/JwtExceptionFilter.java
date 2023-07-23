@@ -53,12 +53,14 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
-            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
-                return true;
-            }
-        }
+//        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
+//            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
 
-        return false;
+        return true;
     }
 }

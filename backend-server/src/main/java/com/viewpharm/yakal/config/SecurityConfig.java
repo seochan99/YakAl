@@ -1,8 +1,6 @@
 package com.viewpharm.yakal.config;
 
 import com.viewpharm.yakal.service.CustomUserDetailService;
-import com.viewpharm.yakal.type.EUserRole;
-import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.filter.JwtAuthenticationFilter;
 import com.viewpharm.yakal.filter.JwtExceptionFilter;
 import com.viewpharm.yakal.security.JwtAccessDenied;
@@ -34,10 +32,11 @@ public class SecurityConfig {
     @Bean
     protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
-                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
-                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
-                        .requestMatchers("/admin/**").hasRole(EUserRole.ADMIN.toString())
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry.anyRequest().permitAll())
+//                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+//                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
+//                        .requestMatchers("/admin/**").hasRole(EUserRole.ADMIN.toString())
+//                        .anyRequest().authenticated())
 
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler))
