@@ -26,7 +26,7 @@ class Step1VC: SignInViewController {
     }
     override func viewDidLoad() {
         self.navigationController?.navigationBar.topItem?.title = "약관 동의"
-
+        changeNaviBack()
 
            super.viewDidLoad()
            myStepNumber = 1
@@ -66,11 +66,7 @@ class Step1VC: SignInViewController {
        
        
        @IBAction func nextButtonTapped(_ sender: UIButton) {
-           print("이전 \(user.step1Input)")
            user.step1Input = siginInInputField.text!
-           print("이후 \(user.step1Input)")
-           print("이후 \(user)")
-           
            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
            let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
            

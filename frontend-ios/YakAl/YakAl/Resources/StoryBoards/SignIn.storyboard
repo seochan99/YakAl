@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="JM6-Ar-eMD">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -22,10 +22,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Detail View Controller1-->
         <scene sceneID="6p2-G2-VGn">
             <objects>
-                <viewController id="007-1e-kwe" sceneMemberID="viewController">
+                <viewController id="007-1e-kwe" customClass="DetailViewController1" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="XdR-Bt-DaU">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -38,26 +38,26 @@
             </objects>
             <point key="canvasLocation" x="-2585" y="1915"/>
         </scene>
-        <!--View Controller-->
+        <!--개인정보-->
         <scene sceneID="Pdc-LY-hdz">
             <objects>
-                <viewController id="aw2-yK-xz0" sceneMemberID="viewController">
+                <viewController id="aw2-yK-xz0" customClass="DetailViewController2" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ngz-cK-0dq">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <viewLayoutGuide key="safeArea" id="V1E-a5-309"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" id="EDP-ZG-TIO"/>
+                    <navigationItem key="navigationItem" title="개인정보" id="EDP-ZG-TIO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z0M-Zz-P6h" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1700" y="1915"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller3-->
         <scene sceneID="wBw-1H-fBK">
             <objects>
-                <viewController id="U5Z-0F-iBD" sceneMemberID="viewController">
+                <viewController id="U5Z-0F-iBD" customClass="DetailViewController3" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="otL-mb-ycC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -70,10 +70,10 @@
             </objects>
             <point key="canvasLocation" x="-892" y="1915"/>
         </scene>
-        <!--View Controller-->
+        <!--Detail View Controller4-->
         <scene sceneID="YEn-RR-dgX">
             <objects>
-                <viewController id="7aM-5B-AKI" sceneMemberID="viewController">
+                <viewController id="7aM-5B-AKI" customClass="DetailViewController4" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="MSx-rM-HKR">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -581,6 +581,9 @@
                                                     <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="AllAproveButtonOn:" destination="yNq-V8-vyC" eventType="touchUpInside" id="plJ-tw-k5s"/>
+                                                </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="전체 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yZq-zf-yIo" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                 <rect key="frame" x="52" y="0.0" width="291" height="36"/>
@@ -610,6 +613,9 @@
                                                             <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="serviceTermsCheckboxTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="h91-6A-8rs"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 서비스 이용약관" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mbS-e6-v6u" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
@@ -650,6 +656,9 @@
                                                             <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="serviceTermsCheckboxTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="TBl-mH-8ca"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 위치기반 서비스 이용약관 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6j8-eZ-fEL" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
@@ -690,6 +699,9 @@
                                                             <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="serviceTermsCheckboxTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="pmV-A0-dTI"/>
+                                                        </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="(필수) 개인정보 수집 및 이용 동의" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dir-ef-hxa" userLabel="본인확인을 위한  이름을 입력해주세요">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
@@ -730,6 +742,9 @@
                                                             <imageReference key="image" image="checkmark.circle.fill" catalog="system" symbolScale="default"/>
                                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="36"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="marketingCheckboxTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="gym-hU-trd"/>
+                                                        </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FVf-Cu-U3g">
                                                         <rect key="frame" x="52" y="0.0" width="263" height="36"/>
@@ -789,13 +804,6 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9al-ek-hbd">
-                                <rect key="frame" x="314" y="642" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <connections>
-                                    <action selector="switchValueChanged:" destination="yNq-V8-vyC" eventType="valueChanged" id="pKM-SV-Dme"/>
-                                </connections>
-                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="0CM-Kf-17L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -813,7 +821,6 @@
                     <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="TRd-Kq-RvD"/>
                     <connections>
                         <outlet property="agreeButton" destination="7X9-Vg-mWv" id="8K7-LN-oUC"/>
-                        <outlet property="agreeSwitch" destination="9al-ek-hbd" id="KYS-5m-Ycu"/>
                         <outlet property="marketingCheckbox" destination="bW7-SB-0BM" id="oVR-AP-ZfL"/>
                         <outlet property="overallCheckbox" destination="7La-X7-Mdd" id="582-c3-0bI"/>
                         <outlet property="serviceTermsCheckbox1" destination="xlY-E4-Iwe" id="Ne8-di-soP"/>
