@@ -113,6 +113,26 @@ public class DoseController {
         return doseService.createSchedules(1L,doesRequestDtoList);
     }
 
+    @DeleteMapping("/schedule/{doseId}")
+    @Operation(summary = "약 스케쥴 하나 삭제",description = "약 Id로 개별 약 삭제")
+    public ResponseDto<Boolean> deleteSchedule(
+            //@UserId
+            @PathVariable Long doseId
+    ){
+
+        return doseService.deleteSchedule(1L,doseId);
+    }
+
+    @DeleteMapping("/schedule")
+    @Operation(summary = "약 스케쥴 하나 삭제",description = "약 Id로 개별 약 삭제")
+    public ResponseDto<Boolean> deleteSchedule(
+            //@UserId
+            @PathVariable Long doseId,
+            @RequestBody List<Long> doesIdList
+    ){
+        return doseService.deleteSchedules(1L,doesIdList);
+    }
+
 
 
 }

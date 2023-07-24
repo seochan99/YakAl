@@ -203,6 +203,23 @@ public class DoseService {
         return new ResponseDto<>(HttpStatus.OK,sucess, result,null);
     }
 
+    public ResponseDto<Boolean> deleteSchedule(final Long userId,final Long id){
+        userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        Dose dose = doseRepository.findById(id).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
+        doseRepository.delete(dose);
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
+    public ResponseDto<Boolean> deleteSchedules(final Long userId,final List<Long> doesIdList){
+        userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        for(Long id:doesIdList){
+            Dose dose = doseRepository.findById(id).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
+            doseRepository.delete(dose);
+        }
+
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
 
 
 }

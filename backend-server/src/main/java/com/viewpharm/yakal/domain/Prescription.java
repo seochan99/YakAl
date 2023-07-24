@@ -45,7 +45,7 @@ public class Prescription {
     @CreationTimestamp
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
-
+    //인식 번호 0이면 Default
     @Column(name = "rec_num")
     private int recNum;
 
