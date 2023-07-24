@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.service;
 
+import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.NotificationDto;
@@ -8,6 +9,7 @@ import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.NotificationRepository;
 import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.type.EDosingTime;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,29 +82,41 @@ public class NotificationService {
     //동적으로 시간대 받는 방법이 도저히 안나와서
     //특정 시간에대 함수를 호출하고 db에서 약 시간 확인하고
     //몇 분뒤에 먹어야 하는지 출력만 하는 방식으로 일단 할 듯
-    
+
+    //특정 시간에 디비에서 오늘 특정 시간 안 약 가져오기
+    //약 유저 확인
+    //유저의 디바이스 토큰 가져와서 알림 보내기
+
     //매일 아침 8시 실행
     @Scheduled(cron = "0 0 8 * * *")
-    public void sendPushNotificationOnMorning(Long userId, Long courseId, int NotificationType) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+    public void sendPushNotificationOnMorning() throws Exception {
+        //현재 날짜
+        LocalDate nowDate = LocalDate.now();
+        //날짜와 시간으로 알약 리스트 찾기
+        // 레포로 옮기기
+        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
+        List<User> users = userRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
         NotificationUserRequestDto notificationUserRequestDto;
-        String title = user.getName() + "님, 아침 약 드실 시간이네요!";
-        String content = "앞으로" + "번 더 먹으면 끝나요."; //갯수 가져와서 넣기
 
-        if (user.getIsIos()) { //ios 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-        } else { //안드로이드 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-            //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+        for(User user : users){
+            String title = user.getName() + "님, 아침 약 드실 시간이네요!";
+            String content = "앞으로" + "번 더 먹으면 끝나요."; //갯수 가져와서 넣기
+            Long userId = user.getId();
+            if (user.getIsIos()) { //ios 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
+            } else { //안드로이드 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
+                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+            }
         }
     }
 
