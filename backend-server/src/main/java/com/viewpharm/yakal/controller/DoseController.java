@@ -105,7 +105,7 @@ public class DoseController {
     }
 
     @PostMapping("/schedules")
-    @Operation(summary = "스케쥴 추가",description = "여러가지 약을 추가한다 중복된 약 있을 경우 false")
+    @Operation(summary = "스케쥴 추가",description = "여러가지 약을 추가한다 중복된 약 있을 경우 false이며 List안에 약 Id존재")
     public ResponseDto<List<Long>> createSchedules(
             //@UserId Long id,
             @RequestBody List<DoesRequestDto> doesRequestDtoList){

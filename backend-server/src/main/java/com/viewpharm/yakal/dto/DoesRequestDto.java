@@ -16,5 +16,5 @@ public class DoesRequestDto {
     private String pillName;
     private int pillCnt;
     private Boolean isHalf;
-    private int recNum;
+    private Long prescriptionId;
 }

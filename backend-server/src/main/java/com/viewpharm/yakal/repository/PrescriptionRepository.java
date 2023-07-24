@@ -9,5 +9,4 @@ import java.util.Optional;
 
 @Repository
 public interface PrescriptionRepository extends JpaRepository<Prescription, Long> {
-    Optional<Prescription> findByUserAndRecNum(User user, int recNum);
 }

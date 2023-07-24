@@ -21,6 +21,7 @@ public class DoseDto {
         final Boolean isTaken;
         final int cnt;
         final boolean isHalf;
+        final Long prescriptinId;
     }
 
     @Builder

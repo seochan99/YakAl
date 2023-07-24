@@ -45,9 +45,7 @@ public class Prescription {
     @CreationTimestamp
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
-    //인식 번호 0이면 Default
-    @Column(name = "rec_num")
-    private int recNum;
+
 
     /* -------------------------------------------------- */
 
@@ -63,10 +61,9 @@ public class Prescription {
     /* -------------------------------------------------- */
 
     @Builder
-    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate, final int recNum) {
+    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate) {
         this.user = user;
         this.pharmacyName = pharmacyName;
         this.prescribedDate = prescribedDate;
-        this.recNum = recNum;
     }
 }

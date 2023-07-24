@@ -41,7 +41,7 @@ public class DoseService {
 
     public ResponseDto<DoseDto> getDayDoseSchedule(final Long userId, final LocalDate date){
 
-        User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
         List<Dose> results = doseRepository.findByUserIdAndDate(1L ,date);
         Map<EDosingTime, List<DoseDto.Pill>> dosesByTime = new HashMap<>();
 
@@ -52,6 +52,7 @@ public class DoseService {
                     .isTaken(result.getIsTaken())
                     .cnt(result.getPillCnt())
                     .isHalf(result.getIsHalf())
+                    .prescriptinId(result.getPrescription().getId())
                     .build();
 
             // 해당 그룹의 List<Pill>를 가져옴, 없을 경우 새로 생성
@@ -153,7 +154,7 @@ public class DoseService {
 
     public ResponseDto<Long> createSchedule(final Long userId, final DoesRequestDto doesRequestDto){
         User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
-        Prescription pre = prescriptionRepository.findByUserAndRecNum(user,doesRequestDto.getRecNum()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        Prescription pre = prescriptionRepository.findById(doesRequestDto.getPrescriptionId()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
         Optional<Dose> dose = doseRepository.findByUserIdAndDateAndTimeAndPillName(userId,doesRequestDto.getDate(),doesRequestDto.getTime(),doesRequestDto.getPillName());
         if(dose.isPresent()) //약이 이미 존재하는 경우
             return new ResponseDto<>(HttpStatus.OK,false, dose.get().getId(), null);
@@ -172,7 +173,7 @@ public class DoseService {
 
     public ResponseDto<List<Long>> createSchedules(final Long userId, final List<DoesRequestDto> doesRequestDtoList){
         User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
-        Prescription pre = prescriptionRepository.findByUserAndRecNum(user, doesRequestDtoList.get(0).getRecNum())
+        Prescription pre = prescriptionRepository.findById(doesRequestDtoList.get(0).getPrescriptionId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         List<Dose> doses = new ArrayList<>();
         List<Long> result = new ArrayList<>();
