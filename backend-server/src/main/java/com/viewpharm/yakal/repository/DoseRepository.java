@@ -18,5 +18,4 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     List<Dose> findByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
     List<Dose> findByUserIdAndDateAndTime(@Param("userId") Long userId, @Param("date") LocalDate date, @Param("time")EDosingTime time);
     Optional<Dose> findByUserIdAndDateAndTimeAndPillName(@Param("userId") Long userId, @Param("date") LocalDate date, @Param("time")EDosingTime time,@Param("pill_name")String pillName);
-
 }

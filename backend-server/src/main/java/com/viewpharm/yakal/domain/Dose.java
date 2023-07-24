@@ -1,17 +1,7 @@
 package com.viewpharm.yakal.domain;
 
 import com.viewpharm.yakal.type.EDosingTime;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,7 +23,6 @@ public class Dose {
     @Column(name = "id")
     private Long id;
 
-    // 도훈: 개인적으로 약명과 성분명은 이름보다 코드가 더 다루기 편할 것 같다.
     @Column(name="pill_name", nullable = false)
     private String pillName;
 

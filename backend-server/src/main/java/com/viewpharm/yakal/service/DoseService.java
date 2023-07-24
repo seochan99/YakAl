@@ -1,14 +1,12 @@
 package com.viewpharm.yakal.service;
 
 
+import ch.qos.logback.core.spi.ErrorCodes;
 import com.viewpharm.yakal.domain.Dose;
 
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.DoesRequestDto;
-import com.viewpharm.yakal.dto.DoseDto;
-import com.viewpharm.yakal.dto.PercentDto;
-import com.viewpharm.yakal.dto.ResponseDto;
+import com.viewpharm.yakal.dto.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
@@ -41,9 +39,6 @@ public class DoseService {
     }
 
 
-
-
-
     public ResponseDto<DoseDto> getDayDoseSchedule(final Long userId, final LocalDate date){
 
         User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
@@ -51,9 +46,10 @@ public class DoseService {
         Map<EDosingTime, List<DoseDto.Pill>> dosesByTime = new HashMap<>();
 
         for (Dose result : results) {
-            DoseDto.Pill pill = DoseDto.Pill.builder().
-                    pillName(result.getPillName()).
-                    isTaken(result.getIsTaken())
+            DoseDto.Pill pill = DoseDto.Pill.builder()
+                    .id(result.getId())
+                    .pillName(result.getPillName())
+                    .isTaken(result.getIsTaken())
                     .cnt(result.getPillCnt())
                     .isHalf(result.getIsHalf())
                     .build();
@@ -133,16 +129,35 @@ public class DoseService {
         return new ResponseDto<>(HttpStatus.OK,true, true,null);
     }
 
-    public ResponseDto<Boolean> updateDoseTakeByTimeAndPillName(final Long userId,final LocalDate date, EDosingTime time,String pillName){
+    public ResponseDto<Boolean> updateDoseTakeById(final Long userId,final Long id){
         userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
-        Dose dose = doseRepository.findByUserIdAndDateAndTimeAndPillName(userId,date,time,pillName).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
+        Dose dose = doseRepository.findById(id).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
         dose.setIsTaken(true);
         return new ResponseDto<>(HttpStatus.OK,true, true,null);
     }
 
-    public ResponseDto<Boolean> createSchedule(final Long userId, final DoesRequestDto doesRequestDto){
+    public ResponseDto<Boolean> updateDoseCnt(final Long userId,final List<Long> doesIdList){
+        for (Long l : doesIdList){
+            Dose dose = doseRepository.findById(l).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
+            dose.setPillCnt(dose.getPillCnt()+1);
+        }
+
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
+    public ResponseDto<Boolean> updateDoseCntById(final Long userId,final Long doseId){
+        Dose dose = doseRepository.findById(doseId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSE));
+        dose.setPillCnt(dose.getPillCnt()+1);
+        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+    }
+
+    public ResponseDto<Long> createSchedule(final Long userId, final DoesRequestDto doesRequestDto){
         User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
         Prescription pre = prescriptionRepository.findByUserAndRecNum(user,doesRequestDto.getRecNum()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
+        Optional<Dose> dose = doseRepository.findByUserIdAndDateAndTimeAndPillName(userId,doesRequestDto.getDate(),doesRequestDto.getTime(),doesRequestDto.getPillName());
+        if(dose.isPresent()) //약이 이미 존재하는 경우
+            return new ResponseDto<>(HttpStatus.OK,false, dose.get().getId(), null);
+
         doseRepository.save(Dose.builder()
                         .date(doesRequestDto.getDate())
                         .time(doesRequestDto.getTime())
@@ -152,30 +167,40 @@ public class DoseService {
                         .prescription(pre)
                         .user(user)
                 .build());
-        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+        return new ResponseDto<>(HttpStatus.OK,true, 0L,null);
     }
 
-    public ResponseDto<Boolean> createSchedules(final Long userId, final List<DoesRequestDto> doesRequestDtoList){
+    public ResponseDto<List<Long>> createSchedules(final Long userId, final List<DoesRequestDto> doesRequestDtoList){
         User user = userRepository.findById(userId).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_USER));
         Prescription pre = prescriptionRepository.findByUserAndRecNum(user, doesRequestDtoList.get(0).getRecNum())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         List<Dose> doses = new ArrayList<>();
+        List<Long> result = new ArrayList<>();
+        Boolean sucess = true;
         for (DoesRequestDto doesRequestDto : doesRequestDtoList) {
+            Optional<Dose> alreadyDose = doseRepository.findByUserIdAndDateAndTimeAndPillName(userId,doesRequestDto.getDate(),doesRequestDto.getTime(),doesRequestDto.getPillName());
+            if(alreadyDose.isPresent()){ //약이 이미 존재하는 경우
+                result.add(alreadyDose.get().getId());
+                sucess = false;
+            }
+            else{
+                result.add(0L);
+                Dose dose = Dose.builder()
+                        .date(doesRequestDto.getDate())
+                        .time(doesRequestDto.getTime())
+                        .pillName(doesRequestDto.getPillName())
+                        .isHalf(doesRequestDto.getIsHalf())
+                        .pillCnt(doesRequestDto.getPillCnt())
+                        .prescription(pre)
+                        .user(user)
+                        .build();
+                doses.add(dose);
+            }
 
-            Dose dose = Dose.builder()
-                    .date(doesRequestDto.getDate())
-                    .time(doesRequestDto.getTime())
-                    .pillName(doesRequestDto.getPillName())
-                    .isHalf(doesRequestDto.getIsHalf())
-                    .pillCnt(doesRequestDto.getPillCnt())
-                    .prescription(pre)
-                    .user(user)
-                    .build();
-            doses.add(dose);
         }
 
         doseRepository.saveAll(doses);
-        return new ResponseDto<>(HttpStatus.OK,true, true,null);
+        return new ResponseDto<>(HttpStatus.OK,sucess, result,null);
     }
 
 

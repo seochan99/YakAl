@@ -59,7 +59,25 @@ public class DoseController {
         return doseService.getDayMonthPercent(1L,doesRequestDto.getDate());
     }
 
-    @PutMapping("/")
+    @PutMapping("/cnt")
+    @Operation(summary = "약의 개수 변경",description = "doesIdList로 여러개의 약의 개수를 +1")
+    public ResponseDto<Boolean> updateDoseCnt(
+            //@UserId Long id,
+            @RequestBody List<Long> doesIdList){
+
+        return doseService.updateDoseCnt(1L,doesIdList);
+    }
+
+    @PutMapping("/cnt/{doesId}")
+    @Operation(summary = "약의 개수 변경",description = "doesId로 특정 약의 개수를 +1")
+    public ResponseDto<Boolean> updateDoseCntByDoesId(
+            //@UserId Long id,
+            @PathVariable Long doesId){
+
+        return doseService.updateDoseCntById(1L,doesId);
+    }
+
+    @PutMapping("/take")
     @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "아침시간대에 5개의 약이 존재할 때 모두완료를 눌러 약의 복용여부를 전부 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByTime(
             //@UserId Long id,
@@ -68,19 +86,18 @@ public class DoseController {
         return doseService.updateDoseTakeByTime(1L,doesRequestDto.getDate(),doesRequestDto.getTime());
     }
 
-    @PutMapping("/{pillName}")
-    @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "특정 시간대의 약의 복용 여부를 True로 바꾼다")
+    @PutMapping("/take/{doseId}")
+    @Operation(summary = "복용 업데이트",description = "특정 시간대의 약의 복용 여부를 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByPill(
             //@UserId Long id,
-            @RequestBody DoesRequestDto doesRequestDto,
-            @PathVariable String pillName){
+            @PathVariable Long doseId){
 
-        return doseService.updateDoseTakeByTimeAndPillName(1L,doesRequestDto.getDate(),doesRequestDto.getTime(),pillName);
+        return doseService.updateDoseTakeById(1L,doseId);
     }
 
     @PostMapping("/schedule")
-    @Operation(summary = "스케쥴 추가",description = "한가지의 약을 추가한다")
-    public ResponseDto<Boolean> createSchedule(
+    @Operation(summary = "스케쥴 추가",description = "직접 한가지의 약을 추가한다 0이 반환되면 정상 추가 아니라면 이미 존재하는 약의 Id 와 false 반환")
+    public ResponseDto<Long> createSchedule(
             //@UserId Long id,
             @RequestBody DoesRequestDto doesRequestDto){
 
@@ -88,8 +105,8 @@ public class DoseController {
     }
 
     @PostMapping("/schedules")
-    @Operation(summary = "스케쥴 추가",description = "여러가지 약을 추가한다")
-    public ResponseDto<Boolean> createSchedules(
+    @Operation(summary = "스케쥴 추가",description = "여러가지 약을 추가한다 중복된 약 있을 경우 false")
+    public ResponseDto<List<Long>> createSchedules(
             //@UserId Long id,
             @RequestBody List<DoesRequestDto> doesRequestDtoList){
 

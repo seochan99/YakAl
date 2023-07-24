@@ -16,6 +16,7 @@ public class DoseDto {
     @Builder
     @Getter
     public static class Pill{
+        final Long id;
         final String pillName;
         final Boolean isTaken;
         final int cnt;
