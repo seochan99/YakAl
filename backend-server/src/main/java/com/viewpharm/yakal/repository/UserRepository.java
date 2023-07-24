@@ -22,12 +22,17 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndIsLoginAndRefreshTokenIsNotNull(Long userId, Boolean isLogin);
     //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
-    @Query("SELECT User.id from Dose d where d.date = :date and d.time = :time group by User.id")
-    List<User> findByDateAndTime(@Param("date") LocalDate localDate, @Param("time")EDosingTime dosingTime);
+    @Query("SELECT u, count(*) from Dose d join fetch User u where d.date = :date and d.time = :time group by User.id")
+    List<UserNotificationFrom> findByDateAndTime(@Param("date") LocalDate localDate, @Param("time")EDosingTime dosingTime);
 
 
     interface UserLoginForm {
         Long getId();
         EUserRole getUserRole();
+    }
+
+    interface UserNotificationFrom{
+        User getUser();
+        int getCount();
     }
 }

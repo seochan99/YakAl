@@ -96,14 +96,14 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<User> users = userRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
         NotificationUserRequestDto notificationUserRequestDto;
 
-        for(User user : users){
-            String title = user.getName() + "님, 아침 약 드실 시간이네요!";
-            String content = "앞으로" + "번 더 먹으면 끝나요."; //갯수 가져와서 넣기
-            Long userId = user.getId();
-            if (user.getIsIos()) { //ios 푸시알림
+        for (UserRepository.UserNotificationFrom user : users) {
+            String title = user.getUser().getName() + "님, 아침 약 드실 시간이네요!";
+            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            Long userId = user.getUser().getId();
+            if (user.getUser().getIsIos()) { //ios 푸시알림
                 notificationUserRequestDto = NotificationUserRequestDto.builder()
                         .targetUserId(userId)
                         .title(title)
@@ -122,51 +122,67 @@ public class NotificationService {
 
     //매일 오후 12시 실행
     @Scheduled(cron = "0 0 12 * * *")
-    public void sendPushNotificationOnLunch(Long userId, Long courseId, int NotificationType) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+    public void sendPushNotificationOnLunch() throws Exception {
+        //현재 날짜
+        LocalDate nowDate = LocalDate.now();
+        //날짜와 시간으로 알약 리스트 찾기
+        // 레포로 옮기기
+        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.LUNCH);
         NotificationUserRequestDto notificationUserRequestDto;
-        String title = user.getName() + "님, 점심 약 드실 시간이네요!";
-        String content = "앞으로" + "번 더 먹으면 끝나요."; //갯수 가져와서 넣기
 
-        if (user.getIsIos()) { //ios 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-        } else { //안드로이드 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-            //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+        for (UserRepository.UserNotificationFrom user : users) {
+            String title = user.getUser().getName() + "님, 점심 약 드실 시간이네요!";
+            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            Long userId = user.getUser().getId();
+            if (user.getUser().getIsIos()) { //ios 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
+            } else { //안드로이드 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
+                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+            }
         }
     }
 
     //매일 저녁 18시 실행
     @Scheduled(cron = "0 0 18 * * *")
-    public void sendPushNotificationOnDinner(Long userId, Long courseId, int NotificationType) throws Exception {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+    public void sendPushNotificationOnDinner() throws Exception {
+        //현재 날짜
+        LocalDate nowDate = LocalDate.now();
+        //날짜와 시간으로 알약 리스트 찾기
+        // 레포로 옮기기
+        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.DINNER);
         NotificationUserRequestDto notificationUserRequestDto;
-        String title = user.getName() + "님, 저녁 약 드실 시간이네요!";
-        String content = "앞으로" + "번 더 먹으면 끝나요."; //갯수 가져와서 넣기
 
-        if (user.getIsIos()) { //ios 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-        } else { //안드로이드 푸시알림
-            notificationUserRequestDto = NotificationUserRequestDto.builder()
-                    .targetUserId(userId)
-                    .title(title)
-                    .body(content).build();
-            notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-            //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+        for (UserRepository.UserNotificationFrom user : users) {
+            String title = user.getUser().getName() + "님, 저녁 약 드실 시간이네요!";
+            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            Long userId = user.getUser().getId();
+            if (user.getUser().getIsIos()) { //ios 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
+            } else { //안드로이드 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
+                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+            }
         }
     }
 
