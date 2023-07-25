@@ -22,6 +22,8 @@
 	<array>
 		<string>SUIT-Medium.otf</string>
 		<string>SUIT-Bold.otf</string>
+		<string></string>
+		<string></string>
 		<string>SUIT-SemiBold.otf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>

@@ -22,7 +22,9 @@ import java.time.LocalDateTime;
 @Getter
 @DynamicUpdate
 @NoArgsConstructor
-@Table(name = "notification")
+
+@Table(name = "notifications")
+
 public class Notification {
 
     @Id

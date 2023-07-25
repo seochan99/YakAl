@@ -70,8 +70,6 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
                 
                 let g = view.safeAreaLayoutGuide
                 NSLayoutConstraint.activate([
-                    
-                    
                     // top
                     outerView.topAnchor.constraint(equalTo: navigationBar.bottomAnchor, constant: 24.0),
                     
@@ -83,7 +81,6 @@ class ProgressNavController: UINavigationController, UINavigationControllerDeleg
                     
                     // height
                     outerView.heightAnchor.constraint(equalToConstant: 6.0),
-                    
                 ])
                 
                 // .alpha to Zero so we can "fade it in"

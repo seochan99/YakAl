@@ -106,7 +106,7 @@ public class NotificationService {
 
         for (UserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 아침 약 드실 시간이네요!";
-            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();
             if (user.getUser().getIsIos()) { //ios 푸시알림
                 notificationUserRequestDto = NotificationUserRequestDto.builder()
@@ -143,7 +143,7 @@ public class NotificationService {
 
         for (UserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 점심 약 드실 시간이네요!";
-            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();
             if (user.getUser().getIsIos()) { //ios 푸시알림
                 notificationUserRequestDto = NotificationUserRequestDto.builder()
@@ -180,7 +180,7 @@ public class NotificationService {
 
         for (UserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 저녁 약 드실 시간이네요!";
-            String content = user.getCount() + "번 먹어야 해요!"; //갯수 가져와서 넣기
+            String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();
             if (user.getUser().getIsIos()) { //ios 푸시알림
                 notificationUserRequestDto = NotificationUserRequestDto.builder()
