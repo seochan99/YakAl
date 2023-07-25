@@ -28,38 +28,38 @@ public class DoseController {
     @Operation(summary = "복용 스케줄 가져오기", description = "환자가 지정한 날짜에 복용해야 하는 약 목록을 가져온다.")
     public ResponseDto<DoseDto> getOneDayDoseSchedule(
             //@UserId Long id,
-            @RequestBody DoesRequestDto doesRequestDto) {
+            @RequestParam LocalDate date) {
 
-        return doseService.getDayDoseSchedule(1L,doesRequestDto.getDate());
+        return doseService.getDayDoseSchedule(1L,date);
     }
 
     @GetMapping("/percent")
     @Operation(summary = "복용 퍼센트 하루 가져오기", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 가져온다.")
     public ResponseDto<PercentDto> getOneDayDosePercent(
             //@UserId Long id,
-            @RequestBody DoesRequestDto doesRequestDto) {
-        return doseService.getDayDosePercent(1L,doesRequestDto.getDate());
+            @RequestParam LocalDate date) {
+        return doseService.getDayDosePercent(1L,date);
     }
 
     @GetMapping("/percent/week")
     @Operation(summary = "복용 퍼센트 일주일 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 일주일 치 가져온다.")
     public ResponseDto<List<PercentDto>> getWeekDosePercent(
             //@UserId Long id,
-            @RequestBody DoesRequestDto doesRequestDto) {
+            @RequestParam LocalDate date) {
 
-        return doseService.getDayWeekPercent(1L,doesRequestDto.getDate());
+        return doseService.getDayWeekPercent(1L,date);
     }
 
     @GetMapping("/percent/month")
     @Operation(summary = "복용 퍼센트 한달 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 한달 치 가져온다.")
     public ResponseDto<List<PercentDto>> getMonthDosePercent(
             //@UserId Long id,
-            @RequestBody DoesRequestDto doesRequestDto) {
+            @RequestParam LocalDate date) {
 
-        return doseService.getDayMonthPercent(1L,doesRequestDto.getDate());
+        return doseService.getDayMonthPercent(1L,date);
     }
 
-    @PutMapping("/cnt")
+    @PatchMapping("/cnt")
     @Operation(summary = "약의 개수 변경",description = "doesIdList로 여러개의 약의 개수를 +1")
     public ResponseDto<Boolean> updateDoseCnt(
             //@UserId Long id,
@@ -68,7 +68,7 @@ public class DoseController {
         return doseService.updateDoseCnt(1L,doesIdList);
     }
 
-    @PutMapping("/cnt/{doesId}")
+    @PatchMapping("/cnt/{doesId}")
     @Operation(summary = "약의 개수 변경",description = "doesId로 특정 약의 개수를 +1")
     public ResponseDto<Boolean> updateDoseCntByDoesId(
             //@UserId Long id,
@@ -77,7 +77,7 @@ public class DoseController {
         return doseService.updateDoseCntById(1L,doesId);
     }
 
-    @PutMapping("/take")
+    @PatchMapping("/take")
     @Operation(summary = "시간대마다 모두완료(복용) 업데이트",description = "아침시간대에 5개의 약이 존재할 때 모두완료를 눌러 약의 복용여부를 전부 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByTime(
             //@UserId Long id,
@@ -86,7 +86,7 @@ public class DoseController {
         return doseService.updateDoseTakeByTime(1L,doesRequestDto.getDate(),doesRequestDto.getTime());
     }
 
-    @PutMapping("/take/{doseId}")
+    @PatchMapping("/take/{doseId}")
     @Operation(summary = "복용 업데이트",description = "특정 시간대의 약의 복용 여부를 True로 바꾼다")
     public ResponseDto<Boolean> updateDoseTakeByPill(
             //@UserId Long id,
