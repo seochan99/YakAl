@@ -9,19 +9,22 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-@Setter
 @DynamicUpdate
 @NoArgsConstructor
+
 @Table(name = "notifications")
+
 public class Notification {
 
     @Id
@@ -29,21 +32,30 @@ public class Notification {
     @Column(name = "id")
     private Long id;
 
-    @Column(name="title", nullable = false)
+    @Column(name = "title", nullable = false)
     private String title;
 
-    @Column(name="description", nullable = false)
-    private String description;
+    @Column(name = "content", nullable = false)
+    private String content;
 
-    @Column(name="is_read", columnDefinition = "TINYINT(1)", nullable = false)
+    @Column(name = "is_read", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isRead;
 
-    @Column(name="created_at", nullable = false)
-    private Timestamp created;
+    @Column(name = "create_date", nullable = false)
+    private Timestamp createdDate;
 
     /* -------------------------------------------------- */
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @Builder
+    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, User user) {
+        this.title = title;
+        this.content = content;
+        this.isRead = false;
+        this.createdDate = Timestamp.valueOf(LocalDateTime.now());
+        this.user = user;
+    }
 }
