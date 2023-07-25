@@ -93,6 +93,9 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Notification> notifications = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Dose> doses = new ArrayList<>();
+
     /* -------------------------------------------------- */
 
     @Builder
