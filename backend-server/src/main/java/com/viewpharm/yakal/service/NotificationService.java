@@ -14,6 +14,7 @@ import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -89,6 +90,10 @@ public class NotificationService {
 
     //매일 아침 8시 실행
     @Scheduled(cron = "0 0 8 * * *")
+    @SchedulerLock(
+            name = "scheduledSendingMorningNotification",
+            lockAtLeastFor = "PT30S",
+            lockAtMostFor = "PT30S")
     public void sendPushNotificationOnMorning() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
@@ -122,6 +127,10 @@ public class NotificationService {
 
     //매일 오후 12시 실행
     @Scheduled(cron = "0 0 12 * * *")
+    @SchedulerLock(
+            name = "scheduledSendingLunchNotification",
+            lockAtLeastFor = "PT30S",
+            lockAtMostFor = "PT30S")
     public void sendPushNotificationOnLunch() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
@@ -155,6 +164,10 @@ public class NotificationService {
 
     //매일 저녁 18시 실행
     @Scheduled(cron = "0 0 18 * * *")
+    @SchedulerLock(
+            name = "scheduledSendingDinnerNotification",
+            lockAtLeastFor = "PT30S",
+            lockAtMostFor = "PT30S")
     public void sendPushNotificationOnDinner() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
