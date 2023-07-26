@@ -1,71 +1,71 @@
 package com.viewpharm.yakal.controller;
 
 
+import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.DoesRequestDto;
 import com.viewpharm.yakal.dto.DoseDto;
 import com.viewpharm.yakal.dto.PercentDto;
 import com.viewpharm.yakal.dto.ResponseDto;
 import com.viewpharm.yakal.service.DoseService;
-import com.viewpharm.yakal.type.EDosingTime;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/dose")
+@RequestMapping("/api/v1/dose")
 @Tag(name = "Dose", description = "환자의 복용 정보 추가, 열람, 수정, 삭제")
 public class DoseController {
 
     private final DoseService doseService;
-    @GetMapping("/schedule")
-    @Operation(summary = "복용 스케줄 가져오기", description = "환자가 지정한 날짜에 복용해야 하는 약 목록을 가져온다.")
+
+    @GetMapping("/schedule/day")
+    @Operation(summary = "하루 복용 스케줄 가져오기", description = "지정된 날짜에 복용해야 하는 약 목록을 가져온다.")
     public ResponseDto<DoseDto> getOneDayDoseSchedule(
-            //@UserId Long id,
-            @RequestParam LocalDate date) {
-
-        return doseService.getDayDoseSchedule(1L,date);
+            @UserId Long id,
+            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return doseService.getDayDoseSchedule(id, date);
     }
 
-    @GetMapping("/percent")
-    @Operation(summary = "복용 퍼센트 하루 가져오기", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 가져온다.")
+    @GetMapping("/progress/day")
+    @Operation(summary = "하루 복용 달성도 가져오기", description = "환자가 지정한 날짜의 약 복용 달성도를 가져온다.")
     public ResponseDto<PercentDto> getOneDayDosePercent(
-            //@UserId Long id,
-            @RequestParam LocalDate date) {
-        return doseService.getDayDosePercent(1L,date);
+            @UserId Long id,
+            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return doseService.getDayDosePercent(id, date);
     }
 
-    @GetMapping("/percent/week")
-    @Operation(summary = "복용 퍼센트 일주일 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 일주일 치 가져온다.")
+    @GetMapping("/progress/week")
+    @Operation(summary = "일주일 복용 달성도 가져오기", description = "환자가 지정한 날짜가 포함된 일주일동안의 약 복용 달성도를 하루 단위로 가져온다.")
     public ResponseDto<List<PercentDto>> getWeekDosePercent(
-            //@UserId Long id,
-            @RequestParam LocalDate date) {
-
-        return doseService.getDayWeekPercent(1L,date);
+            @UserId Long id,
+            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return doseService.getDayWeekPercent(id, date);
     }
 
-    @GetMapping("/percent/month")
-    @Operation(summary = "복용 퍼센트 한달 치 가져오기 ", description = "환자가 지정한 날짜에 복용한 약 퍼센트를 한달 치 가져온다.")
+    @GetMapping("/progress/month")
+    @Operation(summary = "한 달 복용 달성도 가져오기 ", description = "환자가 지정한 달의 약 복용 달성도를 하루 단위로 가져온다.")
     public ResponseDto<List<PercentDto>> getMonthDosePercent(
-            //@UserId Long id,
-            @RequestParam LocalDate date) {
-
-        return doseService.getDayMonthPercent(1L,date);
+            @UserId Long id,
+            @RequestParam("year-month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth) {
+        return doseService.getDayMonthPercent(id, yearMonth);
     }
 
     @PatchMapping("/cnt")
     @Operation(summary = "약의 개수 변경",description = "doesIdList로 여러개의 약의 개수를 +1")
     public ResponseDto<Boolean> updateDoseCnt(
-            //@UserId Long id,
+            @UserId Long id,
             @RequestBody List<Long> doesIdList){
-
-        return doseService.updateDoseCnt(1L,doesIdList);
+        return doseService.updateDoseCnt(id, doesIdList);
     }
 
     @PatchMapping("/cnt/{doesId}")

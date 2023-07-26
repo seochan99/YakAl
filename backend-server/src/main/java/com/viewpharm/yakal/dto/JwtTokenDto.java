@@ -1,13 +1,15 @@
 package com.viewpharm.yakal.dto;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 
-@Data
 @Getter
-@Builder
 public class JwtTokenDto {
-    private String accessToken;
-    private String refreshToken;
+
+    private final String accessToken;
+    private final String refreshToken;
+
+    public JwtTokenDto(final String accessToken, final String refreshToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = refreshToken;
+    }
 }

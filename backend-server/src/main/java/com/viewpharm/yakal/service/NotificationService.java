@@ -1,14 +1,13 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.NotificationDto;
-import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
+import com.viewpharm.yakal.dto.NotificationUserRequestDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.NotificationRepository;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.type.EDosingTime;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
@@ -31,12 +30,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class NotificationService {
-    private final UserRepository userRepository;
+    private final MobileUserRepository mobileUserRepository;
     private final NotificationRepository notificationRepository;
     private final NotificationUtil notificationUtil;
 
     public List<NotificationDto> readNotification(Long userId, Long pageNum, Long num) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
 
         Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
         Page<Notification> notifications = notificationRepository.findByUser(user, paging);
@@ -54,7 +53,7 @@ public class NotificationService {
     }
 
     public Boolean updateNotification(Long userId, Long notificationId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
         Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
         if (user.getId() != notification.getUser().getId()) {
@@ -67,7 +66,7 @@ public class NotificationService {
     }
 
     public Boolean deleteNotification(Long userId, Long notificationId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
         Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
         if (user.getId() != notification.getUser().getId()) {
@@ -101,10 +100,10 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
         NotificationUserRequestDto notificationUserRequestDto;
 
-        for (UserRepository.UserNotificationFrom user : users) {
+        for (MobileUserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 아침 약 드실 시간이네요!";
             String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();
@@ -138,10 +137,10 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.LUNCH);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.LUNCH);
         NotificationUserRequestDto notificationUserRequestDto;
 
-        for (UserRepository.UserNotificationFrom user : users) {
+        for (MobileUserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 점심 약 드실 시간이네요!";
             String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();
@@ -175,10 +174,10 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.DINNER);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.DINNER);
         NotificationUserRequestDto notificationUserRequestDto;
 
-        for (UserRepository.UserNotificationFrom user : users) {
+        for (MobileUserRepository.UserNotificationFrom user : users) {
             String title = user.getUser().getName() + "님, 저녁 약 드실 시간이네요!";
             String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = user.getUser().getId();

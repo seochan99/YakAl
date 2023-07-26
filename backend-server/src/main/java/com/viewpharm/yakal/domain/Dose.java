@@ -51,18 +51,23 @@ public class Dose {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    private MobileUser mobileUser;
 
-    /* -------------------------------------------------- */
     @Builder
-    public Dose(String pillName, LocalDate date, EDosingTime time, int pillCnt, Boolean isHalf, Prescription prescription,User user) {
+    public Dose(final String pillName,
+                final LocalDate date,
+                final EDosingTime time,
+                final int pillCnt,
+                final Boolean isHalf,
+                final Prescription prescription,
+                final MobileUser mobileUser) {
         this.pillName = pillName;
         this.date = date;
         this.time = time;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
         this.prescription = prescription;
-        this.user=user;
+        this.mobileUser=mobileUser;
         this.isTaken = false;
     }
 }

@@ -1,11 +1,13 @@
 package com.viewpharm.yakal.config;
 
-import com.viewpharm.yakal.service.CustomUserDetailService;
-import com.viewpharm.yakal.filter.JwtAuthenticationFilter;
-import com.viewpharm.yakal.filter.JwtExceptionFilter;
+import com.viewpharm.yakal.common.Constants;
+import com.viewpharm.yakal.security.UserDetailServiceForLoad;
+import com.viewpharm.yakal.security.JwtAuthenticationFilter;
+import com.viewpharm.yakal.security.JwtExceptionFilter;
 import com.viewpharm.yakal.security.JwtAccessDenied;
 import com.viewpharm.yakal.security.JwtAuthEntryPoint;
-import com.viewpharm.yakal.service.JwtService;
+import com.viewpharm.yakal.security.JwtProvider;
+import com.viewpharm.yakal.type.ERole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +26,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtService jwtService;
-    private final CustomUserDetailService customUserDetailService;
+    private final JwtProvider jwtProvider;
+    private final UserDetailServiceForLoad userDetailServiceForLoad;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
     private final JwtAccessDenied jwtAccessDeniedHandler;
 
@@ -33,16 +35,16 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry.anyRequest().permitAll())
-//                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
-//                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
-//                        .requestMatchers("/admin/**").hasRole(EUserRole.ADMIN.toString())
-//                        .anyRequest().authenticated())
+                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
+                        .requestMatchers("/admin/**").hasRole(ERole.ROLE_WEB.toString())
+                        .anyRequest().authenticated())
 
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler))
 
-                .addFilterBefore(new JwtAuthenticationFilter(jwtService, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, userDetailServiceForLoad), UsernamePasswordAuthenticationFilter.class)
 
                 .httpBasic(HttpBasicConfigurer::disable)
                 .csrf(CsrfConfigurer::disable)

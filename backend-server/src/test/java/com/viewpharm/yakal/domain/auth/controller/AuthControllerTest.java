@@ -18,6 +18,9 @@ import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.viewpharm.yakal.documentation.DocumentUtils.getDocumentRequest;
 import static com.viewpharm.yakal.documentation.DocumentUtils.getDocumentResponse;
@@ -46,8 +49,9 @@ public class AuthControllerTest {
                 fieldWithPath("error").type(NULL).description("에러 정보(성공: null)"),
         };
 
-        Mockito.when(authService.getRedirectUrl(ELoginProvider.KAKAO))
-                .thenReturn("https://kauth.kakao.com/oauth/authorize?client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URL}");
+        Map<String, String> map = new HashMap<>(1);
+        map.put("url", "https://kauth.kakao.com/oauth/authorize?client_id={KAKAO_CLIENT_ID}&redirect_uri={KAKAO_REDIRECT_URL}");
+        Mockito.when(authService.getRedirectUrl(ELoginProvider.KAKAO)).thenReturn(map);
 
         MockMvcFactory.getRestDocsMockMvc(contextProvider, "localhost", authController)
                 .perform(RestDocumentationRequestBuilders.get("/api/auth/kakao")

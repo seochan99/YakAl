@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.advice;
+package com.viewpharm.yakal.common;
 
 import com.viewpharm.yakal.dto.ResponseDto;
 import org.springframework.core.MethodParameter;

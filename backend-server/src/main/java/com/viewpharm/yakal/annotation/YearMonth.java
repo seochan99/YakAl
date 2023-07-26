@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.annotation;
 
-import com.viewpharm.yakal.validator.EnumValidator;
+import com.viewpharm.yakal.validator.YearMonthValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 
@@ -12,11 +12,10 @@ import java.lang.annotation.Target;
 
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EnumValidator.class)
-@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER})
-public @interface Enum {
-    String message() default "Invalid Enum Value";
+@Target({ElementType.PARAMETER, ElementType.FIELD})
+@Constraint(validatedBy = {YearMonthValidator.class})
+public @interface YearMonth {
+    String message() default "Invalid YearMonth Format. (yyyy-MM)";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
-    Class<? extends java.lang.Enum<?>> enumClass();
 }
