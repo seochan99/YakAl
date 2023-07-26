@@ -1,6 +1,5 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.NotificationDto;
@@ -15,6 +14,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
+import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -78,11 +78,6 @@ public class NotificationService {
         return Boolean.TRUE;
     }
 
-
-    //특정 시간대에 약 먹어야 한다 + 몇 개 남았다 알림 보내기
-    //동적으로 시간대 받는 방법이 도저히 안나와서
-    //특정 시간에대 함수를 호출하고 db에서 약 시간 확인하고
-    //몇 분뒤에 먹어야 하는지 출력만 하는 방식으로 일단 할 듯
 
     //특정 시간에 디비에서 오늘 특정 시간 안 약 가져오기
     //약 유저 확인
@@ -197,6 +192,24 @@ public class NotificationService {
                 //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
             }
         }
+    }
+
+    public Boolean sendPushNotificationTest(LocalDate localDate, EDosingTime eDosingTime) throws Exception {
+        //현재 날짜
+        //날짜와 시간으로 알약 리스트 찾기
+        // 레포로 옮기기
+        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
+
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(localDate, eDosingTime);
+        NotificationUserRequestDto notificationUserRequestDto;
+
+        for (UserRepository.UserNotificationFrom user : users) {
+            String title = user.getUser().getName() + "님, 아침 약 드실 시간이네요!";
+            String content = user.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
+            Long userId = user.getUser().getId();
+            log.info("UserId : " + userId + " UserName : " + user.getUser().getName());
+        }
+        return Boolean.TRUE;
     }
 
 
