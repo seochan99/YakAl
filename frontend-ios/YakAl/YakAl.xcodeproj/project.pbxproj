@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8CE80EF4604FC4229A794C5E /* Pods_YakAl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */; };
+		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2752A6D686A00F507BD /* Step2VC.swift */; };
 		9888A2782A6D690200F507BD /* Step3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2772A6D690200F507BD /* Step3VC.swift */; };
@@ -29,10 +30,13 @@
 		98C12D792A5E6C8E00175EB8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D782A5E6C8E00175EB8 /* HomeViewController.swift */; };
 		98C12D7B2A5E7ADB00175EB8 /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D7A2A5E7ADB00175EB8 /* SUIT-SemiBold.otf */; };
 		98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */; };
+		98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EC8F4C2A72109300AA698C /* Step2_1VC.swift */; };
+		98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EC8F4E2A721C3400AA698C /* SignUpDoneViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.debug.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.debug.xcconfig"; sourceTree = "<group>"; };
+		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		9888A2752A6D686A00F507BD /* Step2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2VC.swift; sourceTree = "<group>"; };
@@ -57,6 +61,8 @@
 		98C12D782A5E6C8E00175EB8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		98C12D7A2A5E7ADB00175EB8 /* SUIT-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-SemiBold.otf"; sourceTree = "<group>"; };
 		98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiginInModel.swift; sourceTree = "<group>"; };
+		98EC8F4C2A72109300AA698C /* Step2_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2_1VC.swift; sourceTree = "<group>"; };
+		98EC8F4E2A721C3400AA698C /* SignUpDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDoneViewController.swift; sourceTree = "<group>"; };
 		BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.release.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.release.xcconfig"; sourceTree = "<group>"; };
 		F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_YakAl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -76,10 +82,13 @@
 		9888A2742A6D680800F507BD /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				980531912A6F7C2F00E094C3 /* Step0_1VC.swift */,
 				9888A27D2A6D69C400F507BD /* Store */,
 				98C12D742A5E67D200175EB8 /* SignInViewController.swift */,
 				9888A27B2A6D697E00F507BD /* Step1VC.swift */,
 				9888A27F2A6D7C8800F507BD /* DetailViewController.swift */,
+				98EC8F4C2A72109300AA698C /* Step2_1VC.swift */,
+				98EC8F4E2A721C3400AA698C /* SignUpDoneViewController.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -350,12 +359,15 @@
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainViewController.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
+				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
+				980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */,
 				98C12D752A5E67D200175EB8 /* SignInViewController.swift in Sources */,
 				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
+				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 				98C12D792A5E6C8E00175EB8 /* HomeViewController.swift in Sources */,
