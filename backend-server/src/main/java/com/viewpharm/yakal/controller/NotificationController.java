@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/notification")
+@RequestMapping("/api/v1/notification")
 @Tag(name = "Notification", description = "알림 조회, 읽음 처리, 삭제")
 public class NotificationController {
     private final NotificationService notificationService;
@@ -45,7 +45,6 @@ public class NotificationController {
     @PostMapping("/notificationTest")
     public ResponseDto<Boolean> createNotificationTest(@RequestBody NotificationTestRequestDto notificationTestRequestDto) throws Exception {
         return ResponseDto.ok(notificationService.sendPushNotificationTest(notificationTestRequestDto.getLocalDate(), notificationTestRequestDto.getEDosingTime()));
-
     }
 
 

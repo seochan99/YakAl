@@ -39,7 +39,7 @@ public class NotificationService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
-        Page<Notification> notifications = notificationRepository.findByUser(user, paging);
+        Page<Notification> notifications = notificationRepository.findByUserAndStatus(user, paging,true);
 
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for (Notification notification : notifications) {
@@ -73,8 +73,8 @@ public class NotificationService {
         if (user.getId() != notification.getUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
-
-        notificationRepository.delete(notification);
+        notification.builder().status(false).build();
+        //notificationRepository.delete(notification);
         return Boolean.TRUE;
     }
 
