@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,9 +25,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
     @Query("SELECT u, count(*) from Dose d join fetch User u where d.date = :date and d.time = :dosingTime group by u")
-    List<UserNotificationFrom> findByDateAndTime(@Param("date") LocalDate localDate, @Param("dosingTime") EDosingTime dosingTime);
+    List<UserNotificationFrom> findByDateAndDosingTime(@Param("date") LocalDate localDate, @Param("dosingTime") EDosingTime dosingTime);
 
+    @Query("SELECT u, count(*) from Dose d join fetch User u where d.date = :date and u.breakfastTime = :localTime group by u")
+    List<UserNotificationFrom> findByDateAndBreakfastTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
+    @Query("SELECT u, count(*) from Dose d join fetch User u where d.date = :date and u.lunchTime = :localTime group by u")
+    List<UserNotificationFrom> findByDateAndLunchTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
+
+    @Query("SELECT u, count(*) from Dose d join fetch User u where d.date = :date and u.dinnerTime = :localTime group by u")
+    List<UserNotificationFrom> findByDateAndDinnerTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
     interface UserLoginForm {
         Long getId();
 

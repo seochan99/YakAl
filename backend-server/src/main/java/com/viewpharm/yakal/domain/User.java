@@ -23,6 +23,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -84,6 +85,16 @@ public class User {
 
     @Column(name = "expiration_date")
     private Timestamp expirationDate;
+
+    @Column(name = "breakfastTime")
+    private LocalTime breakfastTime;
+
+    @Column(name = "lunchTime")
+    private LocalTime lunchTime;
+
+    @Column(name = "dinnerTime")
+    private LocalTime dinnerTime;
+
 
     /* -------------------------------------------------- */
 

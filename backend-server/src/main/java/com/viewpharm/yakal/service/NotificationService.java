@@ -14,7 +14,6 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -23,6 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class NotificationService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
-        Page<Notification> notifications = notificationRepository.findByUserAndStatus(user, paging,true);
+        Page<Notification> notifications = notificationRepository.findByUserAndStatus(user, paging, true);
 
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for (Notification notification : notifications) {
@@ -83,8 +83,8 @@ public class NotificationService {
     //약 유저 확인
     //유저의 디바이스 토큰 가져와서 알림 보내기
 
-    //매일 아침 8시 실행
-    @Scheduled(cron = "0 0 8 * * *")
+    //매일 아침7-11시 10분 간격 실행
+    @Scheduled(cron = "0 0/10 7-11 * * *")
     @SchedulerLock(
             name = "scheduledSendingMorningNotification",
             lockAtLeastFor = "PT30S",
@@ -92,11 +92,12 @@ public class NotificationService {
     public void sendPushNotificationOnMorning() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndBreakfastTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (UserRepository.UserNotificationFrom user : users) {
@@ -120,8 +121,8 @@ public class NotificationService {
         }
     }
 
-    //매일 오후 12시 실행
-    @Scheduled(cron = "0 0 12 * * *")
+    //매일 오후 11-17시 10분 간격 실행
+    @Scheduled(cron = "0 0/10 11-17 * * *")
     @SchedulerLock(
             name = "scheduledSendingLunchNotification",
             lockAtLeastFor = "PT30S",
@@ -129,11 +130,12 @@ public class NotificationService {
     public void sendPushNotificationOnLunch() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.LUNCH);
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndLunchTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (UserRepository.UserNotificationFrom user : users) {
@@ -157,8 +159,8 @@ public class NotificationService {
         }
     }
 
-    //매일 저녁 18시 실행
-    @Scheduled(cron = "0 0 18 * * *")
+    //매일 저녁 17-01시 10분 간격 실행
+    @Scheduled(cron = "0 0/10 17-01 * * *")
     @SchedulerLock(
             name = "scheduledSendingDinnerNotification",
             lockAtLeastFor = "PT30S",
@@ -166,11 +168,12 @@ public class NotificationService {
     public void sendPushNotificationOnDinner() throws Exception {
         //현재 날짜
         LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(nowDate, EDosingTime.DINNER);
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndDinnerTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (UserRepository.UserNotificationFrom user : users) {
@@ -200,7 +203,7 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndTime(localDate, eDosingTime);
+        List<UserRepository.UserNotificationFrom> users = userRepository.findByDateAndDosingTime(localDate, eDosingTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (UserRepository.UserNotificationFrom user : users) {
