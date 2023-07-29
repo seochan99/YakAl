@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+
+	// Spring REST Docs
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
 	id "com.gorylenko.gradle-git-properties" version "2.4.1"
 	id "com.epages.restdocs-api-spec" version "0.16.2"
@@ -30,46 +32,81 @@ ext {
 }
 
 dependencies {
+	// Spring Date JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	// Spring Security + OAuth2
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// Communication
 	implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+	// Spring Web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// JWT
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 	implementation 'jakarta.xml.bind:jakarta.xml.bind-api:4.0.0'
-	implementation 'commons-io:commons-io:2.11.0'
-	implementation 'org.bouncycastle:bcprov-jdk15to18:1.75'
-	implementation 'org.bouncycastle:bcpkix-jdk15to18:1.75'
-	implementation 'com.google.code.findbugs:jsr305:3.0.2'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
-	implementation 'com.google.firebase:firebase-admin:9.2.0'
-	implementation 'org.drjekyll:javapns:2.4.2'
-	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-	implementation 'net.javacrumbs.shedlock:shedlock-spring:5.6.0'
-	implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.6.0'
-	testImplementation 'junit:junit:4.13.1'
-	compileOnly 'org.projectlombok:lombok'
-	compileOnly 'com.jcraft:jsch:0.1.55'
-
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-	runtimeOnly 'com.mysql:mysql-connector-j'
 
-	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
+	// Validation
+	implementation 'com.google.code.findbugs:jsr305:3.0.2'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	// OpenAPI
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
 
+	// Spring REST Docs
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'org.springframework.security:spring-security-test'
 	testImplementation 'com.epages:restdocs-api-spec:0.17.1'
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
-
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
+	// Firebase
+	implementation 'com.google.firebase:firebase-admin:9.2.0'
+
+	// IOS Push
+	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+	implementation 'org.drjekyll:javapns:2.4.2'
+
+	// QueryDSL
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+	// Schedule Lock
+	implementation 'net.javacrumbs.shedlock:shedlock-spring:5.6.0'
+	implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.6.0'
+
+	// Test
+	testImplementation 'junit:junit:4.13.1'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// MYSQL Driver
+	runtimeOnly 'com.mysql:mysql-connector-j'
+
+	// Configuration Metadata
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
+/**
+ * <p>
+ * 개발환경에서만 API 문서를 제공하고자 한다면 빌드태스크에 asciidoctor 를 추가합니다.
+ * asciidoctor 가 수행될 때 통합테스트 실행 태스크 restDocsTest 를 수행하기에
+ * restDocsTest 를 추가로 수행하지 않아도 됩니다.
+ * </p>
+ * @see <a href="https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/">Asciidoctor Gradle Plugin Suite</a>
+ *
+ * ex)<code>./gradlew clean asciidoctor build</code>
+ */
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
@@ -94,16 +131,6 @@ tasks.named("asciidoctor") {
 	baseDirFollowsSourceDir()
 }
 
-/**
- * <p>
- * 개발환경에서만 API 문서를 제공하고자 한다면 빌드태스크에 asciidoctor 를 추가합니다.
- * asciidoctor 가 수행될 때 통합테스트 실행 태스크 restDocsTest 를 수행하기에
- * restDocsTest 를 추가로 수행하지 않아도 됩니다.
- * </p>
- * @see <a href="https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/">Asciidoctor Gradle Plugin Suite</a>
- *
- * ex)<code>./gradlew clean asciidoctor build</code>
- */
 tasks.register("apibuild", GradleBuild) {
 	tasks = ["clean", "asciidoctor", "build"]
 }
@@ -126,4 +153,21 @@ bootJar {
 	}
 
 	archiveFileName.set "application.jar"
+}
+
+/**
+ * Query DSL Build Options (선택사항)
+ */
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir, "$projectDir/src/main/java" ]
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
 }

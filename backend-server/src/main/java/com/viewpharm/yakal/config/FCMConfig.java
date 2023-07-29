@@ -15,6 +15,7 @@ import java.util.List;
 //안드로이드 1번 버전
 @Configuration
 public class FCMConfig {
+
     @Bean
     FirebaseMessaging firebaseMessaging() throws IOException {
         ClassPathResource resource = new ClassPathResource("firebase/firebase_service_key.json");

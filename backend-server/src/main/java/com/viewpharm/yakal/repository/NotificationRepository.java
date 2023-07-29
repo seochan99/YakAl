@@ -1,8 +1,7 @@
 package com.viewpharm.yakal.repository;
 
+import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.domain.Notification;
-import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.MessageDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,9 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
-    Page<Notification> findByUser(User user, Pageable pageable);
 
-    Optional<Notification> findByIdAndUserId(Long notificationId, Long userId);
+    Optional<Notification> findByIdAndMobileUserId(Long notificationId, Long userId);
 
-    Page<Notification> findByUserAndStatus(User user, Pageable pageable, Boolean status);
+    Page<Notification> findByMobileUserAndStatus(MobileUser mobileUser, Pageable pageable, Boolean status);
 }

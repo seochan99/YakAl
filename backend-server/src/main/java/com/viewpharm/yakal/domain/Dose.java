@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Entity
@@ -16,15 +19,26 @@ import java.time.LocalDate;
 @DynamicUpdate
 @NoArgsConstructor
 @Table(name = "doses")
+@Where(clause = "deleted_at is null")
+@SQLDelete(sql = "update doses set deleted_at = now() where id = ?")
 public class Dose {
 
+    /**
+     * PK
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name="pill_name", nullable = false)
-    private String pillName;
+    /**
+     * COLUMNS
+     */
+    @Column(name="kd_code", nullable = false)
+    private String KDCode;
+
+    @Column(name="atc_code", nullable = false)
+    private String ATCCode;
 
     @Column(name="date", nullable = false)
     private LocalDate date;
@@ -37,32 +51,49 @@ public class Dose {
     private Boolean isTaken;
 
     @Column(name="pill_cnt", nullable = false)
-    private int pillCnt;
+    private Long pillCnt;
 
-    // 반알을 먹어야 하면 True
     @Column(name="is_half", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isHalf;
 
-    /* -------------------------------------------------- */
+    @Column(name="is_deleted", columnDefinition = "TINYINT(1)", nullable = false)
+    private Boolean isDeleted;
 
+    @Column(name="created_at", nullable = false)
+    private Timestamp created;
+
+    @Column(name="deleted_at")
+    private Timestamp deleted;
+
+    /**
+     * MANY-TO-ONE RELATION
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="prescription_id", nullable = false)
     private Prescription prescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private User user;
+    private MobileUser mobileUser;
 
-    /* -------------------------------------------------- */
     @Builder
-    public Dose(String pillName, LocalDate date, EDosingTime time, int pillCnt, Boolean isHalf, Prescription prescription,User user) {
-        this.pillName = pillName;
+    public Dose(final String kdCode,
+                final String ATCCode,
+                final LocalDate date,
+                final EDosingTime time,
+                final Long pillCnt,
+                final Boolean isHalf,
+                final Prescription prescription,
+                final MobileUser mobileUser) {
+        this.KDCode = kdCode;
         this.date = date;
         this.time = time;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
         this.prescription = prescription;
-        this.user=user;
+        this.mobileUser = mobileUser;
         this.isTaken = false;
+        this.ATCCode = ATCCode;
+        this.created = new Timestamp(System.currentTimeMillis());
     }
 }

@@ -1,6 +1,5 @@
 package com.viewpharm.yakal.dto;
 
-import jakarta.persistence.Column;
 import lombok.Builder;
 import lombok.Getter;
 import java.sql.Timestamp;
