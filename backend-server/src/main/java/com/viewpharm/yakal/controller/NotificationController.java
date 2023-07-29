@@ -1,12 +1,10 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.dto.NotificationDto;
-import com.viewpharm.yakal.dto.ResponseDto;
-import com.viewpharm.yakal.service.NotificationService;
+import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/notification")
+@RequestMapping("/api/v1/notification")
 @Tag(name = "Notification", description = "알림 조회, 삭제, 알림으로 복용 체크")
 public class NotificationController {
     private final NotificationService notificationService;

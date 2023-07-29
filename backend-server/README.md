@@ -38,6 +38,13 @@ java -jar application.jar
 * [http://localhost:8080/api-docs.html](http://localhost:8080/api-docs.html)로 접속하여
  Swagger UI로 포멧팅된 API 문서를 열람할 수 있음
 
+## QueryDsl
+
+* Q Class 생성
+
+```sh
+./gradlew compileJava
+```
 
 ## 협업 규칙
 > 1. PR 시 본인이 받지 않는다.

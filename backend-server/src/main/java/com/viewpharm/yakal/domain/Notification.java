@@ -20,11 +20,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@Setter
 @DynamicUpdate
 @NoArgsConstructor
-
 @Table(name = "notifications")
-
 public class Notification {
 
     @Id
@@ -48,14 +47,16 @@ public class Notification {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private MobileUser mobileUser;
 
     @Builder
-    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, User user) {
+    public Notification(final String title,
+                        final String content,
+                        final MobileUser mobileUser) {
         this.title = title;
         this.content = content;
         this.isRead = false;
         this.createdDate = Timestamp.valueOf(LocalDateTime.now());
-        this.user = user;
+        this.mobileUser = mobileUser;
     }
 }
