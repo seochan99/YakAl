@@ -18,6 +18,7 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,15 @@ public class MobileUser extends User {
 
     @Column(name = "is_allowed_notification", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isAllowedNotification;
+
+    @Column(name = "breakfastTime")
+    private LocalTime breakfastTime;
+
+    @Column(name = "lunchTime")
+    private LocalTime lunchTime;
+
+    @Column(name = "dinnerTime")
+    private LocalTime dinnerTime;
 
     /**
      * ONE-TO-MANY RELATION

@@ -11,7 +11,7 @@ import com.google.gson.JsonParseException;
 
 import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.dto.MessageDto;
-import com.viewpharm.yakal.dto.NotificationUserRequestDto;
+import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MobileUserRepository;

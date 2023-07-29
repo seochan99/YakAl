@@ -43,6 +43,9 @@ public class Notification {
     @Column(name = "create_date", nullable = false)
     private Timestamp createdDate;
 
+    @Column(name = "status", columnDefinition = "TINYINT(1)")
+    private Boolean status;
+
     /* -------------------------------------------------- */
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,13 +53,18 @@ public class Notification {
     private MobileUser mobileUser;
 
     @Builder
-    public Notification(final String title,
-                        final String content,
-                        final MobileUser mobileUser) {
+    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, Boolean status, MobileUser mobileUser) {
         this.title = title;
         this.content = content;
         this.isRead = false;
         this.createdDate = Timestamp.valueOf(LocalDateTime.now());
+        this.status = true;
         this.mobileUser = mobileUser;
     }
+
+    @Builder
+    public Notification(final Boolean isRead) {
+        this.isRead = isRead;
+    }
+
 }

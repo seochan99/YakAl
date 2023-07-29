@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.dto;
+package com.viewpharm.yakal.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;
