@@ -11,7 +11,6 @@ import com.viewpharm.yakal.dto.response.OneDayScheduleDto;
 import com.viewpharm.yakal.dto.response.OneDaySummaryDto;
 import com.viewpharm.yakal.dto.response.OneDaySummaryWithoutDateDto;
 import com.viewpharm.yakal.dto.response.OneTimeScheduleDto;
-import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
