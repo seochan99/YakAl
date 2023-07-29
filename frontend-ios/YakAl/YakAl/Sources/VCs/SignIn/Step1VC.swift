@@ -28,7 +28,7 @@ class Step1VC: SignInViewController {
         changeNaviBack()
 
            super.viewDidLoad()
-           myStepNumber = 1
+           myStepNumber = 2
         
            
            // Set bottom constraint for button
@@ -49,7 +49,7 @@ class Step1VC: SignInViewController {
        
        
        @IBAction func nextButtonTapped(_ sender: UIButton) {
-           user.step1Input = siginInInputField.text!
+           user.nickName = siginInInputField.text!
            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
            let signInScreen5VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_5") as! Step2_1VC
            

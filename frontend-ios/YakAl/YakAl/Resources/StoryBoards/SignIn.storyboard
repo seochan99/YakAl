@@ -111,43 +111,69 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAj-f1-9Ld">
-                                <rect key="frame" x="20" y="730" width="353" height="56"/>
-                                <color key="backgroundColor" name="MainColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="56" id="xcg-cp-HdG"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="인증하기">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="10"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="agreeButtonTapped:" destination="rCM-1n-JBD" eventType="touchUpInside" id="Bwj-JR-6zz"/>
-                                    <action selector="agreeButtonTapped:" destination="yNq-V8-vyC" eventType="touchUpInside" id="Jwn-gD-euu"/>
-                                </connections>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainLogo" translatesAutoresizingMaskIntoConstraints="NO" id="lkQ-M8-DBA">
-                                <rect key="frame" x="32" y="326" width="329" height="220"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="lkQ-M8-DBA">
+                                <rect key="frame" x="32" y="326" width="329" height="252"/>
                             </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="fXK-Uj-EFf">
+                                <rect key="frame" x="20" y="730" width="353" height="56"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TAj-f1-9Ld">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="56"/>
+                                        <color key="backgroundColor" red="0.9137254901960784" green="0.9137254901960784" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="qxV-ad-znh"/>
+                                            <constraint firstAttribute="height" constant="56" id="xcg-cp-HdG"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="건너뛰기">
+                                            <color key="titleColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="skipButtonTapped:" destination="rCM-1n-JBD" eventType="touchUpInside" id="3o9-I2-7hy"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-AN-w36">
+                                        <rect key="frame" x="108" y="0.0" width="245" height="56"/>
+                                        <color key="backgroundColor" name="MainColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="56" id="pr3-PP-dSq"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="20"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                        <state key="normal" title="인증하기">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                <integer key="value" value="10"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
+                                        <connections>
+                                            <action selector="agreeButtonTapped2:" destination="rCM-1n-JBD" eventType="touchUpInside" id="8yr-bT-8PU"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Nce-hL-E9L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Nce-hL-E9L" firstAttribute="trailing" secondItem="lkQ-M8-DBA" secondAttribute="trailing" constant="32" id="3QL-AS-gpY"/>
                             <constraint firstItem="DPe-VS-NS2" firstAttribute="top" secondItem="Nce-hL-E9L" secondAttribute="top" constant="94" id="E58-G1-48q"/>
-                            <constraint firstItem="TAj-f1-9Ld" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="20" id="HUV-ft-r8U"/>
+                            <constraint firstItem="Nce-hL-E9L" firstAttribute="bottom" secondItem="fXK-Uj-EFf" secondAttribute="bottom" constant="32" id="IMe-Wh-ew5"/>
+                            <constraint firstItem="Nce-hL-E9L" firstAttribute="trailing" secondItem="fXK-Uj-EFf" secondAttribute="trailing" constant="20" id="KqE-R3-JNX"/>
                             <constraint firstItem="lkQ-M8-DBA" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="32" id="L0e-cn-F9e"/>
                             <constraint firstItem="lkQ-M8-DBA" firstAttribute="top" secondItem="yyg-rQ-geN" secondAttribute="bottom" constant="143" id="fpy-4F-KpR"/>
                             <constraint firstItem="DPe-VS-NS2" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="32" id="keO-HJ-WRN"/>
-                            <constraint firstItem="Nce-hL-E9L" firstAttribute="trailing" secondItem="TAj-f1-9Ld" secondAttribute="trailing" constant="20" id="l0X-lr-6Pp"/>
-                            <constraint firstItem="Nce-hL-E9L" firstAttribute="bottom" secondItem="TAj-f1-9Ld" secondAttribute="bottom" constant="32" id="saM-2c-uiv"/>
+                            <constraint firstItem="fXK-Uj-EFf" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="20" id="zlt-4D-6Dy"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="aXK-kF-dme"/>
@@ -328,6 +354,9 @@
                                                         <integer key="value" value="6"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="modeNormalButtonTapped:" destination="Kmn-tF-7CO" eventType="touchUpInside" id="V3d-KZ-Otd"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -370,6 +399,9 @@
                                                         <color key="value" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <action selector="modeSeniorButtonTapped:" destination="Kmn-tF-7CO" eventType="touchUpInside" id="ggC-Ef-NlX"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -430,6 +462,10 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="j9Z-qN-22m"/>
+                    <connections>
+                        <outlet property="modeNormal" destination="Pv8-Ha-YFg" id="m1s-NG-u1O"/>
+                        <outlet property="modeSenior" destination="ZzQ-S3-Ube" id="3cZ-gg-8ek"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OE2-sA-KaQ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -497,6 +533,10 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="dno-w0-xJA">
+                                <rect key="frame" x="38" y="241" width="329" height="252"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="x6x-Ah-OO0"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -509,6 +549,9 @@
                             <constraint firstItem="Mal-Pc-o0i" firstAttribute="leading" secondItem="x6x-Ah-OO0" secondAttribute="leading" constant="20" id="iol-2P-Iv2"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="name" destination="817-oT-Whj" id="pYp-LR-BNJ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fAX-Wl-eVp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1169,10 +1212,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="MainLogo" width="380" height="220"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
+        <image name="defaultImage" width="252" height="252"/>
         <namedColor name="MainColor">
             <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>

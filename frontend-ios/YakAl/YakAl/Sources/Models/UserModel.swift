@@ -10,11 +10,12 @@ import Foundation
 struct User {
     static let shared = User()
 
-    
-    var step1Input: String = ""
-    var step2Input: Date=Date()
-    var step3Input: String = ""
-    var step4Input: String = ""
+    // 닉네임
+    var nickName: String = ""
+    // 본인인증 여부
+    var isVerify: Bool = false
+    // 노인 모드
+    var isSenior: Bool = false
     
     public init() {}
 

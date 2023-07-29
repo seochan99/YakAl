@@ -72,7 +72,7 @@ class Step4VC: SignInViewController,UITextFieldDelegate {
     
     
     @IBAction func goMainButton(_ sender: UIButton) {
-        user.step4Input = siginInInputField.text!
+//        user.step4Input = siginInInputField.text!
         print(user!)
 
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
