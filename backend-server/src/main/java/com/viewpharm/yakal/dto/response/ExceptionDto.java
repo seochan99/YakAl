@@ -1,7 +1,8 @@
-package com.viewpharm.yakal.dto;
+package com.viewpharm.yakal.dto.response;
 
 import com.viewpharm.yakal.exception.ErrorCode;
 import lombok.Getter;
+
 @Getter
 public class ExceptionDto {
     private final String code;

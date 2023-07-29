@@ -7,7 +7,7 @@ import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.dto.JwtTokenDto;
+import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.utils.OAuth2Util;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
@@ -70,7 +70,7 @@ public class AuthService {
         }
 
         if (socialId == null) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER_ERROR);
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
         final Random random = new Random();
@@ -100,7 +100,7 @@ public class AuthService {
     @Transactional
     public void logout(final Long userId) {
         final MobileUser user = mobileUserRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         user.logout();
     }
 

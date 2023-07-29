@@ -26,7 +26,7 @@ import java.time.LocalDate;
 @Setter
 @DynamicUpdate
 @Table(name = "users")
-@DiscriminatorColumn(name="role")
+@DiscriminatorColumn
 @Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {

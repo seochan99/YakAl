@@ -2,6 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.1.1'
 	id 'io.spring.dependency-management' version '1.1.0'
+
+	// Spring REST Docs
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
 	id "com.gorylenko.gradle-git-properties" version "2.4.1"
 	id "com.epages.restdocs-api-spec" version "0.16.2"
@@ -30,7 +32,7 @@ ext {
 }
 
 dependencies {
-	// JPA
+	// Spring Date JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	// Spring Security + OAuth2
@@ -69,6 +71,12 @@ dependencies {
 	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 	implementation 'org.drjekyll:javapns:2.4.2'
 
+	// QueryDSL
+	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
 	// Schedule Lock
 	implementation 'net.javacrumbs.shedlock:shedlock-spring:5.6.0'
 	implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.6.0'
@@ -89,6 +97,16 @@ dependencies {
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 }
 
+/**
+ * <p>
+ * 개발환경에서만 API 문서를 제공하고자 한다면 빌드태스크에 asciidoctor 를 추가합니다.
+ * asciidoctor 가 수행될 때 통합테스트 실행 태스크 restDocsTest 를 수행하기에
+ * restDocsTest 를 추가로 수행하지 않아도 됩니다.
+ * </p>
+ * @see <a href="https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/">Asciidoctor Gradle Plugin Suite</a>
+ *
+ * ex)<code>./gradlew clean asciidoctor build</code>
+ */
 tasks.named('test') {
 	outputs.dir snippetsDir
 	useJUnitPlatform()
@@ -113,16 +131,6 @@ tasks.named("asciidoctor") {
 	baseDirFollowsSourceDir()
 }
 
-/**
- * <p>
- * 개발환경에서만 API 문서를 제공하고자 한다면 빌드태스크에 asciidoctor 를 추가합니다.
- * asciidoctor 가 수행될 때 통합테스트 실행 태스크 restDocsTest 를 수행하기에
- * restDocsTest 를 추가로 수행하지 않아도 됩니다.
- * </p>
- * @see <a href="https://asciidoctor.github.io/asciidoctor-gradle-plugin/development-3.x/user-guide/">Asciidoctor Gradle Plugin Suite</a>
- *
- * ex)<code>./gradlew clean asciidoctor build</code>
- */
 tasks.register("apibuild", GradleBuild) {
 	tasks = ["clean", "asciidoctor", "build"]
 }
@@ -145,4 +153,21 @@ bootJar {
 	}
 
 	archiveFileName.set "application.jar"
+}
+
+/**
+ * Query DSL Build Options (선택사항)
+ */
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir, "$projectDir/src/main/java" ]
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+clean.doLast {
+	file(querydslDir).deleteDir()
 }

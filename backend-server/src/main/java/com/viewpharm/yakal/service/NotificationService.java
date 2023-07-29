@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.service;
 
+import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.NotificationDto;
@@ -27,18 +28,19 @@ import java.util.List;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class NotificationService {
+
     private final MobileUserRepository mobileUserRepository;
     private final NotificationRepository notificationRepository;
     private final NotificationUtil notificationUtil;
 
     public List<NotificationDto> readNotification(Long userId, Long pageNum, Long num) {
-        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
+        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
-        Page<Notification> notifications = notificationRepository.findByUser(user, paging);
+        Page<Notification> notifications = notificationRepository.findByMobileUser(mobileUser, paging);
 
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for (Notification notification : notifications) {
@@ -53,23 +55,23 @@ public class NotificationService {
     }
 
     public Boolean updateNotification(Long userId, Long notificationId) {
-        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
-        Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
+        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Notification notification = notificationRepository.findByIdAndMobileUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
-        if (user.getId() != notification.getUser().getId()) {
+        if (mobileUser.getId() != notification.getMobileUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
 
-        notification.builder().isRead(Boolean.TRUE).build();
+        notification.setIsRead(true);
 
         return Boolean.TRUE;
     }
 
     public Boolean deleteNotification(Long userId, Long notificationId) {
-        User user = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER_ERROR));
-        Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
+        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Notification notification = notificationRepository.findByIdAndMobileUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
-        if (user.getId() != notification.getUser().getId()) {
+        if (mobileUser.getId() != notification.getMobileUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
 
@@ -100,7 +102,7 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.BREAKFAST);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.MORNING);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (MobileUserRepository.UserNotificationFrom user : users) {
@@ -137,7 +139,7 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.LUNCH);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.AFTERNOON);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (MobileUserRepository.UserNotificationFrom user : users) {
@@ -174,7 +176,7 @@ public class NotificationService {
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.DINNER);
+        List<MobileUserRepository.UserNotificationFrom> users = mobileUserRepository.findByDateAndTime(nowDate, EDosingTime.EVENING);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (MobileUserRepository.UserNotificationFrom user : users) {
@@ -197,6 +199,4 @@ public class NotificationService {
             }
         }
     }
-
-
 }

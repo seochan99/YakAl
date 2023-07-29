@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.common;
 
-import com.viewpharm.yakal.dto.ResponseDto;
+import com.viewpharm.yakal.dto.response.ResponseDto;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.security;
 
 import com.viewpharm.yakal.common.Constants;
-import com.viewpharm.yakal.dto.JwtTokenDto;
+import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.exception.ErrorCode;
@@ -16,6 +16,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,9 @@ import java.security.Key;
 import java.util.Date;
 
 @Component
-public class JwtProvider {
+@RequiredArgsConstructor
+public class JwtProvider implements InitializingBean {
+
     private static final Long ACCESS_EXPIRED_MS = 2 * 60 * 60 * 1000L;        // 2 Hours
     private static final Long REFRESH_EXPIRED_MS = 60 * 24 * 60 * 60 * 1000L; // 60 Days
 
@@ -36,14 +40,12 @@ public class JwtProvider {
 
     @Value("${jwt.secret: abc}")
     private String secretKey;
-    private final Key key;
+    private Key key;
 
-    @Autowired
-    public JwtProvider(final UserRepository userRepository) {
-        final byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+    @Override
+    public void afterPropertiesSet() {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
-
-        this.userRepository = userRepository;
     }
 
     public String refineToken(final HttpServletRequest request) throws CommonException {
@@ -84,7 +86,7 @@ public class JwtProvider {
         final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
 
         if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, originalRefreshToken)) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER_ERROR);
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
         return createTotalToken(id, role);

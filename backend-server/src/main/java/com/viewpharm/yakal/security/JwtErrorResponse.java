@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.security;
 
-import com.viewpharm.yakal.dto.ExceptionDto;
+import com.viewpharm.yakal.dto.response.ExceptionDto;
 import com.viewpharm.yakal.exception.ErrorCode;
 import jakarta.servlet.http.HttpServletResponse;
 import net.minidev.json.JSONValue;

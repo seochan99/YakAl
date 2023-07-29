@@ -15,9 +15,4 @@ public class YakalApplication {
     public static void main(String[] args) {
         SpringApplication.run(YakalApplication.class, args);
     }
-
-    @PostConstruct
-    public void started() {
-        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
 }

@@ -9,13 +9,14 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // Not Found Error
-    NOT_FOUND_USER_ERROR("4040", HttpStatus.NOT_FOUND, "Not Exist User Error"),
+    NOT_FOUND_USER("4040", HttpStatus.NOT_FOUND, "해당 사용자가 존재하지 않습니다."),
     NOT_FOUND_COMMENT("4041", HttpStatus.NOT_FOUND, "Not Exist Comment"),
     NOT_FOUND_NOTIFICATION("4042", HttpStatus.NOT_FOUND, "Not Exist Notification"),
     NOT_FOUND_ADVERTISEMENT("4043", HttpStatus.NOT_FOUND, "Not Exist Advertisement"),
     NOT_FOUND_NOTICE("4044", HttpStatus.NOT_FOUND, "Not Exist Notice"),
     NOT_FOUND_DEVICE_TOKEN("4045", HttpStatus.NOT_FOUND, "Not Exist Device Token"),
-    NOT_FOUND_DOSE("4046", HttpStatus.NOT_FOUND, "Not Exist Dose"),
+    NOT_FOUND_DOSE("4046", HttpStatus.NOT_FOUND, "해당 복약 스케줄이 없습니다."),
+    NOT_FOUND_PRESCRIPTION("4047", HttpStatus.NOT_FOUND, "해당 처방전이 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),

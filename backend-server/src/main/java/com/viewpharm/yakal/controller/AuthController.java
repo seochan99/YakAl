@@ -2,10 +2,10 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.DisableSwaggerSecurity;
 import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.dto.JwtTokenDto;
+import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
-import com.viewpharm.yakal.dto.ResponseDto;
+import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.type.ELoginProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

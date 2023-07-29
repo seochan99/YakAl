@@ -35,16 +35,16 @@ public class SecurityConfig {
     protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry.anyRequest().permitAll())
-                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
-                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
-                        .requestMatchers("/admin/**").hasRole(ERole.ROLE_WEB.toString())
-                        .anyRequest().authenticated())
+//                .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+//                        .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
+//                        .requestMatchers("/admin/**").hasRole(ERole.ROLE_WEB.toString())
+//                        .anyRequest().authenticated())
 
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler))
 
-                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
                 .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, userDetailServiceForLoad), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
 
                 .httpBasic(HttpBasicConfigurer::disable)
                 .csrf(CsrfConfigurer::disable)

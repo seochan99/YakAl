@@ -28,7 +28,6 @@ import java.util.List;
 @Setter
 @DynamicUpdate
 @Table(name = "mobile_users")
-@DiscriminatorValue("ROLE_MOBILE")
 @PrimaryKeyJoinColumn(name="user_id")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MobileUser extends User {
@@ -53,6 +52,15 @@ public class MobileUser extends User {
     @Column(name = "is_login", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isLogin;
 
+    @Column(name = "is_ios", columnDefinition = "TINYINT(1)")
+    private Boolean isIos;
+
+    @Column(name = "is_detail", columnDefinition = "TINYINT(1)", nullable = false)
+    private Boolean isDetail;
+
+    @Column(name = "is_allowed_notification", columnDefinition = "TINYINT(1)", nullable = false)
+    private Boolean isAllowedNotification;
+
     /**
      * ONE-TO-MANY RELATION
      */
@@ -65,7 +73,6 @@ public class MobileUser extends User {
     @OneToMany(mappedBy = "mobileUser", fetch = FetchType.LAZY)
     private List<Dose> doses = new ArrayList<>();
 
-    @Builder
     public MobileUser(final String socialId,
                       final ELoginProvider loginProvider,
                       final ERole role,
@@ -74,6 +81,8 @@ public class MobileUser extends User {
         this.socialId = socialId;
         this.loginProvider = loginProvider;
         this.isLogin = true;
+        this.isDetail = true;
+        this.isAllowedNotification = true;
     }
 
     public void logout() {

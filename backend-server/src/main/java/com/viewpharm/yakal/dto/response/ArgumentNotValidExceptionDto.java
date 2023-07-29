@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.dto;
+package com.viewpharm.yakal.dto.response;
 
 import com.viewpharm.yakal.exception.ErrorCode;
 import jakarta.validation.ConstraintViolation;

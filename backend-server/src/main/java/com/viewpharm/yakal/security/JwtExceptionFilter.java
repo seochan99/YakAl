@@ -1,12 +1,7 @@
 package com.viewpharm.yakal.security;
 
-import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +26,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             request.setAttribute("exception", e.getErrorCode());
         } catch (Exception e) {
             log.error("[JwtExceptionFilter] catch Exception Exception : {}", e.getMessage());
-            request.setAttribute("exception", ErrorCode.NOT_FOUND_USER_ERROR);
+            request.setAttribute("exception", ErrorCode.NOT_FOUND_USER);
         }
 
         filterChain.doFilter(request, response);
@@ -39,12 +34,13 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
-            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
-                return true;
-            }
-        }
-
-        return false;
+//        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
+//            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+        return true;
     }
 }

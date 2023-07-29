@@ -3,6 +3,7 @@ package com.viewpharm.yakal.dto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 //메시지 제목, 내용, 유저 아이디용 dto
 //알림을 누구한테 보내는지에 대한 정보 필요할때
 @Getter
