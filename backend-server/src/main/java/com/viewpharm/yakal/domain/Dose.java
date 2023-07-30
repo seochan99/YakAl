@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -59,6 +60,9 @@ public class Dose {
     @Column(name="is_deleted", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isDeleted;
 
+    @Column(name="is_overlap", columnDefinition = "TINYINT(1)", nullable = false)
+    private Boolean isOverlap;
+
     @Column(name="created_at", nullable = false)
     private Timestamp created;
 
@@ -83,6 +87,7 @@ public class Dose {
                 final EDosingTime time,
                 final Long pillCnt,
                 final Boolean isHalf,
+                final Boolean isOverlap,
                 final Prescription prescription,
                 final MobileUser mobileUser) {
         this.KDCode = kdCode;
@@ -93,7 +98,17 @@ public class Dose {
         this.prescription = prescription;
         this.mobileUser = mobileUser;
         this.isTaken = false;
+        this.isOverlap = isOverlap;
+        this.isDeleted = false;
         this.ATCCode = ATCCode;
         this.created = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void updateIsTaken(final Boolean isTaken){
+        this.isTaken = isTaken;
+    }
+
+    public void updateIsOverlap(){
+        this.isOverlap = true;
     }
 }

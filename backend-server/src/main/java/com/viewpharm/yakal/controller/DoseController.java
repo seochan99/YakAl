@@ -51,7 +51,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(id, date);
+        final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(1L, date);
         return ResponseDto.ok(oneDayScheduleDto);
     }
 
@@ -61,7 +61,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final Long progressOrNull = doseService.getOneDayProgressOrNull(id, date);
+        final Long progressOrNull = doseService.getOneDayProgressOrNull(1L, date);
         final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date, progressOrNull);
         return ResponseDto.ok(oneDayProgressDto);
     }
@@ -73,7 +73,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(id, date);
+        final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(1L, date);
         return ResponseDto.ok(oneDaySummary);
     }
 
@@ -83,7 +83,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
-        final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
+        final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = doseService.getOneMonthSummary(1L, yearMonth);
         return ResponseDto.ok(oneMonthSummary);
     }
 
@@ -93,19 +93,19 @@ public class DoseController {
             @UserId Long id,
             @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
     ) {
-        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(id, updateDoseCountDto);
+        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(1L, updateDoseCountDto);
         return ResponseDto.ok(isUpdatedMap);
     }
 
-    @PatchMapping("/taken/{date}")
+    @PatchMapping("/taken/{date}/{time}")
     @Operation(summary = "특정 시간대의 스케줄 모두 복용 처리 혹은 취소", description = "특정 시간대의 복용 스케줄을 모두 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenByTime(
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
-            @RequestParam(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
+            @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenByTime(1L, date, dosingTime, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
     }
 
@@ -113,30 +113,30 @@ public class DoseController {
     @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenById(
             @UserId Long userId,
-            @RequestParam("id") @Valid @Range(min = 1L) Long doesId,
+            @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenById(userId, doesId, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenById(1L, doesId, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
-            @RequestBody CreateScheduleDto createScheduleDto
+            @RequestBody @Valid CreateScheduleDto createScheduleDto
     ) {
-        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
+        final List<Boolean> isInserted = doseService.createSchedule(1L, createScheduleDto);
         return ResponseDto.created(isInserted);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     @Operation(summary = "선택된 약 스케줄 삭제",description = "약 스케줄 ID를 받아 그에 해당하는 스케줄을 삭제합니다.")
     public ResponseDto<Object> deleteScheduleByIds(
             @UserId Long id,
-            @RequestBody List<@Valid @Range(min = 1L) Long> doesIdList
+            @RequestBody List<Long> doesIdList
     ){
-        doseService.deleteSchedule(id, doesIdList);
+        doseService.deleteSchedule(1L, doesIdList);
         return ResponseDto.ok(null);
     }
 }
