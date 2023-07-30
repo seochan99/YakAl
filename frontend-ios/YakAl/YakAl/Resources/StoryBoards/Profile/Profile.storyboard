@@ -13,12 +13,29 @@
         <!--내 정보-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController id="Y6W-OH-hqX" customClass="ProfileVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileVC" id="Y6W-OH-hqX" customClass="ProfileVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QiG-5f-NOx">
+                                <rect key="frame" x="154.66666666666666" y="393.66666666666669" width="84" height="41"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="로그아웃">
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="logout:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="BaJ-Nz-TtR"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="QiG-5f-NOx" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="mG7-HP-h8v"/>
+                            <constraint firstItem="QiG-5f-NOx" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="zgj-Zo-TtZ"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="내 정보" id="fOd-Js-s2x" userLabel="Home">
                         <imageReference key="image" image="icon_mypage_fill" symbolScale="default"/>
@@ -27,7 +44,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="121" y="-2"/>
+            <point key="canvasLocation" x="119.84732824427481" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>

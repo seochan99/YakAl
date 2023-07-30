@@ -100,11 +100,11 @@ class MainViewController: UIViewController {
     }
     
     private func goNextScreen(){
-        let storyboardName = self.isSignedUp ? "Home" : "SignIn"
+        let storyboardName = self.isSignedUp ? "TabRouter" : "SignIn"
         
         
         let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-        if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "TabBarVC" : "SignInScreen_1") as? UIViewController {
             if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
                 sceneDelegate.window?.rootViewController = initialViewController
             }

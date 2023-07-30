@@ -315,7 +315,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="를 선택해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MVT-vj-0XP">
-                                        <rect key="frame" x="42" y="0.0" width="152.66666666666666" height="30"/>
+                                        <rect key="frame" x="42" y="0.0" width="152.66666666666669" height="30"/>
                                         <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -886,15 +886,15 @@
             </objects>
             <point key="canvasLocation" x="5109" y="437"/>
         </scene>
-        <!--HomeScreen_1-->
+        <!--TabBarVC-->
         <scene sceneID="B1O-tq-Zhs">
             <objects>
-                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeScreen_1" id="7qM-rs-Tic" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="TabRouter" referencedIdentifier="TabBarVC" id="7qM-rs-Tic" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="hG5-pg-eQh"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ImY-sg-l68" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2895" y="1082"/>
+            <point key="canvasLocation" x="2893" y="1108"/>
         </scene>
         <!--Progress Nav Controller-->
         <scene sceneID="DdQ-rd-Wr5">
@@ -912,7 +912,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F0G-0t-HlI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-492.36641221374043" y="306.33802816901408"/>
+            <point key="canvasLocation" x="-1527" y="363"/>
         </scene>
         <!--Sign In View Controller-->
         <scene sceneID="eQP-WV-vep">
