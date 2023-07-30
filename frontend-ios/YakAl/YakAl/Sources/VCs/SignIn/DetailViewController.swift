@@ -37,6 +37,10 @@ class DetailViewController4: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+//        let yourBackImage = UIImage(named: "icon_X")
+//        self.navigationController?.navigationBar.backIndicatorImage = yourBackImage
+//        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = yourBackImage
+        
         chageNaviTitle(titleText: "마케팅 정보 활용 동의")
         changeNaviBack()
         
@@ -45,6 +49,8 @@ class DetailViewController4: UIViewController {
 
 extension UIViewController {
     func changeNaviBack() {
+        
+        
         let backButtonTitle = "뒤로"
         navigationItem.backBarButtonItem = UIBarButtonItem(title: backButtonTitle, style: .plain, target: nil, action: nil)
         
