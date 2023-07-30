@@ -13,6 +13,7 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="8X0-0P-QdC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="1cH-Xd-FzD">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
@@ -27,40 +28,40 @@
             </objects>
             <point key="canvasLocation" x="-5.343511450381679" y="3.5211267605633805"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--MyLocationVC-->
         <scene sceneID="bVQ-yv-ev8">
             <objects>
-                <viewControllerPlaceholder id="LPN-2d-YrQ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="u1N-sW-NRR"/>
+                <viewControllerPlaceholder storyboardName="MyLocation" referencedIdentifier="MyLocationVC" id="LPN-2d-YrQ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="icon_home_fill" id="u1N-sW-NRR"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rgI-gl-Doi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-196" y="502"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--CommunityVC-->
         <scene sceneID="xM0-E2-l2l">
             <objects>
-                <viewControllerPlaceholder id="5Rd-Vw-QkX" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Community" referencedIdentifier="CommunityVC" id="5Rd-Vw-QkX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="Afj-bJ-cEg"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQv-9I-q82" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="153" y="502"/>
         </scene>
-        <!--Storyboard Reference-->
+        <!--ProfileVC-->
         <scene sceneID="7Yu-Sc-zVC">
             <objects>
-                <viewControllerPlaceholder id="O4y-CL-O8N" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Profile" referencedIdentifier="ProfileVC" id="O4y-CL-O8N" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="C76-Db-HYD"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UmC-c1-TCX" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="514" y="502"/>
         </scene>
-        <!--HomeNC-->
+        <!--HomeVC-->
         <scene sceneID="V0I-IT-a9G">
             <objects>
-                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeNC" id="adV-hb-JCb" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Home" referencedIdentifier="HomeVC" id="adV-hb-JCb" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="io9-Jf-5FU"/>
                     <navigationItem key="navigationItem" id="esW-Nt-RLf"/>
                 </viewControllerPlaceholder>
@@ -69,4 +70,7 @@
             <point key="canvasLocation" x="-610" y="502"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_home_fill" width="36.333332061767578" height="36"/>
+    </resources>
 </document>
