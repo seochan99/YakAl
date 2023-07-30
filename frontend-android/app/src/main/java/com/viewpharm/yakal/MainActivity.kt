@@ -2,6 +2,7 @@ package com.viewpharm.yakal
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.add
@@ -13,13 +14,12 @@ import com.viewpharm.yakal.ui.HomeMainFragment
 import com.viewpharm.yakal.ui.LocationMainFragment
 import com.viewpharm.yakal.ui.ProfileMainFragment
 
-const val FRAGMENT_TAG_HOME = "home_fragment"
-const val FRAGMENT_TAG_LOCATION = "location_fragment"
-const val FRAGMENT_TAG_COMMUNITY = "community_fragment"
-const val FRAGMENT_TAG_PROFILE = "profile_fragment"
-
-
 class MainActivity : AppCompatActivity() {
+    private val FRAGMENT_TAG_HOME = "home_fragment"
+    private val FRAGMENT_TAG_LOCATION = "location_fragment"
+    private val FRAGMENT_TAG_COMMUNITY = "community_fragment"
+    private val FRAGMENT_TAG_PROFILE = "profile_fragment"
+
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

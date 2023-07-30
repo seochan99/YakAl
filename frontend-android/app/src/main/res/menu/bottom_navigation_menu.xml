@@ -3,6 +3,7 @@
     <item android:id="@+id/homeMainFragment"
         android:icon="@drawable/ic_custom_home"
         android:enabled="true"
+        android:alphabeticModifiers=""
         android:title="홈 화면" />
     <item android:id="@+id/locationMainFragment"
         android:icon="@drawable/ic_custom_location"
