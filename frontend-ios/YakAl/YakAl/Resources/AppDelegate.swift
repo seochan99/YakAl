@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import KakaoSDKAuth
 import KakaoSDKCommon
 
 @main
@@ -20,9 +21,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sleep(1)
         KakaoSDK.initSDK(appKey: "8a8f852ab345e575c11f8b2bc655c989")
 
+
         return true
     }
 
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // 카카오 로그인 처리
+        if AuthApi.isKakaoTalkLoginUrl(url) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+        return false
+    }
+    
     // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
