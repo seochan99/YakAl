@@ -328,18 +328,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lz5-iw-vhO">
                                         <rect key="frame" x="0.0" y="0.0" width="353" height="216.66666666666666"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반 모드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRX-7C-PpD">
-                                                <rect key="frame" x="20.000000000000007" y="24" width="89.666666666666686" height="30"/>
-                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                                <color key="textColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약알의 일반적인 모드입니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6Z-Fj-xME">
-                                                <rect key="frame" x="20" y="66" width="179.66666666666666" height="20"/>
-                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
-                                                <color key="textColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pv8-Ha-YFg">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="216.66666666666666"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -358,6 +346,18 @@
                                                     <action selector="modeNormalButtonTapped:" destination="Kmn-tF-7CO" eventType="touchUpInside" id="V3d-KZ-Otd"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반 모드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VRX-7C-PpD">
+                                                <rect key="frame" x="20.000000000000007" y="24" width="89.666666666666686" height="30"/>
+                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                                <color key="textColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약알의 일반적인 모드입니다." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i6Z-Fj-xME">
+                                                <rect key="frame" x="20" y="66" width="179.66666666666666" height="20"/>
+                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                <color key="textColor" red="0.27450980392156865" green="0.27450980392156865" blue="0.33333333333333331" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -374,20 +374,6 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iWH-jp-FfL">
                                         <rect key="frame" x="0.0" y="240.66666666666669" width="353" height="216.33333333333331"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="라이트 모드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwD-2e-drd">
-                                                <rect key="frame" x="20.000000000000007" y="24" width="110.66666666666669" height="30"/>
-                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
-                                                <color key="textColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ped-n2-85M">
-                                                <rect key="frame" x="20.000000000000014" y="65.999999999999943" width="225.33333333333337" height="40"/>
-                                                <string key="text">시니어를 위한 쉬운 모드입니다.
-다제약물 정보가 포함되어 있습니다.</string>
-                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
-                                                <color key="textColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZzQ-S3-Ube">
                                                 <rect key="frame" x="0.0" y="0.0" width="353" height="216.33333333333334"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -403,6 +389,20 @@
                                                     <action selector="modeSeniorButtonTapped:" destination="Kmn-tF-7CO" eventType="touchUpInside" id="ggC-Ef-NlX"/>
                                                 </connections>
                                             </button>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="라이트 모드" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwD-2e-drd">
+                                                <rect key="frame" x="20.000000000000007" y="24" width="110.66666666666669" height="30"/>
+                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
+                                                <color key="textColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ped-n2-85M">
+                                                <rect key="frame" x="20.000000000000014" y="65.999999999999943" width="225.33333333333337" height="40"/>
+                                                <string key="text">시니어를 위한 쉬운 모드입니다.
+다제약물 정보가 포함되어 있습니다.</string>
+                                                <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                <color key="textColor" red="0.27450980390000002" green="0.27450980390000002" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -463,6 +463,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="j9Z-qN-22m"/>
                     <connections>
+                        <outlet property="buttonContent" destination="i6Z-Fj-xME" id="RkD-xA-I2l"/>
+                        <outlet property="buttonContent2" destination="Ped-n2-85M" id="8GO-LC-QIq"/>
+                        <outlet property="buttonHeader" destination="VRX-7C-PpD" id="cqa-iG-UZf"/>
+                        <outlet property="buttonHeader2" destination="uwD-2e-drd" id="h5m-m6-ctH"/>
                         <outlet property="modeNormal" destination="Pv8-Ha-YFg" id="m1s-NG-u1O"/>
                         <outlet property="modeSenior" destination="ZzQ-S3-Ube" id="3cZ-gg-8ek"/>
                     </connections>
