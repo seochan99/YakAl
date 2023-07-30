@@ -10,6 +10,7 @@ public class OneTimeScheduleDto {
     final Long id;
     final String pillName;
     final Boolean isTaken;
+    final Boolean isOverlap;
     final Double count;
     final Long prescriptionId;
 }
