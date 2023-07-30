@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="SUIT-Bold.otf">
+            <string>SUIT-Bold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--커뮤니티-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="CommunityVC" id="Y6W-OH-hqX" customClass="CommunityVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="DSu-QP-nTR">
+                                <rect key="frame" x="70.666666666666686" y="288" width="252" height="252"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="준비중입니다." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1LQ-kf-W0z">
+                                <rect key="frame" x="130.33333333333337" y="520" width="132.66666666666663" height="30"/>
+                                <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="DSu-QP-nTR" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="MYg-fQ-Uwv"/>
+                            <constraint firstItem="1LQ-kf-W0z" firstAttribute="top" secondItem="DSu-QP-nTR" secondAttribute="bottom" constant="-20" id="V8k-uW-uhw"/>
+                            <constraint firstItem="DSu-QP-nTR" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="YyP-Cg-CBZ"/>
+                            <constraint firstItem="1LQ-kf-W0z" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="boO-tQ-psJ"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="커뮤니티" id="UCA-sy-LlX" userLabel="Home">
+                        <imageReference key="image" image="icon_ community" symbolScale="default"/>
+                    </tabBarItem>
+                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6.8702290076335872" y="-2.1126760563380285"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="defaultImage" width="252" height="252"/>
+        <image name="icon_ community" width="36" height="36"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

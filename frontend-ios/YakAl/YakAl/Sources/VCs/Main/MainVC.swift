@@ -30,6 +30,23 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var appleLoginButton: UIButton!
     
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // accessToken이 있다면 자동 로그인 처리
+        if let accessToken = UserDefaults.standard.string(forKey: "KakaoAccessToken") {
+            // 이미 로그인한 사용자의 액세스 토큰이 있다면, 이를 사용하여 자동 로그인
+            UserApi.shared.loginWithKakaoTalk {(oauthToken, error) in
+                if let error = error {
+                    print("카카오톡 자동 로그인 실패: \(error)")
+                } else {
+                    // 로그인 성공 시 처리
+                    // 이후에 필요한 작업 수행
+                    self.isSignedUp = true
+                    self.goNextScreen()
+                }
+            }
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,8 +67,10 @@ class MainViewController: UIViewController {
            attributedString.append(boldText)
            
            subTitleText.attributedText = attributedString
+        
+ 
     }
-    
+
     // 로그인 버튼 클릭 시 처리
     @IBAction func LoginButtonTapped(_ sender: UIButton) {
         // 카카오톡 설치 여부 확인
@@ -61,31 +80,35 @@ class MainViewController: UIViewController {
                     print(error)
                 }
                 else {
-                    print("loginWithKakaoTalk() success.")
                     _ = oauthToken
                 
-                    print(oauthToken)
+                    // 토큰 기기에 저장학
+                    if let token = oauthToken?.accessToken {
+                        // 액세스 토큰 저장 및 사용자 로그인 상태 유지
+                        UserDefaults.standard.set(token, forKey: "KakaoAccessToken")
+                    }
                     
                     // 만약 oauthToken으로 jwt가 있다면, 로그인으로
                     
                     // 만약 처음온 상태라면 회원가입으로
                     // isSignedUp이 true라면 Home으로
-                    let storyboardName = self.isSignedUp ? "Home" : "SignIn"
-                    
-                    
-                    let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
-                    if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "HomeScreen_1" : "SignInScreen_1") as? UIViewController {
-                        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
-                            sceneDelegate.window?.rootViewController = initialViewController
-                        }
-                    }
-                    
+
+                    self.goNextScreen()
                 }
             }
         }
+    }
+    
+    private func goNextScreen(){
+        let storyboardName = self.isSignedUp ? "TabRouter" : "SignIn"
         
         
-      
+        let storyboard = UIStoryboard(name: storyboardName, bundle: nil)
+        if let initialViewController = storyboard.instantiateViewController(withIdentifier: self.isSignedUp ? "TabBarVC" : "SignInScreen_1") as? UIViewController {
+            if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+                sceneDelegate.window?.rootViewController = initialViewController
+            }
+        }
     }
     @IBAction func appleLoginButtonTapped(_ sender: UIButton) {
         

@@ -17,7 +17,7 @@ class SignUpDoneViewController: UIViewController {
         super.viewDidLoad()
         if let nickname = user?.nickName {
             let attributedText = NSMutableAttributedString(string: nickname)
-            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 17), range: NSRange(location: 0, length: nickname.count))
+            attributedText.addAttribute(.font, value: UIFont.boldSystemFont(ofSize: 24), range: NSRange(location: 0, length: nickname.count))
             name.attributedText = attributedText
         }
         // Do any additional setup after loading the view.
