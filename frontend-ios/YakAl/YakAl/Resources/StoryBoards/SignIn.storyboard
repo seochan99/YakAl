@@ -136,7 +136,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="skipButtonTapped:" destination="rCM-1n-JBD" eventType="touchUpInside" id="3o9-I2-7hy"/>
+                                            <action selector="skipButtonTapped:" destination="rCM-1n-JBD" eventType="touchUpInside" id="0Sh-Zi-cF9"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBw-AN-w36">
@@ -157,7 +157,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
-                                            <action selector="agreeButtonTapped2:" destination="rCM-1n-JBD" eventType="touchUpInside" id="8yr-bT-8PU"/>
+                                            <action selector="agreeButtonTapped2:" destination="rCM-1n-JBD" eventType="touchUpInside" id="4rp-3t-1hb"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -178,7 +178,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="aXK-kF-dme"/>
                     <connections>
-                        <outlet property="nextButton" destination="TAj-f1-9Ld" id="0Ms-7p-DDr"/>
+                        <outlet property="nextButton" destination="HBw-AN-w36" id="jPX-dh-eQd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C8A-TV-pNP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -348,7 +348,7 @@
                                                         <integer key="value" value="2"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
-                                                        <color key="value" red="0.9137254901960784" green="0.9137254901960784" blue="0.93333333333333335" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="value" systemColor="systemIndigoColor"/>
                                                     </userDefinedRuntimeAttribute>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="layer.borderRadius">
                                                         <integer key="value" value="6"/>
@@ -1221,6 +1221,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemIndigoColor">
+            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

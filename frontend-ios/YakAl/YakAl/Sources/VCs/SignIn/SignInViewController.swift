@@ -33,9 +33,15 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         // Set initial button state
         // IBOutlet이 올바르게 연결되었는지 확인
+        if(agreeButton != nil){
+            agreeButton.isEnabled = false
+            agreeButton.backgroundColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0)
+            agreeButton.setTitleColor(UIColor(red: 198/255, green: 198/255, blue: 207/255, alpha: 1.0), for: .disabled)
+        }
         
-
+        
         self.navigationItem.title=" "
+        
         changeNaviBack()
     }
   
@@ -86,6 +92,7 @@ class SignInViewController: UIViewController {
         updateOverallCheckboxState()
     }
     
+    // 전체 체크 박스 상태 변경
     private func updateOverallCheckboxState() {
         if areAllServiceTermsChecked() {
             overallCheckbox.isSelected = true

@@ -18,11 +18,9 @@ class Step0_1VC: SignInViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         myStepNumber = 1
-        // Do any additional setup after loading the view.
     }
     
     // 버튼이 눌러졌을때 다음 화면으로
-    
     @IBAction func agreeButtonTapped2(_ sender: UIButton) {
    
         // 본인 인증 성공
