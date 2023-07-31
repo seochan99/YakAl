@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -143,7 +142,7 @@ public class DoseService {
         return oneMonthSummary;
     }
 
-    public Map<String, Boolean> updateDoseCount(final Long userId, final Map<Long, Double> updateDoseCountDto) {
+    public Map<String, Boolean> updateDoseCount(final Map<Long, Double> updateDoseCountDto) {
         final Map<String, Boolean> isUpdatedMap = new HashMap<>(updateDoseCountDto.size());
 
         for (final Long doseId : updateDoseCountDto.keySet()) {
@@ -164,7 +163,7 @@ public class DoseService {
         }
     }
 
-    public void updateIsTakenById(final Long userId, final Long doseId, final Boolean isTaken){
+    public void updateIsTakenById(final Long doseId, final Boolean isTaken){
         Dose dose = doseRepository.findById(doseId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_DOSE));
         dose.updateIsTaken(isTaken);
     }
@@ -180,6 +179,20 @@ public class DoseService {
         for (final OneMedicineScheduleDto oneMedicineScheduleDto : createScheduleDto.getMedicines()) {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
+            final LocalDate scheduleStartDate = oneMedicineScheduleDto.getSchedules().get(0).getDate().minusDays(15);
+            final LocalDate scheduleEndDate = oneMedicineScheduleDto.getSchedules().get(oneMedicineScheduleDto.getSchedules().size()-1).getDate().plusDays(15);
+
+            final List<Dose> overlappedDoses = doseRepository.findByMobileUserIdAndATCCodeAndDateBetween(
+                    userId, ATCCode,scheduleStartDate,scheduleEndDate);
+
+            Boolean isATCCodeOverlap = false;
+            //중복성분인 약물 검사
+
+            if (overlappedDoses.size()>0) {
+                overlappedDoses.forEach(Dose::updateIsOverlap);
+                isATCCodeOverlap = true;
+            }
+
 
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
@@ -191,15 +204,6 @@ public class DoseService {
                 isInserted.add(!isOverlapped);
 
                 if (!isOverlapped) {
-                    Boolean isATCCodeOverlap = false;
-                    //중복성분인 약물 검사
-                    final List<Dose> overlappedDoses = doseRepository.findByMobileUserIdAndATCCodeAndDateBetween(
-                            userId, ATCCode,oneScheduleDto.getDate().minusDays(15), oneScheduleDto.getDate().plusDays(15));
-                    if (overlappedDoses.size()>0) {
-                        overlappedDoses.forEach(Dose::updateIsOverlap);
-                        isATCCodeOverlap = true;
-                    }
-
 
                     final Dose dose = Dose.builder()
                             .kdCode(KDCode)
@@ -224,7 +228,7 @@ public class DoseService {
         return isInserted;
     }
 
-    public void deleteSchedule(final Long userId, final List<Long> ids){
+    public void deleteSchedule(final List<Long> ids){
         doseRepository.deleteAllByIdInBatch(ids);
     }
 }

@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.DayOfWeek;
@@ -51,7 +50,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(1L, date);
+        final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(id, date);
         return ResponseDto.ok(oneDayScheduleDto);
     }
 
@@ -61,7 +60,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final Long progressOrNull = doseService.getOneDayProgressOrNull(1L, date);
+        final Long progressOrNull = doseService.getOneDayProgressOrNull(id, date);
         final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date, progressOrNull);
         return ResponseDto.ok(oneDayProgressDto);
     }
@@ -73,7 +72,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(1L, date);
+        final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(id, date);
         return ResponseDto.ok(oneDaySummary);
     }
 
@@ -83,7 +82,7 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
-        final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = doseService.getOneMonthSummary(1L, yearMonth);
+        final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
         return ResponseDto.ok(oneMonthSummary);
     }
 
@@ -93,7 +92,7 @@ public class DoseController {
             @UserId Long id,
             @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
     ) {
-        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(1L, updateDoseCountDto);
+        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(updateDoseCountDto);
         return ResponseDto.ok(isUpdatedMap);
     }
 
@@ -105,7 +104,7 @@ public class DoseController {
             @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenByTime(1L, date, dosingTime, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
     }
 
@@ -116,7 +115,7 @@ public class DoseController {
             @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenById(1L, doesId, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
     }
 
@@ -126,7 +125,7 @@ public class DoseController {
             @UserId Long id,
             @RequestBody @Valid CreateScheduleDto createScheduleDto
     ) {
-        final List<Boolean> isInserted = doseService.createSchedule(1L, createScheduleDto);
+        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
         return ResponseDto.created(isInserted);
     }
 
@@ -136,7 +135,7 @@ public class DoseController {
             @UserId Long id,
             @RequestBody List<Long> doesIdList
     ){
-        doseService.deleteSchedule(1L, doesIdList);
+        doseService.deleteSchedule(doesIdList);
         return ResponseDto.ok(null);
     }
 }
