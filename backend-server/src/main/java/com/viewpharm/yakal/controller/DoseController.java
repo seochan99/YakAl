@@ -111,7 +111,7 @@ public class DoseController {
     @PatchMapping("/taken/{id}")
     @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenById(
-            @UserId Long userId,
+            @UserId Long id,
             @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {

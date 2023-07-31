@@ -92,8 +92,6 @@ public class DoseService {
 
         // 일주일 각 날짜에 대한 처리
         for (int i = 0; i < ONE_WEEK_DAYS; ++i) {
-             Long total = null; // 초기값을 null로 설정
-             Long portion = null; // 초기값을 null로 설정
              Long progressOrNull = null; // 초기값을 null로 설정
              Boolean isOverlapped = null; // 초기값을 null로 설정
             final LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
@@ -101,8 +99,8 @@ public class DoseService {
             // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
             for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
                 if (summary.getDate().equals(currentDate)) {
-                    total = summary.getTotal();
-                    portion = summary.getTake();
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
                     isOverlapped = summary.getOverlap();
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
@@ -117,7 +115,7 @@ public class DoseService {
 
         return oneWeekSummary;
     }
-    //한주 보면서 한달 처리까지 해야함.
+
     public Map<LocalDate, OneDaySummaryWithoutDateDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
         final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();
 
@@ -130,10 +128,20 @@ public class DoseService {
         final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = new HashMap<>(ONE_MONTH_DAYS);
 
         for (int i = 0; i < ONE_MONTH_DAYS; ++i) {
-            final Long total = totalAndPortionList.get(i).getTotal();
-            final Long portion = totalAndPortionList.get(i).getTake();
-            final Long progressOrNull = total == 0 ? null : Math.round(portion / (double) total * 100.0);
-            final Boolean isOverlapped = totalAndPortionList.get(i).getOverlap();
+            Long progressOrNull = null; // 초기값을 null로 설정
+            Boolean isOverlapped = null; // 초기값을 null로 설정
+
+            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+            for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+                if (summary.getDate().equals(startOfMonth.plusDays(i))) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    isOverlapped = summary.getOverlap();
+                    // progressOrNull 계산 (null인 경우 예외 처리)
+                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
 
             final OneDaySummaryWithoutDateDto oneDaySummaryWithoutDateDto = new OneDaySummaryWithoutDateDto(progressOrNull, isOverlapped);
             oneMonthSummary.put(startOfMonth.plusDays(i), oneDaySummaryWithoutDateDto);
