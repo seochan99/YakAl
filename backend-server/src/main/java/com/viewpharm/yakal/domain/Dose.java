@@ -60,9 +60,6 @@ public class Dose {
     @Column(name="is_deleted", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isDeleted;
 
-    @Column(name="is_overlap", columnDefinition = "TINYINT(1)", nullable = false)
-    private Boolean isOverlap;
-
     @Column(name="created_at", nullable = false)
     private Timestamp created;
 
@@ -98,7 +95,6 @@ public class Dose {
         this.prescription = prescription;
         this.mobileUser = mobileUser;
         this.isTaken = false;
-        this.isOverlap = isOverlap;
         this.isDeleted = false;
         this.ATCCode = ATCCode;
         this.created = new Timestamp(System.currentTimeMillis());
@@ -106,9 +102,5 @@ public class Dose {
 
     public void updateIsTaken(final Boolean isTaken){
         this.isTaken = isTaken;
-    }
-
-    public void updateIsOverlap(){
-        this.isOverlap = true;
     }
 }

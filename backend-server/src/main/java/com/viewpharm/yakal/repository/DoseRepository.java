@@ -19,16 +19,17 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
     @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date and d.time =:time")
     List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
-    @Query("SELECT d FROM Dose d " +
-            "WHERE d.mobileUser.id = :userId " +
-            "AND d.ATCCode = :ATCCode " +
-            "AND d.date BETWEEN :startDate AND :endDate")
-    List<Dose> findByMobileUserIdAndATCCodeAndDateBetween(Long userId,String ATCCode, LocalDate startDate,LocalDate endDate);
+    @Query("select * from (
+            select distinct atc_code,date,count(*)
+    from doses
+    where user_id = 1 and date >= '2023-07-05' and date <= '2023-07-31'
+    group by atc_code,date)")
+    List<Dose> findByMobileUserAndAndATCCodeAndAndDateBetween(Long userId,String ATCCode, LocalDate startDate,LocalDate endDate);
 
     @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take from Dose d where d.mobileUser.id = :userId and d.date = :date")
     oneDaySummary countTotalAndTakenByUserIdAndDate(Long userId, LocalDate date);
 
-    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take,any(d.isOverlap) as overlap,d.date as date from Dose d where d.mobileUser.id = :userId and d.date between :start and :end group by d.date")
+    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take, d.date as date from Dose d where d.mobileUser.id = :userId and d.date between :start and :end group by d.date")
     List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(Long userId, LocalDate start, LocalDate end);
 
     @Modifying(clearAutomatically = true)
@@ -45,7 +46,6 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
         Long getTotal();
         Long getTake();
-        Boolean getOverlap();
         LocalDate getDate();
     }
 }

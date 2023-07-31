@@ -58,7 +58,6 @@ public class DoseService {
                     .id(result.getId())
                     .pillName(result.getKDCode())
                     .isTaken(result.getIsTaken())
-                    .isOverlap(result.getIsOverlap())
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
@@ -101,7 +100,7 @@ public class DoseService {
                 if (summary.getDate().equals(currentDate)) {
                     Long total = summary.getTotal();
                     Long portion = summary.getTake();
-                    isOverlapped = summary.getOverlap();
+                    isOverlapped = true;
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
                     break;
@@ -136,7 +135,7 @@ public class DoseService {
                 if (summary.getDate().equals(startOfMonth.plusDays(i))) {
                     Long total = summary.getTotal();
                     Long portion = summary.getTake();
-                    isOverlapped = summary.getOverlap();
+                    isOverlapped = true;
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
                     break;
@@ -187,24 +186,9 @@ public class DoseService {
         for (final OneMedicineScheduleDto oneMedicineScheduleDto : createScheduleDto.getMedicines()) {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
-            final LocalDate scheduleStartDate = oneMedicineScheduleDto.getSchedules().get(0).getDate().minusDays(15);
-            final LocalDate scheduleEndDate = oneMedicineScheduleDto.getSchedules().get(oneMedicineScheduleDto.getSchedules().size()-1).getDate().plusDays(15);
-
-            final List<Dose> overlappedDoses = doseRepository.findByMobileUserIdAndATCCodeAndDateBetween(
-                    userId, ATCCode,scheduleStartDate,scheduleEndDate);
-
-            Boolean isATCCodeOverlap = false;
-            //중복성분인 약물 검사
-
-            if (overlappedDoses.size()>0) {
-                overlappedDoses.forEach(Dose::updateIsOverlap);
-                isATCCodeOverlap = true;
-            }
-
 
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
-                // 약 중복 삽입 검사
                 final Boolean isOverlapped = doseRepository.existsByMobileUserIdAndKDCodeAndDateAndTime(
                         userId, KDCode, oneScheduleDto.getDate(), oneScheduleDto.getTime()
                 );
@@ -220,7 +204,6 @@ public class DoseService {
                             .time(oneScheduleDto.getTime())
                             .pillCnt(oneScheduleDto.getCount().longValue())
                             .isHalf(oneScheduleDto.getCount().toString().endsWith(".5"))
-                            .isOverlap(isATCCodeOverlap)
                             .prescription(prescription)
                             .mobileUser(mobileUser)
                             .build();
