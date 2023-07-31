@@ -37,8 +37,8 @@
                             <constraint firstItem="QiG-5f-NOx" firstAttribute="centerY" secondItem="vDu-zF-Fre" secondAttribute="centerY" id="zgj-Zo-TtZ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="내 정보" id="fOd-Js-s2x" userLabel="Home">
-                        <imageReference key="image" image="icon_mypage_fill" symbolScale="default"/>
+                    <tabBarItem key="tabBarItem" title="내 정보" selectedImage="icon_mypage_fill" id="fOd-Js-s2x" userLabel="profile">
+                        <imageReference key="image" image="icon_mypage" symbolScale="default"/>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -48,6 +48,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="icon_mypage" width="36.333332061767578" height="36"/>
         <image name="icon_mypage_fill" width="36.333332061767578" height="36"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

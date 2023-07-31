@@ -9,6 +9,17 @@
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="SUIT-Bold.otf">
+            <string>SUIT-Bold</string>
+        </array>
+        <array key="SUIT-Medium.otf">
+            <string>SUIT-Medium</string>
+        </array>
+        <array key="SUIT-SemiBold.otf">
+            <string>SUIT-SemiBold</string>
+        </array>
+    </customFonts>
     <scenes>
         <!--홈-->
         <scene sceneID="s0d-6b-0kx">
@@ -18,31 +29,152 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="HOME" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Qw-fS-EUa">
-                                <rect key="frame" x="172" y="382" width="49" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Ljk-3E-ehi">
+                                <rect key="frame" x="0.0" y="59" width="393" height="710"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="AoA-z0-HCf">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="240"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-bell(1)" translatesAutoresizingMaskIntoConstraints="NO" id="1BJ-ty-Vf9">
+                                            <rect key="frame" x="333" y="20" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="85j-Gi-FFj"/>
+                                                <constraint firstAttribute="width" constant="40" id="zg1-9c-raD"/>
+                                            </constraints>
+                                        </imageView>
+                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="NQi-Bd-i2d">
+                                            <rect key="frame" x="20" y="60" width="353" height="83"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="2023년 7월 12일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kxb-0j-5Mk">
+                                                    <rect key="frame" x="0.0" y="0.0" width="105.33333333333333" height="33"/>
+                                                    <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="15"/>
+                                                    <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.44705882352941173" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="오늘 복용해야하는 약은" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a91-w2-XZS">
+                                                    <rect key="frame" x="0.0" y="33" width="184" height="25"/>
+                                                    <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
+                                                    <color key="textColor" red="0.082352941176470587" green="0.082352941176470587" blue="0.082352941176470587" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fhb-b0-rNB">
+                                                    <rect key="frame" x="0.0" y="58" width="105.33333333333333" height="25"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총 0개" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bbX-TN-z3V">
+                                                            <rect key="frame" x="0.0" y="0.0" width="52.666666666666664" height="25"/>
+                                                            <fontDescription key="fontDescription" name="SUIT-Bold" family="SUIT" pointSize="20"/>
+                                                            <color key="textColor" red="0.14901960784313725" green="0.40000000000000002" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="입니다" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0rk-xk-biZ">
+                                                            <rect key="frame" x="52.666666666666671" y="0.0" width="52.666666666666671" height="25"/>
+                                                            <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="20"/>
+                                                            <color key="textColor" red="0.08235294118" green="0.08235294118" blue="0.08235294118" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aIQ-s9-clZ">
+                                            <rect key="frame" x="20" y="178" width="163.33333333333334" height="36"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sqz-FQ-BPY">
+                                                    <rect key="frame" x="0.0" y="0.0" width="163.33333333333334" height="36"/>
+                                                    <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.97647058823529409" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                    </state>
+                                                </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Rz-Tz-8JD">
+                                                    <rect key="frame" x="12" y="8" width="139.33333333333334" height="20"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_celedar" translatesAutoresizingMaskIntoConstraints="NO" id="9KG-U5-g3q">
+                                                            <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="20" id="DIW-AL-UZO"/>
+                                                                <constraint firstAttribute="width" constant="20" id="MXV-Uf-j18"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="다른 날짜 복약정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZu-St-UZ0">
+                                                            <rect key="frame" x="19.999999999999993" y="0.0" width="119.33333333333331" height="20"/>
+                                                            <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
+                                                            <color key="textColor" red="0.38431372549019605" green="0.38431372549019605" blue="0.44705882352941173" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            <constraints>
+                                                <constraint firstItem="sqz-FQ-BPY" firstAttribute="top" secondItem="aIQ-s9-clZ" secondAttribute="top" id="0gM-y2-BFH"/>
+                                                <constraint firstItem="sqz-FQ-BPY" firstAttribute="leading" secondItem="aIQ-s9-clZ" secondAttribute="leading" id="1Vg-JU-GUT"/>
+                                                <constraint firstAttribute="trailing" secondItem="1Rz-Tz-8JD" secondAttribute="trailing" constant="12" id="5KU-9q-4r1"/>
+                                                <constraint firstItem="1Rz-Tz-8JD" firstAttribute="top" secondItem="aIQ-s9-clZ" secondAttribute="top" constant="8" id="OTi-1H-Cqq"/>
+                                                <constraint firstAttribute="bottom" secondItem="sqz-FQ-BPY" secondAttribute="bottom" id="bEU-dY-nuS"/>
+                                                <constraint firstAttribute="bottom" secondItem="1Rz-Tz-8JD" secondAttribute="bottom" constant="8" id="jcc-Lo-Vcb"/>
+                                                <constraint firstAttribute="trailing" secondItem="sqz-FQ-BPY" secondAttribute="trailing" id="pW3-xa-hib"/>
+                                                <constraint firstItem="1Rz-Tz-8JD" firstAttribute="leading" secondItem="aIQ-s9-clZ" secondAttribute="leading" constant="12" id="usz-Se-nrg"/>
+                                            </constraints>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="8"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.borderWidth">
+                                                    <integer key="value" value="1"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.borderColor">
+                                                    <color key="value" red="0.9137254901960784" green="0.9137254901960784" blue="0.93333333333333335" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </view>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="NQi-Bd-i2d" firstAttribute="leading" secondItem="AoA-z0-HCf" secondAttribute="leading" constant="20" id="04a-4C-ofz"/>
+                                        <constraint firstAttribute="bottom" secondItem="aIQ-s9-clZ" secondAttribute="bottom" constant="26" id="78E-cj-mQi"/>
+                                        <constraint firstItem="NQi-Bd-i2d" firstAttribute="top" secondItem="1BJ-ty-Vf9" secondAttribute="bottom" id="SEi-f7-fES"/>
+                                        <constraint firstAttribute="trailing" secondItem="1BJ-ty-Vf9" secondAttribute="trailing" constant="20" id="al3-IS-GU5"/>
+                                        <constraint firstAttribute="trailing" secondItem="NQi-Bd-i2d" secondAttribute="trailing" constant="20" id="gQ4-HY-GC2"/>
+                                        <constraint firstItem="aIQ-s9-clZ" firstAttribute="top" secondItem="NQi-Bd-i2d" secondAttribute="bottom" constant="35" id="hCQ-Dk-sys"/>
+                                        <constraint firstItem="1BJ-ty-Vf9" firstAttribute="top" secondItem="AoA-z0-HCf" secondAttribute="top" constant="20" id="sPE-yR-u2c"/>
+                                        <constraint firstItem="aIQ-s9-clZ" firstAttribute="leading" secondItem="AoA-z0-HCf" secondAttribute="leading" constant="20" id="xZO-xF-m5g"/>
+                                    </constraints>
+                                </view>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="Ljk-3E-ehi" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="Ltz-Dx-S5b"/>
+                            <constraint firstItem="Ljk-3E-ehi" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="Ta2-mP-6WE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Ljk-3E-ehi" secondAttribute="trailing" id="UVj-pP-aXV"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="Ljk-3E-ehi" secondAttribute="bottom" id="pSB-9B-h3g"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="홈" id="ziR-ci-exd" userLabel="Home">
-                        <imageReference key="image" image="icon_home_fill" symbolScale="default"/>
+                    <tabBarItem key="tabBarItem" title="홈" selectedImage="icon_home_fill" id="ziR-ci-exd" userLabel="Home">
+                        <imageReference key="image" image="icon_home" symbolScale="default"/>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1102" y="749"/>
+            <point key="canvasLocation" x="-1103.0534351145038" y="748.59154929577471"/>
         </scene>
     </scenes>
     <resources>
+        <image name="icon-bell(1)" width="40" height="40"/>
+        <image name="icon_celedar" width="20" height="20"/>
+        <image name="icon_home" width="36.333332061767578" height="36"/>
         <image name="icon_home_fill" width="36.333332061767578" height="36"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tertiarySystemGroupedBackgroundColor">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
