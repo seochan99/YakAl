@@ -166,12 +166,12 @@
                         <viewLayoutGuide key="safeArea" id="Nce-hL-E9L"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="lkQ-M8-DBA" firstAttribute="top" secondItem="DPe-VS-NS2" secondAttribute="bottom" constant="143" id="10q-Nw-mtg"/>
                             <constraint firstItem="Nce-hL-E9L" firstAttribute="trailing" secondItem="lkQ-M8-DBA" secondAttribute="trailing" constant="32" id="3QL-AS-gpY"/>
                             <constraint firstItem="DPe-VS-NS2" firstAttribute="top" secondItem="Nce-hL-E9L" secondAttribute="top" constant="94" id="E58-G1-48q"/>
                             <constraint firstItem="Nce-hL-E9L" firstAttribute="bottom" secondItem="fXK-Uj-EFf" secondAttribute="bottom" constant="32" id="IMe-Wh-ew5"/>
                             <constraint firstItem="Nce-hL-E9L" firstAttribute="trailing" secondItem="fXK-Uj-EFf" secondAttribute="trailing" constant="20" id="KqE-R3-JNX"/>
                             <constraint firstItem="lkQ-M8-DBA" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="32" id="L0e-cn-F9e"/>
-                            <constraint firstItem="lkQ-M8-DBA" firstAttribute="top" secondItem="yyg-rQ-geN" secondAttribute="bottom" constant="143" id="fpy-4F-KpR"/>
                             <constraint firstItem="DPe-VS-NS2" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="32" id="keO-HJ-WRN"/>
                             <constraint firstItem="fXK-Uj-EFf" firstAttribute="leading" secondItem="Nce-hL-E9L" secondAttribute="leading" constant="20" id="zlt-4D-6Dy"/>
                         </constraints>

@@ -42,7 +42,7 @@
                             <constraint firstItem="1LQ-kf-W0z" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="boO-tQ-psJ"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="커뮤니티" id="UCA-sy-LlX" userLabel="Home">
+                    <tabBarItem key="tabBarItem" title="커뮤니티" selectedImage="icon_ community_fill" id="UCA-sy-LlX" userLabel="Community">
                         <imageReference key="image" image="icon_ community" symbolScale="default"/>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
@@ -55,6 +55,7 @@
     <resources>
         <image name="defaultImage" width="252" height="252"/>
         <image name="icon_ community" width="36" height="36"/>
+        <image name="icon_ community_fill" width="36" height="36"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

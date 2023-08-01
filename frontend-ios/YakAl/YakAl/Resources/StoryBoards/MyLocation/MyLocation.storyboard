@@ -42,8 +42,8 @@
                             <constraint firstItem="myL-5U-UNf" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="SoJ-Sk-trI"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="내 근처" id="INw-Zj-UmH" userLabel="Home">
-                        <imageReference key="image" image="icon_location_fill" symbolScale="default"/>
+                    <tabBarItem key="tabBarItem" title="내 근처" selectedImage="icon_location_fill" id="INw-Zj-UmH" userLabel="Home">
+                        <imageReference key="image" image="icon_location" symbolScale="default"/>
                     </tabBarItem>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
@@ -54,6 +54,7 @@
     </scenes>
     <resources>
         <image name="defaultImage" width="252" height="252"/>
+        <image name="icon_location" width="36" height="36"/>
         <image name="icon_location_fill" width="36" height="36"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
