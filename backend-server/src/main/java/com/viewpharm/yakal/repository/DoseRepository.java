@@ -20,8 +20,13 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
     @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date and d.time =:time")
     List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
-    @Query(value = "SELECT * FROM (SELECT DISTINCT atc_code as ATCCode, date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap", nativeQuery = true)
-    List<overlap> findByMobileUserAndATCCodeAndDateBetween(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Query(value = "SELECT * FROM (SELECT DISTINCT date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap", nativeQuery = true)
+    List<overlap> findOverlap(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    @Query(value = "SELECT * FROM (SELECT atc_code as ATCCode, date,GROUP_CONCAT(DISTINCT kd_code) AS KDCodes COUNT(*) as count FROM doses " +
+            "WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap " +
+            "where date = :specificDate and count > 1", nativeQuery = true)
+    List<overlapDetail> findOverlapDetail(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("specificDate") LocalDate specificDate);
 
 
     @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take from Dose d where d.mobileUser.id = :userId and d.date = :date")
@@ -48,9 +53,13 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     }
 
     interface overlap{
-        String getATCCode();
         LocalDate getDate();
         Long getCount();
+    }
+
+    interface overlapDetail extends overlap{
+        String getATCCode();
+        List<String> getKDCodes();
     }
 
 }

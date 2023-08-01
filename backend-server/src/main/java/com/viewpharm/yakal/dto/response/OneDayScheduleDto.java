@@ -13,23 +13,11 @@ public class OneDayScheduleDto {
 
     private LocalDate date;
     private Map<EDosingTime, List<OneTimeScheduleDto>> schedule;
-    //private Map<EDosingTime, List<>> overlap;
-
-    /* {
-        morning : [
-            {
-                atccode : atccodename,
-                kdcodes : [kd1,kd2]
-            },
-        ]
-        afternoon :
-        evening :
-
-        }
-    */
+    private Map<String,List<String>> overlap;
     @Builder
-    public OneDayScheduleDto(final LocalDate date, final Map<EDosingTime, List<OneTimeScheduleDto>> schedule) {
+    public OneDayScheduleDto(LocalDate date, Map<EDosingTime, List<OneTimeScheduleDto>> schedule, Map<String, List<String>> overlap) {
         this.date = date;
         this.schedule = schedule;
+        this.overlap = overlap;
     }
 }

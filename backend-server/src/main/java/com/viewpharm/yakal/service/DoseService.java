@@ -33,28 +33,40 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DoseService {
 
-    private final Long OVERLAP_PERIOD = 30L;
+    private final Long OVERLAP_PERIOD = 15L;
 
     private final MobileUserRepository mobileUserRepository;
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
 
+    public <T> Map<EDosingTime, List<T>> createMap() {
+        Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
+        map.put(EDosingTime.MORNING, new ArrayList<>());
+        map.put(EDosingTime.AFTERNOON, new ArrayList<>());
+        map.put(EDosingTime.EVENING, new ArrayList<>());
+        map.put(EDosingTime.DEFAULT, new ArrayList<>());
+        return map;
+    }
+
     public OneDayScheduleDto getOneDaySchedule(final Long userId, final LocalDate date) {
-        final List<Dose> results = doseRepository.findByUserIdAndDate(userId, date);
+        final List<Dose> getDoses = doseRepository.findByUserIdAndDate(userId, date);
 
-        final Map<EDosingTime, List<OneTimeScheduleDto>> schedule = new HashMap<>(EDosingTime.values().length);
-        schedule.put(EDosingTime.MORNING, new ArrayList<>());
-        schedule.put(EDosingTime.AFTERNOON, new ArrayList<>());
-        schedule.put(EDosingTime.EVENING, new ArrayList<>());
-        schedule.put(EDosingTime.DEFAULT, new ArrayList<>());
+        final Map<EDosingTime, List<OneTimeScheduleDto>> scheduleMap = createMap();
 
-        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date, schedule);
+        List<DoseRepository.overlapDetail> overlapList = doseRepository.findOverlapDetail(
+                userId, date.minusDays(OVERLAP_PERIOD), date.plusDays(OVERLAP_PERIOD), date);
 
-        for (final Dose result : results) {
+        final Map<String, List<String>> overlapMap = new HashMap<>(overlapList.size());
+        overlapList.forEach(overlapDetail -> overlapMap.put(overlapDetail.getATCCode(), overlapDetail.getKDCodes()));
+
+        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,scheduleMap,overlapMap);
+
+        for (final Dose result : getDoses) {
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
                     .id(result.getId())
-                    .pillName(result.getKDCode())
+                    .ATCCode(result.getKDCode())
                     .isTaken(result.getIsTaken())
+                    .isOverlap(overlapMap.containsKey(result.getATCCode()))
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
@@ -83,31 +95,29 @@ public class DoseService {
         final List<DoseRepository.oneDaySummary> totalAndPortionList
                 = doseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfWeek, endOfWeek);
         final List<DoseRepository.overlap> overlapList
-                = doseRepository.findByMobileUserAndATCCodeAndDateBetween(userId,startOfWeek,endOfWeek);
+                = doseRepository.findOverlap(userId,startOfWeek,endOfWeek);
 
         final Map<DayOfWeek, OneDaySummaryDto> oneWeekSummary = new HashMap<>(ONE_WEEK_DAYS);
 
         // 일주일 각 날짜에 대한 처리
         for (int i = 0; i < ONE_WEEK_DAYS; ++i) {
-            Long total = null; // 초기값을 null로 설정
-            Long portion = null; // 초기값을 null로 설정
             Long progressOrNull = null; // 초기값을 null로 설정
             LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
             Boolean isOverlapped = false;
 
-            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
-            for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
 
+            for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
                 for (DoseRepository.overlap overlap : overlapList
                 ) {
-                    if (overlap.getDate() ==  currentDate && overlap.getCount()>1){
+                    if (overlap.getDate().equals(currentDate) && overlap.getCount()>1){
                         isOverlapped = true;
                     }
                 }
-
+                // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
                 if (summary.getDate().equals(currentDate)) {
-                    total = summary.getTotal();
-                    portion = summary.getTake();
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
                     break;
@@ -132,19 +142,29 @@ public class DoseService {
 
         final List<DoseRepository.oneDaySummary> totalAndPortionList
                 = doseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfMonth, endOfMonth);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId,startOfMonth,endOfMonth);
 
         final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = new HashMap<>(ONE_MONTH_DAYS);
 
         for (int i = 0; i < ONE_MONTH_DAYS; ++i) {
             Long progressOrNull = null; // 초기값을 null로 설정
-            Boolean isOverlapped = null; // 초기값을 null로 설정
+            LocalDate currentDate = startOfMonth.plusDays(i); // 현재 날짜 계산
+            Boolean isOverlapped = false;
 
             // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
             for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate) && overlap.getCount()>1){
+                        isOverlapped = true;
+                    }
+                }
+
                 if (summary.getDate().equals(startOfMonth.plusDays(i))) {
                     Long total = summary.getTotal();
                     Long portion = summary.getTake();
-                    isOverlapped = true;
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
                     break;

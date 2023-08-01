@@ -8,7 +8,7 @@ import lombok.Getter;
 public class OneTimeScheduleDto {
 
     final Long id;
-    final String pillName;
+    final String ATCCode;
     final Boolean isTaken;
     final Boolean isOverlap;
     final Double count;
