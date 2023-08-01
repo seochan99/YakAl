@@ -25,10 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -85,22 +82,32 @@ public class DoseService {
 
         final List<DoseRepository.oneDaySummary> totalAndPortionList
                 = doseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfWeek, endOfWeek);
-
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findByMobileUserAndATCCodeAndDateBetween(userId,startOfWeek,endOfWeek);
 
         final Map<DayOfWeek, OneDaySummaryDto> oneWeekSummary = new HashMap<>(ONE_WEEK_DAYS);
 
         // 일주일 각 날짜에 대한 처리
         for (int i = 0; i < ONE_WEEK_DAYS; ++i) {
-             Long progressOrNull = null; // 초기값을 null로 설정
-             Boolean isOverlapped = null; // 초기값을 null로 설정
-            final LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
+            Long total = null; // 초기값을 null로 설정
+            Long portion = null; // 초기값을 null로 설정
+            Long progressOrNull = null; // 초기값을 null로 설정
+            LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
+            Boolean isOverlapped = false;
 
             // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
             for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate() ==  currentDate && overlap.getCount()>1){
+                        isOverlapped = true;
+                    }
+                }
+
                 if (summary.getDate().equals(currentDate)) {
-                    Long total = summary.getTotal();
-                    Long portion = summary.getTake();
-                    isOverlapped = true;
+                    total = summary.getTotal();
+                    portion = summary.getTake();
                     // progressOrNull 계산 (null인 경우 예외 처리)
                     progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
                     break;
@@ -114,6 +121,8 @@ public class DoseService {
 
         return oneWeekSummary;
     }
+
+
 
     public Map<LocalDate, OneDaySummaryWithoutDateDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
         final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();

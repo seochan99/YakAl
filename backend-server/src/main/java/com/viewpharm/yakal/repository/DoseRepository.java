@@ -5,6 +5,7 @@ import com.viewpharm.yakal.type.EDosingTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -19,12 +20,9 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
     @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date and d.time =:time")
     List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
-    @Query("select * from (
-            select distinct atc_code,date,count(*)
-    from doses
-    where user_id = 1 and date >= '2023-07-05' and date <= '2023-07-31'
-    group by atc_code,date)")
-    List<Dose> findByMobileUserAndAndATCCodeAndAndDateBetween(Long userId,String ATCCode, LocalDate startDate,LocalDate endDate);
+    @Query(value = "SELECT * FROM (SELECT DISTINCT atc_code as ATCCode, date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap", nativeQuery = true)
+    List<overlap> findByMobileUserAndATCCodeAndDateBetween(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 
     @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take from Dose d where d.mobileUser.id = :userId and d.date = :date")
     oneDaySummary countTotalAndTakenByUserIdAndDate(Long userId, LocalDate date);
@@ -48,4 +46,11 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
         Long getTake();
         LocalDate getDate();
     }
+
+    interface overlap{
+        String getATCCode();
+        LocalDate getDate();
+        Long getCount();
+    }
+
 }

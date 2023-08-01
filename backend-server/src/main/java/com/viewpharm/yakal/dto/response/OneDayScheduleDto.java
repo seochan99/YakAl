@@ -13,7 +13,7 @@ public class OneDayScheduleDto {
 
     private LocalDate date;
     private Map<EDosingTime, List<OneTimeScheduleDto>> schedule;
-    private Map<EDosingTime, List<>> overlap;
+    //private Map<EDosingTime, List<>> overlap;
 
     /* {
         morning : [
