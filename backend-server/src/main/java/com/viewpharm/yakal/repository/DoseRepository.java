@@ -15,16 +15,16 @@ import java.util.Set;
 @Repository
 public interface DoseRepository extends JpaRepository<Dose, Long> {
 
-    @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date")
+    @Query("select d from Dose d join fetch d.ATCCode where d.mobileUser.id = :userId and d.date = :date ")
     List<Dose> findByUserIdAndDate(Long userId, LocalDate date);
 
     @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date and d.time =:time")
     List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
-    @Query(value = "SELECT * FROM (SELECT DISTINCT date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap", nativeQuery = true)
+    @Query(value = "SELECT * FROM (SELECT DISTINCT date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risks_id, date) overlap", nativeQuery = true)
     List<overlap> findOverlap(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query(value = "SELECT * FROM (SELECT atc_code as ATCCode, date,GROUP_CONCAT(DISTINCT kd_code) AS KDCodes COUNT(*) as count FROM doses " +
-            "WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY atc_code, date) overlap " +
+    @Query(value = "SELECT * FROM (SELECT risks_id as ATCCode, date,GROUP_CONCAT(DISTINCT kd_code) AS KDCodes ,COUNT(*) as count FROM doses " +
+            "WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risks_id, date) overlap " +
             "where date = :specificDate and count > 1", nativeQuery = true)
     List<overlapDetail> findOverlapDetail(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("specificDate") LocalDate specificDate);
 

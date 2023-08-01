@@ -4,6 +4,7 @@ import com.viewpharm.yakal.domain.Dose;
 
 import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.domain.Prescription;
+import com.viewpharm.yakal.domain.Risk;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.request.OneMedicineScheduleDto;
 import com.viewpharm.yakal.dto.request.OneScheduleDto;
@@ -16,6 +17,7 @@ import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.repository.MobileUserRepository;
+import com.viewpharm.yakal.repository.RiskRepository;
 import com.viewpharm.yakal.type.EDosingTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +40,7 @@ public class DoseService {
     private final MobileUserRepository mobileUserRepository;
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
-
+    private final RiskRepository riskRepository;
     public <T> Map<EDosingTime, List<T>> createMap() {
         Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
         map.put(EDosingTime.MORNING, new ArrayList<>());
@@ -64,9 +66,10 @@ public class DoseService {
         for (final Dose result : getDoses) {
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
                     .id(result.getId())
-                    .ATCCode(result.getKDCode())
+                    .KDCode(result.getKDCode())
+                    .ATCCode(result.getATCCode())
                     .isTaken(result.getIsTaken())
-                    .isOverlap(overlapMap.containsKey(result.getATCCode()))
+                    .isOverlap(overlapMap.containsKey(result.getATCCode().getId()))
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
@@ -225,10 +228,10 @@ public class DoseService {
                 isInserted.add(!isOverlapped);
 
                 if (!isOverlapped) {
-
+                    Risk risk = riskRepository.findById(ATCCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_RISK));
                     final Dose dose = Dose.builder()
                             .kdCode(KDCode)
-                            .ATCCode(ATCCode)
+                            .ATCCode(risk)
                             .date(oneScheduleDto.getDate())
                             .time(oneScheduleDto.getTime())
                             .pillCnt(oneScheduleDto.getCount().longValue())

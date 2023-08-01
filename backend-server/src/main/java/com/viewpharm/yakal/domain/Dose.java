@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
@@ -38,8 +37,9 @@ public class Dose {
     @Column(name="kd_code", nullable = false)
     private String KDCode;
 
-    @Column(name="atc_code", nullable = false)
-    private String ATCCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="risks_id")
+    private Risk ATCCode;
 
     @Column(name="date", nullable = false)
     private LocalDate date;
@@ -79,12 +79,11 @@ public class Dose {
 
     @Builder
     public Dose(final String kdCode,
-                final String ATCCode,
+                final Risk ATCCode,
                 final LocalDate date,
                 final EDosingTime time,
                 final Long pillCnt,
                 final Boolean isHalf,
-                final Boolean isOverlap,
                 final Prescription prescription,
                 final MobileUser mobileUser) {
         this.KDCode = kdCode;
