@@ -13,7 +13,6 @@ class Step1VC: SignInViewController {
     @IBOutlet weak var siginInInputField: UITextField!
     @IBOutlet weak var nextButton: UIButton!
     
-    @IBOutlet weak var headerTextLabel: UILabel!
     // Add 'user' property
      var user: User!
      
@@ -29,24 +28,8 @@ class Step1VC: SignInViewController {
         changeNaviBack()
 
            super.viewDidLoad()
-           myStepNumber = 1
+           myStepNumber = 2
         
-        let text = headerTextLabel.text ?? ""
-        let attributedText = NSMutableAttributedString(string: text)
-
-        let boldFont = UIFont.boldSystemFont(ofSize: headerTextLabel.font.pointSize)
-        let mediumFont = UIFont.systemFont(ofSize: headerTextLabel.font.pointSize, weight: .medium)
-
-        let boldRange = (text as NSString).range(of: "이름")
-        let mediumRange = NSRange(location: 0, length: text.count)
-
-        attributedText.addAttribute(.font, value: mediumFont, range: mediumRange)
-        attributedText.addAttribute(.font, value: boldFont, range: boldRange)
-
-        headerTextLabel.attributedText = attributedText
-
-
-
            
            // Set bottom constraint for button
            let safeArea = self.view.safeAreaLayoutGuide
@@ -66,13 +49,13 @@ class Step1VC: SignInViewController {
        
        
        @IBAction func nextButtonTapped(_ sender: UIButton) {
-           user.step1Input = siginInInputField.text!
+           user.nickName = siginInInputField.text!
            let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-           let signInScreen4VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_4") as! Step2VC
+           let signInScreen5VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_5") as! Step2_1VC
            
-           signInScreen4VC.user = user
+           signInScreen5VC.user = user
            
-           navigationController?.pushViewController(signInScreen4VC, animated: true)
+           navigationController?.pushViewController(signInScreen5VC, animated: true)
        }
        
     // Handle text field editing changed event

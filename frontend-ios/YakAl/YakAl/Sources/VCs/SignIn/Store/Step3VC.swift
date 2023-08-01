@@ -86,8 +86,8 @@ class Step3VC: SignInViewController,UITextFieldDelegate
     
     @IBAction func nextButtonTapped(_ sender: UIButton) {
         if let phoneNumber = siginInInputField.text {
-               let numericPhoneNumber = formatPhoneNumber(phoneNumber)
-               user.step3Input = numericPhoneNumber
+//               let numericPhoneNumber = formatPhoneNumber(phoneNumber)
+//               user.step3Input = numericPhoneNumber
            }
 
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
