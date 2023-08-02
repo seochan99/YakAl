@@ -9,11 +9,13 @@ import UIKit
 
 class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    @IBOutlet weak var calendarView: UIView!
     
     @IBOutlet weak var myTodoTableView: UITableView!
     
     @IBOutlet weak var emptyView: UIView!
     
+    @IBOutlet weak var addModalView: UIView!
     
     // 이곳에 해당하는 데이터 배열이 있을 것으로 가정합니다.
      var myTodoItems: [TodoItem] = [] // TodoItem은 Todo 아이템 데이터 모델로 가정합니다.
@@ -36,8 +38,14 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         return cell
     }
     
-    
+    // UIColor 객체를 #E9E9EE 색상으로 생성
+    let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
     override func viewDidLoad() {
+
+
+        // calendarView의 레이어(border)의 색상을 설정
+        calendarView.layer.borderColor = borderColor.cgColor
+        addModalView.layer.borderColor = borderColor.cgColor
         super.viewDidLoad()
     }
     
