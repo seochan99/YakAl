@@ -63,6 +63,8 @@ public class DoseService {
             overlapMap.get(overlapDetail.getTime()).add(overlapDto);
         }
 
+        Long totalCnt = 0L;
+
         for (final Dose result : getDoses) {
 
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
@@ -74,10 +76,11 @@ public class DoseService {
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
+            totalCnt += oneTimeScheduleDto.getCount().longValue();
             scheduleMap.get(result.getTime()).add(oneTimeScheduleDto);
         }
 
-        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,scheduleMap,overlapMap);
+        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,totalCnt,scheduleMap,overlapMap);
 
         return oneDayScheduleDto;
     }

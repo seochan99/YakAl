@@ -12,11 +12,13 @@ import java.util.Map;
 public class OneDayScheduleDto {
 
     private LocalDate date;
+    private Long totalCnt;
     private Map<EDosingTime, List<OneTimeScheduleDto>> schedule;
     private Map<EDosingTime,List<OverlapDto>> overlap;
     @Builder
-    public OneDayScheduleDto(LocalDate date, Map<EDosingTime, List<OneTimeScheduleDto>> schedule, Map<EDosingTime, List<OverlapDto>> overlap) {
+    public OneDayScheduleDto(LocalDate date,  Long totalCnt, Map<EDosingTime,List<OneTimeScheduleDto>> schedule, Map<EDosingTime, List<OverlapDto>> overlap) {
         this.date = date;
+        this.totalCnt = totalCnt;
         this.schedule = schedule;
         this.overlap = overlap;
     }
