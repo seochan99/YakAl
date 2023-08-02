@@ -22,7 +22,7 @@ class Step2VC: SignInViewController {
         // maybe some other stuff specific to this "step"
     }
     @IBAction func nextButtonTapped(_ sender: UIButton) {
-        user.step2Input = birthPicker.date
+//        user.step2Input = birthPicker.date
 
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
         let signInScreen5VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_5") as! Step3VC

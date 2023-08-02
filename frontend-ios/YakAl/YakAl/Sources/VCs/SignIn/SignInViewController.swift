@@ -10,7 +10,6 @@ import DropDown
 
 //MARK: - 개인정보동의
 class SignInViewController: UIViewController {
-    
     // 다음 버튼
     @IBOutlet weak var agreeButton: UIButton!
     
@@ -34,8 +33,15 @@ class SignInViewController: UIViewController {
         super.viewDidLoad()
         // Set initial button state
         // IBOutlet이 올바르게 연결되었는지 확인
-
+        if(agreeButton != nil){
+            agreeButton.isEnabled = false
+            agreeButton.backgroundColor = UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1.0)
+            agreeButton.setTitleColor(UIColor(red: 198/255, green: 198/255, blue: 207/255, alpha: 1.0), for: .disabled)
+        }
+        
+        
         self.navigationItem.title=" "
+        
         changeNaviBack()
     }
   
@@ -86,6 +92,7 @@ class SignInViewController: UIViewController {
         updateOverallCheckboxState()
     }
     
+    // 전체 체크 박스 상태 변경
     private func updateOverallCheckboxState() {
         if areAllServiceTermsChecked() {
             overallCheckbox.isSelected = true
@@ -144,10 +151,12 @@ class SignInViewController: UIViewController {
     // 버튼이 눌러졌을때 다음 화면으로
     @IBAction func agreeButtonTapped(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "SignIn", bundle: nil)
-        let signInScreen3VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_3") as! Step1VC
-        
+        let signInScreen3VC = storyboard.instantiateViewController(withIdentifier: "SignInScreen_3") as! Step0_1VC
         signInScreen3VC.user = User.shared
+        
 
+//        performSegue(withIdentifier: "ShowMain", sender: sender)
+        
         navigationController?.pushViewController(signInScreen3VC, animated: true)
     }
 }
