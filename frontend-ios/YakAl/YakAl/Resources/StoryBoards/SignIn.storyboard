@@ -45,6 +45,53 @@
                     <view key="view" contentMode="scaleToFill" id="Ngz-cK-0dq">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rEi-WO-Uct">
+                                <rect key="frame" x="143" y="399" width="106" height="54"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PqC-DI-EDR">
+                                        <rect key="frame" x="0.0" y="0.0" width="106" height="54"/>
+                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-gW-yzs">
+                                        <rect key="frame" x="16.333333333333336" y="17" width="73.666666666666657" height="20"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pill.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="qOh-HV-neV">
+                                                <rect key="frame" x="0.0" y="0.66666666666666607" width="20" height="19"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="20" id="24r-8T-Zvc"/>
+                                                    <constraint firstAttribute="width" constant="20" id="g3y-e8-wua"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 추가" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="E1S-Hx-8qW">
+                                                <rect key="frame" x="28.000000000000004" y="0.0" width="45.666666666666671" height="20"/>
+                                                <fontDescription key="fontDescription" name="SUIT-SemiBold" family="SUIT" pointSize="16"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" name="MainColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="PqC-DI-EDR" secondAttribute="bottom" id="0Du-yU-LFr"/>
+                                    <constraint firstAttribute="trailing" secondItem="PqC-DI-EDR" secondAttribute="trailing" id="7HD-jo-oHs"/>
+                                    <constraint firstAttribute="height" constant="54" id="bZ1-Ln-RSg"/>
+                                    <constraint firstItem="mY9-gW-yzs" firstAttribute="centerX" secondItem="rEi-WO-Uct" secondAttribute="centerX" id="bgO-Ae-kAV"/>
+                                    <constraint firstAttribute="width" constant="106" id="fge-Lv-hz1"/>
+                                    <constraint firstItem="PqC-DI-EDR" firstAttribute="leading" secondItem="rEi-WO-Uct" secondAttribute="leading" id="gVH-ac-Czw"/>
+                                    <constraint firstItem="mY9-gW-yzs" firstAttribute="centerY" secondItem="rEi-WO-Uct" secondAttribute="centerY" id="onQ-zA-L5H"/>
+                                    <constraint firstItem="PqC-DI-EDR" firstAttribute="top" secondItem="rEi-WO-Uct" secondAttribute="top" id="r6C-xZ-Qk8"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="28"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="V1E-a5-309"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
@@ -953,7 +1000,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="을 확인해주세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wJx-R4-Bhs">
-                                        <rect key="frame" x="42" y="0.0" width="152.66666666666666" height="30"/>
+                                        <rect key="frame" x="42" y="0.0" width="152.66666666666669" height="30"/>
                                         <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="24"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -1220,6 +1267,7 @@
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="defaultImage" width="252" height="252"/>
+        <image name="pill.fill" catalog="system" width="128" height="123"/>
         <namedColor name="MainColor">
             <color red="0.14900000393390656" green="0.41200000047683716" blue="0.96100002527236938" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
         </namedColor>
