@@ -37,15 +37,16 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     // 배경 어둡게 만드는 view
     lazy var floatingDimView: UIView = {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height))
-        
-        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height - (self.tabBarController?.tabBar.frame.height ?? 0)))
+
+        view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         view.alpha = 0
         view.isHidden = true
 
+        self.view.insertSubview(view, belowSubview: self.floatingStackView)
+
         return view
     }()
-    
     
     // 이곳에 해당하는 데이터 배열이 있을 것으로 가정합니다.
      var myTodoItems: [TodoItem] = [] // TodoItem은 Todo 아이템 데이터 모델로 가정합니다.
@@ -107,37 +108,44 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBAction func floatingButtonAction(_ sender: UIButton) {
         print("약 추가 버튼 선택됨")
-         if isShowFloating {
-             buttons.reversed().forEach { button in
-                 UIView.animate(withDuration: 0.1) {
-                     button.isHidden = true
-                     self.view.layoutIfNeeded()
-                 }
-             }
+        
+        
+        if isShowFloating {
+            // 약 추가 목록버튼모달 없애기
+            UIView.animate(withDuration: 0.3, animations: {
+                self.floatingDimView.alpha = 0
+            }) { (_) in
+                self.floatingDimView.isHidden = true
+            }
 
-             UIView.animate(withDuration: 0.1, animations: {
-                 self.floatingDimView.alpha = 0.5
-             }) { (_) in
-                 self.floatingDimView.isHidden = true
-             }
-         } else {
+            buttons.reversed().forEach { button in
+                UIView.animate(withDuration: 0.3) {
+                    button.alpha = 0
+                    self.view.layoutIfNeeded()
+                } completion: { _ in
+                    button.isHidden = true
+                }
+            }
+        } else {
+            // 약 추가 목록버튼모달 만들기
+            self.floatingDimView.isHidden = false
+            self.floatingDimView.alpha = 0
 
-             self.floatingDimView.isHidden = false
+            UIView.animate(withDuration: 0.3) {
+                self.floatingDimView.alpha = 0.7
+            }
 
-             UIView.animate(withDuration: 0.5) {
-                 self.floatingDimView.alpha = 1
-             }
+            buttons.forEach { [weak self] button in
+                button.isHidden = false
+                button.alpha = 0
 
-             buttons.forEach { [weak self] button in
-                 button.isHidden = false
-                 button.alpha = 0
+                UIView.animate(withDuration: 0.3) {
+                    button.alpha = 1
+                    self?.view.layoutIfNeeded()
+                }
+            }
+        }
 
-                 UIView.animate(withDuration: 0.3) {
-                     button.alpha = 1
-                     self?.view.layoutIfNeeded()
-                 }
-             }
-         }
 
          isShowFloating = !isShowFloating
 
