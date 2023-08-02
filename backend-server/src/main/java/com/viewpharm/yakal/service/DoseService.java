@@ -8,10 +8,7 @@ import com.viewpharm.yakal.domain.Risk;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.request.OneMedicineScheduleDto;
 import com.viewpharm.yakal.dto.request.OneScheduleDto;
-import com.viewpharm.yakal.dto.response.OneDayScheduleDto;
-import com.viewpharm.yakal.dto.response.OneDaySummaryDto;
-import com.viewpharm.yakal.dto.response.OneDaySummaryWithoutDateDto;
-import com.viewpharm.yakal.dto.response.OneTimeScheduleDto;
+import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
@@ -35,8 +32,6 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DoseService {
 
-    private final Long OVERLAP_PERIOD = 15L;
-
     private final MobileUserRepository mobileUserRepository;
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
@@ -55,15 +50,21 @@ public class DoseService {
 
         final Map<EDosingTime, List<OneTimeScheduleDto>> scheduleMap = createMap();
 
-        List<DoseRepository.overlapDetail> overlapList = doseRepository.findOverlapDetail(
-                userId, date.minusDays(OVERLAP_PERIOD), date.plusDays(OVERLAP_PERIOD), date);
+        List<DoseRepository.overlapDetail> overlapList = doseRepository.findOverlapDetail(userId, date);
 
-        final Map<String, List<String>> overlapMap = new HashMap<>(overlapList.size());
-        overlapList.forEach(overlapDetail -> overlapMap.put(overlapDetail.getATCCode(), overlapDetail.getKDCodes()));
+        final Map<EDosingTime, List<OverlapDto>> overlapMap = createMap();
 
-        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,scheduleMap,overlapMap);
+
+        for (DoseRepository.overlapDetail overlapDetail : overlapList){
+            final OverlapDto overlapDto = OverlapDto.builder()
+                    .ATCCode(overlapDetail.getATCCode())
+                    .KDCodes(overlapDetail.getKDCodes())
+                    .build();
+            overlapMap.get(overlapDetail.getTime()).add(overlapDto);
+        }
 
         for (final Dose result : getDoses) {
+
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
                     .id(result.getId())
                     .KDCode(result.getKDCode())
@@ -73,8 +74,10 @@ public class DoseService {
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
-            oneDayScheduleDto.getSchedule().get(result.getTime()).add(oneTimeScheduleDto);
+            scheduleMap.get(result.getTime()).add(oneTimeScheduleDto);
         }
+
+        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,scheduleMap,overlapMap);
 
         return oneDayScheduleDto;
     }
@@ -113,10 +116,12 @@ public class DoseService {
                 //성분 중복 검사
                 for (DoseRepository.overlap overlap : overlapList
                 ) {
-                    if (overlap.getDate().equals(currentDate) && overlap.getCount()>1){
+                    if (overlap.getDate().equals(currentDate)){
                         isOverlapped = true;
+                        break;
                     }
                 }
+
                 // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
                 if (summary.getDate().equals(currentDate)) {
                     Long total = summary.getTotal();
@@ -160,8 +165,9 @@ public class DoseService {
                 //성분 중복 검사
                 for (DoseRepository.overlap overlap : overlapList
                 ) {
-                    if (overlap.getDate().equals(currentDate) && overlap.getCount()>1){
+                    if (overlap.getDate().equals(currentDate)){
                         isOverlapped = true;
+                        break;
                     }
                 }
 

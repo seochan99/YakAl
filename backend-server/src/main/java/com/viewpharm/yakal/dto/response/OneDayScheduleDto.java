@@ -13,9 +13,9 @@ public class OneDayScheduleDto {
 
     private LocalDate date;
     private Map<EDosingTime, List<OneTimeScheduleDto>> schedule;
-    private Map<String,List<String>> overlap;
+    private Map<EDosingTime,List<OverlapDto>> overlap;
     @Builder
-    public OneDayScheduleDto(LocalDate date, Map<EDosingTime, List<OneTimeScheduleDto>> schedule, Map<String, List<String>> overlap) {
+    public OneDayScheduleDto(LocalDate date, Map<EDosingTime, List<OneTimeScheduleDto>> schedule, Map<EDosingTime, List<OverlapDto>> overlap) {
         this.date = date;
         this.schedule = schedule;
         this.overlap = overlap;
