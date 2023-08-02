@@ -11,11 +11,14 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
     @IBOutlet weak var calendarView: UIView!
     
+    @IBOutlet weak var addButton: UIButton!
     @IBOutlet weak var myTodoTableView: UITableView!
     
     @IBOutlet weak var emptyView: UIView!
     
     @IBOutlet weak var addModalView: UIView!
+    
+
     
     // 이곳에 해당하는 데이터 배열이 있을 것으로 가정합니다.
      var myTodoItems: [TodoItem] = [] // TodoItem은 Todo 아이템 데이터 모델로 가정합니다.
@@ -49,7 +52,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         super.viewDidLoad()
     }
     
-
+    
     // 아래 메서드를 사용하여 emptyView의 상태를 갱신합니다.
     func updateEmptyViewVisibility() {
         if myTodoItems.count == 0 {
