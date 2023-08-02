@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="HardcodedText"
     android:background="#ffE9E9EE" >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,6 +15,41 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
+        <ProgressBar
+            android:id="@+id/todayPercentBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="100dp"
+
+            android:layout_height="100dp"
+            android:layout_marginEnd="20dp"
+            android:max="100"
+
+            android:progressDrawable="@drawable/bar_home_taking_percent"
+            android:progressTint="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/todayTakingTextView"
+            app:layout_constraintVertical_bias="0.7" />
+
+        <TextView
+            android:id="@+id/todayPercentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="100%"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            android:textColor="#FF5588FD"
+            android:textAlignment="center"
+
+            style="@style/default_font"
+            app:layout_constraintStart_toStartOf="@id/todayPercentBar"
+            app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
+            app:layout_constraintTop_toTopOf="@id/todayPercentBar"
+            app:layout_constraintBottom_toBottomOf="@id/todayPercentBar" />
+
+
 
         <TextView
             android:id="@+id/todayDateTextView"
@@ -39,12 +73,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
 
-            android:fontFamily="@font/suit_medium"
             android:lineSpacingExtra="3sp"
             android:text="오늘 복용해야 하는 약은\n총 0개입니다"
             android:textColor="@color/black"
-
             android:textSize="22sp"
+            style="@style/default_font"
+
+            android:bufferType="spannable"
             app:layout_constraintStart_toStartOf="@id/todayDateTextView"
             app:layout_constraintTop_toBottomOf="@id/todayDateTextView" />
 
