@@ -39,7 +39,7 @@ public class AuthService {
                  url = oAuth2Util.getGoogleRedirectUrl();
             }
             case APPLE -> {
-                // url = oAuth2Util.getAppleRedirectUrl();
+                url = oAuth2Util.getAppleRedirectUrl();
             }
             default -> {
                 assert (true): "Invalid Type Error";
@@ -64,6 +64,7 @@ public class AuthService {
                 socialId = oAuth2Util.getGoogleUserInformation(authorizationAccessToken);
             }
             case APPLE -> {
+                socialId = oAuth2Util.getAppleUserInformation(authorizationAccessToken);
             }
             default -> {
                 assert (false): "Invalid Type Error";
