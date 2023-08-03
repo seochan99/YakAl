@@ -41,14 +41,12 @@ public interface MobileUserRepository extends JpaRepository<MobileUser, Long> {
 
     @Query("SELECT m, count(*) from Dose d join fetch MobileUser m where d.date = :date and d.time = :dosingTime group by m")
     List<MobileUserNotificationForm> findByDateAndDosingTime(@Param("date") LocalDate localDate, @Param("dosingTime") EDosingTime dosingTime);
-
-    @Query("SELECT m, count(*) from Dose d join fetch MobileUser m where d.date = :date and m.breakfastTime = :localTime group by m")
+    @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.breakfastTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndBreakfastTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
-
-    @Query("SELECT m, count(*) from Dose d join fetch MobileUser m where d.date = :date and m.lunchTime = :localTime group by m")
+    @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.lunchTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndLunchTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
-    @Query("SELECT m, count(*) from Dose d join fetch MobileUser m where d.date = :date and m.dinnerTime = :localTime group by m")
+    @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.dinnerTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndDinnerTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     interface MobileUserNotificationForm {
