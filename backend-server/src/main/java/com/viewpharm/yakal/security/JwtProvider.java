@@ -49,7 +49,7 @@ public class JwtProvider implements InitializingBean {
     }
 
     public String refineToken(final HttpServletRequest request) throws CommonException {
-        String unpreparedToken = request.getHeader(AUTHORIZATION_HEADER);
+        final String unpreparedToken = request.getHeader(AUTHORIZATION_HEADER);
 
         if (!StringUtils.hasText(unpreparedToken) || !unpreparedToken.startsWith(BEARER_PREFIX)) {
             throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
