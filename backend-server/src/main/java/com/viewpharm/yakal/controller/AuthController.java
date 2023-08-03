@@ -44,6 +44,21 @@ public class AuthController {
         return ResponseDto.created(jwtTokenDto);
     }
 
+    @GetMapping("/google")
+    @DisableSwaggerSecurity
+    @Operation(summary = "Google 인증 리다이렉트 URL 가져오기", description = "Google 인증 리다이렉트 URL를 가져옵니다.")
+    public ResponseDto<Map<String, String>> getGoogleRedirectUrl() {
+        return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.GOOGLE));
+    }
+
+    @PostMapping("/google")
+    @Operation(summary = "Google 로그인", description = "Google 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    public ResponseDto<JwtTokenDto> loginUsingGOOGLE(final HttpServletRequest request) {
+        final String accessToken = jwtProvider.refineToken(request);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE);
+        return ResponseDto.created(jwtTokenDto);
+    }
+
     // Google, Apple 로그인 구현 예정
 
     @Deprecated
