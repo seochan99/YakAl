@@ -37,8 +37,9 @@ public class Dose {
     @Column(name="kd_code", nullable = false)
     private String KDCode;
 
-    @Column(name="atc_code", nullable = false)
-    private String ATCCode;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="risks_id")
+    private Risk ATCCode;
 
     @Column(name="date", nullable = false)
     private LocalDate date;
@@ -78,7 +79,7 @@ public class Dose {
 
     @Builder
     public Dose(final String kdCode,
-                final String ATCCode,
+                final Risk ATCCode,
                 final LocalDate date,
                 final EDosingTime time,
                 final Long pillCnt,
@@ -93,7 +94,12 @@ public class Dose {
         this.prescription = prescription;
         this.mobileUser = mobileUser;
         this.isTaken = false;
+        this.isDeleted = false;
         this.ATCCode = ATCCode;
         this.created = new Timestamp(System.currentTimeMillis());
+    }
+
+    public void updateIsTaken(final Boolean isTaken){
+        this.isTaken = isTaken;
     }
 }
