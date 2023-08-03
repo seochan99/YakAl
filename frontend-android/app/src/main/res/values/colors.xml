@@ -6,4 +6,7 @@
     <color name="blue">#FF2666F6</color>
     <color name="no_select_gray">#FFC6C6CF</color>
     <color name="select_blue">#FF2666F6</color>
+    <color name="risk_red">#FFFB5D5D</color>
+    <color name="risk_yellow">#FFFFC100</color>
+    <color name="risk_green">#FF63DC68</color>
 </resources>

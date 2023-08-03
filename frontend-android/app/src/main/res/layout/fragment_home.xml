@@ -1,21 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:ignore="HardcodedText"
-    android:background="#ffE9E9EE" >
+    android:background="#ffE9E9EE">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/homeTopContainer"
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:background="@drawable/lyt_home_top"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
+
+        <ProgressBar
+            android:id="@+id/todayPercentBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="100dp"
+
+            android:layout_height="100dp"
+            android:layout_marginEnd="20dp"
+            android:max="100"
+
+            android:progressDrawable="@drawable/bar_home_taking_percent"
+            android:progressTint="@color/blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/todayTakingTextView"
+            app:layout_constraintVertical_bias="0.7" />
+
+        <TextView
+            android:id="@+id/todayPercentTextView"
+            style="@style/default_font"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:text="100%"
+            android:textAlignment="center"
+            android:textColor="#FF5588FD"
+            android:textSize="20dp"
+
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/todayPercentBar"
+            app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
+            app:layout_constraintStart_toStartOf="@id/todayPercentBar"
+            app:layout_constraintTop_toTopOf="@id/todayPercentBar" />
+
 
         <TextView
             android:id="@+id/todayDateTextView"
@@ -35,11 +69,12 @@
 
         <TextView
             android:id="@+id/todayTakingTextView"
+            style="@style/default_font"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
 
-            android:fontFamily="@font/suit_medium"
+            android:layout_marginTop="12dp"
+            android:bufferType="spannable"
             android:lineSpacingExtra="3sp"
             android:text="오늘 복용해야 하는 약은\n총 0개입니다"
             android:textColor="@color/black"
@@ -90,6 +125,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/todayTakingScheduleMainRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeTopContainer"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_home_pill_main" />
+
     <TextView
         android:id="@+id/nonePillTextView"
         android:layout_width="wrap_content"
@@ -117,85 +164,99 @@
         app:layout_constraintTop_toTopOf="@+id/nonePillTextView"
         app:layout_constraintVertical_bias="0.25" />
 
+    <androidx.constraintlayout.helper.widget.Layer
+        android:id="@+id/nonePillLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="nonePillImageView,nonePillTextView"
+        tools:ignore="MissingConstraints"
+        android:visibility="gone"/>
+
 
     <ImageButton
         android:id="@+id/goNotificationButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:background="@drawable/bt_home_bell"
-        android:src="@drawable/ic_custom_bell"
-
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
+
+        android:background="@drawable/bt_home_bell"
+        android:src="@drawable/ic_custom_bell"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/addPillGrayLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="#26000000" />
+        android:background="#26000000"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addPillListButton"
+        style="@style/addPillButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="약 추가"
-        app:icon="@drawable/ic_custom_pill"
+        android:backgroundTint="@color/blue"
 
-        style="@style/addPillButton"
-        android:textSize="20sp"
         android:gravity="start|center_vertical"
+        android:text="약 추가"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:icon="@drawable/ic_custom_pill"
         app:iconPadding="5dp"
         app:iconTint="@color/white"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/blue"
-        app:shapeAppearanceOverlay="@style/addPillMainButtonShape"
-
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:shapeAppearanceOverlay="@style/addPillMainButtonShape" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addPrescriptionButton"
+        style="@style/addPillSubButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:text="약 봉투"
+
+        android:visibility="gone"
         app:icon="@drawable/ic_baseline_add"
 
-        style="@style/addPillSubButton"
-        app:shapeAppearanceOverlay="@style/addPillSubTopShape"
-
         app:layout_constraintBottom_toTopOf="@id/addGeneralPillButton"
-        app:layout_constraintEnd_toEndOf="@id/addGeneralPillButton" />
+
+        app:layout_constraintEnd_toEndOf="@id/addGeneralPillButton"
+        app:shapeAppearanceOverlay="@style/addPillSubTopShape" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addGeneralPillButton"
+        style="@style/addPillSubButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:text="일반 의약품"
+
+        android:visibility="gone"
         app:icon="@drawable/ic_baseline_add"
 
-        style="@style/addPillSubButton"
-        app:shapeAppearanceOverlay="@style/addPillSubMiddleShape"
-
         app:layout_constraintBottom_toTopOf="@id/addDirectPillButton"
-        app:layout_constraintEnd_toEndOf="@id/addDirectPillButton" />
+
+        app:layout_constraintEnd_toEndOf="@id/addDirectPillButton"
+        app:shapeAppearanceOverlay="@style/addPillSubMiddleShape" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/addDirectPillButton"
+        style="@style/addPillSubButton"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:text="직접 입력"
-        app:icon="@drawable/ic_baseline_add"
         android:layout_marginBottom="10dp"
+        android:text="직접 입력"
 
-        style="@style/addPillSubButton"
-        app:shapeAppearanceOverlay="@style/addPillSubBottomShape"
+        android:visibility="gone"
+        app:icon="@drawable/ic_baseline_add"
 
         app:layout_constraintBottom_toTopOf="@id/addPillListButton"
-        app:layout_constraintEnd_toEndOf="@id/addPillListButton" />
+
+        app:layout_constraintEnd_toEndOf="@id/addPillListButton"
+        app:shapeAppearanceOverlay="@style/addPillSubBottomShape" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

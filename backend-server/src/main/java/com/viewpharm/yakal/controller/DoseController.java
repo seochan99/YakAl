@@ -28,7 +28,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.DayOfWeek;
@@ -93,16 +92,16 @@ public class DoseController {
             @UserId Long id,
             @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
     ) {
-        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(id, updateDoseCountDto);
+        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(updateDoseCountDto);
         return ResponseDto.ok(isUpdatedMap);
     }
 
-    @PatchMapping("/taken/{date}")
+    @PatchMapping("/taken/{date}/{time}")
     @Operation(summary = "특정 시간대의 스케줄 모두 복용 처리 혹은 취소", description = "특정 시간대의 복용 스케줄을 모두 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenByTime(
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
-            @RequestParam(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
+            @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
         doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
@@ -112,31 +111,31 @@ public class DoseController {
     @PatchMapping("/taken/{id}")
     @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenById(
-            @UserId Long userId,
-            @RequestParam("id") @Valid @Range(min = 1L) Long doesId,
+            @UserId Long id,
+            @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenById(userId, doesId, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
-            @RequestBody CreateScheduleDto createScheduleDto
+            @RequestBody @Valid CreateScheduleDto createScheduleDto
     ) {
         final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
         return ResponseDto.created(isInserted);
     }
 
-    @DeleteMapping("/")
+    @DeleteMapping("")
     @Operation(summary = "선택된 약 스케줄 삭제",description = "약 스케줄 ID를 받아 그에 해당하는 스케줄을 삭제합니다.")
     public ResponseDto<Object> deleteScheduleByIds(
             @UserId Long id,
-            @RequestBody List<@Valid @Range(min = 1L) Long> doesIdList
+            @RequestBody List<Long> doesIdList
     ){
-        doseService.deleteSchedule(id, doesIdList);
+        doseService.deleteSchedule(doesIdList);
         return ResponseDto.ok(null);
     }
 }

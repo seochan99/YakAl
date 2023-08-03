@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    tools:context=".SplashActivity"
+    android:background="@color/white">
 
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="380dp"
         android:layout_height="220dp"
-        android:src="@drawable/splash_logo"
+        android:src="@drawable/logo_splash"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"
@@ -21,7 +22,7 @@
     <ImageView
         android:layout_width="228dp"
         android:layout_height="100dp"
-        android:src="@drawable/splash_text"
+        android:src="@drawable/text_splash"
         app:layout_constraintBottom_toTopOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.15"

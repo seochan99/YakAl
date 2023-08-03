@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="5dp"
+    android:paddingEnd="5dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/takingScheduleSubItem"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/it_home_pill_sub_middle"
+        android:backgroundTint="@color/white"
+        android:elevation="3dp">
+
+        <ImageView
+            android:id="@+id/takingScheduleMainImageView"
+            android:layout_width="64dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/view_round"
+            android:backgroundTint="#FFE9F0FF"
+            android:padding="5dp"
+
+            android:src="@drawable/ic_home_list_pill_on"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/takingScheduleSubFillNameTextView"
+            style="@style/default_font"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="약품명 - 약품"
+            android:textColor="@color/black"
+
+            android:textSize="17sp"
+            app:layout_constraintStart_toEndOf="@id/takingScheduleMainImageView"
+            app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView" />
+
+        <TextView
+            android:id="@+id/takingScheduleSubEffectTextView"
+            style="@style/default_font"
+            android:layout_width="wrap_content"
+
+            android:layout_height="wrap_content"
+            android:text="해열, 진통, 소염제"
+            android:textColor="#FF90909F"
+            android:textSize="12sp"
+
+            app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView"
+            app:layout_constraintStart_toStartOf="@id/takingScheduleSubFillNameTextView"
+            app:layout_constraintTop_toBottomOf="@id/takingScheduleSubFillNameTextView" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/takingScheduleSubCheckBox"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="22dp"
+                android:layout_gravity="end"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bt_home_bell"
+                android:src="@drawable/ic_custom_overlap" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="10dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="6dp"
+                android:layout_marginBottom="6dp"
+                android:layout_gravity="center_vertical|end"
+                android:backgroundTint="@color/risk_green"
+                android:background="@drawable/view_oval" />
+        </LinearLayout>
+
+        <CheckBox
+            android:id="@+id/takingScheduleSubCheckBox"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+
+            android:button="@null"
+            android:background="@drawable/cb_home_taking_main"
+            android:layout_marginEnd="16dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
+            app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
+
+        <View
+            android:id="@+id/inactiveExpandView"
+            android:layout_width="60dp"
+            android:layout_height="3dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/view_round"
+
+            android:visibility="gone"
+            android:backgroundTint="#E9E9EE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

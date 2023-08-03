@@ -36,7 +36,7 @@ public class AuthService {
                 url = oAuth2Util.getKakaoRedirectUrl();
             }
             case GOOGLE -> {
-                // url = oAuth2Util.getGoogleRedirectUrl();
+                 url = oAuth2Util.getGoogleRedirectUrl();
             }
             case APPLE -> {
                 url = oAuth2Util.getAppleRedirectUrl();
@@ -61,6 +61,7 @@ public class AuthService {
                 socialId = oAuth2Util.getKakaoUserInformation(authorizationAccessToken);
             }
             case GOOGLE -> {
+                socialId = oAuth2Util.getGoogleUserInformation(authorizationAccessToken);
             }
             case APPLE -> {
                 socialId = oAuth2Util.getAppleUserInformation(authorizationAccessToken);
