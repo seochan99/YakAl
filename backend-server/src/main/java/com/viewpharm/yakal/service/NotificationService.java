@@ -9,7 +9,6 @@ import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.repository.MobileUserRepository.MobileUserNotificationForm;
 import com.viewpharm.yakal.repository.NotificationRepository;
-import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EDosingTime;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
@@ -33,6 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class NotificationService {
+
     private final NotificationRepository notificationRepository;
     private final NotificationUtil notificationUtil;
     private final MobileUserRepository mobileUserRepository;

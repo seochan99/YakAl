@@ -44,7 +44,17 @@ public class AuthController {
         return ResponseDto.created(jwtTokenDto);
     }
 
-    // Google, Apple 로그인 구현 예정
+    @GetMapping("/apple")
+    public ResponseDto<Map<String, String>> getAppleRedirectUrl() {
+        return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.APPLE));
+    }
+
+    @PostMapping("/apple")
+    public ResponseDto<?> loginUsingApple(final HttpServletRequest request) {
+        final String accessToken = jwtProvider.refineToken(request);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE);
+        return ResponseDto.created(jwtTokenDto);
+    }
 
     @Deprecated
     @PostMapping("/user")

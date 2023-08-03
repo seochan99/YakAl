@@ -64,6 +64,12 @@ dependencies {
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.17.1'
 	asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 
+	// Apache Commons IO
+	implementation 'commons-io:commons-io:2.13.0'
+
+	// Bouncy Castle
+	implementation group: 'org.bouncycastle', name: 'bcpkix-jdk18on', version: '1.72'
+
 	// Firebase
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
 
