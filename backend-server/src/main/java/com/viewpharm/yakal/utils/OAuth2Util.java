@@ -18,9 +18,11 @@ import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.apache.commons.io.FileUtils;
@@ -72,6 +74,8 @@ public class OAuth2Util {
     private String APPLE_CLIENT_KEY;
     @Value("${client.registration.apple.redirect-uri: aaa.bbb.ccc}")
     private String APPLE_REDIRECT_URL;
+    @Value(value = "${client.registration.apple.auth-key-file: aaa.bbb.ccc}")
+    private String APPLE_KEY_NAME;
 
     // GOOGLE 용 Data
     @Value("${client.provider.google.authorization-uri: aaa.bbb.ccc}")
@@ -169,7 +173,7 @@ public class OAuth2Util {
                 .build();
 
         try {
-            final InputStream inputStream = new ClassPathResource("AuthKey_25QLY6KYS4.p8").getInputStream();
+            final InputStream inputStream = new ClassPathResource(APPLE_KEY_NAME).getInputStream();
             final File file = File.createTempFile("AuthKey", ".p8");
 
             try {

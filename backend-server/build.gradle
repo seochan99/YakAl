@@ -161,6 +161,11 @@ bootJar {
 	archiveFileName.set "application.jar"
 }
 
+
+jar {
+	enabled = false
+}
+
 /**
  * Query DSL Build Options (선택사항)
  */
