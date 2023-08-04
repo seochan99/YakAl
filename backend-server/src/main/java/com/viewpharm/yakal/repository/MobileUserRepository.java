@@ -41,16 +41,33 @@ public interface MobileUserRepository extends JpaRepository<MobileUser, Long> {
 
     @Query("SELECT m, count(*) from Dose d join fetch MobileUser m where d.date = :date and d.time = :dosingTime group by m")
     List<MobileUserNotificationForm> findByDateAndDosingTime(@Param("date") LocalDate localDate, @Param("dosingTime") EDosingTime dosingTime);
+
     @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.breakfastTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndBreakfastTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
+
     @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.lunchTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndLunchTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query("SELECT m, count(d) from MobileUser m join fetch m.doses d where d.date = :date and m.dinnerTime = :localTime group by m, d")
     List<MobileUserNotificationForm> findByDateAndDinnerTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
+    @Query(value = "SELECT user_id, user_name, COUNT(dose_id) FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id from mobile_users m" +
+            " inner join users u on m.user_id = u.id" +
+            " inner join doses d on m.user_id = d.user_id" +
+            " where d.date = :date and m.dinner_time = :localTime) as q" +
+            " GROUP BY user_name, user_id", nativeQuery = true)
+    List<MobileUserNotificationForm2> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
+
     interface MobileUserNotificationForm {
         MobileUser getMobileUser();
+
+        int getCount();
+    }
+
+    interface MobileUserNotificationForm2 {
+        Long getUserId();
+
+        String getUsername();
 
         int getCount();
     }

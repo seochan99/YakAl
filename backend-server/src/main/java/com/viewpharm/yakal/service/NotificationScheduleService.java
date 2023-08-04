@@ -1,7 +1,10 @@
 package com.viewpharm.yakal.service;
 
+import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
+import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.repository.NotificationRepository;
 import com.viewpharm.yakal.type.EDosingTime;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -122,7 +126,7 @@ public class NotificationScheduleService {
     }
 
     //매일 저녁 17-23시 30분 간격 실행
-    @Scheduled(cron = "0 0/30 15-23 * * *")
+    @Scheduled(cron = "0 0/30 17-23 * * *")
     @SchedulerLock(
             name = "scheduledSendingDinnerNotification",
             lockAtLeastFor = "PT29M",
@@ -136,6 +140,7 @@ public class NotificationScheduleService {
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
         List<MobileUserRepository.MobileUserNotificationForm> mobileUsers = mobileUserRepository.findByDateAndDinnerTime(nowDate, nowTime);
+        //List<MobileUser> mobileUsers = mobileUserRepository.findByDateAndTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
         for (MobileUserRepository.MobileUserNotificationForm mobileUser : mobileUsers) {
@@ -167,20 +172,48 @@ public class NotificationScheduleService {
         }
     }
 
-    public Boolean sendPushNotificationTest(LocalDate localDate, EDosingTime eDosingTime) throws Exception {
+    public Boolean sendPushNotificationTest() throws Exception {
         //현재 날짜
+        LocalDate nowDate = LocalDate.now();
+        LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
-        List<MobileUserRepository.MobileUserNotificationForm> mobileUsers = mobileUserRepository.findByDateAndDosingTime(localDate, eDosingTime);
+        //유저 id, 이름, 약 갯수 가져오기
+        List<MobileUserRepository.MobileUserNotificationForm2> userInformations = mobileUserRepository.findByDateAndTime(nowDate, nowTime);
+        //List<MobileUser> mobileUsers = mobileUserRepository.findByDateAndTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
 
-        for (MobileUserRepository.MobileUserNotificationForm mobileUser : mobileUsers) {
-            String title = mobileUser.getMobileUser().getName() + "님, 아침 약 드실 시간이네요!";
-            String content = mobileUser.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
-            Long userId = mobileUser.getMobileUser().getId();
-            log.info("UserId : " + userId + " UserName : " + mobileUser.getMobileUser().getName());
+        for (MobileUserRepository.MobileUserNotificationForm2 userInformation : userInformations) {
+            String title = userInformation.getUsername() + "님, 저녁 약 드실 시간이네요!";
+            String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
+            Long userId = userInformation.getUserId();
+
+            MobileUser mobileUser = mobileUserRepository.findById(userId)
+                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+            Notification notification = Notification.builder()
+                    .title(title)
+                    .content(content)
+                    .mobileUser(mobileUser).build();
+
+            notificationRepository.save(notification);
+
+            if (mobileUser.getIsIos()) { //ios 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
+            } else { //안드로이드 푸시알림
+                notificationUserRequestDto = NotificationUserRequestDto.builder()
+                        .targetUserId(userId)
+                        .title(title)
+                        .body(content).build();
+                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
+                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
+            }
         }
         return Boolean.TRUE;
     }

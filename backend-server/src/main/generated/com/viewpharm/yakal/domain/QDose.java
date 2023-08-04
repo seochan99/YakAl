@@ -22,7 +22,7 @@ public class QDose extends EntityPathBase<Dose> {
 
     public static final QDose dose = new QDose("dose");
 
-    public final StringPath ATCCode = createString("ATCCode");
+    public final QRisk ATCCode;
 
     public final DateTimePath<java.sql.Timestamp> created = createDateTime("created", java.sql.Timestamp.class);
 
@@ -66,6 +66,7 @@ public class QDose extends EntityPathBase<Dose> {
 
     public QDose(Class<? extends Dose> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.ATCCode = inits.isInitialized("ATCCode") ? new QRisk(forProperty("ATCCode")) : null;
         this.mobileUser = inits.isInitialized("mobileUser") ? new QMobileUser(forProperty("mobileUser")) : null;
         this.prescription = inits.isInitialized("prescription") ? new QPrescription(forProperty("prescription"), inits.get("prescription")) : null;
     }
