@@ -10,14 +10,11 @@ import com.viewpharm.yakal.type.ELoginProvider;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -60,15 +57,26 @@ public class AuthController {
     }
 
     @GetMapping("/apple")
+    @Operation(summary = "Apple 인증 리다이렉트 URL 가져오기", description = "Apple 인증 리다이렉트 URL를 가져옵니다.")
     public ResponseDto<Map<String, String>> getAppleRedirectUrl() {
         return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.APPLE));
     }
 
     @PostMapping("/apple")
+    @Operation(summary = "Apple 로그인", description = "Apple 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<?> loginUsingApple(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE);
         return ResponseDto.created(jwtTokenDto);
+    }
+
+    @Deprecated
+    @PostMapping("/apple/callback")
+    @Operation(summary = "Apple id_code 생성 (테스트용)", description = "Apple 인증 코드을 콜백으로 제공합니다.")
+    public ResponseDto<?> loginUsingApple(final @RequestParam("code") String code) {
+        final Map<String, String> map = new HashMap<>();
+        map.put("code", code);
+        return ResponseDto.created(map);
     }
 
     @Deprecated
