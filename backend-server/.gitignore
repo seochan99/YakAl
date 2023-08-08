@@ -16,6 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+/src/main/generated/
 
 ### IntelliJ IDEA ###
 .ds_store
@@ -32,6 +33,7 @@ application-local.yml
 application-prod.yml
 *.p8
 *.p12
+QDose.class
 
 ### NetBeans ###
 /nbproject/private/
