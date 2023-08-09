@@ -34,6 +34,7 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
     // MARK: - Properties -
 
     let progressCircle = CAShapeLayer()
+    let progressCircle2 = CAShapeLayer()
     let progressLabel = UILabel()
     var currentProgress: CGFloat = 0
     
@@ -95,73 +96,92 @@ class HomeVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
         addModalView.layer.borderColor = borderColor.cgColor
         
     }
+    
     func setupProgressCircle() {
-           let centerX = view.bounds.width - 70
-           let centerY = CGFloat(175)
-           
-           let circularPath = UIBezierPath(arcCenter: CGPoint(x: centerX, y: centerY), radius: 40, startAngle: -CGFloat.pi / 2, endAngle: 3 * CGFloat.pi / 2, clockwise: true)
-           
-           progressCircle.path = circularPath.cgPath
-           progressCircle.strokeColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1).cgColor // #C1D2FF
-           progressCircle.fillColor = UIColor.clear.cgColor
-           progressCircle.lineWidth = 4
-           progressCircle.strokeEnd = 0
-           view.layer.addSublayer(progressCircle)
-           
-           progressLabel.frame = CGRect(x: centerX - 40, y: centerY - 20, width: 80, height: 40)
-           progressLabel.textAlignment = .center
-           progressLabel.textColor = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1) // #5588FD
-           progressLabel.font = UIFont.boldSystemFont(ofSize: 20)
-           progressLabel.text = "0%"
-           view.addSubview(progressLabel)
-       }
-       
+        // 진행바 원 중심의 x 좌표와 y 좌표 설정
+        let centerX = view.bounds.width - 70
+        let centerY = CGFloat(175)
+        
+        // 원형 경로 생성
+        let circularPath = UIBezierPath(arcCenter: CGPoint(x: centerX, y: centerY),
+                                        radius: 40,
+                                        startAngle: -CGFloat.pi / 2,
+                                        endAngle: 3 * CGFloat.pi / 2,
+                                        clockwise: true)
+        // 이전 경로 생성
+        let beforeCircularPath = UIBezierPath(arcCenter: CGPoint(x: centerX, y: centerY),
+                                        radius: 40,
+                                        startAngle: -CGFloat.pi / 2,
+                                        endAngle: 3 * CGFloat.pi / 2,
+                                        clockwise: true)
+        
+        progressCircle2.path = beforeCircularPath.cgPath
+        progressCircle2.strokeColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1).cgColor // #C1D2FF
+        progressCircle2.fillColor = UIColor.clear.cgColor
+        progressCircle2.lineWidth = 4
+        progressCircle2.strokeEnd = 1
+        view.layer.addSublayer(progressCircle2)
+        
+        // 진행바 레이어 설정
+        progressCircle.path = circularPath.cgPath
+        progressCircle.strokeColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1).cgColor // #C1D2FF
+        progressCircle.fillColor = UIColor.clear.cgColor
+        progressCircle.lineWidth = 4
+        progressCircle.strokeEnd = 0
+        view.layer.addSublayer(progressCircle)
+        
+
+        
+        
+        // 진행 상태 레이블 설정
+        progressLabel.frame = CGRect(x: centerX - 40, y: centerY - 20, width: 80, height: 40)
+        progressLabel.textAlignment = .center
+        if currentProgress == 0 {
+            progressLabel.textColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1) // #5588FD
+        }else{
+            progressLabel.textColor = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1) // #5588FD
+        }
+
+        progressLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        progressLabel.text = "0%"
+        view.addSubview(progressLabel)
+    }
        
     func animateProgress() {
-          currentProgress += 0.1
-          if currentProgress > 1 {
-              currentProgress = 1
-          }
-          
-          if currentProgress == 0 {
-              progressLabel.textColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1) // #C1D2FF
-              let colorAnimation = CABasicAnimation(keyPath: "strokeColor")
-              colorAnimation.duration = 0.2
-              colorAnimation.fillMode = .forwards
-              colorAnimation.isRemovedOnCompletion = false
-              progressCircle.add(colorAnimation, forKey: "colorAnimation")
-              
-              let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
-              progressAnimation.toValue = 1
-              progressAnimation.duration = 0.2
-              progressAnimation.fillMode = .forwards
-              progressAnimation.isRemovedOnCompletion = false
-              progressCircle.add(progressAnimation, forKey: "progressAnimation")
-              
-              colorAnimation.toValue = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1) // #C1D2FF
-              
-          } else {
-              progressLabel.textColor = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1) // #5588FD
-          }
-          
-          let colorAnimation = CABasicAnimation(keyPath: "strokeColor")
-          colorAnimation.toValue = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1).cgColor // #5588FD
-          colorAnimation.duration = 0.2
-          colorAnimation.fillMode = .forwards
-          colorAnimation.isRemovedOnCompletion = false
-          progressCircle.add(colorAnimation, forKey: "colorAnimation")
-          
-          let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
-          progressAnimation.toValue = currentProgress
-          progressAnimation.duration = 0.2
-          progressAnimation.fillMode = .forwards
-          progressAnimation.isRemovedOnCompletion = false
-          progressCircle.add(progressAnimation, forKey: "progressAnimation")
-          
-          let formattedProgress = String(format: "%.0f", currentProgress * 100)
-          progressLabel.text = "\(formattedProgress)%"
-      }
-  
+        // 현재 진행 상태를 0.1만큼 증가시킵니다.
+        currentProgress += 0.1
+        
+        // 진행 상태가 1보다 크면 1로 설정합니다.
+        if currentProgress > 1 {
+            currentProgress = 1
+        }
+        
+        // 진행 상태에 따른 progressCircle의 색상 변경
+        let colorAnimation = CABasicAnimation(keyPath: "strokeColor")
+        colorAnimation.toValue = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1).cgColor // #5588FD
+        colorAnimation.duration = 0
+        colorAnimation.fillMode = .forwards
+        colorAnimation.isRemovedOnCompletion = false
+        progressCircle.add(colorAnimation, forKey: "colorAnimation")
+        
+        // 진행바 진행 애니메이션 설정
+        let progressAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        progressAnimation.toValue = currentProgress
+        progressAnimation.duration = 0
+        progressAnimation.fillMode = .forwards
+        progressAnimation.isRemovedOnCompletion = false
+        progressCircle.add(progressAnimation, forKey: "progressAnimation")
+        
+        // 진행 상태에 따른 progressLabel의 텍스트와 색상 변경
+        let formattedProgress = String(format: "%.0f", currentProgress * 100)
+        progressLabel.text = "\(formattedProgress)%"
+        if currentProgress == 0 {
+            progressLabel.textColor = UIColor(red: 193/255, green: 210/255, blue: 255/255, alpha: 1) // #C1D2FF
+        } else {
+            progressLabel.textColor = UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1)
+            // #5588FD
+        }
+    }
 
     
     // 아래 메서드를 사용하여 emptyView의 상태를 갱신합니다.
