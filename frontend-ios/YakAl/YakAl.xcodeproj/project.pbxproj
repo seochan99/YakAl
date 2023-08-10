@@ -12,6 +12,7 @@
 		98019A082A853EB500D6282F /* MedicineCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98019A062A853EB500D6282F /* MedicineCollectionViewCell.xib */; };
 		98019A0B2A85405000D6282F /* Medicine2CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A092A85405000D6282F /* Medicine2CollectionViewCell.swift */; };
 		98019A0C2A85405000D6282F /* Medicine2CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98019A0A2A85405000D6282F /* Medicine2CollectionViewCell.xib */; };
+		98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A0D2A85699B00D6282F /* MedicineModel.swift */; };
 		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98349A882A7C043700071C5D /* CircularProgressBarView.swift */; };
@@ -60,6 +61,7 @@
 		98019A062A853EB500D6282F /* MedicineCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MedicineCollectionViewCell.xib; sourceTree = "<group>"; };
 		98019A092A85405000D6282F /* Medicine2CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medicine2CollectionViewCell.swift; sourceTree = "<group>"; };
 		98019A0A2A85405000D6282F /* Medicine2CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Medicine2CollectionViewCell.xib; sourceTree = "<group>"; };
+		98019A0D2A85699B00D6282F /* MedicineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineModel.swift; sourceTree = "<group>"; };
 		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
@@ -344,6 +346,7 @@
 				98C12D702A5E666100175EB8 /* UserModel.swift */,
 				98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */,
 				98926FE52A778537001AB165 /* TodoModel.swift */,
+				98019A0D2A85699B00D6282F /* MedicineModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				98019A0B2A85405000D6282F /* Medicine2CollectionViewCell.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
+				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,

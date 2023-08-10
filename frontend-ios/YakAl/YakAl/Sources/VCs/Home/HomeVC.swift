@@ -76,10 +76,13 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     // 셀은 어떻게 표현할까요?
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoCell", for: indexPath) as?
-                TodoCell else {
-                return UICollectionViewCell()
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoCell", for: indexPath) as? TodoCell else {
+            return UICollectionViewCell()
         }
+        
+        let todoItem = viewModel.TodoItemList[indexPath.item]
+        cell.update(info: todoItem)
+        
         return cell
     }
     
@@ -95,19 +98,11 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     // device마다 cell크기가 달라야함
     // 셀 사이즈를 계산할거다!
     
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        // 간격
-//        let itemSpacing: CGFloat = 10
-//        // 글박스
-//        let textAreaHeight: CGFloat = 65
-//
-//        // 너비에서 10을 뺌, 남은 녀석 2등분 사용
-//        let width: CGFloat = (collectionView.bounds.width)/2
-//
-//        let height: CGFloat = width * 10/7 + textAreaHeight
-//        return CGSize(width: width, height: height)
-//    }
-    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellWidth = collectionView.bounds.width - 40
+        let cellHeight: CGFloat = 120 // Adjust the value as needed
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
         // UIColor 객체를 #E9E9EE 색상으로 생성
         let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
         
@@ -302,30 +297,47 @@ class TodoViewModel{
         TodoItem(mealTime: .dinner, medication: ["약물E", "약물F"]),
         TodoItem(mealTime: .etc, medication: ["약물G", "약물H","약물J"])
     ]
-    
-    // 정렬
-//    var sortedList:[TodoItem]{
-//        let sortedList = TodoItemList.sorted{prev,next in
-//            return prev. > next.bounty
-//        }
-//        return sortedList
-//    }
-    
     // 총 갯수 반환
     var numOfTodoList: Int{
         print("numOfTodoList 함수 실행")
         return TodoItemList.count
     }
 }
-    // TodoCell
+// TodoCell
 class TodoCell: UICollectionViewCell{
     @IBOutlet weak var todoIcon: UIImageView!
     @IBOutlet weak var todoAllDoneBtn: UIButton!
     @IBOutlet weak var todoNowCnt: UILabel!
     @IBOutlet weak var todoTime2: UILabel!
     @IBOutlet weak var todoTotalCnt: UILabel!
+    @IBOutlet weak var medicationCollectionView: UICollectionView!
+
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+    }
+
+    
+    // TodoItem의 medication리스트 길이만큼 todoTotalCnt 할당 하기 
+
     func update(info: TodoItem){
-        todoTime2.text = info.mealTime.rawValue
+        // info값 출력 
+        print("info값 출력")
+        print(info)
+    // TodoItem 의 mealTime에 따라 todoTime2 할당하기
+        switch info.mealTime {
+        case .breakfast:
+            todoTime2.text = "아침"
+        case .lunch:
+            todoTime2.text = "점심"
+        case .dinner:
+            todoTime2.text = "저녁"
+        case .etc:
+            todoTime2.text = "기타"
+        }
+        todoTotalCnt.text = String(info.medication.count)+"개"
     }
 }
     
