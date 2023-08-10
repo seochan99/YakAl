@@ -1,10 +1,11 @@
-package com.viewpharm.yakal
+package com.viewpharm.yakal.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.viewpharm.yakal.databinding.ItemHomePillMainBinding
+import com.viewpharm.yakal.model.Pill
+import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ItemHomePillSubBinding
 import timber.log.Timber
 

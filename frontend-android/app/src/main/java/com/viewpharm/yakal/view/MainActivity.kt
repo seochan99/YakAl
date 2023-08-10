@@ -1,14 +1,10 @@
-package com.viewpharm.yakal
+package com.viewpharm.yakal.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.add
-import androidx.navigation.ui.setupWithNavController
+import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ActivityMainBinding
-import com.viewpharm.yakal.databinding.FragmentHomeBinding
 import com.viewpharm.yakal.ui.CommunityMainFragment
 import com.viewpharm.yakal.ui.HomeMainFragment
 import com.viewpharm.yakal.ui.LocationMainFragment

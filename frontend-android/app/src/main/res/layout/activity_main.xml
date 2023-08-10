@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
     <FrameLayout
         android:id="@+id/mainFrameLayout"
@@ -30,12 +30,11 @@
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="78dp"
-        app:menu="@menu/bottom_navigation_menu"
         android:background="@color/white"
         android:paddingBottom="7dp"
+        app:menu="@menu/bottom_navigation_menu"
         app:itemBackground="@color/white"
         app:labelVisibilityMode="labeled"
-        android:touchscreenBlocksFocus="false"
         app:itemIconTint="@drawable/menu_click_color"
         app:itemTextColor="@drawable/menu_click_color"
         app:layout_constraintBottom_toBottomOf="parent"

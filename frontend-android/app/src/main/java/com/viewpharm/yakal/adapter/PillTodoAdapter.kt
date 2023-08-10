@@ -1,15 +1,15 @@
-package com.viewpharm.yakal
+package com.viewpharm.yakal.adapter
 
 import android.graphics.Color
-import android.graphics.drawable.GradientDrawable
 import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AlphaAnimation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ItemHomePillMainBinding
+import com.viewpharm.yakal.model.PillTodo
 import timber.log.Timber
 
 class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adapter<PillTodoAdapter.PillTodoViewHolder>() {
@@ -37,6 +37,10 @@ class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adap
 
     inner class PillTodoViewHolder(private val binding : ItemHomePillMainBinding) :RecyclerView.ViewHolder(binding.root) {
         fun bind(pillTodo: PillTodo) {
+            if (pillTodo == pillTodos.last()) {
+                binding.takingScheduleMainItem.visibility = View.INVISIBLE
+            }
+
             binding.todayTakingScheduleSubRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = PillAdapter(pillTodo.pills)
