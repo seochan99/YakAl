@@ -15,7 +15,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     @IBOutlet weak var floatingStackView: UIStackView!
     
-    @IBOutlet weak var myTodoTableView: UITableView!
     
     @IBOutlet weak var emptyView: UIView!
     
@@ -29,9 +28,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     @IBOutlet weak var DirectMedicineButton: UIButton!
     
     @IBOutlet weak var addMedicineButton: UIButton!
-    
-    @IBOutlet weak var animatedCountingLabel: UILabel!
-    
     // MARK: - Properties -
     
     let progressCircle = CAShapeLayer()
@@ -85,14 +81,17 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         return cell
     }
+        
     
-    // UICollectionViewDelegate
-    // 셀이 클릭되었을때 우짤까요?
+    // MARK: - Collection View Delegate
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
-//        performSegue(withIdentifier: "showDetail", sender: indexPath.item)
+        if let cell = collectionView.cellForItem(at: indexPath) as? TodoCell {
+            // Toggle the expanded state of the TodoCell and reload the collection view
+            cell.isExpanded = !cell.isExpanded
+            collectionView.reloadItems(at: [indexPath])
+        }
     }
-    
     
     // UICollectionViewDelegateFlowLayout
     // device마다 cell크기가 달라야함
@@ -103,8 +102,10 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         let cellHeight: CGFloat = 120 // Adjust the value as needed
         return CGSize(width: cellWidth, height: cellHeight)
     }
-        // UIColor 객체를 #E9E9EE 색상으로 생성
-        let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
+    
+    
+    // UIColor 객체를 #E9E9EE 색상으로 생성
+    let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
         
         
         
@@ -115,11 +116,17 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             updateEmptyViewVisibility()
             
             
+            
+//               // Register MedicineCell
+//               let medicineCellNib = UINib(nibName: "MedicineCell", bundle: nil)
+//               medicationCollectionView.register(medicineCellNib, forCellWithReuseIdentifier: "MedicineCell")
             // calendarView의 레이어(border)의 색상을 설정
             calendarView.layer.borderColor = borderColor.cgColor
             addModalView.layer.borderColor = borderColor.cgColor
             
         }
+    
+    
         
         func setupProgressCircle() {
             // 진행바 원 중심의 x 좌표와 y 좌표 설정
@@ -284,24 +291,31 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
                 sender.setImage(image, for: .normal)
                 sender.transform = roatation
             }
-            
         }
-    
-    
-    
-    
-      
-        
     }
 
-// 2. viewModel 만들기
+//MARK: - ViewModel
 class TodoViewModel{
     let TodoItemList: [TodoItem] = [
-        TodoItem(mealTime: .breakfast, medication: ["약물A", "약물B"]),
-        TodoItem(mealTime: .lunch, medication: ["약물C", "약물D"]),
-        TodoItem(mealTime: .dinner, medication: ["약물E", "약물F"]),
-        TodoItem(mealTime: .etc, medication: ["약물G", "약물H","약물J"])
+        TodoItem(mealTime: .breakfast, medication: [
+            Medicine(id: 1, image: "image_덱시로펜정", name: "약물A", ingredients: "성분 A", dangerImage: "Green-Light", isTaken: false),
+            Medicine(id: 2, image: "image_덱시로펜정", name: "약물B", ingredients: "성분 B", dangerImage: "Yellow-Light", isTaken: false)
+        ]),
+        TodoItem(mealTime: .lunch, medication: [
+            Medicine(id: 3, image: "image_덱시로펜정", name: "약물C", ingredients: "성분 C", dangerImage: "Green-Light", isTaken: false),
+            Medicine(id: 4, image: "image_덱시로펜정", name: "약물D", ingredients: "성분 D", dangerImage: "Green-Light", isTaken: false)
+        ]),
+        TodoItem(mealTime: .dinner, medication: [
+            Medicine(id: 5, image: "image_덱시로펜정", name: "약물E", ingredients: "성분 E", dangerImage: "Red-Right", isTaken: false),
+            Medicine(id: 6, image: "image_덱시로펜정", name: "약물F", ingredients: "성분 F", dangerImage: "Red-Right", isTaken: false)
+        ]),
+        TodoItem(mealTime: .etc, medication: [
+            Medicine(id: 7, image: "image_덱시로펜정", name: "약물G", ingredients: "성분 G", dangerImage: "Yellow-Light", isTaken: false),
+            Medicine(id: 8, image: "image_덱시로펜정", name: "약물H", ingredients: "성분 H", dangerImage: "Yellow-Light", isTaken: false),
+            Medicine(id: 9, image: "image_덱시로펜정", name: "약물J", ingredients: "성분 J", dangerImage: "Yellow-Light", isTaken: false)
+        ])
     ]
+
     // 총 갯수 반환
     var numOfTodoList: Int{
         print("numOfTodoList 함수 실행")
@@ -309,8 +323,8 @@ class TodoViewModel{
     }
 }
 
-// Todo Cell
-class TodoCell: UICollectionViewCell{
+//MARK: - TodoCell
+class TodoCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDataSource{
     @IBOutlet weak var todoIcon: UIImageView!
     @IBOutlet weak var todoAllDoneBtn: UIButton!
     @IBOutlet weak var todoNowCnt: UILabel!
@@ -318,6 +332,14 @@ class TodoCell: UICollectionViewCell{
     @IBOutlet weak var todoTotalCnt: UILabel!
     @IBOutlet weak var medicationCollectionView: UICollectionView!
 
+    
+    var medicines: [Medicine] = []
+    var isExpanded: Bool = false {
+        didSet {
+            medicationCollectionView.reloadData()
+        }
+    }
+    
     
     override func awakeFromNib() {
 
@@ -345,9 +367,20 @@ class TodoCell: UICollectionViewCell{
             todoTime2.text = "기타"
         }
         todoTotalCnt.text = String(info.medication.count)+"개"
+        medicines = info.medication
     }
     
     
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return medicines.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MedicineCell", for: indexPath) as! MedicineCell
+        let medicine = medicines[indexPath.item]
+        cell.update(info: medicine)
+        return cell
+    }
     
     // 전체 확인 버튼
     @IBAction func AllAproveButtonOn(_ sender: UIButton) {
@@ -366,14 +399,14 @@ class TodoCell: UICollectionViewCell{
     }
 
     // 버튼 상태 변경
-    private func changeButtonState(_ sender:UIButton){
+    public func changeButtonState(_ sender:UIButton){
         let isOn = sender.isSelected
         sender.isSelected = !isOn
         updateButtonAppearance(sender)
     }
 
     // 버튼의 상태에 따라 색상 변경
-    private func updateButtonAppearance(_ button: UIButton) {
+    public func updateButtonAppearance(_ button: UIButton) {
         let selectedImage = UIImage(named: "Check_disable_ing")
         let deselectedImage = UIImage(named: "Check_disable")
         
@@ -383,15 +416,23 @@ class TodoCell: UICollectionViewCell{
             button.setImage(deselectedImage, for: .normal)
         }
     }
-    
+
 }
     
-
-
-
-class MedicineCell: UICollectionViewCell{
-    func update(info: TodoItem){
-        
+//MARK: - Medicine Cell
+class MedicineCell: UICollectionViewCell {
+    @IBOutlet weak var medicineIcon: UIImageView!
+    @IBOutlet weak var medicineNameLabel: UILabel!
+    @IBOutlet weak var medicineIngredientsLabel: UILabel!
+    @IBOutlet weak var medicineDangerIcon: UIImageView!
+    @IBOutlet weak var medineEatButton: UIButton!
+    
+    
+    func update(info: Medicine) {
+        medicineIcon.image = UIImage(named: info.image)
+        medicineNameLabel.text = info.name
+        medicineIngredientsLabel.text = info.ingredients
+        medicineDangerIcon.image = UIImage(named: info.dangerImage)
     }
 }
     

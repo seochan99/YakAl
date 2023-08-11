@@ -9,12 +9,13 @@ struct TodoItem {
     
     // 복용 시간
     let mealTime: MealTime
-    
+    // 오픈여부
+    var open = Bool()
     // 약물 정보를 담는 배열
-    var medication: [String]
+    var medication: [Medicine]
     
     // 이니셜라이저를 사용하여 TodoItem을 생성합니다.
-    init(mealTime: MealTime, medication: [String]) {
+    init(mealTime: MealTime, medication: [Medicine]) {
         self.mealTime = mealTime
         self.medication = medication
     }
