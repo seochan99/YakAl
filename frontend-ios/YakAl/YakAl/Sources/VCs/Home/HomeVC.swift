@@ -286,6 +286,11 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
             
         }
+    
+    
+    
+    
+      
         
     }
 
@@ -303,7 +308,8 @@ class TodoViewModel{
         return TodoItemList.count
     }
 }
-// TodoCell
+
+// Todo Cell
 class TodoCell: UICollectionViewCell{
     @IBOutlet weak var todoIcon: UIImageView!
     @IBOutlet weak var todoAllDoneBtn: UIButton!
@@ -314,6 +320,7 @@ class TodoCell: UICollectionViewCell{
 
     
     override func awakeFromNib() {
+
         super.awakeFromNib()
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
@@ -339,8 +346,48 @@ class TodoCell: UICollectionViewCell{
         }
         todoTotalCnt.text = String(info.medication.count)+"개"
     }
+    
+    
+    
+    // 전체 확인 버튼
+    @IBAction func AllAproveButtonOn(_ sender: UIButton) {
+        
+        let allButtons = [todoAllDoneBtn]
+        
+        // 전체 동의 버튼의 상태에 따라 모든 버튼을 On 또는 Off로 설정
+        let isAllOn = todoAllDoneBtn.isSelected
+        
+        // 모든 버튼 반복문 돌면서 상태 변경
+        for button in allButtons {
+            button?.isSelected = !isAllOn
+            updateButtonAppearance(button ?? todoAllDoneBtn)
+        }
+        
+    }
+
+    // 버튼 상태 변경
+    private func changeButtonState(_ sender:UIButton){
+        let isOn = sender.isSelected
+        sender.isSelected = !isOn
+        updateButtonAppearance(sender)
+    }
+
+    // 버튼의 상태에 따라 색상 변경
+    private func updateButtonAppearance(_ button: UIButton) {
+        let selectedImage = UIImage(named: "Check_disable_ing")
+        let deselectedImage = UIImage(named: "Check_disable")
+        
+        if button.isSelected {
+            button.setImage(selectedImage, for: .normal)
+        } else {
+            button.setImage(deselectedImage, for: .normal)
+        }
+    }
+    
 }
     
+
+
 
 class MedicineCell: UICollectionViewCell{
     func update(info: TodoItem){
