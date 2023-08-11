@@ -47,9 +47,9 @@ public class NotificationController {
     public ResponseDto<Boolean> deleteNotification(Authentication authentication, @PathVariable Long notificationId) {
         return ResponseDto.ok(notificationService.deleteNotification(Long.valueOf(authentication.getName()), notificationId));
     }
-    @PostMapping("/notificationTest")
-    public ResponseDto<Boolean> createNotificationTest(@RequestBody NotificationTestRequestDto notificationTestRequestDto) throws Exception {
-        return ResponseDto.ok(notificationScheduleService.sendPushNotificationTest(notificationTestRequestDto.getLocalDate(), notificationTestRequestDto.getEDosingTime()));
+    @GetMapping("/notificationTest")
+    public ResponseDto<Boolean> createNotificationTest() throws Exception {
+        return ResponseDto.ok(notificationScheduleService.sendPushNotificationTest());
     }
 
 
