@@ -29,11 +29,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     @IBOutlet weak var addMedicineButton: UIButton!
     
-    
-    
-    
-    
-    
     // MARK: - Properties -
     let progressCircle = CAShapeLayer()
     let progressCircle2 = CAShapeLayer()
@@ -104,7 +99,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
            let cellWidth = collectionView.bounds.width - 40
            let innerCellHeight: CGFloat = 40 // Height of the inner cell
-           var outerCellHeight: CGFloat = 100 // Initial height of the outer cell
+           var outerCellHeight: CGFloat = 90 // Initial height of the outer cell
            
            if let cell = collectionView.cellForItem(at: indexPath) as? TodoCell {
                if cell.isExpanded {
@@ -122,8 +117,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     // UIColor 객체를 #E9E9EE 색상으로 생성
     let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
         
-        
-        
+    
         //MARK: - viewDidLoad
         override func viewDidLoad() {
             super.viewDidLoad()
@@ -351,20 +345,44 @@ class TodoCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var todoTotalCnt: UILabel!
     @IBOutlet weak var medicationCollectionView: UICollectionView!
 
+    @IBOutlet weak var firstDivinder: UIView!
+    
+    
+    
+    @IBOutlet weak var secondDivinder: UIView!
     
     var medicines: [Medicine] = []
     var isExpanded: Bool = false {
         didSet {
+            firstDivinder.isHidden = true
             medicationCollectionView.reloadData()
+            firstDivinder.isHidden = isExpanded
         }
     }
     
-    
     override func awakeFromNib() {
-
+        
         super.awakeFromNib()
-        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
+        // Apply styling to the cell
+               self.layer.cornerRadius = 16
+               self.layer.masksToBounds = false
+               self.layer.borderWidth = 1
+               self.layer.borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0).cgColor
+               
+               // Apply shadow
+               self.layer.shadowColor = UIColor(red: 98/255, green: 98/255, blue: 114/255, alpha: 0.20).cgColor
+               self.layer.shadowOffset = CGSize(width: 0, height: 2)
+               self.layer.shadowOpacity = 1
+               self.layer.shadowRadius = 6
+        i
+        firstDivinder.isHidden = true
+        
+        // Set the width constraint of secondDivinder
+        secondDivinder.translatesAutoresizingMaskIntoConstraints = false
+        secondDivinder.widthAnchor.constraint(equalToConstant: 60).isActive = true
+        secondDivinder.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+
+
     }
 
     
