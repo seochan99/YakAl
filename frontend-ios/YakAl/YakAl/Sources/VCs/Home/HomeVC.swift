@@ -28,8 +28,13 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     @IBOutlet weak var DirectMedicineButton: UIButton!
     
     @IBOutlet weak var addMedicineButton: UIButton!
-    // MARK: - Properties -
     
+    
+    
+    
+    
+    
+    // MARK: - Properties -
     let progressCircle = CAShapeLayer()
     let progressCircle2 = CAShapeLayer()
     let progressLabel = UILabel()
@@ -96,13 +101,23 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     // UICollectionViewDelegateFlowLayout
     // device마다 cell크기가 달라야함
     // 셀 사이즈를 계산할거다!
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellWidth = collectionView.bounds.width - 40
-        let cellHeight: CGFloat = 120 // Adjust the value as needed
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
+           let cellWidth = collectionView.bounds.width - 40
+           let innerCellHeight: CGFloat = 40 // Height of the inner cell
+           var outerCellHeight: CGFloat = 100 // Initial height of the outer cell
+           
+           if let cell = collectionView.cellForItem(at: indexPath) as? TodoCell {
+               if cell.isExpanded {
+                   if indexPath.item < viewModel.TodoItemList.count {
+                       let todoItem = viewModel.TodoItemList[indexPath.item]
+                       let numberOfMedicines = viewModel.numberOfMedicines(for: todoItem)
+                       outerCellHeight += CGFloat(numberOfMedicines) * innerCellHeight
+                   }
+               }
+           }
+           
+           return CGSize(width: cellWidth, height: outerCellHeight)
+       }
     
     // UIColor 객체를 #E9E9EE 색상으로 생성
     let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
@@ -316,6 +331,10 @@ class TodoViewModel{
         ])
     ]
 
+    func numberOfMedicines(for todoItem: TodoItem) -> Int {
+        return todoItem.medication.count
+    }
+    
     // 총 갯수 반환
     var numOfTodoList: Int{
         print("numOfTodoList 함수 실행")
@@ -377,8 +396,12 @@ class TodoCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MedicineCell", for: indexPath) as! MedicineCell
-        let medicine = medicines[indexPath.item]
-        cell.update(info: medicine)
+
+        if indexPath.item < medicines.count {
+            let medicine = medicines[indexPath.item]
+            cell.update(info: medicine)
+        }
+
         return cell
     }
     

@@ -239,14 +239,14 @@
                                 </view>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="TodoCell" id="kvR-Kv-hhQ" customClass="TodoCell" customModule="YakAl" customModuleProvider="target">
-                                        <rect key="frame" x="12" y="16" width="369" height="171"/>
+                                        <rect key="frame" x="12" y="16" width="369" height="100"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" id="V4A-Xl-1Q5">
-                                            <rect key="frame" x="0.0" y="0.0" width="369" height="171"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="369" height="100"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="s06-8u-tpQ">
-                                                    <rect key="frame" x="16" y="0.0" width="337" height="151"/>
+                                                    <rect key="frame" x="16" y="0.0" width="337" height="80"/>
                                                     <subviews>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="nIM-hM-Xtv">
                                                             <rect key="frame" x="0.0" y="0.0" width="337" height="70"/>
@@ -313,19 +313,20 @@
                                                             </constraints>
                                                         </view>
                                                         <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="S4m-Xz-7tA">
-                                                            <rect key="frame" x="0.0" y="72" width="337" height="75"/>
+                                                            <rect key="frame" x="0.0" y="72" width="337" height="4"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                                            <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iFr-8x-EI8">
+                                                            <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="iFr-8x-EI8">
                                                                 <size key="itemSize" width="379" height="128"/>
+                                                                <size key="estimatedItemSize" width="379" height="128"/>
                                                                 <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                                                 <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                                                <inset key="sectionInset" minX="0.0" minY="10" maxX="0.0" maxY="10"/>
+                                                                <inset key="sectionInset" minX="0.0" minY="15" maxX="0.0" maxY="15"/>
                                                             </collectionViewFlowLayout>
                                                             <cells>
-                                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" reuseIdentifier="MedicineCell" id="k4S-oc-Laq" userLabel="MedicineCell" customClass="MedicineCell" customModule="YakAl" customModuleProvider="target">
-                                                                    <rect key="frame" x="0.0" y="10" width="337" height="50"/>
+                                                                <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" reuseIdentifier="MedicineCell" id="k4S-oc-Laq" userLabel="MedicineCell" customClass="MedicineCell" customModule="YakAl" customModuleProvider="target">
+                                                                    <rect key="frame" x="0.0" y="15" width="337" height="50"/>
                                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="MSg-7C-Kd3">
+                                                                    <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="YnK-Ih-MDi">
                                                                         <rect key="frame" x="0.0" y="0.0" width="337" height="50"/>
                                                                         <autoresizingMask key="autoresizingMask"/>
                                                                         <subviews>
@@ -381,9 +382,9 @@
                                                                             </stackView>
                                                                         </subviews>
                                                                         <constraints>
-                                                                            <constraint firstItem="aii-Hh-Qba" firstAttribute="top" secondItem="MSg-7C-Kd3" secondAttribute="top" id="1KJ-g8-qbz"/>
+                                                                            <constraint firstItem="aii-Hh-Qba" firstAttribute="top" secondItem="YnK-Ih-MDi" secondAttribute="top" id="1KJ-g8-qbz"/>
                                                                             <constraint firstAttribute="bottom" secondItem="aii-Hh-Qba" secondAttribute="bottom" id="1Zh-2A-78E"/>
-                                                                            <constraint firstItem="aii-Hh-Qba" firstAttribute="leading" secondItem="MSg-7C-Kd3" secondAttribute="leading" id="Gu1-Fp-aLJ"/>
+                                                                            <constraint firstItem="aii-Hh-Qba" firstAttribute="leading" secondItem="YnK-Ih-MDi" secondAttribute="leading" id="Gu1-Fp-aLJ"/>
                                                                             <constraint firstAttribute="trailing" secondItem="aii-Hh-Qba" secondAttribute="trailing" id="kL6-NA-Qq6"/>
                                                                         </constraints>
                                                                     </collectionViewCellContentView>
@@ -402,12 +403,11 @@
                                                                 <outlet property="delegate" destination="kvR-Kv-hhQ" id="TwY-4e-DKS"/>
                                                             </connections>
                                                         </collectionView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5O-9n-ksE">
-                                                            <rect key="frame" x="0.0" y="147" width="337" height="4"/>
+                                                        <view contentMode="center" translatesAutoresizingMaskIntoConstraints="NO" id="a5O-9n-ksE">
+                                                            <rect key="frame" x="0.0" y="76" width="337" height="4"/>
                                                             <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="4" id="7tB-l9-u3A"/>
-                                                                <constraint firstAttribute="width" constant="50" id="MTy-ts-EXL"/>
                                                             </constraints>
                                                         </view>
                                                     </subviews>
@@ -426,7 +426,7 @@
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <size key="customSize" width="369" height="171"/>
+                                        <size key="customSize" width="369" height="100"/>
                                         <connections>
                                             <outlet property="medicationCollectionView" destination="S4m-Xz-7tA" id="wzz-Vh-1bN"/>
                                             <outlet property="todoAllDoneBtn" destination="A5f-8k-Aje" id="h71-1a-0Mt"/>
