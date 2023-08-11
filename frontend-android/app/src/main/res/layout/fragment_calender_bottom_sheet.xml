@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minHeight="500dp"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/dl_calendar"
     app:layout_behavior="com.google.android.material.bottom-sheet.BottomSheetBehavior">
@@ -125,17 +124,25 @@
             android:textColor="@color/blue" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/calendarMonthRecyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        tools:listitem="@layout/item_calendar_day"
-        tools:itemCount="42"
-        app:layout_constraintTop_toBottomOf="@id/calendarDayOfWeekLayout"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/calendarDayOfWeekLayout" >
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/calendarMonthRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constrainedHeight="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="42"
+            tools:listitem="@layout/item_calendar" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

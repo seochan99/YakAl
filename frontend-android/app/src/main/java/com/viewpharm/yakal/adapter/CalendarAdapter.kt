@@ -1,20 +1,19 @@
 package com.viewpharm.yakal.adapter
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.viewpharm.yakal.R
-import com.viewpharm.yakal.databinding.ItemCalendarDayBinding
+import com.viewpharm.yakal.databinding.ItemCalendarBinding
 import com.viewpharm.yakal.model.CalendarTaking
 
-class CalendarAdapter(private val calendarTakingList : List<CalendarTaking>) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
+class CalendarAdapter(private var calendarTakingList : List<CalendarTaking>) : RecyclerView.Adapter<CalendarAdapter.CalendarViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): CalendarAdapter.CalendarViewHolder {
         return CalendarViewHolder(
-            ItemCalendarDayBinding.inflate(
+            ItemCalendarBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -26,15 +25,32 @@ class CalendarAdapter(private val calendarTakingList : List<CalendarTaking>) : R
         holder.bind(calendarTakingList[position])
     }
 
+    override fun onBindViewHolder(
+        holder: CalendarViewHolder,
+        position: Int,
+        payloads: MutableList<Any>
+    ) {
+        super.onBindViewHolder(holder, position, payloads)
+    }
+
     override fun getItemCount(): Int = calendarTakingList.size
 
-    inner class CalendarViewHolder(private val binding: ItemCalendarDayBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun setCalendarTakingList(calendarTakingList: List<CalendarTaking>) {
+        this.calendarTakingList = calendarTakingList
+    }
+
+    inner class CalendarViewHolder(private val binding: ItemCalendarBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(calendarTaking: CalendarTaking) {
-            if (calendarTaking.dateOfDay == "") {
+            if (calendarTaking.dateOfDay.isEmpty()) {
                 binding.overLapImageView.visibility = ViewGroup.INVISIBLE
+                binding.calendarDayTextView.visibility = ViewGroup.INVISIBLE
                 binding.todayPercentBar.visibility = ViewGroup.INVISIBLE
                 binding.calendarDayTextView.visibility = ViewGroup.INVISIBLE
                 return
+            } else {
+                binding.calendarDayTextView.visibility = ViewGroup.VISIBLE
+                binding.overLapImageView.visibility = ViewGroup.VISIBLE
+                binding.todayPercentBar.visibility = ViewGroup.VISIBLE
             }
 
             binding.overLapImageView.visibility = if (calendarTaking.isOverlap) {
@@ -49,12 +65,6 @@ class CalendarAdapter(private val calendarTakingList : List<CalendarTaking>) : R
                     binding.todayPercentBar.setBackgroundResource(
                         R.drawable.view_oval_temp
                     )
-                }
-
-                if (this == 0) {
-                    binding.calendarDayTextView.setTextColor(Color.parseColor("#FFC1D2FF"))
-                } else {
-                    binding.calendarDayTextView.setTextColor(Color.parseColor("#FF5588FD"))
                 }
 
                 binding.calendarDayTextView.text = calendarTaking.dateOfDay
