@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ItemHomePillMainBinding
 import com.viewpharm.yakal.model.PillTodo
+import com.viewpharm.yakal.type.ETakingTime
 import timber.log.Timber
 
 class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adapter<PillTodoAdapter.PillTodoViewHolder>() {
@@ -37,8 +38,9 @@ class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adap
 
     inner class PillTodoViewHolder(private val binding : ItemHomePillMainBinding) :RecyclerView.ViewHolder(binding.root) {
         fun bind(pillTodo: PillTodo) {
-            if (pillTodo == pillTodos.last()) {
-                binding.takingScheduleMainItem.visibility = View.INVISIBLE
+            if (pillTodo.ETime == ETakingTime.INVISIBLE) {
+                binding.takingScheduleLayout.visibility = View.INVISIBLE
+                return
             }
 
             binding.todayTakingScheduleSubRecyclerView.apply {
@@ -57,28 +59,32 @@ class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adap
             itemView.setOnClickListener {
                 Timber.d("Item Click 이벤트 발생")
                 pillTodo.isExpanded = if (!pillTodo.isExpanded) {
-                    binding.takingScheduleMainItem.setBackgroundResource(R.drawable.it_home_pill_main_expand)
+                    /*
+                    확장되어 있지 않으므로 확장시킴
+                    이미지 및 외곽선을 활성화 시키고, 확장 상태를 보여주는  View Visible 상태로 바꾼다.
+                     */
+                    binding.takingScheduleMainImageView.setImageResource(R.drawable.ic_custom_list_pill_on)
+                    binding.takingScheduleLayout.setBackgroundResource(R.drawable.view_round_todo_on)
                     binding.activeExpandView.visibility = View.VISIBLE
-                    binding.inactiveExpandView.visibility = View.INVISIBLE
 
+                    /*
+                    리사이클러 뷰를 View Visible 상태로 바꾸고, 확장 상태로 넣어준다.
+                     */
                     binding.todayTakingScheduleSubRecyclerView.visibility = View.VISIBLE
-                    binding.todayTakingScheduleSubRecyclerView.animate().apply {
-                        duration = 200
-                        rotation(0f)
-                    }
-
                     pillTodo.isExpanded.not()
                 }else {
-                    binding.takingScheduleMainItem.setBackgroundResource(R.drawable.it_home_pill_main_shrink)
-                    binding.activeExpandView.visibility = View.INVISIBLE
-                    binding.inactiveExpandView.visibility = View.VISIBLE
+                    /*
+                    확장되어 있으므로 축소시킴
+                    이미지 및 외곽선을 비활성화 시키고, 확장 상태를 보여주는 View Gone 상태로 바꾼다.
+                     */
+                    binding.takingScheduleMainImageView.setImageResource(R.drawable.ic_custom_list_pill_off)
+                    binding.takingScheduleLayout.setBackgroundResource(R.drawable.view_round_todo_off)
+                    binding.activeExpandView.visibility = View.GONE
 
+                    /*
+                    리사이클러 뷰를 View Gone 상태로 바꾸고, 값에 축소 상태로 넣어준다.
+                     */
                     binding.todayTakingScheduleSubRecyclerView.visibility = View.GONE
-                    binding.todayTakingScheduleSubRecyclerView.animate().apply {
-                        duration = 200
-                        rotation(0f)
-                    }
-
                     pillTodo.isExpanded.not()
                 }
             }

@@ -29,13 +29,13 @@ class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAda
     override fun getItemCount(): Int = pills.size
 
     inner class PillViewHolder(private val binding: ItemHomePillSubBinding) : RecyclerView.ViewHolder(binding.root) {
-        public fun bind(pill: Pill) {
-            if (pill == pills.last()) {
-                binding.takingScheduleSubItem.setBackgroundResource(R.drawable.it_home_pill_sub_last)
-                binding.inactiveExpandView.visibility = View.VISIBLE
-            }
+        fun bind(pill: Pill) {
             binding.takingScheduleSubFillNameTextView.text = pill.name
             binding.takingScheduleSubCheckBox.isChecked = pill.completed
+
+            itemView.setOnClickListener {
+                Timber.d("Test 중")
+            }
         }
     }
 }

@@ -72,7 +72,7 @@ class HomeMainFragment : Fragment() {
 
         binding.todayTakingScheduleMainRecyclerView.apply {
             // 수직으로 출력
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, )
 
             // Data 관리
             adapter = PillTodoAdapter(pillTodos)
@@ -105,8 +105,6 @@ class HomeMainFragment : Fragment() {
         // 약 추가 버튼 초기화
         binding.addPillListButton.extend()
 
-
-
         setInitTakingTextView(10)
     }
 
@@ -131,7 +129,7 @@ class HomeMainFragment : Fragment() {
             }
             binding.nonePillLayout.visibility = View.GONE
 
-            setTakingEvent(percent)
+            setTakingEvent(100)
         } else {
             binding.todayTakingTextView.text = "오늘 복용해야 하는 약은\n없습니다."
             binding.todayPercentBar.visibility = View.GONE

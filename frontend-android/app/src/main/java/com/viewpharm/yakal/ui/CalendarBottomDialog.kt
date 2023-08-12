@@ -58,7 +58,7 @@ class CalendarBottomDialog(private var currentDate : LocalDate) : BottomSheetDia
 
         binding.calendarMonthRecyclerView.apply {
             layoutManager = GridLayoutManager(context, 7)
-            adapter = CalendarAdapter(CalendarUtil.daysInMonthArray(currentDate))
+            adapter = CalendarAdapter(currentDate, CalendarUtil.daysInMonthArray(currentDate))
             setHasFixedSize(true)
         }
     }
@@ -68,7 +68,7 @@ class CalendarBottomDialog(private var currentDate : LocalDate) : BottomSheetDia
         setDateTextView()
 
         binding.calendarMonthRecyclerView.adapter?.let {
-            (it as CalendarAdapter).setCalendarTakingList(CalendarUtil.daysInMonthArray(currentDate))
+            (it as CalendarAdapter).setCalendarTakingList(currentDate, CalendarUtil.daysInMonthArray(currentDate))
             it.notifyItemRangeChanged(0, 42)
         }
     }

@@ -11,8 +11,7 @@
         android:id="@+id/takingScheduleSubItem"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/it_home_pill_sub_middle"
-        android:backgroundTint="@color/white"
+        android:background="@drawable/it_list_pill"
         android:elevation="3dp">
 
         <ImageView
@@ -22,9 +21,9 @@
             android:layout_marginStart="16dp"
             android:background="@drawable/view_round"
             android:backgroundTint="#FFE9F0FF"
-            android:padding="5dp"
+            android:padding="8dp"
 
-            android:src="@drawable/ic_home_list_pill_on"
+            android:src="@drawable/ic_custom_pill_sub"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
