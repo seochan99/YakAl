@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Yakal"
         tools:targetApi="31">
         <activity
+            android:name=".view.PillDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.NotificationActivity"
             android:exported="false" />
         <activity

@@ -1,12 +1,13 @@
 package com.viewpharm.yakal.adapter
 
+import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.viewpharm.yakal.model.Pill
-import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ItemHomePillSubBinding
+import com.viewpharm.yakal.view.PillDetailActivity
 import timber.log.Timber
 
 class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAdapter.PillViewHolder>() {
@@ -34,6 +35,17 @@ class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAda
             binding.takingScheduleSubCheckBox.isChecked = pill.completed
 
             itemView.setOnClickListener {
+                Timber.d("Test 중")
+                val intent = Intent(binding.root.context, PillDetailActivity::class.java)
+                intent.run { binding.root.context.startActivity(this) }
+            }
+
+            binding.takingScheduleSubCheckBox.setOnClickListener {
+                pill.completed = !pill.completed
+                binding.takingScheduleSubCheckBox.isChecked = pill.completed
+            }
+
+            binding.overLapImageBottom.setOnClickListener {
                 Timber.d("Test 중")
             }
         }

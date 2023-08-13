@@ -3,6 +3,7 @@ package com.viewpharm.yakal.view
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.viewpharm.yakal.R
@@ -14,6 +15,7 @@ import com.viewpharm.yakal.model.PillTodo
 import com.viewpharm.yakal.type.ETakingTime
 import com.viewpharm.yakal.ui.CalendarBottomDialog
 import com.viewpharm.yakal.util.CalendarUtil
+import timber.log.Timber
 import java.time.LocalDate
 
 class CalenderActivity : AppCompatActivity() {
@@ -57,14 +59,22 @@ class CalenderActivity : AppCompatActivity() {
         _init()
     }
 
-
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         finish()
         if (isFinishing) {
             overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
         }
+    }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        when (event?.action) {
+            MotionEvent.ACTION_DOWN -> {
+                Timber.d("Touch Down X event : ${event.x}, rawX : ${event.rawX}")
+                Timber.d("Touch Down Y event : ${event.y}, rawY : ${event.rawY}")
+            }
+        }
+        return super.onTouchEvent(event)
     }
 
     private fun _init() {
