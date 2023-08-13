@@ -1,4 +1,6 @@
-package com.viewpharm.yakal
+package com.viewpharm.yakal.model
+
+import com.viewpharm.yakal.type.ETakingTime
 
 data class PillTodo(
     val ETime: ETakingTime,
@@ -9,8 +11,3 @@ data class PillTodo(
 ) {
     public fun getTotalPillCnt() : Int = totalCnt
 }
-
-data class Pill(
-    val name: String,
-    var completed: Boolean
-)

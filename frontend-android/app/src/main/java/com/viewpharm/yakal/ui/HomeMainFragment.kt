@@ -1,22 +1,22 @@
 package com.viewpharm.yakal.ui
 
+import android.content.Intent
 import android.graphics.Color
-import android.opengl.Visibility
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
 import android.text.style.ForegroundColorSpan
-import android.text.style.TextAppearanceSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.viewpharm.yakal.ETakingTime
-import com.viewpharm.yakal.Pill
-import com.viewpharm.yakal.PillTodo
-import com.viewpharm.yakal.PillTodoAdapter
+import com.viewpharm.yakal.view.CalenderActivity
+import com.viewpharm.yakal.type.ETakingTime
+import com.viewpharm.yakal.view.NotificationActivity
+import com.viewpharm.yakal.model.Pill
+import com.viewpharm.yakal.model.PillTodo
+import com.viewpharm.yakal.adapter.PillTodoAdapter
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentHomeBinding
 import timber.log.Timber
@@ -29,19 +29,31 @@ class HomeMainFragment : Fragment() {
     private var pillTotalCnt : Int = 0;
     private var percent: Int = 0
     private val pillTodos : List<PillTodo> = listOf(
-        PillTodo(ETakingTime.MORNING, 3, false, false, listOf(
+        PillTodo(
+            ETakingTime.MORNING, 3, false, false, listOf(
             Pill("1", false),
             Pill("2", true),
             Pill("3", false)
         )),
-        PillTodo(ETakingTime.AFTERNOON, 2, false, false, listOf(
+        PillTodo(
+            ETakingTime.AFTERNOON, 2, false, false, listOf(
             Pill("1", true),
             Pill("2", true),
         )),
-        PillTodo(ETakingTime.EVENING, 3, false, false, listOf(
+        PillTodo(
+            ETakingTime.EVENING, 3, false, false, listOf(
             Pill("1", true),
             Pill("2", true),
             Pill("3", false)
+        )),
+        PillTodo(
+            ETakingTime.DEFAULT, 3, false, false, listOf(
+            Pill("1", true),
+            Pill("2", false),
+            Pill("3", false)
+        )),
+        PillTodo(
+            ETakingTime.INVISIBLE, 0, true, true, listOf(
         )),
     )
 
@@ -60,7 +72,7 @@ class HomeMainFragment : Fragment() {
 
         binding.todayTakingScheduleMainRecyclerView.apply {
             // 수직으로 출력
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context, )
 
             // Data 관리
             adapter = PillTodoAdapter(pillTodos)
@@ -93,8 +105,6 @@ class HomeMainFragment : Fragment() {
         // 약 추가 버튼 초기화
         binding.addPillListButton.extend()
 
-
-
         setInitTakingTextView(10)
     }
 
@@ -119,11 +129,12 @@ class HomeMainFragment : Fragment() {
             }
             binding.nonePillLayout.visibility = View.GONE
 
-            setTakingEvent(percent)
+            setTakingEvent(100)
         } else {
             binding.todayTakingTextView.text = "오늘 복용해야 하는 약은\n없습니다."
             binding.todayPercentBar.visibility = View.GONE
             binding.todayPercentTextView.visibility = View.GONE
+            binding.todayTakingScheduleMainRecyclerView.visibility = View.GONE
             binding.nonePillLayout.visibility = View.VISIBLE
         }
     }
@@ -144,18 +155,18 @@ class HomeMainFragment : Fragment() {
     // 알람 버튼 이벤트
     private fun setNotificationButtonClickEvent() {
         binding.goNotificationButton.setOnClickListener {
-            Timber.d("알람 버튼 클릭")
-            percent += 10
-            setTakingEvent(percent)
+            Intent(context, NotificationActivity::class.java).apply {
+                startActivity(this)
+            }
         }
     }
 
     // 다른 날짜 복약정보 버튼 이벤트
     private fun setAnotherTakingLayoutClickEvent() {
         binding.anotherTakingLayout.setOnClickListener {
-            Timber.d("다른 날짜 복약정보 버튼 클릭")
-            percent -= 10
-            setTakingEvent(percent)
+            Intent(context, CalenderActivity::class.java).apply {
+                startActivity(this)
+            }
         }
     }
 

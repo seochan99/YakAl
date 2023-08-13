@@ -4,6 +4,11 @@
         <item name="fontFamily">@font/suit_medium</item>
     </style>
 
+    <style name="calendar_day_of_week" parent="default_font">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
     <style name="addPillMainButtonShape">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">28dp</item>

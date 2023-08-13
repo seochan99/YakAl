@@ -1,10 +1,11 @@
-package com.viewpharm.yakal
+package com.viewpharm.yakal.view
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.viewpharm.yakal.R
 import timber.log.Timber
 
 @SuppressLint("CustomSplashScreen")
