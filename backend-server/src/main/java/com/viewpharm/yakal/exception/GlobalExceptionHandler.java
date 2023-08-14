@@ -23,15 +23,15 @@ public class GlobalExceptionHandler {
         return ResponseDto.toResponseEntity(e);
     }
 
-    @ExceptionHandler(value = {CommonException.class})
-    public ResponseDto<?> handleApiException(CommonException e) {
-        log.error("handleApiException() in GlobalExceptionHandler throw CommonException : {}", e.getErrorCode());
-        return ResponseDto.toResponseEntity(e);
-    }
-
-    @ExceptionHandler(value = {Exception.class})
-    public ResponseDto<?> handleException(Exception e) {
-        log.error("handleException() in GlobalExceptionHandler throw Exception : {}", e.getMessage());
-        return ResponseDto.toResponseEntity(new CommonException(ErrorCode.SERVER_ERROR));
-    }
+//    @ExceptionHandler(value = {CommonException.class})
+//    public ResponseDto<?> handleApiException(CommonException e) {
+//        log.error("handleApiException() in GlobalExceptionHandler throw CommonException : {}", e.getErrorCode());
+//        return ResponseDto.toResponseEntity(e);
+//    }
+//
+//    @ExceptionHandler(value = {Exception.class})
+//    public ResponseDto<?> handleException(Exception e) {
+//        log.error("handleException() in GlobalExceptionHandler throw Exception : {}", e.getMessage());
+//        return ResponseDto.toResponseEntity(new CommonException(ErrorCode.SERVER_ERROR));
+//    }
 }
