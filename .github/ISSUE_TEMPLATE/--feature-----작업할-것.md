@@ -1,7 +1,7 @@
 ---
 name: "[ Feature ] - 작업할 것"
 about: "✨ Feature Template "
-title: ''
+title: "[ Feature ] - "
 labels: feature
 assignees: ''
 

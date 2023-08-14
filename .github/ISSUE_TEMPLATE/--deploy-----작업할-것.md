@@ -1,7 +1,7 @@
 ---
 name: "[ Deploy ] - 작업할 것"
 about: "\U0001F4BB Deploy Template"
-title: ''
+title: "[ Deploy ] - "
 labels: server
 assignees: ''
 
