@@ -11,8 +11,6 @@ jobs:
   CI:
     if: contains(github.event.pull_request.labels.*.name, 'safe') && contains(github.event.pull_request.labels.*.name, 'server')
     runs-on: ubuntu-20.04
-    env:
-      working-directory: ./backend-server
 
     steps:
     - name: Checkout
@@ -32,6 +30,7 @@ jobs:
         
     ### gradlew 실행 권한 부여
     - name: Grant execute permisstion for gradlew
+      run: cd ./backend-server
       run: chmod +x gradlew
     
     ### project test
