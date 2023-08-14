@@ -2,7 +2,7 @@ FROM openjdk:17-alpine
 
 WORKDIR /app
 
-ARG JAR_PATH=./build/libs
+ARG JAR_PATH=./backend-server/build/libs
 
 COPY ${JAR_PATH}/application.jar app.jar
 
