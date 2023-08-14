@@ -162,6 +162,16 @@ bootJar {
 }
 
 
+/*
+ * Submodule Copy Function
+ */
+processResources.dependsOn('copyGitSubmodule')
+
+tasks.register('copyGitSubmodule', Copy) {
+	from('./properties/was')
+	into('./src/main/resources')
+}
+
 jar {
 	enabled = false
 }
