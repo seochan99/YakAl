@@ -33,7 +33,6 @@ application-local.yml
 application-prod.yml
 *.p8
 *.p12
-QDose.class
 
 ### NetBeans ###
 /nbproject/private/
