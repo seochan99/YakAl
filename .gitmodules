@@ -1,3 +1,4 @@
 [submodule "properties"]
 	path = properties
 	url = https://github.com/View-Pharm/properties.git
+	branch = main
