@@ -7,10 +7,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.viewpharm.yakal.model.Pill
 import com.viewpharm.yakal.databinding.ItemHomePillSubBinding
+import com.viewpharm.yakal.ui.OverlapBottomDialog
 import com.viewpharm.yakal.view.PillDetailActivity
 import timber.log.Timber
 
-class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAdapter.PillViewHolder>() {
+class PillAdapter(private val pills : List<Pill>, private val onOverlapItemCallBack: OnOverlapItemCallBack?) : RecyclerView.Adapter<PillAdapter.PillViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PillViewHolder {
         Timber.d("onCreateViewHolder")
         return PillViewHolder(
@@ -24,13 +25,13 @@ class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAda
 
     override fun onBindViewHolder(holder: PillViewHolder, position: Int) {
         Timber.d("onBindViewHolder")
-        holder.bind(pills[position])
+        holder.bind(pills[position], onOverlapItemCallBack)
     }
 
     override fun getItemCount(): Int = pills.size
 
     inner class PillViewHolder(private val binding: ItemHomePillSubBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(pill: Pill) {
+        fun bind(pill: Pill, onOverlapItemCallBack: OnOverlapItemCallBack?) {
             binding.takingScheduleSubFillNameTextView.text = pill.name
             binding.takingScheduleSubCheckBox.isChecked = pill.completed
 
@@ -46,8 +47,14 @@ class PillAdapter(private val pills : List<Pill>) : RecyclerView.Adapter<PillAda
             }
 
             binding.overLapImageBottom.setOnClickListener {
-                Timber.d("Test 중")
+                OverlapBottomDialog(pills).also {
+                    onOverlapItemCallBack?.onOverlapItemClick(pills)
+                }
             }
         }
+    }
+
+    interface OnOverlapItemCallBack {
+        fun onOverlapItemClick(pills : List<Pill>)
     }
 }
