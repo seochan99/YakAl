@@ -20,6 +20,8 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
         token: ${{ secrets.ACCESS_TOKEN }}
         submodules: true
+      env:
+        working-directory: ./backend-server
         
     ### runner application java 설정
     - name: Set up JDK 17
