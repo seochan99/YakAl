@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import java.util.TimeZone;
 @EnableScheduling
 @SpringBootApplication
-@EnableSchedulerLock(defaultLockAtMostFor = "PT30S")
+//@EnableSchedulerLock(defaultLockAtMostFor = "PT30S")
 public class YakalApplication {
 
     public static void main(String[] args) {
