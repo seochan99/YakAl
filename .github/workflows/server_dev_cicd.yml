@@ -11,6 +11,8 @@ jobs:
   CI:
     if: contains(github.event.pull_request.labels.*.name, 'safe') && contains(github.event.pull_request.labels.*.name, 'server')
     runs-on: ubuntu-20.04
+    env:
+      working-directory: ./backend-server
 
     steps:
     - name: Checkout
@@ -20,8 +22,6 @@ jobs:
         ref: ${{ github.event.pull_request.head.sha }}
         token: ${{ secrets.ACCESS_TOKEN }}
         submodules: true
-      env:
-        working-directory: ./backend-server
         
     ### runner application java 설정
     - name: Set up JDK 17
