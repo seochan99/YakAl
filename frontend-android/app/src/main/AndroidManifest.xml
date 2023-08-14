@@ -22,12 +22,6 @@
             android:name=".view.CalenderActivity"
             android:exported="false" />
         <activity
-            android:name=".TestActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
             android:name=".view.MainActivity"
             android:exported="false" />
         <activity
@@ -39,9 +33,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.MainActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

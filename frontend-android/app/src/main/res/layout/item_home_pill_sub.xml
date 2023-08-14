@@ -11,8 +11,7 @@
         android:id="@+id/takingScheduleSubItem"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/it_list_pill"
-        android:elevation="3dp">
+        android:background="@drawable/it_list_pill" >
 
         <ImageView
             android:id="@+id/takingScheduleMainImageView"

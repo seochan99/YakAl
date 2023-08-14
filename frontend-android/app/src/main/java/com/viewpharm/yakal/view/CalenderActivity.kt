@@ -8,12 +8,14 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.adapter.CalendarAdapter
+import com.viewpharm.yakal.adapter.PillAdapter
 import com.viewpharm.yakal.adapter.PillTodoAdapter
 import com.viewpharm.yakal.databinding.ActivityCalenderBinding
 import com.viewpharm.yakal.model.Pill
 import com.viewpharm.yakal.model.PillTodo
 import com.viewpharm.yakal.type.ETakingTime
 import com.viewpharm.yakal.ui.CalendarBottomDialog
+import com.viewpharm.yakal.ui.OverlapBottomDialog
 import com.viewpharm.yakal.util.CalendarUtil
 import timber.log.Timber
 import java.time.LocalDate
@@ -97,7 +99,7 @@ class CalenderActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
 
             // Data 관리
-            adapter = PillTodoAdapter(pillTodos)
+            adapter = PillTodoAdapter(pillTodos, null)
 
             // 리사이클러뷰의 크기가 변할 일이 없으므로,
             // 그럼 누구 새로 들어오거나 나갈때 아이템들의 자리만 다시 잡아준다. (리소스 최적화)

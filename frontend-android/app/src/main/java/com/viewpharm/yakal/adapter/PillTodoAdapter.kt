@@ -13,7 +13,9 @@ import com.viewpharm.yakal.model.PillTodo
 import com.viewpharm.yakal.type.ETakingTime
 import timber.log.Timber
 
-class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adapter<PillTodoAdapter.PillTodoViewHolder>() {
+class PillTodoAdapter(
+    private val pillTodos: List<PillTodo>,
+    private val onOverlapItemCallBack: PillAdapter.OnOverlapItemCallBack?) : RecyclerView.Adapter<PillTodoAdapter.PillTodoViewHolder>() {
     private val selectedItems : SparseBooleanArray = SparseBooleanArray();
     private var prePosition : Int = -1;
 
@@ -45,7 +47,7 @@ class PillTodoAdapter(private val pillTodos: List<PillTodo>) : RecyclerView.Adap
 
             binding.todayTakingScheduleSubRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = PillAdapter(pillTodo.pills)
+                adapter = PillAdapter(pillTodo.pills, onOverlapItemCallBack)
                 setHasFixedSize(true)
             }
 
