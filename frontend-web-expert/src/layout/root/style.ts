@@ -47,11 +47,11 @@ export const Screen = styled.div`
   height: 100%;
 `;
 
-export const Topbar = styled.div`
+export const Header = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 6rem;
+  height: 6.75rem;
 `;
 
 export const ButtonBox = styled.div`
@@ -73,13 +73,13 @@ export const NonTopSection = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
-  background-color: ${theme.colors.indigo[100]};
+  background-color: #f5f5f9;
 `;
 
 export const Sidebar = styled.div`
   & {
     position: relative;
-    width: 20rem;
+    width: 22rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -164,15 +164,16 @@ export const ProfileText = styled.div`
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: middle;
+    justify-content: center;
     padding-left: 2rem;
     padding-right: 1rem;
+    height: 100%;
   }
   &:after {
     content: "";
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 1.2rem;
+    bottom: 1.2rem;
     left: 0;
     width: 1px;
     border-left: 1px solid ${theme.colors.gray[300]};

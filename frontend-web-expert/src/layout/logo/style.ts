@@ -7,7 +7,7 @@ export const NonBorderOuter = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;
-  width: 16rem;
+  width: 18rem;
   padding: 0 2rem;
   margin: 0;
   text-decoration: none;
@@ -17,8 +17,8 @@ export const Outer = styled(NonBorderOuter)`
   &:after {
     content: "";
     position: absolute;
-    top: 1.4rem;
-    bottom: 1.4rem;
+    top: 1.2rem;
+    bottom: 1.2rem;
     right: 0;
     width: 1px;
     border-right: 1px solid ${theme.colors.gray[300]};
@@ -27,7 +27,7 @@ export const Outer = styled(NonBorderOuter)`
 
 export const Icon = styled.img`
   content: url("/src/assets/yakal-logo.png");
-  width: 3rem;
+  width: 4.2rem;
   margin: 0 1rem 0 0.6rem;
 `;
 

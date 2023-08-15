@@ -11,6 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     position: relative;
+    font-family: "SUIT"; 
   }
 
   ::-webkit-scrollber {
@@ -27,5 +28,10 @@ export const GlobalStyle = createGlobalStyle`
 
   ::-webkit-scrollber-track:hover {
     background: ${theme.colors.gray[500]}
+  }
+
+  @font-face {
+    font-family: "SUIT";
+    src: url("./src/assets/SUIT-Variable.ttf") format("truetype");
   }
 `;

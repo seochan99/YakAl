@@ -1,4 +1,4 @@
-import { Topbar } from "@/layout/root/style";
+import { Header } from "@/layout/root/style";
 import {
   KakaoSymbol,
   GoogleSymbol,
@@ -13,7 +13,6 @@ import {
   AppleButton,
   AppleSymbol,
   AppleText,
-  Footer,
   InnerMain,
   LogoSection,
   LoginSection,
@@ -25,13 +24,14 @@ import {
   LogoShade,
 } from "./style";
 import Logo from "@/layout/logo";
+import Footer from "@/layout/footer";
 
 export default function Login() {
   return (
     <Outer>
-      <Topbar>
+      <Header>
         <Logo hasBorder={false} path="/login" />
-      </Topbar>
+      </Header>
       <Main>
         <InnerMain>
           <LogoSection>
@@ -62,7 +62,7 @@ export default function Login() {
           </LoginSection>
         </InnerMain>
       </Main>
-      <Footer></Footer>
+      <Footer />
     </Outer>
   );
 }

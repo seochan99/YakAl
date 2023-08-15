@@ -7,7 +7,7 @@ import {
   Ul,
   ItemName,
   Screen,
-  Topbar,
+  Header,
   NonTopSection,
   SwingIconButton,
   ProfileImg,
@@ -29,6 +29,7 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useRef, useState } from "react";
 import Logo from "@/layout/logo";
+import Footer from "@/layout/footer";
 
 export default function Root() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -59,8 +60,8 @@ export default function Root() {
 
   return (
     <Screen>
-      <Topbar>
-        <Logo hasBorder={true} />
+      <Header>
+        <Logo hasBorder={true} path="/login" />
         <TopRight>
           <ButtonBox>
             <SwingIconButton>
@@ -82,7 +83,7 @@ export default function Root() {
           </ProfileText>
           <ProfileImg src="https://mui.com/static/images/avatar/1.jpg" />
         </TopRight>
-      </Topbar>
+      </Header>
       {isOpen && (
         <ProfileMenu ref={profileMenuRef}>
           <ProfileMenuItem to="/">
@@ -90,7 +91,7 @@ export default function Root() {
             <span>내 정보</span>
           </ProfileMenuItem>
           <Bar />
-          <Logout>로그아웃</Logout>
+          <Logout onClick={() => navigate("/login")}>로그아웃</Logout>
         </ProfileMenu>
       )}
       <NonTopSection>
@@ -115,6 +116,7 @@ export default function Root() {
           <Outlet />
         </Detail>
       </NonTopSection>
+      <Footer />
     </Screen>
   );
 }

@@ -92,7 +92,6 @@ export const LoginSection = styled.div`
 export const YakalSymbol = styled.img`
   content: url("/src/assets/yakal-logo.png");
   width: 16rem;
-  aspect-ratio: auto;
 `;
 
 export const LoginTitle = styled.span`
@@ -195,9 +194,4 @@ export const AppleSymbol = styled(AppleIconSvg)`
 
 export const AppleText = styled(ButtonText)`
   color: ${theme.colors.white};
-`;
-
-export const Footer = styled.div`
-  height: 10rem;
-  background-color: #e9e9ee;
 `;
