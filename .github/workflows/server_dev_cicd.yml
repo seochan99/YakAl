@@ -9,7 +9,7 @@ on:
 jobs:
   # safe tag에 대한 gradlew test && merged에 대한 gradlew build/deploy
   CI:
-    if: contains(github.event.pull_request.labels.*.name, 'safe') && contains(github.event.pull_request.labels.*.name, 'server')
+    if: contains(github.event.pull_request.labels.*.name, 'safe to server')
     runs-on: ubuntu-20.04
 
     steps:
@@ -36,7 +36,7 @@ jobs:
     
     ### project test
     - name: Test
-      if: contains(github.event.pull_request.labels.*.name, 'safe') && contains(github.event.pull_request.labels.*.name, 'server')
+      if: contains(github.event.pull_request.labels.*.name, 'safe to server') && github.event.pull_request.merged == false
       run: |
         cd ./backend-server
         ./gradlew clean test -Pprofile=test
@@ -46,7 +46,7 @@ jobs:
       if: github.event.pull_request.merged == true
       run: |
         cd ./backend-server
-        ./gradlew clean build
+        ./gradlew clean build -x test
 
     ### Docker Image Build and Push
     - name: Login to Docker Hub
