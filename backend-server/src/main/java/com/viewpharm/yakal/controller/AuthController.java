@@ -71,15 +71,6 @@ public class AuthController {
     }
 
     @Deprecated
-    @PostMapping("/apple/callback")
-    @Operation(summary = "Apple id_code 생성 (테스트용)", description = "Apple 인증 코드을 콜백으로 제공합니다.")
-    public ResponseDto<?> loginUsingApple(final @RequestParam("code") String code) {
-        final Map<String, String> map = new HashMap<>();
-        map.put("code", code);
-        return ResponseDto.created(map);
-    }
-
-    @Deprecated
     @PostMapping("/user")
     @Operation(summary = "사용자 생성 (테스트용)", description = "더미 사용자를 생성합니다. 개발 기간에만 제공됩니다.")
     public ResponseDto<JwtTokenDto> createUser() {
@@ -99,5 +90,35 @@ public class AuthController {
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
         final JwtTokenDto jwtTokenDto = authService.reissue(request);
         return ResponseDto.created(jwtTokenDto);
+    }
+
+    /**
+     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
+     * 2023-08-15
+     * Github: HyungJoonSon
+     */
+    @Deprecated
+    @GetMapping("/kakao/callback")
+    public ResponseDto<?> loginUsingKAKAO(final @RequestParam("code") String code) {
+        final Map<String, String> map = new HashMap<>();
+        map.put("accessToken", authService.getAccessToken(code, ELoginProvider.KAKAO));
+        return ResponseDto.ok(map);
+    }
+
+    @Deprecated
+    @GetMapping("/google/callback")
+    public ResponseDto<?> loginUsingGOOGLE(final @RequestParam("code") String code) {
+        final Map<String, String> map = new HashMap<>();
+        map.put("accessToken", authService.getAccessToken(code, ELoginProvider.GOOGLE));
+        return ResponseDto.ok(map);
+    }
+
+    @Deprecated
+    @PostMapping("/apple/callback")
+    @Operation(summary = "Apple id_code 생성 (테스트용)", description = "Apple 인증 코드을 콜백으로 제공합니다.")
+    public ResponseDto<?> loginUsingApple(final @RequestParam("code") String code) {
+        final Map<String, String> map = new HashMap<>();
+        map.put("accessToken", code);
+        return ResponseDto.ok(map);
     }
 }
