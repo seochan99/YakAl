@@ -17,8 +17,7 @@ import org.bouncycastle.asn1.pkcs.PrivateKeyInfo;
 import org.bouncycastle.openssl.jcajce.JcaPEMKeyConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -289,5 +288,62 @@ public class OAuth2Util {
     @RequiredArgsConstructor
     private static class Key {
         private List<JWTSetKeys> keys;
+    }
+
+
+    /**
+     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
+     * 2023-08-15
+     * Github: HyungJoonSon
+     */
+    @Deprecated
+    public String getKakaoAccessToken(final String authorizationCode) {
+        final RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("grant_type", "authorization_code");
+        parameters.add("client_id", KAKAO_CLIENT_ID);
+        parameters.add("redirect_uri", KAKAO_REDIRECT_URL);
+        parameters.add("code", authorizationCode);
+
+        HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(parameters, httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                KAKAO_TOKEN_URL,
+                HttpMethod.POST,
+                kakaoTokenRequest,
+                String.class
+        );
+
+        return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
+    }
+
+    @Deprecated
+    public String getGoogleAccessToken(final String authorizationCode) {
+        final RestTemplate restTemplate = new RestTemplate();
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+        parameters.add("grant_type", "authorization_code");
+        parameters.add("client_id", GOOGLE_CLIENT_ID);
+        parameters.add("client_secret", GOOGLE_CLIENT_SECRET);
+        parameters.add("redirect_uri", GOOGLE_REDIRECT_URL);
+        parameters.add("code", authorizationCode);
+
+        HttpEntity<MultiValueMap<String,String>> googleTokenRequest = new HttpEntity<>(parameters, httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                GOOGLE_TOKEN_URL,
+                HttpMethod.POST,
+                googleTokenRequest,
+                String.class
+        );
+
+        return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
     }
 }
