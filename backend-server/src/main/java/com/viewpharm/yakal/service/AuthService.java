@@ -75,23 +75,12 @@ public class AuthService {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
+        final String finalSocialId = socialId;
+
         final Random random = new Random();
         final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElse(mobileUserRepository.save(new MobileUser(socialId, loginProvider, ERole.ROLE_MOBILE, defaultName)));
-
-        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
-        user.setRefreshToken(jwtTokenDto.getRefreshToken());
-
-        return jwtTokenDto;
-    }
-
-    @Deprecated
-    @Transactional
-    public JwtTokenDto createUser() {
-        final Random random = new Random();
-        final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
-        final MobileUser user = mobileUserRepository.save(new MobileUser("0", ELoginProvider.KAKAO, ERole.ROLE_MOBILE, defaultName));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, ERole.ROLE_MOBILE, defaultName)));
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
@@ -109,5 +98,18 @@ public class AuthService {
     @Transactional
     public JwtTokenDto reissue(final HttpServletRequest request) {
         return jwtProvider.reissue(request);
+    }
+
+    @Deprecated
+    @Transactional
+    public JwtTokenDto createUser() {
+        final Random random = new Random();
+        final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
+        final MobileUser user = mobileUserRepository.save(new MobileUser("0", ELoginProvider.KAKAO, ERole.ROLE_MOBILE, defaultName));
+
+        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
+        user.setRefreshToken(jwtTokenDto.getRefreshToken());
+
+        return jwtTokenDto;
     }
 }
