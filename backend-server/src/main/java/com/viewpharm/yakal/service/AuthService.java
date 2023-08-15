@@ -112,4 +112,32 @@ public class AuthService {
 
         return jwtTokenDto;
     }
+
+    /**
+     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
+     * 2023-08-15
+     * Github: HyungJoonSon
+     */
+    @Deprecated
+    public String getAccessToken(final String authorizationCode, final ELoginProvider provider) {
+        String authorizationAccessToken = null;
+
+        switch (provider) {
+            case KAKAO -> {
+                authorizationAccessToken = oAuth2Util.getKakaoAccessToken(authorizationCode);
+            }
+            case GOOGLE -> {
+                authorizationAccessToken = oAuth2Util.getGoogleAccessToken(authorizationCode);
+            }
+            case APPLE -> {
+                // 애플의 경우 authorizationCode 그대로 accessToken으로 사용
+                authorizationAccessToken = authorizationCode;
+            }
+            default -> {
+                assert (false): "Invalid Type Error";
+            }
+        }
+
+        return authorizationAccessToken;
+    }
 }
