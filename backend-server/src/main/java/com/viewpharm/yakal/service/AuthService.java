@@ -53,7 +53,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider) {
+    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider, final ERole role) {
         String socialId = null;
 
         switch (loginProvider) {
@@ -80,7 +80,7 @@ public class AuthService {
         final Random random = new Random();
         final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, ERole.ROLE_MOBILE, defaultName)));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role, defaultName)));
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
@@ -98,6 +98,11 @@ public class AuthService {
     @Transactional
     public JwtTokenDto reissue(final HttpServletRequest request) {
         return jwtProvider.reissue(request);
+    }
+
+    @Transactional
+    public JwtTokenDto reissue(final String refreshToken) {
+        return jwtProvider.reissue(refreshToken);
     }
 
     @Deprecated

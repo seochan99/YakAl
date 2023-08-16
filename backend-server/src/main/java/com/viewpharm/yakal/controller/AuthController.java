@@ -7,9 +7,14 @@ import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.type.ELoginProvider;
+import com.viewpharm.yakal.type.ERole;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,8 +42,28 @@ public class AuthController {
     @Operation(summary = "Kakao 로그인", description = "Kakao 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingKAKAO(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_MOBILE);
         return ResponseDto.created(jwtTokenDto);
+    }
+
+    @PostMapping("/kakao/web")
+    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+    public ResponseEntity<ResponseDto<?>> loginUsingKakaoForWeb(final HttpServletRequest request) {
+        final String accessToken = jwtProvider.refineToken(request);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
+
+        final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
+
+        final Map<String, String> data = new HashMap<>(1);
+        data.put("accessToken", jwtTokenDto.getAccessToken());
+
+        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
     }
 
     @GetMapping("/google")
@@ -52,7 +77,7 @@ public class AuthController {
     @Operation(summary = "Google 로그인", description = "Google 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingGOOGLE(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_MOBILE);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -66,7 +91,7 @@ public class AuthController {
     @Operation(summary = "Apple 로그인", description = "Apple 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<?> loginUsingApple(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE, ERole.ROLE_MOBILE);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -90,6 +115,25 @@ public class AuthController {
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
         final JwtTokenDto jwtTokenDto = authService.reissue(request);
         return ResponseDto.created(jwtTokenDto);
+    }
+
+    @PostMapping("/reissue/web")
+    @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
+    public ResponseEntity<ResponseDto<?>> reissueForWeb(@CookieValue("refreshToken") final String refreshToken) {
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+
+        final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .build();
+
+        final Map<String, String> data = new HashMap<>(1);
+        data.put("accessToken", jwtTokenDto.getAccessToken());
+
+        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
+
+        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
     }
 
     /**

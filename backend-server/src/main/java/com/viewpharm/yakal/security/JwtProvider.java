@@ -92,12 +92,23 @@ public class JwtProvider implements InitializingBean {
         return createTotalToken(id, role);
     }
 
-    public String getUserId(final String token) {
-        JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-        return jwtParser.parseClaimsJws(token)
-                .getBody()
-                .get("id")
-                .toString();
+    public JwtTokenDto reissue(final String refreshToken) throws CommonException {
+        if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith(BEARER_PREFIX)) {
+            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
+        }
+
+        final String orgRefreshToken = refreshToken.substring(BEARER_PREFIX.length());
+
+        final Claims claims = validateToken(orgRefreshToken);
+
+        final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
+        final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
+
+        if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, orgRefreshToken)) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+
+        return createTotalToken(id, role);
     }
 
     public Claims validateToken(final String token) throws CommonException {
