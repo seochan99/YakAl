@@ -4,6 +4,7 @@ import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.interceptor.UserIdInterceptor;
 import com.viewpharm.yakal.interceptor.UserIdArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -14,6 +15,9 @@ import java.util.List;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
+
+    @Value("${client-host}")
+    private String clientHost;
 
     private final UserIdArgumentResolver userIdArgumentResolver;
 
@@ -30,7 +34,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173")
+                .allowedOrigins(clientHost)
                 .allowedMethods("*");
     }
 
