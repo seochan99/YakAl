@@ -19,3 +19,8 @@ export async function reissue<T = TTokens>(): Promise<T> {
   const response = await client.post<TResponse<T>>(`${AUTH_HANDLER_PREFIX}/reissue/web`);
   return response.data.data;
 }
+
+export async function logout(): Promise<null> {
+  const response = await client.patch<TResponse<null>>(`${AUTH_HANDLER_PREFIX}/logout`);
+  return response.data.data;
+}

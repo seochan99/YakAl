@@ -30,6 +30,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useEffect, useRef, useState } from "react";
 import Logo from "@/layout/logo";
 import Footer from "@/layout/footer";
+import { client } from "@/api/aixos";
 
 export default function Root() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -61,6 +62,19 @@ export default function Root() {
       document.removeEventListener("mouseup", handleOutOfMenuClick);
     };
   }, [isOpen, navigate]);
+
+  const handleLogoutClick = () => {
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    let id = window.setTimeout(() => {}, 0);
+
+    while (id--) {
+      window.clearTimeout(id);
+    }
+
+    client.defaults.headers.common["Authorization"] = "";
+    localStorage.setItem("logged", "false");
+    navigate("/login");
+  };
 
   return (
     <Screen>
@@ -95,7 +109,7 @@ export default function Root() {
             <span>내 정보</span>
           </ProfileMenuItem>
           <Bar />
-          <Logout onClick={() => navigate("/login")}>로그아웃</Logout>
+          <Logout onClick={handleLogoutClick}>로그아웃</Logout>
         </ProfileMenu>
       )}
       <NonTopSection>
