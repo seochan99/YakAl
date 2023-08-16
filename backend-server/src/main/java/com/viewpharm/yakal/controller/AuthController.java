@@ -95,14 +95,6 @@ public class AuthController {
         return ResponseDto.created(jwtTokenDto);
     }
 
-    @Deprecated
-    @PostMapping("/user")
-    @Operation(summary = "사용자 생성 (테스트용)", description = "더미 사용자를 생성합니다. 개발 기간에만 제공됩니다.")
-    public ResponseDto<JwtTokenDto> createUser() {
-        final JwtTokenDto jwtTokenDto = authService.createUser();
-        return ResponseDto.created(jwtTokenDto);
-    }
-
     @PatchMapping("/mobile/logout")
     @Operation(summary = "모바일 로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
     public ResponseDto<Object> logout(@UserId Long id) {
@@ -113,14 +105,14 @@ public class AuthController {
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다.")
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
-        final JwtTokenDto jwtTokenDto = authService.reissue(request);
+        final JwtTokenDto jwtTokenDto = authService.reissueForWeb(request);
         return ResponseDto.created(jwtTokenDto);
     }
 
     @PostMapping("/reissue/web")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
     public ResponseEntity<ResponseDto<?>> reissueForWeb(@CookieValue("refreshToken") final String refreshToken) {
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+        final JwtTokenDto jwtTokenDto = authService.reissueForWeb(refreshToken);
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
                 .httpOnly(true)
