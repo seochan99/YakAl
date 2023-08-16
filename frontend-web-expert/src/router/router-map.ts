@@ -4,10 +4,10 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import AssistWalkerOutlinedIcon from "@mui/icons-material/AssistWalkerOutlined";
 import Groups2OutlinedIcon from "@mui/icons-material/Groups2Outlined";
-import Dashboard from "@/pages/dashboard";
-import Facility from "@/pages/facility";
-import Patient from "@/pages/patient";
-import Cohort from "@/pages/cohort";
+import Dashboard from "@/page/dashboard";
+import Facility from "@/page/facility";
+import Patient from "@/page/patient";
+import Cohort from "@/page/cohort";
 
 export const routerMap: RouterType[] = [
   { path: "/", icon: DashboardOutlinedIcon, korName: "대시보드", engName: "Dashboard", element: Dashboard },

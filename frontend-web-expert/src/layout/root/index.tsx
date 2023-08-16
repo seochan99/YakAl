@@ -41,6 +41,10 @@ export default function Root() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (localStorage.getItem("logged") !== "true") {
+      navigate("/login");
+    }
+
     const handleOutOfMenuClick = (e: MouseEvent) => {
       if (profileMenuRef.current) {
         if (!(e.target instanceof Node) || !profileMenuRef.current.contains(e.target)) {
@@ -56,12 +60,12 @@ export default function Root() {
     return () => {
       document.removeEventListener("mouseup", handleOutOfMenuClick);
     };
-  }, [isOpen]);
+  }, [isOpen, navigate]);
 
   return (
     <Screen>
       <Header>
-        <Logo hasBorder={true} path="/login" />
+        <Logo path="/" />
         <TopRight>
           <ButtonBox>
             <SwingIconButton>

@@ -44,7 +44,7 @@ export const Screen = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  min-height: 100dvh;
 `;
 
 export const Header = styled.div`
@@ -52,6 +52,8 @@ export const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   height: 6.75rem;
+  line-height: 6.75rem;
+  box-sizing: border-box;
 `;
 
 export const ButtonBox = styled.div`
@@ -79,7 +81,7 @@ export const NonTopSection = styled.div`
 export const Sidebar = styled.div`
   & {
     position: relative;
-    width: 22rem;
+    width: 20rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -182,6 +184,7 @@ export const ProfileText = styled.div`
 
 export const Job = styled.span`
   font-size: 0.9rem;
+  line-height: 1.2rem;
   font-weight: 600;
   color: ${theme.colors.gray[300]};
   text-align: right;
@@ -194,7 +197,7 @@ export const NameBox = styled.div`
     color: black;
   }
   & svg {
-    margin-top: 0.1rem;
+    margin-top: 0.3rem;
   }
   &:hover {
     color: ${theme.colors.indigo[600]};
@@ -213,6 +216,7 @@ export const NameBox = styled.div`
 
 export const Name = styled.span`
   font-size: 1.2rem;
+  line-height: 1.8rem;
   font-weight: 600;
   margin-top: 0.2rem;
   text-align: right;
@@ -223,10 +227,10 @@ export const ProfileMenu = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 5rem;
+    top: 6rem;
     right: 3rem;
     width: 8rem;
-    padding: 0.8rem;
+    padding: 0.6rem;
     border-radius: 0.6rem;
     background-color: white;
     border: 1px solid ${theme.colors.gray[200]};
@@ -284,7 +288,7 @@ export const Logout = styled.button`
     color: white;
     font-size: 0.9rem;
     font-weight: 500;
-    margin: 0.1rem 0.2rem 0;
+    margin: 0.1rem 0.4rem 0;
   }
   &:hover {
     background-color: ${theme.colors.mojo[700]};

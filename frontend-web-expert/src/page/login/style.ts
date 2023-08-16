@@ -1,9 +1,9 @@
 import { theme } from "@/style/theme";
 import { css, styled } from "styled-components";
-import { ReactComponent as KakaoIconSvg } from "@/assets/kakao-logo.svg";
-import { ReactComponent as GoogleIconSvg } from "@/assets/google-logo.svg";
-import { ReactComponent as AppleIconSvg } from "@/assets/apple-logo.svg";
-import { ReactComponent as LogoShadeSvg } from "@/assets/logo-shade.svg";
+import { ReactComponent as KakaoIconSvg } from "@/asset/kakao-logo.svg";
+import { ReactComponent as GoogleIconSvg } from "@/asset/google-logo.svg";
+import { ReactComponent as AppleIconSvg } from "@/asset/apple-logo.svg";
+import { ReactComponent as LogoShadeSvg } from "@/asset/logo-shade.svg";
 
 export const Outer = styled.div`
   display: flex;
@@ -67,7 +67,7 @@ export const Description = styled.span`
 `;
 
 export const BigLogo = styled.img`
-  content: url("/src/assets/yakal-logo.png");
+  content: url("/src/asset/yakal-logo.png");
   width: 16rem;
   margin: 3rem auto;
   z-index: 1;
@@ -90,7 +90,7 @@ export const LoginSection = styled.div`
 `;
 
 export const YakalSymbol = styled.img`
-  content: url("/src/assets/yakal-logo.png");
+  content: url("/src/asset/yakal-logo.png");
   width: 16rem;
 `;
 

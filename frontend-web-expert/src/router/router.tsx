@@ -1,14 +1,20 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "@/layout/Root";
-import ErrorPage from "@/pages/error-page";
-import Login from "@/pages/login";
+import Root from "@/layout/root";
+import ErrorPage from "@/page/error-page";
+import Login from "@/page/login";
 import { RouterType } from "./router-map-type";
 import { routerMap } from "./router-map";
+import KakaoLogin from "@/page/kakao-login";
 
 const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/auth/kakao/callback",
+    element: <KakaoLogin />,
     errorElement: <ErrorPage />,
   },
   {

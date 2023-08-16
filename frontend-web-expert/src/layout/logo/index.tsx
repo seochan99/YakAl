@@ -1,19 +1,16 @@
-import { Icon, Title, Description, Outer, NonBorderOuter } from "./style";
+import { Icon, Title, Description, Outer } from "./style";
 
 type TLogoProps = {
-  hasBorder: boolean;
   path: string;
 };
 
-function Logo({ hasBorder, path }: TLogoProps) {
-  const Wrapper = hasBorder ? Outer : NonBorderOuter;
-
+function Logo({ path }: TLogoProps) {
   return (
-    <Wrapper to={path}>
+    <Outer to={path}>
       <Icon />
       <Title>약 알</Title>
       <Description>전문가 WEB</Description>
-    </Wrapper>
+    </Outer>
   );
 }
 

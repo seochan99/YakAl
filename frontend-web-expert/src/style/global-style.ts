@@ -32,6 +32,6 @@ export const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: "SUIT";
-    src: url("./src/assets/SUIT-Variable.ttf") format("truetype");
+    src: url("./src/asset/SUIT-Variable.ttf") format("truetype");
   }
 `;

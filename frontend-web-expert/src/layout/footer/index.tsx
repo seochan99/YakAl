@@ -3,7 +3,7 @@ import { FooterOuter, ViewPharmIcon, ViewPharmExplain } from "./style";
 function Footer() {
   return (
     <FooterOuter>
-      <ViewPharmIcon onClick={() => window.location.replace("https://viewpharm1.oopy.io/")} />
+      <ViewPharmIcon onClick={() => window.location.href("https://viewpharm1.oopy.io/")} />
       <ViewPharmExplain>
         {`VIEW PHARM (뷰팜)`}
         <br />

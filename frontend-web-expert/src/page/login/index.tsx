@@ -25,12 +25,29 @@ import {
 } from "./style";
 import Logo from "@/layout/logo";
 import Footer from "@/layout/footer";
+import { getKakaoRedirectUrl } from "@/api/auth";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+function Login() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem("logged") === "true") {
+      navigate("/");
+    }
+  }, [navigate]);
+
+  const handleKakaoLoginClick = async () => {
+    getKakaoRedirectUrl().then((response) => {
+      window.location.href = response.url;
+    });
+  };
+
   return (
     <Outer>
       <Header>
-        <Logo hasBorder={false} path="/login" />
+        <Logo path="/login" />
       </Header>
       <Main>
         <InnerMain>
@@ -46,7 +63,7 @@ export default function Login() {
           <LoginSection>
             <LoginTitle>로그인</LoginTitle>
             <ButtonBox>
-              <KakaoButton onClick={() => console.log("kakao!!!")}>
+              <KakaoButton onClick={handleKakaoLoginClick}>
                 <KakaoSymbol />
                 <KakaoText>카카오로 로그인</KakaoText>
               </KakaoButton>
@@ -66,3 +83,5 @@ export default function Login() {
     </Outer>
   );
 }
+
+export default Login;
