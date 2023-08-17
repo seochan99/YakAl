@@ -2,15 +2,9 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@/style/global-style.js";
 import { theme } from "@/style/theme.js";
 import { RouterProvider } from "react-router-dom";
-import router from "@/router/router";
-import { useEffect } from "react";
-import { onSlientRefresh } from "./util/slient-refresh";
+import { router } from "./router/router";
 
-export default function App() {
-  useEffect(() => {
-    onSlientRefresh();
-  }, []);
-
+function App() {
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -20,3 +14,5 @@ export default function App() {
     </>
   );
 }
+
+export default App;

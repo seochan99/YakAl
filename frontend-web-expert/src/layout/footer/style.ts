@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FooterOuter = styled.div`
+export const FooterOuter = styled.footer`
   display: flex;
   flex-direction: row;
   height: 6rem;

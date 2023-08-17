@@ -9,7 +9,7 @@ export async function getKakaoRedirectUrl<T = TLoginRedirectUrl>(): Promise<T> {
 }
 
 export async function loginUsingKakao<T = TTokens>(code: string): Promise<T> {
-  const response = await client.post<TResponse<T>>(`${AUTH_HANDLER_PREFIX}/kakao`, null, {
+  const response = await client.get<TResponse<T>>(`${AUTH_HANDLER_PREFIX}/kakao`, {
     headers: { Authorization: code },
   });
   return response.data.data;

@@ -1,31 +1,34 @@
 import { createBrowserRouter } from "react-router-dom";
-import Root from "@/layout/root";
-import ErrorPage from "@/page/error-page";
-import Login from "@/page/login";
-import { RouterType } from "./router-map-type";
-import { routerMap } from "./router-map";
-import KakaoLogin from "@/page/kakao-login";
+import Main from "@/layout/main";
+import ErrorPage from "@/page/error";
+import Login from "@/layout/login";
+import { sidebarRouterMap } from "./sidebar-router";
+import LoginMain from "@/page/login/login-main";
 
-const router = createBrowserRouter([
+export const MAIN_DASHBOARD_ROUTE = "/";
+export const LOGIN_ROUTE = "/login";
+
+export const router = createBrowserRouter([
   {
-    path: "/login",
+    path: LOGIN_ROUTE,
     element: <Login />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        index: true,
+        element: <LoginMain />,
+      },
+    ],
   },
   {
-    path: "/auth/kakao/callback",
-    element: <KakaoLogin />,
-    errorElement: <ErrorPage />,
-  },
-  {
-    path: "/",
-    element: <Root />,
+    path: MAIN_DASHBOARD_ROUTE,
+    element: <Main />,
     errorElement: <ErrorPage />,
     children: [
       {
         errorElement: <ErrorPage />,
-        children: routerMap.map((router: RouterType) =>
-          router.path == "/"
+        children: sidebarRouterMap.map((router) =>
+          router.path == ""
             ? { index: true, element: <router.element /> }
             : { path: router.path, element: <router.element /> },
         ),
@@ -33,5 +36,3 @@ const router = createBrowserRouter([
     ],
   },
 ]);
-
-export default router;

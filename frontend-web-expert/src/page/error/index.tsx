@@ -3,7 +3,6 @@ import { Description, Div, Header, Icon, Text } from "./style";
 
 export default function ErrorPage() {
   const error = useRouteError();
-  console.error(typeof error);
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
