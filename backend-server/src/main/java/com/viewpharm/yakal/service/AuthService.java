@@ -4,6 +4,7 @@ import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.repository.MobileUserRepository;
+import com.viewpharm.yakal.type.EPlatform;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
@@ -53,7 +54,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider) {
+    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider, final ERole role) throws CommonException {
         String socialId = null;
 
         switch (loginProvider) {
@@ -80,9 +81,9 @@ public class AuthService {
         final Random random = new Random();
         final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, ERole.ROLE_MOBILE, defaultName)));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role, defaultName)));
 
-        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
+        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
 
         return jwtTokenDto;
@@ -96,21 +97,13 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto reissue(final HttpServletRequest request) {
-        return jwtProvider.reissue(request);
+    public JwtTokenDto reissueForWeb(final HttpServletRequest request) {
+        return jwtProvider.reissueForWeb(request);
     }
 
-    @Deprecated
     @Transactional
-    public JwtTokenDto createUser() {
-        final Random random = new Random();
-        final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
-        final MobileUser user = mobileUserRepository.save(new MobileUser("0", ELoginProvider.KAKAO, ERole.ROLE_MOBILE, defaultName));
-
-        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
-        user.setRefreshToken(jwtTokenDto.getRefreshToken());
-
-        return jwtTokenDto;
+    public JwtTokenDto reissueForWeb(final String refreshToken) {
+        return jwtProvider.reissueForWeb(refreshToken);
     }
 
     /**

@@ -2,6 +2,7 @@ package com.viewpharm.yakal.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.JsonParser;
+import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
@@ -27,6 +28,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.bouncycastle.openssl.PEMParser;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.FileReader;
@@ -39,6 +41,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Slf4j
 @Component
@@ -111,7 +114,7 @@ public class OAuth2Util {
                 + "&response_type=code%20id_token&scope=name%20email&response_mode=form_post";
     }
 
-    public String getKakaoUserInformation(final String accessToken) {
+    public String getKakaoUserInformation(final String accessToken) throws CommonException {
         final WebClient webClient = WebClient.builder()
                 .defaultHeaders(httpHeaders -> {
                             httpHeaders.setBearerAuth(accessToken);
@@ -123,9 +126,7 @@ public class OAuth2Util {
                 .uri(KAKAO_USERINFO_URL)
                 .retrieve()
                 .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
-                        clientResponse -> {
-                            throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
-                        })
+                        clientResponse -> clientResponse.bodyToMono(String.class).flatMap(error -> null))
                 .bodyToMono(String.class)
                 .flux()
                 .toStream()
