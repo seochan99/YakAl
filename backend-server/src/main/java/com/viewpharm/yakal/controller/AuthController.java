@@ -106,7 +106,7 @@ public class AuthController {
 
         final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
 
-        return ResponseEntity.status(HttpStatus.TEMPORARY_REDIRECT).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
+        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
     }
 
     @PatchMapping("/logout")
