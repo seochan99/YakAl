@@ -1,7 +1,16 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-export const Outer = styled(Link)`
+export const HeaderOuter = styled.header`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 6.75rem;
+  line-height: 6.75rem;
+  box-sizing: border-box;
+`;
+
+export const LogoOuter = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;

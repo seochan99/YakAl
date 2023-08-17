@@ -2,7 +2,7 @@ import axios, { Axios } from "axios";
 
 // Global Axios Config
 export const client: Axios = axios.create({
-  baseURL: import.meta.env.VITE_SERVER_HOST,
+  baseURL: import.meta.env.VITE_DEV_SERVER_HOST,
   headers: {
     "Content-Type": "application/json",
   },

@@ -1,29 +1,12 @@
 import { theme } from "@/style/theme";
-import { css, styled } from "styled-components";
+import styled, { css } from "styled-components";
+
 import { ReactComponent as KakaoIconSvg } from "@/asset/kakao-logo.svg";
 import { ReactComponent as GoogleIconSvg } from "@/asset/google-logo.svg";
 import { ReactComponent as AppleIconSvg } from "@/asset/apple-logo.svg";
 import { ReactComponent as LogoShadeSvg } from "@/asset/logo-shade.svg";
 
-export const Outer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 100dvh;
-`;
-
-export const Main = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  place-items: center;
-  background-color: #f5f5f9;
-  height: 100%;
-  flex: 1;
-`;
-
-export const InnerMain = styled.div`
+export const InnerCenter = styled.div`
   display: flex;
   flex-direction: row;
 `;
