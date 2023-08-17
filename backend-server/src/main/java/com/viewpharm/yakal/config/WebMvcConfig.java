@@ -16,9 +16,6 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    @Value("${client-host}")
-    private String clientHost;
-
     private final UserIdArgumentResolver userIdArgumentResolver;
 
     @Autowired
@@ -34,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins(clientHost)
+                .allowedOrigins("http://localhost:5173")
                 .allowedMethods("*");
     }
 
