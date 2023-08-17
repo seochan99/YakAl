@@ -11,6 +11,11 @@ export const onSlientRefresh = () => {
     .then((response) => {
       client.defaults.headers.common["Authorization"] = `Bearer ${response.accessToken}`;
       setTimeout(onSlientRefresh, TOKEN_EXPIRE_MS - 60 * 1000);
+      localStorage.setItem("logged", "true");
+
+      if (window.location.pathname.includes("/login")) {
+        redirect("/");
+      }
     })
     .catch((error) => {
       console.log(error);
