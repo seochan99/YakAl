@@ -54,7 +54,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider, final ERole role) {
+    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider, final ERole role) throws CommonException {
         String socialId = null;
 
         switch (loginProvider) {
