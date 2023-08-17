@@ -88,7 +88,7 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
     }
 
-    /**]
+    /**
      * <h1>Web Social Login Redirect URL</h1>
      * 이하는 웹 소셜 로그인 인증 페이지로의 Redirect URL을 반환합니다.
      */
