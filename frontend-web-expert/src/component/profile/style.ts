@@ -65,6 +65,7 @@ export const NameBox = styled.div`
   &:hover {
     color: ${theme.colors.indigo[600]};
     transition: color ease 0.2s;
+    cursor: pointer;
   }
   &.open {
     color: ${theme.colors.indigo[600]};
@@ -93,7 +94,7 @@ export const ProfileMenu = styled.div`
     top: 6rem;
     right: 3rem;
     width: 8rem;
-    padding: 0.6rem;
+    padding: 0.8rem;
     border-radius: 0.6rem;
     background-color: white;
     border: 1px solid ${theme.colors.gray[200]};
@@ -121,8 +122,7 @@ export const ProfileMenuItem = styled(Link)`
     color: black;
     border-radius: 0.2rem;
     padding: 0.5rem;
-    margin: 0.1rem 0;
-    line-height: 1;
+    line-height: 1rem;
   }
   &:hover {
     background-color: ${theme.colors.gray[200]};
@@ -139,8 +139,8 @@ export const ProfileMenuItem = styled(Link)`
 export const Bar = styled.hr`
   border: 0;
   height: 1px;
-  background: ${theme.colors.gray[300]};
-  margin: 0.5rem 0;
+  background: #e9e9ee;
+  margin: 0.8rem 0;
 `;
 
 export const Logout = styled.button`
@@ -152,7 +152,7 @@ export const Logout = styled.button`
     color: white;
     font-size: 0.9rem;
     font-weight: 500;
-    margin: 0.1rem 0.4rem 0;
+    margin: 0 0.8rem;
   }
   &:hover {
     background-color: ${theme.colors.mojo[700]};

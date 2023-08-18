@@ -27,7 +27,7 @@ const swing = keyframes`
 export const Outer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 0 1rem;
+  padding: 0 2rem;
 `;
 
 export const SwingIconButton = styled(IconButton)`

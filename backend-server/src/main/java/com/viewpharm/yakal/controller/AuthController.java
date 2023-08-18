@@ -12,7 +12,10 @@ import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -69,9 +73,9 @@ public class AuthController {
      * 이하는 상단의 Mobile 로그인 API와 같은 기능을 가지지만 리프레시 토큰을 json body가 아닌 쿠키에 넣어서 보내줍니다.
      * XSS와 CSRF 공격에 취약한 웹 서비스에서 보안을 강화하기 위한 API입니다.
      */
-    @GetMapping("/kakao")
+    @GetMapping("/kakao/callback")
     @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public ResponseEntity<ResponseDto<?>> loginUsingKakaoForWeb(@RequestParam("code") final String code) {
+    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, HttpServletResponse response) throws Exception{
         final JwtTokenDto jwtTokenDto = authService.login(code, ELoginProvider.KAKAO, ERole.ROLE_WEB);
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
@@ -80,12 +84,25 @@ public class AuthController {
                 .sameSite("None")
                 .build();
 
+        final Cookie cookie_two = new Cookie("accessToken", jwtTokenDto.getAccessToken());
+        cookie_two.setMaxAge(1000);
+
         final Map<String, String> data = new HashMap<>(1);
         data.put("accessToken", jwtTokenDto.getAccessToken());
 
-        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
-
-        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
+        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
+        response.addCookie(cookie_two);
+        response.sendRedirect("http://localhost:5173");
+//        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
+//
+//        URI redirectUri = new URI("http://localhost:5173/auth/kakao/callback");
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        httpHeaders.setLocation(redirectUri);
+//        httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
+//
+//
+//
+//        return ResponseEntity.status(HttpStatus.SEE_OTHER).headers(httpHeaders).body(responseBody);
     }
 
     /**

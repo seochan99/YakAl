@@ -1,4 +1,4 @@
-import { Detail, TopRight, Outer, Center } from "@/layout/main/style";
+import { Detail, TopRight, Outer, MainSection } from "@/layout/main/style";
 import { Outlet, useNavigation } from "react-router-dom";
 
 import Footer from "@/layout/footer";
@@ -7,9 +7,14 @@ import Profile from "@/component/profile";
 import IconBox from "@/component/icon-box";
 import Sidebar from "../sidebar";
 import { MAIN_DASHBOARD_ROUTE } from "@/router/router";
+import { useEffect } from "react";
 
 export default function Main() {
   const navigation = useNavigation();
+
+  useEffect(() => {
+    console.log(document.cookie);
+  }, []);
 
   return (
     <Outer>
@@ -23,12 +28,12 @@ export default function Main() {
           />
         </TopRight>
       </Header>
-      <Center>
+      <MainSection>
         <Sidebar />
         <Detail className={navigation.state === "loading" ? "loading" : ""}>
           <Outlet />
         </Detail>
-      </Center>
+      </MainSection>
       <Footer />
     </Outer>
   );

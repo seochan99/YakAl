@@ -125,8 +125,9 @@ public class OAuth2Util {
         final String responseJsonBody = webClient.post()
                 .uri(KAKAO_USERINFO_URL)
                 .retrieve()
-                .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
-                        clientResponse -> clientResponse.bodyToMono(String.class).flatMap(error -> null))
+
+//                .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
+//                        clientResponse -> Mono.just(new CommonException()))
                 .bodyToMono(String.class)
                 .flux()
                 .toStream()

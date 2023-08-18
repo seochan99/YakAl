@@ -54,18 +54,19 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String authorizationAccessToken, final ELoginProvider loginProvider, final ERole role) throws CommonException {
+    public JwtTokenDto login(final String authorizationCode, final ELoginProvider loginProvider, final ERole role) throws CommonException {
+        String accessToken = getAccessToken(authorizationCode, loginProvider);
         String socialId = null;
 
         switch (loginProvider) {
             case KAKAO -> {
-                socialId = oAuth2Util.getKakaoUserInformation(authorizationAccessToken);
+                socialId = oAuth2Util.getKakaoUserInformation(accessToken);
             }
             case GOOGLE -> {
-                socialId = oAuth2Util.getGoogleUserInformation(authorizationAccessToken);
+                socialId = oAuth2Util.getGoogleUserInformation(accessToken);
             }
             case APPLE -> {
-                socialId = oAuth2Util.getAppleUserInformation(authorizationAccessToken);
+                socialId = oAuth2Util.getAppleUserInformation(accessToken);
             }
             default -> {
                 assert (false): "Invalid Type Error";
@@ -111,7 +112,6 @@ public class AuthService {
      * 2023-08-15
      * Github: HyungJoonSon
      */
-    @Deprecated
     public String getAccessToken(final String authorizationCode, final ELoginProvider provider) {
         String authorizationAccessToken = null;
 
