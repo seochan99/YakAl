@@ -34,7 +34,7 @@ public class JwtProvider implements InitializingBean {
     private static final Long MOBILE_REFRESH_EXPIRED_MS = 60 * 24 * 60 * 60 * 1000L; // 60 Days
 
     private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;        // 1 Hours
-    private static final Long WEB_REFRESH_EXPIRED_MS = 24 * 60 * 60 * 1000L; // 24 Hours
+    private static final Long WEB_REFRESH_EXPIRED_MS = 7 * 24 * 60 * 60 * 1000L; // 7 Days
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
@@ -49,6 +49,10 @@ public class JwtProvider implements InitializingBean {
     public void afterPropertiesSet() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         this.key = Keys.hmacShaKeyFor(keyBytes);
+    }
+
+    public int getWebRefreshTokenExpirationSecond() {
+        return (int) (WEB_REFRESH_EXPIRED_MS / 1000);
     }
 
     public String refineToken(final HttpServletRequest request) throws CommonException {
@@ -81,33 +85,13 @@ public class JwtProvider implements InitializingBean {
         return new JwtTokenDto(accessToken, refreshToken);
     }
 
-    public JwtTokenDto reissueForWeb(final HttpServletRequest request) throws CommonException {
-        final String originalRefreshToken = refineToken(request);
-        final Claims claims = validateToken(originalRefreshToken);
+    public JwtTokenDto reissue(final String refreshToken) throws CommonException {
+        final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
         final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
 
-        if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, originalRefreshToken)) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER);
-        }
-
-        return createTotalToken(id, role, EPlatform.MOBILE);
-    }
-
-    public JwtTokenDto reissueForWeb(final String refreshToken) throws CommonException {
-        if (!StringUtils.hasText(refreshToken) || !refreshToken.startsWith(BEARER_PREFIX)) {
-            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
-        }
-
-        final String orgRefreshToken = refreshToken.substring(BEARER_PREFIX.length());
-
-        final Claims claims = validateToken(orgRefreshToken);
-
-        final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
-        final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
-
-        if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, orgRefreshToken)) {
+        if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, refreshToken)) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 

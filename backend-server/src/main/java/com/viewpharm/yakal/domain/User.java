@@ -56,9 +56,8 @@ public class User {
     private String refreshToken;
 
     @Builder
-    public User(final ERole role, final String name) {
+    public User(final ERole role) {
         this.role = role;
-        this.name = name;
         this.createdDate = LocalDate.now();
     }
 }

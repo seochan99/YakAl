@@ -10,15 +10,16 @@ import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.utils.OAuth2Util;
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 @Slf4j
 @Service
@@ -54,8 +55,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String authorizationCode, final ELoginProvider loginProvider, final ERole role) throws CommonException {
-        String accessToken = getAccessToken(authorizationCode, loginProvider);
+    public JwtTokenDto login(final String accessToken, final ELoginProvider loginProvider, final ERole role) throws CommonException {
         String socialId = null;
 
         switch (loginProvider) {
@@ -79,13 +79,12 @@ public class AuthService {
 
         final String finalSocialId = socialId;
 
-        final Random random = new Random();
-        final String defaultName = "user#" + String.format("%06d", random.nextInt(1000000));
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role, defaultName)));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role)));
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
+        user.setName("user#" + String.format("%06d", user.getId()));
 
         return jwtTokenDto;
     }
@@ -98,39 +97,33 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto reissueForWeb(final HttpServletRequest request) {
-        return jwtProvider.reissueForWeb(request);
+    public JwtTokenDto reissue(final String refreshToken) {
+        return jwtProvider.reissue(refreshToken);
     }
 
-    @Transactional
-    public JwtTokenDto reissueForWeb(final String refreshToken) {
-        return jwtProvider.reissueForWeb(refreshToken);
-    }
+    public void sendRedirectWithTokenCookieAdded(
+            final JwtTokenDto jwtTokenDto,
+            final HttpServletResponse response,
+            final ELoginProvider loginProvider
+    ) throws IOException {
+        final String FRONTEND_HOST = "http://localhost:5173"; // Front Server Host -> 배포 시 변경
 
-    /**
-     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
-     * 2023-08-15
-     * Github: HyungJoonSon
-     */
-    public String getAccessToken(final String authorizationCode, final ELoginProvider provider) {
-        String authorizationAccessToken = null;
+        final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.getRefreshToken());
+        refreshTokenSecureCookie.setPath("/");
+        refreshTokenSecureCookie.setHttpOnly(true);
+        refreshTokenSecureCookie.setSecure(true);
+        refreshTokenSecureCookie.setMaxAge(jwtProvider.getWebRefreshTokenExpirationSecond());
 
-        switch (provider) {
-            case KAKAO -> {
-                authorizationAccessToken = oAuth2Util.getKakaoAccessToken(authorizationCode);
-            }
-            case GOOGLE -> {
-                authorizationAccessToken = oAuth2Util.getGoogleAccessToken(authorizationCode);
-            }
-            case APPLE -> {
-                // 애플의 경우 authorizationCode 그대로 accessToken으로 사용
-                authorizationAccessToken = authorizationCode;
-            }
-            default -> {
-                assert (false): "Invalid Type Error";
-            }
-        }
+        final Cookie accessTokenCookie = new Cookie("accessToken", jwtTokenDto.getAccessToken());
+        accessTokenCookie.setPath("/");
 
-        return authorizationAccessToken;
+        final Cookie sameSiteNoneCookie = new Cookie("SameSite", "None");
+        sameSiteNoneCookie.setPath("/");
+
+        response.addCookie(refreshTokenSecureCookie);
+        response.addCookie(accessTokenCookie);
+        response.addCookie(sameSiteNoneCookie);
+
+        response.sendRedirect(FRONTEND_HOST + "/auth/" + loginProvider.toString().toLowerCase());
     }
 }
