@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     padding: 0;
     position: relative;
-    font-family: "SUIT"; 
+    font-family: SUIT, Pretendard; 
   }
 
   ::-webkit-scrollber {
@@ -32,6 +32,14 @@ export const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: "SUIT";
-    src: url("./src/asset/SUIT-Variable.ttf") format("truetype");
+    src: url("/src/asset/SUIT-Variable.ttf") format("truetype");
+  }
+
+  @font-face {
+    font-family: "Pretendard";
+    font-weight: 45 920;
+    font-style: normal;
+    font-display: swap;
+    src: url('/src/asset/PretendardVariable.woff2') format('woff2-variations');
   }
 `;

@@ -7,7 +7,7 @@ export const Outer = styled.div`
   min-height: 100dvh;
 `;
 
-export const Center = styled.main`
+export const MainSection = styled.div`
   display: flex;
   flex-direction: row;
   height: 100%;
@@ -23,7 +23,7 @@ export const TopRight = styled.div`
   padding: 0 2rem;
 `;
 
-export const Detail = styled.section`
+export const Detail = styled.div`
   & {
     flex: 1;
     width: 100%;

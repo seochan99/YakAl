@@ -2,7 +2,7 @@ import { theme } from "@/style/theme";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
-export const Outer = styled.aside`
+export const Outer = styled.div`
   & {
     position: relative;
     width: 20rem;
