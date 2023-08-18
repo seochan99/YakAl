@@ -83,9 +83,8 @@ public class MobileUser extends User {
 
     public MobileUser(final String socialId,
                       final ELoginProvider loginProvider,
-                      final ERole role,
-                      final String name) {
-        super(role, name);
+                      final ERole role) {
+        super(role);
         this.socialId = socialId;
         this.loginProvider = loginProvider;
         this.isLogin = true;

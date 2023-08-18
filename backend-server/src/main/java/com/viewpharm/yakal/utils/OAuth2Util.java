@@ -292,13 +292,6 @@ public class OAuth2Util {
         private List<JWTSetKeys> keys;
     }
 
-
-    /**
-     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
-     * 2023-08-15
-     * Github: HyungJoonSon
-     */
-    @Deprecated
     public String getKakaoAccessToken(final String authorizationCode) {
         final RestTemplate restTemplate = new RestTemplate();
 
@@ -323,7 +316,6 @@ public class OAuth2Util {
         return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
     }
 
-    @Deprecated
     public String getGoogleAccessToken(final String authorizationCode) {
         final RestTemplate restTemplate = new RestTemplate();
 

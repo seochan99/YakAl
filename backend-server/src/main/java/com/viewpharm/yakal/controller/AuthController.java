@@ -3,29 +3,24 @@ package com.viewpharm.yakal.controller;
 import com.viewpharm.yakal.annotation.DisableSwaggerSecurity;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
+import com.viewpharm.yakal.utils.OAuth2Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,15 +32,13 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtProvider jwtProvider;
+    private final OAuth2Util oAuth2Util;
 
     /**
-     * <h1>Mobile Login API</h1>
-     * Android, iOS 모바일 어플리케이션에서 사용하는 로그인 API입니다.
-     * 프론트엔드에서 각자 인증 서버로부터 인가 코드를 받고 이를 본 API에 넘겨주면 본 서비스를 이용하는데 필요한 JWT를 반환합니다.
-     * JOSN Body에 액세스 토큰과 리프레시 토큰이 포함되어 있습니다.
+     * Mobile Login API
      */
     @PostMapping("/kakao")
-    @Operation(summary = "Kakao 로그인", description = "Kakao 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Kakao 로그인", description = "Kakao 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingKAKAO(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_MOBILE);
@@ -53,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("/google")
-    @Operation(summary = "Google 로그인", description = "Google 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Google 로그인", description = "Google 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingGOOGLE(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_MOBILE);
@@ -61,7 +54,7 @@ public class AuthController {
     }
 
     @PostMapping("/apple")
-    @Operation(summary = "Apple 로그인", description = "Apple 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Apple 로그인", description = "Apple 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<?> loginUsingApple(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE, ERole.ROLE_MOBILE);
@@ -69,66 +62,62 @@ public class AuthController {
     }
 
     /**
-     * <h1>Web Login API</h1>
-     * 이하는 상단의 Mobile 로그인 API와 같은 기능을 가지지만 리프레시 토큰을 json body가 아닌 쿠키에 넣어서 보내줍니다.
-     * XSS와 CSRF 공격에 취약한 웹 서비스에서 보안을 강화하기 위한 API입니다.
+     * Web Login API
      */
     @GetMapping("/kakao/callback")
-    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, HttpServletResponse response) throws Exception{
-        final JwtTokenDto jwtTokenDto = authService.login(code, ELoginProvider.KAKAO, ERole.ROLE_WEB);
+    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+        final String accessToken = oAuth2Util.getKakaoAccessToken(code);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
 
-        final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("None")
-                .build();
-
-        final Cookie cookie_two = new Cookie("accessToken", jwtTokenDto.getAccessToken());
-        cookie_two.setMaxAge(1000);
-
-        final Map<String, String> data = new HashMap<>(1);
-        data.put("accessToken", jwtTokenDto.getAccessToken());
-
-        response.setHeader(HttpHeaders.SET_COOKIE, cookie.toString());
-        response.addCookie(cookie_two);
-        response.sendRedirect("http://localhost:5173");
-//        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
-//
-//        URI redirectUri = new URI("http://localhost:5173/auth/kakao/callback");
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.setLocation(redirectUri);
-//        httpHeaders.add(HttpHeaders.SET_COOKIE, cookie.toString());
-//
-//
-//
-//        return ResponseEntity.status(HttpStatus.SEE_OTHER).headers(httpHeaders).body(responseBody);
+        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.KAKAO);
     }
 
+    @GetMapping("/google/callback")
+    @Operation(summary = "Google 웹 로그인", description = "Google 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+        final String accessToken = oAuth2Util.getGoogleAccessToken(code);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
+
+        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
+    }
+
+//    아직 검증되지 않았으므로 주석처리
+//    @GetMapping("/apple/callback")
+//    @Operation(summary = "Apple 웹 로그인", description = "Apple 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+//    public void loginUsingAppleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+//        final JwtTokenDto jwtTokenDto = authService.login(code, ELoginProvider.KAKAO, ERole.ROLE_WEB);
+//
+//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.APPLE);
+//    }
+
     /**
-     * <h1>Web Social Login Redirect URL</h1>
-     * 이하는 웹 소셜 로그인 인증 페이지로의 Redirect URL을 반환합니다.
+     * Web Social Login Redirect URL
      */
     @GetMapping("/kakao")
     @DisableSwaggerSecurity
-    @Operation(summary = "Kakao 인증 리다이렉트 URL 가져오기", description = "Kakao 인증 리다이렉트 URL를 가져옵니다.")
+    @Operation(summary = "Kakao 인증 리다이렉트 URL 가져오기", description = "Kakao 인증 리다이렉트 URL을 가져옵니다.")
     public ResponseDto<Map<String, String>> getKakaoRedirectUrl() {
         return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.KAKAO));
     }
 
     @GetMapping("/google")
     @DisableSwaggerSecurity
-    @Operation(summary = "Google 인증 리다이렉트 URL 가져오기", description = "Google 인증 리다이렉트 URL를 가져옵니다.")
+    @Operation(summary = "Google 인증 리다이렉트 URL 가져오기", description = "Google 인증 리다이렉트 URL을 가져옵니다.")
     public ResponseDto<Map<String, String>> getGoogleRedirectUrl() {
         return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.GOOGLE));
     }
 
     @GetMapping("/apple")
-    @Operation(summary = "Apple 인증 리다이렉트 URL 가져오기", description = "Apple 인증 리다이렉트 URL를 가져옵니다.")
+    @DisableSwaggerSecurity
+    @Operation(summary = "Apple 인증 리다이렉트 URL 가져오기", description = "Apple 인증 리다이렉트 URL을 가져옵니다.")
     public ResponseDto<Map<String, String>> getAppleRedirectUrl() {
         return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.APPLE));
     }
 
+    /**
+     * Logout
+     */
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
     public ResponseDto<Object> logout(@UserId Long id) {
@@ -136,17 +125,24 @@ public class AuthController {
         return ResponseDto.ok(null);
     }
 
+    /**
+     * Reissue Access Token
+     */
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다.")
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
-        final JwtTokenDto jwtTokenDto = authService.reissueForWeb(request);
+        final String refreshToken = jwtProvider.refineToken(request);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
         return ResponseDto.created(jwtTokenDto);
     }
 
+    /**
+     * Reissue Access Token Using Secure Cookie
+     */
     @PostMapping("/reissue/secure")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
-    public ResponseEntity<ResponseDto<?>> reissueForWeb(@CookieValue("refreshToken") final String refreshToken) {
-        final JwtTokenDto jwtTokenDto = authService.reissueForWeb(refreshToken);
+    public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken) {
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
                 .httpOnly(true)
