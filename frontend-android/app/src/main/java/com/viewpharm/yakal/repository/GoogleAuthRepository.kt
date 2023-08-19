@@ -1,13 +1,13 @@
 package com.viewpharm.yakal.repository
 
 import com.viewpharm.yakal.common.GoogleTokenResponse
-import com.viewpharm.yakal.service.RetrofitManager
+import com.viewpharm.yakal.service.OauthRetrofitManager
 import retrofit2.Call
 import retrofit2.Response
 
 class GoogleAuthRepository: OAuth2Repository {
     override fun getOauth2Token(code: String, callBack: OAuth2Repository.CallBack) {
-        RetrofitManager.googleAuthService.getAccessToken(code = code)
+        OauthRetrofitManager.googleAuthService.getAccessToken(code = code)
             .enqueue(object : retrofit2.Callback<GoogleTokenResponse> {
                 override fun onResponse(
                     call: Call<GoogleTokenResponse>,

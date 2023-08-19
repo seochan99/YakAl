@@ -18,7 +18,17 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, SignInActivity::class.java)
+            val intent = Intent(
+                this,
+                getSharedPreferences("token", MODE_PRIVATE).let {
+                    if (it.getString("accessToken", null) == null || it.getString("refreshToken", null) == null) {
+                        SignInActivity::class.java
+                    } else {
+                        Timber.d("AccessToken: ${it.getString("accessToken", null)}" +
+                                "\nRefreshToken: ${it.getString("refreshToken", null)}")
+                        MainActivity::class.java
+                    }
+                })
             startActivity(intent)
         }, 1000)
     }

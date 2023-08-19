@@ -1,16 +1,12 @@
 package com.viewpharm.yakal.service
 
 import com.google.gson.GsonBuilder
+import com.viewpharm.yakal.BuildConfig
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import java.util.concurrent.TimeUnit
 
-object RetrofitManager {
-
+object YakalRetrofitManager {
     private val okHttpClient = OkHttpClient.Builder()
-        .addInterceptor(HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
-        })
         .connectTimeout(10, TimeUnit.SECONDS)
         .readTimeout(10, TimeUnit.SECONDS)
         .writeTimeout(10, TimeUnit.SECONDS)
@@ -21,10 +17,10 @@ object RetrofitManager {
         .create()
 
     private val retrofit = retrofit2.Retrofit.Builder()
-        .baseUrl("https://oauth2.googleapis.com/")
+        .baseUrl(BuildConfig.YAKAL_API_SERVER_URL)
         .client(okHttpClient)
         .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson))
         .build()
 
-    val googleAuthService : GoogleAuthService by lazy { retrofit.create(GoogleAuthService::class.java) }
+    val yakalService : YakalService by lazy { retrofit.create(YakalService::class.java) }
 }
