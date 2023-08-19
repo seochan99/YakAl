@@ -16,8 +16,10 @@ struct Medication: Identifiable {
 
 //MARK: - MedicationSwiftUIView : 시간대별 약물 데이터
 struct MedicationSwiftUIView: View {
+    // 확장 여부
     @State private var expandedIndex: Int? = nil
-
+    
+    // 약물
     let medications: [Medication] = [
         Medication(name: "아침",medication: [
             Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
@@ -38,7 +40,7 @@ struct MedicationSwiftUIView: View {
             Medicine(id: 9, image: "image_덱시로펜정", name: "약물J", ingredients: "성분 J", dangerStat: 2, isTaken: false)
         ]),
     ]
-//
+    
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
@@ -63,7 +65,6 @@ struct MedicationSwiftUIView: View {
 struct MedicationRow: View {
     @State var medication: Medication // Change let to var
 
-
     let isExpanded: Bool
     let onTap: () -> Void
 
@@ -87,6 +88,7 @@ struct MedicationRow: View {
                      )
                      .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
                  Spacer()
+                 // 만약 모든 약물 복용이 체크된다면
                  if medication.isAllCompleted {
 
                      Text("모두 완료")
@@ -94,7 +96,7 @@ struct MedicationRow: View {
                              Font.custom("SUIT", size: 14)
                                  .weight(.semibold)
                          )
-                         .foregroundColor(Color(red: 0.78, green: 0.78, blue: 0.81))
+                         .foregroundColor(Color(red: 0.15, green: 0.4, blue: 0.96))
                      Button(action: {
                          medication.completedCount = 0 // Reset completed count
                      }) {
@@ -103,7 +105,7 @@ struct MedicationRow: View {
                              .frame(width: 36, height: 36)
                      }
                  } else {
-                     
+                     // 그외에 0개 체크시
                      if medication.completedCount == 0{
                          Text("모두 완료")
                              .font(
@@ -113,13 +115,15 @@ struct MedicationRow: View {
                              .foregroundColor(Color(red: 0.78, green: 0.78, blue: 0.81))
                          
                      }
+                     // 그외에 1개 체크시
                      else{
                          Text("\(medication.completedCount)개 완료")
                              .font(
                                  Font.custom("SUIT", size: 14)
                                      .weight(.semibold)
                              )
-                             .foregroundColor(Color(red: 0.78, green: 0.78, blue: 0.81))
+                             .foregroundColor(Color(red: 0.15, green: 0.4, blue: 0.96))
+
                      }
                      
 
@@ -151,10 +155,14 @@ struct MedicationRow: View {
                    .frame(height: 2)
                  ForEach(medication.medication.indices, id: \.self) { index in
                      MedicationItemRow(
+                        // 약물 정보
                          medicine: medication.medication[index], // Use the medicine from the Medication model
+                         // 모두 완료여부
+                         isAllCompleted : medication.isAllCompleted,
+                         // 완료 여부
                          isCompleted: Binding(
                              get: {
-                                 index < medication.completedCount // Changed to index < completedCount
+                                 index < medication.completedCount
                              },
                              set: { newValue in
                                  if newValue {
@@ -187,7 +195,8 @@ struct MedicationRow: View {
 
 //MARK: - 약 개별 Row
 struct MedicationItemRow: View {
-    let medicine: Medicine
+    @State var medicine: Medicine
+    let isAllCompleted: Bool // Add this parameter
     @Binding var isCompleted: Bool
 
     var body: some View {
@@ -229,8 +238,10 @@ struct MedicationItemRow: View {
             }
             Button(action: {
                 isCompleted.toggle()
+                medicine.isTaken = isCompleted
+
             }) {
-                Image(isCompleted ? "Check_disable_ing" : "Check_disable")
+                Image(isAllCompleted ? "Check_disable_end" : (isCompleted ? "Check_disable_ing" : "Check_disable"))
                     .resizable()
                     .frame(width: 24, height: 24)
             }

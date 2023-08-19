@@ -16,7 +16,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     @IBOutlet weak var floatingStackView: UIStackView!
     
-    
     @IBOutlet weak var emptyView: UIView!
     
     @IBOutlet weak var addModalView: UIView!
@@ -30,7 +29,9 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     @IBOutlet weak var addMedicineButton: UIButton!
     
-    // MARK: - Properties -
+    @IBOutlet weak var HomeCollectionView: UICollectionView!
+    
+    // MARK: - Properties
     let progressCircle = CAShapeLayer()
     let progressCircle2 = CAShapeLayer()
     let progressLabel = UILabel()
@@ -59,15 +60,11 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         return view
     }()
     
-//    var myTodoItems: [TodoItem] = []
-    
-    
     
     // 몇개
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return viewModel.numOfTodoList
     }
-    
     
     // 셀은 어떻게 표현할까요?
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -325,23 +322,7 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
 //MARK: - ViewModel
 class TodoViewModel{
     let TodoItemList: [TodoItem] = [
-//        TodoItem(mealTime: .breakfast, medication: [
-//            Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "성분 A", dangerImage: "Green-Light", isTaken: false),
-//            Medicine(id: 2, image: "image_덱시로펜정", name: "동화디트로판정", ingredients: "성분 B", dangerImage: "Yellow-Light", isTaken: false)
-//        ]),
-//        TodoItem(mealTime: .lunch, medication: [
-//            Medicine(id: 3, image: "image_덱시로펜정", name: "약물C", ingredients: "성분 C", dangerImage: "Green-Light", isTaken: false),
-//            Medicine(id: 4, image: "image_덱시로펜정", name: "약물D", ingredients: "성분 D", dangerImage: "Green-Light", isTaken: false)
-//        ]),
-//        TodoItem(mealTime: .dinner, medication: [
-//            Medicine(id: 5, image: "image_덱시로펜정", name: "약물E", ingredients: "성분 E", dangerImage: "Red-Light", isTaken: false),
-//            Medicine(id: 6, image: "image_덱시로펜정", name: "약물F", ingredients: "성분 F", dangerImage: "Red-Light", isTaken: false)
-//        ]),
-//        TodoItem(mealTime: .etc, medication: [
-//            Medicine(id: 7, image: "image_덱시로펜정", name: "약물G", ingredients: "성분 G", dangerImage: "Yellow-Light", isTaken: false),
-//            Medicine(id: 8, image: "image_덱시로펜정", name: "약물H", ingredients: "성분 H", dangerImage: "Yellow-Light", isTaken: false),
-//            Medicine(id: 9, image: "image_덱시로펜정", name: "약물J", ingredients: "성분 J", dangerImage: "Yellow-Light", isTaken: false)
-//        ])
+
     ]
 
     func numberOfMedicines(for todoItem: TodoItem) -> Int {
