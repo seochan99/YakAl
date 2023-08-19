@@ -1,52 +1,21 @@
 import SwiftUI
+import Combine
 
-struct Medication: Identifiable {
-    let id = UUID()
-    let name: String
-    var completedCount: Int = 0 // 복용한 약
-    // 모두 먹었는지
-    var isAllCompleted: Bool {
-        return completedCount == count
-    }
-    let medication: [Medicine]
-    var count: Int {
-        return medication.count
-    }
-}
 
 //MARK: - MedicationSwiftUIView : 시간대별 약물 데이터
 struct MedicationSwiftUIView: View {
     // 확장 여부
     @State private var expandedIndex: Int? = nil
-    
-    // 약물
-    let medications: [Medication] = [
-        Medication(name: "아침",medication: [
-            Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
-            Medicine(id: 2, image: "image_덱시로펜정", name: "동화디트로판정", ingredients: "소화성 궤양용제", dangerStat: 1, isTaken: false),
-            Medicine(id: 3, image: "image_덱시로펜정", name: "동광레바미피드정", ingredients: "소화성 궤양용제", dangerStat: 1, isTaken: false)
-        ]),
-        Medication(name: "점심",medication: [
-            Medicine(id: 3, image: "image_덱시로펜정", name: "약물C", ingredients: "성분 C", dangerStat: 2, isTaken: false),
-            Medicine(id: 4, image: "image_덱시로펜정", name: "약물D", ingredients: "성분 D", dangerStat: 1, isTaken: false)
-        ]),
-        Medication(name: "저녁", medication: [
-            Medicine(id: 5, image: "image_덱시로펜정", name: "약물E", ingredients: "성분 E", dangerStat: 2, isTaken: false),
-            Medicine(id: 6, image: "image_덱시로펜정", name: "약물F", ingredients: "성분 F", dangerStat: 1, isTaken: false)
-        ]),
-        Medication(name: "기타",medication: [
-            Medicine(id: 7, image: "image_덱시로펜정", name: "약물G", ingredients: "성분 G", dangerStat: 0, isTaken: false),
-            Medicine(id: 8, image: "image_덱시로펜정", name: "약물H", ingredients: "성분 H", dangerStat: 1, isTaken: false),
-            Medicine(id: 9, image: "image_덱시로펜정", name: "약물J", ingredients: "성분 J", dangerStat: 2, isTaken: false)
-        ]),
-    ]
+    // 데이터 받아오기
+    @EnvironmentObject private var medicationData: MedicationData
+
     
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(medications.indices, id: \.self) { index in
+                ForEach(medicationData.medications.indices, id: \.self) { index in
                     MedicationRow(
-                        medication: medications[index],
+                        medication: medicationData.medications[index],
                         isExpanded: expandedIndex == index,
                         onTap: {
                             withAnimation {
@@ -254,7 +223,8 @@ struct MedicationItemRow: View {
 @available(iOS 15.0, *)
 struct MedicationSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
-        MedicationSwiftUIView()
+        AnyView(MedicationSwiftUIView()
+            .environmentObject(MedicationData()))
             .previewLayout(.sizeThatFits)
     }
 }

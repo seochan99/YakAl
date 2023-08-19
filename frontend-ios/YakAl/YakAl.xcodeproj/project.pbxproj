@@ -13,6 +13,7 @@
 		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		981433462A9104DE00017600 /* UIHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433452A9104DE00017600 /* UIHomeVC.swift */; };
+		9814334A2A91597200017600 /* MedicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433492A91597200017600 /* MedicationModel.swift */; };
 		98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98349A882A7C043700071C5D /* CircularProgressBarView.swift */; };
 		985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A28BE2A76B99E00B9943D /* TabBarVC.swift */; };
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
@@ -57,6 +58,7 @@
 		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
 		981433452A9104DE00017600 /* UIHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHomeVC.swift; sourceTree = "<group>"; };
+		981433492A91597200017600 /* MedicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModel.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		98349A882A7C043700071C5D /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		985A28BE2A76B99E00B9943D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
@@ -340,6 +342,7 @@
 				98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */,
 				98926FE52A778537001AB165 /* TodoModel.swift */,
 				98019A0D2A85699B00D6282F /* MedicineModel.swift */,
+				981433492A91597200017600 /* MedicationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -509,6 +512,7 @@
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
+				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
