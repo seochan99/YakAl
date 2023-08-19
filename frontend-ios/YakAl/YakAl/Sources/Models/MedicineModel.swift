@@ -5,6 +5,6 @@ struct Medicine {
     let image: String
     let name: String
     let ingredients: String
-    let dangerImage: String
+    let dangerStat : Int
     var isTaken: Bool
 }
