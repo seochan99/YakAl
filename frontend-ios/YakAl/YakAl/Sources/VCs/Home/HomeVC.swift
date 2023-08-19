@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
     
@@ -119,6 +120,26 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         //MARK: - viewDidLoad
         override func viewDidLoad() {
             super.viewDidLoad()
+            
+            // Create a SwiftUI view
+               let swiftUIView = MedicationSwiftUIView()
+
+               // Create a UIHostingController with the SwiftUI view
+               let hostingController = UIHostingController(rootView: swiftUIView)
+            // Add the hosting controller's view as a subview
+                addChild(hostingController)
+                view.addSubview(hostingController.view)
+                hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+
+                // Set the hosting controller's constraints
+                NSLayoutConstraint.activate([
+                    hostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+                    hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                    hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                    hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+                ])
+
+                hostingController.didMove(toParent: self)
             setupProgressCircle()
             updateEmptyViewVisibility()
             

@@ -12,6 +12,7 @@
 		98019A122A862B6800D6282F /* TodoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A102A862B6800D6282F /* TodoCVC.swift */; };
 		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
+		981433462A9104DE00017600 /* UIHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433452A9104DE00017600 /* UIHomeVC.swift */; };
 		98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98349A882A7C043700071C5D /* CircularProgressBarView.swift */; };
 		985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A28BE2A76B99E00B9943D /* TabBarVC.swift */; };
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
@@ -55,6 +56,7 @@
 		98019A102A862B6800D6282F /* TodoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCVC.swift; sourceTree = "<group>"; };
 		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
+		981433452A9104DE00017600 /* UIHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHomeVC.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		98349A882A7C043700071C5D /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		985A28BE2A76B99E00B9943D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				98C12D782A5E6C8E00175EB8 /* HomeVC.swift */,
+				981433452A9104DE00017600 /* UIHomeVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
+				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
@@ -676,7 +680,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,7 +712,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
