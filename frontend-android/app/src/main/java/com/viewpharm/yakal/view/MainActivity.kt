@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity(), PillAdapter.OnOverlapItemCallBack {
         supportFragmentManager.beginTransaction().apply {
             replace(binding.mainFrameLayout.id, HomeMainFragment(this@MainActivity), FRAGMENT_TAG_HOME)
             commit()
+        }
+
+        Intent(this, SignUpActivity::class.java).let {
+            startActivity(it)
         }
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->

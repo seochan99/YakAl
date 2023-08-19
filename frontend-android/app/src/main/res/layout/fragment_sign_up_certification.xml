@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.SignUpCertificationFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="32dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" >
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="건너뛰기"
+                style="@style/default_font"
+                android:textSize="20sp"
+                android:textColor="#626272"
+
+                android:layout_marginEnd="5dp"
+                android:outlineProvider="none"
+                android:background="@drawable/btn_sign_up_skip"
+                android:layout_weight="2"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/skipButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="인증하기"
+                style="@style/default_font"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:outlineProvider="none"
+                android:background="@drawable/btn_sign_up_next_enable"
+
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>
