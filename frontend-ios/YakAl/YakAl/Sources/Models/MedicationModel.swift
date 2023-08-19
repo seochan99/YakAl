@@ -9,7 +9,7 @@ struct Medication: Identifiable {
     var isAllCompleted: Bool {
         return completedCount == count
     }
-    let medication: [Medicine]
+    var medication: [Medicine]
     var count: Int {
         return medication.count
     }

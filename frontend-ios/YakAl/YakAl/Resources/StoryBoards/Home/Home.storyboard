@@ -360,11 +360,11 @@
                                 </constraints>
                             </stackView>
                             <view contentMode="scaleToFill" id="1hb-Cx-irD" userLabel="EmptyView">
-                                <rect key="frame" x="0.0" y="299" width="393" height="450"/>
+                                <rect key="frame" x="0.0" y="299" width="393" height="461"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="TAO-3E-gaJ">
-                                        <rect key="frame" x="118.33333333333333" y="205" width="156.33333333333337" height="40"/>
+                                        <rect key="frame" x="118.33333333333333" y="210.66666666666669" width="156.33333333333337" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="아직 등록된 약이 없네요!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0fA-VZ-iXe">
                                                 <rect key="frame" x="0.0" y="0.0" width="156.33333333333334" height="20"/>
@@ -373,7 +373,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="여기를 눌러 보세요." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" enabled="NO" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D6l-hn-vFK">
-                                                <rect key="frame" x="16.333333333333321" y="20" width="123.66666666666669" height="20"/>
+                                                <rect key="frame" x="16.333333333333321" y="19.999999999999943" width="123.66666666666669" height="20"/>
                                                 <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
                                                 <color key="textColor" red="0.56470588239999997" green="0.56470588239999997" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -390,7 +390,7 @@
                                         </constraints>
                                     </stackView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="image-startarrow" translatesAutoresizingMaskIntoConstraints="NO" id="YEG-9U-YUo">
-                                        <rect key="frame" x="275.66666666666669" y="235" width="71" height="125"/>
+                                        <rect key="frame" x="275.66666666666669" y="240.66666666666663" width="71" height="125"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.91372549020000005" green="0.91372549020000005" blue="0.93333333330000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -426,6 +426,7 @@
                         <outlet property="emptyView" destination="1hb-Cx-irD" id="YGU-RD-mIw"/>
                         <outlet property="floatingStackView" destination="M3x-He-6Ys" id="ph3-jg-Phl"/>
                         <outlet property="normalMedicineButton" destination="m1p-nu-P1R" id="8dS-c2-7hl"/>
+                        <outlet property="todayMedicinCnt" destination="qjE-rQ-izk" id="pE7-mQ-tUk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ebv-TA-rTC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
