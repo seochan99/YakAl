@@ -5,12 +5,12 @@ import Login from "@/layout/login";
 import LoginMain from "@/page/login/login-main";
 import SignUpTerms from "@/page/login/signup-terms";
 
-import Patient from "@/page/main/patient";
+import PatientList from "@/page/main/patient-list";
 import Dashboard from "@/page/main/dashboard";
-import PatientInfo from "@/component/patient-info";
+import PatientInfo from "@/page/main/patient-info";
 
-import { loader as patientLoader } from "@/page/main/patient/loader";
-import { loader as patientInfoLoader } from "@/component/patient-info/loader";
+import { loader as patientLoader } from "@/page/main/patient-list/loader";
+import { loader as patientInfoLoader } from "@/page/main/patient-info/loader";
 import Registration from "@/page/main/registration";
 import Certification from "@/page/main/certification";
 import MyInfo from "@/page/main/my-info";
@@ -52,7 +52,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "patient",
-            element: <Patient />,
+            element: <PatientList />,
             loader: patientLoader,
           },
           {

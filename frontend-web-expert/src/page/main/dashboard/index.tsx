@@ -1,4 +1,14 @@
-import { EnrollBox, EnrollText, IconText, YakAlIcon, EnrollButton, DoctorIcon } from "./style";
+import {
+  EnrollBox,
+  EnrollText,
+  IconText,
+  YakAlIcon,
+  EnrollButton,
+  DoctorIcon,
+  CertTextBox,
+  SubEnrollText,
+  Blue,
+} from "./style";
 
 function Dashboard() {
   return (
@@ -6,20 +16,23 @@ function Dashboard() {
       <EnrollBox>
         <IconText>
           <YakAlIcon />
-          <EnrollText>약국이나 병원을 본 서비스에 등록합니다.</EnrollText>
+          <EnrollText>
+            약국이나 병원을 <Blue>약 알</Blue>에 등록합니다.
+          </EnrollText>
         </IconText>
-        <EnrollButton to="/registration">
-          <span>제휴 문의</span>
-        </EnrollButton>
+        <EnrollButton to="/registration">기관 등록</EnrollButton>
       </EnrollBox>
       <EnrollBox>
         <IconText>
           <DoctorIcon />
-          <EnrollText>서비스를 이용하려면 전문가 인증이 필요합니다.</EnrollText>
+          <CertTextBox>
+            <EnrollText>서비스를 이용하려면 전문가 인증이 필요합니다.</EnrollText>
+            <SubEnrollText>
+              <Blue>약 알</Blue>에 등록된 기관의 전문가만 인증이 가능합니다.
+            </SubEnrollText>
+          </CertTextBox>
         </IconText>
-        <EnrollButton to="/certification">
-          <span>인증하기</span>
-        </EnrollButton>
+        <EnrollButton to="/certification">인증하기</EnrollButton>
       </EnrollBox>
     </>
   );

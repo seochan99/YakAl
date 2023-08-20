@@ -5,28 +5,28 @@ import {
   PageLeftButton,
   PageRightButton,
   PagingButtonBox,
-  PatientList,
+  List,
   SearchButton,
   SearchInput,
-  SearchPatient,
+  OptionBar,
 } from "./style";
 import { useLoaderData } from "react-router-dom";
 import { TPatientLoaderReturn } from "./loader";
 
-function Patient() {
+function PatientList() {
   const { userList } = useLoaderData() as TPatientLoaderReturn;
 
   return (
     <Outer>
-      <SearchPatient>
+      <OptionBar>
         <SearchButton />
         <SearchInput type="text" placeholder="환자 검색" />
-      </SearchPatient>
-      <PatientList>
+      </OptionBar>
+      <List>
         {userList.map((user) => {
           return <PatientItem key={user.id} id={user.id} name={user.name} sex={user.sex} birthday={user.birthday} />;
         })}
-      </PatientList>
+      </List>
       <PagingButtonBox>
         <PageLeftButton />
         <PageButton>1</PageButton>
@@ -38,4 +38,4 @@ function Patient() {
   );
 }
 
-export default Patient;
+export default PatientList;

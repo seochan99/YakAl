@@ -17,7 +17,7 @@ import {
 import { TPatientInfoLoaderReturn } from "./loader";
 import { ESex } from "@/type/sex";
 import getAge from "@/util/get-age";
-import PatientInfoText from "../patient-info-text";
+import PatientInfoText from "../../../component/patient-info-text";
 
 function PatientInfo() {
   const { userInfo } = useLoaderData() as TPatientInfoLoaderReturn;
