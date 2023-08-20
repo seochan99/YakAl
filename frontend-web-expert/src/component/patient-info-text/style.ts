@@ -8,7 +8,7 @@ export const Outer = styled.div`
   height: 100%;
 `;
 
-export const SelectPatientText = styled.span`
+export const Text = styled.span`
   font-size: 2rem;
   font-weight: 700;
   color: #90909f;

@@ -5,12 +5,15 @@ import Login from "@/layout/login";
 import LoginMain from "@/page/login/login-main";
 import SignUpTerms from "@/page/login/signup-terms";
 
-import Facility from "@/page/main/facility";
 import Patient from "@/page/main/patient";
-import Cohort from "@/page/main/cohort";
 import Dashboard from "@/page/main/dashboard";
 import PatientInfo from "@/component/patient-info";
-import SelectPatient from "@/component/select-patient";
+
+import { loader as patientLoader } from "@/page/main/patient/loader";
+import { loader as patientInfoLoader } from "@/component/patient-info/loader";
+import Registration from "@/page/main/registration";
+import Certification from "@/page/main/certification";
+import MyInfo from "@/page/main/my-info";
 
 export const MAIN_DASHBOARD_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -44,26 +47,26 @@ export const router = createBrowserRouter([
             element: <Dashboard />,
           },
           {
-            path: "facility",
-            element: <Facility />,
+            path: "info",
+            element: <MyInfo />,
           },
           {
             path: "patient",
             element: <Patient />,
-            children: [
-              { index: true, element: <SelectPatient /> },
-              {
-                path: ":patientId",
-                element: <PatientInfo />,
-                loader: async ({ params }) => {
-                  return { patientId: params.patientId };
-                },
-              },
-            ],
+            loader: patientLoader,
           },
           {
-            path: "cohort",
-            element: <Cohort />,
+            path: "registration",
+            element: <Registration />,
+          },
+          {
+            path: "certification",
+            element: <Certification />,
+          },
+          {
+            path: "patient/:patientId",
+            element: <PatientInfo />,
+            loader: patientInfoLoader,
           },
         ],
       },
