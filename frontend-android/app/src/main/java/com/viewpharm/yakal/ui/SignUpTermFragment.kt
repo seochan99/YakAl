@@ -1,6 +1,10 @@
 package com.viewpharm.yakal.ui
 
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,12 +42,27 @@ class SignUpTermFragment() : Fragment() {
 
         onCheckButtonClickEvent()
         onDetailButtonClickEvent()
+        setTextView()
     }
 
     override fun onResume() {
         super.onResume()
         Timber.d("onResume")
         binding.nextButton.isEnabled = isEssentialAgree()
+    }
+
+    private fun setTextView() {
+        val titleText: String = "약관을 확인해주세요"
+        binding.termTitleTextView.text = titleText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    2,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
     }
 
     private fun onCheckButtonClickEvent() {

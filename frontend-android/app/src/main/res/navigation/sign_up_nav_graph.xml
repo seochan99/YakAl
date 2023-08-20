@@ -78,5 +78,7 @@
         android:id="@+id/signUpFinishFragment"
         android:name="com.viewpharm.yakal.ui.SignUpFinishFragment"
         android:label="fragment_sign_up_finish"
-        tools:layout="@layout/fragment_sign_up_finish" />
+        tools:layout="@layout/fragment_sign_up_finish" >
+
+    </fragment>
 </navigation>

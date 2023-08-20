@@ -1,21 +1,16 @@
 package com.viewpharm.yakal.view
 
 import android.animation.ValueAnimator
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
-import com.kakao.sdk.common.util.Utility
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.ActivitySignUpBinding
-import timber.log.Timber
+
 
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
@@ -60,6 +55,13 @@ class SignUpActivity : AppCompatActivity() {
                             startProgressBarAnimation(75)
                         }
                         R.id.signUpFinishFragment -> {
+                            binding.toolbar.animate()
+                                .alpha(0.0f)
+                                .setDuration(300)
+                                .withEndAction(Runnable {
+                                    binding.toolbar.visibility = View.INVISIBLE
+                                })
+                                .start()
                             startProgressBarAnimation(100)
                         }
                     }
@@ -85,5 +87,17 @@ class SignUpActivity : AppCompatActivity() {
             binding.signUpProgressBar.progress = animatedValue
         }
         animator.start()
+    }
+
+    override fun finish() {
+        binding.signUpFrameLayout.animate()
+            .alpha(0.0f)
+            .setDuration(50)
+            .start()
+        navController.popBackStack(
+            R.id.signUpTermFragment,
+            true
+        )
+        super.finish()
     }
 }

@@ -1,60 +1,104 @@
 package com.viewpharm.yakal.ui
 
+import android.graphics.Typeface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.text.Editable
+import android.text.InputFilter
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.TextWatcher
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
+import com.viewpharm.yakal.databinding.FragmentSignUpNicknameBinding
+import java.util.regex.Pattern
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpNicknameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpNicknameFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private var _binding: FragmentSignUpNicknameBinding?= null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up_nickname, container, false)
+        _binding =  FragmentSignUpNicknameBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpNicknameFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpNicknameFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setTextView()
+        setEditText()
+        onButtonClickEvent()
+    }
+
+    private fun setTextView() {
+        val titleText: String = "약알에서 사용할\n닉네임을 입력해주세요"
+        binding.titleTextView.text = titleText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    9,
+                    12,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+    }
+
+    private fun onButtonClickEvent() {
+        binding.nextButton.setOnClickListener {
+            val pattern: Pattern = Pattern.compile("^[가-힣]+$")
+            if (pattern.matcher(binding.nicknameEditText.text.toString()).matches()) {
+                Navigation.createNavigateOnClickListener(R.id.action_signUpNicknameFragment_to_signUpModeFragment)
+                    .onClick(it)
+            } else {
+                Toast.makeText(context, "초성, 중성 입력이 존재합니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.textClearButton.setOnClickListener {
+            binding.nicknameEditText.setText("")
+        }
+    }
+
+    private fun setEditText() {
+        val filterSpace = InputFilter { source, start, end, dest, dstart, dend ->
+            val ps: Pattern = Pattern.compile("^[ㄱ-ㅣ가-힣]+$")
+            if (ps.matcher(source).matches() || source == "") {
+                source
+            } else {
+                Toast.makeText(context, "한글만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
+                ""
+            }
+        }
+        binding.nicknameEditText.filters = arrayOf(filterSpace, InputFilter.LengthFilter(5))
+        binding.nicknameEditText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                binding.nextButton.isEnabled = binding.nicknameEditText.text.toString().isNotEmpty()
+                binding.textClearButton.visibility = if (binding.nicknameEditText.text.toString().isNotEmpty()){
+                    View.VISIBLE
+                } else{
+                    View.INVISIBLE
                 }
             }
+            override fun afterTextChanged(s: Editable) {}
+        })
     }
 }

@@ -1,60 +1,107 @@
 package com.viewpharm.yakal.ui
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.AbsoluteSizeSpan
+import android.text.style.ForegroundColorSpan
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
+import com.viewpharm.yakal.databinding.FragmentSignUpModeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SignUpModeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SignUpModeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private var _binding: FragmentSignUpModeBinding?= null
+    private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up_mode, container, false)
+    ): View {
+        _binding = FragmentSignUpModeBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SignUpModeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SignUpModeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        onButtonClickEvent()
+        setTextView()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
+    private fun setTextView() {
+        val titleText: String = "모드를 선택해주세요"
+        binding.titleTextView.text = titleText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    StyleSpan(android.graphics.Typeface.BOLD),
+                    0,
+                    2,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        val normalModeText: String = "일반 모드\n\n약알의 일반적인 모드입니다"
+        binding.normalModeRadioButton.text = normalModeText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    AbsoluteSizeSpan(24, true),
+                    0,
+                    6,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+
+        val lightModeText: String = "라이트 모드\n\n시니어를 위한 쉬운 모드입니다.\n다제약물 정보가 포함되어 있습니다."
+        binding.lightModeRadioButton.text = lightModeText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    AbsoluteSizeSpan(24, true),
+                    0,
+                    7,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+                setSpan(
+                    StyleSpan(android.graphics.Typeface.BOLD),
+                    8,
+                    21,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
+    }
+
+    private fun onButtonClickEvent() {
+        binding.modeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId) {
+                R.id.normalModeRadioButton -> {
+                    binding.nextButton.isEnabled = true
+                }
+                R.id.lightModeRadioButton -> {
+                    binding.nextButton.isEnabled = true
                 }
             }
+
+            binding.nextButton.isEnabled = true
+        }
+
+        binding.nextButton.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_signUpModeFragment_to_signUpFinishFragment)
+                .onClick(it)
+        }
     }
 }
