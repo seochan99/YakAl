@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpModeBinding
 
@@ -32,7 +33,7 @@ class SignUpModeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onButtonClickEvent()
+        onButtonClickEvent(view)
         setTextView()
     }
 
@@ -85,7 +86,7 @@ class SignUpModeFragment : Fragment() {
         }
     }
 
-    private fun onButtonClickEvent() {
+    private fun onButtonClickEvent(view: View) {
         binding.modeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId) {
                 R.id.normalModeRadioButton -> {
@@ -100,8 +101,15 @@ class SignUpModeFragment : Fragment() {
         }
 
         binding.nextButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpModeFragment_to_signUpFinishFragment)
-                .onClick(it)
+            val safeArgs: SignUpModeFragmentArgs by navArgs()
+
+            Navigation.findNavController(view)
+                .navigate(SignUpModeFragmentDirections
+                    .actionToSignUpFinishFragment(
+                        safeArgs.birthday,
+                        safeArgs.sex,
+                        safeArgs.nickName,
+                        binding.lightModeRadioButton.isChecked))
         }
     }
 }

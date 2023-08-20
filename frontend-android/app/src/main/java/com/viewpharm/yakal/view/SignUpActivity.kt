@@ -6,6 +6,7 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.viewpharm.yakal.R
@@ -55,6 +56,7 @@ class SignUpActivity : AppCompatActivity() {
                             startProgressBarAnimation(75)
                         }
                         R.id.signUpFinishFragment -> {
+                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
                             binding.toolbar.animate()
                                 .alpha(0.0f)
                                 .setDuration(300)
@@ -89,15 +91,12 @@ class SignUpActivity : AppCompatActivity() {
         animator.start()
     }
 
-    override fun finish() {
-        binding.signUpFrameLayout.animate()
-            .alpha(0.0f)
-            .setDuration(50)
-            .start()
-        navController.popBackStack(
-            R.id.signUpTermFragment,
-            true
-        )
-        super.finish()
+    fun navigateToActivity() {
+        val navOptions: NavOptions = NavOptions.Builder()
+            .setPopUpTo(0, false)
+            .build()
+
+        navController.navigate(R.id.action_to_MainActivity, null, navOptions)
+        finish()
     }
 }

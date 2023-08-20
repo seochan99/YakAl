@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
+import com.viewpharm.yakal.type.ESex
 import timber.log.Timber
 
 class SignUpTermFragment() : Fragment() {
@@ -36,12 +37,12 @@ class SignUpTermFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.nextButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpCertificationFragment).onClick(it)
+            Navigation.findNavController(view).navigate(R.id.action_to_signUpCertificationFragment)
         }
         super.onViewCreated(view, savedInstanceState)
 
         onCheckButtonClickEvent()
-        onDetailButtonClickEvent()
+        onDetailButtonClickEvent(view)
         setTextView()
     }
 
@@ -101,19 +102,19 @@ class SignUpTermFragment() : Fragment() {
         }
     }
 
-    private fun onDetailButtonClickEvent() {
+    private fun onDetailButtonClickEvent(view: View) {
         // 데이터 넘기기 예정
         binding.serviceAgreeDetailButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
         }
         binding.locationAgreeDetailButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
         }
         binding.informationAgreeDetailButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
         }
         binding.marketingAgreeDetailButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
         }
     }
     private fun isAllAgree(): Boolean {

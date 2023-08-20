@@ -14,8 +14,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpNicknameBinding
+import com.viewpharm.yakal.type.ESex
 import java.util.regex.Pattern
 
 
@@ -44,7 +46,7 @@ class SignUpNicknameFragment : Fragment() {
 
         setTextView()
         setEditText()
-        onButtonClickEvent()
+        onButtonClickEvent(view)
     }
 
     private fun setTextView() {
@@ -61,12 +63,15 @@ class SignUpNicknameFragment : Fragment() {
         }
     }
 
-    private fun onButtonClickEvent() {
+    private fun onButtonClickEvent(view: View) {
         binding.nextButton.setOnClickListener {
             val pattern: Pattern = Pattern.compile("^[가-힣]+$")
             if (pattern.matcher(binding.nicknameEditText.text.toString()).matches()) {
-                Navigation.createNavigateOnClickListener(R.id.action_signUpNicknameFragment_to_signUpModeFragment)
-                    .onClick(it)
+                val safeArgs: SignUpNicknameFragmentArgs by navArgs()
+
+                Navigation.findNavController(view)
+                    .navigate(SignUpNicknameFragmentDirections
+                        .actionToSignUpModeFragment(safeArgs.birthday, safeArgs.sex, binding.nicknameEditText.text.toString()))
             } else {
                 Toast.makeText(context, "초성, 중성 입력이 존재합니다.", Toast.LENGTH_SHORT).show()
             }

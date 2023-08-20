@@ -33,10 +33,6 @@ class MainActivity : AppCompatActivity(), PillAdapter.OnOverlapItemCallBack {
             commit()
         }
 
-        Intent(this, SignUpActivity::class.java).let {
-            startActivity(it)
-        }
-
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             // 어떤 Fragment인지 확인
             val selectedFragment: Fragment = when (item.itemId) {

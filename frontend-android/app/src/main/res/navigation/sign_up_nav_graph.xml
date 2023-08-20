@@ -11,7 +11,7 @@
         android:label="fragment_sign_up_term"
         tools:layout="@layout/fragment_sign_up_term" >
         <action
-            android:id="@+id/action_signUpTermFragment_to_signUpTermDetailFragment"
+            android:id="@+id/action_to_signUpTermDetailFragment"
             app:destination="@id/signUpTermDetailFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
@@ -19,7 +19,7 @@
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpTermFragment" />
         <action
-            android:id="@+id/action_signUpTermFragment_to_signUpCertificationFragment"
+            android:id="@+id/action_to_signUpCertificationFragment"
             app:destination="@id/signUpCertificationFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
@@ -38,7 +38,7 @@
         android:label="fragment_sign_up_certification"
         tools:layout="@layout/fragment_sign_up_certification" >
         <action
-            android:id="@+id/action_signUpCertificationFragment_to_signUpNicknameFragment"
+            android:id="@+id/action_to_signUpNicknameFragment"
             app:destination="@id/signUpNicknameFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
@@ -52,13 +52,21 @@
         android:label="fragment_sign_up_nickname"
         tools:layout="@layout/fragment_sign_up_nickname" >
         <action
-            android:id="@+id/action_signUpNicknameFragment_to_signUpModeFragment"
+            android:id="@+id/action_to_signUpModeFragment"
             app:destination="@id/signUpModeFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpNicknameFragment" />
+        <argument
+            android:name="birthday"
+            app:argType="string"
+            android:defaultValue="0000-00-00" />
+        <argument
+            android:name="sex"
+            app:argType="com.viewpharm.yakal.type.ESex"
+            android:defaultValue="FEMALE" />
     </fragment>
     <fragment
         android:id="@+id/signUpModeFragment"
@@ -66,19 +74,54 @@
         android:label="fragment_sign_up_mode"
         tools:layout="@layout/fragment_sign_up_mode" >
         <action
-            android:id="@+id/action_signUpModeFragment_to_signUpFinishFragment"
+            android:id="@+id/action_to_signUpFinishFragment"
             app:destination="@id/signUpFinishFragment"
             app:enterAnim="@anim/slide_from_right"
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpModeFragment" />
+        <argument
+            android:name="birthday"
+            app:argType="string"
+            android:defaultValue="0000-00-00" />
+        <argument
+            android:name="sex"
+            app:argType="com.viewpharm.yakal.type.ESex"
+            android:defaultValue="FEMALE" />
+        <argument
+            android:name="nickName"
+            app:argType="string"
+            android:defaultValue="약알" />
     </fragment>
     <fragment
         android:id="@+id/signUpFinishFragment"
         android:name="com.viewpharm.yakal.ui.SignUpFinishFragment"
         android:label="fragment_sign_up_finish"
         tools:layout="@layout/fragment_sign_up_finish" >
-
+        <action
+            android:id="@+id/action_to_MainActivity"
+            app:destination="@id/mainActivity" />
+        <argument
+            android:name="birthday"
+            app:argType="string"
+            android:defaultValue="0000-00-00" />
+        <argument
+            android:name="sex"
+            app:argType="com.viewpharm.yakal.type.ESex"
+            android:defaultValue="FEMALE" />
+        <argument
+            android:name="nickName"
+            app:argType="string"
+            android:defaultValue="약알" />
+        <argument
+            android:name="isDetail"
+            app:argType="boolean"
+            android:defaultValue="false" />
     </fragment>
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.viewpharm.yakal.view.MainActivity"
+        android:label="activity_main"
+        tools:layout="@layout/activity_main" />
 </navigation>

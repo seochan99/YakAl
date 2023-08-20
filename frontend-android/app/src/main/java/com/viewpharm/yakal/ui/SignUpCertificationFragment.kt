@@ -14,6 +14,7 @@ import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpCertificationBinding
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
+import com.viewpharm.yakal.type.ESex
 
 
 class SignUpCertificationFragment : Fragment() {
@@ -35,7 +36,7 @@ class SignUpCertificationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setTextView()
-        onButtonClickEvent()
+        onButtonClickEvent(view)
     }
 
     override fun onDestroyView() {
@@ -57,15 +58,19 @@ class SignUpCertificationFragment : Fragment() {
         }
     }
 
-    private fun onButtonClickEvent() {
+    private fun onButtonClickEvent(view: View) {
         binding.certificationButton.setOnClickListener {
             // 인증 완료 후 뒤로 온 상태 예외 처리 해야함
             Toast.makeText(context, "준비 중 입니다.", Toast.LENGTH_SHORT).show()
         }
 
         binding.skipButton.setOnClickListener {
-            Navigation.createNavigateOnClickListener(R.id.action_signUpCertificationFragment_to_signUpNicknameFragment)
-                .onClick(it)
+            val birthDay = "0000-00-00"
+            val sex = ESex.FEMALE
+
+            Navigation.findNavController(view)
+                .navigate(SignUpCertificationFragmentDirections
+                    .actionToSignUpNicknameFragment(birthDay, sex))
         }
     }
 }

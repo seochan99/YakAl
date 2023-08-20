@@ -6,8 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpFinishBinding
+import com.viewpharm.yakal.view.SignUpActivity
+import timber.log.Timber
 
 class SignUpFinishFragment : Fragment() {
     private var _binding: FragmentSignUpFinishBinding? = null
@@ -48,8 +52,17 @@ class SignUpFinishFragment : Fragment() {
     }
 
     private fun onButtonClickEvent() {
+        val safeArgs: SignUpFinishFragmentArgs by navArgs()
+
+        Timber.e("""
+            safeArgs.birthday: ${safeArgs.birthday}
+            safeArgs.sex: ${safeArgs.sex}
+            safeArgs.nickName: ${safeArgs.nickName}
+            safeArgs.isDetail: ${safeArgs.isDetail}
+        """)
+
         binding.finishButton.setOnClickListener {
-            activity?.finish()
+            (activity as SignUpActivity).navigateToActivity()
         }
     }
 }
