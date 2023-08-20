@@ -219,6 +219,13 @@ class HomeVC: UIViewController{
             print("DirectMedicineButtonAction")
         }
         
+    @IBAction func goCalendarViewAction(_ sender: Any) {
+        
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            let CalendarView = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as! CalendarViewController
+            print("선택됨!")
+            navigationController?.pushViewController(CalendarView, animated: true)
+    }
     
         @IBAction func floatingButtonAction(_ sender: UIButton) {
             if isShowFloating {

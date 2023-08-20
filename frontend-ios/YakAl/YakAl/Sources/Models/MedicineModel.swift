@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct Medicine:Identifiable {
+struct Medicine:Identifiable,Hashable {
     let id: Int
     let image: String
     let name: String

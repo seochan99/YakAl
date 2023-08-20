@@ -155,6 +155,7 @@
 				9814334E2A9163CD00017600 /* Common */,
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 				988893BA2A847EB200388E45 /* UITableViewCell.swift */,
+				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -401,7 +402,6 @@
 		98C2AE7D2A925E0900A0FE6B /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
 				98C2AE802A925F6200A0FE6B /* CalendarViewController.swift */,
 			);
 			path = Calendar;
