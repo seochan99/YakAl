@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import { Description, Div, Header, Icon, Text } from "./style";
+import { Description, Outer, Header, Icon, Text } from "./style";
 
 export default function ErrorPage() {
   const error = useRouteError();
@@ -7,7 +7,7 @@ export default function ErrorPage() {
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
       return (
-        <Div>
+        <Outer>
           <Icon>{":("}</Icon>
           <Text>
             <Header>404 Error</Header>
@@ -18,17 +18,17 @@ export default function ErrorPage() {
               엽력하신 주소가 정확한지 다시 한 번 확인해주세요.
             </p>
           </Text>
-        </Div>
+        </Outer>
       );
     }
   } else {
     return (
-      <Div>
+      <Outer>
         <Icon>{":("}</Icon>
         <Text>
           <Header>Error Page</Header>
         </Text>
-      </Div>
+      </Outer>
     );
   }
 }

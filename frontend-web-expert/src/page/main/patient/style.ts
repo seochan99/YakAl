@@ -6,14 +6,8 @@ import { ReactComponent as PageRightIconSvg } from "@/asset/page-right.svg";
 
 export const Outer = styled.div`
   display: flex;
-  flex-direction: row;
-`;
-
-export const PatientListContainer = styled.div`
-  display: flex;
   flex-direction: column;
-  align-itmes: center;
-  width: 20rem;
+  align-items: center;
   border-radius: 0.5rem;
   background: #fff;
   margin-right: 1.25rem;
@@ -49,20 +43,12 @@ export const SearchInput = styled.input`
   outline: none;
 `;
 
-export const PatientList = styled.ul`
+export const PatientList = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 0.5rem 0;
+  padding: 1rem 0;
   margin: 0;
   overflow: auto;
-`;
-
-export const PatientListHr = styled.hr`
-  border: 0;
-  height: 0.125rem;
-  background: #e9e9ee;
-  margin: 0;
-  padding: 0;
 `;
 
 export const PagingButtonBox = styled.div`
@@ -70,7 +56,6 @@ export const PagingButtonBox = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 2rem;
-  margin-top: 1rem;
 `;
 
 export const PageLeftButton = styled(PageLeftIconSvg)``;

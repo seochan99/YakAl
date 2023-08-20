@@ -14,8 +14,7 @@ export const LogoOuter = styled(Link)`
   position: relative;
   display: flex;
   align-items: center;
-  width: 18rem;
-  padding: 0 2rem;
+  padding: 0 3rem;
   margin: 0;
   text-decoration: none;
 `;
@@ -31,7 +30,7 @@ export const Title = styled.span`
   font-size: 2rem;
   font-weight: 700;
   color: #2666f6;
-  margin-top: 0.2rem;
+  margin: 0.2rem 0.5rem 0;
 `;
 
 export const Description = styled.span`
