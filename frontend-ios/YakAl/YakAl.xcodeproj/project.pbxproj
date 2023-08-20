@@ -50,6 +50,9 @@
 		98C12D792A5E6C8E00175EB8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D782A5E6C8E00175EB8 /* HomeVC.swift */; };
 		98C12D7B2A5E7ADB00175EB8 /* SUIT-SemiBold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 98C12D7A2A5E7ADB00175EB8 /* SUIT-SemiBold.otf */; };
 		98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */; };
+		98C2AE7C2A92414C00A0FE6B /* MedicineDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C2AE7B2A92414C00A0FE6B /* MedicineDetailView.swift */; };
+		98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */; };
+		98C2AE812A925F6200A0FE6B /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C2AE802A925F6200A0FE6B /* CalendarViewController.swift */; };
 		98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EC8F4C2A72109300AA698C /* Step2_1VC.swift */; };
 		98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98EC8F4E2A721C3400AA698C /* SignUpDoneViewController.swift */; };
 /* End PBXBuildFile section */
@@ -101,6 +104,9 @@
 		98C12D782A5E6C8E00175EB8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		98C12D7A2A5E7ADB00175EB8 /* SUIT-SemiBold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SUIT-SemiBold.otf"; sourceTree = "<group>"; };
 		98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiginInModel.swift; sourceTree = "<group>"; };
+		98C2AE7B2A92414C00A0FE6B /* MedicineDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDetailView.swift; sourceTree = "<group>"; };
+		98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarSwiftUIView.swift; sourceTree = "<group>"; };
+		98C2AE802A925F6200A0FE6B /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
 		98EC8F4C2A72109300AA698C /* Step2_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2_1VC.swift; sourceTree = "<group>"; };
 		98EC8F4E2A721C3400AA698C /* SignUpDoneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDoneViewController.swift; sourceTree = "<group>"; };
 		BCD506A65FEAE383D996B30E /* Pods-YakAl.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.release.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.release.xcconfig"; sourceTree = "<group>"; };
@@ -331,6 +337,8 @@
 		98C12D512A5E3C7E00175EB8 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
+				98C2AE7D2A925E0900A0FE6B /* Calendar */,
+				98C2AE7A2A92412D00A0FE6B /* Medication */,
 				986AF8382A76B53700F442B4 /* Main */,
 				986AF8302A76B4E100F442B4 /* MyLocation */,
 				986AF82F2A76B4D900F442B4 /* Community */,
@@ -380,6 +388,23 @@
 				98C12D6B2A5E59DA00175EB8 /* SUIT-Medium.otf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		98C2AE7A2A92412D00A0FE6B /* Medication */ = {
+			isa = PBXGroup;
+			children = (
+				98C2AE7B2A92414C00A0FE6B /* MedicineDetailView.swift */,
+			);
+			path = Medication;
+			sourceTree = "<group>";
+		};
+		98C2AE7D2A925E0900A0FE6B /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
+				98C2AE802A925F6200A0FE6B /* CalendarViewController.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		BA76A499F4600E78623F8D51 /* Pods */ = {
@@ -526,6 +551,7 @@
 			files = (
 				986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */,
 				9888A2802A6D7C8800F507BD /* DetailViewController.swift in Sources */,
+				98C2AE812A925F6200A0FE6B /* CalendarViewController.swift in Sources */,
 				98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */,
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
@@ -538,6 +564,7 @@
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
+				98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */,
 				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
@@ -549,6 +576,7 @@
 				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
 				981433522A916A6800017600 /* MedicationData.swift in Sources */,
+				98C2AE7C2A92414C00A0FE6B /* MedicineDetailView.swift in Sources */,
 				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
@@ -712,7 +740,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -744,7 +772,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

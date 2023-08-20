@@ -3,6 +3,8 @@ import SwiftUI
 
 
 class MedicationData: ObservableObject {
+    static let shared = MedicationData() // 싱글톤 패턴을 사용하여 유일한 인스턴스 생성
+
     @Published var medications: [Medication] = [
         Medication(name: "아침",medication: [
             Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
@@ -26,6 +28,11 @@ class MedicationData: ObservableObject {
     var totalMedicineCount: Int {
         return medications.reduce(0) { $0 + $1.count }
     }
-    @Published var totalCompletedCount: Int = 0
+    var totalTakenCount: Int {
+        return medications.reduce(0) { result, medication in
+            result + medication.medication.filter { $0.isTaken }.count
+        }
+    }
 
+    
 }

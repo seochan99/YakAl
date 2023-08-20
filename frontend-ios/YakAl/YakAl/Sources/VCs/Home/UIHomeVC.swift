@@ -26,9 +26,11 @@ struct MedicationSwiftUIView: View {
                 }
             }
             .padding()
+            .padding(.bottom, 90) // Add bottom padding here
         } .background(Color(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0))
     }
 }
+
 
 // Preview
 @available(iOS 15.0, *)

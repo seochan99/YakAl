@@ -43,18 +43,19 @@ struct MedicationItemRow: View {
                     .frame(width: 16, height: 16)
             }
             Button(action: {
-                isCompleted.toggle() // Toggle the binding value
+                medicine.isTaken.toggle()
+                isCompleted = medicine.isTaken
+//                print("isCompleted : \(isCompleted)")
+//                print("medicine.isTaken : \(medicine.isTaken)")
             }) {
-                Image(isAllCompleted ? "Check_disable_end" : (isCompleted ? "Check_disable_ing" : "Check_disable"))
+                Image(isAllCompleted ? "Check_disable_end" : (medicine.isTaken ? "Check_disable_ing" : "Check_disable"))
                     .resizable()
                     .frame(width: 24, height: 24)
             }
         }
         .padding(.horizontal,16)
-    }
+          }
 }
-import SwiftUI
-
 struct MedicationItemRowView_Previews: PreviewProvider {
     static var previews: some View {
         let medicine = Binding<Medicine>(

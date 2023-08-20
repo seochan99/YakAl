@@ -6,6 +6,5 @@ struct Medicine:Identifiable {
     let name: String
     let ingredients: String
     let dangerStat : Int
-    @State var isTaken: Bool //
-
+    var isTaken: Bool //
 }
