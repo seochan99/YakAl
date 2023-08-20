@@ -1,4 +1,4 @@
-import PatientItem from "@/component/patient-item";
+import PatientItem from "@/page/main/patient-list/child/patient-item";
 import {
   Outer,
   PageButton,

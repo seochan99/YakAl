@@ -61,6 +61,12 @@ function NavBar() {
         <NavItem to="/" className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}>
           대시보드
         </NavItem>
+        <NavItem
+          to="/patient"
+          className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
+        >
+          환자 정보
+        </NavItem>
         <NavItem to="/info" className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}>
           내 정보
         </NavItem>
