@@ -12,6 +12,11 @@
 		98019A122A862B6800D6282F /* TodoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A102A862B6800D6282F /* TodoCVC.swift */; };
 		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
+		981433462A9104DE00017600 /* UIHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433452A9104DE00017600 /* UIHomeVC.swift */; };
+		9814334A2A91597200017600 /* MedicationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433492A91597200017600 /* MedicationModel.swift */; };
+		9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9814334B2A91636F00017600 /* MedicationItemRowView.swift */; };
+		981433502A9163F200017600 /* MedicationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9814334F2A9163F200017600 /* MedicationRowView.swift */; };
+		981433522A916A6800017600 /* MedicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433512A916A6800017600 /* MedicationData.swift */; };
 		98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98349A882A7C043700071C5D /* CircularProgressBarView.swift */; };
 		985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A28BE2A76B99E00B9943D /* TabBarVC.swift */; };
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
@@ -55,6 +60,11 @@
 		98019A102A862B6800D6282F /* TodoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCVC.swift; sourceTree = "<group>"; };
 		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
+		981433452A9104DE00017600 /* UIHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIHomeVC.swift; sourceTree = "<group>"; };
+		981433492A91597200017600 /* MedicationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationModel.swift; sourceTree = "<group>"; };
+		9814334B2A91636F00017600 /* MedicationItemRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationItemRowView.swift; sourceTree = "<group>"; };
+		9814334F2A9163F200017600 /* MedicationRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationRowView.swift; sourceTree = "<group>"; };
+		981433512A916A6800017600 /* MedicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationData.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		98349A882A7C043700071C5D /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
 		985A28BE2A76B99E00B9943D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
@@ -117,9 +127,26 @@
 			path = Todo;
 			sourceTree = "<group>";
 		};
+		9814334D2A9163C300017600 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		9814334E2A9163CD00017600 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				9814334B2A91636F00017600 /* MedicationItemRowView.swift */,
+				9814334F2A9163F200017600 /* MedicationRowView.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		98349A872A7C041400071C5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9814334E2A9163CD00017600 /* Common */,
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 				988893BA2A847EB200388E45 /* UITableViewCell.swift */,
 			);
@@ -130,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				98C12D782A5E6C8E00175EB8 /* HomeVC.swift */,
+				981433452A9104DE00017600 /* UIHomeVC.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -290,6 +318,7 @@
 		98C12D502A5E3C7700175EB8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				9814334D2A9163C300017600 /* New Group */,
 				98349A872A7C041400071C5D /* Views */,
 				98C12D542A5E3C8F00175EB8 /* Models */,
 				98C12D532A5E3C8900175EB8 /* Cells */,
@@ -316,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				980BF8F12A61015100ADE034 /* ProgressNavController.swift */,
+				981433512A916A6800017600 /* MedicationData.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -337,6 +367,7 @@
 				98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */,
 				98926FE52A778537001AB165 /* TodoModel.swift */,
 				98019A0D2A85699B00D6282F /* MedicineModel.swift */,
+				981433492A91597200017600 /* MedicationModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -498,21 +529,26 @@
 				98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */,
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
+				9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
+				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
+				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
 				980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */,
+				981433502A9163F200017600 /* MedicationRowView.swift in Sources */,
 				98C12D752A5E67D200175EB8 /* SignInViewController.swift in Sources */,
 				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
+				981433522A916A6800017600 /* MedicationData.swift in Sources */,
 				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
@@ -676,7 +712,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -708,7 +744,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
