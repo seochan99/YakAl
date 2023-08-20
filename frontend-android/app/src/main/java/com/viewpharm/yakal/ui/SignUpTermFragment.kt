@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
+import timber.log.Timber
 
 class SignUpTermFragment() : Fragment() {
     private var _binding: FragmentSignUpTermBinding ?= null
@@ -35,9 +36,73 @@ class SignUpTermFragment() : Fragment() {
         }
         super.onViewCreated(view, savedInstanceState)
 
+        onCheckButtonClickEvent()
+        onDetailButtonClickEvent()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("onResume")
+        binding.nextButton.isEnabled = isEssentialAgree()
+    }
+
+    private fun onCheckButtonClickEvent() {
+        binding.totalAgreeCheckBox.setOnClickListener {
+            if (binding.totalAgreeCheckBox.isChecked) {
+                binding.serviceAgreeCheckBox.isChecked = true
+                binding.locationAgreeCheckBox.isChecked = true
+                binding.informationAgreeCheckBox.isChecked = true
+                binding.marketingAgreeCheckBox.isChecked = true
+            } else {
+                binding.serviceAgreeCheckBox.isChecked = false
+                binding.locationAgreeCheckBox.isChecked = false
+                binding.informationAgreeCheckBox.isChecked = false
+                binding.marketingAgreeCheckBox.isChecked = false
+            }
+            binding.nextButton.isEnabled = isEssentialAgree()
+        }
+
+        binding.serviceAgreeCheckBox.setOnClickListener {
+            binding.totalAgreeCheckBox.isChecked = isAllAgree()
+            binding.nextButton.isEnabled = isEssentialAgree()
+        }
+
+        binding.locationAgreeCheckBox.setOnClickListener {
+            binding.totalAgreeCheckBox.isChecked = isAllAgree()
+            binding.nextButton.isEnabled = isEssentialAgree()
+        }
+
+        binding.informationAgreeCheckBox.setOnClickListener {
+            binding.totalAgreeCheckBox.isChecked = isAllAgree()
+            binding.nextButton.isEnabled = isEssentialAgree()
+        }
+
+        binding.marketingAgreeCheckBox.setOnClickListener {
+            binding.totalAgreeCheckBox.isChecked = isAllAgree()
+        }
+    }
+
+    private fun onDetailButtonClickEvent() {
+        // 데이터 넘기기 예정
         binding.serviceAgreeDetailButton.setOnClickListener {
             Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
         }
+        binding.locationAgreeDetailButton.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+        }
+        binding.informationAgreeDetailButton.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+        }
+        binding.marketingAgreeDetailButton.setOnClickListener {
+            Navigation.createNavigateOnClickListener(R.id.action_signUpTermFragment_to_signUpTermDetailFragment).onClick(view)
+        }
+    }
+    private fun isAllAgree(): Boolean {
+        return binding.serviceAgreeCheckBox.isChecked && binding.locationAgreeCheckBox.isChecked && binding.informationAgreeCheckBox.isChecked && binding.marketingAgreeCheckBox.isChecked
+    }
+
+    private fun isEssentialAgree(): Boolean {
+        return binding.serviceAgreeCheckBox.isChecked && binding.locationAgreeCheckBox.isChecked && binding.informationAgreeCheckBox.isChecked
     }
 
     override fun onDestroyView() {

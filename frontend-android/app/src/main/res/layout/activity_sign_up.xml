@@ -18,7 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationContentDescription="뒤로"
 
-
         app:title="@string/app_name"
         app:navigationIcon="@drawable/ic_custom_back" >
         
@@ -31,6 +30,17 @@
             android:progressDrawable="@drawable/bar_sign_up_percent"
             android:progress="0"
             android:max="100" />
+
+        <TextView
+            android:id="@+id/signUpTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="이용약관"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:visibility="gone"/>
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView

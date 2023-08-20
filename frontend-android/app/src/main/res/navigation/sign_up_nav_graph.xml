@@ -13,6 +13,10 @@
         <action
             android:id="@+id/action_signUpTermFragment_to_signUpTermDetailFragment"
             app:destination="@id/signUpTermDetailFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpTermFragment" />
         <action
             android:id="@+id/action_signUpTermFragment_to_signUpCertificationFragment"
@@ -21,7 +25,7 @@
             app:exitAnim="@anim/slide_to_left"
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"
-            app:popUpTo="@id/signUpTermFragment" />
+            app:popUpTo="@id/signUpCertificationFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpTermDetailFragment"
@@ -36,6 +40,10 @@
         <action
             android:id="@+id/action_signUpCertificationFragment_to_signUpNicknameFragment"
             app:destination="@id/signUpNicknameFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpCertificationFragment" />
     </fragment>
     <fragment
@@ -46,6 +54,10 @@
         <action
             android:id="@+id/action_signUpNicknameFragment_to_signUpModeFragment"
             app:destination="@id/signUpModeFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpNicknameFragment" />
     </fragment>
     <fragment
@@ -56,6 +68,10 @@
         <action
             android:id="@+id/action_signUpModeFragment_to_signUpFinishFragment"
             app:destination="@id/signUpFinishFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/signUpModeFragment" />
     </fragment>
     <fragment
