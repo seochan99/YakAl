@@ -99,4 +99,8 @@ class SignUpActivity : AppCompatActivity() {
         navController.navigate(R.id.action_to_MainActivity, null, navOptions)
         finish()
     }
+
+    fun setToolbarTitle(title: String) {
+        binding.signUpTitleTextView.text = title
+    }
 }

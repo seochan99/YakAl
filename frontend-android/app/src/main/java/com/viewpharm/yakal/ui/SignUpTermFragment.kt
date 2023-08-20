@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
-import com.viewpharm.yakal.type.ESex
+import com.viewpharm.yakal.type.ETerm
 import timber.log.Timber
 
 class SignUpTermFragment() : Fragment() {
@@ -30,7 +30,7 @@ class SignUpTermFragment() : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding  = FragmentSignUpTermBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -103,18 +103,28 @@ class SignUpTermFragment() : Fragment() {
     }
 
     private fun onDetailButtonClickEvent(view: View) {
-        // 데이터 넘기기 예정
         binding.serviceAgreeDetailButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
+            Navigation.findNavController(view)
+                .navigate(SignUpTermFragmentDirections
+                    .actionToSignUpTermDetailFragment(ETerm.SERVICE))
         }
+
         binding.locationAgreeDetailButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
+            Navigation.findNavController(view)
+                .navigate(SignUpTermFragmentDirections
+                    .actionToSignUpTermDetailFragment(ETerm.LOCATION))
         }
+
         binding.informationAgreeDetailButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
+            Navigation.findNavController(view)
+                .navigate(SignUpTermFragmentDirections
+                    .actionToSignUpTermDetailFragment(ETerm.INFORMATION))
         }
+
         binding.marketingAgreeDetailButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_to_signUpTermDetailFragment)
+            Navigation.findNavController(view)
+                .navigate(SignUpTermFragmentDirections
+                    .actionToSignUpTermDetailFragment(ETerm.MARKETING))
         }
     }
     private fun isAllAgree(): Boolean {

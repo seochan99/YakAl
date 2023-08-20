@@ -31,7 +31,12 @@
         android:id="@+id/signUpTermDetailFragment"
         android:name="com.viewpharm.yakal.ui.SignUpTermDetailFragment"
         android:label="fragment_sign_up_term_detail"
-        tools:layout="@layout/fragment_sign_up_term_detail" />
+        tools:layout="@layout/fragment_sign_up_term_detail" >
+        <argument
+            android:name="termType"
+            app:argType="com.viewpharm.yakal.type.ETerm"
+            android:defaultValue="SERVICE" />
+    </fragment>
     <fragment
         android:id="@+id/signUpCertificationFragment"
         android:name="com.viewpharm.yakal.ui.SignUpCertificationFragment"

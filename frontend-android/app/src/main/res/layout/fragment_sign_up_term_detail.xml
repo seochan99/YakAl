@@ -5,10 +5,18 @@
     android:layout_height="match_parent"
     tools:context=".ui.SignUpTermDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/termDetailTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/serviceTerms"
+            style="@style/default_font"
+            android:textSize="16sp"
+            android:lineSpacingExtra="8dp"
+            android:layout_margin="20dp"/>
+    </ScrollView>
 
 </FrameLayout>
