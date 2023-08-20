@@ -26,7 +26,7 @@ class SplashActivity : AppCompatActivity() {
                     } else {
                         Timber.d("AccessToken: ${it.getString("accessToken", null)}" +
                                 "\nRefreshToken: ${it.getString("refreshToken", null)}")
-                        SignUpActivity::class.java
+                        MainActivity::class.java
                     }
                 })
             startActivity(intent)

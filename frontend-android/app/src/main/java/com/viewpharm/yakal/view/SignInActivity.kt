@@ -120,7 +120,7 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
             apply()
         }
 
-        Intent(this, MainActivity::class.java).let {
+        Intent(this, SignUpActivity::class.java).let {
             startActivity(it)
         }
 
