@@ -1,10 +1,3 @@
-//
-//  ProgressNavController.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/07/14.
-//
-
 import UIKit
 
 class ProgressNavController: UINavigationController, UINavigationControllerDelegate {
