@@ -44,10 +44,6 @@ public class ImageService {
             throw new CommonException(ErrorCode.FILE_UPLOAD);
         }
 
-        //OCR 이미지의 경우 종료
-        if(imageUseType == EImageUseType.OCR)
-            return uuidImageName;
-
         // Path DB Save
         Object useObject = null;
         switch (imageUseType) {
