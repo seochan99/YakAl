@@ -12,7 +12,7 @@ class NotificationActivity : AppCompatActivity() {
         binding = ActivityNotificationBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        overridePendingTransition(R.anim.slide_right_to_left, R.anim.none)
+        overridePendingTransition(R.anim.slide_from_right, R.anim.none)
 
         onCreateToolbar()
     }
@@ -29,7 +29,7 @@ class NotificationActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 
@@ -37,7 +37,7 @@ class NotificationActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         if (isFinishing) {
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 }
