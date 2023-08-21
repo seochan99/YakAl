@@ -46,6 +46,19 @@ public class Comment extends BaseCreateEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
     private List<Comment> child = new ArrayList<>();
 
+    public void updateComment(String content) {
+        this.content = content;
+        isEdit = true;
+    }
+
+    public void updateParent(Comment parent) {
+        this.parent = parent;
+    }
+
+    public void deleteComment() {
+        this.isDeleted = true;
+    }
+
 
     @Builder
     public Comment(User user, String content, Board board) {
@@ -57,7 +70,7 @@ public class Comment extends BaseCreateEntity {
         this.board = board;
     }
 
-    @Builder
+    @Builder(builderMethodName = "CommentWithParent")
     public Comment(User user, String content, Board board, Comment parent) {
         this.user = user;
         this.content = content;

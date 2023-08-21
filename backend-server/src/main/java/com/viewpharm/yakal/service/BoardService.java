@@ -13,14 +13,12 @@ import com.viewpharm.yakal.type.ERegion;
 import com.viewpharm.yakal.utils.BoardUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -132,7 +130,7 @@ public class BoardService {
         List<Board> page = boardRepository.findAllByIsDeleted(false, paging);
 
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -145,7 +143,7 @@ public class BoardService {
         List<Board> page = boardRepository.findListByTitleContainingAndIsDeleted(title, false, paging);
 
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -160,7 +158,7 @@ public class BoardService {
         List<Board> page = boardRepository.findListByRegionAndIsDeleted(boardRegion, false, paging);
 
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -175,7 +173,7 @@ public class BoardService {
         List<Board> page = boardRepository.findListByUserAndIsDeleted(boardUser, false, paging);
 
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
