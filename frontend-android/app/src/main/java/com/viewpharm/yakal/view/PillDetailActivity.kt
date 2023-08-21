@@ -13,7 +13,7 @@ class PillDetailActivity : AppCompatActivity() {
 
         binding = ActivityPillDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        overridePendingTransition(R.anim.slide_right_to_left, R.anim.none)
+        overridePendingTransition(R.anim.slide_from_right, R.anim.none)
     }
 
     override fun onStart() {
@@ -25,7 +25,7 @@ class PillDetailActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         if (isFinishing) {
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 
@@ -46,7 +46,7 @@ class PillDetailActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 }

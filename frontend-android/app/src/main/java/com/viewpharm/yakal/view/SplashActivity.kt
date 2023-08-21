@@ -7,16 +7,28 @@ import android.os.Bundle
 import android.os.Handler
 import com.viewpharm.yakal.R
 import timber.log.Timber
+import timber.log.Timber.Forest.plant
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
+        plant(Timber.DebugTree())
         super.onCreate(savedInstanceState)
         Timber.d("SplashActivity Create")
         setContentView(R.layout.activity_splash)
 
         Handler().postDelayed(Runnable {
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(
+                this,
+                getSharedPreferences("token", MODE_PRIVATE).let {
+                    if (it.getString("accessToken", null) == null || it.getString("refreshToken", null) == null) {
+                        SignInActivity::class.java
+                    } else {
+                        Timber.d("AccessToken: ${it.getString("accessToken", null)}" +
+                                "\nRefreshToken: ${it.getString("refreshToken", null)}")
+                        MainActivity::class.java
+                    }
+                })
             startActivity(intent)
         }, 1000)
     }
