@@ -4,8 +4,10 @@ import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.interceptor.UserIdInterceptor;
 import com.viewpharm.yakal.interceptor.UserIdArgumentResolver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -19,6 +21,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     public WebMvcConfig(final UserIdArgumentResolver userIdArgumentResolver) {
         this.userIdArgumentResolver = userIdArgumentResolver;
+    }
+
+    /**
+     * 웹 프론트 서버 CORS 이슈 해결을 위한 WebMvc 설정
+     * 개발 기간이 끝나면 삭제 예정
+     * Github: DoHunKim1215
+     */
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("*")
+                .allowCredentials(true);
     }
 
     @Override

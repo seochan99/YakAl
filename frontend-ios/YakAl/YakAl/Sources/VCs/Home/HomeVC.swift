@@ -1,20 +1,11 @@
-//
-//  HomeViewController.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/07/12.
-//
-
 import UIKit
+import SwiftUI
 
-class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout{
-    
-    
+class HomeVC: UIViewController{
     // MARK: - Outlets -
     @IBOutlet weak var calendarView: UIView!
     
     @IBOutlet weak var floatingStackView: UIStackView!
-    
     
     @IBOutlet weak var emptyView: UIView!
     
@@ -29,21 +20,31 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
     
     @IBOutlet weak var addMedicineButton: UIButton!
     
-    // MARK: - Properties -
+    @IBOutlet weak var todayMedicinCnt: UILabel!
+    
+    
+    
+    
+    // MARK: - Properties
     let progressCircle = CAShapeLayer()
     let progressCircle2 = CAShapeLayer()
     let progressLabel = UILabel()
     var currentProgress: CGFloat = 0
-    
+
+
     
     // 버튼들이 들어있는 모달 뷰
     lazy var buttons: [UIView] = [self.addModalView]
     
-    let viewModel = TodoViewModel()
-    
     // 플로팅 버튼 상태에 대한 플래그
     var isShowFloating: Bool = false
     
+    
+    var medicationData = MedicationData()
+    
+    var medicationHostingController: UIHostingController<MedicationSwiftUIView>?
+
+
     
     // 배경 어둡게 만드는 view
     lazy var floatingDimView: UIView = {
@@ -58,59 +59,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         return view
     }()
     
-//    var myTodoItems: [TodoItem] = []
-    
-    
-    
-    // 몇개
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.numOfTodoList
-    }
-    
-    
-    // 셀은 어떻게 표현할까요?
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "TodoCell", for: indexPath) as? TodoCell else {
-            return UICollectionViewCell()
-        }
-        
-        let todoItem = viewModel.TodoItemList[indexPath.item]
-        cell.update(info: todoItem)
-        
-        return cell
-    }
-        
-    
-    // MARK: - Collection View Delegate
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let cell = collectionView.cellForItem(at: indexPath) as? TodoCell {
-            // Toggle the expanded state of the TodoCell and reload the collection view
-            cell.isExpanded = !cell.isExpanded
-            collectionView.reloadItems(at: [indexPath])
-        }
-    }
-    
-    // UICollectionViewDelegateFlowLayout
-    // device마다 cell크기가 달라야함
-    // 셀 사이즈를 계산할거다!
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-           let cellWidth = collectionView.bounds.width - 40
-           let innerCellHeight: CGFloat = 40 // Height of the inner cell
-           var outerCellHeight: CGFloat = 90 // Initial height of the outer cell
-           
-           if let cell = collectionView.cellForItem(at: indexPath) as? TodoCell {
-               if cell.isExpanded {
-                   if indexPath.item < viewModel.TodoItemList.count {
-                       let todoItem = viewModel.TodoItemList[indexPath.item]
-                       let numberOfMedicines = viewModel.numberOfMedicines(for: todoItem)
-                       outerCellHeight += CGFloat(numberOfMedicines) * innerCellHeight + 20
-                   }
-               }
-           }
-           
-           return CGSize(width: cellWidth, height: outerCellHeight)
-       }
     
     // UIColor 객체를 #E9E9EE 색상으로 생성
     let borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0)
@@ -119,14 +67,39 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         //MARK: - viewDidLoad
         override func viewDidLoad() {
             super.viewDidLoad()
-            setupProgressCircle()
-            updateEmptyViewVisibility()
+            todayMedicinCnt.text = "총 \(medicationData.totalMedicineCount)개"
+
             
+            if medicationData.medications.isEmpty {
+                emptyView.isHidden = false
+                self.view.bringSubviewToFront(floatingStackView)
+
+
+                
+            }else{
+                self.view.bringSubviewToFront(floatingStackView)
+                // Swift UI View만들기
+                    let medicationSwiftUIView = MedicationSwiftUIView()
+                        .environmentObject(medicationData)
+                    
+                    
+                    let medicationHostingController = UIHostingController(rootView: medicationSwiftUIView)
+                    addChild(medicationHostingController)
+                    medicationHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+                    // Empty View에 붙이기
+                    emptyView.addSubview(medicationHostingController.view)
+                    NSLayoutConstraint.activate([
+                        medicationHostingController.view.topAnchor.constraint(equalTo: emptyView.topAnchor),
+                        medicationHostingController.view.leadingAnchor.constraint(equalTo: emptyView.leadingAnchor),
+                        medicationHostingController.view.trailingAnchor.constraint(equalTo: emptyView.trailingAnchor),
+                        medicationHostingController.view.bottomAnchor.constraint(equalTo: emptyView.bottomAnchor)
+                    ])
+                    
+                    medicationHostingController.didMove(toParent: self)
+            }
+                floatingStackView.isHidden = false
+                setupProgressCircle()
             
-            
-//               // Register MedicineCell
-//               let medicineCellNib = UINib(nibName: "MedicineCell", bundle: nil)
-//               medicationCollectionView.register(medicineCellNib, forCellWithReuseIdentifier: "MedicineCell")
             // calendarView의 레이어(border)의 색상을 설정
             calendarView.layer.borderColor = borderColor.cgColor
             addModalView.layer.borderColor = borderColor.cgColor
@@ -221,21 +194,10 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
         }
         
-        
-        // 아래 메서드를 사용하여 emptyView의 상태를 갱신합니다.
-        func updateEmptyViewVisibility() {
-            
-            if viewModel.numOfTodoList == 0 {
-                emptyView.isHidden = false
-            } else {
-                emptyView.isHidden = true
-            }
-        }
-        
-        
         @IBAction func AlertButtonAction(_ sender: UIButton) {
             print("Alert")
             animateProgress()
+            print(medicationData.totalCompletedCount)
         }
         @IBAction func EnvelopeMedicineButtonAction(_ sender: UIButton) {
             print("EnvelopeMedicineButtonAction")
@@ -249,9 +211,6 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
         
         
         @IBAction func floatingButtonAction(_ sender: UIButton) {
-            print("약 추가 버튼 선택됨")
-            
-            
             if isShowFloating {
                 // 약 추가 목록버튼모달 없애기
                 UIView.animate(withDuration: 0.3, animations: {
@@ -300,205 +259,3 @@ class HomeVC: UIViewController, UICollectionViewDataSource, UICollectionViewDele
             }
         }
     }
-
-//MARK: - ViewModel
-class TodoViewModel{
-    let TodoItemList: [TodoItem] = [
-        TodoItem(mealTime: .breakfast, medication: [
-            Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "성분 A", dangerImage: "Green-Light", isTaken: false),
-            Medicine(id: 2, image: "image_덱시로펜정", name: "동화디트로판정", ingredients: "성분 B", dangerImage: "Yellow-Light", isTaken: false)
-        ]),
-        TodoItem(mealTime: .lunch, medication: [
-            Medicine(id: 3, image: "image_덱시로펜정", name: "약물C", ingredients: "성분 C", dangerImage: "Green-Light", isTaken: false),
-            Medicine(id: 4, image: "image_덱시로펜정", name: "약물D", ingredients: "성분 D", dangerImage: "Green-Light", isTaken: false)
-        ]),
-        TodoItem(mealTime: .dinner, medication: [
-            Medicine(id: 5, image: "image_덱시로펜정", name: "약물E", ingredients: "성분 E", dangerImage: "Red-Light", isTaken: false),
-            Medicine(id: 6, image: "image_덱시로펜정", name: "약물F", ingredients: "성분 F", dangerImage: "Red-Light", isTaken: false)
-        ]),
-        TodoItem(mealTime: .etc, medication: [
-            Medicine(id: 7, image: "image_덱시로펜정", name: "약물G", ingredients: "성분 G", dangerImage: "Yellow-Light", isTaken: false),
-            Medicine(id: 8, image: "image_덱시로펜정", name: "약물H", ingredients: "성분 H", dangerImage: "Yellow-Light", isTaken: false),
-            Medicine(id: 9, image: "image_덱시로펜정", name: "약물J", ingredients: "성분 J", dangerImage: "Yellow-Light", isTaken: false)
-        ])
-    ]
-
-    func numberOfMedicines(for todoItem: TodoItem) -> Int {
-        return todoItem.medication.count
-    }
-    
-    // 총 갯수 반환
-    var numOfTodoList: Int{
-        return TodoItemList.count
-    }
-}
-
-//MARK: - TodoCell
-class TodoCell: UICollectionViewCell,UICollectionViewDelegate, UICollectionViewDataSource{
-    @IBOutlet weak var todoIcon: UIImageView!
-    @IBOutlet weak var todoAllDoneBtn: UIButton!
-    @IBOutlet weak var todoNowCnt: UILabel!
-    @IBOutlet weak var todoTime2: UILabel!
-    @IBOutlet weak var todoTotalCnt: UILabel!
-    @IBOutlet weak var medicationCollectionView: UICollectionView!
-
-    @IBOutlet weak var firstDivinder: UIView!
-    
-    
-    
-    @IBOutlet weak var secondDivinder: UIView!
-    
-    var medicines: [Medicine] = []
-    
-    var isExpanded: Bool = false {
-        didSet {
-            print("확장여부는 \(isExpanded) 입니다!")
-            medicationCollectionView.reloadData()
-            updateTodoIconImage()
-        }
-    }
-    func updateTodoIconImage() {
-        let imageName = isExpanded ? "icon-mainpill(1)" : "icon-mainpill(2)"
-        todoIcon.image = UIImage(named: imageName)
-        // Update the border color based on isExpanded
-        let borderColor = isExpanded ? UIColor(red: 85/255, green: 136/255, blue: 253/255, alpha: 1) : UIColor(red: 233/255, green: 233/255, blue: 238/255, alpha: 1)
-        firstDivinder.isHidden = !isExpanded
-        // Apply border and corner radius
-        self.layer.borderColor = borderColor.cgColor
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 16
-        self.layer.masksToBounds = true
-        
-        // Apply shadow
-        self.layer.shadowColor = UIColor(red: 98/255, green: 98/255, blue: 114/255, alpha: 0.2).cgColor
-        self.layer.shadowOffset = CGSize(width: 0, height: 2)
-        self.layer.shadowOpacity = 1
-        self.layer.shadowRadius = 6
-    
-    }
-    
-    override func awakeFromNib() {
-        
-        super.awakeFromNib()
-        // Apply styling to the cell
-               self.layer.cornerRadius = 16
-               self.layer.masksToBounds = false
-               self.layer.borderWidth = 1
-               self.layer.borderColor = UIColor(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0, alpha: 1.0).cgColor
-               
-               // Apply shadow
-               self.layer.shadowColor = UIColor(red: 98/255, green: 98/255, blue: 114/255, alpha: 0.20).cgColor
-               self.layer.shadowOffset = CGSize(width: 0, height: 2)
-               self.layer.shadowOpacity = 1
-               self.layer.shadowRadius = 6
-        
-        // Set the width constraint of secondDivinder
-        secondDivinder.translatesAutoresizingMaskIntoConstraints = false
-        secondDivinder.widthAnchor.constraint(equalToConstant: 60).isActive = true
-        secondDivinder.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-
-
-    }
-
-    
-    // TodoItem의 medication리스트 길이만큼 todoTotalCnt 할당 하기
-    func update(info: TodoItem) {
-        // info값 출력
-        print("info값 출력")
-        print(info)
-        
-        // TodoItem 의 mealTime에 따라 todoTime2 할당하기
-        switch info.mealTime {
-        case .breakfast:
-            todoTime2.text = "아침"
-        case .lunch:
-            todoTime2.text = "점심"
-        case .dinner:
-            todoTime2.text = "저녁"
-        case .etc:
-            todoTime2.text = "기타"
-        }
-        
-        // todoTotalCnt 설정
-        todoTotalCnt.text = String(info.medication.count) + "개"
-        
-        // medicines 배열 초기화
-        medicines = info.medication
-        
-        // 업데이트 후 collectionView 리로드
-        medicationCollectionView.reloadData()
-    }
-    
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return medicines.count
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MedicineCell", for: indexPath) as? MedicineCell else {
-            return UICollectionViewCell()
-        }
-        
-        if indexPath.item < medicines.count {
-            let medicine = medicines[indexPath.item]
-            cell.update(info: medicine)
-        }
-        
-        return cell
-    }
-
-    
-    // 전체 확인 버튼
-    @IBAction func AllAproveButtonOn(_ sender: UIButton) {
-        
-        let allButtons = [todoAllDoneBtn]
-        
-        // 전체 동의 버튼의 상태에 따라 모든 버튼을 On 또는 Off로 설정
-        let isAllOn = todoAllDoneBtn.isSelected
-        
-        // 모든 버튼 반복문 돌면서 상태 변경
-        for button in allButtons {
-            button?.isSelected = !isAllOn
-            updateButtonAppearance(button ?? todoAllDoneBtn)
-        }
-        
-    }
-
-    // 버튼 상태 변경
-    public func changeButtonState(_ sender:UIButton){
-        let isOn = sender.isSelected
-        sender.isSelected = !isOn
-        updateButtonAppearance(sender)
-    }
-
-    // 버튼의 상태에 따라 색상 변경
-    public func updateButtonAppearance(_ button: UIButton) {
-        let selectedImage = UIImage(named: "Check_disable_ing")
-        let deselectedImage = UIImage(named: "Check_disable")
-        
-        if button.isSelected {
-            button.setImage(selectedImage, for: .normal)
-        } else {
-            button.setImage(deselectedImage, for: .normal)
-        }
-    }
-
-}
-    
-//MARK: - Medicine Cell
-class MedicineCell: UICollectionViewCell {
-    @IBOutlet weak var medicineIcon: UIImageView!
-    @IBOutlet weak var medicineNameLabel: UILabel!
-    @IBOutlet weak var medicineIngredientsLabel: UILabel!
-    @IBOutlet weak var medicineDangerIcon: UIImageView!
-    @IBOutlet weak var medineEatButton: UIButton!
-    
-    
-    func update(info: Medicine) {
-        medicineIcon.image = UIImage(named: info.image)
-        medicineNameLabel.text = info.name
-        medicineIngredientsLabel.text = info.ingredients
-        medicineDangerIcon.image = UIImage(named: info.dangerImage)
-    }
-}
-    

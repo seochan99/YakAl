@@ -2,6 +2,7 @@ package com.viewpharm.yakal.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.JsonParser;
+import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
@@ -27,6 +28,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import org.apache.commons.io.FileUtils;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.bouncycastle.openssl.PEMParser;
+import reactor.core.publisher.Mono;
 
 import java.io.File;
 import java.io.FileReader;
@@ -39,6 +41,7 @@ import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Slf4j
 @Component
@@ -111,7 +114,7 @@ public class OAuth2Util {
                 + "&response_type=code%20id_token&scope=name%20email&response_mode=form_post";
     }
 
-    public String getKakaoUserInformation(final String accessToken) {
+    public String getKakaoUserInformation(final String accessToken) throws CommonException {
         final WebClient webClient = WebClient.builder()
                 .defaultHeaders(httpHeaders -> {
                             httpHeaders.setBearerAuth(accessToken);
@@ -122,10 +125,9 @@ public class OAuth2Util {
         final String responseJsonBody = webClient.post()
                 .uri(KAKAO_USERINFO_URL)
                 .retrieve()
-                .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
-                        clientResponse -> {
-                            throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
-                        })
+
+//                .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
+//                        clientResponse -> Mono.just(new CommonException()))
                 .bodyToMono(String.class)
                 .flux()
                 .toStream()
@@ -290,13 +292,6 @@ public class OAuth2Util {
         private List<JWTSetKeys> keys;
     }
 
-
-    /**
-     * Dev Release 때, Back Test 쉽게 하라고 만든 함수이므로 마지막 Product Release 전에 지울 것
-     * 2023-08-15
-     * Github: HyungJoonSon
-     */
-    @Deprecated
     public String getKakaoAccessToken(final String authorizationCode) {
         final RestTemplate restTemplate = new RestTemplate();
 
@@ -321,7 +316,6 @@ public class OAuth2Util {
         return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
     }
 
-    @Deprecated
     public String getGoogleAccessToken(final String authorizationCode) {
         final RestTemplate restTemplate = new RestTemplate();
 
