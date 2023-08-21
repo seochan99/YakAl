@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+import { ReactComponent as RedIconSvg } from "@/asset/red-icon.svg";
+import { ReactComponent as YellowIconSvg } from "@/asset/yellow-icon.svg";
+import { ReactComponent as GreenIconSvg } from "@/asset/green-icon.svg";
+
 export const Header = styled.div`
   display: flex;
   flex-direction: row;
@@ -7,7 +11,15 @@ export const Header = styled.div`
   align-items: center;
 `;
 
+export const IconBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
+`;
+
 export const PeriodSelectBox = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
 `;
@@ -16,11 +28,11 @@ export const PeriodSelectButton = styled.button`
   & {
     display: inline-flex;
     padding: 0.4rem 0.8rem 0.4rem 0.4rem;
-    justify-content: center;
     align-items: center;
     gap: 0.2rem;
     border: 0;
     border-radius: 2rem;
+    width: 5.5rem;
     height: 2rem;
     background-color: #e9e9ee;
     color: #151515;
@@ -33,8 +45,54 @@ export const PeriodSelectButton = styled.button`
     height: 1.2rem;
     transition: 0.3s;
   }
-  &:focus svg {
+  & span {
+    flex: 1;
+    text-align: center;
+  }
+  &.open svg {
     transform: rotate(180deg);
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #e0dfe6;
+  }
+  &:active {
+    background-color: #cbcbd6;
+  }
+`;
+
+export const PeriodList = styled.ul`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  top: 1.2rem;
+  right: 0;
+  list-style: none;
+  border-radius: 0.25rem;
+  padding: 0.4rem;
+  width: 6rem;
+  background-color: #fff;
+  border: 1px solid #b7b5c4;
+`;
+
+export const PeriodItem = styled.li`
+  width: 100%;
+`;
+
+export const PeriodItemButton = styled.button`
+  & {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0.25rem;
+    color: #151515;
+    font-family: Pretendard;
+    font-size: 0.9rem;
+    font-weight: 500;
+    line-height: 0.9rem;
+    padding: 0.5rem;
   }
   &:hover {
     cursor: pointer;
@@ -120,6 +178,18 @@ export const CommonItem = styled.span`
   font-weight: 500;
   line-height: 0.9rem;
   text-align: left;
+`;
+
+export const GreenIcon = styled(GreenIconSvg)`
+  height: 1rem;
+`;
+
+export const YellowIcon = styled(YellowIconSvg)`
+  height: 1rem;
+`;
+
+export const RedIcon = styled(RedIconSvg)`
+  height: 1rem;
 `;
 
 export const ListFooter = styled.div`

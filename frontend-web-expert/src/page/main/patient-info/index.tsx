@@ -1,6 +1,5 @@
 import { useLoaderData } from "react-router-dom";
 import {
-  Subtitle,
   NameSex,
   Outer,
   PatientSummary,
@@ -19,6 +18,7 @@ import getAge from "@/util/get-age";
 import PatientInfoText from "./child/patient-info-text";
 import SpecialNote from "./child/special-note";
 import DoseList from "./child/dose-list";
+import SurveyResult from "./child/test-result";
 
 function PatientInfo() {
   const { userInfo } = useLoaderData() as TPatientInfoLoaderReturn;
@@ -54,18 +54,14 @@ function PatientInfo() {
           <SpecialNote patientId={id} />
         </InnerBox>
         <InnerBox>
-          <DoseList />
+          <DoseList patientId={id} />
         </InnerBox>
       </NoteAndDoseList>
       <InnerBox>
-        <Subtitle>자가 진단 테스트 결과</Subtitle>
+        <SurveyResult />
       </InnerBox>
-      <InnerBox>
-        <Subtitle>이전 처방 목록</Subtitle>
-      </InnerBox>
-      <InnerBox>
-        <Subtitle>복용 중인 건강기능식품</Subtitle>
-      </InnerBox>
+      <InnerBox>이전 처방 목록</InnerBox>
+      <InnerBox>복용 중인 건강기능식품</InnerBox>
     </Outer>
   );
 }

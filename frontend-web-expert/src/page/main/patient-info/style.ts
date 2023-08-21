@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { styled } from "styled-components";
 
-import { ReactComponent as BackIconSvg } from "@/asset/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "@/asset/back-icon.svg";
 
 export const Outer = styled.div`
   display: flex;
@@ -16,7 +16,7 @@ export const Header = styled.div`
   justify-content: space-between;
 `;
 
-export const BackIcon = styled(BackIconSvg)`
+export const BackIcon = styled(LinkIconSvg)`
   transform: scaleX(-1);
   margin-left: -0.4rem;
 `;
@@ -76,13 +76,6 @@ export const Bar = styled.hr`
   margin: 1rem 0;
 `;
 
-export const Subtitle = styled.span`
-  color: #151515;
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.25rem;
-`;
-
 export const Description = styled.span`
   color: #151515;
   font-size: 1rem;
@@ -98,7 +91,7 @@ export const NoteAndDoseList = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 28.5rem;
+  height: 30rem;
 `;
 
 export const InnerBox = styled.div`

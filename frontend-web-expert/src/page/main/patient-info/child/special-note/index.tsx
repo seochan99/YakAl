@@ -30,17 +30,17 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
   };
 
   const noteList = [
+    { id: 6, title: "특이사항6", description: "괜찮으십니까?", recorded_at: new Date("2023-08-19") },
+    { id: 5, title: "특이사항5", description: "괜찮으십니까?", recorded_at: new Date("2023-08-18") },
+    { id: 4, title: "특이사항4", description: "괜찮으십니까?", recorded_at: new Date("2023-08-17") },
+    { id: 3, title: "특이사항3", description: "괜찮으십니까?", recorded_at: new Date("2023-08-16") },
+    { id: 2, title: "특이사항2", description: "괜찮으십니까?", recorded_at: new Date("2023-08-15") },
     {
       id: 1,
       title: "특이사항1",
       description: "괜찮으십니까?",
       recorded_at: new Date("2023-08-14"),
     },
-    { id: 2, title: "특이사항2", description: "괜찮으십니까?", recorded_at: new Date("2023-08-15") },
-    { id: 3, title: "특이사항3", description: "괜찮으십니까?", recorded_at: new Date("2023-08-16") },
-    { id: 4, title: "특이사항4", description: "괜찮으십니까?", recorded_at: new Date("2023-08-17") },
-    { id: 5, title: "특이사항5", description: "괜찮으십니까?", recorded_at: new Date("2023-08-18") },
-    { id: 6, title: "특이사항6", description: "괜찮으십니까?", recorded_at: new Date("2023-08-19") },
   ];
 
   return (
