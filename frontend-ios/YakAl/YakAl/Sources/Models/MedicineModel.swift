@@ -1,11 +1,10 @@
 import SwiftUI
 
-struct Medicine:Identifiable {
+struct Medicine:Identifiable,Hashable {
     let id: Int
     let image: String
     let name: String
     let ingredients: String
     let dangerStat : Int
-    @State var isTaken: Bool //
-
+    var isTaken: Bool //
 }
