@@ -6,6 +6,7 @@ struct DayModel: Identifiable,Hashable {
     let date: Date
     let medications: [Medicine] // List of medications for the day
     
+    // 일자로 변경
     var dayText: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "d"
@@ -19,11 +20,10 @@ struct DayModel: Identifiable,Hashable {
         formatter.locale = Locale(identifier: "ko_KR") // 한국어 로케일 설정
         return formatter.string(from: date)
     }
-
-    var fullWeekdayText: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "EEEE"
-        return formatter.string(from: date)
+    // 하류 약 섭취률
+    var medicineIntakeRate: Double {
+        let takenCount = medications.filter { $0.isTaken }.count
+        return Double(takenCount) / Double(medications.count)
     }
 }
 
@@ -69,6 +69,7 @@ struct CalendarWeekView: View {
 
 
 
+//MARK: - CalendarSwiftUIView : 달력 뷰
 struct CalendarSwiftUIView: View {
     @State private var currentDate = Date()
     @State private var isExpanded = false
@@ -163,7 +164,6 @@ struct CalendarSwiftUIView: View {
             }
             .padding(.top, 20)
 
-
             VStack(spacing: 0){
                 HStack{
                     VStack(spacing: 16){
@@ -193,7 +193,7 @@ struct CalendarSwiftUIView: View {
                     }
                     Spacer()
                     VStack{
-                        CircularProgressBarWithText(progress: 0.89)
+                        CircularProgressBarWithText(progress: 0.0)
                     }
                 }.frame(maxWidth: .infinity, alignment: .leading) // 왼쪽에 붙이는 부분
                     .padding(.horizontal,20)
@@ -212,8 +212,6 @@ struct CalendarSwiftUIView: View {
 
         }
         .padding(.horizontal, 0) // 수평 여백을 없애는 부분
-        
-
         // --------------- 약물 뷰 ---------------
 
     }
@@ -221,6 +219,7 @@ struct CalendarSwiftUIView: View {
     }
 }
 
+//MARK: - 원 프로그레스바 : 달력 뷰
 struct CircularProgressBarWithText: View {
     var progress: Double
     
@@ -239,7 +238,8 @@ struct CircularProgressBarWithText: View {
                 Text("\(Int(progress * 100))%")
                     .font(Font.custom("SUIT", size: 16).weight(.semibold))
                     .multilineTextAlignment(.center)
-                    .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
+                    .foregroundColor(progress == 0 ? Color(red: 0.76, green: 0.82, blue: 1) : Color(red: 0.33, green: 0.53, blue: 0.99))
+
             }
         }
         .frame(width: 60, height: 60)
@@ -248,6 +248,7 @@ struct CircularProgressBarWithText: View {
 
 
 
+//MARK: - Date Extension
 extension Date {
     var day: String {
         let formatter = DateFormatter()
@@ -256,6 +257,7 @@ extension Date {
     }
     
 }
+//MARK: -CalendarSwiftUIView_Previews
 struct CalendarSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
         CalendarSwiftUIView()
