@@ -100,3 +100,10 @@ export const InnerBox = styled.div`
   background-color: #fff;
   padding: 1.5rem;
 `;
+
+export const PrescriptionAndHealthFunctionalFood = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  height: 25rem;
+`;

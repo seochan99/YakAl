@@ -68,7 +68,7 @@ function SurveyResult() {
       <Content>
         <FirstList>
           {surveyResultKeyList.slice(0, surveyCount / 2).map((surveyKey) => (
-            <Item>
+            <Item key={surveyKey}>
               <ItemTitle>{surveyKeyName[surveyKey as keyof typeof surveyKeyName]}</ItemTitle>
               <ItemResult>{surveyResult[surveyKey as keyof typeof surveyResult]}</ItemResult>
             </Item>
@@ -76,7 +76,7 @@ function SurveyResult() {
         </FirstList>
         <List>
           {surveyResultKeyList.slice(surveyCount / 2, surveyCount).map((surveyKey) => (
-            <Item>
+            <Item key={surveyKey}>
               <ItemTitle>{surveyKeyName[surveyKey as keyof typeof surveyKeyName]}</ItemTitle>
               <ItemResult>{surveyResult[surveyKey as keyof typeof surveyResult]}</ItemResult>
             </Item>

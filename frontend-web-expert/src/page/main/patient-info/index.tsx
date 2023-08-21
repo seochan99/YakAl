@@ -11,6 +11,7 @@ import {
   Header,
   BackButton,
   BackIcon,
+  PrescriptionAndHealthFunctionalFood,
 } from "./style";
 import { TPatientInfoLoaderReturn } from "./loader";
 import { ESex } from "@/type/sex";
@@ -18,7 +19,9 @@ import getAge from "@/util/get-age";
 import PatientInfoText from "./child/patient-info-text";
 import SpecialNote from "./child/special-note";
 import DoseList from "./child/dose-list";
-import SurveyResult from "./child/test-result";
+import SurveyResult from "./child/survey-result";
+import PrescriptionList from "./child/prescription-list";
+import HealthFoodList from "./child/health-food-list";
 
 function PatientInfo() {
   const { userInfo } = useLoaderData() as TPatientInfoLoaderReturn;
@@ -60,8 +63,14 @@ function PatientInfo() {
       <InnerBox>
         <SurveyResult />
       </InnerBox>
-      <InnerBox>이전 처방 목록</InnerBox>
-      <InnerBox>복용 중인 건강기능식품</InnerBox>
+      <PrescriptionAndHealthFunctionalFood>
+        <InnerBox>
+          <PrescriptionList />
+        </InnerBox>
+        <InnerBox>
+          <HealthFoodList />
+        </InnerBox>
+      </PrescriptionAndHealthFunctionalFood>
     </Outer>
   );
 }

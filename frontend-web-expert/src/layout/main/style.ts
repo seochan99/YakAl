@@ -4,14 +4,13 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100dvh;
 `;
 
 export const MainSection = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  height: 100%;
+  flex: 1;
   width: 100%;
   background-color: #f5f5f9;
 `;
