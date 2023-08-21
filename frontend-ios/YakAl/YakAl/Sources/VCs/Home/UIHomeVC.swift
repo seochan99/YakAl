@@ -27,7 +27,7 @@ struct MedicationSwiftUIView: View {
             }
             .padding()
             .padding(.bottom, 90) // Add bottom padding here
-        }.background(Color(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0))
+        }.background(Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1))
     }
 }
 

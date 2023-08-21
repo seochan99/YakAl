@@ -117,12 +117,12 @@ struct CalendarSwiftUIView: View {
             
         // --------------- 달력 뷰 ---------------
         VStack(spacing: 16) {
-            HStack {
+            HStack(spacing:20) {
                 Spacer()
                 Button(action: {
                     self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate) ?? self.currentDate
                 }) {
-                    Image(systemName: "arrow.left")
+                    Image("previous-month")
                 }
                 
                 Text(dateFormatter.string(from: currentDate))
@@ -135,10 +135,12 @@ struct CalendarSwiftUIView: View {
                 Button(action: {
                     self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: self.currentDate) ?? self.currentDate
                 }) {
-                    Image(systemName: "arrow.right")
+                    Image("next-month")
                 }
                 Spacer()
-            }
+            }.padding(.top, 20)
+                .padding(.bottom, 15)
+            
             
             // 펼쳐졌을 경우의 뷰
             if isExpanded {
@@ -148,19 +150,23 @@ struct CalendarSwiftUIView: View {
             } else {
                 CalendarWeekView(weekDates: sampleWeekDates[currentWeekIndex])
             }
-            
-            // 달력 펼치기
-            Button(action: {
-                withAnimation {
-                    self.isExpanded.toggle()
+            // --------------- 스와이핑 아이콘 ---------------
+            VStack {
+                Button(action: {
+                    withAnimation {
+                        self.isExpanded.toggle()
+                    }
+                }) {
+                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                        .colorMultiply(Color(red: 0.56, green: 0.56, blue: 0.62, opacity: 1))
                 }
-            }) {
-                Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
             }
+            .padding(.top, 20)
+
 
             VStack(spacing: 0){
                 HStack{
-                    VStack{
+                    VStack(spacing: 16){
                         HStack{
                             Text("2023년 7월 20일")
                               .font(
@@ -170,7 +176,7 @@ struct CalendarSwiftUIView: View {
                               .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
                         }.frame(maxWidth: .infinity, alignment: .leading)
      
-                        HStack{
+                        HStack(spacing: 8){
                             Text("14개 복용 ")
                               .font(
                                 Font.custom("SUIT", size: 20)
@@ -184,25 +190,16 @@ struct CalendarSwiftUIView: View {
                               )
                               .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
                         }.frame(maxWidth: .infinity, alignment: .leading)
-                        
-                                        
                     }
                     Spacer()
                     VStack{
-                        Text("89%")
-                          .font(
-                            Font.custom("SUIT", size: 16)
-                              .weight(.semibold)
-                          )
-                          .multilineTextAlignment(.center)
-                          .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
-                          .frame(width: 44, height: 16, alignment: .top)
+                        CircularProgressBarWithText(progress: 0.89)
                     }
                 }.frame(maxWidth: .infinity, alignment: .leading) // 왼쪽에 붙이는 부분
                     .padding(.horizontal,20)
-                    .padding(.vertical,20)
-                    .background(Color(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0))
-                
+                    .padding(.top,40)
+                    .padding(.bottom,20)
+                    .background(Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1))
                 // 약물 View
                 MedicationSwiftUIView()
                     .environmentObject(MedicationData())
@@ -223,6 +220,32 @@ struct CalendarSwiftUIView: View {
         
     }
 }
+
+struct CircularProgressBarWithText: View {
+    var progress: Double
+    
+    var body: some View {
+        ZStack {
+            Circle()
+                .stroke(lineWidth: 3)
+                .opacity(0.3)
+                .foregroundColor(Color(red: 0.76, green: 0.82, blue: 1))
+            Circle()
+                .trim(from: 0, to: CGFloat(min(self.progress, 1.0)))
+                .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
+                .rotationEffect(Angle(degrees: -90))
+            VStack {
+                Text("\(Int(progress * 100))%")
+                    .font(Font.custom("SUIT", size: 16).weight(.semibold))
+                    .multilineTextAlignment(.center)
+                    .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
+            }
+        }
+        .frame(width: 60, height: 60)
+    }
+}
+
 
 
 extension Date {
