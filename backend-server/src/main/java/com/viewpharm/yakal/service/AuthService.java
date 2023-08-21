@@ -2,6 +2,7 @@ package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.repository.ImageRepository;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.type.EImageUseType;
 import com.viewpharm.yakal.type.ELoginProvider;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -31,6 +33,10 @@ public class AuthService {
     private final MobileUserRepository mobileUserRepository;
     private final JwtProvider jwtProvider;
     private final OAuth2Util oAuth2Util;
+    private final ImageRepository imageRepository;
+
+    @Value("${spring.image.path}")
+    private String FOLDER_PATH;
 
     public Map<String, String> getRedirectUrl(final ELoginProvider loginProvider) {
         String url = null;
@@ -82,11 +88,17 @@ public class AuthService {
         final String finalSocialId = socialId;
 
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role,
-                        Image.builder()
-                                .imageUseType(EImageUseType.USER)
-                                .uuidName("0_default_image.png")
-                                .build())));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role, null)));
+
+        if (user.getImage() == null){
+            user.setImage(imageRepository.save(Image.builder()
+                    .useObject(user)
+                    .imageUseType(EImageUseType.USER)
+                    .originName("default_image.png")
+                    .uuidName("0_default_image.png")
+                    .type("image/png")
+                    .path(FOLDER_PATH + "0_default_image.png").build()));
+        }
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
