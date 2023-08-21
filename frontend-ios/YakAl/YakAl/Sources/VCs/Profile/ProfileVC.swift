@@ -18,7 +18,7 @@ enum ViewControllerIdentifier: String {
 }
 
 class ProfileVC: UIViewController {
-    var profileHostingController: UIHostingController<ProfileSwiftUIView>?
+    var profileHostingController: UIHostingController<MypageSwiftUIView>?
     
     
     
@@ -26,7 +26,7 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         
         
-        let profileSwiftUIView = ProfileSwiftUIView()
+        let profileSwiftUIView = MypageSwiftUIView()
         
         let profileHostingController = UIHostingController(rootView: profileSwiftUIView)
         addChild(profileHostingController)

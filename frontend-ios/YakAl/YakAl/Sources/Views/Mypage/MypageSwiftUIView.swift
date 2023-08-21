@@ -33,7 +33,7 @@ struct MypageSwiftUIView: View {
                             .font(Font.custom("SUIT", size: 14).weight(.medium))
                             .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
 
-                    }.padding(.top, 45)
+                    }.padding(.top, 60)
                     .padding(.horizontal, 20)
                     
                     /*-------------------- 전문가 공유 버튼 --------------------*/
@@ -63,7 +63,6 @@ struct MypageSwiftUIView: View {
                         
                     }.padding(.horizontal, 20) // 양옆 margin 20
                         .padding(.vertical,20) // 양옆 margin 20
-                    Divider().padding(.vertical, 1)
                     //-------------------- Scorll View --------------------
                     ZStack {
                         Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1).edgesIgnoringSafeArea(.all)

@@ -29,6 +29,12 @@ struct SettingButton: View {
                     .font(Font.custom("SUIT", size: 16).weight(.medium))
                     .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
                 Spacer()
+                if imageName == "house-home" {
+                               Text("경기 성남시 분당구 불정로 6")
+                                   .font(Font.custom("SUIT", size: 14).weight(.medium))
+                                   .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
+                           }
+                
             }
             .frame(maxWidth: .infinity)
             .padding(.horizontal, 20)
@@ -40,6 +46,6 @@ struct SettingButton: View {
 
 struct SettingButton_Previews: PreviewProvider {
     static var previews: some View {
-        SettingButton(action: {}, imageName: nil, title: "ㅎㅇ")
+        SettingButton(action: {}, imageName: "house-home", title: "내 위치 설정")
     }
 }
