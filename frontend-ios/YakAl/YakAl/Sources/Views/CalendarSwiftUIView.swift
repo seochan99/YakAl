@@ -34,18 +34,24 @@ struct CalendarWeekView: View {
     
     // 뷰
     var body: some View {
-        HStack(spacing: 30) {
+        HStack(spacing: 45) {
             ForEach(weekDates, id: \.self) { date in
                 VStack {
                     Text("\(date.weekdayText)")
-                        .font(.headline)
+                        .font(
+                        Font.custom("SUIT", size: 12)
+                        .weight(.bold)
+                        )
                         .foregroundColor(weekdayColor(for: date.weekdayText))
                     Text("\(date.dayText)")
-                        .font(.headline)
+                        .font(
+                        Font.custom("SUIT", size: 12)
+                        .weight(.medium)
+                        )
                         .foregroundColor(weekdayColor(for: date.weekdayText))
                 }
             }
-        }
+        }.frame(maxWidth: .infinity, alignment: .center)
     }
     
     func weekdayColor(for weekdayText: String) -> Color {
@@ -66,35 +72,50 @@ struct CalendarWeekView: View {
 struct CalendarSwiftUIView: View {
     @State private var currentDate = Date()
     @State private var isExpanded = false
+    @State private var currentWeekIndex = 0 // 이 부분을 추가해 주세요
 
+    // 년 월 표현
     var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy년 M월"
         return formatter
     }
-    // Sample data for medications
+    
+    // 예시 약물
     var sampleMedications: [Medicine] = [
         Medicine(id: 1, image: "image_덱시로펜정", name: "약물A", ingredients: "성분 A", dangerStat: 0, isTaken: false),
         Medicine(id: 2, image: "image_덱시로펜정", name: "약물B", ingredients: "성분 B", dangerStat: 1, isTaken: false)
     ]
-    // Generate sample DayModels for a week
-      var sampleWeekDates: [DayModel] {
-          var weekDates: [DayModel] = []
-          let calendar = Calendar.current
-          let startDate = calendar.startOfDay(for: currentDate)
-          for day in 0..<7 {
-              if let date = calendar.date(byAdding: .day, value: day, to: startDate) {
-                  let dayModel = DayModel(date: date, medications: sampleMedications)
-                  weekDates.append(dayModel)
-              }
-          }
-          return weekDates
-      }
+    
+    // 일주일 생성
+    var sampleWeekDates: [[DayModel]] {
+        var allWeekDates: [[DayModel]] = []
+        let calendar = Calendar.current
+        let components = calendar.dateComponents([.year, .month], from: currentDate)
+        guard let startOfMonth = calendar.date(from: components),
+              let range = calendar.range(of: .weekOfMonth, in: .month, for: startOfMonth) else {
+            return allWeekDates
+        }
+        
+        for week in range {
+            var weekDates: [DayModel] = []
+            let startOfWeek = calendar.date(bySetting: .weekOfMonth, value: week, of: startOfMonth)!
+            for day in 0..<7 {
+                if let date = calendar.date(byAdding: .day, value: day, to: startOfWeek) {
+                    let dayModel = DayModel(date: date, medications: sampleMedications)
+                    weekDates.append(dayModel)
+                }
+            }
+            allWeekDates.append(weekDates)
+        }
+        return allWeekDates
+    }
 
+    
     var body: some View {
         ScrollView{
             
-        
+        // --------------- 달력 뷰 ---------------
         VStack(spacing: 16) {
             HStack {
                 Spacer()
@@ -121,43 +142,85 @@ struct CalendarSwiftUIView: View {
             
             // 펼쳐졌을 경우의 뷰
             if isExpanded {
-                         ForEach(0..<5, id: \.self) { _ in
-                             // Display sample week dates using CalendarWeekView
-                             CalendarWeekView(weekDates: sampleWeekDates)
-                         }
-                     } else {
-             // 접혔을떄
-                         CalendarWeekView(weekDates: sampleWeekDates)
-                     }
+                ForEach(sampleWeekDates, id: \.self) { weekDates in
+                    CalendarWeekView(weekDates: weekDates)
+                }
+            } else {
+                CalendarWeekView(weekDates: sampleWeekDates[currentWeekIndex])
+            }
             
             // 달력 펼치기
             Button(action: {
-                self.isExpanded.toggle()
+                withAnimation {
+                    self.isExpanded.toggle()
+                }
             }) {
                 Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
             }
-            
-            // 약물 뷰
-            ForEach(0..<5) { _ in
-                let dummyDayModel = DayModel(date: Date(), medications: [
-                    Medicine(id: 1, image: "image_덱시로펜정", name: "약물A", ingredients: "성분 A", dangerStat: 0, isTaken: false),
-                    Medicine(id: 2, image: "image_덱시로펜정", name: "약물B", ingredients: "성분 B", dangerStat: 1, isTaken: false)
-                ])
+
+            VStack(spacing: 0){
+                HStack{
+                    VStack{
+                        HStack{
+                            Text("2023년 7월 20일")
+                              .font(
+                                Font.custom("SUIT", size: 15)
+                                  .weight(.semibold)
+                              )
+                              .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+     
+                        HStack{
+                            Text("14개 복용 ")
+                              .font(
+                                Font.custom("SUIT", size: 20)
+                                  .weight(.bold)
+                              )
+                              .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                            Text("(15개)")
+                              .font(
+                                Font.custom("SUIT", size: 15)
+                                  .weight(.semibold)
+                              )
+                              .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
+                        }.frame(maxWidth: .infinity, alignment: .leading)
+                        
+                                        
+                    }
+                    Spacer()
+                    VStack{
+                        Text("89%")
+                          .font(
+                            Font.custom("SUIT", size: 16)
+                              .weight(.semibold)
+                          )
+                          .multilineTextAlignment(.center)
+                          .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
+                          .frame(width: 44, height: 16, alignment: .top)
+                    }
+                }.frame(maxWidth: .infinity, alignment: .leading) // 왼쪽에 붙이는 부분
+                    .padding(.horizontal,20)
+                    .padding(.vertical,20)
+                    .background(Color(red: 233.0/255.0, green: 233.0/255.0, blue: 238.0/255.0))
                 
-                VStack {
-                    Text("\(dummyDayModel.fullWeekdayText), \(dummyDayModel.weekdayText)")
-                        .font(.headline)
-                    Text(dummyDayModel.dayText)
-                        .font(.headline)
-                }
-                
-                ForEach(dummyDayModel.medications, id: \.self) { medication in
-                    Text(medication.name)
-                }
+                // 약물 View
+                MedicationSwiftUIView()
+                    .environmentObject(MedicationData())
+                    .padding(.horizontal, 0) // 수평 여백을 없애는 부분
+                    .padding(.vertical, 0) // 수평 여백을 없애는 부분
             }
+        
+                
+
+
         }
-        .padding()
+        .padding(.horizontal, 0) // 수평 여백을 없애는 부분
+        
+
+        // --------------- 약물 뷰 ---------------
+
     }
+        
     }
 }
 
