@@ -19,13 +19,12 @@ import java.time.LocalDate;
 public class UpdateUserInfoDto {
 
     @NotBlank
-    private String nickname;
+    private String name;
 
     @NotNull
     private Boolean isDetail;
 
-    @Date
-    @Past
+    // @Date
     @NotNull
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;

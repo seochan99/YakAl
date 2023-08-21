@@ -3,11 +3,13 @@ package com.viewpharm.yakal.validator;
 import com.viewpharm.yakal.annotation.Date;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+@Slf4j
 public class DateValidator implements ConstraintValidator<Date, String> {
 
     @Override
@@ -20,6 +22,8 @@ public class DateValidator implements ConstraintValidator<Date, String> {
         if (value == null || value.length() == 0) {
             return false;
         }
+
+        log.info("{}", value);
 
         try {
             LocalDate.parse(value, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
