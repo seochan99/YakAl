@@ -68,31 +68,71 @@ struct MypageSwiftUIView: View {
                     ZStack {
                         Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1).edgesIgnoringSafeArea(.all)
                         ScrollView {
-                            Button("자가진단 테스트 \(user.testCnt)/6") {
-                                
-                            }
-                            Button("앱설정") {
-                                // 앱설정 버튼 액션
-                            }
-                            Button("알림설정") {
-                                // 알림설정 버튼 액션
-                            }
-                            Button("내 위치 설정") {
-                                // 내 위치 설정 버튼 액션
-                            }
                             
-                            
-                            Button("약알에게 바라는 점") {
-                                // 약알에게 바라는 점 버튼 액션
+                            Button(action: {}) {
+                                HStack{
+                                    Text("자가 진단 테스트")
+                                      .font(
+                                        Font.custom("SUIT", size: 16)
+                                          .weight(.bold)
+                                      )
+                                      .foregroundColor(.white)
+                                    Spacer()
+                                    Text("\(user.testCnt)/6")
+                                      .font(
+                                        Font.custom("SUIT", size: 20)
+                                          .weight(.semibold)
+                                      )
+                                      .foregroundColor(.white)
+                                }
+                            }.padding(.horizontal, 24)
+                                .padding(.vertical, 28)
+                                .background(Color(red: 0.15, green: 0.4, blue: 0.96))
+                                .cornerRadius(16)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 28)
+                            VStack(spacing: 0){
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: "gear", title: "앱 설정")
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: "bell", title: "알림 설정")
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: "house-home", title: "내 위치 설정")
                             }
-                            Button("자주 묻는 질문") {
-                                // 자주 묻는 질문 버튼 액션
-                            }
-                            Button("버전 정보") {
-                                // 버전 정보 버튼 액션
-                            }
-                            Button("전문가 인증") {
-                                // 전문가 인증 버튼 액션
+                            VStack(spacing: 0){
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: nil, title: "약알에게 바라는 점")
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: nil, title: "자주묻는 질문")
+                                    HStack {
+                                        Text("버전 정보")
+                                            .font(Font.custom("SUIT", size: 16).weight(.medium))
+                                            .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                                        Spacer()
+                                        Text("v0.0.1")
+                                          .font(
+                                            Font.custom("SUIT", size: 14)
+                                              .weight(.medium)
+                                          )
+                                          .multilineTextAlignment(.trailing)
+                                          .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
+
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical,15)
+                                    .background(Color(red: 1, green: 1, blue: 1))
+                                }
+
+                            VStack(spacing: 0){
+                                SettingButton(action: {
+                                    // 버튼을 클릭했을 때의 액션
+                                }, imageName: nil, title: "전문가 인증")
                             }
                         }.background(Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1))
                             
@@ -103,6 +143,38 @@ struct MypageSwiftUIView: View {
             
         }
 }
+
+//MARK: - SettingButton View
+struct SettingButton: View {
+    let action: () -> Void
+    let imageName: String?
+    let title: String
+
+    init(action: @escaping () -> Void, imageName: String?, title: String) {
+        self.action = action
+        self.imageName = imageName
+        self.title = title
+    }
+
+    var body: some View {
+        Button(action: action) {
+            HStack {
+                if let validImageName = imageName {  // 옵셔널 바인딩을 사용하여 이미지 이름이 nil이 아닌 경우에만 Image를 표시
+                               Image(validImageName)
+                           }
+                Text(title)
+                    .font(Font.custom("SUIT", size: 16).weight(.medium))
+                    .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                Spacer()
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 20)
+            .padding(.vertical,15)
+            .background(Color(red: 1, green: 1, blue: 1))
+        }
+    }
+}
+
 
 struct MypageSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {
