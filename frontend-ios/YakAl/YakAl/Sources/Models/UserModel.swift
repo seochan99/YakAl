@@ -17,6 +17,10 @@ struct User {
     // 노인 모드
     var isSenior: Bool = false
     
+    // 테스트 진행 상태
+    var testCnt: Int = 0
+    
+    
     public init() {}
 
 }
