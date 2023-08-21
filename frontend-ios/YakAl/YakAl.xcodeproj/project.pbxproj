@@ -29,6 +29,7 @@
 		9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A27B2A6D697E00F507BD /* Step1VC.swift */; };
 		9888A2802A6D7C8800F507BD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A27F2A6D7C8800F507BD /* DetailViewController.swift */; };
 		9890C8F22A93C8940007299B /* ProfileSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */; };
+		9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */; };
 		98926FE62A778537001AB165 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE52A778537001AB165 /* TodoModel.swift */; };
 		98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE72A7785D6001AB165 /* TodoTVC.swift */; };
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
@@ -82,6 +83,7 @@
 		9888A27B2A6D697E00F507BD /* Step1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step1VC.swift; sourceTree = "<group>"; };
 		9888A27F2A6D7C8800F507BD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSwiftUIView.swift; sourceTree = "<group>"; };
+		9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButtonSwiftUI.swift; sourceTree = "<group>"; };
 		98926FE52A778537001AB165 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
 		98926FE72A7785D6001AB165 /* TodoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTVC.swift; sourceTree = "<group>"; };
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
@@ -138,8 +140,10 @@
 		9811AE422A93C60200FD9B82 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				9890C8F42A93DCBC0007299B /* New Group */,
 				9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */,
 				9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */,
+				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -235,6 +239,13 @@
 				9888A2792A6D694F00F507BD /* Step4VC.swift */,
 			);
 			path = Store;
+			sourceTree = "<group>";
+		};
+		9890C8F42A93DCBC0007299B /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -578,6 +589,7 @@
 				98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */,
 				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
 				9811AE442A93C61B00FD9B82 /* MypageSwiftUIView.swift in Sources */,
+				9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
