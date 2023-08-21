@@ -3,7 +3,7 @@ import { Outlet, useNavigation } from "react-router-dom";
 
 import Footer from "@/layout/footer";
 import Header from "../header";
-import Profile from "@/component/profile";
+import Profile from "@/layout/main/child/profile";
 import NavBar from "@/component/navbar";
 import { MAIN_DASHBOARD_ROUTE } from "@/router/router";
 

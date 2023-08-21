@@ -85,7 +85,7 @@ public class JwtProvider implements InitializingBean {
         return new JwtTokenDto(accessToken, refreshToken);
     }
 
-    public JwtTokenDto reissue(final String refreshToken) throws CommonException {
+    public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) throws CommonException {
         final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
@@ -95,7 +95,7 @@ public class JwtProvider implements InitializingBean {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
-        return createTotalToken(id, role, EPlatform.WEB);
+        return createTotalToken(id, role, platform);
     }
 
     public Claims validateToken(final String token) throws CommonException {

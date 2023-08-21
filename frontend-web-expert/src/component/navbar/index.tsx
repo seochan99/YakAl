@@ -5,7 +5,7 @@ import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/router/router";
-import NavbarTooltip from "../navbar-tooltip";
+import NavbarTooltip from "./child/navbar-tooltip";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -60,6 +60,12 @@ function NavBar() {
       <TextNav>
         <NavItem to="/" className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}>
           대시보드
+        </NavItem>
+        <NavItem
+          to="/patient"
+          className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
+        >
+          환자 목록
         </NavItem>
         <NavItem to="/info" className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}>
           내 정보

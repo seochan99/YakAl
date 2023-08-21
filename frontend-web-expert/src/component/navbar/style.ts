@@ -36,7 +36,7 @@ export const TextNav = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 2rem;
+  gap: 1.2rem;
   padding: 0 1rem;
 `;
 

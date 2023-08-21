@@ -67,3 +67,22 @@ export const DoctorIcon = styled.img`
   content: url("/src/asset/doctor-icon.png");
   width: 5rem;
 `;
+
+export const CertTextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+`;
+
+export const SubEnrollText = styled.span`
+  color: #7c7c94;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5rem;
+  margin-left: 2rem;
+`;
+
+export const Blue = styled.span`
+  color: #2666f6;
+  font-weight: 700;
+`;
