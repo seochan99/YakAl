@@ -29,7 +29,7 @@ public class ImageService {
     private final MedicalRepository medicalRepository;
     private final ImageRepository imageRepository;
 
-    @Value("E:\\Work\\YakAl\\backend-server\\src\\main\\resources\\")
+    @Value("${spring.image.path}")
     private String FOLDER_PATH;
 
     public String uploadImage(Long useId, EImageUseType imageUseType, MultipartFile file){
