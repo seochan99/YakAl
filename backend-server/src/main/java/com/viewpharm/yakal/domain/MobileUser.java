@@ -3,14 +3,7 @@ package com.viewpharm.yakal.domain;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.ESex;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -68,6 +61,13 @@ public class MobileUser extends User {
 
     @Column(name = "dinnerTime")
     private LocalTime dinnerTime;
+
+    /**
+     * ONE-TO-ONE RELATION
+     */
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Image image;
 
     /**
      * ONE-TO-MANY RELATION
