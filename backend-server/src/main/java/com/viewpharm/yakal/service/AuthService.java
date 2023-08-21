@@ -1,7 +1,9 @@
 package com.viewpharm.yakal.service;
 
+import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.MobileUser;
 import com.viewpharm.yakal.security.JwtProvider;
+import com.viewpharm.yakal.type.EImageUseType;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.type.EPlatform;
@@ -80,7 +82,11 @@ public class AuthService {
         final String finalSocialId = socialId;
 
         final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role)));
+                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role,
+                        Image.builder()
+                                .imageUseType(EImageUseType.USER)
+                                .uuidName("0_default_image.png")
+                                .build())));
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
