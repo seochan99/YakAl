@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dl_calendar"
+    app:layout_behavior="com.google.android.material.bottom-sheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/overlapLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:id="@+id/nicknameTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="닉네임 수정"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            style="@style/default_font"
+
+            app:layout_constraintBottom_toBottomOf="@+id/nicknameCloseButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/nicknameCloseButton" />
+
+        <TextView
+            android:id="@+id/nicknameContentTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="약알이 어떻게 불러드릴까요?"
+            android:textSize="14sp"
+            android:textColor="#626272"
+            style="@style/default_font"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/nicknameTitleTextView"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/nicknameCloseButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_custom_big_close"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/nicknameEditText"
+            style="@style/default_font"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/et_rounded_corner_rectangle"
+
+            android:hint="5자 이내로 입력"
+            android:textSize="20sp"
+            android:maxLength="5"
+            android:singleLine="true"
+            android:privateImeOptions="defaultInputmode=korean;"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nicknameContentTextView" />
+
+        <ImageButton
+            android:id="@+id/textClearButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:src="@drawable/ic_custom_oval_cancel"
+            android:layout_marginEnd="24dp"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@+id/nicknameEditText"
+            app:layout_constraintEnd_toEndOf="@+id/nicknameEditText"
+            app:layout_constraintTop_toTopOf="@+id/nicknameEditText"
+            android:importantForAccessibility="no" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/nextButton"
+            style="@style/default_font"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/btn_sign_up_next"
+            android:enabled="false"
+            android:outlineProvider="none"
+            android:text="완료"
+
+            android:textColor="@drawable/btn_sign_up_text_color"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nicknameEditText" />
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
