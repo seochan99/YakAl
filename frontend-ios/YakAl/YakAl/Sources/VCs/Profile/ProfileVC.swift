@@ -7,6 +7,7 @@
 
 import UIKit
 import KakaoSDKUser
+import SwiftUI
 
 enum StoryboardIdentifier: String {
     case main = "Main"
@@ -17,9 +18,29 @@ enum ViewControllerIdentifier: String {
 }
 
 class ProfileVC: UIViewController {
+    var profileHostingController: UIHostingController<ProfileSwiftUIView>?
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        let profileSwiftUIView = ProfileSwiftUIView()
+        
+        let profileHostingController = UIHostingController(rootView: profileSwiftUIView)
+        addChild(profileHostingController)
+        profileHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        // Add CalendarSwiftUIView to the main view
+        view.addSubview(profileHostingController.view)
+        NSLayoutConstraint.activate([
+            profileHostingController.view.topAnchor.constraint(equalTo: view.topAnchor),
+            profileHostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileHostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            profileHostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        profileHostingController.didMove(toParent: self)
     }
     
     @IBAction func logout(_ sender: UIButton) {

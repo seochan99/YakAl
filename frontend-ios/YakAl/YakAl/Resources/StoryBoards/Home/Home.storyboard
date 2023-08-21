@@ -21,7 +21,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--HomeVC-->
+        <!--내 근처-->
         <scene sceneID="tSh-hZ-ZGZ">
             <objects>
                 <viewController storyboardIdentifier="HomeVC" id="gsW-TC-H92" customClass="HomeVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
@@ -376,6 +376,9 @@
                             <constraint firstItem="M3x-He-6Ys" firstAttribute="leading" secondItem="vvN-By-1s4" secondAttribute="leading" constant="233" id="tSg-f4-wMS"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="내 근처" selectedImage="icon_home_fill" id="weu-nE-Jne" userLabel="Home">
+                        <imageReference key="image" image="icon_home" symbolScale="default"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="eaM-Ur-6Np"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
