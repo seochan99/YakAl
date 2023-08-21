@@ -53,6 +53,21 @@ public class Board extends BaseCreateEntity {
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
+    //-----------------------------------------------------------------
+    public void addCnt() {
+        this.readCnt++;
+    }
+
+    public void modifyBoard(String title, String content, ERegion region) {
+        this.title = title;
+        this.content = content;
+        this.region = region;
+    }
+
+    public void deleteBoard() {
+        this.isDeleted = true;
+    }
+
     @Builder
     public Board(String title, String content, User user, ERegion region) {
         this.title = title;

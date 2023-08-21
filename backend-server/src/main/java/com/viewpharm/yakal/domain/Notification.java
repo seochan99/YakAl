@@ -52,6 +52,14 @@ public class Notification {
     @JoinColumn(name = "user_id", nullable = false)
     private MobileUser mobileUser;
 
+    public void readNoti() {
+        this.isRead = true;
+    }
+
+    public void deleteNofification() {
+        this.status = false;
+    }
+
     @Builder
     public Notification(String title, String content, Boolean isRead, Timestamp createdDate, Boolean status, MobileUser mobileUser) {
         this.title = title;
@@ -62,9 +70,5 @@ public class Notification {
         this.mobileUser = mobileUser;
     }
 
-    @Builder
-    public Notification(final Boolean isRead) {
-        this.isRead = isRead;
-    }
 
 }

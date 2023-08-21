@@ -63,7 +63,7 @@ public class NotificationService {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
 
-        notification.builder().isRead(Boolean.TRUE).build();
+        notification.readNoti();
 
         return Boolean.TRUE;
     }
@@ -75,8 +75,8 @@ public class NotificationService {
         if (mobileUser.getId() != notification.getMobileUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
-        notification.builder().status(false).build();
-        //notificationRepository.delete(notification);
+        notification.deleteNofification();
+
         return Boolean.TRUE;
     }
 }
