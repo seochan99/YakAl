@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.UpdateIsAllowedNotificationDto;
 import com.viewpharm.yakal.dto.request.UpdateIsDetailDto;
 import com.viewpharm.yakal.dto.request.UpdateNameDto;
@@ -33,9 +33,9 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "사용자 정보 가져오기")
-    public ResponseDto<MobileUser> getUserInfo(@UserId Long id) {
-        final MobileUser mobileUser = userService.getMobileUserInfo(id);
-        return ResponseDto.ok(mobileUser);
+    public ResponseDto<User> getUserInfo(@UserId Long id) {
+        final User user = userService.getUserInfo(id);
+        return ResponseDto.ok(user);
     }
 
     @PatchMapping("")

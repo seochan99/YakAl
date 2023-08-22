@@ -9,12 +9,12 @@ import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 import com.google.gson.JsonParseException;
 
-import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.MessageDto;
 import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.repository.MobileUserRepository;
+import com.viewpharm.yakal.repository.UserRepository;
 import javapns.Push;
 import javapns.communication.exceptions.CommunicationException;
 import javapns.communication.exceptions.KeystoreException;
@@ -37,11 +37,11 @@ import java.util.List;
 public class NotificationUtil {
 
     private final FirebaseMessaging firebaseMessaging;
-    private final MobileUserRepository mobileUserRepository;
+    private final UserRepository userRepository;
 
     //ios 푸시알림
     public void sendApnFcmtoken(NotificationUserRequestDto requestDto) throws Exception {
-        MobileUser user = mobileUserRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         if (user.getDeviceToken() != null) {
             try {
                 PushNotificationPayload payload = PushNotificationPayload.complex();
@@ -84,7 +84,7 @@ public class NotificationUtil {
 
     //안드로이드 버전 1
     public void sendNotificationByToken(NotificationUserRequestDto requestDto) {
-        MobileUser user = mobileUserRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (user.getDeviceToken() != null) {
             Notification notification = Notification.builder()
@@ -114,7 +114,7 @@ public class NotificationUtil {
     private final ObjectMapper objectMapper;
 
     public void sendMessageTo(NotificationUserRequestDto requestDto) throws IOException {
-        MobileUser user = mobileUserRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         if (user.getDeviceToken() != null) {
             String message = makeMessage(user.getDeviceToken(), requestDto.getTitle(), requestDto.getBody());
             OkHttpClient client = new OkHttpClient();

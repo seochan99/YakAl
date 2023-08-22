@@ -86,15 +86,6 @@ public class AuthController {
         authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
     }
 
-//    아직 검증되지 않았으므로 주석처리
-//    @GetMapping("/apple/callback")
-//    @Operation(summary = "Apple 웹 로그인", description = "Apple 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-//    public void loginUsingAppleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
-//        final JwtTokenDto jwtTokenDto = authService.login(code, ELoginProvider.KAKAO, ERole.ROLE_WEB);
-//
-//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.APPLE);
-//    }
-
     /**
      * Web Social Login Redirect URL
      */
@@ -128,11 +119,6 @@ public class AuthController {
         authService.logout(id);
         return ResponseDto.ok(null);
     }
-
-    /*
-     * 1. JWT Validation => VALID, EXPIRED, INVALID
-     * 2. IS_REGISTERED => T/F
-     */
 
     /**
      * Get Access Token Validity

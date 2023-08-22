@@ -17,21 +17,21 @@ import java.awt.*;
 public class Medical {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="id")
     private Long id;
 
-    @Column
+    @Column(name="medical_name")
     private String medicalName;
 
-    @Column
+    @Column(name="medical_introduction")
     private String medicalIntroduction;
 
     //서울시 성북구...
-    @Column
+    @Column(name="medical_location")
     private String medicalLocation;
 
     //좌표
-    @Column
+    @Column(name="medical_point")
     private Point medicalPoint;
 
     // ----------------------------------------------------------

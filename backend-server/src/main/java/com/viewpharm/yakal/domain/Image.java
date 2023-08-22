@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.util.UUID;
+
 @Entity
 @Getter
 @Setter
@@ -28,10 +30,7 @@ public class Image {
     @OneToOne(fetch = FetchType.LAZY)
     private Medical medical;
 
-    @Column(name = "origin_name", nullable = false)
-    private String originName;
-
-    @Column(name = "uuid_name", nullable = false)
+    @Column(name = "uuid_name", columnDefinition = "CHAR(41)", nullable = false)
     private String uuidName;
 
     @Column(name = "type", nullable = false)
@@ -41,7 +40,7 @@ public class Image {
     private String path;
 
     @Builder
-    public Image(Object useObject, EImageUseType imageUseType, String originName, String uuidName, String type, String path) {
+    public Image(Object useObject, EImageUseType imageUseType, String uuidName, String type, String path) {
         switch (imageUseType) {
             case USER -> {
                 this.user = (User) useObject;
@@ -52,14 +51,12 @@ public class Image {
                 this.user = null;
             }
         }
-        this.originName = originName;
         this.uuidName = uuidName;
         this.type = type;
         this.path = path;
     }
 
-    public void updateImage(String originName, String uuidName, String type, String path) {
-        setOriginName(originName);
+    public void updateImage(String uuidName, String type, String path) {
         setUuidName(uuidName);
         setType(type);
         setPath(path);

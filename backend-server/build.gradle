@@ -77,12 +77,6 @@ dependencies {
 	implementation 'com.squareup.okhttp3:okhttp:4.10.0'
 	implementation 'org.drjekyll:javapns:2.4.2'
 
-	// QueryDSL
-	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
 	// Schedule Lock
 	implementation 'net.javacrumbs.shedlock:shedlock-spring:5.6.0'
 	implementation 'net.javacrumbs.shedlock:shedlock-provider-jdbc-template:5.6.0'
@@ -174,21 +168,4 @@ tasks.register('copyGitSubmodule', Copy) {
 
 jar {
 	enabled = false
-}
-
-/**
- * Query DSL Build Options (선택사항)
- */
-def querydslDir = "$buildDir/generated/querydsl"
-
-sourceSets {
-	main.java.srcDirs += [ querydslDir, "$projectDir/src/main/java" ]
-}
-
-tasks.withType(JavaCompile) {
-	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-}
-
-clean.doLast {
-	file(querydslDir).deleteDir()
 }
