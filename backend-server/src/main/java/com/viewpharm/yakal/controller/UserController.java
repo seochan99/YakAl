@@ -7,6 +7,7 @@ import com.viewpharm.yakal.dto.request.UpdateIsDetailDto;
 import com.viewpharm.yakal.dto.request.UpdateNameDto;
 import com.viewpharm.yakal.dto.request.UpdateUserInfoDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.dto.response.UserInfoDto;
 import com.viewpharm.yakal.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,9 +34,10 @@ public class UserController {
 
     @GetMapping("")
     @Operation(summary = "사용자 정보 가져오기")
-    public ResponseDto<User> getUserInfo(@UserId Long id) {
+    public ResponseDto<UserInfoDto> getUserInfo(@UserId Long id) {
         final User user = userService.getUserInfo(id);
-        return ResponseDto.ok(user);
+        final UserInfoDto userInfoDto = new UserInfoDto(user.getName());
+        return ResponseDto.ok(userInfoDto);
     }
 
     @PatchMapping("")
