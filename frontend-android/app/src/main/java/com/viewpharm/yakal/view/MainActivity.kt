@@ -3,6 +3,8 @@ package com.viewpharm.yakal.view
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.adapter.PillAdapter
@@ -62,5 +64,11 @@ class MainActivity : AppCompatActivity(), PillAdapter.OnOverlapItemCallBack {
     override fun onStart() {
         Timber.d("#1onStart")
         super.onStart()
+    }
+
+    fun displayToast(message: String) {
+        Handler().postDelayed(Runnable {
+            Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        }, 500)
     }
 }

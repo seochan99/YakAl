@@ -129,6 +129,11 @@ public class AuthController {
         return ResponseDto.ok(null);
     }
 
+    /*
+     * 1. JWT Validation => VALID, EXPIRED, INVALID
+     * 2. IS_REGISTERED => T/F
+     */
+
     /**
      * Get Access Token Validity
      */

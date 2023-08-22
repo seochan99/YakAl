@@ -3,14 +3,7 @@ package com.viewpharm.yakal.domain;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.ESex;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.PrimaryKeyJoinColumn;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -70,6 +63,13 @@ public class MobileUser extends User {
     private LocalTime dinnerTime;
 
     /**
+     * ONE-TO-ONE RELATION
+     */
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Image image;
+
+    /**
      * ONE-TO-MANY RELATION
      */
     @OneToMany(mappedBy = "mobileUser", fetch = FetchType.LAZY)
@@ -83,13 +83,15 @@ public class MobileUser extends User {
 
     public MobileUser(final String socialId,
                       final ELoginProvider loginProvider,
-                      final ERole role) {
+                      final ERole role,
+                      final Image image) {
         super(role);
         this.socialId = socialId;
         this.loginProvider = loginProvider;
         this.isLogin = true;
         this.isDetail = true;
         this.isAllowedNotification = true;
+        this.image = image;
     }
 
     public void logout() {

@@ -9,6 +9,7 @@ class HomeVC: UIViewController{
     
     @IBOutlet weak var emptyView: UIView!
     
+    @IBOutlet weak var todayDate: UILabel!
     @IBOutlet weak var addModalView: UIView!
     @IBOutlet weak var AddModalButtonView: UIView!
     
@@ -40,7 +41,8 @@ class HomeVC: UIViewController{
     var isShowFloating: Bool = false
     
     
-    var medicationData = MedicationData()
+    var medicationData = MedicationData.shared
+
     
     var medicationHostingController: UIHostingController<MedicationSwiftUIView>?
 
@@ -69,13 +71,11 @@ class HomeVC: UIViewController{
             super.viewDidLoad()
             todayMedicinCnt.text = "총 \(medicationData.totalMedicineCount)개"
 
+            updateTodayDateLabel()
             
             if medicationData.medications.isEmpty {
                 emptyView.isHidden = false
                 self.view.bringSubviewToFront(floatingStackView)
-
-
-                
             }else{
                 self.view.bringSubviewToFront(floatingStackView)
                 // Swift UI View만들기
@@ -106,7 +106,16 @@ class HomeVC: UIViewController{
             
         }
     
-    
+    func updateTodayDateLabel() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "yyyy년 M월 d일"
+        
+        let currentDate = Date()
+        let formattedDate = dateFormatter.string(from: currentDate)
+        
+        todayDate.text = formattedDate
+    }
         
         func setupProgressCircle() {
             // 진행바 원 중심의 x 좌표와 y 좌표 설정
@@ -197,7 +206,8 @@ class HomeVC: UIViewController{
         @IBAction func AlertButtonAction(_ sender: UIButton) {
             print("Alert")
             animateProgress()
-            print(medicationData.totalCompletedCount)
+            print(medicationData.medications)
+            
         }
         @IBAction func EnvelopeMedicineButtonAction(_ sender: UIButton) {
             print("EnvelopeMedicineButtonAction")
@@ -209,7 +219,14 @@ class HomeVC: UIViewController{
             print("DirectMedicineButtonAction")
         }
         
+    @IBAction func goCalendarViewAction(_ sender: Any) {
         
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            let CalendarView = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as! CalendarViewController
+            print("선택됨!")
+            navigationController?.pushViewController(CalendarView, animated: true)
+    }
+    
         @IBAction func floatingButtonAction(_ sender: UIButton) {
             if isShowFloating {
                 // 약 추가 목록버튼모달 없애기
