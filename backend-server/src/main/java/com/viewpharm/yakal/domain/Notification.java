@@ -50,16 +50,16 @@ public class Notification {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
-    private MobileUser mobileUser;
+    private User user;
 
     @Builder
-    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, Boolean status, MobileUser mobileUser) {
+    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, Boolean status, User user) {
         this.title = title;
         this.content = content;
         this.isRead = false;
         this.createdDate = Timestamp.valueOf(LocalDateTime.now());
         this.status = true;
-        this.mobileUser = mobileUser;
+        this.user = user;
     }
 
     @Builder

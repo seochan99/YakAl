@@ -1,29 +1,22 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.dto.NotificationDto;
-import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.repository.MobileUserRepository;
-import com.viewpharm.yakal.repository.MobileUserRepository.MobileUserNotificationForm;
+import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.repository.NotificationRepository;
-import com.viewpharm.yakal.type.EDosingTime;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,13 +28,13 @@ public class NotificationService {
 
     private final NotificationRepository notificationRepository;
     private final NotificationUtil notificationUtil;
-    private final MobileUserRepository mobileUserRepository;
+    private final UserRepository userRepository;
 
     public List<NotificationDto> readNotification(Long userId, Long pageNum, Long num) {
-        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
-        Page<Notification> notifications = notificationRepository.findByMobileUserAndStatus(mobileUser, paging, true);
+        Page<Notification> notifications = notificationRepository.findByUserAndStatus(user, paging, true);
 
         List<NotificationDto> notificationDtoList = new ArrayList<>();
         for (Notification notification : notifications) {
@@ -56,10 +49,10 @@ public class NotificationService {
     }
 
     public Boolean updateNotification(Long userId, Long notificationId) {
-        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Notification notification = notificationRepository.findByIdAndMobileUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
-        if (mobileUser.getId() != notification.getMobileUser().getId()) {
+        if (user.getId() != notification.getUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
 
@@ -69,10 +62,10 @@ public class NotificationService {
     }
 
     public Boolean deleteNotification(Long userId, Long notificationId) {
-        MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Notification notification = notificationRepository.findByIdAndMobileUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Notification notification = notificationRepository.findByIdAndUserId(notificationId, userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTIFICATION));
 
-        if (mobileUser.getId() != notification.getMobileUser().getId()) {
+        if (user.getId() != notification.getUser().getId()) {
             throw new CommonException(ErrorCode.NOT_EQUAL);
         }
         notification.builder().status(false).build();

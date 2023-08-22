@@ -29,8 +29,8 @@ public class ImageService {
     private final MedicalRepository medicalRepository;
     private final ImageRepository imageRepository;
 
-    @Value("${spring.image.path}")
-    private String FOLDER_PATH;
+    // @Value("${spring.image.path}")
+    private final String FOLDER_PATH = "/image";
 
     public String uploadImage(Long useId, EImageUseType imageUseType, MultipartFile file){
         // File Path Fetch
