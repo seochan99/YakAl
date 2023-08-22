@@ -1,4 +1,4 @@
-import { TUser, users } from "@/state/user";
+import { TUser, users } from "@/uiui/user";
 
 export type TPatientInfoLoaderArgs = {
   patientId: string;
