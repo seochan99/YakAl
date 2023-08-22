@@ -13,10 +13,11 @@ import org.hibernate.annotations.DynamicUpdate;
 @NoArgsConstructor
 @Table(name = "risks")
 public class Risk {
-    @Id
-    @Column(name = "id")
-    private String id;
 
-    @Column(name = "score", nullable = false)
+    @Id
+    @Column(name = "id", columnDefinition = "CHAR(7)")
+    private String atcCode;
+
+    @Column(name = "score", columnDefinition = "TINYINT(1)", nullable = false)
     private int score;
 }

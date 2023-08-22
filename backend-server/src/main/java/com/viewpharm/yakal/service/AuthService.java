@@ -94,7 +94,6 @@ public class AuthService {
             user.setImage(imageRepository.save(Image.builder()
                     .useObject(user)
                     .imageUseType(EImageUseType.USER)
-                    .originName("default_image.png")
                     .uuidName("0_default_image.png")
                     .type("image/png")
                     .path(FOLDER_PATH + "0_default_image.png").build()));

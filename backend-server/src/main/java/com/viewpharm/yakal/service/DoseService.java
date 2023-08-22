@@ -72,7 +72,7 @@ public class DoseService {
                     .KDCode(result.getKDCode())
                     .ATCCode(result.getATCCode())
                     .isTaken(result.getIsTaken())
-                    .isOverlap(overlapMap.containsKey(result.getATCCode().getId()))
+                    .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();

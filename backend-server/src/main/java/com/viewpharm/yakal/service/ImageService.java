@@ -29,12 +29,20 @@ public class ImageService {
     private final MedicalRepository medicalRepository;
     private final ImageRepository imageRepository;
 
+    private final String IMAGE_CONTENT_PREFIX = "image/";
+
     // @Value("${spring.image.path}")
     private final String FOLDER_PATH = "/image";
 
-    public String uploadImage(Long useId, EImageUseType imageUseType, MultipartFile file){
+    public String uploadImage(Long useId, EImageUseType imageUseType, MultipartFile file) {
+        final String contentType = file.getContentType();
+
+        if (!contentType.startsWith(IMAGE_CONTENT_PREFIX)) {
+            throw new CommonException(ErrorCode.NOT_IMAGE_ERROR);
+        }
+
         // File Path Fetch
-        String uuidImageName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String uuidImageName = UUID.randomUUID().toString() + "." + contentType.substring(IMAGE_CONTENT_PREFIX.length());
         String filePath = FOLDER_PATH + uuidImageName;
 
         // File Upload
@@ -63,7 +71,7 @@ public class ImageService {
             boolean result = currentFile.delete();
         }
 
-        findImage.updateImage(file.getOriginalFilename(), uuidImageName,file.getContentType(), filePath);
+        findImage.updateImage(uuidImageName, file.getContentType(), filePath);
 
         return uuidImageName;
     }

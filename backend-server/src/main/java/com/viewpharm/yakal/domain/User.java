@@ -34,7 +34,7 @@ public class User {
     /**
      * COLUMNS
      */
-    @Column(name = "name")
+    @Column(name = "name", columnDefinition = "CHAR(20)")
     private String name;
 
     @Column(name = "role", nullable = false)
