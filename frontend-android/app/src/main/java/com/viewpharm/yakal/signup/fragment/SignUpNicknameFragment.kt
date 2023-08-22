@@ -13,41 +13,29 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import com.viewpharm.yakal.R
+import com.viewpharm.yakal.base.BaseFragment
 import com.viewpharm.yakal.databinding.FragmentSignUpNicknameBinding
+import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
+import com.viewpharm.yakal.signup.viewmodel.NicknameViewModel
+import com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel
 import java.util.regex.Pattern
 
 
-class SignUpNicknameFragment : Fragment() {
-    private var _binding: FragmentSignUpNicknameBinding?= null
-    private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class SignUpNicknameFragment : BaseFragment<FragmentSignUpNicknameBinding, NicknameViewModel>(R.layout.fragment_sign_up_nickname) {
+    private val safeArgs: SignUpNicknameFragmentArgs by navArgs()
+
+    override val baseViewModel: NicknameViewModel by viewModels {
+        NicknameViewModel.NicknameViewModelFactory()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding =  FragmentSignUpNicknameBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun initView() {
+        super.initView()
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setTextView()
-        setEditText()
-        onButtonClickEvent(view)
-    }
-
-    private fun setTextView() {
         val titleText: String = "약알에서 사용할\n닉네임을 입력해주세요"
         binding.titleTextView.text = titleText.run {
             SpannableStringBuilder(this).apply {
@@ -59,30 +47,46 @@ class SignUpNicknameFragment : Fragment() {
                 )
             }
         }
+
+        val filterSpace = InputFilter { source, _, _, _, _, _ ->
+            baseViewModel.filterKorean(source)
+        }
+
+        binding.nicknameEditText.filters = arrayOf(filterSpace, InputFilter.LengthFilter(5))
     }
 
-    private fun onButtonClickEvent(view: View) {
-        binding.nextButton.setOnClickListener {
-            val pattern: Pattern = Pattern.compile("^[가-힣]+$")
-            if (pattern.matcher(binding.nicknameEditText.text.toString()).matches()) {
-                val safeArgs: SignUpNicknameFragmentArgs by navArgs()
+    override fun initViewModel() {
+        super.initViewModel()
+        binding.baseViewModel = baseViewModel
+    }
 
+    override fun initListener(view: View) {
+        super.initListener(view)
+
+        baseViewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
                 Navigation.findNavController(view)
                     .navigate(
                         SignUpNicknameFragmentDirections.actionToSignUpModeFragment(
                             safeArgs.birthday,
                             safeArgs.sex,
-                            binding.nicknameEditText.text.toString()
+                            baseViewModel.nickname.value?.nickname.toString()
                         )
                     )
-            } else {
-                Toast.makeText(context, "초성, 중성 입력이 존재합니다.", Toast.LENGTH_SHORT).show()
             }
-        }
+        })
 
-        binding.textClearButton.setOnClickListener {
-            binding.nicknameEditText.setText("")
-        }
+        baseViewModel.inputToastEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(context, "한글만 입력 가능합니다", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        baseViewModel.buttonToastEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(context, "초성, 중성 입력이 존재합니다", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     private fun setEditText() {

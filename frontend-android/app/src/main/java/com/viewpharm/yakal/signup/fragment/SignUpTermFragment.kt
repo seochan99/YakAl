@@ -59,12 +59,6 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
 
     override fun initListener(view: View) {
         super.initListener(view)
-
-        // All Agree CheckBox Click Event
-        baseViewModel.agreeState.observe(this.viewLifecycleOwner, Observer {
-            // 해야할 행동이 없음
-        })
-
         // Next Button Click Event
         nextActionViewModel.addScheduleEvent.observe(this.viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
