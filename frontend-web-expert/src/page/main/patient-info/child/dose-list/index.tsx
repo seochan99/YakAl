@@ -21,6 +21,7 @@ import {
   YellowIcon,
   RedIcon,
   IconBox,
+  TotalCount,
 } from "./style";
 import { useEffect, useRef, useState } from "react";
 
@@ -99,11 +100,13 @@ function DoseList({ patientId }: TDoseListProps) {
         <Title>복약 목록</Title>
         <IconBox>
           <GreenIcon />
-          {`${doseList.filter((dose) => dose.polypharmacyRisk === 0 || dose.polypharmacyRisk === 1).length}개`}
+          <TotalCount>{`${
+            doseList.filter((dose) => dose.polypharmacyRisk === 0 || dose.polypharmacyRisk === 1).length
+          }개`}</TotalCount>
           <YellowIcon />
-          {`${doseList.filter((dose) => dose.polypharmacyRisk === 2).length}개`}
+          <TotalCount>{`${doseList.filter((dose) => dose.polypharmacyRisk === 2).length}개`}</TotalCount>
           <RedIcon />
-          {`${doseList.filter((dose) => dose.polypharmacyRisk === 3).length}개`}
+          <TotalCount>{`${doseList.filter((dose) => dose.polypharmacyRisk === 3).length}개`}</TotalCount>
         </IconBox>
         <PeriodSelectBox data-role="selectbox">
           <PeriodSelectButton className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>

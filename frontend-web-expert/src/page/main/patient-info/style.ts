@@ -54,6 +54,8 @@ export const PatientSummary = styled.div`
   padding: 0 0.5rem;
   background-color: #fff;
   padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 0;
 `;
 
 export const NameSex = styled.div`
@@ -99,11 +101,13 @@ export const InnerBox = styled.div`
   flex-direction: column;
   background-color: #fff;
   padding: 1.5rem;
+  border-radius: 0.5rem;
+  border: 0;
 `;
 
 export const PrescriptionAndHealthFunctionalFood = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 25rem;
+  height: 26rem;
 `;

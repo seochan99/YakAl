@@ -2,7 +2,7 @@ package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Dose;
 
-import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.Risk;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
@@ -13,7 +13,7 @@ import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.DoseRepository;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
-import com.viewpharm.yakal.repository.MobileUserRepository;
+import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.repository.RiskRepository;
 import com.viewpharm.yakal.type.EDosingTime;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class DoseService {
 
-    private final MobileUserRepository mobileUserRepository;
+    private final UserRepository userRepository;
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final RiskRepository riskRepository;
@@ -72,7 +72,7 @@ public class DoseService {
                     .KDCode(result.getKDCode())
                     .ATCCode(result.getATCCode())
                     .isTaken(result.getIsTaken())
-                    .isOverlap(overlapMap.containsKey(result.getATCCode().getId()))
+                    .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
                     .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
                     .prescriptionId(result.getPrescription().getId())
                     .build();
@@ -217,7 +217,7 @@ public class DoseService {
     }
 
     public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
-        final MobileUser mobileUser = mobileUserRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
 
@@ -230,7 +230,7 @@ public class DoseService {
 
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
-                final Boolean isOverlapped = doseRepository.existsByMobileUserIdAndKDCodeAndDateAndTime(
+                final Boolean isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndTime(
                         userId, KDCode, oneScheduleDto.getDate(), oneScheduleDto.getTime()
                 );
 
@@ -246,7 +246,7 @@ public class DoseService {
                             .pillCnt(oneScheduleDto.getCount().longValue())
                             .isHalf(oneScheduleDto.getCount().toString().endsWith(".5"))
                             .prescription(prescription)
-                            .mobileUser(mobileUser)
+                            .user(user)
                             .build();
 
                     willSave.add(dose);

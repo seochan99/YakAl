@@ -10,15 +10,14 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 @Repository
 public interface DoseRepository extends JpaRepository<Dose, Long> {
 
-    @Query("select d from Dose d join fetch d.ATCCode where d.mobileUser.id = :userId and d.date = :date ")
+    @Query("select d from Dose d join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
     List<Dose> findByUserIdAndDate(Long userId, LocalDate date);
 
-    @Query("select d from Dose d where d.mobileUser.id = :userId and d.date = :date and d.time =:time")
+    @Query("select d from Dose d where d.user.id = :userId and d.date = :date and d.time =:time")
     List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
     @Query(value = "SELECT * FROM (SELECT  date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risks_id, date, time) overlap where count > 1 order by count desc ", nativeQuery = true)
     List<overlap> findOverlap(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
@@ -29,17 +28,17 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     List<overlapDetail> findOverlapDetail(@Param("userId") Long userId, @Param("date") LocalDate date);
 
 
-    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take from Dose d where d.mobileUser.id = :userId and d.date = :date")
+    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take from Dose d where d.user.id = :userId and d.date = :date")
     oneDaySummary countTotalAndTakenByUserIdAndDate(Long userId, LocalDate date);
 
-    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take, d.date as date from Dose d where d.mobileUser.id = :userId and d.date between :start and :end group by d.date")
+    @Query("select sum(1) as total, sum(case when d.isTaken = true then 1 else 0 end) as take, d.date as date from Dose d where d.user.id = :userId and d.date between :start and :end group by d.date")
     List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(Long userId, LocalDate start, LocalDate end);
 
     @Modifying(clearAutomatically = true)
     @Query("update Dose d set d.pillCnt = :pillCnt, d.isHalf = :isHalf where d.id = :doseId")
     Integer updateCountById(Long doseId, Long pillCnt, Boolean isHalf);
 
-    Boolean existsByMobileUserIdAndKDCodeAndDateAndTime(Long userId, String KDCode, LocalDate date, EDosingTime time);
+    Boolean existsByUserIdAndKDCodeAndDateAndTime(Long userId, String KDCode, LocalDate date, EDosingTime time);
 
     @Override
     @Modifying(clearAutomatically = true, flushAutomatically = true)

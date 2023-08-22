@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ImageRepository extends JpaRepository<Image,Long> {
+public interface ImageRepository extends JpaRepository<Image, Long> {
     Optional<Image> findByUser(User user);
     Optional<Image> findByMedical(Medical medical);
     Optional<Image> findByUuidName(String uuidName);
