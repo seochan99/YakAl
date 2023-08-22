@@ -33,6 +33,7 @@
 		9890C8F92A94EF0A0007299B /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F82A94EF0A0007299B /* DayModel.swift */; };
 		9890C8FB2A94EF600007299B /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FA2A94EF600007299B /* CircularProgressBar.swift */; };
 		9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */; };
+		9890C9002A94FC640007299B /* CalendarWeekSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */; };
 		98926FE62A778537001AB165 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE52A778537001AB165 /* TodoModel.swift */; };
 		98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE72A7785D6001AB165 /* TodoTVC.swift */; };
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
@@ -90,6 +91,7 @@
 		9890C8F82A94EF0A0007299B /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
 		9890C8FA2A94EF600007299B /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayHeaderSwiftUIView.swift; sourceTree = "<group>"; };
+		9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekSwiftUIView.swift; sourceTree = "<group>"; };
 		98926FE52A778537001AB165 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
 		98926FE72A7785D6001AB165 /* TodoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTVC.swift; sourceTree = "<group>"; };
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
@@ -268,6 +270,7 @@
 				9890C8FA2A94EF600007299B /* CircularProgressBar.swift */,
 				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
 				9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */,
+				9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -624,6 +627,7 @@
 				9890C8F22A93C8940007299B /* ProfileSwiftUIView.swift in Sources */,
 				981433502A9163F200017600 /* MedicationRowView.swift in Sources */,
 				98C12D752A5E67D200175EB8 /* SignInViewController.swift in Sources */,
+				9890C9002A94FC640007299B /* CalendarWeekSwiftUIView.swift in Sources */,
 				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
 				981433522A916A6800017600 /* MedicationData.swift in Sources */,
