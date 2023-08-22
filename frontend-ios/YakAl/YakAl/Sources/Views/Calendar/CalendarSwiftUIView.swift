@@ -33,11 +33,11 @@ struct CalendarSwiftUIView: View {
         for (index, week) in sampleWeekDates.enumerated() {
             for day in week {
                 if Calendar.current.isDate(day.date, inSameDayAs: today) {
-                    return index
+                    return index // 오늘 날짜가 있는 주의 인덱스를 반환
                 }
             }
         }
-        return 0 // Default to the first week if not found
+        return 0
     }
     
     
@@ -46,32 +46,37 @@ struct CalendarSwiftUIView: View {
         var allWeekDates: [[DayModel]] = []
         let calendar = Calendar.current
         let components = calendar.dateComponents([.year, .month], from: currentDate)
+        
+        // 시작하는 달 가져오기
         guard let startOfMonth = calendar.date(from: components),
               let range = calendar.range(of: .weekOfMonth, in: .month, for: startOfMonth) else {
-            return allWeekDates
+            return allWeekDates // // 시작 달의 데이터를 가져올 수 없는 경우 빈 배열을 반환
         }
-        
         if let firstWeekday = calendar.dateComponents([.weekday], from: startOfMonth).weekday {
             var currentDay = startOfMonth
             
             for _ in range {
                 var weekDates: [DayModel] = []
-                
                 for dayIndex in 0..<7 {
-                    if dayIndex >= firstWeekday - 1 || allWeekDates.count > 0 { // If the index has passed the first day of the month or it's not the first week anymore
+                    // 달의 첫 번째 날을 지나거나 첫 번째 주가 아닌 경우
+                    if dayIndex >= firstWeekday - 1 || allWeekDates.count > 0 {
                         let dayModel = DayModel(date: currentDay, medications: sampleMedications)
                         weekDates.append(dayModel)
                         currentDay = calendar.date(byAdding: .day, value: 1, to: currentDay)!
-                    } else {
+                    }
+                    // 그외
+                    else {
                         weekDates.append(DayModel(date: Date(timeIntervalSince1970: 0), medications: [])) // Empty day
                     }
                 }
+                // 해당 주 allWeekData에 붙이기
                 allWeekDates.append(weekDates)
             }
         }
-        
+        // 모든 주의 데이터
         return allWeekDates
     }
+    
     /* --------------- 토,일 색상 ---------------*/
     func weekdayColor(for weekdayText: String) -> Color {
         switch weekdayText {
@@ -84,44 +89,20 @@ struct CalendarSwiftUIView: View {
         }
     }
     
+//MARK: - View Body
     var body: some View {
         ScrollView{
             
-        // --------------- 달력 뷰 ---------------
+        /* --------------- 달력 뷰 --------------- */
         VStack(spacing: 16) {
-            HStack(spacing:20) {
-                Spacer()
-                // --------------- 이전버튼  ---------------
-                Button(action: {
-                    self.currentDate = Calendar.current.date(byAdding: .month, value: -1, to: self.currentDate) ?? self.currentDate
-                }) {
-                    Image("previous-month")
-                }
-                // --------------- 년/월  ---------------
-                Text(dateFormatter.string(from: currentDate))
-                    .font(
-                        Font.custom("SUIT", size: 15)
-                            .weight(.semibold)
-                    )
-                    .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
-                // --------------- 다음버튼  ---------------
-                Button(action: {
-                    self.currentDate = Calendar.current.date(byAdding: .month, value: 1, to: self.currentDate) ?? self.currentDate
-                }) {
-                    Image("next-month")
-                }
-                Spacer()
-            }.padding(.top, 20)
-                .padding(.bottom, 15)
-            
-            // --------------- 요일 불러오는 Header  ---------------
+            /* --------------- 달 이동 View --------------- */
+            CalendarHeaderChangeMonthSwiftUIView(currentDate: $currentDate)
+        
+            /* --------------- 요일 불러오는 Header View --------------- */
             WeekdayHeaderSwiftUIView()
             
-
-            
-            // --------------- 펼쳐졌을 경우의 뷰  ---------------
+            /* --------------- 펼쳐졌을 경우의 View, 달 전체를 보여줌 --------------- */
             if isExpanded {
-                // 매일자 삽입
                 ForEach(sampleWeekDates, id: \.self) {
                     weekDates in
                     CalendarWeekSwiftUIView(weekDates: weekDates, selectedDate: $selectedDate) // 선택한 날짜를 하위 뷰에 전달
@@ -132,7 +113,7 @@ struct CalendarSwiftUIView: View {
 
                 
             }
-            // --------------- 스와이핑 아이콘 ---------------
+            /* --------------- 스와이핑 아이콘 --------------- */
             VStack {
                 Button(action: {
                     withAnimation {
@@ -145,50 +126,13 @@ struct CalendarSwiftUIView: View {
             }
             .padding(.top, 20)
             
-            // --------------- 복용 퍼센트  ---------------
+            
+            
+            /* --------------- 해당일 약물 TODO --------------- */
             VStack(spacing: 0){
-                HStack{
-                    VStack(spacing: 16){
+                /* --------------- 해당일 복용 퍼센트  --------------- */
+                CalendarTodoHeaderSwiftUIView(selectedDate: $selectedDate)
 
-                        // --------------- 일자  ---------------
-                        HStack{
-                            Text("\(String(selectedDate?.date.year ?? 2023))년 \(String(selectedDate?.date.month ?? 7))월 \(String(selectedDate?.date.SingleDay ?? 20))일")
-                              .font(
-                                Font.custom("SUIT", size: 15)
-                                  .weight(.semibold)
-                              )
-                              .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        // --------------- 복용 갯수  ---------------
-                        HStack(spacing: 8){
-                            Text("14개 복용 ")
-                              .font(
-                                Font.custom("SUIT", size: 20)
-                                  .weight(.bold)
-                              )
-                              .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
-                            
-                            // --------------- 총 갯수  ---------------
-                            Text("(15개)")
-                              .font(
-                                Font.custom("SUIT", size: 15)
-                                  .weight(.semibold)
-                              )
-                              .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
-                        }.frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                    Spacer()
-                    // --------------- 복용 퍼센트  ---------------
-                    VStack{
-                        CircularProgressBarWithText(progress: 0.70)
-                    }
-                }.frame(maxWidth: .infinity, alignment: .leading) // 왼쪽에 붙이는 부분
-                    .padding(.horizontal,20)
-                    .padding(.top,40)
-                    .padding(.bottom,20)
-                    .background(Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1))
-                
                 // ---------------  약물 View  ---------------
                 MedicationSwiftUIView()
                     .environmentObject(MedicationData())
@@ -203,30 +147,6 @@ struct CalendarSwiftUIView: View {
 }
 
 
-//MARK: - 원 프로그레스바 : 달력 뷰
-struct CircularProgressBarWithText: View {
-    var progress: Double
-    var body: some View {
-        ZStack {
-            Circle()
-                .stroke(lineWidth: 3)
-                .opacity(0.3)
-                .foregroundColor(Color(red: 0.76, green: 0.82, blue: 1))
-            Circle()
-                .trim(from: 0, to: CGFloat(min(self.progress, 1.0)))
-                .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
-                .rotationEffect(Angle(degrees: -90))
-            VStack {
-                Text("\(Int(progress * 100))%")
-                    .font(Font.custom("SUIT", size: 16).weight(.semibold))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(progress == 0 ? Color(red: 0.76, green: 0.82, blue: 1) : Color(red: 0.33, green: 0.53, blue: 0.99))
-            }
-        }
-        .frame(width: 60, height: 60)
-    }
-}
 
 //MARK: - Date Extension
 extension Date {

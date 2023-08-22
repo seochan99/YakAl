@@ -34,6 +34,9 @@
 		9890C8FB2A94EF600007299B /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FA2A94EF600007299B /* CircularProgressBar.swift */; };
 		9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */; };
 		9890C9002A94FC640007299B /* CalendarWeekSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */; };
+		9890C9022A94FF720007299B /* CalendarHeaderChangeMonthSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C9012A94FF720007299B /* CalendarHeaderChangeMonthSwiftUIView.swift */; };
+		9890C9042A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C9032A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift */; };
+		9890C9072A9502060007299B /* CircularProgressBarWithText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C9062A9502060007299B /* CircularProgressBarWithText.swift */; };
 		98926FE62A778537001AB165 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE52A778537001AB165 /* TodoModel.swift */; };
 		98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE72A7785D6001AB165 /* TodoTVC.swift */; };
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
@@ -92,6 +95,9 @@
 		9890C8FA2A94EF600007299B /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayHeaderSwiftUIView.swift; sourceTree = "<group>"; };
 		9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarWeekSwiftUIView.swift; sourceTree = "<group>"; };
+		9890C9012A94FF720007299B /* CalendarHeaderChangeMonthSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHeaderChangeMonthSwiftUIView.swift; sourceTree = "<group>"; };
+		9890C9032A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTodoHeaderSwiftUIView.swift; sourceTree = "<group>"; };
+		9890C9062A9502060007299B /* CircularProgressBarWithText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarWithText.swift; sourceTree = "<group>"; };
 		98926FE52A778537001AB165 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
 		98926FE72A7785D6001AB165 /* TodoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTVC.swift; sourceTree = "<group>"; };
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
@@ -169,6 +175,7 @@
 				9814334B2A91636F00017600 /* MedicationItemRowView.swift */,
 				9814334F2A9163F200017600 /* MedicationRowView.swift */,
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
+				9890C9062A9502060007299B /* CircularProgressBarWithText.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -271,6 +278,8 @@
 				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
 				9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */,
 				9890C8FF2A94FC640007299B /* CalendarWeekSwiftUIView.swift */,
+				9890C9012A94FF720007299B /* CalendarHeaderChangeMonthSwiftUIView.swift */,
+				9890C9032A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -602,10 +611,12 @@
 				986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */,
 				9888A2802A6D7C8800F507BD /* DetailViewController.swift in Sources */,
 				98C2AE812A925F6200A0FE6B /* CalendarViewController.swift in Sources */,
+				9890C9072A9502060007299B /* CircularProgressBarWithText.swift in Sources */,
 				98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */,
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */,
+				9890C9042A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
 				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
@@ -625,6 +636,7 @@
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
 				980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */,
 				9890C8F22A93C8940007299B /* ProfileSwiftUIView.swift in Sources */,
+				9890C9022A94FF720007299B /* CalendarHeaderChangeMonthSwiftUIView.swift in Sources */,
 				981433502A9163F200017600 /* MedicationRowView.swift in Sources */,
 				98C12D752A5E67D200175EB8 /* SignInViewController.swift in Sources */,
 				9890C9002A94FC640007299B /* CalendarWeekSwiftUIView.swift in Sources */,
