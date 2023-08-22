@@ -156,10 +156,19 @@ public class BoardService {
     //슬라이드 방식인지 페이지 선택하는 방식인지?
 
     //모든게시글 리스트 가져오기
-    public List<BoardListDto> getAllBoardList(Long userId, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getAllBoardList(Long userId, String sorting, Long pageIndex, Long pageSize) {
+        Pageable paging = null;
+
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        else if (sorting.equals("view"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+        else if (sorting.equals("like"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+
         List<Board> page = boardRepository.findAllByIsDeleted(false, paging);
 
         //Dto 변환
@@ -169,13 +178,22 @@ public class BoardService {
 
         return list;
     }
-    
-    
+
+
     //제목으로 검색
-    public List<BoardListDto> getBoardListByTitle(Long userId, String title, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getBoardListByTitle(Long userId, String title, String sorting, Long pageIndex, Long pageSize) {
+        Pageable paging = null;
+
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        else if (sorting.equals("view"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+        else if (sorting.equals("like"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+
         List<Board> page = boardRepository.findListByTitleContainingAndIsDeleted(title, false, paging);
 
         //Dto 변환
@@ -187,14 +205,23 @@ public class BoardService {
     }
 
     //지역으로 검색
-    public List<BoardListDto> getBoardListByRegion(Long userId, String region, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getBoardListByRegion(Long userId, String region, String sorting, Long pageIndex, Long pageSize) {
+        Pageable paging = null;
+
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        else if (sorting.equals("view"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+        else if (sorting.equals("like"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
         ERegion boardRegion = ERegion.from(region);
 
-        Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
         List<Board> page = boardRepository.findListByRegionAndIsDeleted(boardRegion, false, paging);
-        
+
         //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
@@ -203,14 +230,22 @@ public class BoardService {
         return list;
     }
 
-    
-    //유저로 검색
-    public List<BoardListDto> getBoardListByUser(Long userId, Long boardUserId, Long pageIndex, Long pageSize) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+    //유저로 검색
+    public List<BoardListDto> getBoardListByUser(Long userId, Long boardUserId, String sorting, Long pageIndex, Long pageSize) {
+        Pageable paging = null;
+
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User boardUser = userRepository.findById(boardUserId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+        else if (sorting.equals("view"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+        else if (sorting.equals("like"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+
         List<Board> page = boardRepository.findListByUserAndIsDeleted(boardUser, false, paging);
 
         List<BoardListDto> list = page.stream()
@@ -220,7 +255,7 @@ public class BoardService {
         return list;
     }
 
-    
+
     //게시판 좋아요
     public Map<String, Object> likeBoard(Long userId, Long boardId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
@@ -244,7 +279,7 @@ public class BoardService {
         return map;
     }
 
-    
+
     //게시판 좋아요 취소
     public Map<String, Object> dislikeBoard(Long userId, Long boardId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));

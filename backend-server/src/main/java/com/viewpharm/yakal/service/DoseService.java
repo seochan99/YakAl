@@ -45,10 +45,12 @@ public class DoseService {
         return map;
     }
 
-    public OneDayScheduleDto getOneDaySchedule(final Long userId, final LocalDate date) {
+    public OneDayScheduleDto getOneDaySchedule(Long userId, LocalDate date) {
+        log.info("서비스 시작 전");
         final List<Dose> getDoses = doseRepository.findByUserIdAndDate(userId, date);
-
+        log.info("서비스 중간");
         final Map<EDosingTime, List<OneTimeScheduleDto>> scheduleMap = createMap();
+        log.info("서비스 시작");
 
         List<DoseRepository.overlapDetail> overlapList = doseRepository.findOverlapDetail(userId, date);
 

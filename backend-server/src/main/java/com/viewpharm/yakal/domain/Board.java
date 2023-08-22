@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,9 @@ public class Board extends BaseCreateEntity {
 
     @Column(name = "read_cnt", nullable = false)
     private Long readCnt;
+
+    @Formula("(select count(*) from likes where likes.board_id = id)")
+    private int likeCount;
 
     //-------------------------------------------------------------------
 
