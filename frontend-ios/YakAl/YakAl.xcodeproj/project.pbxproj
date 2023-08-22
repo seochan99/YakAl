@@ -23,6 +23,9 @@
 		98470ED32A9544F600C29ED1 /* BlueHorizontalButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */; };
 		98470ED52A9545D400C29ED1 /* TimeSlotView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470ED42A9545D400C29ED1 /* TimeSlotView.swift */; };
 		98470ED72A954B5F00C29ED1 /* ModeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470ED62A954B5F00C29ED1 /* ModeButton.swift */; };
+		98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470ED82A954CA700C29ED1 /* TimeSettingView.swift */; };
+		98470EDB2A954CD100C29ED1 /* DatePickerModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470EDA2A954CD100C29ED1 /* DatePickerModalView.swift */; };
+		98470EDD2A954EDD00C29ED1 /* KakaoSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470EDC2A954EDD00C29ED1 /* KakaoSettingView.swift */; };
 		985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A28BE2A76B99E00B9943D /* TabBarVC.swift */; };
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
 		986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8332A76B51000F442B4 /* CommunityVC.swift */; };
@@ -89,6 +92,9 @@
 		98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlueHorizontalButton.swift; sourceTree = "<group>"; };
 		98470ED42A9545D400C29ED1 /* TimeSlotView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSlotView.swift; sourceTree = "<group>"; };
 		98470ED62A954B5F00C29ED1 /* ModeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModeButton.swift; sourceTree = "<group>"; };
+		98470ED82A954CA700C29ED1 /* TimeSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeSettingView.swift; sourceTree = "<group>"; };
+		98470EDA2A954CD100C29ED1 /* DatePickerModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerModalView.swift; sourceTree = "<group>"; };
+		98470EDC2A954EDD00C29ED1 /* KakaoSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KakaoSettingView.swift; sourceTree = "<group>"; };
 		985A28BE2A76B99E00B9943D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationVC.swift; sourceTree = "<group>"; };
 		986AF8332A76B51000F442B4 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
@@ -171,6 +177,8 @@
 				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
 				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
 				98470ED62A954B5F00C29ED1 /* ModeButton.swift */,
+				98470ED82A954CA700C29ED1 /* TimeSettingView.swift */,
+				98470EDC2A954EDD00C29ED1 /* KakaoSettingView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 				9890C9062A9502060007299B /* CircularProgressBarWithText.swift */,
 				98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */,
+				98470EDA2A954CD100C29ED1 /* DatePickerModalView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -629,12 +638,14 @@
 				9890C9072A9502060007299B /* CircularProgressBarWithText.swift in Sources */,
 				98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */,
 				98470ED32A9544F600C29ED1 /* BlueHorizontalButton.swift in Sources */,
+				98470EDB2A954CD100C29ED1 /* DatePickerModalView.swift in Sources */,
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */,
 				9890C9042A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				98470ED72A954B5F00C29ED1 /* ModeButton.swift in Sources */,
+				98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
 				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
 				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
@@ -666,6 +677,7 @@
 				9890C9092A9506200007299B /* CustomTabBar.swift in Sources */,
 				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
 				9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */,
+				98470EDD2A954EDD00C29ED1 /* KakaoSettingView.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
 				9890C8F92A94EF0A0007299B /* DayModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
