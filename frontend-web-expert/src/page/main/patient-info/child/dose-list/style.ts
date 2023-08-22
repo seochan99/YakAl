@@ -15,7 +15,14 @@ export const IconBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.1rem;
+`;
+
+export const TotalCount = styled.span`
+  font-size: 0.9rem;
+  line-height: 0.9rem;
+  font-weight: 500;
+  margin-right: 0.4rem;
 `;
 
 export const PeriodSelectBox = styled.div`
@@ -129,7 +136,7 @@ export const ListRow = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem;
+  padding: 0.75rem 0;
   border-radius: 0.25rem;
 `;
 
@@ -178,18 +185,22 @@ export const CommonItem = styled.span`
   font-weight: 500;
   line-height: 0.9rem;
   text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const GreenIcon = styled(GreenIconSvg)`
-  height: 1rem;
+  height: 0.9rem;
 `;
 
 export const YellowIcon = styled(YellowIconSvg)`
-  height: 1rem;
+  height: 0.9rem;
 `;
 
 export const RedIcon = styled(RedIconSvg)`
-  height: 1rem;
+  height: 0.9rem;
 `;
 
 export const ListFooter = styled.div`
