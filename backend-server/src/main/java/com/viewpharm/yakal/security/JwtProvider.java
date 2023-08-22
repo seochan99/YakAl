@@ -33,7 +33,7 @@ public class JwtProvider implements InitializingBean {
     private static final Long MOBILE_ACCESS_EXPIRED_MS = 2 * 60 * 60 * 1000L;        // 2 Hours
     private static final Long MOBILE_REFRESH_EXPIRED_MS = 60 * 24 * 60 * 60 * 1000L; // 60 Days
 
-    private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;        // 1 Hours
+    private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;           // 1 Hours
     private static final Long WEB_REFRESH_EXPIRED_MS = 7 * 24 * 60 * 60 * 1000L; // 7 Days
 
     private static final String AUTHORIZATION_HEADER = "Authorization";

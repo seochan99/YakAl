@@ -26,7 +26,7 @@ export const TopRight = styled.div`
 
 export const Detail = styled.div`
   & {
-    width: 60rem;
+    width: 50rem;
     display: flex;
     flex-direction: column;
     padding: 2rem;

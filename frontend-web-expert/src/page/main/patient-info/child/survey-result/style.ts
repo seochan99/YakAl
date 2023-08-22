@@ -59,11 +59,16 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.8rem 1.2rem;
+  padding: 0.8rem 0 0 2rem;
   gap: 1.4rem;
 `;
 
-export const FirstList = styled(List)`
+export const FirstList = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.8rem 0;
+  gap: 1.4rem;
   background-image: linear-gradient(black 33%, rgba(255, 255, 255, 0) 0%);
   background-position: right;
   background-size: 0.1rem 0.6rem;
@@ -80,18 +85,16 @@ export const Item = styled.div`
 
 export const ItemTitle = styled.span`
   color: #151515;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 1.1rem;
-  font-family: Pretendard;
+  line-height: 1rem;
 `;
 
 export const ItemResult = styled.span`
-  width: 4rem;
+  width: 6rem;
   text-align: center;
   color: #151515;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 1.1rem;
-  font-family: Pretendard;
+  line-height: 1rem;
 `;

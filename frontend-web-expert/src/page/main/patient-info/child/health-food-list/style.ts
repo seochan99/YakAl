@@ -31,21 +31,12 @@ export const List = styled.div`
 `;
 
 export const Item = styled.div`
-  & {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-  }
-  &:hover {
-    cursor: pointer;
-    background-color: #f5f5f9;
-  }
-  &:active {
-    background-color: #e9e9ee;
-  }
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0;
+  border-radius: 0.25rem;
 `;
 
 export const TitleHeader = styled.span`
