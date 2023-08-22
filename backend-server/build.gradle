@@ -101,6 +101,13 @@ dependencies {
 
 	// Configuration Metadata
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	//Excel
+	implementation 'org.apache.poi:poi:5.0.0'
+	implementation 'org.apache.poi:poi-ooxml:5.0.0'
+	//Geometry
+	implementation group: 'org.locationtech.jts', name: 'jts-core', version: '1.16.1'
+	implementation 'org.hibernate:hibernate-spatial:6.2.2.Final'
 }
 
 /**

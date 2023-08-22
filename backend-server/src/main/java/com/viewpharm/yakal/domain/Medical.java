@@ -1,12 +1,13 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.type.EMedical;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.awt.*;
+import org.locationtech.jts.geom.Point;
 
 @Entity
 @Getter
@@ -20,23 +21,35 @@ public class Medical {
     @Column
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String medicalName;
 
     @Column
-    private String medicalIntroduction;
+    private String medicalAddress;
 
-    //서울시 성북구...
     @Column
-    private String medicalLocation;
+    private String medicalTel;
 
     //좌표
-    @Column
+    @Column(columnDefinition = "point")
     private Point medicalPoint;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private EMedical eMedical;
 
     // ----------------------------------------------------------
 
     @OneToOne(mappedBy = "medical",fetch = FetchType.LAZY)
     private Image image;
 
+    @Builder
+    public Medical(Long id, String medicalName, String medicalAddress, String medicalTel, Point medicalPoint, EMedical eMedical) {
+        this.id = id;
+        this.medicalName = medicalName;
+        this.medicalAddress = medicalAddress;
+        this.medicalTel = medicalTel;
+        this.medicalPoint = medicalPoint;
+        this.eMedical = eMedical;
+    }
 }
