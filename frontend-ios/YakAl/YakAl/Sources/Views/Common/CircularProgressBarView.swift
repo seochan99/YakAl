@@ -1,10 +1,3 @@
-//
-//  CircularProgressBarView.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/08/04.
-//
-
 import UIKit
 
 class CircularProgressBarView: UIView {

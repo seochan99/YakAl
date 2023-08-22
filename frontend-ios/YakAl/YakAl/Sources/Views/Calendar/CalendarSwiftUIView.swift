@@ -7,45 +7,35 @@ struct CalendarWeekView: View {
 
     var body: some View {
         HStack(spacing:20) {
-                ForEach(weekDates, id: \.self) { date in
-                    /* --------------- 마지막 주이고 1이 표시되어 있을때  --------------- */
-                    if isLastWeek() && date.date.day == "1" {
-                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
-                            .padding(.top, 4)
-                    }
-                    /* --------------- 첫쨋주이고 1이 표시되어 있을때  --------------- */
-                    else if isFirstWeek() && date.date.day == "1"{
-                        if isLastOne(in: weekDates, current: date) {
-                            CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText))
-                                .padding(.top, 4)
-                                .onTapGesture {
-                                    selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
-                                }
-                        } else {
-                            /* --------------- 그외에는 없애기  --------------- */
-                            CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
-                                .padding(.top, 4)
-                        }
-                    }
-                    
-                    /* --------------- 마지막주이고 7보다 작은 수가 있을떄  --------------- */
-                   else if isLastWeek() && Int(date.date.day)! <= 7 {
-                        // Hide dates of next month if in the last week
-                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText))
-                            .padding(.top, 4)
-                            .onTapGesture {
-                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
-                            }
-                       /* --------------- 그외에는 모두 표시하기  --------------- */
-                    } else {
-                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText) )
-                            .padding(.top, 4)
-                            .onTapGesture {
-                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
-                            }
-                    }
-                }
-            }.padding(.horizontal,20)
+                   ForEach(weekDates, id: \.self) { date in
+                       let isSelectedDate = date.dayText == selectedDate?.dayText && date.date.month == selectedDate?.date.month
+
+                       if isFirstWeek() && date.date.day == "1" {
+                           if isLastOne(in: weekDates, current: date) {
+                               CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: isSelectedDate)
+                                   .padding(.top, 4)
+                                   .onTapGesture {
+                                       selectedDate = date
+                                   }
+                           } else {
+                               CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
+                                   .padding(.top, 4)
+                           }
+                       } else if isLastWeek() && (Int(date.date.day)! <= 7 || date.date.day == "1") {
+                           CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
+                               .padding(.top, 4)
+                               .onTapGesture {
+                                   selectedDate = date
+                               }
+                       } else {
+                           CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: isSelectedDate)
+                               .padding(.top, 4)
+                               .onTapGesture {
+                                   selectedDate = date
+                               }
+                       }
+                   }
+               }.padding(.horizontal,20)
         
       }
     func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
@@ -96,7 +86,7 @@ struct CalendarSwiftUIView: View {
 
 
     /* --------------- 요일 스트링 --------------- */
-    let weekStringdate : [String] = ["일","월","화","수","목","금","토"]
+    
 
     // 년 월 표현
     var dateFormatter: DateFormatter {
@@ -125,7 +115,6 @@ struct CalendarSwiftUIView: View {
     }
     
     /* --------------- 한줄 캘린더 데이터--------------- */
-
     var sampleWeekDates: [[DayModel]] {
         var allWeekDates: [[DayModel]] = []
         
@@ -205,13 +194,7 @@ struct CalendarSwiftUIView: View {
                 .padding(.bottom, 15)
             
             // --------------- 요일  ---------------
-            HStack(spacing:20) {
-                ForEach(weekStringdate, id: \.self) { symbol in
-                    Text(symbol)
-                        .frame(maxWidth: .infinity)
-                        .foregroundColor(weekdayColor(for: symbol))
-                }
-            }.padding(.horizontal,20)
+            WeekdayHeaderSwiftUIView()
             
 
             
