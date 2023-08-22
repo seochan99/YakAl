@@ -80,8 +80,10 @@ struct TimeSettingView: View {
     var title: String
     var iconName: String
     
+    
     @Environment(\.presentationMode) var presentationMode
-
+    
+    @State private var isShowingAlert = false
     @State private var isShowingDatePicker: Bool = false
     @State private var isSettingStartTime: Bool = true  // Start with startTime by default
 
@@ -148,9 +150,13 @@ struct TimeSettingView: View {
                     Spacer()
                 }.padding(.horizontal,20)
                 Spacer()
-
                 BlueHorizontalButton(text: "완료") {
-                    isShowingDatePicker = false
+                    if isValidTime {
+                        isShowingDatePicker = false
+                        presentationMode.wrappedValue.dismiss()
+                    } else {
+                        isShowingAlert = true
+                    }
                 }
 
             }
@@ -170,11 +176,13 @@ struct TimeSettingView: View {
             if isShowingDatePicker {
                 DatePickerModalView(isPresented: $isShowingDatePicker, date: isSettingStartTime ? $startTime : $endTime)
             }
+        }.alert(isPresented: $isShowingAlert) {
+            Alert(title: Text("경고"), message: Text("시작시간이 종료시간보다 뒤에 있습니다."), dismissButton: .default(Text("확인")))
         }
     }
 }
 
-//모달 뷰
+//MARK: - DatePickerModalView : 데이터 피커 
 struct DatePickerModalView: View {
     @Binding var isPresented: Bool
     @Binding var date: Date
