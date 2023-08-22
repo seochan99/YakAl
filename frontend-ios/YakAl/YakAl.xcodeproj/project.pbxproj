@@ -30,6 +30,9 @@
 		9888A2802A6D7C8800F507BD /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A27F2A6D7C8800F507BD /* DetailViewController.swift */; };
 		9890C8F22A93C8940007299B /* ProfileSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */; };
 		9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */; };
+		9890C8F92A94EF0A0007299B /* DayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8F82A94EF0A0007299B /* DayModel.swift */; };
+		9890C8FB2A94EF600007299B /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FA2A94EF600007299B /* CircularProgressBar.swift */; };
+		9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */; };
 		98926FE62A778537001AB165 /* TodoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE52A778537001AB165 /* TodoModel.swift */; };
 		98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE72A7785D6001AB165 /* TodoTVC.swift */; };
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
@@ -84,6 +87,9 @@
 		9888A27F2A6D7C8800F507BD /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSwiftUIView.swift; sourceTree = "<group>"; };
 		9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingButtonSwiftUI.swift; sourceTree = "<group>"; };
+		9890C8F82A94EF0A0007299B /* DayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayModel.swift; sourceTree = "<group>"; };
+		9890C8FA2A94EF600007299B /* CircularProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
+		9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekdayHeaderSwiftUIView.swift; sourceTree = "<group>"; };
 		98926FE52A778537001AB165 /* TodoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoModel.swift; sourceTree = "<group>"; };
 		98926FE72A7785D6001AB165 /* TodoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTVC.swift; sourceTree = "<group>"; };
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
@@ -160,6 +166,7 @@
 			children = (
 				9814334B2A91636F00017600 /* MedicationItemRowView.swift */,
 				9814334F2A9163F200017600 /* MedicationRowView.swift */,
+				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -167,10 +174,9 @@
 		98349A872A7C041400071C5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				9890C8FC2A94F4D40007299B /* Calendar */,
 				9811AE422A93C60200FD9B82 /* Mypage */,
 				9814334E2A9163CD00017600 /* Common */,
-				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
-				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -246,6 +252,24 @@
 			children = (
 			);
 			path = "New Group";
+			sourceTree = "<group>";
+		};
+		9890C8F72A94EEC60007299B /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				9890C8F82A94EF0A0007299B /* DayModel.swift */,
+			);
+			path = Calendar;
+			sourceTree = "<group>";
+		};
+		9890C8FC2A94F4D40007299B /* Calendar */ = {
+			isa = PBXGroup;
+			children = (
+				9890C8FA2A94EF600007299B /* CircularProgressBar.swift */,
+				98C2AE7E2A925E1900A0FE6B /* CalendarSwiftUIView.swift */,
+				9890C8FD2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift */,
+			);
+			path = Calendar;
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -394,6 +418,7 @@
 		98C12D542A5E3C8F00175EB8 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9890C8F72A94EEC60007299B /* Calendar */,
 				98C12D702A5E666100175EB8 /* UserModel.swift */,
 				98C12D7C2A5E7F5500175EB8 /* SiginInModel.swift */,
 				98926FE52A778537001AB165 /* TodoModel.swift */,
@@ -588,6 +613,7 @@
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
 				98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */,
 				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
+				9890C8FB2A94EF600007299B /* CircularProgressBar.swift in Sources */,
 				9811AE442A93C61B00FD9B82 /* MypageSwiftUIView.swift in Sources */,
 				9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
@@ -603,7 +629,9 @@
 				981433522A916A6800017600 /* MedicationData.swift in Sources */,
 				98C2AE7C2A92414C00A0FE6B /* MedicineDetailView.swift in Sources */,
 				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
+				9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */,
 				98C12D7D2A5E7F5500175EB8 /* SiginInModel.swift in Sources */,
+				9890C8F92A94EF0A0007299B /* DayModel.swift in Sources */,
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 				98C12D792A5E6C8E00175EB8 /* HomeVC.swift in Sources */,
 				98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */,

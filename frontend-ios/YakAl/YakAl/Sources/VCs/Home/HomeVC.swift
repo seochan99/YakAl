@@ -227,6 +227,18 @@ class HomeVC: UIViewController{
             navigationController?.pushViewController(CalendarView, animated: true)
     }
     
+    
+    
+    @IBAction func goToCaldendarViewAction(_ sender: UIButton) {
+        let storyboard = UIStoryboard(name: "Home", bundle: nil)
+        print("클리됨!")
+        if let CalenderView = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController {
+            navigationController?.pushViewController(CalenderView, animated: true)
+        } else {
+            print("Failed to instantiate CalendarViewController")
+        }
+    }
+    
         @IBAction func floatingButtonAction(_ sender: UIButton) {
             if isShowFloating {
                 // 약 추가 목록버튼모달 없애기
