@@ -29,50 +29,46 @@ struct DayModel: Identifiable,Hashable {
 
 //MARK: - Calendar Week View : 매 주차 뷰
 struct CalendarWeekView: View {
-    // 모델 생성
     var weekDates: [DayModel]
-    // --------------- 주차별 뷰 ---------------
+    
     var body: some View {
         HStack(spacing: 40) {
-                ForEach(weekDates, id: \.self) { date in
+            ForEach(weekDates, id: \.self) { date in
+                VStack {
                     if isSameDate(date.date, Date()) {
-                        Circle()
-                            .fill(Color(red: 0.33, green: 0.53, blue: 0.99)) // Set the circle color
-                            .frame(width: 24, height: 24)
-                            .overlay(
-                                Text("\(date.dayText)")
-                                    .font(Font.custom("SUIT", size: 12).weight(.medium))
-                                    .foregroundColor(Color.white) // Set text color to white
-                            )
+                        // date.medicineIntakeRate
+                        CircularProgressBar(progress: 0.6, dateText: date.dayText, today:true, weekDates:date.weekdayText)
+                            .padding(.top, 4)
                     } else {
-                        Text("\(date.dayText)")
-                            .font(Font.custom("SUIT", size: 12).weight(.medium))
-                            .foregroundColor(weekdayColor(for: date.weekdayText))
+                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today:false, weekDates:date.weekdayText)
+                            .padding(.top, 4)
+
                     }
+                        
                 }
             }
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal,30)
-    }
-        
-    // --------------- 동일 일자인지 체크 ---------------
-    func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
-            let calendar = Calendar.current
-            return calendar.isDate(date1, inSameDayAs: date2)
         }
+        
+        
+    }
     
-    // --------------- 요일 스트링 ---------------
+    func isSameDate(_ date1: Date, _ date2: Date) -> Bool {
+        let calendar = Calendar.current
+        return calendar.isDate(date1, inSameDayAs: date2)
+    }
+    
     func weekdayColor(for weekdayText: String) -> Color {
         switch weekdayText {
-            case "일":
-                return Color(red: 0.88, green: 0.06, blue: 0.16) // 일요일 색상
-            case "토":
-                return Color(red: 0.33, green: 0.53, blue: 0.99) // 토요일 색상
-            default:
-                return Color.black // 기본 색상
+        case "일":
+            return Color(red: 0.88, green: 0.06, blue: 0.16)
+        case "토":
+            return Color(red: 0.33, green: 0.53, blue: 0.99)
+        default:
+            return Color.black
         }
     }
 }
+
 
 
 //MARK: - CalendarSwiftUIView : 달력 뷰
@@ -179,12 +175,14 @@ struct CalendarSwiftUIView: View {
             
             // --------------- 요일  ---------------
             HStack(spacing:40) {
-                  ForEach(weekStringdate, id: \.self) { symbol in
-                      Text(symbol)
-                          .frame(maxWidth: .infinity)
-                          .foregroundColor(weekdayColor(for: symbol))
-                  }
-              }.padding(.horizontal,30)
+                ForEach(weekStringdate, id: \.self) { symbol in
+                    Text(symbol)
+                        .frame(maxWidth: .infinity)
+                        .foregroundColor(weekdayColor(for: symbol))
+                }
+            }
+            
+
             
             // --------------- 펼쳐졌을 경우의 뷰  ---------------
             if isExpanded {
@@ -262,8 +260,7 @@ struct CalendarSwiftUIView: View {
                     .padding(.vertical, 0) // 수평 여백을 없애는 부분
             }
         }
-        .padding(.horizontal, 0) // 수평 여백을 없애는 부분
-        }
+        }.padding(.horizontal, 20) // 수평 여백을 없애는 부분
     }
 }
 
@@ -298,7 +295,9 @@ struct CircularProgressBarWithText: View {
 //MARK: - 원 프로그레스바 : 달력 일자 위에
 struct CircularProgressBar: View {
     var progress: Double
-    
+    var dateText: String // Add dateText parameter
+    var today : Bool
+    var weekDates : String
     var body: some View {
         ZStack {
             Circle()
@@ -310,12 +309,42 @@ struct CircularProgressBar: View {
                 .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
                 .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
                 .rotationEffect(Angle(degrees: -90))
+            VStack{
+                if(today == true)
+                {
+                    Circle()
+                        .fill(Color(red: 0.33, green: 0.53, blue: 0.99))
+                        .frame(width: 24, height: 24)
+                        .overlay(
+                            Text("\(dateText)")
+                                .font(Font.custom("SUIT", size: 12).weight(.medium))
+                                .foregroundColor(Color.white)
+                        )
+                }else{
+                    Text(dateText)
+                        .foregroundColor(weekdayColor(for: weekDates))
+                        .font(Font.custom("SUIT", size: 12).weight(.medium))
+                        .foregroundColor(Color.black)
+                }
+                
+            }
+            
         }
         .frame(width: 32, height: 32)
     }
+    
+    // --------------- 토,일 색상 ---------------
+    func weekdayColor(for weekdayText: String) -> Color {
+        switch weekdayText {
+            case "일":
+                return Color(red: 0.88, green: 0.06, blue: 0.16) // 일요일 색상
+            case "토":
+                return Color(red: 0.33, green: 0.53, blue: 0.99) // 토요일 색상
+            default:
+                return Color.black // 기본 색상
+        }
+    }
 }
-
-
 
 //MARK: - Date Extension
 extension Date {
