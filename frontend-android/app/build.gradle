@@ -1,9 +1,8 @@
 plugins {
-    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.kapt'
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'androidx.navigation.safeargs.kotlin'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 Properties properties = new Properties()
@@ -32,6 +31,7 @@ android {
 
     buildFeatures {
         buildConfig = true
+        dataBinding = true
     }
 
     buildTypes {
@@ -80,6 +80,16 @@ dependencies {
 
     // Google SDK
     implementation 'com.google.android.gms:play-services-auth:20.6.0'
+
+    // Mvvm
+    implementation 'androidx.activity:activity-ktx:1.7.2'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+
+    // Async RxKotlin
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+    annotationProcessor 'androidx.databinding:databinding-compiler:8.1.0'
 
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
