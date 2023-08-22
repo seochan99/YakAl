@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signup.term
+package com.viewpharm.yakal.signup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

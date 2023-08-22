@@ -6,19 +6,19 @@
     <data>
         <variable
             name="baseViewModel"
-            type="com.viewpharm.yakal.signup.term.SignUpTermViewModel" />
+            type="com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel" />
         <variable
             name="nextActionViewModel"
-            type="com.viewpharm.yakal.signup.common.NextEventViewModel" />
+            type="com.viewpharm.yakal.signup.viewmodel.NextEventViewModel" />
         <variable
             name="detailActionViewModel"
-            type="com.viewpharm.yakal.signup.term.DetailEventViewModel" />
+            type="com.viewpharm.yakal.signup.viewmodel.DetailEventViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signup.term.SignUpTermFragment"
+        tools:context=".signup.fragment.SignUpTermFragment"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout

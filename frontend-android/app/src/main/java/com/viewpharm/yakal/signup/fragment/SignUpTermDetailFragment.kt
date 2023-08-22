@@ -1,7 +1,5 @@
-package com.viewpharm.yakal.signup.termdetail
+package com.viewpharm.yakal.signup.fragment
 
-import android.os.Bundle
-import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R

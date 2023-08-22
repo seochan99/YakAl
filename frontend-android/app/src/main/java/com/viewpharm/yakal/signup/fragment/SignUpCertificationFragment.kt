@@ -1,48 +1,39 @@
 package com.viewpharm.yakal.signup.fragment
 
 import android.graphics.Typeface
-import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.StyleSpan
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import com.viewpharm.yakal.R
+import com.viewpharm.yakal.base.BaseFragment
+import com.viewpharm.yakal.base.DefaultViewModel
 import com.viewpharm.yakal.databinding.FragmentSignUpCertificationBinding
+import com.viewpharm.yakal.signup.viewmodel.NextEventViewModel
+import com.viewpharm.yakal.signup.viewmodel.SkipEventViewModel
 import com.viewpharm.yakal.type.ESex
 
 
-class SignUpCertificationFragment : Fragment() {
-    private var _binding: FragmentSignUpCertificationBinding?= null
-    private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class SignUpCertificationFragment: BaseFragment<FragmentSignUpCertificationBinding, SkipEventViewModel>(
+    R.layout.fragment_sign_up_certification) {
+
+    // 스킵 ViewModel 삭제 예정
+    override val baseViewModel: SkipEventViewModel by viewModels {
+        SkipEventViewModel.SkipEventViewModelFactory()
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentSignUpCertificationBinding.inflate(inflater, container, false)
-        return binding.root
+    private val certificationViewModel: NextEventViewModel by viewModels() {
+        NextEventViewModel.ActionViewModelFactory()
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun initView() {
+        super.initView()
 
-        setTextView()
-        onButtonClickEvent(view)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setTextView() {
+        // 상단 세팅
         val titleText: String = "본인인증을 해주세요"
         binding.titleTextView.text = titleText.run {
             SpannableStringBuilder(this).apply {
@@ -56,23 +47,31 @@ class SignUpCertificationFragment : Fragment() {
         }
     }
 
-    private fun onButtonClickEvent(view: View) {
-        binding.certificationButton.setOnClickListener {
-            // 인증 완료 후 뒤로 온 상태 예외 처리 해야함
-            Toast.makeText(context, "준비 중 입니다.", Toast.LENGTH_SHORT).show()
-        }
+    override fun initViewModel() {
+        super.initViewModel()
+        binding.baseViewModel = baseViewModel
+        binding.certificationViewModel = certificationViewModel
+    }
 
-        binding.skipButton.setOnClickListener {
-            val birthDay = "0000-00-00"
-            val sex = ESex.FEMALE
+    override fun initListener(view: View) {
+        super.initListener(view)
 
-            Navigation.findNavController(view)
-                .navigate(
-                    SignUpCertificationFragmentDirections.actionToSignUpNicknameFragment(
-                        birthDay,
-                        sex
+        baseViewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Navigation.findNavController(view)
+                    .navigate(
+                        SignUpCertificationFragmentDirections.actionToSignUpNicknameFragment(
+                            "0000-00-00",
+                            ESex.FEMALE
+                        )
                     )
-                )
-        }
+            }
+        })
+
+        certificationViewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Toast.makeText(context, "준비 중 입니다", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 }

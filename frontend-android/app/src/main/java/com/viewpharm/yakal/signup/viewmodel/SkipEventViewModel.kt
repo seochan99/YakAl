@@ -1,17 +1,17 @@
-package com.viewpharm.yakal.signup.common
+package com.viewpharm.yakal.signup.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.viewpharm.yakal.event.AbstractEventViewModel
 
-class NextEventViewModel: AbstractEventViewModel() {
+class SkipEventViewModel: AbstractEventViewModel() {
     fun onClickNextButton() {
         addScheduleEvent()
     }
 
-    class ActionViewModelFactory: ViewModelProvider.Factory {
+    class SkipEventViewModelFactory: ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return NextEventViewModel() as T
+            return SkipEventViewModel() as T
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signup.term
+package com.viewpharm.yakal.signup.fragment
 
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
@@ -11,8 +11,9 @@ import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseFragment
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
-import com.viewpharm.yakal.signup.common.NextEventViewModel
-import com.viewpharm.yakal.type.ETerm
+import com.viewpharm.yakal.signup.viewmodel.NextEventViewModel
+import com.viewpharm.yakal.signup.viewmodel.DetailEventViewModel
+import com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel
 import timber.log.Timber
 
 class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermViewModel>(R.layout.fragment_sign_up_term) {
@@ -77,7 +78,8 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
                 Navigation.findNavController(view).navigate(
                     SignUpTermFragmentDirections.actionToSignUpTermDetailFragment(
                         termType = detailActionViewModel.termType
-                ))
+                    )
+                )
             }
         })
     }
