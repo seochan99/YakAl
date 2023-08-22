@@ -19,8 +19,10 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseFragment
+import com.viewpharm.yakal.databinding.FragmentSignUpModeBinding
 import com.viewpharm.yakal.databinding.FragmentSignUpNicknameBinding
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
+import com.viewpharm.yakal.signup.viewmodel.NextEventViewModel
 import com.viewpharm.yakal.signup.viewmodel.NicknameViewModel
 import com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel
 import java.util.regex.Pattern
@@ -86,31 +88,6 @@ class SignUpNicknameFragment : BaseFragment<FragmentSignUpNicknameBinding, Nickn
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(context, "초성, 중성 입력이 존재합니다", Toast.LENGTH_SHORT).show()
             }
-        })
-    }
-
-    private fun setEditText() {
-        val filterSpace = InputFilter { source, start, end, dest, dstart, dend ->
-            val ps: Pattern = Pattern.compile("^[ㄱ-ㅣ가-힣]+$")
-            if (ps.matcher(source).matches() || source == "" || source.isEmpty()) {
-                source
-            } else {
-                Toast.makeText(context, "한글만 입력 가능합니다.", Toast.LENGTH_SHORT).show()
-                ""
-            }
-        }
-        binding.nicknameEditText.filters = arrayOf(filterSpace, InputFilter.LengthFilter(5))
-        binding.nicknameEditText.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                binding.nextButton.isEnabled = binding.nicknameEditText.text.toString().isNotEmpty()
-                binding.textClearButton.visibility = if (binding.nicknameEditText.text.toString().isNotEmpty()){
-                    View.VISIBLE
-                } else{
-                    View.INVISIBLE
-                }
-            }
-            override fun afterTextChanged(s: Editable) {}
         })
     }
 }

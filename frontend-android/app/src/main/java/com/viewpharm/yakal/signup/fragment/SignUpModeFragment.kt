@@ -1,46 +1,31 @@
 package com.viewpharm.yakal.signup.fragment
 
-import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
 import android.text.style.StyleSpan
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
+import com.viewpharm.yakal.base.BaseFragment
 import com.viewpharm.yakal.databinding.FragmentSignUpModeBinding
+import com.viewpharm.yakal.signup.viewmodel.NextEventViewModel
+import com.viewpharm.yakal.signup.viewmodel.ModeViewModel
+import com.viewpharm.yakal.type.EMode
 
-class SignUpModeFragment : Fragment() {
-    private var _binding: FragmentSignUpModeBinding?= null
-    private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+class SignUpModeFragment : BaseFragment<FragmentSignUpModeBinding, ModeViewModel>(R.layout.fragment_sign_up_mode) {
+    override val baseViewModel: ModeViewModel by viewModels {
+        ModeViewModel.RadioViewModelFactory()
     }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentSignUpModeBinding.inflate(inflater, container, false)
-        return binding.root
+    private val nextActionViewModel: NextEventViewModel by viewModels() {
+        NextEventViewModel.ActionViewModelFactory()
     }
+    private val safeArgs: SignUpModeFragmentArgs by navArgs()
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        onButtonClickEvent(view)
-        setTextView()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    private fun setTextView() {
+    override fun initView() {
+        super.initView()
         val titleText: String = "모드를 선택해주세요"
         binding.titleTextView.text = titleText.run {
             SpannableStringBuilder(this).apply {
@@ -84,32 +69,30 @@ class SignUpModeFragment : Fragment() {
         }
     }
 
-    private fun onButtonClickEvent(view: View) {
-        binding.modeRadioGroup.setOnCheckedChangeListener { _, checkedId ->
-            when(checkedId) {
-                R.id.normalModeRadioButton -> {
-                    binding.nextButton.isEnabled = true
-                }
-                R.id.lightModeRadioButton -> {
-                    binding.nextButton.isEnabled = true
-                }
-            }
+    override fun initViewModel() {
+        super.initViewModel()
+        binding.baseViewModel = baseViewModel
+        binding.nextActionViewModel = nextActionViewModel
+    }
 
-            binding.nextButton.isEnabled = true
+    override fun initListener(view: View) {
+        super.initListener(view)
+
+        baseViewModel.mode.observe(viewLifecycleOwner) {
         }
 
-        binding.nextButton.setOnClickListener {
-            val safeArgs: SignUpModeFragmentArgs by navArgs()
-
-            Navigation.findNavController(view)
-                .navigate(
-                    SignUpModeFragmentDirections.actionToSignUpFinishFragment(
-                        safeArgs.birthday,
-                        safeArgs.sex,
-                        safeArgs.nickName,
-                        binding.lightModeRadioButton.isChecked
+        nextActionViewModel.addScheduleEvent.observe(viewLifecycleOwner) {
+            it.getContentIfNotHandled()?.let {
+                Navigation.findNavController(view)
+                    .navigate(
+                        SignUpModeFragmentDirections.actionToSignUpFinishFragment(
+                            safeArgs.birthday,
+                            safeArgs.sex,
+                            safeArgs.nickName,
+                            baseViewModel.mode.value?.mode == EMode.DETAIL
+                        )
                     )
-                )
+            }
         }
     }
 }
