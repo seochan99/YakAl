@@ -19,6 +19,7 @@
 		981433502A9163F200017600 /* MedicationRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9814334F2A9163F200017600 /* MedicationRowView.swift */; };
 		981433522A916A6800017600 /* MedicationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 981433512A916A6800017600 /* MedicationData.swift */; };
 		98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98349A882A7C043700071C5D /* CircularProgressBarView.swift */; };
+		98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */; };
 		985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985A28BE2A76B99E00B9943D /* TabBarVC.swift */; };
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
 		986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8332A76B51000F442B4 /* CommunityVC.swift */; };
@@ -81,6 +82,7 @@
 		981433512A916A6800017600 /* MedicationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationData.swift; sourceTree = "<group>"; };
 		981C933B2A67B1A600F428E5 /* YakAl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = YakAl.entitlements; sourceTree = "<group>"; };
 		98349A882A7C043700071C5D /* CircularProgressBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressBarView.swift; sourceTree = "<group>"; };
+		98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSwiftUIView.swift; sourceTree = "<group>"; };
 		985A28BE2A76B99E00B9943D /* TabBarVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationVC.swift; sourceTree = "<group>"; };
 		986AF8332A76B51000F442B4 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
@@ -156,10 +158,11 @@
 		9811AE422A93C60200FD9B82 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
-				9890C8F42A93DCBC0007299B /* New Group */,
+				98470ECF2A95367300C29ED1 /* New Group */,
 				9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */,
 				9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */,
 				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
+				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -190,6 +193,13 @@
 				9814334E2A9163CD00017600 /* Common */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		98470ECF2A95367300C29ED1 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 		986AF82D2A76B37500F442B4 /* Home */ = {
@@ -256,13 +266,6 @@
 				9888A2792A6D694F00F507BD /* Step4VC.swift */,
 			);
 			path = Store;
-			sourceTree = "<group>";
-		};
-		9890C8F42A93DCBC0007299B /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		9890C8F72A94EEC60007299B /* Calendar */ = {
@@ -623,6 +626,7 @@
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
 				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
+				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
