@@ -1,222 +1,246 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.SignUpTermFragment"
-    android:background="@color/white">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+        <variable
+            name="baseViewModel"
+            type="com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel" />
+        <variable
+            name="actionViewModel"
+            type="com.viewpharm.yakal.event.ActionViewModel" />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/termTitleTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="약관을 확인해주세요"
-            style="@style/default_font"
-            android:textSize="30sp"
-            android:textColor="@color/black"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".signup.fragment.SignUpTermFragment"
+        android:background="@color/white">
 
-        <CheckBox
-            android:id="@+id/totalAgreeCheckBox"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-
-            android:button="@null"
-            android:background="@drawable/cb_home_taking_main"
-            android:layout_marginTop="72dp"
-
-            app:layout_constraintTop_toBottomOf="@id/termTitleTextView"
-            app:layout_constraintStart_toStartOf="@id/termTitleTextView" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="전체 동의"
-            style="@style/default_font"
-            android:textSize="25sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="@id/totalAgreeCheckBox"
-            app:layout_constraintBottom_toBottomOf="@+id/totalAgreeCheckBox"
-            app:layout_constraintStart_toEndOf="@id/totalAgreeCheckBox" />
-
-        <CheckBox
-            android:id="@+id/serviceAgreeCheckBox"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-
-            android:button="@null"
-            android:background="@drawable/cb_home_taking_main"
-            android:layout_marginTop="32dp"
-
-            app:layout_constraintTop_toBottomOf="@id/totalAgreeCheckBox"
-            app:layout_constraintStart_toStartOf="@id/totalAgreeCheckBox" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(필수) 서비스 이용약관"
-            style="@style/default_font"
-            android:textSize="19sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="@id/serviceAgreeCheckBox"
-            app:layout_constraintBottom_toBottomOf="@+id/serviceAgreeCheckBox"
-            app:layout_constraintStart_toEndOf="@id/serviceAgreeCheckBox" />
-
-        <ImageButton
-            android:id="@+id/serviceAgreeDetailButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/view_oval_next"
-            android:src="@drawable/ic_custom_next_big"
-
-            android:onClick="onClickDetailButton"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/serviceAgreeCheckBox"
-            app:layout_constraintTop_toTopOf="@+id/serviceAgreeCheckBox" />
-        
-        <CheckBox
-            android:id="@+id/locationAgreeCheckBox"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-
-            android:button="@null"
-            android:background="@drawable/cb_home_taking_main"
-            android:layout_marginTop="24dp"
-
-            app:layout_constraintTop_toBottomOf="@id/serviceAgreeCheckBox"
-            app:layout_constraintStart_toStartOf="@id/serviceAgreeCheckBox" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(필수) 위치기반 서비스 이용약관"
-            style="@style/default_font"
-            android:textSize="19sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="@id/locationAgreeCheckBox"
-            app:layout_constraintBottom_toBottomOf="@+id/locationAgreeCheckBox"
-            app:layout_constraintStart_toEndOf="@id/locationAgreeCheckBox" />
-
-        <ImageButton
-            android:id="@+id/locationAgreeDetailButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/view_oval_next"
-            android:src="@drawable/ic_custom_next_big"
-
-            android:onClick="onClickDetailButton"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/locationAgreeCheckBox"
-            app:layout_constraintTop_toTopOf="@+id/locationAgreeCheckBox" />
-
-        <CheckBox
-            android:id="@+id/informationAgreeCheckBox"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-
-            android:button="@null"
-            android:background="@drawable/cb_home_taking_main"
-            android:layout_marginTop="24dp"
-
-            app:layout_constraintTop_toBottomOf="@id/locationAgreeCheckBox"
-            app:layout_constraintStart_toStartOf="@id/locationAgreeCheckBox" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="(필수) 개인정보 수집 및 이용 동의"
-            style="@style/default_font"
-            android:textSize="19sp"
-            android:textColor="@color/black"
-            android:layout_marginStart="16dp"
-            app:layout_constraintTop_toTopOf="@id/informationAgreeCheckBox"
-            app:layout_constraintBottom_toBottomOf="@+id/informationAgreeCheckBox"
-            app:layout_constraintStart_toEndOf="@id/informationAgreeCheckBox" />
-
-        <ImageButton
-            android:id="@+id/informationAgreeDetailButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/view_oval_next"
-            android:src="@drawable/ic_custom_next_big"
-
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/informationAgreeCheckBox"
-            app:layout_constraintTop_toTopOf="@+id/informationAgreeCheckBox" />
-
-        <CheckBox
-            android:id="@+id/marketingAgreeCheckBox"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-
-            android:button="@null"
-            android:background="@drawable/cb_home_taking_main"
-            android:layout_marginTop="24dp"
-
-            app:layout_constraintTop_toBottomOf="@id/informationAgreeCheckBox"
-            app:layout_constraintStart_toStartOf="@id/informationAgreeCheckBox" />
-
-        <TextView
-            style="@style/default_font"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginStart="16dp"
-            android:text="(선택) 마케팅 정보 활용 동의"
-
-            android:gravity="center_vertical"
-            android:textColor="@color/black"
-            android:textSize="19sp"
-            app:layout_constraintBottom_toBottomOf="@+id/marketingAgreeCheckBox"
-            app:layout_constraintStart_toEndOf="@id/marketingAgreeCheckBox"
-            app:layout_constraintTop_toTopOf="@id/marketingAgreeCheckBox"
-            app:layout_constraintVertical_bias="0.0" />
-
-        <ImageButton
-            android:id="@+id/marketingAgreeDetailButton"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/view_oval_next"
-            android:src="@drawable/ic_custom_next_big"
-
-            android:onClick="onClickDetailButton"
-            android:layout_marginEnd="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="@+id/marketingAgreeCheckBox"
-            app:layout_constraintTop_toTopOf="@+id/marketingAgreeCheckBox" />
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/nextButton"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:text="다음"
-            android:textColor="@drawable/btn_sign_up_text_color"
-            style="@style/default_font"
-            android:enabled="false"
-            android:textSize="20sp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="32dp"
+            android:layout_height="match_parent">
 
-            android:outlineProvider="none"
-            android:background="@drawable/btn_sign_up_next"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    
+            <TextView
+                android:id="@+id/termTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="약관을 확인해주세요"
+                style="@style/default_font"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <CheckBox
+                android:id="@+id/totalAgreeCheckBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+
+                android:button="@null"
+                android:background="@drawable/checkbox_big_blue"
+                android:layout_marginTop="72dp"
+
+                android:onClick="@{() -> baseViewModel.onClickAllAgree()}"
+                android:checked="@{baseViewModel.agreeState.allAgreed}"
+                app:layout_constraintTop_toBottomOf="@id/termTitleTextView"
+                app:layout_constraintStart_toStartOf="@id/termTitleTextView" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="전체 동의"
+                style="@style/default_font"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/totalAgreeCheckBox"
+                app:layout_constraintBottom_toBottomOf="@+id/totalAgreeCheckBox"
+                app:layout_constraintStart_toEndOf="@id/totalAgreeCheckBox" />
+
+            <CheckBox
+                android:id="@+id/serviceAgreeCheckBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+
+                android:button="@null"
+                android:background="@drawable/checkbox_big_blue"
+                android:layout_marginTop="32dp"
+
+                android:onClick="@{() -> baseViewModel.onClickServiceAgree()}"
+                android:checked="@{baseViewModel.agreeState.serviceAgreed}"
+                app:layout_constraintTop_toBottomOf="@id/totalAgreeCheckBox"
+                app:layout_constraintStart_toStartOf="@id/totalAgreeCheckBox" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(필수) 서비스 이용약관"
+                style="@style/default_font"
+                android:textSize="19sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/serviceAgreeCheckBox"
+                app:layout_constraintBottom_toBottomOf="@+id/serviceAgreeCheckBox"
+                app:layout_constraintStart_toEndOf="@id/serviceAgreeCheckBox" />
+
+            <ImageButton
+                android:id="@+id/serviceAgreeDetailButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/view_oval_next"
+                android:src="@drawable/ic_custom_next_big"
+
+                android:onClick="onClickDetailButton"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/serviceAgreeCheckBox"
+                app:layout_constraintTop_toTopOf="@+id/serviceAgreeCheckBox" />
+
+            <CheckBox
+                android:id="@+id/locationAgreeCheckBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+
+                android:button="@null"
+                android:background="@drawable/checkbox_big_blue"
+                android:layout_marginTop="24dp"
+
+                android:onClick="@{() -> baseViewModel.onClickLocationAgree()}"
+                android:checked="@{baseViewModel.agreeState.locationAgreed}"
+                app:layout_constraintTop_toBottomOf="@id/serviceAgreeCheckBox"
+                app:layout_constraintStart_toStartOf="@id/serviceAgreeCheckBox" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(필수) 위치기반 서비스 이용약관"
+                style="@style/default_font"
+                android:textSize="19sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/locationAgreeCheckBox"
+                app:layout_constraintBottom_toBottomOf="@+id/locationAgreeCheckBox"
+                app:layout_constraintStart_toEndOf="@id/locationAgreeCheckBox" />
+
+            <ImageButton
+                android:id="@+id/locationAgreeDetailButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/view_oval_next"
+                android:src="@drawable/ic_custom_next_big"
+
+                android:onClick="onClickDetailButton"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/locationAgreeCheckBox"
+                app:layout_constraintTop_toTopOf="@+id/locationAgreeCheckBox" />
+
+            <CheckBox
+                android:id="@+id/informationAgreeCheckBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+
+                android:button="@null"
+                android:background="@drawable/checkbox_big_blue"
+                android:layout_marginTop="24dp"
+
+                android:onClick="@{() -> baseViewModel.onClickInformationAgree()}"
+                android:checked="@{baseViewModel.agreeState.informationAgreed}"
+                app:layout_constraintTop_toBottomOf="@id/locationAgreeCheckBox"
+                app:layout_constraintStart_toStartOf="@id/locationAgreeCheckBox" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(필수) 개인정보 수집 및 이용 동의"
+                style="@style/default_font"
+                android:textSize="19sp"
+                android:textColor="@color/black"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="@id/informationAgreeCheckBox"
+                app:layout_constraintBottom_toBottomOf="@+id/informationAgreeCheckBox"
+                app:layout_constraintStart_toEndOf="@id/informationAgreeCheckBox" />
+
+            <ImageButton
+                android:id="@+id/informationAgreeDetailButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/view_oval_next"
+                android:src="@drawable/ic_custom_next_big"
+
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/informationAgreeCheckBox"
+                app:layout_constraintTop_toTopOf="@+id/informationAgreeCheckBox" />
+
+            <CheckBox
+                android:id="@+id/marketingAgreeCheckBox"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+
+                android:button="@null"
+                android:background="@drawable/checkbox_big_blue"
+                android:layout_marginTop="24dp"
+
+                android:onClick="@{() -> baseViewModel.onClickMarketingAgree()}"
+                android:checked="@{baseViewModel.agreeState.marketingAgreed}"
+                app:layout_constraintTop_toBottomOf="@id/informationAgreeCheckBox"
+                app:layout_constraintStart_toStartOf="@id/informationAgreeCheckBox" />
+
+            <TextView
+                style="@style/default_font"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginStart="16dp"
+                android:text="(선택) 마케팅 정보 활용 동의"
+
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="19sp"
+                app:layout_constraintBottom_toBottomOf="@+id/marketingAgreeCheckBox"
+                app:layout_constraintStart_toEndOf="@id/marketingAgreeCheckBox"
+                app:layout_constraintTop_toTopOf="@id/marketingAgreeCheckBox"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <ImageButton
+                android:id="@+id/marketingAgreeDetailButton"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/view_oval_next"
+                android:src="@drawable/ic_custom_next_big"
+
+                android:onClick="onClickDetailButton"
+                android:layout_marginEnd="30dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/marketingAgreeCheckBox"
+                app:layout_constraintTop_toTopOf="@+id/marketingAgreeCheckBox" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/nextButton"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="다음"
+                android:textColor="@drawable/btn_sign_up_text_color"
+                style="@style/default_font"
+
+                android:onClick="@{() -> actionViewModel.addScheduleEvent()}"
+                android:enabled="@{baseViewModel.agreeState.essentialAgreed}"
+                android:textSize="20sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="32dp"
+
+                android:outlineProvider="none"
+                android:background="@drawable/btn_sign_up_next"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</FrameLayout>
+    </FrameLayout>
+</layout>

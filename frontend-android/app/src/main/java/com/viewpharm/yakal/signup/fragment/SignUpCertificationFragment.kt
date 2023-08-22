@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.signup.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -11,9 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
-import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpCertificationBinding
-import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
 import com.viewpharm.yakal.type.ESex
 
 
@@ -69,8 +67,12 @@ class SignUpCertificationFragment : Fragment() {
             val sex = ESex.FEMALE
 
             Navigation.findNavController(view)
-                .navigate(SignUpCertificationFragmentDirections
-                    .actionToSignUpNicknameFragment(birthDay, sex))
+                .navigate(
+                    SignUpCertificationFragmentDirections.actionToSignUpNicknameFragment(
+                        birthDay,
+                        sex
+                    )
+                )
         }
     }
 }

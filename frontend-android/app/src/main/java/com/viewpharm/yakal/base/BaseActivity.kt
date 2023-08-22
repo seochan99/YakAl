@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModel
 abstract class BaseActivity<T: ViewDataBinding, R: ViewModel>
     (@LayoutRes private val layoutId: Int): AppCompatActivity() {
     protected lateinit var binding: T
-
     abstract val viewModel: R
 
     override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {

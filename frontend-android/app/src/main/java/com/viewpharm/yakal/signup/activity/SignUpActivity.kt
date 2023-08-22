@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.view
+package com.viewpharm.yakal.signup.activity
 
 import android.animation.ValueAnimator
 import android.os.Bundle

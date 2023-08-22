@@ -1,11 +1,9 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.signup.fragment
 
-import android.graphics.Color
 import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.AbsoluteSizeSpan
-import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -104,12 +102,14 @@ class SignUpModeFragment : Fragment() {
             val safeArgs: SignUpModeFragmentArgs by navArgs()
 
             Navigation.findNavController(view)
-                .navigate(SignUpModeFragmentDirections
-                    .actionToSignUpFinishFragment(
+                .navigate(
+                    SignUpModeFragmentDirections.actionToSignUpFinishFragment(
                         safeArgs.birthday,
                         safeArgs.sex,
                         safeArgs.nickName,
-                        binding.lightModeRadioButton.isChecked))
+                        binding.lightModeRadioButton.isChecked
+                    )
+                )
         }
     }
 }

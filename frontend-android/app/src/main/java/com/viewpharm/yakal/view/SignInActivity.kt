@@ -19,10 +19,8 @@ import com.viewpharm.yakal.repository.GoogleAuthRepository
 import com.viewpharm.yakal.repository.OAuth2Repository
 import com.viewpharm.yakal.repository.YakalRepository
 import com.viewpharm.yakal.repository.YakalRepositoryImpl
+import com.viewpharm.yakal.signup.activity.SignUpActivity
 import com.viewpharm.yakal.type.ESignInProvider
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -120,9 +118,7 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
             apply()
         }
 
-        Intent(this, SignUpActivity::class.java).let {
-            startActivity(it)
-        }
+        startActivity(Intent(this, SignUpActivity::class.java))
 
         Timber.d("AccessToken: $accessToken" +
                 "\nRefreshToken: $refreshToken")

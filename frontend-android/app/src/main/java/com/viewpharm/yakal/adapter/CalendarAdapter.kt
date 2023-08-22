@@ -2,7 +2,6 @@ package com.viewpharm.yakal.adapter
 
 import android.graphics.Color
 import android.graphics.Typeface
-import android.opengl.Visibility
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

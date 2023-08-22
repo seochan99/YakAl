@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.signup.fragment
 
 import android.graphics.Typeface
 import android.os.Bundle
@@ -15,9 +15,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpNicknameBinding
-import com.viewpharm.yakal.type.ESex
 import java.util.regex.Pattern
 
 
@@ -31,7 +29,7 @@ class SignUpNicknameFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding =  FragmentSignUpNicknameBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -70,8 +68,13 @@ class SignUpNicknameFragment : Fragment() {
                 val safeArgs: SignUpNicknameFragmentArgs by navArgs()
 
                 Navigation.findNavController(view)
-                    .navigate(SignUpNicknameFragmentDirections
-                        .actionToSignUpModeFragment(safeArgs.birthday, safeArgs.sex, binding.nicknameEditText.text.toString()))
+                    .navigate(
+                        SignUpNicknameFragmentDirections.actionToSignUpModeFragment(
+                            safeArgs.birthday,
+                            safeArgs.sex,
+                            binding.nicknameEditText.text.toString()
+                        )
+                    )
             } else {
                 Toast.makeText(context, "초성, 중성 입력이 존재합니다.", Toast.LENGTH_SHORT).show()
             }
@@ -85,7 +88,7 @@ class SignUpNicknameFragment : Fragment() {
     private fun setEditText() {
         val filterSpace = InputFilter { source, start, end, dest, dstart, dend ->
             val ps: Pattern = Pattern.compile("^[ㄱ-ㅣ가-힣]+$")
-            if (ps.matcher(source).matches() || source == "") {
+            if (ps.matcher(source).matches() || source == "" || source.isEmpty()) {
                 source
             } else {
                 Toast.makeText(context, "한글만 입력 가능합니다.", Toast.LENGTH_SHORT).show()

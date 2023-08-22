@@ -11,12 +11,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavArgs
 
-abstract class BaseFragment<T: ViewDataBinding, R: ViewModel, A: NavArgs>
+abstract class BaseFragment<T: ViewDataBinding, R: ViewModel>
     (@LayoutRes private val layoutId: Int): Fragment() {
     private var _binding: T? = null
-    protected val binding get() = _binding!!
+    protected val binding: T get() = _binding!!
 
-    abstract val safeArgs: A
+    abstract val baseViewModel: R
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,8 +34,8 @@ abstract class BaseFragment<T: ViewDataBinding, R: ViewModel, A: NavArgs>
         super.onViewCreated(view, savedInstanceState)
         initView()
         initViewModel()
-        initListener()
-        afterViewCreated()
+        initListener(view)
+        afterViewCreated(view)
     }
 
     override fun onDestroyView() {
@@ -45,6 +45,6 @@ abstract class BaseFragment<T: ViewDataBinding, R: ViewModel, A: NavArgs>
 
     protected open fun initView() {}
     protected open fun initViewModel() {}
-    protected open fun initListener() {}
-    protected open fun afterViewCreated() {}
+    protected open fun initListener(view: View) {}
+    protected open fun afterViewCreated(view: View) {}
 }

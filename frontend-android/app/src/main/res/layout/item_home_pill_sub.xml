@@ -83,7 +83,7 @@
             android:layout_height="24dp"
 
             android:button="@null"
-            android:background="@drawable/cb_home_taking_sub"
+            android:background="@drawable/checkbox_small_white"
             android:layout_marginEnd="16dp"
 
             app:layout_constraintEnd_toEndOf="parent"

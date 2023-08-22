@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.signup.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpTermDetailBinding
 import com.viewpharm.yakal.type.ETerm
-import com.viewpharm.yakal.view.SignUpActivity
+import com.viewpharm.yakal.signup.activity.SignUpActivity
 
 class SignUpTermDetailFragment : Fragment() {
     private var _binding: FragmentSignUpTermDetailBinding? = null

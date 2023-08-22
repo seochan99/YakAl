@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.signup.fragment
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,11 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
-import com.viewpharm.yakal.R
 import com.viewpharm.yakal.databinding.FragmentSignUpFinishBinding
-import com.viewpharm.yakal.view.SignUpActivity
+import com.viewpharm.yakal.signup.activity.SignUpActivity
 import timber.log.Timber
 
 class SignUpFinishFragment : Fragment() {
