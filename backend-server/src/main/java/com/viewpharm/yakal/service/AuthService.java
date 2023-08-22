@@ -1,12 +1,12 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
-import com.viewpharm.yakal.domain.MobileUser;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.repository.ImageRepository;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.type.EImageUseType;
 import com.viewpharm.yakal.type.ELoginProvider;
-import com.viewpharm.yakal.repository.MobileUserRepository;
+import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EPlatform;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.exception.CommonException;
@@ -30,13 +30,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final MobileUserRepository mobileUserRepository;
+    private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final OAuth2Util oAuth2Util;
     private final ImageRepository imageRepository;
 
-    @Value("${spring.image.path}")
-    private String FOLDER_PATH;
+    // @Value("${spring.image.path}")
+    private final String FOLDER_PATH = "/image";
 
     public Map<String, String> getRedirectUrl(final ELoginProvider loginProvider) {
         String url = null;
@@ -87,14 +87,13 @@ public class AuthService {
 
         final String finalSocialId = socialId;
 
-        final MobileUser user = mobileUserRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
-                .orElseGet(() -> mobileUserRepository.save(new MobileUser(finalSocialId, loginProvider, role, null)));
+        final User user = userRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
+                .orElseGet(() -> userRepository.save(new User(finalSocialId, loginProvider, role, null)));
 
         if (user.getImage() == null){
             user.setImage(imageRepository.save(Image.builder()
                     .useObject(user)
                     .imageUseType(EImageUseType.USER)
-                    .originName("default_image.png")
                     .uuidName("0_default_image.png")
                     .type("image/png")
                     .path(FOLDER_PATH + "0_default_image.png").build()));
@@ -109,7 +108,7 @@ public class AuthService {
 
     @Transactional
     public void logout(final Long userId) {
-        final MobileUser user = mobileUserRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
+        final User user = userRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         user.logout();
     }

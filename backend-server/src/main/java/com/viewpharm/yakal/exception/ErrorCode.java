@@ -34,6 +34,7 @@ public enum ErrorCode {
 
     // Server, File Up/DownLoad Error
     SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
+    NOT_IMAGE_ERROR("5024", HttpStatus.INTERNAL_SERVER_ERROR, "Uploaded File Is Not Image"),
 
     /**
      * 502 Bad Gateway: Gateway Server Error

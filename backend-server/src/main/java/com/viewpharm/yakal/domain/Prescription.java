@@ -56,13 +56,13 @@ public class Prescription {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private MobileUser mobileUser;
+    private User user;
 
     /* -------------------------------------------------- */
 
     @Builder
-    public Prescription(final MobileUser mobileUser, final String pharmacyName, final LocalDate prescribedDate) {
-        this.mobileUser = mobileUser;
+    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate) {
+        this.user = user;
         this.pharmacyName = pharmacyName;
         this.prescribedDate = prescribedDate;
     }

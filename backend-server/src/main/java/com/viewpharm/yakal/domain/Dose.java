@@ -75,7 +75,7 @@ public class Dose {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable = false)
-    private MobileUser mobileUser;
+    private User user;
 
     @Builder
     public Dose(final String kdCode,
@@ -85,14 +85,14 @@ public class Dose {
                 final Long pillCnt,
                 final Boolean isHalf,
                 final Prescription prescription,
-                final MobileUser mobileUser) {
+                final User user) {
         this.KDCode = kdCode;
         this.date = date;
         this.time = time;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
         this.prescription = prescription;
-        this.mobileUser = mobileUser;
+        this.user = user;
         this.isTaken = false;
         this.isDeleted = false;
         this.ATCCode = ATCCode;
