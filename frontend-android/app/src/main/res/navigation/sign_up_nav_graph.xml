@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signUpTermFragment"
-        android:name="com.viewpharm.yakal.signup.fragment.SignUpTermFragment"
+        android:name="com.viewpharm.yakal.signup.term.SignUpTermFragment"
         android:label="fragment_sign_up_term"
         tools:layout="@layout/fragment_sign_up_term" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpTermDetailFragment"
-        android:name="com.viewpharm.yakal.signup.fragment.SignUpTermDetailFragment"
+        android:name="com.viewpharm.yakal.signup.termdetail.SignUpTermDetailFragment"
         android:label="fragment_sign_up_term_detail"
         tools:layout="@layout/fragment_sign_up_term_detail" >
         <argument

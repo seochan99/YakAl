@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signup.model
+package com.viewpharm.yakal.signup.term
 
 data class TermAgreeState(
     val isAllAgreed: Boolean = false,

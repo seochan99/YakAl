@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signup.fragment
+package com.viewpharm.yakal.signup.term
 
 import android.graphics.Typeface
 import android.text.SpannableStringBuilder
@@ -9,10 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
 import com.viewpharm.yakal.R
-import com.viewpharm.yakal.event.ActionViewModel
 import com.viewpharm.yakal.base.BaseFragment
 import com.viewpharm.yakal.databinding.FragmentSignUpTermBinding
-import com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel
+import com.viewpharm.yakal.signup.common.NextEventViewModel
 import com.viewpharm.yakal.type.ETerm
 import timber.log.Timber
 
@@ -21,10 +20,13 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
     override val baseViewModel: SignUpTermViewModel by viewModels {
         SignUpTermViewModel.SignUpTermViewModelFactory()
     }
-
-    private val actionViewModel: ActionViewModel by viewModels() {
-        ActionViewModel.ActionViewModelFactory()
+    private val nextActionViewModel: NextEventViewModel by viewModels() {
+        NextEventViewModel.ActionViewModelFactory()
     }
+    private val detailActionViewModel: DetailEventViewModel by viewModels() {
+        DetailEventViewModel.DetailEventViewModelFactory()
+    }
+
 
     override fun onResume() {
         super.onResume()
@@ -34,7 +36,7 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
     override fun initView() {
         super.initView()
 
-        val titleText: String = "약관을 확인해주세요"
+        val titleText = "약관을 확인해주세요"
         binding.termTitleTextView.text = titleText.run {
             SpannableStringBuilder(this).apply {
                 setSpan(
@@ -50,7 +52,8 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
     override fun initViewModel() {
         super.initViewModel()
         binding.baseViewModel = baseViewModel
-        binding.actionViewModel = actionViewModel
+        binding.nextActionViewModel = nextActionViewModel
+        binding.detailActionViewModel = detailActionViewModel
     }
 
     override fun initListener(view: View) {
@@ -58,12 +61,23 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
 
         // All Agree CheckBox Click Event
         baseViewModel.agreeState.observe(this.viewLifecycleOwner, Observer {
+            // 해야할 행동이 없음
         })
 
         // Next Button Click Event
-        actionViewModel.addScheduleEvent.observe(this.viewLifecycleOwner, Observer {
+        nextActionViewModel.addScheduleEvent.observe(this.viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 Navigation.findNavController(view).navigate(R.id.action_to_signUpCertificationFragment)
+            }
+        })
+
+        // Detail Button Click Event
+        detailActionViewModel.addScheduleEvent.observe(this.viewLifecycleOwner, Observer {
+            it.getContentIfNotHandled()?.let {
+                Navigation.findNavController(view).navigate(
+                    SignUpTermFragmentDirections.actionToSignUpTermDetailFragment(
+                        termType = detailActionViewModel.termType
+                ))
             }
         })
     }

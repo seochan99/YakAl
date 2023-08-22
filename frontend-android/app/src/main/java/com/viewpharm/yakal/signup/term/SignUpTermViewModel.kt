@@ -1,11 +1,10 @@
-package com.viewpharm.yakal.signup.viewmodel
+package com.viewpharm.yakal.signup.term
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.viewpharm.yakal.base.BaseViewModel
-import com.viewpharm.yakal.signup.model.TermAgreeState
 
 class SignUpTermViewModel: BaseViewModel() {
     private val _agreeState = MutableLiveData<TermAgreeState>()

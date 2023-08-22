@@ -6,16 +6,19 @@
     <data>
         <variable
             name="baseViewModel"
-            type="com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel" />
+            type="com.viewpharm.yakal.signup.term.SignUpTermViewModel" />
         <variable
-            name="actionViewModel"
-            type="com.viewpharm.yakal.event.ActionViewModel" />
+            name="nextActionViewModel"
+            type="com.viewpharm.yakal.signup.common.NextEventViewModel" />
+        <variable
+            name="detailActionViewModel"
+            type="com.viewpharm.yakal.signup.term.DetailEventViewModel" />
     </data>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".signup.fragment.SignUpTermFragment"
+        tools:context=".signup.term.SignUpTermFragment"
         android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -94,7 +97,7 @@
                 android:background="@drawable/view_oval_next"
                 android:src="@drawable/ic_custom_next_big"
 
-                android:onClick="onClickDetailButton"
+                android:onClick="@{() -> detailActionViewModel.onClickServiceTerm()}"
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/serviceAgreeCheckBox"
@@ -133,7 +136,7 @@
                 android:background="@drawable/view_oval_next"
                 android:src="@drawable/ic_custom_next_big"
 
-                android:onClick="onClickDetailButton"
+                android:onClick="@{() -> detailActionViewModel.onClickLocationTerm()}"
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/locationAgreeCheckBox"
@@ -172,6 +175,7 @@
                 android:background="@drawable/view_oval_next"
                 android:src="@drawable/ic_custom_next_big"
 
+                android:onClick="@{() -> detailActionViewModel.onClickInformationTerm()}"
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/informationAgreeCheckBox"
@@ -213,7 +217,7 @@
                 android:background="@drawable/view_oval_next"
                 android:src="@drawable/ic_custom_next_big"
 
-                android:onClick="onClickDetailButton"
+                android:onClick="@{() -> detailActionViewModel.onClickMarketingTerm()}"
                 android:layout_marginEnd="30dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/marketingAgreeCheckBox"
@@ -227,7 +231,7 @@
                 android:textColor="@drawable/btn_sign_up_text_color"
                 style="@style/default_font"
 
-                android:onClick="@{() -> actionViewModel.addScheduleEvent()}"
+                android:onClick="@{() -> nextActionViewModel.onClickNextButton()}"
                 android:enabled="@{baseViewModel.agreeState.essentialAgreed}"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
