@@ -83,9 +83,6 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
-                                                <connections>
-                                                    <segue destination="oaL-O3-dwD" kind="show" id="pDN-eI-sxb"/>
-                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zfK-oZ-OEg">
                                                 <rect key="frame" x="12" y="8" width="147.33333333333334" height="20"/>

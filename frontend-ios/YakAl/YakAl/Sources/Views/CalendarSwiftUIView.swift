@@ -32,7 +32,7 @@ struct CalendarWeekView: View {
     var weekDates: [DayModel]
     
     var body: some View {
-        HStack(spacing: 40) {
+        HStack(spacing:0) {
             ForEach(weekDates, id: \.self) { date in
                 VStack {
                     if isSameDate(date.date, Date()) {
@@ -40,14 +40,15 @@ struct CalendarWeekView: View {
                         CircularProgressBar(progress: 0.6, dateText: date.dayText, today:true, weekDates:date.weekdayText)
                             .padding(.top, 4)
                     } else {
-                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today:false, weekDates:date.weekdayText)
+                        CircularProgressBar(progress: 0.2
+                                            , dateText: date.dayText, today:false, weekDates:date.weekdayText)
                             .padding(.top, 4)
 
                     }
                         
                 }
             }
-        }
+        }.padding(.horizontal,20)
         
         
     }
@@ -174,13 +175,13 @@ struct CalendarSwiftUIView: View {
                 .padding(.bottom, 15)
             
             // --------------- 요일  ---------------
-            HStack(spacing:40) {
+            HStack(spacing:20) {
                 ForEach(weekStringdate, id: \.self) { symbol in
                     Text(symbol)
                         .frame(maxWidth: .infinity)
                         .foregroundColor(weekdayColor(for: symbol))
                 }
-            }
+            }.padding(.horizontal,20)
             
 
             
@@ -260,7 +261,7 @@ struct CalendarSwiftUIView: View {
                     .padding(.vertical, 0) // 수평 여백을 없애는 부분
             }
         }
-        }.padding(.horizontal, 20) // 수평 여백을 없애는 부분
+        }
     }
 }
 
