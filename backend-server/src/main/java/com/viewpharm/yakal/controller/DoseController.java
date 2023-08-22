@@ -51,8 +51,6 @@ public class DoseController {
             @UserId Long id,
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
-        log.info("시작");
-        log.info(id.toString());
         final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(id, date);
         return ResponseDto.ok(oneDayScheduleDto);
     }
