@@ -153,6 +153,7 @@ struct MypageSwiftUIView: View {
         }
 }
 
+
 struct EditNicknameView: View {
     @ObservedObject private var user = User.shared
     @Binding var nickname: String

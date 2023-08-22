@@ -1,53 +1,5 @@
 import SwiftUI
 
-enum Mode {
-    case light, regular
-}
-
-struct ModeButton: View {
-    var mode: Mode
-    var title: String
-    var description: String
-
-
-    @Binding var selectedMode: Mode
-
-    var body: some View {
-        Button(action: {
-            selectedMode = mode
-        }) {
-            
-            VStack {
-                HStack{
-                    VStack(alignment: .leading,spacing: 16){
-                        Text(title)
-                            .font(Font.custom("SUIT", size: 24).weight(.medium))
-                            .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        
-                        Text(description)
-                            .font(Font.custom("SUIT", size: 15).weight(.bold))
-                            .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                            
-
-                    }.padding(.horizontal,20)
-                    
-                    Spacer()
-                }
-
-            }
-            .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 20))
-            .frame(maxWidth: .infinity)
-            .background(selectedMode == mode ? Color(red: 0.95, green: 0.96, blue: 1) : .white)
-            .cornerRadius(20)
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .inset(by: 1)
-                    .stroke(selectedMode == mode ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.91, green: 0.91, blue: 0.93), lineWidth: 2)
-            )
-        }
-    }
-}
-
 struct SettingSwiftUIView: View {
     @State private var selectedMode: Mode = .light
     @State private var morningStartTime: Date = Date()
@@ -122,13 +74,16 @@ struct SettingSwiftUIView_Previews: PreviewProvider {
 
 /* --------------- 시간 설정 뷰 --------------- */
 struct TimeSettingView: View {
+    
     @Binding var startTime: Date
     @Binding var endTime: Date
     var title: String
+    var iconName: String
+    
     @Environment(\.presentationMode) var presentationMode
 
-    @State private var isSettingStartTime: Bool = false
-    @State private var isSettingEndTime: Bool = false
+    @State private var isShowingDatePicker: Bool = false
+    @State private var isSettingStartTime: Bool = true  // Start with startTime by default
 
     var isValidTime: Bool {
         return startTime < endTime
@@ -147,95 +102,96 @@ struct TimeSettingView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            HStack{
-                TextField("Start Time", text: .constant(formattedStartTime))
-                    .onTapGesture {
-                        isSettingStartTime = true
+        ZStack {
+            VStack(spacing: 16) {
+                HStack(spacing: 60) {
+                    HStack(spacing:8){
+                        Image(iconName)
+                            .resizable()
+                            .frame(width: 20, height: 20)
+                        Text(title)
+                            .font(Font.custom("SUIT", size: 16).weight(.medium))
+                            .foregroundColor(.black)
                     }
-                TextField("End Time", text: .constant(formattedEndTime))
-                    .onTapGesture {
-                        isSettingEndTime = true
+                    
+                    
+                    HStack(spacing:8){
+                        Button(action: {
+                            isSettingStartTime = true
+                            isShowingDatePicker = true
+                        }) {
+                            Text(formattedStartTime).font(
+                                Font.custom("SUIT", size: 16)
+                                .weight(.bold)
+                                )
+                                .multilineTextAlignment(.trailing)
+                                .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
+                        }
+                        Rectangle()
+                          .foregroundColor(.clear)
+                          .frame(width: 8, height: 2)
+                          .background(Color(red: 0.78, green: 0.78, blue: 0.81))
+
+                        Button(action: {
+                            isSettingStartTime = false
+                            isShowingDatePicker = true
+                        }) {
+                            Text(formattedEndTime).font(
+                                Font.custom("SUIT", size: 16)
+                                .weight(.bold)
+                                )
+                                .multilineTextAlignment(.trailing)
+                                .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
+                        }
                     }
-            }
+                    
+                    Spacer()
+                }.padding(.horizontal,20)
+                Spacer()
 
+                BlueHorizontalButton(text: "완료") {
+                    isShowingDatePicker = false
+                }
 
-            if isSettingStartTime {
-                DatePicker("Select Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .labelsHidden()
-                    .onDisappear {
-                        isSettingStartTime = false
-                    }
             }
-
-            if isSettingEndTime {
-                DatePicker("Select End Time", selection: $endTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(WheelDatePickerStyle())
-                    .labelsHidden()
-                    .onDisappear {
-                        isSettingEndTime = false
-                    }
-            }
-
-            Spacer()
-            BlueHorizontalButton(text: "완료"){
-                isSettingStartTime = false
-                isSettingEndTime = false
-            }
-            
-        }
-        .padding()
-        .navigationTitle(title)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }) {
+            .padding(.vertical, 30)
+            .navigationTitle("시간 설정")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
                 Image(systemName: "chevron.left")
                     .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
                 Text("뒤로")
                     .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-        })
+            })
+
+            // This is our custom date picker modal
+            if isShowingDatePicker {
+                DatePickerModalView(isPresented: $isShowingDatePicker, date: isSettingStartTime ? $startTime : $endTime)
+            }
+        }
     }
 }
 
-
-/* --------------- 시간 열 컴포넌트 --------------- */
-struct TimeSlotView: View {
-    var iconName: String
-    var label: String
-    @Binding var startTime: Date
-    @Binding var endTime: Date
-
-    var formattedTime: String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return "\(formatter.string(from: startTime)) - \(formatter.string(from: endTime))"
-    }
+//모달 뷰
+struct DatePickerModalView: View {
+    @Binding var isPresented: Bool
+    @Binding var date: Date
 
     var body: some View {
-        NavigationLink(destination: TimeSettingView(startTime: $startTime, endTime: $endTime, title: label)) {
-            HStack(spacing: 8) {
-                Image(iconName)
-                    .resizable()
-                    .frame(width: 20, height: 20)
-                
-                HStack(spacing: 24) {
-                    Text(label)
-                        .font(Font.custom("SUIT", size: 16).weight(.medium))
-                        .foregroundColor(.black)
-                    
-                    Text(formattedTime)
-                        .font(Font.custom("SUIT", size: 15).weight(.medium))
-                        .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .foregroundColor(Color(UIColor(red: 0.08, green: 0.08, blue: 0.08, alpha: 1)))
-
+        VStack {
+            DatePicker("시간 설정", selection: $date, displayedComponents: .hourAndMinute)
+                .datePickerStyle(WheelDatePickerStyle())
+                .labelsHidden()
+                .padding()
+            
+            BlueHorizontalButton(text: "Set Time") {
+                isPresented = false
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.white)
+        .edgesIgnoringSafeArea(.all)
     }
 }
