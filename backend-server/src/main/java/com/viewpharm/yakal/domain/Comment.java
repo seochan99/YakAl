@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.Formula;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +39,7 @@ public class Comment extends BaseCreateEntity {
     private Board board;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "perent_comment")
+    @JoinColumn(name = "parent_comment")
     private Comment parent;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")

@@ -61,7 +61,7 @@ public class Notification {
     }
 
     @Builder
-    public Notification(String title, String content, Boolean isRead, Timestamp createdDate, Boolean status, User user) {
+    public Notification(String title, String content, User user) {
         this.title = title;
         this.content = content;
         this.isRead = false;
@@ -69,6 +69,4 @@ public class Notification {
         this.status = true;
         this.user = user;
     }
-
-
 }

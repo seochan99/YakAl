@@ -6,13 +6,11 @@ import com.viewpharm.yakal.dto.response.BoardDetailDto;
 import com.viewpharm.yakal.dto.response.BoardListDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.BoardService;
-import com.viewpharm.yakal.type.ERegion;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.type.EDisease;
 import com.viewpharm.yakal.type.ERegion;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -50,6 +51,10 @@ public class Board extends BaseCreateEntity {
     @JoinColumn(name = "region")
     @Enumerated(EnumType.STRING)
     private ERegion region;
+
+    @JoinColumn(name = "disease")
+    @Enumerated(EnumType.STRING)
+    private EDisease disease;
 
     @OneToMany(mappedBy = "board", fetch = FetchType.LAZY)
     private List<Like> likes = new ArrayList<>();

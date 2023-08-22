@@ -1,8 +1,6 @@
 package com.viewpharm.yakal.type;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonValue;
-import lombok.Getter;
 
 public enum ERegion {
     도봉구, 노원구, 강북구, 성북구, 중랑구, 은평구, 종로구, 동대문구,
@@ -19,5 +17,4 @@ public enum ERegion {
         }
         return null;
     }
-
 }
