@@ -26,10 +26,19 @@ struct DayModel: Identifiable,Hashable {
         return Double(takenCount) / Double(medications.count)
     }
 }
+extension DayModel {
+    init(currentDate: Date) {
+        self.date = currentDate
+        self.medications = []  // 현재 날짜에 해당하는 약물 데이터를 설정하십시오.
+    }
+}
+
 
 //MARK: - Calendar Week View : 매 주차 뷰
 struct CalendarWeekView: View {
     var weekDates: [DayModel]
+    @Binding var selectedDate: DayModel? // 선택한 날짜를 바인딩
+
     var body: some View {
         HStack(spacing:20) {
                 ForEach(weekDates, id: \.self) { date in
@@ -37,15 +46,24 @@ struct CalendarWeekView: View {
                     if isLastWeek() && date.date.day == "1" {
                         CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
                             .padding(.top, 4)
+                            .onTapGesture {
+                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
+                            }
                     }
                     
                     else if isFirstWeek() && date.date.day == "1"{
                         if isLastOne(in: weekDates, current: date) {
                             CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText)
                                 .padding(.top, 4)
+                                .onTapGesture {
+                                    selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
+                                }
                         } else {
                             CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
                                 .padding(.top, 4)
+                                .onTapGesture {
+                                    selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
+                                }
                         }
                     }
                     
@@ -54,9 +72,15 @@ struct CalendarWeekView: View {
                         // Hide dates of next month if in the last week
                         CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
                             .padding(.top, 4)
+                            .onTapGesture {
+                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
+                            }
                     } else {
-                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText)
+                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.id == selectedDate?.id)
                             .padding(.top, 4)
+                            .onTapGesture {
+                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
+                            }
                     }
                 }
             }.padding(.horizontal,20)
@@ -99,6 +123,19 @@ struct CalendarWeekView: View {
     }
 }
 
+extension Date {
+    var year: Int {
+        return Calendar.current.component(.year, from: self)
+    }
+    
+    var month: Int {
+        return Calendar.current.component(.month, from: self)
+    }
+    
+    var SingleDay: Int {
+        return Calendar.current.component(.day, from: self)
+    }
+}
 
 
 //MARK: - CalendarSwiftUIView : 달력 뷰
@@ -106,8 +143,11 @@ struct CalendarSwiftUIView: View {
     // --------------- 상태 ---------------
     @State private var currentDate = Date()
     @State private var isExpanded = false
-    @State private var currentWeekIndex = 3 //
     
+    @State private var currentWeekIndex: Int = 0
+    // 선택한 날짜를 저장할 상태 변수 추가
+    @State private var selectedDate: DayModel? = DayModel(currentDate: Date())
+
     // --------------- 요일 스트링 ---------------
     let weekStringdate : [String] = ["일","월","화","수","목","금","토"]
 
@@ -124,6 +164,18 @@ struct CalendarSwiftUIView: View {
         Medicine(id: 2, image: "image_덱시로펜정", name: "약물B", ingredients: "성분 B", dangerStat: 1, isTaken: false)
         
     ]
+    
+    func findCurrentWeekIndex() -> Int {
+        let today = Date()
+        for (index, week) in sampleWeekDates.enumerated() {
+            for day in week {
+                if Calendar.current.isDate(day.date, inSameDayAs: today) {
+                    return index
+                }
+            }
+        }
+        return 0 // Default to the first week if not found
+    }
     
     // --------------- 한줄 캘린더 데이터---------------
 
@@ -221,11 +273,12 @@ struct CalendarSwiftUIView: View {
                 // 매일자 삽입
                 ForEach(sampleWeekDates, id: \.self) {
                     weekDates in
-                    CalendarWeekView(weekDates: weekDates)
+                    CalendarWeekView(weekDates: weekDates, selectedDate: $selectedDate) // 선택한 날짜를 하위 뷰에 전달
                 }
             } else {
                 // 해당 주차
-                CalendarWeekView(weekDates: sampleWeekDates[currentWeekIndex])
+                CalendarWeekView(weekDates: sampleWeekDates[currentWeekIndex], selectedDate: $selectedDate) // 선택한 날짜를 하위 뷰에 전달
+
                 
             }
             // --------------- 스와이핑 아이콘 ---------------
@@ -248,7 +301,7 @@ struct CalendarSwiftUIView: View {
 
                         // --------------- 일자  ---------------
                         HStack{
-                            Text("2023년 7월 20일")
+                            Text("\(String(selectedDate?.date.year ?? 2023))년 \(String(selectedDate?.date.month ?? 7))월 \(String(selectedDate?.date.SingleDay ?? 20))일")
                               .font(
                                 Font.custom("SUIT", size: 15)
                                   .weight(.semibold)
@@ -292,6 +345,8 @@ struct CalendarSwiftUIView: View {
                     .padding(.vertical, 0) // 수평 여백을 없애는 부분
             }
         }
+        }.onAppear {
+            currentWeekIndex = findCurrentWeekIndex()
         }
     }
 }
@@ -329,46 +384,42 @@ struct CircularProgressBar: View {
     var dateText: String // Add dateText parameter
     var today : Bool
     var weekDates : String
+    var isSelected: Bool = false // 선택된 날짜인지 나타내는 변수 추가
+    
+
+
     var body: some View {
         ZStack {
-            if(dateText=="  ")
-            {
-                
-            }else{
-                Circle()
-                    .stroke(lineWidth: 3)
-                    .opacity(0.3)
-                    .foregroundColor(Color(red: 0.76, green: 0.82, blue: 1))
-                Circle()
-                    .trim(from: 0, to: CGFloat(min(self.progress, 1.0)))
-                    .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                    .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
-                    .rotationEffect(Angle(degrees: -90))
-                VStack{
-                    if(today == true)
-                    {
-                        Circle()
-                            .fill(Color(red: 0.33, green: 0.53, blue: 0.99))
-                            .frame(width: 24, height: 24)
-                            .overlay(
-                                Text("\(dateText)")
-                                    .font(Font.custom("SUIT", size: 12).weight(.medium))
-                                    .foregroundColor(Color.white)
-                            )
-                    }else{
-
-                        Text(dateText)
-                            .foregroundColor(weekdayColor(for: weekDates))
-                            .font(Font.custom("SUIT", size: 12).weight(.medium))
-                            .foregroundColor(Color.black)
-                    }
-                    
-                }
-            }
-
-            
-        }
-        .frame(width: 32, height: 32)
+               if dateText != "  " {
+                   Circle()
+                       .stroke(lineWidth: 3)
+                       .opacity(0.3)
+                       .foregroundColor(Color(red: 0.76, green: 0.82, blue: 1))
+                   
+                   Circle()
+                       .trim(from: 0, to: CGFloat(min(self.progress, 1.0)))
+                       .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
+                       .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
+                       .rotationEffect(Angle(degrees: -90))
+                   
+                   if isSelected {
+                       Circle()
+                           .fill(Color(red: 0.33, green: 0.53, blue: 0.99))
+                           .frame(width: 24, height: 24)
+                           .overlay(
+                               Text("\(dateText)")
+                                   .font(Font.custom("SUIT", size: 12).weight(.medium))
+                                   .foregroundColor(Color.white)
+                           )
+                   } else {
+                       Text(dateText)
+                           .foregroundColor(weekdayColor(for: weekDates))
+                           .font(Font.custom("SUIT", size: 12).weight(.medium))
+                       
+                   }
+               }
+           }
+           .frame(width: 32, height: 32)
     }
     
     // --------------- 토,일 색상 ---------------
