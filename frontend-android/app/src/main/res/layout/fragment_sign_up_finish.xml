@@ -25,10 +25,11 @@
                 android:layout_height="wrap_content"
                 android:text="홍길동님,\n회원가입이 완료되었습니다!"
                 style="@style/default_font"
-                android:textSize="24sp"
+                android:textSize="26sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
+                android:lineSpacingExtra="10dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
 

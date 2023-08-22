@@ -1,7 +1,11 @@
 package com.viewpharm.yakal.signup.fragment
 
 import android.annotation.SuppressLint
+import android.graphics.Typeface
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.StyleSpan
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,7 +36,17 @@ class SignUpFinishFragment : BaseFragment<FragmentSignUpFinishBinding, NextEvent
     @SuppressLint("SetTextI18n")
     override fun initView() {
         super.initView()
-        binding.titleTextView.text = "${safeArgs.nickName}님\n회원가입이 완료되었습니다!"
+        val titleText: String = "${safeArgs.nickName}님\n회원가입이 완료되었습니다!"
+        binding.titleTextView.text = titleText.run {
+            SpannableStringBuilder(this).apply {
+                setSpan(
+                    StyleSpan(Typeface.BOLD),
+                    0,
+                    safeArgs.nickName.length,
+                    Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+        }
 
         (activity as SignUpActivity).onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -56,7 +70,14 @@ class SignUpFinishFragment : BaseFragment<FragmentSignUpFinishBinding, NextEvent
                     safeArgs.isDetail: ${safeArgs.isDetail}
                     """)
 
-                (activity as SignUpActivity).navigateToActivity()
+                val navOptions: NavOptions = NavOptions.Builder()
+                    .setPopUpTo(0, false)
+                    .build()
+
+                Navigation.findNavController(view).navigate(
+                    SignUpFinishFragmentDirections.actionToMainActivity(), navOptions)
+
+                (activity as SignUpActivity).finish()
             }
         }
     }
