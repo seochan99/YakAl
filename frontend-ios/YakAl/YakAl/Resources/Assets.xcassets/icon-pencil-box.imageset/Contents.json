@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "icon-pencil-box.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
