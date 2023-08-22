@@ -149,7 +149,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="teG-Hh-Ox0">
                                                                 <rect key="frame" x="0.0" y="8" width="77.666666666666671" height="24"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="fzu-4z-I17">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-envelope" translatesAutoresizingMaskIntoConstraints="NO" id="fzu-4z-I17">
                                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="width" constant="24" id="bxl-Oc-H3h"/>
@@ -191,7 +191,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="e0I-FO-MJz">
                                                                 <rect key="frame" x="0.0" y="8" width="107" height="24"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="d17-4Z-QSg">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-OTC" translatesAutoresizingMaskIntoConstraints="NO" id="d17-4Z-QSg">
                                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="24" id="FV5-nd-WqK"/>
@@ -233,7 +233,7 @@
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="T66-PL-NiP">
                                                                 <rect key="frame" x="0.0" y="8" width="92.333333333333329" height="24"/>
                                                                 <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultImage" translatesAutoresizingMaskIntoConstraints="NO" id="cnq-6A-tJa">
+                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-pencil-box" translatesAutoresizingMaskIntoConstraints="NO" id="cnq-6A-tJa">
                                                                         <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="24" id="BDf-Xd-uAJ"/>
@@ -430,8 +430,10 @@
     </scenes>
     <resources>
         <image name="FAB-add-pill" width="122" height="70"/>
-        <image name="defaultImage" width="252" height="252"/>
+        <image name="icon-OTC" width="24" height="24"/>
         <image name="icon-bell(1)" width="40" height="40"/>
+        <image name="icon-envelope" width="24" height="24"/>
+        <image name="icon-pencil-box" width="24" height="24"/>
         <image name="icon_celedar" width="20" height="20"/>
         <image name="icon_home" width="36.333332061767578" height="36"/>
         <image name="icon_home_fill" width="36.333332061767578" height="36"/>
