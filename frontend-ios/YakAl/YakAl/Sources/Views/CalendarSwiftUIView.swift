@@ -1,39 +1,5 @@
 import SwiftUI
 
-//MARK: - Day Model
-struct DayModel: Identifiable,Hashable {
-    let id = UUID()
-    let date: Date
-    let medications: [Medicine] // List of medications for the day
-    
-    // 일자로 변경
-    var dayText: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "d"
-        return formatter.string(from: date)
-    }
-
-    // 한국어 요일 변환
-    var weekdayText: String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "E"
-        formatter.locale = Locale(identifier: "ko_KR") // 한국어 로케일 설정
-        return formatter.string(from: date)
-    }
-    // 하류 약 섭취률
-    var medicineIntakeRate: Double {
-        let takenCount = medications.filter { $0.isTaken }.count
-        return Double(takenCount) / Double(medications.count)
-    }
-}
-extension DayModel {
-    init(currentDate: Date) {
-        self.date = currentDate
-        self.medications = []  // 현재 날짜에 해당하는 약물 데이터를 설정하십시오.
-    }
-}
-
-
 //MARK: - Calendar Week View : 매 주차 뷰
 struct CalendarWeekView: View {
     var weekDates: [DayModel]
@@ -50,7 +16,7 @@ struct CalendarWeekView: View {
                     /* --------------- 첫쨋주이고 1이 표시되어 있을때  --------------- */
                     else if isFirstWeek() && date.date.day == "1"{
                         if isLastOne(in: weekDates, current: date) {
-                            CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
+                            CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText))
                                 .padding(.top, 4)
                                 .onTapGesture {
                                     selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
@@ -65,14 +31,14 @@ struct CalendarWeekView: View {
                     /* --------------- 마지막주이고 7보다 작은 수가 있을떄  --------------- */
                    else if isLastWeek() && Int(date.date.day)! <= 7 {
                         // Hide dates of next month if in the last week
-                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
+                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText))
                             .padding(.top, 4)
                             .onTapGesture {
                                 selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
                             }
                        /* --------------- 그외에는 모두 표시하기  --------------- */
                     } else {
-                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
+                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: (date.date.month == selectedDate?.date.month) && (date.dayText == selectedDate?.dayText) )
                             .padding(.top, 4)
                             .onTapGesture {
                                 selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
@@ -100,7 +66,6 @@ struct CalendarWeekView: View {
     }
     
     func isLastWeek() -> Bool {
-        print("weekDates 는 \(weekDates)")
         return weekDates.contains(where: { $0.date.day == "28" || $0.date.day == "29" || $0.date.day == "30" || $0.date.day == "31" })
     }
     
@@ -118,22 +83,6 @@ struct CalendarWeekView: View {
         }
     }
 }
-
-extension Date {
-    var year: Int {
-        return Calendar.current.component(.year, from: self)
-    }
-    
-    var month: Int {
-        return Calendar.current.component(.month, from: self)
-    }
-    
-    var SingleDay: Int {
-        return Calendar.current.component(.day, from: self)
-    }
-}
-
-
 //MARK: - CalendarSwiftUIView : 달력 뷰
 struct CalendarSwiftUIView: View {
     // --------------- 상태 ---------------
@@ -213,7 +162,7 @@ struct CalendarSwiftUIView: View {
 
     
     
-    // --------------- 토,일 색상 ---------------
+    /* --------------- 토,일 색상 ---------------*/
     func weekdayColor(for weekdayText: String) -> Color {
         switch weekdayText {
             case "일":
@@ -375,64 +324,6 @@ struct CircularProgressBarWithText: View {
     }
 }
 
-
-//MARK: - 원 프로그레스바 : 달력 일자 위에
-struct CircularProgressBar: View {
-    var progress: Double
-    var dateText: String // Add dateText parameter
-    var today : Bool
-    var weekDates : String
-    var isSelected: Bool = false // 선택된 날짜인지 나타내는 변수 추가
-    
-
-
-    var body: some View {
-        ZStack {
-               if dateText != "  " {
-                   Circle()
-                       .stroke(lineWidth: 3)
-                       .opacity(0.3)
-                       .foregroundColor(Color(red: 0.76, green: 0.82, blue: 1))
-                   
-                   Circle()
-                       .trim(from: 0, to: CGFloat(min(self.progress, 1.0)))
-                       .stroke(style: StrokeStyle(lineWidth: 3, lineCap: .round, lineJoin: .round))
-                       .foregroundColor(Color(red: 0.33, green: 0.53, blue: 0.99))
-                       .rotationEffect(Angle(degrees: -90))
-                   
-                   if isSelected {
-                       Circle()
-                           .fill(Color(red: 0.33, green: 0.53, blue: 0.99))
-                           .frame(width: 24, height: 24)
-                           .overlay(
-                               Text("\(dateText)")
-                                   .font(Font.custom("SUIT", size: 12).weight(.medium))
-                                   .foregroundColor(Color.white)
-                           )
-                   } else {
-                       Text(dateText)
-                           .foregroundColor(weekdayColor(for: weekDates))
-                           .font(Font.custom("SUIT", size: 12).weight(.medium))
-                       
-                   }
-               }
-           }
-           .frame(width: 32, height: 32)
-    }
-    
-    // --------------- 토,일 색상 ---------------
-    func weekdayColor(for weekdayText: String) -> Color {
-        switch weekdayText {
-            case "일":
-                return Color(red: 0.88, green: 0.06, blue: 0.16) // 일요일 색상
-            case "토":
-                return Color(red: 0.33, green: 0.53, blue: 0.99) // 토요일 색상
-            default:
-                return Color.black // 기본 색상
-        }
-    }
-}
-
 //MARK: - Date Extension
 extension Date {
     var day: String {
@@ -440,7 +331,17 @@ extension Date {
         formatter.dateFormat = "d"
         return formatter.string(from: self)
     }
+    var year: Int {
+        return Calendar.current.component(.year, from: self)
+    }
     
+    var month: Int {
+        return Calendar.current.component(.month, from: self)
+    }
+    
+    var SingleDay: Int {
+        return Calendar.current.component(.day, from: self)
+    }
 }
 //MARK: -CalendarSwiftUIView_Previews
 struct CalendarSwiftUIView_Previews: PreviewProvider {
