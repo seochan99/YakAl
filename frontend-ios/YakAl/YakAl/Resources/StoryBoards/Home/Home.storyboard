@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7HN-e4-xog">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="LwD-90-sny">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
-        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,7 +20,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--내 근처-->
+        <!--홈-->
         <scene sceneID="tSh-hZ-ZGZ">
             <objects>
                 <viewController storyboardIdentifier="HomeVC" id="gsW-TC-H92" customClass="HomeVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,7 +33,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Hmp-nm-lZJ">
-                                        <rect key="frame" x="20" y="74" width="353" height="69"/>
+                                        <rect key="frame" x="20" y="68" width="353" height="69"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2023년 7월 12일" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6os-Sa-jmp">
                                                 <rect key="frame" x="0.0" y="0.0" width="105.33333333333333" height="19"/>
@@ -71,50 +70,34 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jPF-6J-Xlm">
-                                        <rect key="frame" x="20" y="178" width="171.33333333333334" height="36"/>
+                                        <rect key="frame" x="20" y="172" width="174" height="42"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5Q-u2-zbe">
-                                                <rect key="frame" x="0.0" y="0.0" width="171.33333333333334" height="36"/>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w5Q-u2-zbe">
+                                                <rect key="frame" x="0.0" y="0.0" width="174" height="42"/>
                                                 <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
+                                                <inset key="contentEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                <state key="normal">
-                                                    <color key="titleColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.97647058819999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <state key="normal" title="다른 날짜 복약정보" image="icon_celedar">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.masksToBounds" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <connections>
-                                                    <segue destination="oaL-O3-dwD" kind="show" id="pDN-eI-sxb"/>
+                                                    <action selector="goToCaldendarViewAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="k9d-uh-84L"/>
+                                                    <segue destination="leg-uf-qdw" kind="show" id="rvi-w4-49d"/>
                                                 </connections>
                                             </button>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zfK-oZ-OEg">
-                                                <rect key="frame" x="12" y="8" width="147.33333333333334" height="20"/>
-                                                <subviews>
-                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon_celedar" translatesAutoresizingMaskIntoConstraints="NO" id="PRR-pF-Ovu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                                                        <constraints>
-                                                            <constraint firstAttribute="width" constant="20" id="cq4-MJ-Gn1"/>
-                                                            <constraint firstAttribute="height" constant="20" id="iP0-G8-vrr"/>
-                                                        </constraints>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="다른 날짜 복약정보" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iZ9-tf-8ir">
-                                                        <rect key="frame" x="27.999999999999993" y="0.0" width="119.33333333333331" height="20"/>
-                                                        <fontDescription key="fontDescription" name="SUIT-Medium" family="SUIT" pointSize="16"/>
-                                                        <color key="textColor" red="0.38431372549999998" green="0.38431372549999998" blue="0.44705882349999998" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                            </stackView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="w5Q-u2-zbe" firstAttribute="top" secondItem="jPF-6J-Xlm" secondAttribute="top" id="4Ax-gY-B4f"/>
                                             <constraint firstAttribute="bottom" secondItem="w5Q-u2-zbe" secondAttribute="bottom" id="Fmn-4u-Cxe"/>
                                             <constraint firstAttribute="trailing" secondItem="w5Q-u2-zbe" secondAttribute="trailing" id="LEz-9w-hLU"/>
-                                            <constraint firstItem="zfK-oZ-OEg" firstAttribute="leading" secondItem="jPF-6J-Xlm" secondAttribute="leading" constant="12" id="SRX-Zi-fWH"/>
-                                            <constraint firstItem="zfK-oZ-OEg" firstAttribute="top" secondItem="jPF-6J-Xlm" secondAttribute="top" constant="8" id="sOX-KI-CwW"/>
-                                            <constraint firstAttribute="bottom" secondItem="zfK-oZ-OEg" secondAttribute="bottom" constant="8" id="xgO-J8-6Nq"/>
-                                            <constraint firstAttribute="trailing" secondItem="zfK-oZ-OEg" secondAttribute="trailing" constant="12" id="z5W-RF-hOG"/>
                                             <constraint firstItem="w5Q-u2-zbe" firstAttribute="leading" secondItem="jPF-6J-Xlm" secondAttribute="leading" id="zlX-hv-vr5"/>
                                         </constraints>
                                         <userDefinedRuntimeAttributes>
@@ -136,6 +119,7 @@
                                         <state key="normal" image="icon-bell(1)"/>
                                         <connections>
                                             <action selector="AlertButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="GEe-ql-wTz"/>
+                                            <segue destination="vGx-6t-hf5" kind="show" id="Wd6-hJ-20Y"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -376,9 +360,7 @@
                             <constraint firstItem="M3x-He-6Ys" firstAttribute="leading" secondItem="vvN-By-1s4" secondAttribute="leading" constant="233" id="tSg-f4-wMS"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="내 근처" selectedImage="icon_home_fill" id="weu-nE-Jne" userLabel="Home">
-                        <imageReference key="image" image="icon_home" symbolScale="default"/>
-                    </tabBarItem>
+                    <tabBarItem key="tabBarItem" title="홈" image="icon_home" selectedImage="icon_home_fill" id="mHT-qD-2py"/>
                     <navigationItem key="navigationItem" id="eaM-Ur-6Np"/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -398,23 +380,17 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ebv-TA-rTC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="590.07633587786256" y="734.50704225352115"/>
+            <point key="canvasLocation" x="2441.9847328244273" y="734.50704225352115"/>
         </scene>
-        <!--헤더-->
-        <scene sceneID="EIM-Ff-626">
+        <!--Calendar View Controller-->
+        <scene sceneID="AEv-Gt-RxT">
             <objects>
-                <viewController storyboardIdentifier="CalendarViewController" title="헤더" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oaL-O3-dwD" customClass="CalendarViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZQK-b5-lMH">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="NQE-N7-nsL"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="다른 날짜 복약정보" id="LJN-zf-Skm"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Sqi-eh-jcg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <hostingController storyboardIdentifier="CalendarViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="leg-uf-qdw" customClass="CalendarViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="riv-Pe-DbN"/>
+                </hostingController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Obh-Jd-74N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1570.2290076335878" y="1115.4929577464789"/>
+            <point key="canvasLocation" x="3294" y="1246"/>
         </scene>
         <!--알림-->
         <scene sceneID="bqh-b2-bQz">
@@ -430,28 +406,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OgG-Zg-KTu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1620.6106870229007" y="382.3943661971831"/>
+            <point key="canvasLocation" x="3474.0458015267172" y="382.3943661971831"/>
         </scene>
-        <!--홈-->
-        <scene sceneID="Xso-gI-rKj">
+        <!--Home-->
+        <scene sceneID="7vg-UR-Vnc">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7HN-e4-xog" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="홈" selectedImage="icon_home_fill" id="lX3-iv-Qgx" userLabel="Home">
-                        <imageReference key="image" image="icon_home" symbolScale="default"/>
-                    </tabBarItem>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="LwD-90-sny" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Home" image="icon_home" selectedImage="icon_home_fill" id="SFt-0Q-9VC"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fqg-24-VHK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="u0s-2h-5cl">
                         <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="gsW-TC-H92" kind="relationship" relationship="rootViewController" id="Xl0-Zd-KAV"/>
+                        <segue destination="gsW-TC-H92" kind="relationship" relationship="rootViewController" id="Tqu-aZ-ii1"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Oat-rX-CF2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xWJ-7w-nef" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-336.64122137404581" y="734.50704225352115"/>
+            <point key="canvasLocation" x="1515.2671755725189" y="734.50704225352115"/>
         </scene>
     </scenes>
     <resources>

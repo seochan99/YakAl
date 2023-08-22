@@ -8,7 +8,6 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.topItem?.title = "약관 동의"
 
         let calendarSwiftUIView = CalendarSwiftUIView()
             .environmentObject(medicationData)
