@@ -51,12 +51,16 @@ public enum ErrorCode {
      */
     INVALID_TOKEN_ERROR("4011", HttpStatus.UNAUTHORIZED, "Invalid Token Error"),
     TOKEN_MALFORMED_ERROR("4012", HttpStatus.UNAUTHORIZED, "Malformed Token Error"),
-    EXPIRED_TOKEN_ERROR("4013", HttpStatus.UNAUTHORIZED, "Expired Token Error"),
     TOKEN_TYPE_ERROR("4014", HttpStatus.UNAUTHORIZED, "Type Token Error"),
     TOKEN_UNSUPPORTED_ERROR("4015", HttpStatus.UNAUTHORIZED, "Unsupported Token Error"),
     TOKEN_GENERATION_ERROR("4016", HttpStatus.UNAUTHORIZED, "Failed To Generate Token"),
     TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "Unknown Error"),
-    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "Insufficient Privileges Error");
+    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "Insufficient Privileges Error"),
+
+    /**
+     * 403 Forbidden
+     */
+    EXPIRED_TOKEN_ERROR("4030", HttpStatus.FORBIDDEN, "Expired Token Error");
 
 
     private final String code;
