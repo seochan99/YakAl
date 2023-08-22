@@ -33,7 +33,7 @@ public class JwtProvider implements InitializingBean {
     private static final Long MOBILE_ACCESS_EXPIRED_MS = 2 * 60 * 60 * 1000L;        // 2 Hours
     private static final Long MOBILE_REFRESH_EXPIRED_MS = 60 * 24 * 60 * 60 * 1000L; // 60 Days
 
-    private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;        // 1 Hours
+    private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;           // 1 Hours
     private static final Long WEB_REFRESH_EXPIRED_MS = 7 * 24 * 60 * 60 * 1000L; // 7 Days
 
     private static final String AUTHORIZATION_HEADER = "Authorization";
@@ -85,7 +85,7 @@ public class JwtProvider implements InitializingBean {
         return new JwtTokenDto(accessToken, refreshToken);
     }
 
-    public JwtTokenDto reissue(final String refreshToken) throws CommonException {
+    public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) throws CommonException {
         final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
@@ -95,7 +95,7 @@ public class JwtProvider implements InitializingBean {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
-        return createTotalToken(id, role, EPlatform.WEB);
+        return createTotalToken(id, role, platform);
     }
 
     public Claims validateToken(final String token) throws CommonException {

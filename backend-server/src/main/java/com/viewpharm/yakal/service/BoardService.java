@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Board;
+import com.viewpharm.yakal.domain.Like;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.BoardRequestDto;
 import com.viewpharm.yakal.dto.response.BoardDetailDto;
@@ -8,6 +9,7 @@ import com.viewpharm.yakal.dto.response.BoardListDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.BoardRepository;
+import com.viewpharm.yakal.repository.LikeRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.ERegion;
 import com.viewpharm.yakal.utils.BoardUtil;
@@ -19,7 +21,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -29,6 +33,7 @@ import java.util.stream.Collectors;
 public class BoardService {
     BoardRepository boardRepository;
     UserRepository userRepository;
+    LikeRepository likeRepository;
     BoardUtil boardUtil;
 
     public Boolean createBoard(Long userId, BoardRequestDto requestDto) {
@@ -177,6 +182,45 @@ public class BoardService {
                 .collect(Collectors.toList());
 
         return list;
+    }
+
+    public Map<String, Object> likeBoard(Long userId, Long boardId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
+
+        likeRepository.findByUserAndBoard(user, board)
+                .ifPresent(l -> {
+                    throw new CommonException(ErrorCode.EXIST_ENTITY_REQUEST);
+                });
+
+        likeRepository.save(Like.builder()
+                .user(user)
+                .board(board)
+                .build());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("like_cnt", board.getLikes().size());
+        map.put("is_like", Boolean.TRUE);
+
+        return map;
+    }
+
+    public Map<String, Object> dislikeBoard(Long userId, Long boardId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
+
+        Like like = likeRepository.findByUserAndBoard(user, board)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_EXIST_ENTITY_REQUEST));
+
+        likeRepository.delete(like);
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("like_cnt", board.getLikes().size());
+        map.put("is_like", Boolean.FALSE);
+
+        return map;
     }
 
 

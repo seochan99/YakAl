@@ -60,7 +60,7 @@
             android:layout_height="20dp"
             android:layout_gravity="end"
             android:scaleType="fitCenter"
-            android:background="@drawable/bt_home_bell"
+            android:background="@drawable/btn_home_bell"
             android:src="@drawable/ic_custom_overlap"
             android:layout_marginEnd="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/takingScheduleSubCheckBox"

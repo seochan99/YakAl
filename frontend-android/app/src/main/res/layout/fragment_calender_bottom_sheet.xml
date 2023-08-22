@@ -33,7 +33,7 @@
             android:id="@+id/previousButton"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/bt_home_bell"
+            android:background="@drawable/btn_home_bell"
             android:src="@drawable/ic_custom_previous" />
 
         <TextView
@@ -50,7 +50,7 @@
             android:id="@+id/nextButton"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:background="@drawable/bt_home_bell"
+            android:background="@drawable/btn_home_bell"
             android:src="@drawable/ic_custom_next" />
     </LinearLayout>
 

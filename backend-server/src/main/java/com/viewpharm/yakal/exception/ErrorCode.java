@@ -17,8 +17,8 @@ public enum ErrorCode {
     NOT_FOUND_DEVICE_TOKEN("4045", HttpStatus.NOT_FOUND, "Not Exist Device Token"),
     NOT_FOUND_DOSE("4046", HttpStatus.NOT_FOUND, "해당 복약 스케줄이 없습니다."),
     NOT_FOUND_PRESCRIPTION("4047", HttpStatus.NOT_FOUND, "해당 처방전이 존재하지 않습니다."),
-    NOT_FOUND_RISK("4047", HttpStatus.NOT_FOUND, "해당 위험도 정보가 없습니다."),
-    NOT_FOUND_MEDICAL("4048",HttpStatus.NOT_FOUND,"해당 의료기관이 존재하지 않습니다"),
+    NOT_FOUND_RISK("4048", HttpStatus.NOT_FOUND, "해당 위험도 정보가 없습니다."),
+    NOT_FOUND_MEDICAL("4049",HttpStatus.NOT_FOUND,"해당 의료기관이 존재하지 않습니다"),
     NOT_FOUND_BOARD("4050", HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
 
     // Bad Request Error

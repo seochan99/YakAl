@@ -15,7 +15,8 @@
     <fragment
         android:id="@+id/homeMainFragment"
         android:name="com.viewpharm.yakal.ui.HomeMainFragment"
-        android:label="HomeMainFragment" />
+        android:label="HomeMainFragment" >
+    </fragment>
     <fragment
         android:id="@+id/locationMainFragment"
         android:name="com.viewpharm.yakal.ui.LocationMainFragment"

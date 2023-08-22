@@ -1,10 +1,10 @@
-import Foundation
+import SwiftUI
 
-struct Medicine {
+struct Medicine:Identifiable,Hashable {
     let id: Int
     let image: String
     let name: String
     let ingredients: String
-    let dangerImage: String
-    var isTaken: Bool
+    let dangerStat : Int
+    var isTaken: Bool //
 }

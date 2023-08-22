@@ -3,11 +3,15 @@ package com.viewpharm.yakal.controller;
 import com.viewpharm.yakal.annotation.DisableSwaggerSecurity;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
+import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.type.ELoginProvider;
+import com.viewpharm.yakal.type.EPlatform;
 import com.viewpharm.yakal.type.ERole;
+import com.viewpharm.yakal.type.EValidity;
 import com.viewpharm.yakal.utils.OAuth2Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -125,6 +129,40 @@ public class AuthController {
         return ResponseDto.ok(null);
     }
 
+    /*
+     * 1. JWT Validation => VALID, EXPIRED, INVALID
+     * 2. IS_REGISTERED => T/F
+     */
+
+    /**
+     * Get Access Token Validity
+     */
+    @GetMapping("/validate")
+    @Operation(summary = "액세스 토큰 유효성 검사", description = "전송된 액세스 토큰이 유효한지 판별합니다.")
+    public ResponseDto<Object> validateAccessToken(final HttpServletRequest request) {
+        final String accessToken = jwtProvider.refineToken(request);
+
+        final Map<String, String> map = new HashMap<>(1);
+
+        try {
+            jwtProvider.validateToken(accessToken);
+        } catch (CommonException e) {
+            if (e.getErrorCode() == ErrorCode.EXPIRED_TOKEN_ERROR) {
+                map.put("validity", EValidity.EXPIRED.toString());
+                return ResponseDto.ok(map);
+            } else if (e.getErrorCode() == ErrorCode.INVALID_TOKEN_ERROR) {
+                map.put("validity", EValidity.INVALID.toString());
+                return ResponseDto.ok(map);
+            } else {
+                throw new CommonException(ErrorCode.SERVER_ERROR);
+            }
+        }
+
+        map.put("validity", EValidity.VALID.toString());
+
+        return ResponseDto.ok(map);
+    }
+
     /**
      * Reissue Access Token
      */
@@ -132,7 +170,7 @@ public class AuthController {
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다.")
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
         final String refreshToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.MOBILE);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -142,7 +180,7 @@ public class AuthController {
     @PostMapping("/reissue/secure")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
     public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken) {
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.WEB);
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
                 .httpOnly(true)

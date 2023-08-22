@@ -1,11 +1,12 @@
 import { styled } from "styled-components";
 
-export const Div = styled.div`
+export const Outer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   width: 100%;
+  height: 100%;
 `;
 
 export const Icon = styled.h1`

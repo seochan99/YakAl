@@ -8,14 +8,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.adapter.CalendarAdapter
-import com.viewpharm.yakal.adapter.PillAdapter
 import com.viewpharm.yakal.adapter.PillTodoAdapter
 import com.viewpharm.yakal.databinding.ActivityCalenderBinding
 import com.viewpharm.yakal.model.Pill
 import com.viewpharm.yakal.model.PillTodo
 import com.viewpharm.yakal.type.ETakingTime
 import com.viewpharm.yakal.ui.CalendarBottomDialog
-import com.viewpharm.yakal.ui.OverlapBottomDialog
 import com.viewpharm.yakal.util.CalendarUtil
 import timber.log.Timber
 import java.time.LocalDate
@@ -56,7 +54,7 @@ class CalenderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCalenderBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        overridePendingTransition(R.anim.slide_right_to_left, R.anim.none)
+        overridePendingTransition(R.anim.slide_from_right, R.anim.none)
 
         _init()
     }
@@ -65,7 +63,7 @@ class CalenderActivity : AppCompatActivity() {
     override fun onBackPressed() {
         finish()
         if (isFinishing) {
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 
@@ -130,7 +128,7 @@ class CalenderActivity : AppCompatActivity() {
 
         binding.toolbar.setNavigationOnClickListener {
             finish()
-            overridePendingTransition(R.anim.none, R.anim.slide_left_to_right)
+            overridePendingTransition(R.anim.none, R.anim.slide_to_right)
         }
     }
 

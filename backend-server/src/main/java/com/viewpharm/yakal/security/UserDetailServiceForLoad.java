@@ -7,10 +7,12 @@ import com.viewpharm.yakal.repository.MobileUserRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.ERole;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailServiceForLoad implements UserDetailsService {
@@ -21,18 +23,8 @@ public class UserDetailServiceForLoad implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws CommonException {
         final Long userId = Long.valueOf(username);
-        final ERole role = userRepository.getRoleById(userId)
+        final MobileUser user = mobileUserRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        if (role == ERole.ROLE_MOBILE) {
-            final MobileUser user = mobileUserRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            return UserDetailForIdOnly.create(user);
-        } else {
-            // 임시, Web에 해당하는 User Load 로직을 작성해야 함
-            final MobileUser user = mobileUserRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            return UserDetailForIdOnly.create(user);
-        }
+        return UserDetailForIdOnly.create(user);
     }
 }

@@ -6,16 +6,21 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct User {
+class User: ObservableObject  {
     static let shared = User()
 
     // 닉네임
-    var nickName: String = ""
+    @Published var nickName: String = ""
     // 본인인증 여부
     var isVerify: Bool = false
     // 노인 모드
     var isSenior: Bool = false
+    
+    // 테스트 진행 상태
+    var testCnt: Int = 0
+    
     
     public init() {}
 

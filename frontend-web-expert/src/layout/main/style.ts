@@ -4,13 +4,14 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100dvh;
 `;
 
 export const MainSection = styled.div`
   display: flex;
   flex-direction: row;
-  height: 100%;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
   background-color: #f5f5f9;
 `;
 
@@ -25,11 +26,11 @@ export const TopRight = styled.div`
 
 export const Detail = styled.div`
   & {
-    flex: 1;
-    width: 100%;
+    width: 50rem;
     display: flex;
     flex-direction: column;
     padding: 2rem;
+    align-items: center;
   }
   &.loading {
     opacity: 0.25;

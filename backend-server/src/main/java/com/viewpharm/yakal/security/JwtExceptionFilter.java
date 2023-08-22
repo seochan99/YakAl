@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.security;
 
+import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import jakarta.servlet.FilterChain;
@@ -7,6 +8,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.codec.CharEncoding;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
@@ -16,7 +18,7 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        response.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding(CharEncoding.UTF_8);
 
         try {
             filterChain.doFilter(request, response);
@@ -34,13 +36,12 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-//        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
-//            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
-//                return true;
-//            }
-//        }
-//
-//        return false;
-        return true;
+        for (String noNeedAuthUrlRegex : Constants.NO_NEED_AUTH_URLS_REGEX) {
+            if (request.getRequestURI().matches(noNeedAuthUrlRegex)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
