@@ -42,41 +42,37 @@ struct CalendarWeekView: View {
     var body: some View {
         HStack(spacing:20) {
                 ForEach(weekDates, id: \.self) { date in
-                    
+                    /* --------------- 마지막 주이고 1이 표시되어 있을때  --------------- */
                     if isLastWeek() && date.date.day == "1" {
-                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
+                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
                             .padding(.top, 4)
-                            .onTapGesture {
-                                selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
-                            }
                     }
-                    
+                    /* --------------- 첫쨋주이고 1이 표시되어 있을때  --------------- */
                     else if isFirstWeek() && date.date.day == "1"{
                         if isLastOne(in: weekDates, current: date) {
-                            CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText)
+                            CircularProgressBar(progress: 0.9, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
                                 .padding(.top, 4)
                                 .onTapGesture {
                                     selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
                                 }
                         } else {
-                            CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
+                            /* --------------- 그외에는 없애기  --------------- */
+                            CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: false)
                                 .padding(.top, 4)
-                                .onTapGesture {
-                                    selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
-                                }
                         }
                     }
                     
-                    
+                    /* --------------- 마지막주이고 7보다 작은 수가 있을떄  --------------- */
                    else if isLastWeek() && Int(date.date.day)! <= 7 {
                         // Hide dates of next month if in the last week
-                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText)
+                        CircularProgressBar(progress: 0, dateText: "  ", today: false, weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
                             .padding(.top, 4)
                             .onTapGesture {
                                 selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
                             }
+                       /* --------------- 그외에는 모두 표시하기  --------------- */
                     } else {
-                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.id == selectedDate?.id)
+                        CircularProgressBar(progress: 0.2, dateText: date.dayText, today: isSameDate(date.date, Date()), weekDates: date.weekdayText, isSelected: date.dayText == selectedDate?.dayText)
                             .padding(.top, 4)
                             .onTapGesture {
                                 selectedDate = date // 날짜를 탭하면 선택한 날짜를 업데이트
@@ -145,10 +141,12 @@ struct CalendarSwiftUIView: View {
     @State private var isExpanded = false
     
     @State private var currentWeekIndex: Int = 0
+    
     // 선택한 날짜를 저장할 상태 변수 추가
     @State private var selectedDate: DayModel? = DayModel(currentDate: Date())
 
-    // --------------- 요일 스트링 ---------------
+
+    /* --------------- 요일 스트링 --------------- */
     let weekStringdate : [String] = ["일","월","화","수","목","금","토"]
 
     // 년 월 표현
@@ -177,7 +175,7 @@ struct CalendarSwiftUIView: View {
         return 0 // Default to the first week if not found
     }
     
-    // --------------- 한줄 캘린더 데이터---------------
+    /* --------------- 한줄 캘린더 데이터--------------- */
 
     var sampleWeekDates: [[DayModel]] {
         var allWeekDates: [[DayModel]] = []
