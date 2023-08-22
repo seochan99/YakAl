@@ -1,15 +1,16 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Medical;
+import com.viewpharm.yakal.dto.PointDto;
+import com.viewpharm.yakal.dto.response.MedicalDto;
 import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.type.EMedical;
+import com.viewpharm.yakal.utils.GeometryUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.locationtech.jts.geom.Coordinate;
-import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +28,7 @@ import java.util.List;
 public class MedicalService {
 
     private final MedicalRepository medicalRepository;
-    private static final GeometryFactory geometryFactory = new GeometryFactory();
-
+    private final GeometryUtil geometryUtil;
     public Boolean updateMedical() throws IOException {
         // 엑셀 파일을 읽어들입니다.
         FileInputStream fileInputStream;
@@ -64,7 +64,7 @@ public class MedicalService {
             double latitude = getNumericCellValue(row, 3, 0.0);
             double longitude = getNumericCellValue(row, 4, 0.0);
 
-            Point medicalPoint = geometryFactory.createPoint(new Coordinate(latitude, longitude));
+            Point medicalPoint = geometryUtil.getLatLng2Point(latitude,longitude);
 
             Medical data = Medical.builder()
                     .medicalName(medicalName)
@@ -77,7 +77,7 @@ public class MedicalService {
             dataList.add(data);
         }
 
-// 약국 삽입
+        // 약국 삽입
         Sheet sheet2 = workbook.getSheetAt(1);
         for (int i = 1; i <= sheet2.getLastRowNum(); i++) {
             Row row = sheet2.getRow(i);
@@ -89,7 +89,7 @@ public class MedicalService {
             double latitude = getNumericCellValue(row, 3, 0.0);
             double longitude = getNumericCellValue(row, 4, 0.0);
 
-            Point medicalPoint = geometryFactory.createPoint(new Coordinate(latitude, longitude));
+            Point medicalPoint = geometryUtil.getLatLng2Point(latitude,longitude);
 
             Medical data = Medical.builder()
                     .medicalName(medicalName)
@@ -124,6 +124,45 @@ public class MedicalService {
         }
         return defaultValue;
     }
+
+    private List<MedicalDto> convertMedicalListToDtoList(List<Medical> medicalList) {
+        List<MedicalDto> result = new ArrayList<>();
+
+        for (Medical medical : medicalList) {
+            result.add(
+                    MedicalDto.builder()
+                            .medicalName(medical.getMedicalName())
+                            .medicalAddress(medical.getMedicalAddress())
+                            .medicalPoint(new PointDto(medical.getMedicalPoint().getX(),medical.getMedicalPoint().getY()))
+                            .medicalTel(medical.getMedicalTel())
+                            .eMedical(medical.getEMedical())
+                            .build()
+            );
+        }
+
+        return result;
+    }
+
+    public List<MedicalDto> findNearestMedicalsByPoint(Point point) {
+        List<Medical> medicals = medicalRepository.findNearestMedicalsByPoint(point);
+        return convertMedicalListToDtoList(medicals);
+    }
+
+    public List<MedicalDto> findNearestMedicalsByPointAndEMedical(Point point, String eMedical) {
+        List<Medical> medicals = medicalRepository.findNearestMedicalsByPointAndEMedical(point, eMedical);
+        return convertMedicalListToDtoList(medicals);
+    }
+
+    public List<MedicalDto> findNearbyMedicalsByDistance(Point point, double distance) {
+        List<Medical> medicals = medicalRepository.findNearbyMedicalsByDistance(point, distance);
+        return convertMedicalListToDtoList(medicals);
+    }
+
+    public List<MedicalDto> findNearbyMedicalsByDistanceAndEMedical(Point point, double distance, String eMedical) {
+        List<Medical> medicals = medicalRepository.findNearbyMedicalsByDistanceAndEMedical(point, distance, eMedical);
+        return convertMedicalListToDtoList(medicals);
+    }
+
 
 
 }
