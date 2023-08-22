@@ -20,8 +20,13 @@ public class CommentListDto {
     }
 
     public static CommentListDto convertCommentToDto(Comment comment) {
-        return comment.getIsDeleted() ?
-                new CommentListDto(comment.getId(), "삭제된 댓글입니다.", "삭제된 사용자") :
-                new CommentListDto(comment.getId(), comment.getContent(), comment.getUser().getName());
+        String content = comment.getContent(), userName;
+        if (comment.getIsDeleted()) content = "삭제된 댓글입니다.";
+
+        if (comment.getUser() == null) userName = "탈퇴한 사용자";
+        else userName = comment.getUser().getName();
+
+        return new CommentListDto(comment.getId(), content, userName);
+
     }
 }

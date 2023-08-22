@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 public class BoardRequestDto {
     private String title;
     private String content;
-    private ERegion region;
+    private String region;
 
 }

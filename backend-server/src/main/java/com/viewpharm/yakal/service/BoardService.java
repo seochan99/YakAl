@@ -31,33 +31,48 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class BoardService {
-    BoardRepository boardRepository;
-    UserRepository userRepository;
-    LikeRepository likeRepository;
-    BoardUtil boardUtil;
+    private final BoardRepository boardRepository;
+    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
+    private final BoardUtil boardUtil;
 
     public Boolean createBoard(Long userId, BoardRequestDto requestDto) {
+        //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+        //제목 중복 확인
         boardRepository.findByTitleAndIsDeleted(requestDto.getTitle(), false)
                 .ifPresent(b -> {
                     throw new CommonException(ErrorCode.DUPLICATION_TITLE);
                 });
 
+        //지역 유효성 확인
+        if (ERegion.from(requestDto.getRegion()) == null) {
+            throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        }
+
+        //입력값 유효성 확인
+        if ((requestDto.getTitle().length() == 0) || (requestDto.getContent().length() == 0)) {
+            throw new CommonException(ErrorCode.NOT_EXIST_PARAMETER);
+        }
+
+        //저장
         boardRepository.save(Board.builder()
                 .title(requestDto.getTitle())
                 .content(requestDto.getContent())
                 .user(user)
-                .region(requestDto.getRegion())
+                .region(ERegion.from(requestDto.getRegion()))
                 .build());
         return Boolean.TRUE;
     }
 
     public BoardDetailDto readBoard(Long userId, Long boardId) {
+        //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        //게시판 확인
         Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
-
+        //조회수 증가
         board.addCnt();
 
         return BoardDetailDto.builder()
@@ -69,8 +84,11 @@ public class BoardService {
                 .readCnt(board.getReadCnt())
                 .userId(user.getId())
                 .likeCnt((long) board.getLikes().size())
+                .isLike(boardUtil.existLike(user, board))
+                .region(board.getRegion().toString())
+                .createDate(board.getCreateDate())
+                .lastModifiedDate(board.getLastModifiedDate())
                 .build();
-        //좋아요 여부 추가해야함
     }
 
     public BoardDetailDto updateBoard(Long userId, Long boardId, BoardRequestDto requestDto) {
@@ -86,18 +104,22 @@ public class BoardService {
                     throw new CommonException(ErrorCode.DUPLICATION_TITLE);
                 });
 
+        //지역 유효성 확인
+        if (ERegion.from(requestDto.getRegion()) == null) {
+            throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        }
 
         //게시글 작성 유저와 요청 유저 비교
         if (board.getUser().getId() != user.getId())
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
         //입력 유효한지 확인
-        if ((requestDto.getTitle() == null) || (requestDto.getTitle().length() == 0) || (requestDto.getRegion() == null)) {
+        if ((requestDto.getTitle().length() == 0) || (requestDto.getContent().length() == 0)) {
             throw new CommonException(ErrorCode.NOT_EXIST_PARAMETER);
         }
 
         //수정
-        board.modifyBoard(requestDto.getTitle(), requestDto.getContent(), requestDto.getRegion());
+        board.modifyBoard(requestDto.getTitle(), requestDto.getContent(), ERegion.from(requestDto.getRegion()));
 
         return BoardDetailDto.builder()
                 .id(board.getId())
@@ -106,8 +128,12 @@ public class BoardService {
                 .userName(board.getUser().getName())
                 .isEdit(board.getIsEdit())
                 .readCnt(board.getReadCnt())
+                .isLike(boardUtil.existLike(user, board))
                 .userId(board.getUser().getId())
                 .likeCnt((long) board.getLikes().size())
+                .region(board.getRegion().toString())
+                .createDate(board.getCreateDate())
+                .lastModifiedDate(board.getLastModifiedDate())
                 .build();
     }
 
@@ -128,25 +154,31 @@ public class BoardService {
 
     //최신순만 만듬, 좋아요 수, 조회수도 만들어야함
     //슬라이드 방식인지 페이지 선택하는 방식인지?
+
+    //모든게시글 리스트 가져오기
     public List<BoardListDto> getAllBoardList(Long userId, Long pageIndex, Long pageSize) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
         List<Board> page = boardRepository.findAllByIsDeleted(false, paging);
 
+        //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
     }
-
+    
+    
+    //제목으로 검색
     public List<BoardListDto> getBoardListByTitle(Long userId, String title, Long pageIndex, Long pageSize) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
         List<Board> page = boardRepository.findListByTitleContainingAndIsDeleted(title, false, paging);
 
+        //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
@@ -154,6 +186,7 @@ public class BoardService {
         return list;
     }
 
+    //지역으로 검색
     public List<BoardListDto> getBoardListByRegion(Long userId, String region, Long pageIndex, Long pageSize) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -161,7 +194,8 @@ public class BoardService {
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
         List<Board> page = boardRepository.findListByRegionAndIsDeleted(boardRegion, false, paging);
-
+        
+        //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
@@ -169,6 +203,8 @@ public class BoardService {
         return list;
     }
 
+    
+    //유저로 검색
     public List<BoardListDto> getBoardListByUser(Long userId, Long boardUserId, Long pageIndex, Long pageSize) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -184,6 +220,8 @@ public class BoardService {
         return list;
     }
 
+    
+    //게시판 좋아요
     public Map<String, Object> likeBoard(Long userId, Long boardId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -206,6 +244,8 @@ public class BoardService {
         return map;
     }
 
+    
+    //게시판 좋아요 취소
     public Map<String, Object> dislikeBoard(Long userId, Long boardId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -217,7 +257,7 @@ public class BoardService {
         likeRepository.delete(like);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("like_cnt", board.getLikes().size());
+        map.put("like_cnt", board.getLikes().size() - 1);
         map.put("is_like", Boolean.FALSE);
 
         return map;

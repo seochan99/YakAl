@@ -18,9 +18,11 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     Optional<Comment> findByIdAndUserAndBoardAndIsDeleted(Long id, User user, Board board, Boolean isDeleted);
 
-    @Query("select c from Comment c left join fetch c.parent where c.board.id = :id and c.isDeleted = false" +
+    Optional<Comment> findByIdAndBoardAndIsDeleted(Long id, Board board, Boolean isDeleted);
+
+    @Query("select c from Comment c left join fetch c.parent where c.board.id = :id" +
             " order by c.parent.id NULLS FIRST, c.createDate desc")
-    Page<Comment> findByBoardIdAndIsDeleted(@Param("id") Long boardId, Pageable pageable);
+    Page<Comment> findByBoardId(@Param("id") Long boardId, Pageable pageable);
 
 
 }

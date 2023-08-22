@@ -31,6 +31,7 @@ public enum ErrorCode {
     NOT_EXIST_PARAMETER("4006", HttpStatus.BAD_REQUEST, "Not Exist Parameter Request"),
     PAYMENT_FAIL("4007", HttpStatus.BAD_REQUEST, "InValid Payment Information Request"),
     INVALID_ARGUMENT("4008", HttpStatus.BAD_REQUEST, "Invalid Argument"),
+    INVALID_REGION("4009", HttpStatus.BAD_REQUEST, "Invalid REGION"),
 
     // Server, File Up/DownLoad Error
     SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),

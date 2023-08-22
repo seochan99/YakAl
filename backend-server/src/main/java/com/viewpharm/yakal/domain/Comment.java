@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class Comment extends BaseCreateEntity {
 
     public void updateComment(String content) {
         this.content = content;
-        isEdit = true;
+        this.isEdit = true;
     }
 
     public void updateParent(Comment parent) {
@@ -67,16 +68,6 @@ public class Comment extends BaseCreateEntity {
         this.isEdit = false;
         this.isDeleted = false;
         this.parent = null;
-        this.board = board;
-    }
-
-    @Builder(builderMethodName = "CommentWithParent")
-    public Comment(User user, String content, Board board, Comment parent) {
-        this.user = user;
-        this.content = content;
-        this.isEdit = false;
-        this.isDeleted = false;
-        this.parent = parent;
         this.board = board;
     }
 }

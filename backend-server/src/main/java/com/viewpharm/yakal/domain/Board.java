@@ -62,6 +62,7 @@ public class Board extends BaseCreateEntity {
         this.title = title;
         this.content = content;
         this.region = region;
+        this.isEdit = true;
     }
 
     public void deleteBoard() {

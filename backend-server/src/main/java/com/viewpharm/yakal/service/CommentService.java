@@ -16,7 +16,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -38,19 +36,22 @@ public class CommentService {
     //Create
     public Boolean createComment(Long userId, Long boardId, CommentRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Board board = boardRepository.findById(boardId)
+        Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
 
         //대댓글 여부 확인
         if (requestDto.getParentId() != null) {
-            Comment parentComment = commentRepository.findById(requestDto.getParentId())
+            Comment parentComment = commentRepository.findByIdAndBoardAndIsDeleted(requestDto.getParentId(), board, false)
                     .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COMMENT));
-            commentRepository.save(Comment.CommentWithParent()
+
+            Comment newcomment = Comment.builder()
                     .user(user)
                     .content(requestDto.getContent())
                     .board(board)
-                    .parent(parentComment)
-                    .build());
+                    .build();
+            newcomment.updateParent(parentComment);
+
+            commentRepository.save(newcomment);
         } else {
             commentRepository.save(Comment.builder()
                     .user(user)
@@ -59,22 +60,22 @@ public class CommentService {
                     .build());
         }
         return Boolean.TRUE;
-
-        //Sort.NullHandling.NULLS_FIRST
     }
 
 
     //Read
-
     public List<CommentListDto> getCommentList(Long boardId, Long pageIndex, Long pageSize) {
-        Board board = boardRepository.findById(boardId)
+        //게시판 확인
+        Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
+
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
+        Page<Comment> page = commentRepository.findByBoardId(board.getId(), paging);
 
-        Page<Comment> page = commentRepository.findByBoardIdAndIsDeleted(board.getId(), paging);
-        List<CommentListDto> list = new ArrayList<>();
-        Map<Long, CommentListDto> commentDTOHashMap = new HashMap<>();
+        List<CommentListDto> list = new ArrayList<>(); //일반 댓글 저장
+        Map<Long, CommentListDto> commentDTOHashMap = new HashMap<>(); //부모 댓글 찾기 위한 맵
 
+        //댓글, 부모 여부에 따라 리스트 재구성
         page.forEach(c -> {
             CommentListDto commentListDto = CommentListDto.convertCommentToDto(c);
             commentDTOHashMap.put(commentListDto.getId(), commentListDto);
@@ -82,27 +83,29 @@ public class CommentService {
             else list.add(commentListDto);
         });
 
-
         return list;
     }
 
 
     //Update
     public Boolean updateComment(Long userId, Long boardId, Long commentId, CommentForUpdateRequestDto commentForUpdateRequestDto) {
-        // User, Course, Comment 존재유무 확인
+        // User 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Board board = boardRepository.findById(boardId)
+        //게시판 확인
+        Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
 
+        //댓글 확인
         Comment comment = commentRepository.findByIdAndUserAndBoardAndIsDeleted(commentId, user, board, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COMMENT));
 
-        // Comment 수정
-        if ((commentForUpdateRequestDto.getContent() == null) || (commentForUpdateRequestDto.getContent().length() == 0)) {
+        //입력값 확인
+        if ((commentForUpdateRequestDto.getContent().length() == 0) || (commentForUpdateRequestDto.getContent().length() == 0)) {
             throw new CommonException(ErrorCode.NOT_EXIST_PARAMETER);
         }
 
+        // Comment 수정
         comment.updateComment(commentForUpdateRequestDto.getContent());
 
         return Boolean.TRUE;
@@ -110,16 +113,20 @@ public class CommentService {
 
     //Delete
     public Boolean deleteComment(Long userId, Long boardId, Long commentId) {
-        // User, Course, Comment 존재유무 확인
+        // User 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Board board = boardRepository.findById(boardId)
+
+        //게시판 확인
+        Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
 
+        //댓글 확인
         Comment comment = commentRepository.findByIdAndUserAndBoardAndIsDeleted(commentId, user, board, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COMMENT));
 
         // 삭제 - status 변경
         comment.deleteComment();
+
         return Boolean.TRUE;
     }
 }
