@@ -179,19 +179,11 @@ struct TimeSettingView: View {
             }
 
             Spacer()
-
-            Button("완료") {
-                // Navigate back
+            BlueHorizontalButton(text: "완료"){
                 isSettingStartTime = false
                 isSettingEndTime = false
             }
             
-            .disabled(!isValidTime)
-            .padding()
-            .background(Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .opacity(isValidTime ? 1.0 : 0.5)
         }
         .padding()
         .navigationTitle(title)

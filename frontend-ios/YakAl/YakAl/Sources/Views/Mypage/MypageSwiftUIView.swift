@@ -197,18 +197,10 @@ struct EditNicknameView: View {
                    )
 
             /* ----------- 완료 버튼 ----------- */
-            Button("완료") {
+            BlueHorizontalButton(text: "완료"){
                 user.nickName = nickname
                 onDismiss()
-            }.font(
-                Font.custom("SUIT", size: 20)
-                .weight(.semibold)
-                )
-                .foregroundColor(.white)
-                .frame(maxWidth: .infinity)  // 수평 방향을 꽉 채움
-                .frame(height: 56)
-                .background(Color(red: 0.15, green: 0.4, blue: 0.96))
-                .cornerRadius(8)
+            }
         }.padding(.horizontal, 20)  // 양쪽에 마진 20 추가
         Spacer()
     }
