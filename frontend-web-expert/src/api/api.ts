@@ -1,10 +1,10 @@
-import { BaseQueryApi, FetchArgs, createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logout } from "@/store/auth";
 import { RootState } from "@/store/store";
 import { HttpStatusCode } from "axios";
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: import.meta.env.VITE_DEV_SERVER_HOST,
+  baseUrl: import.meta.env.VITE_SERVER_HOST,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const state = getState() as RootState;
@@ -17,7 +17,7 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithReauth = async (args: FetchArgs, api: BaseQueryApi, extraOptions: Record<string, never>) => {
+const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
   if (result?.error?.status === HttpStatusCode.Unauthorized) {

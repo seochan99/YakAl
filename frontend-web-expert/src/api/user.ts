@@ -1,12 +1,12 @@
-import { apiSlice } from "../../app/api/apiSlice";
+import { TUser } from "@/store/auth";
+import { apiSlice } from "./api";
 
-export const usersApiSlice = apiSlice.injectEndpoints({
+export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getUsers: builder.query({
-      query: () => "/users",
-      keepUnusedDataFor: 5,
+    getUser: builder.query<TUser, void>({
+      query: () => "user",
     }),
   }),
 });
 
-export const { useGetUsersQuery } = usersApiSlice;
+export const { useGetUserQuery } = userApiSlice;

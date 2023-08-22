@@ -14,6 +14,7 @@ import { loader as patientInfoLoader } from "@/page/main/patient-info/loader";
 import Registration from "@/page/main/registration";
 import Certification from "@/page/main/certification";
 import MyInfo from "@/page/main/my-info";
+import KakaoLogin from "@/page/login/kakao-login";
 
 export const MAIN_DASHBOARD_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -33,6 +34,11 @@ export const router = createBrowserRouter([
         element: <SignUpTerms />,
       },
     ],
+  },
+  {
+    path: "/auth/kakao",
+    element: <KakaoLogin />,
+    errorElement: <ErrorPage />,
   },
   {
     path: MAIN_DASHBOARD_ROUTE,

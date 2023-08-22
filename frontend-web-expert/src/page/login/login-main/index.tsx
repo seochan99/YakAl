@@ -1,4 +1,4 @@
-import { getKakaoRedirectUrl } from "@/api/auth";
+import axios, { HttpStatusCode, isAxiosError } from "axios";
 import {
   AppleButton,
   AppleSymbol,
@@ -24,9 +24,19 @@ import {
 
 function LoginMain() {
   const handleKakaoLoginClick = async () => {
-    getKakaoRedirectUrl().then((response) => {
-      window.location.href = response.url;
-    });
+    try {
+      console.log(`${import.meta.env.VITE_SERVER_HOST}/auth/kakao`);
+
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/auth/kakao`);
+
+      if (response.status === HttpStatusCode.Ok) {
+        window.location.href = response.data.data.url;
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error);
+      }
+    }
   };
 
   return (
