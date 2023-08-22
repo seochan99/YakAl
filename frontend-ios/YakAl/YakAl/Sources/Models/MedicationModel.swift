@@ -13,5 +13,9 @@ struct Medication: Identifiable {
     var count: Int {
         return medication.count
     }
+    var takenPercentage: Double {
+        let takenCount = medication.filter { $0.isTaken }.count
+        return Double(takenCount) / Double(count)
+    }
 }
 

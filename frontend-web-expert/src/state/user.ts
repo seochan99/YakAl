@@ -7,6 +7,13 @@ export type TUser = {
   birthday: Date;
 };
 
+export type TSpecialNote = {
+  id: number;
+  title: string;
+  description: string;
+  recorded_at: Date;
+};
+
 export const users: TUser[] = [
   {
     id: 1,

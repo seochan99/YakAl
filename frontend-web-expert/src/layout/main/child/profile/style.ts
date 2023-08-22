@@ -22,7 +22,7 @@ export const Job = styled.span`
   font-size: 0.9rem;
   line-height: 1.2rem;
   font-weight: 600;
-  color: #a4a7b6;
+  color: #7c7c94;
 `;
 
 export const NameBox = styled.div`

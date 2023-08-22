@@ -46,12 +46,13 @@
             android:layout_marginTop="10dp"
             app:layout_constraintTop_toBottomOf="@id/overlapTitle"
             app:layout_constraintStart_toStartOf="parent" />
-        
-        <ImageView
-            android:id="@+id/overlapCloseButton"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:background="@drawable/ic_custom_big_close"
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:backgroundTint="@color/black"
+            android:src="@drawable/ic_custom_big_close"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

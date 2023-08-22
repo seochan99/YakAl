@@ -115,8 +115,8 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto reissue(final String refreshToken) {
-        return jwtProvider.reissue(refreshToken);
+    public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) {
+        return jwtProvider.reissue(refreshToken, platform);
     }
 
     public void sendRedirectWithTokenCookieAdded(

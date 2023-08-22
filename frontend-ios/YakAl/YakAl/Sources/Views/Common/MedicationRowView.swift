@@ -35,6 +35,7 @@ struct MedicationRow: View {
                      )
                      .foregroundColor(Color(red: 0.56, green: 0.56, blue: 0.62))
                  Spacer()
+                 
                  // 만약 모든 약물 복용이 체크된다면
                  if medication.isAllCompleted {
 
@@ -44,8 +45,14 @@ struct MedicationRow: View {
                                  .weight(.semibold)
                          )
                          .foregroundColor(Color(red: 0.15, green: 0.4, blue: 0.96))
+                     
+                     // 버튼 클릭시 초기화 진행
                      Button(action: {
-                         medication.completedCount = 0 // Reset completed count
+                         medication.completedCount = 0
+                         // 모두 false로
+                         for index in medication.medication.indices {
+                                medication.medication[index].isTaken = false
+                            }
                      }) {
                          Image("Check_disable_end")
                              .resizable()
@@ -60,7 +67,6 @@ struct MedicationRow: View {
                                      .weight(.semibold)
                              )
                              .foregroundColor(Color(red: 0.78, green: 0.78, blue: 0.81))
-                         
                      }
                      // 그외에 1개 체크시
                      else{
@@ -72,10 +78,12 @@ struct MedicationRow: View {
                              .foregroundColor(Color(red: 0.15, green: 0.4, blue: 0.96))
 
                      }
-                     
-
                      Button(action: {
                          medication.completedCount = medication.count // Mark all as completed
+                         for index in medication.medication.indices {
+                                medication.medication[index].isTaken = true
+                            }
+                         
                      }) {
                          Image(medication.completedCount == 0 ? "Check_disable" : "Check_disable_ing")
                              .resizable()
@@ -115,12 +123,14 @@ struct MedicationRow: View {
                              set: { newValue in
                                  if newValue {
                                      medication.completedCount += 1
+//                                     print("더할때 \(index) : \(medication.completedCount)")
                                  } else {
                                      medication.completedCount -= 1
+//                                     print("뺄때 \(index) : \(medication.completedCount)")
                                  }
                              }
                          )
-                     )
+                     ).id(UUID())
                  }
                  .padding(.horizontal,0)
              }
@@ -149,7 +159,10 @@ struct MedicationRowView_Previews: PreviewProvider {
     static var previews: some View {
         MedicationRow(
             medication: Medication(name: "아침", medication: [
-                Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false)
+                Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
+                Medicine(id: 2, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
+                Medicine(id: 3, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false)
+                
             ]),
             isExpanded: true, // or false, depending on your use case
             onTap: {}

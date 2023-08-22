@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7HN-e4-xog">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -21,44 +21,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
-        <scene sceneID="Bd1-pd-Val">
-            <objects>
-                <viewController id="0Vh-IQ-gNe" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="RBy-Ln-jdg">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="VCF-iD-lfQ"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="4yp-qg-a9k"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nX5-Qo-Eju" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="644" y="365"/>
-        </scene>
-        <!--홈-->
-        <scene sceneID="1S6-1D-d5z">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gW5-Zx-Sb9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="홈" selectedImage="icon_home_fill" id="ziR-ci-exd" userLabel="Home">
-                        <imageReference key="image" image="icon_home" symbolScale="default"/>
-                    </tabBarItem>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="my7-5y-wWY">
-                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="gsW-TC-H92" kind="relationship" relationship="rootViewController" id="Bjh-RG-UhM"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="XNe-ey-0Jd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1263.3587786259541" y="734.50704225352115"/>
-        </scene>
-        <!--홈-->
+        <!--내 근처-->
         <scene sceneID="tSh-hZ-ZGZ">
             <objects>
                 <viewController storyboardIdentifier="HomeVC" id="gsW-TC-H92" customClass="HomeVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
@@ -120,6 +83,9 @@
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="boolean" keyPath="keyPath" value="YES"/>
                                                 </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <segue destination="oaL-O3-dwD" kind="show" id="pDN-eI-sxb"/>
+                                                </connections>
                                             </button>
                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zfK-oZ-OEg">
                                                 <rect key="frame" x="12" y="8" width="147.33333333333334" height="20"/>
@@ -410,7 +376,7 @@
                             <constraint firstItem="M3x-He-6Ys" firstAttribute="leading" secondItem="vvN-By-1s4" secondAttribute="leading" constant="233" id="tSg-f4-wMS"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="홈" selectedImage="icon_home_fill" id="lX3-iv-Qgx" userLabel="Home">
+                    <tabBarItem key="tabBarItem" title="내 근처" selectedImage="icon_home_fill" id="weu-nE-Jne" userLabel="Home">
                         <imageReference key="image" image="icon_home" symbolScale="default"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="eaM-Ur-6Np"/>
@@ -426,10 +392,64 @@
                         <outlet property="emptyView" destination="1hb-Cx-irD" id="YGU-RD-mIw"/>
                         <outlet property="floatingStackView" destination="M3x-He-6Ys" id="ph3-jg-Phl"/>
                         <outlet property="normalMedicineButton" destination="m1p-nu-P1R" id="8dS-c2-7hl"/>
+                        <outlet property="todayDate" destination="6os-Sa-jmp" id="3EI-EA-hNb"/>
                         <outlet property="todayMedicinCnt" destination="qjE-rQ-izk" id="pE7-mQ-tUk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ebv-TA-rTC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="590.07633587786256" y="734.50704225352115"/>
+        </scene>
+        <!--헤더-->
+        <scene sceneID="EIM-Ff-626">
+            <objects>
+                <viewController storyboardIdentifier="CalendarViewController" title="헤더" useStoryboardIdentifierAsRestorationIdentifier="YES" id="oaL-O3-dwD" customClass="CalendarViewController" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ZQK-b5-lMH">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="NQE-N7-nsL"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="다른 날짜 복약정보" id="LJN-zf-Skm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Sqi-eh-jcg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1570.2290076335878" y="1115.4929577464789"/>
+        </scene>
+        <!--알림-->
+        <scene sceneID="bqh-b2-bQz">
+            <objects>
+                <viewController id="vGx-6t-hf5" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="RTl-mT-Co4">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="9bX-vY-Yfr"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="알림" id="f87-BM-Nhc"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OgG-Zg-KTu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1620.6106870229007" y="382.3943661971831"/>
+        </scene>
+        <!--홈-->
+        <scene sceneID="Xso-gI-rKj">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="7HN-e4-xog" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="홈" selectedImage="icon_home_fill" id="lX3-iv-Qgx" userLabel="Home">
+                        <imageReference key="image" image="icon_home" symbolScale="default"/>
+                    </tabBarItem>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fqg-24-VHK">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="gsW-TC-H92" kind="relationship" relationship="rootViewController" id="Xl0-Zd-KAV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Oat-rX-CF2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-336.64122137404581" y="734.50704225352115"/>
         </scene>

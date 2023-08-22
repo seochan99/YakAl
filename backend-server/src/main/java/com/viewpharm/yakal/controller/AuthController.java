@@ -7,6 +7,7 @@ import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.type.ELoginProvider;
+import com.viewpharm.yakal.type.EPlatform;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.utils.OAuth2Util;
 import io.swagger.v3.oas.annotations.Operation;
@@ -125,6 +126,11 @@ public class AuthController {
         return ResponseDto.ok(null);
     }
 
+    /*
+     * 1. JWT Validation => VALID, EXPIRED, INVALID
+     * 2. IS_REGISTERED => T/F
+     */
+
     /**
      * Reissue Access Token
      */
@@ -132,7 +138,7 @@ public class AuthController {
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다.")
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
         final String refreshToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.MOBILE);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -142,7 +148,7 @@ public class AuthController {
     @PostMapping("/reissue/secure")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
     public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken) {
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.WEB);
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
                 .httpOnly(true)

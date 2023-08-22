@@ -11,10 +11,11 @@ export const Outer = styled.div`
   border-radius: 0.5rem;
   background: #fff;
   margin-right: 1.25rem;
-  padding: 1.25rem;
+  padding: 2rem;
+  width: 100%;
 `;
 
-export const SearchPatient = styled.div`
+export const OptionBar = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -22,6 +23,7 @@ export const SearchPatient = styled.div`
   height: 3rem;
   border-radius: 2rem;
   border: 2px solid #e9e9ee;
+  width: 100%;
 `;
 
 export const SearchButton = styled(SearchIconSvg)`
@@ -43,12 +45,13 @@ export const SearchInput = styled.input`
   outline: none;
 `;
 
-export const PatientList = styled.div`
+export const List = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 0;
   margin: 0;
   overflow: auto;
+  width: 100%;
 `;
 
 export const PagingButtonBox = styled.div`
