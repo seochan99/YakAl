@@ -3,6 +3,9 @@ package com.viewpharm.yakal.security;
 import com.viewpharm.yakal.common.Constants;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.UnsupportedJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -10,6 +13,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.CharEncoding;
 import org.springframework.web.filter.OncePerRequestFilter;
+import io.jsonwebtoken.MalformedJwtException;
 
 import java.io.IOException;
 
@@ -20,18 +24,47 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         response.setCharacterEncoding(CharEncoding.UTF_8);
 
+        boolean isException = false;
+
         try {
             filterChain.doFilter(request, response);
-            return;
+        } catch (SecurityException e) {
+            log.error("FilterException throw SecurityException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.ACCESS_DENIED_ERROR);
+            isException = true;
+        } catch (MalformedJwtException  e) {
+            log.error("FilterException throw MalformedJwtException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.TOKEN_MALFORMED_ERROR);
+            isException = true;
+        } catch (IllegalArgumentException e) {
+            log.error("FilterException throw IllegalArgumentException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.TOKEN_TYPE_ERROR);
+            isException = true;
+        } catch (ExpiredJwtException e) {
+            log.error("FilterException throw ExpiredJwtException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN_ERROR);
+            isException = true;
+        } catch (UnsupportedJwtException e) {
+            log.error("FilterException throw UnsupportedJwtException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.TOKEN_UNSUPPORTED_ERROR);
+            isException = true;
+        } catch (JwtException e) {
+            log.error("FilterException throw JwtException Exception : {}", e.fillInStackTrace());
+            request.setAttribute("exception", ErrorCode.TOKEN_UNKNOWN_ERROR);
+            isException = true;
         } catch (CommonException e) {
-            log.error("[JwtExceptionFilter] catch CommonException Exception : {}", e.getMessage());
+            log.error("FilterException throw CommonException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", e.getErrorCode());
+            isException = true;
         } catch (Exception e) {
-            log.error("[JwtExceptionFilter] catch Exception Exception : {}", e.getMessage());
+            log.error("FilterException throw Exception Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.NOT_FOUND_USER);
+            isException = true;
         }
 
-        filterChain.doFilter(request, response);
+        if (isException) {
+            filterChain.doFilter(request, response);
+        }
     }
 
     @Override

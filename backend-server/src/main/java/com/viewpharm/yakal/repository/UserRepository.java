@@ -22,8 +22,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndIsLoginAndRefreshTokenIsNotNull(Long userId, Boolean isLogin);
 
-    Boolean existsByIdAndRoleAndRefreshToken(Long userId, ERole role, String refreshToken);
-
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.isDetail = :isDetail where u.id = :userId")
     Integer updateIsDetailById(Long userId, Boolean isDetail);

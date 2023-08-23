@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.security;
 
 import com.viewpharm.yakal.common.Constants;
+import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EPlatform;
@@ -17,7 +18,9 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -25,7 +28,9 @@ import org.springframework.util.StringUtils;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Objects;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtProvider implements InitializingBean {
@@ -85,27 +90,28 @@ public class JwtProvider implements InitializingBean {
         return new JwtTokenDto(accessToken, refreshToken);
     }
 
+    @Transactional
     public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) throws CommonException {
         final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
         final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
 
-        if (!userRepository.existsByIdAndRoleAndRefreshToken(id, role, refreshToken)) {
+        final User user = userRepository.findById(id).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        if (!Objects.equals(user.getId(), id) || user.getRole() != role || !user.getRefreshToken().equals(refreshToken)) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
 
-        return createTotalToken(id, role, platform);
+        final JwtTokenDto jwtTokenDto = createTotalToken(id, role, platform);
+
+        user.setRefreshToken(jwtTokenDto.getRefreshToken());
+
+        return jwtTokenDto;
     }
 
-    public Claims validateToken(final String token) throws CommonException {
-        try {
-            final JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
-            return jwtParser.parseClaimsJws(token).getBody();
-        } catch (ExpiredJwtException e) {
-            throw new CommonException(ErrorCode.EXPIRED_TOKEN_ERROR);
-        } catch (JwtException e) {
-            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
-        }
+    public Claims validateToken(final String token) throws ExpiredJwtException, JwtException {
+        final JwtParser jwtParser = Jwts.parserBuilder().setSigningKey(key).build();
+        return jwtParser.parseClaimsJws(token).getBody();
     }
 }

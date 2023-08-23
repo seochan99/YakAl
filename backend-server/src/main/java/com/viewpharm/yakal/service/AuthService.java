@@ -14,6 +14,7 @@ import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.utils.OAuth2Util;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -134,12 +135,8 @@ public class AuthService {
         final Cookie accessTokenCookie = new Cookie("accessToken", jwtTokenDto.getAccessToken());
         accessTokenCookie.setPath("/");
 
-        final Cookie sameSiteNoneCookie = new Cookie("SameSite", "None");
-        sameSiteNoneCookie.setPath("/");
-
         response.addCookie(refreshTokenSecureCookie);
         response.addCookie(accessTokenCookie);
-        response.addCookie(sameSiteNoneCookie);
 
         response.sendRedirect(FRONTEND_HOST + "/auth/" + loginProvider.toString().toLowerCase());
     }
