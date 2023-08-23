@@ -3,6 +3,12 @@ import { setCredentials, logout } from "@/store/auth";
 import { RootState } from "@/store/store";
 import { HttpStatusCode } from "axios";
 
+export type TResponse = {
+  success: boolean;
+  data: object | null;
+  error: object | null;
+};
+
 const baseQuery = fetchBaseQuery({
   baseUrl: import.meta.env.VITE_SERVER_HOST,
   credentials: "include",

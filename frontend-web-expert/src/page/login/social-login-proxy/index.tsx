@@ -4,7 +4,7 @@ import { Cookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function KakaoLogin() {
+function SocialLoginProxy() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,4 +25,4 @@ function KakaoLogin() {
   return <>kakao login...</>;
 }
 
-export default KakaoLogin;
+export default SocialLoginProxy;

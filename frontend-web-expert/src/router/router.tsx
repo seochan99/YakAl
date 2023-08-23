@@ -14,7 +14,7 @@ import { loader as patientInfoLoader } from "@/page/main/patient-info/loader";
 import Registration from "@/page/main/registration";
 import Certification from "@/page/main/certification";
 import MyInfo from "@/page/main/my-info";
-import KakaoLogin from "@/page/login/kakao-login";
+import SocialLoginProxy from "@/page/login/social-login-proxy";
 
 export const MAIN_DASHBOARD_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -37,7 +37,12 @@ export const router = createBrowserRouter([
   },
   {
     path: "/auth/kakao",
-    element: <KakaoLogin />,
+    element: <SocialLoginProxy />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/auth/google",
+    element: <SocialLoginProxy />,
     errorElement: <ErrorPage />,
   },
   {

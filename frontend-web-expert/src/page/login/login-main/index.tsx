@@ -1,8 +1,5 @@
 import axios, { HttpStatusCode, isAxiosError } from "axios";
 import {
-  AppleButton,
-  AppleSymbol,
-  AppleText,
   BigLogo,
   ButtonBox,
   Description,
@@ -37,6 +34,20 @@ function LoginMain() {
     }
   };
 
+  const handleGoogleLoginClick = async () => {
+    try {
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/auth/google`);
+
+      if (response.status === HttpStatusCode.Ok) {
+        window.location.href = response.data.data.url;
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        console.log(error);
+      }
+    }
+  };
+
   return (
     <InnerCenter>
       <LogoSection>
@@ -55,14 +66,10 @@ function LoginMain() {
             <KakaoSymbol />
             <KakaoText>카카오로 로그인</KakaoText>
           </KakaoButton>
-          <GoogleButton onClick={() => console.log("google!!!")}>
+          <GoogleButton onClick={handleGoogleLoginClick}>
             <GoogleSymbol />
             <GoogleText>Google 계정으로 로그인</GoogleText>
           </GoogleButton>
-          <AppleButton onClick={() => console.log("apple!!!")}>
-            <AppleSymbol />
-            <AppleText>Apple로 로그인</AppleText>
-          </AppleButton>
         </ButtonBox>
       </LoginSection>
     </InnerCenter>

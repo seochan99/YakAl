@@ -1,13 +1,7 @@
-import { apiSlice } from "./api";
+import { TResponse, apiSlice } from "./api";
 
 export type TUser = {
   name: string;
-};
-
-export type TResponse = {
-  success: boolean;
-  data: object | null;
-  error: object | null;
 };
 
 export const userApiSlice = apiSlice.injectEndpoints({
