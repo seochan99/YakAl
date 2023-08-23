@@ -103,6 +103,7 @@ public class AuthService {
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
         user.setName("user#" + String.format("%06d", user.getId()));
+        user.setIsLogin(true);
 
         return jwtTokenDto;
     }

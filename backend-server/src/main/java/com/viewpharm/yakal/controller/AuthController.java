@@ -31,6 +31,7 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Slf4j
 @RestController
@@ -120,9 +121,17 @@ public class AuthController {
      */
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
-    public ResponseDto<Object> logout(@UserId Long id) {
+    public ResponseEntity<ResponseDto<Object>> logout(@UserId Long id) {
         authService.logout(id);
-        return ResponseDto.ok(null);
+
+        final ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(ResponseDto.ok(null));
     }
 
     /**
