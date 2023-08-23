@@ -13,10 +13,14 @@ import com.viewpharm.yakal.type.EPlatform;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.EValidity;
 import com.viewpharm.yakal.utils.OAuth2Util;
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -27,7 +31,9 @@ import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
@@ -115,9 +121,17 @@ public class AuthController {
      */
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
-    public ResponseDto<Object> logout(@UserId Long id) {
+    public ResponseEntity<ResponseDto<Object>> logout(@UserId Long id) {
         authService.logout(id);
-        return ResponseDto.ok(null);
+
+        final ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
+                .httpOnly(true)
+                .secure(true)
+                .maxAge(0)
+                .path("/")
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(ResponseDto.ok(null));
     }
 
     /**
@@ -132,20 +146,17 @@ public class AuthController {
 
         try {
             jwtProvider.validateToken(accessToken);
-        } catch (CommonException e) {
-            if (e.getErrorCode() == ErrorCode.EXPIRED_TOKEN_ERROR) {
-                map.put("validity", EValidity.EXPIRED.toString());
-                return ResponseDto.ok(map);
-            } else if (e.getErrorCode() == ErrorCode.INVALID_TOKEN_ERROR) {
-                map.put("validity", EValidity.INVALID.toString());
-                return ResponseDto.ok(map);
-            } else {
-                throw new CommonException(ErrorCode.SERVER_ERROR);
-            }
+        } catch (ExpiredJwtException e) {
+            map.put("validity", EValidity.EXPIRED.toString());
+            return ResponseDto.ok(map);
+        } catch (JwtException e) {
+            map.put("validity", EValidity.INVALID.toString());
+            return ResponseDto.ok(map);
+        } catch (Exception e) {
+            throw new CommonException(ErrorCode.SERVER_ERROR);
         }
 
         map.put("validity", EValidity.VALID.toString());
-
         return ResponseDto.ok(map);
     }
 
@@ -165,13 +176,22 @@ public class AuthController {
      */
     @PostMapping("/reissue/secure")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
-    public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken) {
+    public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken, final HttpServletRequest request) {
         final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.WEB);
+
+        final Cookie[] cookies = request.getCookies();
+
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals("refreshToken")) {
+                cookie.setMaxAge(0);
+                cookie.setPath("/");
+            }
+        }
 
         final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
                 .httpOnly(true)
                 .secure(true)
-                .sameSite("None")
+                .path("/")
                 .build();
 
         final Map<String, String> data = new HashMap<>(1);

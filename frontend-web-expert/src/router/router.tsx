@@ -14,6 +14,7 @@ import { loader as patientInfoLoader } from "@/page/main/patient-info/loader";
 import Registration from "@/page/main/registration";
 import Certification from "@/page/main/certification";
 import MyInfo from "@/page/main/my-info";
+import SocialLoginProxy from "@/page/login/social-login-proxy";
 
 export const MAIN_DASHBOARD_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -33,6 +34,16 @@ export const router = createBrowserRouter([
         element: <SignUpTerms />,
       },
     ],
+  },
+  {
+    path: "/auth/kakao",
+    element: <SocialLoginProxy />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/auth/google",
+    element: <SocialLoginProxy />,
+    errorElement: <ErrorPage />,
   },
   {
     path: MAIN_DASHBOARD_ROUTE,

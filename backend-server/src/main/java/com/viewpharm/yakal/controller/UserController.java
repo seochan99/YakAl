@@ -36,7 +36,10 @@ public class UserController {
     @Operation(summary = "사용자 정보 가져오기")
     public ResponseDto<UserInfoDto> getUserInfo(@UserId Long id) {
         final User user = userService.getUserInfo(id);
-        final UserInfoDto userInfoDto = new UserInfoDto(user.getName());
+        final UserInfoDto userInfoDto = UserInfoDto.builder()
+                .name(user.getName())
+                .build();
+
         return ResponseDto.ok(userInfoDto);
     }
 

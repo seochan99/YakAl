@@ -6,11 +6,18 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LOGIN_ROUTE } from "@/router/router";
 import NavbarTooltip from "./child/navbar-tooltip";
+import { useLazyLogoutQuery } from "@/api/auth";
+import { useDispatch } from "react-redux";
+import { logout } from "@/store/auth";
 
 function NavBar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const [trigger, currentResult] = useLazyLogoutQuery();
+
   const profileMenuRef = useRef<HTMLDivElement>(null);
+
+  const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
@@ -32,18 +39,18 @@ function NavBar() {
     };
   }, [isOpen]);
 
-  const handleLogoutClick = () => {
-    // // eslint-disable-next-line @typescript-eslint/no-empty-function
-    // let id = window.setTimeout(() => {}, 0);
-
-    // while (id--) {
-    //   window.clearTimeout(id);
-    // }
-
-    // client.defaults.headers.common["Authorization"] = "";
-    // localStorage.setItem("logged", "false");
-    navigate(LOGIN_ROUTE);
+  const handleLogoutClick = async () => {
+    trigger(null);
   };
+
+  useEffect(() => {
+    const { isSuccess, isLoading } = currentResult;
+
+    if (isSuccess && !isLoading) {
+      dispatch(logout());
+      navigate(LOGIN_ROUTE);
+    }
+  }, [currentResult, dispatch, navigate]);
 
   const notificationsLabel = (count: number) => {
     if (count === 0) {
