@@ -37,9 +37,9 @@ public class UserService {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         return (user.getBirthday() != null
-            && user.getName() != null
-            && user.getSex() != null
-            && user.getIsDetail() != null);
+                && user.getName() != null
+                && user.getSex() != null
+                && user.getIsDetail() != null);
     }
 
     public void updateName(final Long userId, final String name) {

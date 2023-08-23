@@ -44,7 +44,7 @@ public class User {
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
-    @Column(name="refresh_token")
+    @Column(name = "refresh_token")
     private String refreshToken;
 
     @Column(name = "social_id", nullable = false)
@@ -102,6 +102,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Dose> doses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Board> board = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Like> likes = new ArrayList<>();
 
     public User(final String socialId,
                 final ELoginProvider loginProvider,

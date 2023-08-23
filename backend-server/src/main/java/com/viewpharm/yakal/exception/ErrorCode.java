@@ -19,6 +19,7 @@ public enum ErrorCode {
     NOT_FOUND_PRESCRIPTION("4047", HttpStatus.NOT_FOUND, "해당 처방전이 존재하지 않습니다."),
     NOT_FOUND_RISK("4048", HttpStatus.NOT_FOUND, "해당 위험도 정보가 없습니다."),
     NOT_FOUND_MEDICAL("4049",HttpStatus.NOT_FOUND,"해당 의료기관이 존재하지 않습니다"),
+    NOT_FOUND_BOARD("4050", HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),
@@ -30,6 +31,7 @@ public enum ErrorCode {
     NOT_EXIST_PARAMETER("4006", HttpStatus.BAD_REQUEST, "Not Exist Parameter Request"),
     PAYMENT_FAIL("4007", HttpStatus.BAD_REQUEST, "InValid Payment Information Request"),
     INVALID_ARGUMENT("4008", HttpStatus.BAD_REQUEST, "Invalid Argument"),
+    INVALID_REGION("4009", HttpStatus.BAD_REQUEST, "Invalid REGION"),
 
     // Server, File Up/DownLoad Error
     SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),
