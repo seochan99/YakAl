@@ -11,8 +11,9 @@ const baseQuery = fetchBaseQuery({
     const token = state.auth.token;
 
     if (token) {
-      headers.set("authorization", `Bearer ${token}`);
+      headers.set("Authorization", `Bearer ${token}`);
     }
+
     return headers;
   },
 });
@@ -20,23 +21,27 @@ const baseQuery = fetchBaseQuery({
 const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
-  if (result?.error?.status === HttpStatusCode.Unauthorized) {
-    window.location.href = "/login";
-  }
+  const resultHttpStatus = result?.meta?.response?.status;
 
-  if (result?.error?.status === HttpStatusCode.Forbidden) {
+  if (resultHttpStatus === HttpStatusCode.Unauthorized || resultHttpStatus === HttpStatusCode.Forbidden) {
     const reissueResult = await baseQuery({ url: "/auth/reissue/secure", method: "POST" }, api, extraOptions);
 
-    if (reissueResult?.error?.status !== HttpStatusCode.Created) {
-      const state = api.getState() as RootState;
-      const user = state.auth.user;
+    type TReissueResult = {
+      success: boolean;
+      data: {
+        accessToken: string;
+      };
+      error?: object;
+    };
 
-      api.dispatch(setCredentials({ token: (reissueResult.data as { accessToken: string }).accessToken, user }));
+    const reissueResultHttpStatus = reissueResult?.meta?.response?.status;
 
-      result = await baseQuery(args, api, extraOptions);
-    } else {
+    if (reissueResultHttpStatus !== HttpStatusCode.Created) {
       api.dispatch(logout());
       window.location.href = "/login";
+    } else {
+      api.dispatch(setCredentials({ token: (reissueResult.data as TReissueResult).data.accessToken }));
+      result = await baseQuery(args, api, extraOptions);
     }
   }
 

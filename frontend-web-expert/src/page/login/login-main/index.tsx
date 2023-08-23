@@ -25,8 +25,6 @@ import {
 function LoginMain() {
   const handleKakaoLoginClick = async () => {
     try {
-      console.log(`${import.meta.env.VITE_SERVER_HOST}/auth/kakao`);
-
       const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/auth/kakao`);
 
       if (response.status === HttpStatusCode.Ok) {
