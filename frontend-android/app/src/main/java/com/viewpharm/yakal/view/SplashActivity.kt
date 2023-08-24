@@ -9,6 +9,7 @@ import com.viewpharm.yakal.R
 import com.viewpharm.yakal.signup.activity.SignUpActivity
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
+import java.sql.Time
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {

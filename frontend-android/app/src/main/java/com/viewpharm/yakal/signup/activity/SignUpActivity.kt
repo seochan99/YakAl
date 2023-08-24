@@ -2,26 +2,32 @@ package com.viewpharm.yakal.signup.activity
 
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.viewpharm.yakal.R
+import com.viewpharm.yakal.base.BaseActivity
 import com.viewpharm.yakal.databinding.ActivitySignUpBinding
+import com.viewpharm.yakal.signup.viewmodel.SignUpViewModel
+import timber.log.Timber
 
 
-class SignUpActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignUpBinding
+class SignUpActivity : BaseActivity<ActivitySignUpBinding, SignUpViewModel>(R.layout.activity_sign_up) {
+    override val viewModel: SignUpViewModel by viewModels {
+        SignUpViewModel.SignUpViewModelFactory()
+    }
     private lateinit var navController: NavController
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater).apply {
-            setContentView(root)
-        }
 
+    override fun initView() {
+        super.initView()
         setSupportActionBar(binding.toolbar).apply {
             supportActionBar?.setDisplayShowTitleEnabled(false)
         }
@@ -35,46 +41,46 @@ class SignUpActivity : AppCompatActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(binding.signUpFrameLayout.id) as NavHostFragment
         navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            when (destination.id) {
-                R.id.signUpTermFragment, R.id.signUpCertificationFragment,
-                R.id.signUpNicknameFragment, R.id.signUpModeFragment ,
-                R.id.signUpFinishFragment -> {
-                    binding.signUpProgressBar.visibility = View.VISIBLE
-                    binding.signUpTitleTextView.visibility = View.GONE
-
-                    when(destination.id) {
-                        R.id.signUpTermFragment -> {
-                            startProgressBarAnimation(0)
-                        }
-                        R.id.signUpCertificationFragment -> {
-                            startProgressBarAnimation(25)
-                        }
-                        R.id.signUpNicknameFragment -> {
-                            startProgressBarAnimation(50)
-                        }
-                        R.id.signUpModeFragment -> {
-                            startProgressBarAnimation(75)
-                        }
-                        R.id.signUpFinishFragment -> {
-                            supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                            binding.toolbar.animate()
-                                .alpha(0.0f)
-                                .setDuration(300)
-                                .withEndAction(Runnable {
-                                    binding.toolbar.visibility = View.INVISIBLE
-                                })
-                                .start()
-                            startProgressBarAnimation(100)
-                        }
-                    }
-                }
-                else -> {
-                    binding.signUpProgressBar.visibility = View.GONE
-                    binding.signUpTitleTextView.visibility = View.VISIBLE
-                }
-            }
+            viewModel.addOnDestinationChanged(destination.id)
         }
         NavigationUI.setupActionBarWithNavController(this, navController)
+    }
+    override fun initViewModel() {
+        super.initViewModel()
+        binding.viewModel = viewModel
+    }
+
+    override fun initListener() {
+        super.initListener()
+
+        // percent가 변경될 때마다 progressBar의 progress를 변경
+        viewModel.percent.observe(this) {
+            startProgressBarAnimation(it)
+        }
+
+        // DetailScreen 따라서 progressBar와 titleTextView의 visibility를 변경
+        viewModel.isDetailed.observe(this) {
+            binding.signUpProgressBar.visibility = if (it) View.GONE else View.VISIBLE
+            binding.signUpTitleTextView.visibility = if (it) View.VISIBLE else View.GONE
+        }
+
+        // FinishScreen 이면 toolbar를 숨기고 progressBar를 100으로 변경
+        viewModel.isFinished.observe(this) {
+            if (it) {
+                supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                binding.toolbar.animate()
+                    .alpha(0.0f)
+                    .setDuration(300)
+                    .withEndAction(Runnable {
+                        binding.toolbar.visibility = View.INVISIBLE
+                    })
+                    .start()
+                startProgressBarAnimation(100)
+            } else {
+                supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                binding.toolbar.visibility = View.VISIBLE
+            }
+        }
     }
 
     override fun onSupportNavigateUp(): Boolean {

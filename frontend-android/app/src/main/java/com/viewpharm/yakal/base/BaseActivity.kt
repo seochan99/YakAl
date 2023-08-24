@@ -7,18 +7,18 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModel
+import timber.log.Timber
 
 abstract class BaseActivity<T: ViewDataBinding, R: ViewModel>
     (@LayoutRes private val layoutId: Int): AppCompatActivity() {
     protected lateinit var binding: T
     abstract val viewModel: R
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
-
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView<T>(this, layoutId).also {
-            setContentView(it.root)
             it.lifecycleOwner = this
+            setContentView(it.root)
         }
 
         initView()
