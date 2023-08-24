@@ -122,5 +122,5 @@ export const PrescriptionAndHealthFunctionalFood = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 26rem;
+  height: 25rem;
 `;

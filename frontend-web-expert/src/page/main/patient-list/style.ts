@@ -1,8 +1,6 @@
 import { styled } from "styled-components";
 
 import { ReactComponent as SearchIconSvg } from "@/asset/magnifying-glass.svg";
-import { ReactComponent as PageLeftIconSvg } from "@/asset/page-left.svg";
-import { ReactComponent as PageRightIconSvg } from "@/asset/page-right.svg";
 
 export const Outer = styled.div`
   display: flex;
@@ -11,6 +9,7 @@ export const Outer = styled.div`
   border-radius: 0.5rem;
   background-color: #fff;
   padding: 2rem;
+  height: 52.5rem;
 `;
 
 export const OptionBar = styled.div`
@@ -46,10 +45,10 @@ export const SearchInput = styled.input`
 export const List = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
+  padding: 1.5rem 0;
   margin: 0;
-  overflow: auto;
   width: 100%;
+  flex: 1;
 `;
 
 export const TableHeader = styled.div`
@@ -73,7 +72,7 @@ export const Name = styled.span`
 export const Sex = styled.span`
   & {
     line-height: 1rem;
-    width: 5rem;
+    width: 4rem;
     text-align: center;
   }
   & svg {
@@ -84,39 +83,72 @@ export const Sex = styled.span`
 export const TestProgress = styled.span`
   line-height: 1rem;
   text-align: center;
-  width: 6rem;
+  width: 5rem;
 `;
 
 export const Risk = styled.span`
   line-height: 1rem;
   text-align: center;
-  width: 14rem;
+  width: 16rem;
 `;
 
 export const Birthday = styled.span`
   text-align: right;
   line-height: 1rem;
   text-align: center;
-  width: 10rem;
+  width: 12em;
 `;
 
-export const PagingButtonBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2rem;
-`;
-
-export const PageLeftButton = styled(PageLeftIconSvg)``;
-
-export const PageButton = styled.span``;
-
-export const PageRightButton = styled(PageRightIconSvg)``;
-
-export const PatientInfoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  border-radius: 0.5rem;
-  background: #fff;
+export const ListFooter = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    font-family: Pretendard;
+  }
+  & .pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    margin: 0;
+  }
+  & ul {
+    list-style: none;
+    padding: 0;
+  }
+  & ul.pagination li {
+    display: inline-block;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 1.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b7b5c4;
+  }
+  & ul.pagination li:hover {
+    background-color: #e9e9ee;
+    cursor: pointer;
+  }
+  & ul.pagination li:active {
+    background-color: #337ab7;
+  }
+  & ul.pagination li.active {
+    background-color: #337ab7;
+  }
+  & ul.pagination li a {
+    text-decoration: none;
+    color: #151515;
+  }
+  & ul.pagination li:hover a {
+    color: #151515;
+  }
+  & ul.pagination li:active a {
+    color: white;
+  }
+  & ul.pagination li.active a {
+    color: white;
+  }
 `;

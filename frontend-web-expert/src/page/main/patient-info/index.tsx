@@ -53,7 +53,7 @@ function PatientInfo() {
         </NameSex>
         <Birthday>
           {`${birthday.getFullYear()}.
-          ${birthday.getMonth() + 1}.
+          ${birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1}.
           ${birthday.getDate()}.
           (${getAge(birthday)}세)`}
         </Birthday>

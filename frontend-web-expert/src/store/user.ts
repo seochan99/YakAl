@@ -25,12 +25,12 @@ export const users: TUser[] = [
     id: 1,
     name: "홍길동1",
     sex: ESex.MALE,
-    birthday: new Date("2000-02-13"),
+    birthday: new Date("2000-12-13"),
     testProgress: 30,
     doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
+      red: 442,
+      yellow: 112,
+      green: 200,
     },
   },
   {
@@ -140,6 +140,18 @@ export const users: TUser[] = [
       red: 4,
       yellow: 1,
       green: 2,
+    },
+  },
+  {
+    id: 11,
+    name: "홍길동11",
+    sex: ESex.FEMALE,
+    birthday: new Date("1998-02-13"),
+    testProgress: 82,
+    doseCount: {
+      red: 1,
+      yellow: 1,
+      green: 0,
     },
   },
 ];

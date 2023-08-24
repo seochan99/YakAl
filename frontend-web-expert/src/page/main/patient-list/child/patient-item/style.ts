@@ -41,7 +41,7 @@ export const Sex = styled.span`
     font-size: 1rem;
     font-weight: 600;
     line-height: 1rem;
-    width: 5rem;
+    width: 4rem;
     gap: 0.1rem;
   }
   & svg {
@@ -54,7 +54,7 @@ export const TestProgress = styled.span`
   font-weight: 600;
   line-height: 1rem;
   text-align: center;
-  width: 6rem;
+  width: 5rem;
 `;
 
 export const IconBox = styled.div`
@@ -62,7 +62,7 @@ export const IconBox = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 14rem;
+  width: 16rem;
   gap: 0.1rem;
 `;
 
@@ -90,5 +90,5 @@ export const Birthday = styled.span`
   font-weight: 600;
   line-height: 1rem;
   text-align: center;
-  width: 10rem;
+  width: 12em;
 `;

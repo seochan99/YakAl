@@ -59,7 +59,7 @@ export const List = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0.8rem 0 0 2rem;
+  padding: 0.8rem 0 0 1rem;
   gap: 1.4rem;
 `;
 
@@ -91,10 +91,9 @@ export const ItemTitle = styled.span`
 `;
 
 export const ItemResult = styled.span`
-  width: 6rem;
-  text-align: center;
   color: #151515;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1rem;
+  margin-right: 1rem;
 `;
