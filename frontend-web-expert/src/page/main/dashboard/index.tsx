@@ -68,7 +68,7 @@ function Dashboard() {
       </EnrollBox>
       <Menu>
         {menuInfos.map((menuInfo) => (
-          <DashboardMenuItem menuInfo={menuInfo} />
+          <DashboardMenuItem key={menuInfo.title} menuInfo={menuInfo} />
         ))}
       </Menu>
     </Outer>

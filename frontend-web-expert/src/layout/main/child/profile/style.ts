@@ -13,8 +13,7 @@ export const ProfileText = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: end;
-  padding-left: 2rem;
-  padding-right: 1rem;
+  padding: 0 1rem;
   height: 100%;
 `;
 

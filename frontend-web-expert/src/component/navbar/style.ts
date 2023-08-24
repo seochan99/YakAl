@@ -25,18 +25,18 @@ const swing = keyframes`
   }
 `;
 
-export const Outer = styled.div`
+export const NavOuter = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   align-items: center;
-  gap: 1rem;
 `;
 
 export const TextNav = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 1.2rem;
+  gap: 0.6rem;
   padding: 0 1rem;
 `;
 
@@ -85,7 +85,7 @@ export const IconNav = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 1rem;
-  padding: 0 2rem;
+  padding: 0 1rem;
   border-left: 1px solid #a4a7b6;
   border-right: 1px solid #a4a7b6;
 `;
@@ -96,7 +96,7 @@ export const ProfileMenu = styled.div`
     flex-direction: column;
     position: absolute;
     top: 6rem;
-    right: 15.9rem;
+    right: 13.9rem;
     width: 8rem;
     padding: 0.8rem;
     border-radius: 0.6rem;
@@ -131,11 +131,4 @@ export const ProfileMenuItem = styled(Link)`
   &:hover {
     background-color: ${theme.colors.gray[200]};
   }
-`;
-
-export const Bar = styled.hr`
-  border: 0;
-  height: 1px;
-  background: #e9e9ee;
-  margin: 0.8rem 0;
 `;
