@@ -173,9 +173,10 @@ public class BoardService {
 
         //Dto 변환
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
+                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
-
+        log.info("끝");
         return list;
     }
 
@@ -198,7 +199,8 @@ public class BoardService {
 
         //Dto 변환
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
+                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -224,7 +226,8 @@ public class BoardService {
 
         //Dto 변환
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
+                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -249,7 +252,8 @@ public class BoardService {
         List<Board> page = boardRepository.findListByUserAndIsDeleted(boardUser, false, paging);
 
         List<BoardListDto> list = page.stream()
-                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(), b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
+                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -297,6 +301,4 @@ public class BoardService {
 
         return map;
     }
-
-
 }
