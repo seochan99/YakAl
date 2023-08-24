@@ -7,7 +7,8 @@ import Profile from "@/layout/main/child/profile";
 import NavBar from "@/component/navbar";
 import { MAIN_DASHBOARD_ROUTE } from "@/router/router";
 import { useGetUserQuery } from "@/api/user";
-import ErrorPage from "@/page/error";
+import ErrorPage from "@/page/error-page";
+import LoadingPage from "@/page/loading-page";
 
 export default function Main() {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function Main() {
   const { data, isLoading, isError } = useGetUserQuery(null);
 
   if (isLoading) {
-    return <>loading...</>;
+    return <LoadingPage />;
   }
 
   if (isError) {

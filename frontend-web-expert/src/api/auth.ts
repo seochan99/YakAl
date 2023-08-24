@@ -1,10 +1,13 @@
-import { TResponse, apiSlice } from "./api";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { TResponse, baseQueryWithReauth } from "./api";
 
 export type TLogout = {
   success: boolean;
 };
 
-export const authAPiSlice = apiSlice.injectEndpoints({
+export const authApiSlice = createApi({
+  reducerPath: "api/auth",
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     logout: builder.query<TLogout, null>({
       query: () => ({
@@ -18,4 +21,4 @@ export const authAPiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLazyLogoutQuery } = authAPiSlice;
+export const { useLazyLogoutQuery } = authApiSlice;
