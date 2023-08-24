@@ -33,7 +33,7 @@ function PatientList() {
           <Name>{`이름`}</Name>
           <Sex>{`성별`}</Sex>
           <TestProgress>{`설문 완료율`}</TestProgress>
-          <Risk>{`다제약물 위험도`}</Risk>
+          <Risk>{`위험군 약 개수`}</Risk>
           <Birthday>{`생년월일(만 나이)`}</Birthday>
         </TableHeader>
         {userList.map((user) => {

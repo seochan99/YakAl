@@ -11,7 +11,6 @@ export const Outer = styled.div`
   border-radius: 0.5rem;
   background-color: #fff;
   padding: 2rem;
-  width: 100%;
 `;
 
 export const OptionBar = styled.div`
@@ -60,27 +59,22 @@ export const TableHeader = styled.div`
   align-items: center;
   padding: 0.8rem 1rem;
   border: 0;
-  color: #151515;
+  color: #7c7c94;
+  font-weight: 500;
+  font-size: 1rem;
 `;
 
 export const Name = styled.span`
-  font-size: 1rem;
-  font-weight: 600;
   line-height: 1rem;
-  text-align: left;
+  text-align: center;
   width: 6rem;
 `;
 
 export const Sex = styled.span`
   & {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: 600;
     line-height: 1rem;
-    width: 4rem;
-    text-align: left;
+    width: 5rem;
+    text-align: center;
   }
   & svg {
     height: 1.2rem;
@@ -88,27 +82,21 @@ export const Sex = styled.span`
 `;
 
 export const TestProgress = styled.span`
-  font-size: 1rem;
-  font-weight: 600;
   line-height: 1rem;
-  text-align: left;
+  text-align: center;
   width: 6rem;
 `;
 
 export const Risk = styled.span`
-  font-size: 1rem;
-  font-weight: 600;
   line-height: 1rem;
-  text-align: left;
-  width: 10rem;
+  text-align: center;
+  width: 14rem;
 `;
 
 export const Birthday = styled.span`
   text-align: right;
-  font-size: 1rem;
-  font-weight: 600;
   line-height: 1rem;
-  text-align: left;
+  text-align: center;
   width: 10rem;
 `;
 

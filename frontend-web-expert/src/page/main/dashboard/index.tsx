@@ -8,11 +8,12 @@ import {
   CertTextBox,
   SubEnrollText,
   Blue,
+  Outer,
 } from "./style";
 
 function Dashboard() {
   return (
-    <>
+    <Outer>
       <EnrollBox>
         <IconText>
           <YakAlIcon />
@@ -34,7 +35,7 @@ function Dashboard() {
         </IconText>
         <EnrollButton to="/certification">인증하기</EnrollButton>
       </EnrollBox>
-    </>
+    </Outer>
   );
 }
 

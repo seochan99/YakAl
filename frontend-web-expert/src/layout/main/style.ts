@@ -30,7 +30,6 @@ export const Detail = styled.div`
     display: flex;
     flex-direction: column;
     padding: 2rem;
-    align-items: center;
   }
   &.loading {
     opacity: 0.25;

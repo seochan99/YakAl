@@ -28,7 +28,7 @@ export const Name = styled.span`
   font-size: 1.2rem;
   font-weight: 600;
   line-height: 1.2rem;
-  text-align: left;
+  text-align: center;
   width: 6rem;
 `;
 
@@ -37,11 +37,12 @@ export const Sex = styled.span`
     display: inline-flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
     font-size: 1rem;
     font-weight: 600;
     line-height: 1rem;
-    width: 4rem;
-    text-align: left;
+    width: 5rem;
+    gap: 0.1rem;
   }
   & svg {
     height: 1.2rem;
@@ -52,7 +53,7 @@ export const TestProgress = styled.span`
   font-size: 1rem;
   font-weight: 600;
   line-height: 1rem;
-  text-align: left;
+  text-align: center;
   width: 6rem;
 `;
 
@@ -60,7 +61,8 @@ export const IconBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 10rem;
+  justify-content: center;
+  width: 14rem;
   gap: 0.1rem;
 `;
 
@@ -84,10 +86,9 @@ export const RedIcon = styled(RedIconSvg)`
 `;
 
 export const Birthday = styled.span`
-  text-align: right;
   font-size: 1rem;
   font-weight: 600;
   line-height: 1rem;
-  text-align: left;
+  text-align: center;
   width: 10rem;
 `;

@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+export const Outer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+`;
+
 export const EnrollBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 48rem;
   height: 8rem;
   background-color: #fff;
   border: 0.15rem solid #2666f6;

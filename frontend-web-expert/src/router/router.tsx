@@ -15,6 +15,7 @@ import Registration from "@/page/main/registration";
 import Certification from "@/page/main/certification";
 import MyInfo from "@/page/main/my-info";
 import SocialLoginProxy from "@/page/login/social-login-proxy";
+import LoadingPage from "@/page/loading-page";
 
 export const MAIN_DASHBOARD_ROUTE = "/";
 export const LOGIN_ROUTE = "/login";
@@ -43,6 +44,11 @@ export const router = createBrowserRouter([
   {
     path: "/auth/google",
     element: <SocialLoginProxy />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: "/loading",
+    element: <LoadingPage />,
     errorElement: <ErrorPage />,
   },
   {
