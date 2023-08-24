@@ -92,3 +92,17 @@ export const Blue = styled.span`
   color: #2666f6;
   font-weight: 700;
 `;
+
+export const Menu = styled.div`
+  display: grid;
+  margin: 1.5rem 0;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 1rem;
+  column-gap: 1rem;
+`;
+
+export const PatientIcon = styled.img`
+  content: url("/src/asset/patient-icon.png");
+  width: 6rem;
+  height: 6rem;
+`;
