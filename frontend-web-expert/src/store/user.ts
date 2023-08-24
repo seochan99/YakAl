@@ -5,6 +5,12 @@ export type TUser = {
   name: string;
   sex: ESex;
   birthday: Date;
+  testProgress: number;
+  doseCount: {
+    red: number;
+    yellow: number;
+    green: number;
+  };
 };
 
 export type TSpecialNote = {
@@ -20,59 +26,120 @@ export const users: TUser[] = [
     name: "홍길동1",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 2,
     name: "홍길동2",
-    sex: ESex.MALE,
+    sex: ESex.FEMALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 3,
     name: "홍길동3",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 4,
     name: "홍길동4",
     sex: ESex.MALE,
+
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 5,
     name: "홍길동5",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 6,
     name: "홍길동6",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 7,
     name: "홍길동7",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 8,
     name: "홍길동8",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 9,
     name: "홍길동9",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
   {
     id: 10,
     name: "홍길동10",
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
+    testProgress: 30,
+    doseCount: {
+      red: 4,
+      yellow: 1,
+      green: 2,
+    },
   },
 ];

@@ -15,7 +15,7 @@ export default function Main() {
 
   const { data, isLoading, isError } = useGetUserQuery(null);
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return <LoadingPage />;
   }
 

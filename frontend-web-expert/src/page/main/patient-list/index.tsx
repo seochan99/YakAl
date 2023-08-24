@@ -9,6 +9,12 @@ import {
   SearchButton,
   SearchInput,
   OptionBar,
+  Birthday,
+  Risk,
+  Name,
+  Sex,
+  TableHeader,
+  TestProgress,
 } from "./style";
 import { useLoaderData } from "react-router-dom";
 import { TPatientLoaderReturn } from "./loader";
@@ -23,8 +29,15 @@ function PatientList() {
         <SearchInput type="text" placeholder="환자 검색" />
       </OptionBar>
       <List>
+        <TableHeader>
+          <Name>{`이름`}</Name>
+          <Sex>{`성별`}</Sex>
+          <TestProgress>{`설문 완료율`}</TestProgress>
+          <Risk>{`다제약물 위험도`}</Risk>
+          <Birthday>{`생년월일(만 나이)`}</Birthday>
+        </TableHeader>
         {userList.map((user) => {
-          return <PatientItem key={user.id} id={user.id} name={user.name} sex={user.sex} birthday={user.birthday} />;
+          return <PatientItem key={user.id} userInfo={user} />;
         })}
       </List>
       <PagingButtonBox>

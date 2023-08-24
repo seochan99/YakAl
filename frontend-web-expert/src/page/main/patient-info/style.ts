@@ -78,15 +78,28 @@ export const Bar = styled.hr`
   margin: 1rem 0;
 `;
 
-export const Description = styled.span`
+export const Birthday = styled.span`
   color: #151515;
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1rem;
 `;
 
-export const Sex = styled(Description)`
-  margin-left: 0.5rem;
+export const Sex = styled.span`
+  & {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    color: #151515;
+    font-size: 1.1rem;
+    font-weight: 600;
+    line-height: 1.1rem;
+    margin-left: 2rem;
+  }
+  & svg {
+    height: 1.4rem;
+    margin-left: 0.4rem;
+  }
 `;
 
 export const NoteAndDoseList = styled.div`
