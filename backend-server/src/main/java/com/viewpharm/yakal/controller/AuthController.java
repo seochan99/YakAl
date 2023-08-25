@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -121,17 +122,23 @@ public class AuthController {
      */
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
-    public ResponseEntity<ResponseDto<Object>> logout(@UserId Long id) {
+    public ResponseDto<Object> logout(@UserId Long id, final HttpServletRequest request, final HttpServletResponse response) {
         authService.logout(id);
 
-        final ResponseCookie cookie = ResponseCookie.from("refreshToken", "")
-                .httpOnly(true)
-                .secure(true)
-                .maxAge(0)
-                .path("/")
-                .build();
+        final Cookie[] cookies = request.getCookies();
 
-        return ResponseEntity.status(HttpStatus.OK).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(ResponseDto.ok(null));
+        if (cookies == null) {
+            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
+        }
+
+        final Cookie refreshTokenCookie = Arrays.stream(cookies).filter((cookie) -> cookie.getName().equals("refreshToken"))
+                .findFirst().orElseThrow(() -> new CommonException(ErrorCode.INVALID_TOKEN_ERROR));
+
+        refreshTokenCookie.setMaxAge(0);
+
+        response.addCookie(refreshTokenCookie);
+
+        return ResponseDto.ok(null);
     }
 
     /**
@@ -176,29 +183,29 @@ public class AuthController {
      */
     @PostMapping("/reissue/secure")
     @Operation(summary = "웹 액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다. (HttpOnly 쿠키를 사용하는 웹 전용)")
-    public ResponseEntity<ResponseDto<?>> reissueSecurely(@CookieValue("refreshToken") final String refreshToken, final HttpServletRequest request) {
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.WEB);
-
+    public ResponseDto<Map<String, String>> reissueSecurely(final HttpServletRequest request, final HttpServletResponse response) {
         final Cookie[] cookies = request.getCookies();
 
-        for (Cookie cookie : cookies) {
-            if (cookie.getName().equals("refreshToken")) {
-                cookie.setMaxAge(0);
-                cookie.setPath("/");
-            }
+        if (cookies == null) {
+            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
         }
 
-        final ResponseCookie cookie = ResponseCookie.from("refreshToken", jwtTokenDto.getRefreshToken())
-                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .build();
+        final Cookie refreshTokenCookie = Arrays.stream(cookies).filter((cookie) -> cookie.getName().equals("refreshToken"))
+                .findFirst().orElseThrow(() -> new CommonException(ErrorCode.INVALID_TOKEN_ERROR));
+
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshTokenCookie.getValue(), EPlatform.WEB);
+
+        refreshTokenCookie.setValue(jwtTokenDto.getRefreshToken());
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setSecure(true);
+        refreshTokenCookie.setHttpOnly(true);
+        refreshTokenCookie.setMaxAge(jwtProvider.getWebRefreshTokenExpirationSecond());
+
+        response.addCookie(refreshTokenCookie);
 
         final Map<String, String> data = new HashMap<>(1);
         data.put("accessToken", jwtTokenDto.getAccessToken());
 
-        final ResponseDto<?> responseBody = ResponseDto.builder().data(data).success(true).build();
-
-        return ResponseEntity.status(HttpStatus.CREATED).header(HttpHeaders.SET_COOKIE, cookie.toString()).body(responseBody);
+        return ResponseDto.created(data);
     }
 }

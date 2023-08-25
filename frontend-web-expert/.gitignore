@@ -24,6 +24,8 @@ dist-ssr
 *.sw?
 
 .env
+.env.prod
+.env.local
 
 localhost.pem
 localhost-key.pem
