@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-//버전 1에서 메시지를 생성하기 위한 Dto
-//버전 2하면 삭제
 @Builder
 @AllArgsConstructor
 @Getter
