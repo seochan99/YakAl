@@ -2,7 +2,6 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.NotificationDto;
-import com.viewpharm.yakal.dto.request.NotificationTestRequestDto;
 import com.viewpharm.yakal.service.NotificationScheduleService;
 import com.viewpharm.yakal.service.NotificationService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
@@ -10,11 +9,12 @@ import com.viewpharm.yakal.utils.NotificationUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.Authentication;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/notification")
@@ -53,6 +53,5 @@ public class NotificationController {
     public ResponseDto<Boolean> createNotificationTest() throws Exception {
         return ResponseDto.ok(notificationScheduleService.sendPushNotificationTest());
     }
-
 
 }

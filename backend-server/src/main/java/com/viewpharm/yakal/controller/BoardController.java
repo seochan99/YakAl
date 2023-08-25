@@ -56,9 +56,6 @@ public class BoardController {
     @GetMapping("/list/all")
     @Operation(summary = "게시글 리스트", description = "모든 게시글 들고오기")
     public ResponseDto<List<BoardListDto>> getAllBoardList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("page") Long page, @RequestParam("num") Long num) {
-        log.info(sort);
-        log.info(page.toString());
-        log.info(num.toString());
         return ResponseDto.ok(boardService.getAllBoardList(id, sort, page, num));
     }
 

@@ -176,7 +176,6 @@ public class BoardService {
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
                         b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
-        log.info("끝");
         return list;
     }
 

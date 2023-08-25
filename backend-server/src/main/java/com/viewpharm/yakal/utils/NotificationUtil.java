@@ -28,6 +28,8 @@ import org.json.JSONException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -108,54 +110,4 @@ public class NotificationUtil {
             log.info("서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserID=" + requestDto.getTargetUserId());
         }
     }
-
-    //안드로이드 버전2
-    private final String API_URL = "https://fcm.googleapis.com/v1/projects/wearebility-303e9/messages:send";
-    private final ObjectMapper objectMapper;
-
-    public void sendMessageTo(NotificationUserRequestDto requestDto) throws IOException {
-        User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        if (user.getDeviceToken() != null) {
-            String message = makeMessage(user.getDeviceToken(), requestDto.getTitle(), requestDto.getBody());
-            OkHttpClient client = new OkHttpClient();
-            RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
-            Request request = new Request.Builder()
-                    .url(API_URL)
-                    .post(requestBody)
-                    .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
-                    .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
-                    .build();
-            Response response = client.newCall(request).execute();
-            log.info(response.body().string());
-        } else {
-            log.info("서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserID=" + requestDto.getTargetUserId());
-        }
-    }
-    //안드로이드 버전2 - 메시지 생성
-    private String makeMessage(String targetToken, String title, String body) throws
-            JsonParseException, JsonProcessingException {
-        MessageDto messageDto = MessageDto.builder()
-                .message(MessageDto.Message.builder()
-                        .token(targetToken)
-                        .messageNotification(MessageDto.MessageNotification.builder()
-                                .title(title)
-                                .body(body)
-                                .image(null)
-                                .build()
-                        ).build()).validateOnly(false).build();
-        return objectMapper.writeValueAsString(messageDto);
-    }
-    //안드로이드 버전2 - AccessToken 가져오기 Config 클래스 대신 쓰는거
-    private String getAccessToken() throws IOException {
-        String firebaseConfigPath = "firebase/firebase_service_key.json";
-
-        GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
-                .createScoped(List.of("https://www.googleapis.com/auth/cloud-platform"));
-
-        googleCredentials.refreshIfExpired();
-        return googleCredentials.getAccessToken().getTokenValue();
-    }
-
-
 }
