@@ -13,30 +13,31 @@ export const HeaderOuter = styled.header`
 export const LogoOuter = styled(Link)`
   position: relative;
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   align-items: center;
-  padding: 0 3rem;
-  margin: 0;
+  height: 6.75rem;
+  padding-left: 3rem;
+  gap: 1rem;
   text-decoration: none;
 `;
 
 export const Icon = styled.img`
   content: url("/src/asset/yakal-logo.png");
   width: 4.2rem;
-  margin: 0 1rem 0 0.6rem;
 `;
 
 export const Title = styled.span`
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
+  line-height: 2rem;
   color: #2666f6;
-  margin: 0.2rem 0.5rem 0;
 `;
 
 export const Description = styled.span`
   font-size: 1.25rem;
   font-weight: 700;
+  line-height: 1.25rem;
   color: #90909f;
-  margin-left: 1rem;
-  margin-top: 0.2rem;
 `;

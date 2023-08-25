@@ -1,4 +1,13 @@
-import { IconNav, NavItem, Outer, ProfileMenu, ProfileMenuItem, SmallBadge, SwingIconButton, TextNav } from "./style";
+import {
+  IconNav,
+  NavItem,
+  NavOuter,
+  ProfileMenu,
+  ProfileMenuItem,
+  SmallBadge,
+  SwingIconButton,
+  TextNav,
+} from "./style";
 
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
@@ -63,7 +72,7 @@ function NavBar() {
   };
 
   return (
-    <Outer>
+    <NavOuter>
       <TextNav>
         <NavItem to="/" className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}>
           대시보드
@@ -121,7 +130,7 @@ function NavBar() {
           </ProfileMenuItem>
         </ProfileMenu>
       )}
-    </Outer>
+    </NavOuter>
   );
 }
 

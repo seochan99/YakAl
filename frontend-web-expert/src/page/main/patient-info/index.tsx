@@ -6,7 +6,7 @@ import {
   Sex,
   InnerBox,
   Name,
-  Description,
+  Birthday,
   NoteAndDoseList,
   Header,
   BackButton,
@@ -22,6 +22,9 @@ import DoseList from "./child/dose-list";
 import SurveyResult from "./child/survey-result";
 import PrescriptionList from "./child/prescription-list";
 import HealthFoodList from "./child/health-food-list";
+
+import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
+import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
 
 function PatientInfo() {
   const { userInfo } = useLoaderData() as TPatientInfoLoaderReturn;
@@ -43,14 +46,17 @@ function PatientInfo() {
       <PatientSummary>
         <NameSex>
           <Name>{name}</Name>
-          <Sex>{sex === ESex.MALE ? "(남성)" : "(여성)"}</Sex>
+          <Sex>
+            {sex === ESex.MALE ? "남성" : "여성"}
+            {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
+          </Sex>
         </NameSex>
-        <Description>
+        <Birthday>
           {`${birthday.getFullYear()}.
-          ${birthday.getMonth() + 1}.
+          ${birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1}.
           ${birthday.getDate()}.
           (${getAge(birthday)}세)`}
-        </Description>
+        </Birthday>
       </PatientSummary>
       <NoteAndDoseList>
         <InnerBox>

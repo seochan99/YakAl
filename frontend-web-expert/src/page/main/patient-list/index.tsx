@@ -1,20 +1,32 @@
 import PatientItem from "@/page/main/patient-list/child/patient-item";
 import {
   Outer,
-  PageButton,
-  PageLeftButton,
-  PageRightButton,
-  PagingButtonBox,
   List,
   SearchButton,
   SearchInput,
   OptionBar,
+  Birthday,
+  Risk,
+  Name,
+  Sex,
+  TableHeader,
+  TestProgress,
+  ListFooter,
 } from "./style";
 import { useLoaderData } from "react-router-dom";
 import { TPatientLoaderReturn } from "./loader";
+import Pagination from "react-js-pagination";
+import { useState } from "react";
 
 function PatientList() {
   const { userList } = useLoaderData() as TPatientLoaderReturn;
+
+  const [page, setPage] = useState<number>(1);
+
+  const handlePageChange = (page: number) => {
+    setPage(page);
+    console.log(page);
+  };
 
   return (
     <Outer>
@@ -23,17 +35,28 @@ function PatientList() {
         <SearchInput type="text" placeholder="환자 검색" />
       </OptionBar>
       <List>
-        {userList.map((user) => {
-          return <PatientItem key={user.id} id={user.id} name={user.name} sex={user.sex} birthday={user.birthday} />;
+        <TableHeader>
+          <Name>{`이름`}</Name>
+          <Sex>{`성별`}</Sex>
+          <TestProgress>{`설문 완료율`}</TestProgress>
+          <Risk>{`위험군 약 개수`}</Risk>
+          <Birthday>{`생년월일(만 나이)`}</Birthday>
+        </TableHeader>
+        {userList.slice(10 * (page - 1), 10 * page).map((user) => {
+          return <PatientItem key={user.id} userInfo={user} />;
         })}
       </List>
-      <PagingButtonBox>
-        <PageLeftButton />
-        <PageButton>1</PageButton>
-        <PageButton>2</PageButton>
-        <PageButton>3</PageButton>
-        <PageRightButton />
-      </PagingButtonBox>
+      <ListFooter>
+        <Pagination
+          activePage={page}
+          itemsCountPerPage={10}
+          totalItemsCount={userList.length}
+          pageRangeDisplayed={5}
+          prevPageText={"‹"}
+          nextPageText={"›"}
+          onChange={handlePageChange}
+        />
+      </ListFooter>
     </Outer>
   );
 }

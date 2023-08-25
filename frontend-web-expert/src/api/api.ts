@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { setCredentials, logout } from "@/store/auth";
 import { RootState } from "@/store/store";
 import { HttpStatusCode } from "axios";
@@ -24,7 +24,7 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
-const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
+export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
   let result = await baseQuery(args, api, extraOptions);
 
   const resultHttpStatus = result?.meta?.response?.status;
@@ -44,7 +44,9 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
     if (reissueResultHttpStatus !== HttpStatusCode.Created) {
       api.dispatch(logout());
-      window.location.href = "/login";
+
+      console.log(reissueResult);
+      // window.location.href = "/login";
     } else {
       api.dispatch(setCredentials({ token: (reissueResult.data as TReissueResult).data.accessToken }));
       result = await baseQuery(args, api, extraOptions);
@@ -53,8 +55,3 @@ const baseQueryWithReauth = async (args: any, api: any, extraOptions: any) => {
 
   return result;
 };
-
-export const apiSlice = createApi({
-  baseQuery: baseQueryWithReauth,
-  endpoints: (builder) => ({}),
-});

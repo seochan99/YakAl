@@ -1,12 +1,18 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+export const Outer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+`;
+
 export const EnrollBox = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 48rem;
   height: 8rem;
   background-color: #fff;
   border: 0.15rem solid #2666f6;
@@ -49,10 +55,6 @@ export const EnrollButton = styled(Link)`
     font-weight: 700;
     line-height: 1rem;
     text-decoration: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   }
   &:hover {
     cursor: pointer;
@@ -85,4 +87,18 @@ export const SubEnrollText = styled.span`
 export const Blue = styled.span`
   color: #2666f6;
   font-weight: 700;
+`;
+
+export const Menu = styled.div`
+  display: grid;
+  margin: 1.5rem 0;
+  grid-template-columns: repeat(3, 1fr);
+  row-gap: 1rem;
+  column-gap: 1rem;
+`;
+
+export const PatientIcon = styled.img`
+  content: url("/src/asset/patient-icon.png");
+  width: 6rem;
+  height: 6rem;
 `;
