@@ -11,18 +11,17 @@ function SocialLoginProxy() {
   useEffect(() => {
     const cookies = new Cookies();
     const accessToken = cookies.get("accessToken");
-    cookies.remove("accessToken", { path: "/" });
 
     if (!accessToken) {
-      navigate("/login");
+      navigate("/login/social/failure");
     }
 
     dispatch(setCredentials({ token: accessToken }));
 
-    navigate("/");
+    navigate("/login/identification");
   }, [dispatch, navigate]);
 
-  return <>kakao login...</>;
+  return <></>;
 }
 
 export default SocialLoginProxy;

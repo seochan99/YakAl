@@ -55,10 +55,6 @@ export const EnrollButton = styled(Link)`
     font-weight: 700;
     line-height: 1rem;
     text-decoration: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   }
   &:hover {
     cursor: pointer;

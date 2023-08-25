@@ -4,7 +4,7 @@ import styled from "styled-components";
 export const NonLinkOuter = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
   border: 1px solid;
   text-decoration: none;
@@ -24,7 +24,7 @@ export const CoomingSoonTitle = styled.div`
   color: #b7b5c4;
   font-size: 1.4rem;
   font-weight: 700;
-  margin: 1.5rem 0 1rem;
+  margin: 1rem 0;
 `;
 
 export const CoomingSoonIcon = styled.img`
@@ -55,7 +55,7 @@ export const Outer = styled(Link)`
   & {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     border: 1px solid;
     text-decoration: none;
@@ -76,7 +76,7 @@ export const ImgBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 8rem;
+  min-height: 8rem;
 `;
 
 export const Title = styled.div`
@@ -88,7 +88,7 @@ export const Title = styled.div`
   color: #2666f6;
   font-size: 1.4rem;
   font-weight: 700;
-  margin: 1.5rem 0 1rem;
+  margin: 1rem 0;
 `;
 
 export const Description = styled.div`

@@ -44,7 +44,9 @@ export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any
 
     if (reissueResultHttpStatus !== HttpStatusCode.Created) {
       api.dispatch(logout());
-      window.location.href = "/login";
+
+      console.log(reissueResult);
+      // window.location.href = "/login";
     } else {
       api.dispatch(setCredentials({ token: (reissueResult.data as TReissueResult).data.accessToken }));
       result = await baseQuery(args, api, extraOptions);
