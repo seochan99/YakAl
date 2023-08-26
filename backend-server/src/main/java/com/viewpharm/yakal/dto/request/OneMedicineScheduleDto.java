@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.viewpharm.yakal.dto.request.OneScheduleDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -16,9 +17,11 @@ import java.util.List;
 public class OneMedicineScheduleDto {
 
     @NotBlank
+    @JsonProperty("KDCode")
     private String KDCode;
 
     @NotBlank
+    @JsonProperty("ATCCode")
     private String ATCCode;
 
     @Valid
