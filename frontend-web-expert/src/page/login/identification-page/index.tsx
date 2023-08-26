@@ -58,7 +58,7 @@ function IdentificationPage() {
     //     };
 
     //     if (resultCode !== "0000") {
-    //       navigate("/login/identification/failure");
+    //       //navigate("/login/identification/failure");
     //     }
 
     //     console.log(resultCode, authRequestUrl, txId, token);
@@ -67,7 +67,7 @@ function IdentificationPage() {
     //     console.log(error);
 
     //     if (isAxiosError(error)) {
-    //       navigate("/login/identification/failure");
+    //       //navigate("/login/identification/failure");
     //     }
     //   });
 

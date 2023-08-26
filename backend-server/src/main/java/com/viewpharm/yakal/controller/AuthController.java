@@ -93,6 +93,22 @@ public class AuthController {
         authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
     }
 
+    @Deprecated
+    @GetMapping("/kakao/callback/test")
+    public ResponseDto<JwtTokenDto> loginUsingKakaoForWebTest(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+        final String accessToken = oAuth2Util.getKakaoAccessToken(code);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
+        return ResponseDto.ok(jwtTokenDto);
+    }
+
+    @Deprecated
+    @GetMapping("/google/callback/test")
+    public ResponseDto<JwtTokenDto> loginUsingGoogleForWebTest(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+        final String accessToken = oAuth2Util.getGoogleAccessToken(code);
+        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
+        return ResponseDto.ok(jwtTokenDto);
+    }
+
     /**
      * Web Social Login Redirect URL
      */
