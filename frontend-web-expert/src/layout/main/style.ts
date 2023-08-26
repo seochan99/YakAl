@@ -3,16 +3,9 @@ import { styled } from "styled-components";
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
-`;
-
-export const MainSection = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex: 1;
-  width: 100%;
-  background-color: #f5f5f9;
+  align-items: stretch;
+  justify-content: start;
+  width: 100vw;
 `;
 
 export const TopRight = styled.div`
@@ -24,9 +17,18 @@ export const TopRight = styled.div`
   padding: 0 2rem;
 `;
 
+export const MainSection = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex: 1;
+  width: 100%;
+  background-color: #f5f5f9;
+`;
+
 export const Detail = styled.div`
   & {
-    width: 50rem;
+    width: 54rem;
     display: flex;
     flex-direction: column;
     padding: 2rem;

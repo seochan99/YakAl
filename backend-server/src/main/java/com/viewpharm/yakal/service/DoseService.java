@@ -36,6 +36,7 @@ public class DoseService {
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final RiskRepository riskRepository;
+
     public <T> Map<EDosingTime, List<T>> createMap() {
         Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
         map.put(EDosingTime.MORNING, new ArrayList<>());
@@ -259,7 +260,7 @@ public class DoseService {
         return isInserted;
     }
 
-    public void deleteSchedule(final List<Long> ids){
+    public void deleteSchedule(final List<Long> ids) {
         doseRepository.deleteAllByIdInBatch(ids);
     }
 }

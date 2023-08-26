@@ -25,9 +25,9 @@ export const Outer = styled(NavLink)`
 `;
 
 export const Name = styled.span`
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
-  line-height: 1.2rem;
+  line-height: 1.1rem;
   text-align: center;
   width: 6rem;
 `;
@@ -39,7 +39,7 @@ export const Sex = styled.span`
     align-items: center;
     justify-content: center;
     font-size: 1rem;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1rem;
     width: 4rem;
     gap: 0.1rem;
@@ -51,7 +51,7 @@ export const Sex = styled.span`
 
 export const TestProgress = styled.span`
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1rem;
   text-align: center;
   width: 5rem;
@@ -69,7 +69,7 @@ export const IconBox = styled.div`
 export const TotalCount = styled.span`
   font-size: 1rem;
   line-height: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-right: 0.4rem;
 `;
 
@@ -87,7 +87,7 @@ export const RedIcon = styled(RedIconSvg)`
 
 export const Birthday = styled.span`
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1rem;
   text-align: center;
   width: 12em;

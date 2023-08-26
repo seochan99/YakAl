@@ -125,7 +125,7 @@ public class AuthService {
             final HttpServletResponse response,
             final ELoginProvider loginProvider
     ) throws IOException {
-        final String FRONTEND_HOST = "https://localhost:5173"; // Front Server Host -> 배포 시 변경
+        final String FRONTEND_HOST = "http://localhost:5173"; // Front Server Host -> 배포 시 변경
 
         final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.getRefreshToken());
         refreshTokenSecureCookie.setPath("/");
