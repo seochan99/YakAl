@@ -21,6 +21,18 @@ export const GlobalStyle = createGlobalStyle`
     font-family: SUIT, Pretendard; 
   }
 
+  @media only screen and (min-width: 1049px) {
+    html { font-size: 100%; }
+  }
+
+  @media only screen and (max-width: 1048px) and (min-width: 795px) {
+    html { font-size: 75%; }
+  }
+
+  @media only screen and (max-width: 794px) {
+    html { font-size: 62.5%; }
+  }
+
   ::-webkit-scrollber {
     width: 10px;
   }
