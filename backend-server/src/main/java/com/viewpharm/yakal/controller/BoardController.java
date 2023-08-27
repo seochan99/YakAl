@@ -46,7 +46,7 @@ public class BoardController {
     }
 
     //Delete
-    @DeleteMapping("{boardId}")
+    @DeleteMapping("/{boardId}")
     @Operation(summary = "게시글 삭제", description = "특정 게시글 삭제")
     public ResponseDto<Boolean> deleteBoard(@UserId Long id, @PathVariable Long boardId) {
         return ResponseDto.ok(boardService.deleteBoard(id, boardId));

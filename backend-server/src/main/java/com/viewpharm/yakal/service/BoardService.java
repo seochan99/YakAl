@@ -152,9 +152,6 @@ public class BoardService {
         return Boolean.TRUE;
     }
 
-    //최신순만 만듬, 좋아요 수, 조회수도 만들어야함
-    //슬라이드 방식인지 페이지 선택하는 방식인지?
-
     //모든게시글 리스트 가져오기
     public List<BoardListDto> getAllBoardList(Long userId, String sorting, Long pageIndex, Long pageSize) {
         Pageable paging = null;

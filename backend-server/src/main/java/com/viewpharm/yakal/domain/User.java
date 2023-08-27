@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.type.EJob;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.ESex;
@@ -85,6 +86,10 @@ public class User {
     @Column(name = "dinnerTime")
     private LocalTime dinnerTime;
 
+    @Column(name = "job")
+    @Enumerated(EnumType.STRING)
+    private EJob job;
+
     /**
      * ONE-TO-ONE RELATION
      */
@@ -108,6 +113,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Like> likes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Counsel> counselForExpert = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Counsel> counselForPatient = new ArrayList<>();
+
 
     public User(final String socialId,
                 final ELoginProvider loginProvider,
