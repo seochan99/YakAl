@@ -4,8 +4,7 @@ import com.viewpharm.yakal.domain.Counsel;
 import com.viewpharm.yakal.domain.Note;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.NoteRequestDto;
-import com.viewpharm.yakal.dto.response.NoteDetailDto;
-import com.viewpharm.yakal.dto.response.PatientDto;
+import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.CounselRepository;
@@ -14,6 +13,7 @@ import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -70,13 +70,14 @@ public class CounselService {
         return Boolean.TRUE;
     }
 
-    public List<PatientDto> getPatientList(Long expertId, Long pageIndex, Long pageSize) {
+    public PatientAllDto getPatientList(Long expertId, Long pageIndex, Long pageSize) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
 
-        List<Counsel> counselList = counselRepository.findByExpertIdAndIsDeleted(expertId, false, paging);
+        Page<Counsel> counselList = counselRepository.findByExpertIdAndIsDeleted(expertId, false, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
         List<PatientDto> patientDtoList = new ArrayList<>();
 
@@ -92,7 +93,12 @@ public class CounselService {
             //테스트 퍼센트, 약 수 추가 예정
             //추가 후 방식 바꿀 예정
         }
-        return patientDtoList;
+
+
+        return PatientAllDto.builder()
+                .data(patientDtoList)
+                .pageInfo(pageInfo)
+                .build();
     }
 
     public Boolean createNote(Long expertId, Long patientId, Long counselId, NoteRequestDto requestDto) {
@@ -174,7 +180,7 @@ public class CounselService {
     }
 
 
-    public List<NoteDetailDto> getAllNoteList(Long expertId, Long counselId, Long pageIndex, Long pageSize) {
+    public NoteAllDto getAllNoteList(Long expertId, Long counselId, Long pageIndex, Long pageSize) {
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         //상담 확인
@@ -183,11 +189,17 @@ public class CounselService {
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
 
-        List<Note> noteList = noteRepository.findByCounselAndIsDeleted(counsel, false, paging);
+        Page<Note> noteList = noteRepository.findByCounselAndIsDeleted(counsel, false, paging);
+
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) noteList.getTotalElements(), noteList.getTotalPages());
 
         List<NoteDetailDto> list = noteList.stream()
                 .map(n -> new NoteDetailDto(n.getId(), n.getTitle(), n.getDescription()))
                 .collect(Collectors.toList());
-        return list;
+
+        return NoteAllDto.builder()
+                .data(list)
+                .pageInfo(pageInfo)
+                .build();
     }
 }

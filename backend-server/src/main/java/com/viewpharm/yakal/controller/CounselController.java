@@ -38,7 +38,7 @@ public class CounselController {
     //List
     @GetMapping("/patient")
     @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
-    public ResponseDto<List<PatientDto>> getPatientList(@UserId Long id, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("page") Long page, @RequestParam("num") Long num) {
         return ResponseDto.ok(counselService.getPatientList(id, page, num));
     }
 
@@ -63,7 +63,7 @@ public class CounselController {
 
     @GetMapping("/{counselId}/note")
     @Operation(summary = "특이사항 가져오기", description = "특정 상담 특이사항 가져오기")
-    public ResponseDto<List<NoteDetailDto>> readNote(@UserId Long id, @PathVariable Long counselId, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+    public ResponseDto<NoteAllDto> readNote(@UserId Long id, @PathVariable Long counselId, @RequestParam("page") Long page, @RequestParam("num") Long num) {
         return ResponseDto.ok(counselService.getAllNoteList(id, counselId, page, num));
     }
 

@@ -18,6 +18,6 @@ public interface NoteRepository extends JpaRepository<Note, Long> {
 
     Optional<Note> findByIdNotAndTitleAndIsDeleted(Long noteId, String title, Boolean isDeleted);
 
-    List<Note> findByCounselAndIsDeleted(Counsel counsel, Boolean isDeleted, Pageable pageable);
+    Page<Note> findByCounselAndIsDeleted(Counsel counsel, Boolean isDeleted, Pageable pageable);
 
 }
