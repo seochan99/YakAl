@@ -69,6 +69,7 @@ public class BoardService {
     public BoardDetailDto readBoard(Long userId, Long boardId) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
         //게시판 확인
         Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));

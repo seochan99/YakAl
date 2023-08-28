@@ -120,7 +120,8 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Counsel> counselForPatient = new ArrayList<>();
 
-
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Answer> answers = new ArrayList<>();
     public User(final String socialId,
                 final ELoginProvider loginProvider,
                 final ERole role,

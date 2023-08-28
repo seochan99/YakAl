@@ -24,6 +24,8 @@ public enum ErrorCode {
     NOT_FOUND_PATIENT("4052", HttpStatus.NOT_FOUND, "해당 환자가 존재하지 않습니다."),
     NOT_FOUND_COUNSEL("4053", HttpStatus.NOT_FOUND, "해당 상담이 존재하지 않습니다."),
     NOT_FOUND_NOTE("4054", HttpStatus.NOT_FOUND, "해당 특이사항이 존재하지 않습니다."),
+    NOT_FOUND_SURBEY("4055", HttpStatus.NOT_FOUND, "해당 설문이 존재하지 않습니다."),
+    NOT_FOUND_ANSWER("4056", HttpStatus.NOT_FOUND, "해당 설문결과가 존재하지 않습니다."),
 
     
     // Bad Request Error

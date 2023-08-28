@@ -18,5 +18,7 @@ public interface CounselRepository extends JpaRepository<Counsel, Long> {
 
     Optional<Counsel> findByExpertAndPatient(User expert, User patient);
 
+    Optional<Counsel> findByExpertAndPatientAndIsDeleted(User expert, User patient, Boolean isDeleted);
+
     Optional<Counsel> findByIdAndIsDeleted(Long counselId, Boolean isDeleted);
 }

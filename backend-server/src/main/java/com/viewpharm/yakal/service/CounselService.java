@@ -194,7 +194,7 @@ public class CounselService {
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) noteList.getTotalElements(), noteList.getTotalPages());
 
         List<NoteDetailDto> list = noteList.stream()
-                .map(n -> new NoteDetailDto(n.getId(), n.getTitle(), n.getDescription()))
+                .map(n -> new NoteDetailDto(n.getId(), n.getTitle(), n.getDescription(), n.getCreateDate()))
                 .collect(Collectors.toList());
 
         return NoteAllDto.builder()
