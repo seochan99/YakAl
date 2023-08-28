@@ -17,7 +17,7 @@ export const LogoOuter = styled(Link)`
   justify-content: center;
   align-items: center;
   height: 6.75rem;
-  padding-left: 3rem;
+  padding: 0 2rem;
   gap: 1rem;
   text-decoration: none;
 `;
@@ -25,6 +25,13 @@ export const LogoOuter = styled(Link)`
 export const Icon = styled.img`
   content: url("/src/asset/yakal-logo.png");
   width: 4.2rem;
+`;
+
+export const LogoText = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 1rem;
 `;
 
 export const Title = styled.span`

@@ -8,13 +8,26 @@ import { ReactComponent as LogoShadeSvg } from "@/asset/logo-shade.svg";
 
 export const InnerCenter = styled.div`
   display: flex;
-  flex-direction: row;
+
+  @media only screen and (min-width: 769px) {
+    flex-direction: row;
+    gap: 4rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 8rem;
+  }
 `;
 
 export const LogoSection = styled.div`
   display: flex;
   flex-direction: column;
-  width: 27rem;
+
+  @media only screen and (min-width: 481px) {
+    width: 27rem;
+  }
 `;
 
 export const TitleBox = styled.div`
@@ -67,9 +80,18 @@ export const LoginSection = styled.div`
   flex-direction: column;
   border-radius: 1rem;
   background-color: white;
-  width: 22rem;
-  padding: 5rem;
-  margin-left: 4rem;
+
+  @media only screen and (min-width: 481px) {
+    width: 22rem;
+    padding: 5rem;
+    gap: 2.5rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    margin: 0 2rem 4rem;
+    padding: 1.5rem;
+    gap: 1rem;
+  }
 `;
 
 export const YakalSymbol = styled.img`
@@ -84,7 +106,6 @@ export const LoginTitle = styled.span`
   font-style: normal;
   font-weight: 700;
   line-height: 1.5;
-  margin-bottom: 2.5rem;
 `;
 
 export const ButtonBox = styled.div`

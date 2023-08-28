@@ -15,6 +15,7 @@ import {
 } from "./style";
 import DashboardMenuItem from "./menu-item";
 import { useGetUserQuery } from "@/api/user";
+import { useMediaQuery } from "react-responsive";
 
 export type TMenuInfo = {
   path?: string;
@@ -25,6 +26,8 @@ export type TMenuInfo = {
 
 function Dashboard() {
   const { data } = useGetUserQuery(null);
+
+  const isNarrowMobile = useMediaQuery({ query: "(max-width: 380px)" });
 
   const menuInfos: TMenuInfo[] = [
     {
@@ -58,9 +61,16 @@ function Dashboard() {
         <IconText>
           <DoctorIcon />
           <CertTextBox>
-            <EnrollText>서비스를 이용하려면 전문가 인증이 필요합니다.</EnrollText>
+            <EnrollText>
+              {"서비스를 이용하려면"}
+              {isNarrowMobile ? <br /> : " "}
+              {"전문가 인증이 필요합니다."}
+            </EnrollText>
             <SubEnrollText>
-              <Blue>약 알</Blue>에 등록된 기관의 전문가만 인증이 가능합니다.
+              <Blue>{"약 알"}</Blue>
+              {"에 등록된 기관의"}
+              {isNarrowMobile ? <br /> : " "}
+              {"전문가만 인증이 가능합니다."}
             </SubEnrollText>
           </CertTextBox>
         </IconText>

@@ -29,6 +29,8 @@ export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any
 
   const resultHttpStatus = result?.meta?.response?.status;
 
+  console.log(resultHttpStatus);
+
   if (resultHttpStatus === HttpStatusCode.Unauthorized || resultHttpStatus === HttpStatusCode.Forbidden) {
     const reissueResult = await baseQuery({ url: "/auth/reissue/secure", method: "POST" }, api, extraOptions);
 

@@ -51,7 +51,6 @@ export const PatientSummary = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5rem;
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 0.5rem;
@@ -104,9 +103,16 @@ export const Sex = styled.span`
 
 export const NoteAndDoseList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 30rem;
+
+  @media only screen and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 30rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-rows: repeat(2, 1fr);
+  }
 `;
 
 export const InnerBox = styled.div`
@@ -120,7 +126,14 @@ export const InnerBox = styled.div`
 
 export const PrescriptionAndHealthFunctionalFood = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 25rem;
+
+  @media only screen and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 25rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-rows: repeat(2, 1fr);
+  }
 `;

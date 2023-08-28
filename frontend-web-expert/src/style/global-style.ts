@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { theme } from "./theme";
 
 export const GlobalStyle = createGlobalStyle`
@@ -21,16 +21,12 @@ export const GlobalStyle = createGlobalStyle`
     font-family: SUIT, Pretendard; 
   }
 
-  @media only screen and (min-width: 1049px) {
+  @media only screen and (min-width: 971px) {
     html { font-size: 100%; }
   }
 
-  @media only screen and (max-width: 1048px) and (min-width: 795px) {
+  @media only screen and (max-width: 970px) {
     html { font-size: 75%; }
-  }
-
-  @media only screen and (max-width: 794px) {
-    html { font-size: 62.5%; }
   }
 
   ::-webkit-scrollber {
@@ -60,5 +56,60 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
     font-display: swap;
     src: url('/src/asset/PretendardVariable.woff2') format('woff2-variations');
+  }
+`;
+
+export const ListFooter = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-family: Pretendard;
+    padding: 1rem 0;
+  }
+  & .pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 0.8rem;
+    margin: 0;
+  }
+  & ul {
+    list-style: none;
+    padding: 0;
+  }
+  & ul.pagination li {
+    display: inline-block;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 2.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #b7b5c4;
+  }
+  & ul.pagination li:hover {
+    background-color: #e9e9ee;
+    cursor: pointer;
+  }
+  & ul.pagination li:active {
+    background-color: #337ab7;
+  }
+  & ul.pagination li.active {
+    background-color: #337ab7;
+  }
+  & ul.pagination li a {
+    text-decoration: none;
+    color: #151515;
+  }
+  & ul.pagination li:hover a {
+    color: #151515;
+  }
+  & ul.pagination li:active a {
+    color: white;
+  }
+  & ul.pagination li.active a {
+    color: white;
   }
 `;

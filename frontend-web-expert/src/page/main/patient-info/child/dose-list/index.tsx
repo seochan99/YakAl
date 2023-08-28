@@ -5,7 +5,6 @@ import {
   CommonItem,
   ItemTitle,
   List,
-  ListFooter,
   ListRow,
   PeriodSelectBox,
   PeriodSelectButton,
@@ -27,6 +26,7 @@ import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { EPeriod } from "@/type/period";
+import { ListFooter } from "@/style/global-style";
 
 type TDoseListProps = {
   patientId: number;

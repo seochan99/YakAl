@@ -79,7 +79,7 @@ export const PeriodList = styled.ul`
   list-style: none;
   border-radius: 0.25rem;
   padding: 0.4rem;
-  width: 6rem;
+  width: 4.6rem;
   background-color: #fff;
   border: 1px solid #b7b5c4;
 `;
@@ -201,57 +201,4 @@ export const YellowIcon = styled(YellowIconSvg)`
 
 export const RedIcon = styled(RedIconSvg)`
   height: 0.9rem;
-`;
-
-export const ListFooter = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-family: Pretendard;
-  }
-  & .pagination {
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-  }
-  & ul {
-    list-style: none;
-    padding: 0;
-  }
-  & ul.pagination li {
-    display: inline-block;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 1.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #b7b5c4;
-  }
-  & ul.pagination li:hover {
-    background-color: #e9e9ee;
-    cursor: pointer;
-  }
-  & ul.pagination li:active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li.active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li a {
-    text-decoration: none;
-    color: #151515;
-  }
-  & ul.pagination li:hover a {
-    color: #151515;
-  }
-  & ul.pagination li:active a {
-    color: white;
-  }
-  & ul.pagination li.active a {
-    color: white;
-  }
 `;

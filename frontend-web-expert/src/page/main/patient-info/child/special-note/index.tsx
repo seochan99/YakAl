@@ -10,12 +10,12 @@ import {
   Title,
   Header,
   AddButton,
-  ListFooter,
 } from "./style";
 
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Pagination from "react-js-pagination";
 import { useState } from "react";
+import { ListFooter } from "@/style/global-style";
 
 type TSpecialNoteProps = {
   patientId: number;

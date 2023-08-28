@@ -5,22 +5,38 @@ import { ReactComponent as SearchIconSvg } from "@/asset/magnifying-glass.svg";
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
   border-radius: 0.5rem;
   background-color: #fff;
   padding: 2rem;
-  height: 52.5rem;
 `;
 
 export const OptionBar = styled.div`
   display: flex;
+
+  @media only screen and (min-width: 481px) {
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+`;
+
+export const SearchBar = styled.div`
+  display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 0.5rem;
-  height: 3rem;
   border-radius: 2rem;
   border: 2px solid #e9e9ee;
-  width: 100%;
+  height: 3rem;
+
+  @media only screen and (min-width: 481px) {
+    flex: 1;
+  }
 `;
 
 export const SearchButton = styled(SearchIconSvg)`
@@ -40,6 +56,102 @@ export const SearchInput = styled.input`
   margin-right: 1.4rem;
   border: 0;
   outline: none;
+`;
+
+export const SelectBox = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const SelectButton = styled.button`
+  & {
+    display: inline-flex;
+    padding: 0.4rem 0.8rem 0.4rem 0.4rem;
+    align-items: center;
+    border: 0;
+    border-radius: 3rem;
+    height: 3rem;
+    background-color: #e9e9ee;
+    color: #151515;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1rem;
+
+    @media only screen and (min-width: 481px) {
+      width: 8rem;
+    }
+  }
+  & svg {
+    height: 1.5rem;
+    transition: 0.3s;
+    margin-left: 0.4rem;
+  }
+  & span {
+    flex: 1;
+    text-align: center;
+  }
+  &.open svg {
+    transform: rotate(180deg);
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #e0dfe6;
+  }
+  &:active {
+    background-color: #cbcbd6;
+  }
+`;
+
+export const SelectList = styled.ul`
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  top: 2rem;
+  list-style: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem;
+  background-color: #fff;
+  border: 1px solid #b7b5c4;
+
+  @media only screen and (min-width: 481px) {
+    right: 0;
+    width: 7rem;
+  }
+
+  @media only screen and (max-width: 480px) {
+    left: 0;
+    width: calc(100% - 1rem);
+  }
+`;
+
+export const SelectItem = styled.li`
+  width: 100%;
+`;
+
+export const SelectItemButton = styled.button`
+  & {
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    border-radius: 0.5rem;
+    color: #151515;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1rem;
+    padding: 1rem;
+  }
+  &:hover {
+    cursor: pointer;
+    background-color: #e0dfe6;
+  }
+  &:active {
+    background-color: #cbcbd6;
+  }
 `;
 
 export const List = styled.div`
@@ -86,69 +198,15 @@ export const TestProgress = styled.span`
   width: 5rem;
 `;
 
-export const Risk = styled.span`
+export const DateBox = styled.span`
   line-height: 1rem;
   text-align: center;
-  width: 16rem;
-`;
 
-export const Birthday = styled.span`
-  text-align: right;
-  line-height: 1rem;
-  text-align: center;
-  width: 12em;
-`;
+  @media only screen and (min-width: 481px) {
+    width: 12rem;
+  }
 
-export const ListFooter = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-family: Pretendard;
-  }
-  & .pagination {
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-    margin: 0;
-  }
-  & ul {
-    list-style: none;
-    padding: 0;
-  }
-  & ul.pagination li {
-    display: inline-block;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 1.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #b7b5c4;
-  }
-  & ul.pagination li:hover {
-    background-color: #e9e9ee;
-    cursor: pointer;
-  }
-  & ul.pagination li:active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li.active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li a {
-    text-decoration: none;
-    color: #151515;
-  }
-  & ul.pagination li:hover a {
-    color: #151515;
-  }
-  & ul.pagination li:active a {
-    color: white;
-  }
-  & ul.pagination li.active a {
-    color: white;
+  @media only screen and (max-width: 480px) {
+    width: 7rem;
   }
 `;
