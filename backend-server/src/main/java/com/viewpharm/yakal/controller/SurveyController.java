@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/survey")
-@Tag(name = "Suervey", description = "설문조사")
+@Tag(name = "Survey", description = "설문조사")
 public class SurveyController {
     private final SurbeyService surbeyService;
 
@@ -49,6 +49,8 @@ public class SurveyController {
     public ResponseDto<List<AnswerListDto>> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
         return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
     }
+
+
 
 
 }

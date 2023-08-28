@@ -1,14 +1,18 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Answer;
+import com.viewpharm.yakal.domain.Diagnosis;
 import com.viewpharm.yakal.domain.Surbey;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.AnswerRequestDto;
+import com.viewpharm.yakal.dto.request.DiagnosisRequestDto;
 import com.viewpharm.yakal.dto.response.AnswerDetailDto;
 import com.viewpharm.yakal.dto.response.AnswerListDto;
+import com.viewpharm.yakal.dto.response.DiagnosisListDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.AnswerRepository;
+import com.viewpharm.yakal.repository.DiagnosisRepository;
 import com.viewpharm.yakal.repository.SurbeyRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EJob;
@@ -28,6 +32,7 @@ public class SurbeyService {
     private final UserRepository userRepository;
     private final SurbeyRepository surbeyRepository;
     private final AnswerRepository answerRepository;
+
 
     public Boolean createAnswer(Long userId, Long surbeyId, AnswerRequestDto requestDto) {
         //유저 확인
@@ -53,7 +58,7 @@ public class SurbeyService {
                 .user(user)
                 .build());
 
-        return Boolean.FALSE;
+        return Boolean.TRUE;
     }
 
     public AnswerDetailDto readAnswer(Long userId, Long answerId) {
@@ -123,5 +128,8 @@ public class SurbeyService {
 
         return listDtos;
     }
+
+
+
 
 }

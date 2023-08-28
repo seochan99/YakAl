@@ -111,7 +111,7 @@ public class BoardService {
         }
 
         //게시글 작성 유저와 요청 유저 비교
-        if (board.getUser().getId() != user.getId())
+        if (board.getUser().getId() != userId)
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
         //입력 유효한지 확인
@@ -145,7 +145,7 @@ public class BoardService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
 
         //게시글 작성 유저와 요청 유저 비교
-        if (board.getUser().getId() != user.getId())
+        if (board.getUser().getId() != userId)
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
         board.deleteBoard();
