@@ -35,7 +35,7 @@ export const Item = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 0;
+  padding: 0.5rem;
   border-radius: 0.25rem;
 `;
 

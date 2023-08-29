@@ -4,7 +4,10 @@ import styled from "styled-components";
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+
+  @media only screen and (max-width: 768px) {
+    margin: 2rem;
+  }
 `;
 
 export const EnrollBox = styled.div`
@@ -25,20 +28,8 @@ export const EnrollBox = styled.div`
   @media only screen and (max-width: 768px) {
     justify-content: center;
     flex-direction: column;
-    padding: 1rem 0;
+    padding: 2rem;
     gap: 1rem;
-  }
-
-  @media only screen and (max-width: 768px) and (min-width: 481px) {
-    height: 10rem;
-  }
-
-  @media only screen and (max-width: 480px) and (min-width: 381px) {
-    height: 15rem;
-  }
-
-  @media only screen and (max-width: 380px) {
-    height: 18rem;
   }
 `;
 
@@ -46,11 +37,11 @@ export const IconText = styled.div`
   display: flex;
   align-items: center;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 769px) {
     flex-direction: row;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     flex-direction: column;
     gap: 1rem;
   }
@@ -68,7 +59,7 @@ export const EnrollText = styled.span`
   line-height: 2.25rem;
   text-align: center;
 
-  @media only screen and (min-width: 480px) {
+  @media only screen and (min-width: 769px) {
     margin-left: 2rem;
   }
 `;
@@ -120,11 +111,11 @@ export const CertTextBox = styled.div`
   display: flex;
   flex-direction: column;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 769px) {
     align-items: start;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 768px) {
     align-items: center;
   }
 `;
@@ -136,7 +127,7 @@ export const SubEnrollText = styled.span`
   line-height: 1.5rem;
   text-align: center;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 769px) {
     margin-left: 2rem;
   }
 `;
@@ -156,11 +147,11 @@ export const Menu = styled.div`
     grid-template-columns: repeat(3, 1fr);
   }
 
-  @media only screen and (max-width: 768px) and (min-width: 381px) {
+  @media only screen and (max-width: 768px) and (min-width: 541px) {
     grid-template-columns: repeat(2, 1fr);
   }
 
-  @media only screen and (max-width: 380px) {
+  @media only screen and (max-width: 540px) {
     grid-template-columns: repeat(1, 1fr);
   }
 `;

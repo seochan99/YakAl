@@ -27,7 +27,7 @@ export type TMenuInfo = {
 function Dashboard() {
   const { data } = useGetUserQuery(null);
 
-  const isNarrowMobile = useMediaQuery({ query: "(max-width: 380px)" });
+  const isNarrowMobile = useMediaQuery({ query: "(max-width: 480px)" });
 
   const menuInfos: TMenuInfo[] = [
     {

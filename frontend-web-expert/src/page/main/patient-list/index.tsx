@@ -34,8 +34,7 @@ function PatientList() {
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
 
-  const isMiddleMobile = useMediaQuery({ query: "(max-width: 592px)" });
-  const isNarrowMobile = useMediaQuery({ query: "(max-width: 380px)" });
+  const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
   const selectListRef = useRef<HTMLUListElement>(null);
 
@@ -106,7 +105,7 @@ function PatientList() {
             {!isMiddleMobile && `(만 나이)`}
           </DateBox>
           {!isMiddleMobile && <TestProgress>{`설문 완료율`}</TestProgress>}
-          {!isNarrowMobile && <DateBox>{`최근 설문 제출일`}</DateBox>}
+          <DateBox>{`최근 설문 제출일`}</DateBox>
         </TableHeader>
         {userList.slice(10 * (page - 1), 10 * page).map((user) => {
           return <PatientItem key={user.id} userInfo={user} />;

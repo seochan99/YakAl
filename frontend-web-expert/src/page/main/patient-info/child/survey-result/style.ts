@@ -2,16 +2,17 @@ import styled from "styled-components";
 
 import { ReactComponent as LinkIconSvg } from "@/asset/back-icon.svg";
 
+export const Header = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const Title = styled.span`
-  & {
-    color: #151515;
-    font-size: 1.25rem;
-    font-weight: 700;
-    line-height: 1.25rem;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
+  color: #151515;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25rem;
 `;
 
 export const LinkButton = styled.button`
@@ -32,9 +33,9 @@ export const LinkButton = styled.button`
 
 export const Progress = styled.span`
   color: #151515;
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 500;
-  line-height: 1.25rem;
+  line-height: 1.2rem;
   flex: 1;
   text-align: right;
 

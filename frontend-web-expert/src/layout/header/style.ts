@@ -29,22 +29,22 @@ export const Icon = styled.img`
 
 export const LogoText = styled.div`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 1rem;
+  align-items: start;
+  flex-direction: column;
+  gap: 0.4rem;
 `;
 
 export const Title = styled.span`
   text-align: center;
-  font-size: 2rem;
   font-weight: 700;
-  line-height: 2rem;
   color: #2666f6;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
 `;
 
 export const Description = styled.span`
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1rem;
   color: #90909f;
 `;

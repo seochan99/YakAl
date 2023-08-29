@@ -7,7 +7,22 @@ export const Outer = styled.div`
   flex-direction: column;
   border-radius: 0.5rem;
   background-color: #fff;
-  padding: 2rem;
+
+  @media only screen and (min-width: 541px) {
+    padding: 2rem;
+  }
+
+  @media only screen and (max-width: 540px) {
+    padding: 1.5rem;
+  }
+
+  @media only screen and (min-width: 381px) {
+    border-radius: 0.5rem;
+  }
+
+  @media only screen and (max-width: 380px) {
+    border-radius: 0;
+  }
 `;
 
 export const OptionBar = styled.div`
@@ -202,11 +217,11 @@ export const DateBox = styled.span`
   line-height: 1rem;
   text-align: center;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 541px) {
     width: 12rem;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 540px) {
     width: 7rem;
   }
 `;

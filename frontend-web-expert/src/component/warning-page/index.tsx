@@ -7,7 +7,7 @@ type TWarningPageProps = {
   icon: string;
   title: string;
   subtitle?: string;
-  description?: string;
+  description?: ReactNode;
 };
 
 function WarningPage({ children, icon, title, subtitle, description }: TWarningPageProps) {

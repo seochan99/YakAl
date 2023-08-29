@@ -68,11 +68,11 @@ export const DateBox = styled.span`
   line-height: 1rem;
   text-align: center;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 541px) {
     width: 12rem;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 540px) {
     width: 7rem;
   }
 `;

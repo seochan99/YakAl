@@ -90,7 +90,7 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
   };
 
   const handleLogoutClick = async () => {
-    trigger(null);
+    // trigger(null);
   };
 
   useEffect(() => {
@@ -183,7 +183,7 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
           </AlertBox>
           <Bar />
           <DrawerFooter>
-            <LogoutButton>로그아웃</LogoutButton>
+            <LogoutButton onClick={handleLogoutClick}>로그아웃</LogoutButton>
           </DrawerFooter>
         </DetailProfile>
       </SwipeableDrawer>

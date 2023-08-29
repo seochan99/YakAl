@@ -17,8 +17,7 @@ function PatientItem({ userInfo }: PatientItemProps) {
 
   const [dateDiff, setDateDiff] = useState<number>(-1);
 
-  const isMiddleMobile = useMediaQuery({ query: "(max-width: 592px)" });
-  const isNarrowMobile = useMediaQuery({ query: "(max-width: 380px)" });
+  const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
   useEffect(() => {
     setDateDiff(Math.floor((Date.now() - submitDate.getTime()) / (1000 * 60 * 60 * 24)));
@@ -43,23 +42,21 @@ function PatientItem({ userInfo }: PatientItemProps) {
         {!isMiddleMobile && ` (${getAge(birthday)}세)`}
       </DateBox>
       {!isMiddleMobile && <TestProgress>{`${testProgress}%`}</TestProgress>}
-      {!isNarrowMobile && (
-        <DateBox>
-          {`${submitDate.getFullYear()}.
+      <DateBox>
+        {`${submitDate.getFullYear()}.
           ${
             submitDate.getMonth() + 1 < 10
               ? "0".concat((submitDate.getMonth() + 1).toString())
               : submitDate.getMonth() + 1
           }.
           ${submitDate.getDate()}.`}
-          {!isMiddleMobile &&
-            (dateDiff > 365
-              ? ` (${Math.floor(dateDiff / 365)}년 전)`
-              : dateDiff > 30
-              ? ` (${Math.floor(dateDiff / 30)}개월 전)`
-              : ` (${dateDiff}일 전)`)}
-        </DateBox>
-      )}
+        {!isMiddleMobile &&
+          (dateDiff > 365
+            ? ` (${Math.floor(dateDiff / 365)}년 전)`
+            : dateDiff > 30
+            ? ` (${Math.floor(dateDiff / 30)}개월 전)`
+            : ` (${dateDiff}일 전)`)}
+      </DateBox>
     </Outer>
   );
 }

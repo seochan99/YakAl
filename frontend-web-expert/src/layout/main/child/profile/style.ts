@@ -8,7 +8,7 @@ export const Outer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media only screen and (min-width: 488px) {
+  @media only screen and (min-width: 769px) {
     width: 20rem;
   }
 `;

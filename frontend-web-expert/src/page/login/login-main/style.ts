@@ -8,6 +8,7 @@ import { ReactComponent as LogoShadeSvg } from "@/asset/logo-shade.svg";
 
 export const InnerCenter = styled.div`
   display: flex;
+  justify-content: center;
 
   @media only screen and (min-width: 769px) {
     flex-direction: row;
@@ -24,6 +25,9 @@ export const InnerCenter = styled.div`
 export const LogoSection = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 
   @media only screen and (min-width: 481px) {
     width: 27rem;
@@ -31,8 +35,8 @@ export const LogoSection = styled.div`
 `;
 
 export const TitleBox = styled.div`
-  margin-top: 3.2rem;
   text-align: center;
+  align-items: center;
 `;
 
 export const Title = styled.span`
@@ -40,16 +44,14 @@ export const Title = styled.span`
   font-size: 2.5rem;
   font-weight: 700;
   color: #2666f6;
-  margin-top: 0.2rem;
   line-height: 4rem;
 `;
 
 export const Subtitle = styled.span`
   font-size: 2rem;
-  font-weight: 700;
+  font-weight: 600;
   color: #90909f;
   margin-left: 1rem;
-  margin-top: 0.2rem;
   line-height: 3.2rem;
 `;
 
@@ -57,37 +59,36 @@ export const Description = styled.span`
   color: #90909f;
   font-size: 1.5rem;
   font-weight: 500;
-  line-height: 2.4rem;
-  margin-top: 0.75em;
   text-align: center;
+  margin-bottom: 2rem;
 `;
 
 export const BigLogo = styled.img`
   content: url("/src/asset/yakal-logo.png");
-  width: 16rem;
-  margin: 3rem auto;
+  width: 60%;
   z-index: 1;
 `;
 
 export const LogoShade = styled(LogoShadeSvg)`
-  margin: -5.75rem auto;
   width: 100%;
+  margin-top: -6rem;
   fill: radial-gradient(50% 50% at 50% 50%, #8ca9d4 0%, rgba(246, 246, 246, 0) 100%);
 `;
 
 export const LoginSection = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   border-radius: 1rem;
   background-color: white;
 
-  @media only screen and (min-width: 481px) {
+  @media only screen and (min-width: 541px) {
     width: 22rem;
-    padding: 5rem;
+    padding: 3rem 2rem;
     gap: 2.5rem;
   }
 
-  @media only screen and (max-width: 480px) {
+  @media only screen and (max-width: 540px) {
     margin: 0 2rem 4rem;
     padding: 1.5rem;
     gap: 1rem;
@@ -104,19 +105,24 @@ export const LoginTitle = styled.span`
   text-align: center;
   font-size: 1.6rem;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.5;
 `;
 
 export const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: ${theme.colors.white};
+  background-color: #fff;
   border: 0;
 `;
 
 // Button Style
 const Button = styled.button`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
   padding: 0.5rem;
   margin: 0.75rem;
   border-radius: 0.25rem;
@@ -127,14 +133,12 @@ const ButtonSymbol = css`
   display: inline-block;
   height: 1.125rem;
   vertical-align: -0.25rem;
-  margin: 0 0.4rem 0 3rem;
 `;
 
 const ButtonText = styled.span`
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   vertical-align: -0.1rem;
-  margin: 0 3rem 0 0.4rem;
 `;
 
 export const KakaoButton = styled(Button)`

@@ -22,14 +22,15 @@ export const Detail = styled.div`
   & {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
 
     @media only screen and (min-width: 769px) {
       width: 54rem;
+      padding: 2rem;
     }
 
     @media only screen and (max-width: 768px) {
       width: 100%;
+      padding: 0;
     }
   }
   &.loading {
