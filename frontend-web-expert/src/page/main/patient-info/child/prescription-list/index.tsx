@@ -1,6 +1,7 @@
 import Pagination from "react-js-pagination";
-import { Header, Title, Bar, Item, ItemTitle, List, ListFooter } from "./style";
+import { Header, Title, Bar, Item, ItemTitle, List } from "./style";
 import { useState } from "react";
+import { ListFooter } from "@/style/global-style";
 
 function PrescriptionList() {
   const [page, setPage] = useState<number>(1);

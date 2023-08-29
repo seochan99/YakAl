@@ -2,17 +2,15 @@ import Pagination from "react-js-pagination";
 import {
   Bar,
   Header,
-  CommonItem,
+  ItemDate,
   ItemTitle,
   List,
-  ListFooter,
-  ListRow,
+  ListHeader,
   PeriodSelectBox,
   PeriodSelectButton,
   RiskHeader,
   Title,
   TitleHeader,
-  CommonBox,
   DateHeader,
   PeriodList,
   PeriodItem,
@@ -20,13 +18,14 @@ import {
   GreenIcon,
   YellowIcon,
   RedIcon,
-  IconBox,
-  TotalCount,
+  Item,
+  ItemIcon,
 } from "./style";
 import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { EPeriod } from "@/type/period";
+import { ListFooter } from "@/style/global-style";
 
 type TDoseListProps = {
   patientId: number;
@@ -98,16 +97,6 @@ function DoseList({ patientId }: TDoseListProps) {
     <>
       <Header>
         <Title>복약 목록</Title>
-        <IconBox>
-          <GreenIcon />
-          <TotalCount>{`${
-            doseList.filter((dose) => dose.polypharmacyRisk === 0 || dose.polypharmacyRisk === 1).length
-          }개`}</TotalCount>
-          <YellowIcon />
-          <TotalCount>{`${doseList.filter((dose) => dose.polypharmacyRisk === 2).length}개`}</TotalCount>
-          <RedIcon />
-          <TotalCount>{`${doseList.filter((dose) => dose.polypharmacyRisk === 3).length}개`}</TotalCount>
-        </IconBox>
         <PeriodSelectBox data-role="selectbox">
           <PeriodSelectButton className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
             <ArrowDropDownIcon />
@@ -131,29 +120,25 @@ function DoseList({ patientId }: TDoseListProps) {
       </Header>
       <Bar />
       <List>
-        <ListRow>
+        <ListHeader>
           <TitleHeader>약품명</TitleHeader>
-          <CommonBox>
-            <RiskHeader>위험도</RiskHeader>
-            <DateHeader>처방일</DateHeader>
-          </CommonBox>
-        </ListRow>
+          <RiskHeader>위험도</RiskHeader>
+          <DateHeader>처방일</DateHeader>
+        </ListHeader>
         {doseList.slice(5 * (page - 1), 5 * page).map((dose) => (
-          <ListRow key={dose.name.concat("_" + dose.prescribed_at.toDateString())}>
+          <Item key={dose.name.concat("_" + dose.prescribed_at.toDateString())}>
             <ItemTitle>{dose.name.length > 9 ? dose.name.substring(0, 8).concat("...") : dose.name}</ItemTitle>
-            <CommonBox>
-              <CommonItem>{getRiskIcon(dose.polypharmacyRisk)}</CommonItem>
-              <CommonItem>
-                {`${dose.prescribed_at.getFullYear()}.
+            <ItemIcon>{getRiskIcon(dose.polypharmacyRisk)}</ItemIcon>
+            <ItemDate>
+              {`${dose.prescribed_at.getFullYear()}.
                 ${
                   dose.prescribed_at.getMonth() + 1 < 10
                     ? "0".concat((dose.prescribed_at.getMonth() + 1).toString())
                     : dose.prescribed_at.getMonth() + 1
                 }.
                 ${dose.prescribed_at.getDate()}.`}
-              </CommonItem>
-            </CommonBox>
-          </ListRow>
+            </ItemDate>
+          </Item>
         ))}
       </List>
       <ListFooter>

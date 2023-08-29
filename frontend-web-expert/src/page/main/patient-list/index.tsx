@@ -4,43 +4,108 @@ import {
   List,
   SearchButton,
   SearchInput,
-  OptionBar,
-  Birthday,
-  Risk,
+  SearchBar,
+  DateBox,
   Name,
   Sex,
   TableHeader,
   TestProgress,
-  ListFooter,
+  SelectBox,
+  SelectItem,
+  SelectItemButton,
+  SelectList,
+  SelectButton,
+  OptionBar,
 } from "./style";
 import { useLoaderData } from "react-router-dom";
 import { TPatientLoaderReturn } from "./loader";
 import Pagination from "react-js-pagination";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import { EPatientFilter } from "@/type/patient-filter";
+import { ListFooter } from "@/style/global-style";
+import { useMediaQuery } from "react-responsive";
 
 function PatientList() {
   const { userList } = useLoaderData() as TPatientLoaderReturn;
 
   const [page, setPage] = useState<number>(1);
+  const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
+  const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
+
+  const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
+
+  const selectListRef = useRef<HTMLUListElement>(null);
+
+  useEffect(() => {
+    const handleOutOfMenuClick = (e: MouseEvent) => {
+      if (selectListRef.current) {
+        if (!(e.target instanceof Node) || !selectListRef.current.contains(e.target)) {
+          if (filterOptionIsOpen) {
+            setTimeout(() => setFilterOptionIsOpen(false), 20);
+          }
+        }
+      }
+    };
+
+    document.addEventListener("mouseup", handleOutOfMenuClick);
+
+    return () => {
+      document.removeEventListener("mouseup", handleOutOfMenuClick);
+    };
+  }, [filterOptionIsOpen]);
+
+  const handleSelect = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    setSelected(e.currentTarget.value);
+    setFilterOptionIsOpen(false);
+  };
 
   const handlePageChange = (page: number) => {
     setPage(page);
-    console.log(page);
   };
 
   return (
     <Outer>
       <OptionBar>
-        <SearchButton />
-        <SearchInput type="text" placeholder="환자 검색" />
+        <SearchBar>
+          <SearchButton />
+          <SearchInput type="text" placeholder="환자 이름으로 검색" />
+        </SearchBar>
+        <SelectBox data-role="selectbox">
+          <SelectButton
+            className={filterOptionIsOpen ? "open" : ""}
+            onClick={() => setFilterOptionIsOpen(!filterOptionIsOpen)}
+          >
+            <ArrowDropDownIcon />
+            <span>{selected ? selected : "필터"}</span>
+          </SelectButton>
+          {filterOptionIsOpen && (
+            <SelectList ref={selectListRef}>
+              {Object.keys(EPatientFilter).map((patientFilter) => {
+                const value = EPatientFilter[patientFilter as keyof typeof EPatientFilter];
+                return (
+                  <SelectItem key={patientFilter}>
+                    <SelectItemButton value={value} onClick={handleSelect}>
+                      {value}
+                    </SelectItemButton>
+                  </SelectItem>
+                );
+              })}
+            </SelectList>
+          )}
+        </SelectBox>
       </OptionBar>
       <List>
         <TableHeader>
           <Name>{`이름`}</Name>
-          <Sex>{`성별`}</Sex>
-          <TestProgress>{`설문 완료율`}</TestProgress>
-          <Risk>{`위험군 약 개수`}</Risk>
-          <Birthday>{`생년월일(만 나이)`}</Birthday>
+          {!isMiddleMobile && <Sex>{`성별`}</Sex>}
+          <DateBox>
+            {`생년월일`}
+            {!isMiddleMobile && `(만 나이)`}
+          </DateBox>
+          {!isMiddleMobile && <TestProgress>{`설문 완료율`}</TestProgress>}
+          <DateBox>{`최근 설문 제출일`}</DateBox>
         </TableHeader>
         {userList.slice(10 * (page - 1), 10 * page).map((user) => {
           return <PatientItem key={user.id} userInfo={user} />;

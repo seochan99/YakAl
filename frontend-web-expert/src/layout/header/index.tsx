@@ -1,4 +1,4 @@
-import { Description, HeaderOuter, Icon, LogoOuter, Title } from "./style";
+import { Description, HeaderOuter, Icon, LogoOuter, LogoText, Title } from "./style";
 
 type THeaderProps = {
   children?: React.ReactNode;
@@ -10,8 +10,10 @@ function Header({ children, to }: THeaderProps) {
     <HeaderOuter>
       <LogoOuter to={to}>
         <Icon />
-        <Title>약 알</Title>
-        <Description>전문가 WEB</Description>
+        <LogoText>
+          <Title>약 알</Title>
+          <Description>전문가 WEB</Description>
+        </LogoText>
       </LogoOuter>
       {children}
     </HeaderOuter>
