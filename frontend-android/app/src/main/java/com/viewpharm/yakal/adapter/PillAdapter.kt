@@ -1,13 +1,12 @@
 package com.viewpharm.yakal.adapter
 
 import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.viewpharm.yakal.model.Pill
 import com.viewpharm.yakal.databinding.ItemHomePillSubBinding
-import com.viewpharm.yakal.ui.OverlapBottomDialog
+import com.viewpharm.yakal.dialog.OverlapBottomDialog
 import com.viewpharm.yakal.view.PillDetailActivity
 import timber.log.Timber
 

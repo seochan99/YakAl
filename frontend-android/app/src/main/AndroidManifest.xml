@@ -30,7 +30,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.SignInActivity"
+            android:name=".signin.SignInActivity"
             android:exported="true" >
         </activity>
         <activity
@@ -47,7 +47,7 @@
             android:name=".view.CalenderActivity"
             android:exported="false" />
         <activity
-            android:name=".view.MainActivity"
+            android:name=".main.activity.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:exported="false" />
         <activity

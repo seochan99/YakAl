@@ -1,8 +1,7 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.dialog
 
 import android.app.Dialog
 import android.os.Bundle
-import android.text.style.TtsSpan.TimeBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,6 @@ import com.viewpharm.yakal.adapter.PillAdapter
 import com.viewpharm.yakal.databinding.FragmentOverlapBottomSheetBinding
 import com.viewpharm.yakal.model.Pill
 import timber.log.Timber
-import java.sql.Time
 
 class OverlapBottomDialog(
     private val overlapPills : List<Pill>?) : BottomSheetDialogFragment() {

@@ -2,23 +2,23 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_nav_graph"
-    app:startDestination="@id/homeMainFragment">
+    app:startDestination="@id/communityMainFragment">
 
     <fragment
         android:id="@+id/profileMainFragment"
-        android:name="com.viewpharm.yakal.ui.ProfileMainFragment"
+        android:name="com.viewpharm.yakal.main.fragment.MainProfileFragment"
         android:label="ProfileMainFragment" />
     <fragment
         android:id="@+id/communityMainFragment"
-        android:name="com.viewpharm.yakal.ui.CommunityMainFragment"
+        android:name="com.viewpharm.yakal.main.fragment.MainCommunityFragment"
         android:label="CommunityMainFragment" />
     <fragment
         android:id="@+id/homeMainFragment"
-        android:name="com.viewpharm.yakal.ui.HomeMainFragment"
+        android:name="com.viewpharm.yakal.main.fragment.MainHomeFragment"
         android:label="HomeMainFragment" >
     </fragment>
     <fragment
         android:id="@+id/locationMainFragment"
-        android:name="com.viewpharm.yakal.ui.LocationMainFragment"
+        android:name="com.viewpharm.yakal.main.fragment.MainLocationFragment"
         android:label="LocationMainFragment" />
 </navigation>

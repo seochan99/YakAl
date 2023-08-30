@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog

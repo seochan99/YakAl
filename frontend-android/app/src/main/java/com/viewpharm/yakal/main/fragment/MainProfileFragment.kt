@@ -1,17 +1,17 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.main.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.viewpharm.yakal.databinding.FragmentHomeBinding
-import com.viewpharm.yakal.databinding.FragmentProfileBinding
-import com.viewpharm.yakal.view.MainActivity
+import com.viewpharm.yakal.databinding.FragmentMainProfileBinding
+import com.viewpharm.yakal.dialog.NicknameEditBottomDialog
+import com.viewpharm.yakal.main.activity.MainActivity
 import timber.log.Timber
 
-class ProfileMainFragment : Fragment() {
-    private lateinit var binding: FragmentProfileBinding
+class MainProfileFragment : Fragment() {
+    private lateinit var binding: FragmentMainProfileBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,15 +22,15 @@ class ProfileMainFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentProfileBinding.inflate(inflater)
+        binding = FragmentMainProfileBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.editNickNameButton.setOnClickListener {
-            NicknameEditDialog().also {
-                it.show((activity as MainActivity).supportFragmentManager, NicknameEditDialog.TAG)
+            NicknameEditBottomDialog().also {
+                it.show((activity as MainActivity).supportFragmentManager, NicknameEditBottomDialog.TAG)
             }
         }
 
@@ -65,5 +65,7 @@ class ProfileMainFragment : Fragment() {
         binding.expertLayout.setOnClickListener {
             Timber.d("expertLayout")
         }
+
+        (activity as MainActivity).onLogBackStack()
     }
 }

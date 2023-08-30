@@ -1,29 +1,21 @@
-package com.viewpharm.yakal.ui
+package com.viewpharm.yakal.dialog
 
 import android.app.Dialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.text.style.TtsSpan.TimeBuilder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.viewpharm.yakal.adapter.PillAdapter
 import com.viewpharm.yakal.databinding.FragmentNicknameEditBottomSheetBinding
-import com.viewpharm.yakal.databinding.FragmentOverlapBottomSheetBinding
-import com.viewpharm.yakal.model.Pill
-import com.viewpharm.yakal.view.MainActivity
+import com.viewpharm.yakal.main.activity.MainActivity
 import timber.log.Timber
-import java.sql.Time
 import java.util.regex.Pattern
 
-class NicknameEditDialog() : BottomSheetDialogFragment() {
+class NicknameEditBottomDialog() : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "NicknameEditDialog"
     }

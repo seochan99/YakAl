@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.view
+package com.viewpharm.yakal.signin
 
 import android.content.Intent
 import android.os.Bundle
@@ -37,9 +37,10 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
             val authCode = GoogleSignIn.getSignedInAccountFromIntent(result.data).getResult(ApiException::class.java).serverAuthCode!!
             googleAuthRepository.getOauth2Token(authCode, this@SignInActivity)
         } catch (e: ApiException) {
+            Timber.e("로그인 실패 ${e.message}")
+            e.printStackTrace()
             Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
         }
-
     }
 
     private val googleAuthRepository: OAuth2Repository = GoogleAuthRepository()

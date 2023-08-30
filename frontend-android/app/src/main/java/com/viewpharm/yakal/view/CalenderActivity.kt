@@ -13,7 +13,7 @@ import com.viewpharm.yakal.databinding.ActivityCalenderBinding
 import com.viewpharm.yakal.model.Pill
 import com.viewpharm.yakal.model.PillTodo
 import com.viewpharm.yakal.type.ETakingTime
-import com.viewpharm.yakal.ui.CalendarBottomDialog
+import com.viewpharm.yakal.dialog.CalendarBottomDialog
 import com.viewpharm.yakal.util.CalendarUtil
 import timber.log.Timber
 import java.time.LocalDate
