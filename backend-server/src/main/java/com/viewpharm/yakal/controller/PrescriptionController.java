@@ -17,15 +17,15 @@ public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;
 
-    @GetMapping("/{id}")
+    @GetMapping("")
     public ResponseDto<List<Prescription>> getPrescriptions(
-            @PathVariable @UserId Long id) {
+            @UserId Long id) {
         return ResponseDto.ok(prescriptionService.getPrescriptions(id));
     }
 
-    @PostMapping("/{id}")
+    @PostMapping("")
     public ResponseDto<Boolean> createPrescription(
-            @PathVariable @UserId Long id, @RequestBody CreatePrescriptionDto prescriptionDto){
+            @UserId Long id, @RequestBody CreatePrescriptionDto prescriptionDto){
 
         return ResponseDto.ok(prescriptionService.createPrescription(id,prescriptionDto));
     }
