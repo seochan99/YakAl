@@ -23,7 +23,7 @@ public class DiagnosisController {
 
     @PostMapping("")
     @Operation(summary = "과거 병명 작성", description = "과거 병명 작성")
-    public ResponseDto<Boolean> createBoard(@UserId Long id, @RequestBody DiagnosisRequestDto requestDto) {
+    public ResponseDto<Boolean> createDiagnosis(@UserId Long id, @RequestBody DiagnosisRequestDto requestDto) {
         return ResponseDto.ok(diagnosisService.createDiagnosis(id, requestDto));
     }
 
@@ -35,7 +35,7 @@ public class DiagnosisController {
 
     @DeleteMapping("/{diagnosisId}")
     @Operation(summary = "과거 병명 삭제", description = "특정 과거 병명 삭제")
-    public ResponseDto<Boolean> deleteBoard(@UserId Long id, @PathVariable Long diagnosisId) {
+    public ResponseDto<Boolean> deleteDiagnosis(@UserId Long id, @PathVariable Long diagnosisId) {
         return ResponseDto.ok(diagnosisService.deleteDiagnosis(id, diagnosisId));
     }
 

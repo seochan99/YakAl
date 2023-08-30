@@ -40,13 +40,13 @@ public class SurveyController {
 
     @GetMapping("/answer/my")
     @Operation(summary = "설문 리스트", description = "자신이 작성한 설문 리스트 들고오기")
-    public ResponseDto<List<AnswerListDto>> getAllAnswerList(@UserId Long id) {
+    public ResponseDto<AnswerAllDto> getAllAnswerList(@UserId Long id) {
         return ResponseDto.ok(surbeyService.getAllAnswerList(id));
     }
 
     @GetMapping("/expert/{patientId}")
     @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
-    public ResponseDto<List<AnswerListDto>> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
+    public ResponseDto<AnswerAllDto> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
         return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
     }
 

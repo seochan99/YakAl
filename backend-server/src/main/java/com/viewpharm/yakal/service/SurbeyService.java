@@ -6,6 +6,7 @@ import com.viewpharm.yakal.domain.Surbey;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.AnswerRequestDto;
 import com.viewpharm.yakal.dto.request.DiagnosisRequestDto;
+import com.viewpharm.yakal.dto.response.AnswerAllDto;
 import com.viewpharm.yakal.dto.response.AnswerDetailDto;
 import com.viewpharm.yakal.dto.response.AnswerListDto;
 import com.viewpharm.yakal.dto.response.DiagnosisListDto;
@@ -98,7 +99,7 @@ public class SurbeyService {
     }
 
     //자기 설문조사 리스트
-    public List<AnswerListDto> getAllAnswerList(Long userId) {
+    public AnswerAllDto getAllAnswerList(Long userId) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -108,11 +109,14 @@ public class SurbeyService {
                 .map(a -> new AnswerListDto(a.getSurbey().getTitle(), a.getScore()))
                 .collect(Collectors.toList());
 
-        return listDtos;
+        return AnswerAllDto.builder()
+                .data(listDtos)
+                .percent(listDtos.size()/14)
+                .build();
     }
 
     //전문가가 환자 설문조사 리스트
-    public List<AnswerListDto> getAllAnswerListForExpert(Long expertId, Long patientId) {
+    public AnswerAllDto getAllAnswerListForExpert(Long expertId, Long patientId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
@@ -126,7 +130,10 @@ public class SurbeyService {
                 .map(a -> new AnswerListDto(a.getSurbey().getTitle(), a.getScore()))
                 .collect(Collectors.toList());
 
-        return listDtos;
+        return AnswerAllDto.builder()
+                .data(listDtos)
+                .percent(listDtos.size()/14)
+                .build();
     }
 
 
