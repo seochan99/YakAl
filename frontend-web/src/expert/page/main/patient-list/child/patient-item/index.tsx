@@ -24,7 +24,7 @@ function PatientItem({ userInfo }: PatientItemProps) {
   }, [submitDate]);
 
   return (
-    <Outer to={`/patient/${id}`}>
+    <Outer to={`/expert/patient/${id}`}>
       <Name>
         {name.length > 4 ? name.substring(0, 4) + "..." : name}
         {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}

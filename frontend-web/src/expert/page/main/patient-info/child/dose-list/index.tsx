@@ -25,7 +25,7 @@ import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { EPeriod } from "@/expert/type/period.ts";
-import { ListFooter } from "@/expert/style/global-style.ts";
+import { ListFooter } from "@/expert/style.ts";
 
 // type TDoseListProps = {
 //   patientId: number;

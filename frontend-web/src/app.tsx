@@ -1,23 +1,19 @@
-import { ThemeProvider } from "styled-components";
-import { GlobalStyle } from "@/expert/style/global-style.js";
-import { theme } from "@/expert/style/theme.js";
 import { RouterProvider } from "react-router-dom";
-import { router } from "@/expert/router/router";
+import { router } from "@/global/router.tsx";
 import { Provider } from "react-redux";
 import { store } from "@/expert/store/store";
 import { CookiesProvider } from "react-cookie";
+import { GlobalStyle } from "@/global/style/style.ts";
 
 function App() {
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <CookiesProvider>
-          <Provider store={store}>
-            <RouterProvider router={router} />
-          </Provider>
-        </CookiesProvider>
-      </ThemeProvider>
+      <GlobalStyle />
+      <CookiesProvider>
+        <Provider store={store}>
+          <RouterProvider router={router} />
+        </Provider>
+      </CookiesProvider>
     </>
   );
 }

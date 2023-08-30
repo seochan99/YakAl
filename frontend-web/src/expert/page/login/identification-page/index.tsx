@@ -73,7 +73,7 @@ function IdentificationPage() {
     //     }
     //   });
 
-    navigate("/expert/dashboard");
+    navigate("/expert");
   }, [navigate]);
 
   return (

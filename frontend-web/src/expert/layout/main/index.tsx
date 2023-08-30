@@ -1,20 +1,20 @@
 import {
   Detail,
-  Outer,
+  DrawableList,
   MainSection,
-  NavOuter,
-  NavItem,
-  MobileNavOuter,
-  MobileNavTitle,
+  MobileCurrentNav,
   MobileNavItem,
   MobileNavList,
-  DrawableList,
-  MobileCurrentNav,
+  MobileNavOuter,
+  MobileNavTitle,
+  NavItem,
+  NavOuter,
+  Outer,
 } from "@/expert/layout/main/style.ts";
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
-import Footer from "@/expert/layout/footer";
+import Footer from "../footer";
 import Header from "../header";
 import Profile from "@/expert/layout/main/child/profile";
 // import { useGetUserQuery } from "@/api/user";
@@ -36,7 +36,7 @@ export default function Main() {
   const location = useLocation();
 
   const navRouter = [
-    { path: "/expert/dashboard", name: "대시보드", icon: DashboardOutlinedIcon },
+    { path: "/expert", name: "대시보드", icon: DashboardOutlinedIcon },
     { path: "/expert/patient", name: "환자 목록", icon: LocalHotelOutlinedIcon },
     { path: "/expert/info", name: "내 정보", icon: AssignmentIndOutlinedIcon },
   ];
@@ -59,13 +59,14 @@ export default function Main() {
 
   return (
     <Outer>
-      <Header to="/expert/dashboard">
+      <Header to="/expert">
         {!isWideMobile && (
           <NavOuter>
             {navRouter.map((itemRouter) => (
               <NavItem
                 key={itemRouter.path + "_" + itemRouter.name}
                 to={itemRouter.path}
+                end={itemRouter.path === "/expert"}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
                 {itemRouter.name}
@@ -82,12 +83,10 @@ export default function Main() {
       {isWideMobile && currentNavItem && (
         <MobileNavOuter>
           <MobileNavTitle onClick={() => setIsOpen(!isOpen)} className={isOpen ? "open" : ""}>
-            {currentNavItem ? (
-              <MobileCurrentNav>
-                <currentNavItem.icon />
-                {currentNavItem.name}
-              </MobileCurrentNav>
-            ) : null}
+            <MobileCurrentNav>
+              <currentNavItem.icon />
+              {currentNavItem.name}
+            </MobileCurrentNav>
             <KeyboardArrowDownIcon />
           </MobileNavTitle>
           <DrawableList className={isOpen ? "open" : ""}>

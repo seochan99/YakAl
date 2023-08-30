@@ -48,7 +48,7 @@ export const IconText = styled.div`
 `;
 
 export const YakAlIcon = styled.img`
-  content: url("/src/expert/asset/yakal-logo.png");
+  content: url("/src/global/asset/yakal-logo.png");
   width: 5rem;
 `;
 
@@ -93,10 +93,12 @@ export const EnrollButton = styled(Link)`
       line-height: 1.2rem;
     }
   }
+
   &:hover {
     cursor: pointer;
     background-color: #1348e2;
   }
+
   &:active {
     background-color: #163bb7;
   }

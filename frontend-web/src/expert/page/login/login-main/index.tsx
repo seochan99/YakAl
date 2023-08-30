@@ -18,11 +18,8 @@ import {
   Title,
   TitleBox,
 } from "./style.ts";
-import { useMediaQuery } from "react-responsive";
 
 function LoginMain() {
-  const isWideMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
   const handleKakaoLoginClick = async () => {
     try {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/auth/kakao`);

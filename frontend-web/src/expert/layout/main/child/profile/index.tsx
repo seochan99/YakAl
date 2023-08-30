@@ -1,8 +1,10 @@
 import { SwipeableDrawer } from "@mui/material";
 import {
-  AlertTitle,
   AlertBox,
+  AlertClearButton,
+  AlertDescription,
   AlertItem,
+  AlertTitle,
   Bar,
   DetailBelong,
   DetailJob,
@@ -12,9 +14,13 @@ import {
   DetailNamePrefix,
   DetailProfile,
   DetailProfileBox,
+  DrawerFooter,
   DrawerHeader,
+  DrawerProfileImg,
   DrawerTitle,
+  DrawerTitleText,
   Job,
+  LogoutButton,
   Name,
   NameBox,
   NamePostfix,
@@ -23,19 +29,13 @@ import {
   ProfileImg,
   ProfileText,
   SmallBadge,
-  AlertDescription,
-  DrawerFooter,
-  LogoutButton,
-  DrawerProfileImg,
-  AlertClearButton,
-  DrawerTitleText,
 } from "./style.ts";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLazyLogoutQuery } from "@/expert/api/auth.ts";
 import { useDispatch } from "react-redux";
 
-import { LOGIN_ROUTE } from "@/expert/router/router.tsx";
+import { EXPERT_LOGIN_ROUTE } from "@/global/router.tsx";
 
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
@@ -98,7 +98,7 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
 
     if (isSuccess && !isLoading) {
       dispatch(logout());
-      navigate(LOGIN_ROUTE);
+      navigate(EXPERT_LOGIN_ROUTE);
     }
   }, [currentResult, dispatch, navigate]);
 

@@ -1,17 +1,17 @@
 import { useLoaderData } from "react-router-dom";
 import {
-  NameSex,
-  Outer,
-  PatientSummary,
-  Sex,
-  InnerBox,
-  Name,
-  Birthday,
-  NoteAndDoseList,
-  Header,
   BackButton,
   BackIcon,
+  Birthday,
+  Header,
+  InnerBox,
+  Name,
+  NameSex,
+  NoteAndDoseList,
+  Outer,
+  PatientSummary,
   PrescriptionAndHealthFunctionalFood,
+  Sex,
 } from "./style.ts";
 import { TPatientInfoLoaderReturn } from "./loader.ts";
 import { ESex } from "@/expert/type/sex.ts";
@@ -41,7 +41,7 @@ function PatientInfo() {
   return (
     <Outer>
       <Header>
-        <BackButton to="/patient">
+        <BackButton to="/expert/patient">
           <BackIcon />
           환자 목록으로
         </BackButton>

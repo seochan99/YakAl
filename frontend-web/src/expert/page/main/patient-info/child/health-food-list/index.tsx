@@ -1,7 +1,7 @@
 import Pagination from "react-js-pagination";
 import { Header, Title, Bar, Item, ItemTitle, List } from "./style.ts";
 import { useState } from "react";
-import { ListFooter } from "@/expert/style/global-style.ts";
+import { ListFooter } from "@/expert/style.ts";
 
 function HealthFoodList() {
   const [page, setPage] = useState<number>(1);

@@ -24,7 +24,7 @@ import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { EPatientFilter } from "@/expert/type/patient-filter.ts";
-import { ListFooter } from "@/expert/style/global-style.ts";
+import { ListFooter } from "@/expert/style.ts";
 import { useMediaQuery } from "react-responsive";
 
 function PatientList() {

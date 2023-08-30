@@ -26,7 +26,7 @@ import {
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Pagination from "react-js-pagination";
 import { useState } from "react";
-import { ListFooter } from "@/expert/style/global-style.ts";
+import { ListFooter } from "@/expert/style.ts";
 import { Dialog, useMediaQuery, useTheme } from "@mui/material";
 
 type TSpecialNoteProps = {

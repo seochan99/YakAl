@@ -4,9 +4,8 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100vh;
-  height: -webkit-fill-available;
-  height: fill-available;
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
 `;
 
 export const Center = styled.main`

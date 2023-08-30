@@ -1,9 +1,7 @@
-import { theme } from "@/expert/style/theme.ts";
 import styled, { css } from "styled-components";
 
 import { ReactComponent as KakaoIconSvg } from "@/expert/asset/kakao-logo.svg";
 import { ReactComponent as GoogleIconSvg } from "@/expert/asset/google-logo.svg";
-import { ReactComponent as AppleIconSvg } from "@/expert/asset/apple-logo.svg";
 import { ReactComponent as LogoShadeSvg } from "@/expert/asset/logo-shade.svg";
 
 export const InnerCenter = styled.div`
@@ -64,7 +62,7 @@ export const Description = styled.span`
 `;
 
 export const BigLogo = styled.img`
-  content: url("/src/expert/asset/yakal-logo.png");
+  content: url(");
   width: 60%;
   z-index: 1;
 `;
@@ -96,7 +94,7 @@ export const LoginSection = styled.div`
 `;
 
 export const YakalSymbol = styled.img`
-  content: url("/src/expert/asset/yakal-logo.png");
+  content: url("/src/global/asset/yakal-logo.png");
   width: 16rem;
 `;
 
@@ -126,7 +124,6 @@ const Button = styled.button`
   padding: 0.5rem;
   margin: 0.75rem;
   border-radius: 0.25rem;
-  padding: 1rem;
 `;
 
 const ButtonSymbol = css`
@@ -143,14 +140,16 @@ const ButtonText = styled.span`
 
 export const KakaoButton = styled(Button)`
   & {
-    background-color: ${theme.colors.yellow[500]};
-    border: 0.5px solid ${theme.colors.yellow[600]};
+    background-color: #FEE500;
+    border: 0.5px solid #d1aa00;
   }
+
   &:hover {
-    background-color: ${theme.colors.yellow[400]};
+    background-color: #fff40d;
   }
+
   &:active {
-    background-color: ${theme.colors.yellow[300]};
+    background-color: #feff41;
   }
 `;
 
@@ -159,19 +158,21 @@ export const KakaoSymbol = styled(KakaoIconSvg)`
 `;
 
 export const KakaoText = styled(ButtonText)`
-  color: #000000 85%;
+  color: #151515;
 `;
 
 export const GoogleButton = styled(Button)`
   & {
-    background-color: ${theme.colors.white};
-    border: 0.5px solid ${theme.colors.gray[300]};
+    background-color: #fff;
+    border: 0.5px solid #bdbdbd;
   }
+
   &:hover {
-    background-color: ${theme.colors.gray[100]};
+    background-color: #efefef;
   }
+
   &:active {
-    background-color: ${theme.colors.gray[200]};
+    background-color: #dcdcdc;
   }
 `;
 
@@ -180,26 +181,5 @@ export const GoogleSymbol = styled(GoogleIconSvg)`
 `;
 
 export const GoogleText = styled(ButtonText)`
-  color: ${theme.colors.gray[900]};
-`;
-
-export const AppleButton = styled(Button)`
-  & {
-    background-color: ${theme.colors.black};
-    border: 0;
-  }
-  &:hover {
-    background-color: ${theme.colors.gray[900]};
-  }
-  &:active {
-    background-color: ${theme.colors.gray[800]};
-  }
-`;
-
-export const AppleSymbol = styled(AppleIconSvg)`
-  ${ButtonSymbol}
-`;
-
-export const AppleText = styled(ButtonText)`
-  color: ${theme.colors.white};
+  color: #151515;
 `;

@@ -1,16 +1,17 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const HeaderOuter = styled.header`
+export const Outer = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   height: 6.75rem;
   line-height: 6.75rem;
   box-sizing: border-box;
+  background-color: var(--color-surface-300);
 `;
 
-export const LogoOuter = styled(Link)`
+export const LinkLogo = styled(Link)`
   position: relative;
   display: flex;
   flex-direction: row;
@@ -22,7 +23,7 @@ export const LogoOuter = styled(Link)`
   text-decoration: none;
 `;
 
-export const Icon = styled.img`
+export const YakalIcon = styled.img`
   content: url("/src/global/asset/yakal-logo.png");
   width: 4.2rem;
 `;
@@ -37,14 +38,14 @@ export const LogoText = styled.div`
 export const Title = styled.span`
   text-align: center;
   font-weight: 700;
-  color: #2666f6;
+  color: #fff;
   font-size: 1.6rem;
   line-height: 1.6rem;
 `;
 
-export const Description = styled.span`
+export const Subtitle = styled.span`
   font-size: 1.1rem;
   font-weight: 600;
   line-height: 1.1rem;
-  color: #90909f;
+  color: var(--color-primary-500);
 `;
