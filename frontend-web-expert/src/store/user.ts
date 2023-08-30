@@ -6,11 +6,7 @@ export type TUser = {
   sex: ESex;
   birthday: Date;
   testProgress: number;
-  doseCount: {
-    red: number;
-    yellow: number;
-    green: number;
-  };
+  submitDate: Date;
 };
 
 export type TSpecialNote = {
@@ -27,11 +23,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-12-13"),
     testProgress: 30,
-    doseCount: {
-      red: 442,
-      yellow: 112,
-      green: 200,
-    },
+    submitDate: new Date("2023-07-13"),
   },
   {
     id: 2,
@@ -39,11 +31,7 @@ export const users: TUser[] = [
     sex: ESex.FEMALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2023-07-13"),
   },
   {
     id: 3,
@@ -51,11 +39,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2023-07-13"),
   },
   {
     id: 4,
@@ -64,11 +48,7 @@ export const users: TUser[] = [
 
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2023-03-13"),
   },
   {
     id: 5,
@@ -76,11 +56,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2023-01-13"),
   },
   {
     id: 6,
@@ -88,11 +64,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2021-12-13"),
   },
   {
     id: 7,
@@ -100,11 +72,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2000-12-13"),
   },
   {
     id: 8,
@@ -112,11 +80,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2000-12-13"),
   },
   {
     id: 9,
@@ -124,11 +88,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2000-12-13"),
   },
   {
     id: 10,
@@ -136,11 +96,7 @@ export const users: TUser[] = [
     sex: ESex.MALE,
     birthday: new Date("2000-02-13"),
     testProgress: 30,
-    doseCount: {
-      red: 4,
-      yellow: 1,
-      green: 2,
-    },
+    submitDate: new Date("2000-12-13"),
   },
   {
     id: 11,
@@ -148,10 +104,6 @@ export const users: TUser[] = [
     sex: ESex.FEMALE,
     birthday: new Date("1998-02-13"),
     testProgress: 82,
-    doseCount: {
-      red: 1,
-      yellow: 1,
-      green: 0,
-    },
+    submitDate: new Date("2000-12-13"),
   },
 ];

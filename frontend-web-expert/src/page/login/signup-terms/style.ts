@@ -3,15 +3,24 @@ import { styled } from "styled-components";
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
+
+  @media only screen and (max-width: 768px) {
+    flex: 1;
+    background-color: #fff;
+  }
 `;
 
 export const TermsBox = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
-  width: 48rem;
-  border-radius: 1rem;
   padding: 2rem;
+
+  @media only screen and (min-width: 769px) {
+    width: 48rem;
+    border-radius: 1rem;
+    margin-top: 2rem;
+  }
 `;
 
 export const TermsHeader = styled.h1`
@@ -59,7 +68,6 @@ export const Agreement = styled.input`
 
 export const NextButton = styled.button`
   & {
-    align-self: flex-end;
     border-radius: 0.5rem;
     border: 0;
     background-color: #e9e9ee;
@@ -67,8 +75,18 @@ export const NextButton = styled.button`
     font-family: Pretendard;
     font-size: 1.25rem;
     font-weight: 600;
-    padding: 1rem 2.5rem;
     margin: 1.5rem 0;
+
+    @media only screen and (min-width: 769px) {
+      align-self: flex-end;
+      padding: 1rem 2.5rem;
+      margin-bottom: 2rem;
+    }
+
+    @media only screen and (max-width: 768px) {
+      align-self: center;
+      padding: 1.5rem 4rem;
+    }
   }
   &.is-agreed {
     background-color: #2666f6;

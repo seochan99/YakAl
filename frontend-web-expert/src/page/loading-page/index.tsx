@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Icon, Text, Outer, Header, Description } from "./style";
 import useInterval from "@/util/use-interval";
+import WarningPage from "@/component/warning-page";
 
 function LoadingPage() {
   const [dotString, setDotString] = useState<string>(".");
@@ -10,13 +10,7 @@ function LoadingPage() {
   }, 1000);
 
   return (
-    <Outer>
-      <Icon>{":|"}</Icon>
-      <Text>
-        <Header>Loading{dotString}</Header>
-        <Description>페이지를 불러오는 중입니다. 잠시 기다려 주세요.</Description>
-      </Text>
-    </Outer>
+    <WarningPage icon=":|" title={`Loading${dotString}`} subtitle="페이지를 불러오는 중입니다. 잠시 기다려 주세요." />
   );
 }
 

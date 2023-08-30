@@ -38,6 +38,9 @@ public class Medical {
     @Enumerated(EnumType.STRING)
     private EMedical eMedical;
 
+    @Column
+    private boolean isRegister;
+
     // ----------------------------------------------------------
 
     @OneToOne(mappedBy = "medical",fetch = FetchType.LAZY)

@@ -11,20 +11,6 @@ export const Header = styled.div`
   align-items: center;
 `;
 
-export const IconBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 0.1rem;
-`;
-
-export const TotalCount = styled.span`
-  font-size: 0.9rem;
-  line-height: 0.9rem;
-  font-weight: 500;
-  margin-right: 0.4rem;
-`;
-
 export const PeriodSelectBox = styled.div`
   position: relative;
   display: flex;
@@ -79,7 +65,7 @@ export const PeriodList = styled.ul`
   list-style: none;
   border-radius: 0.25rem;
   padding: 0.4rem;
-  width: 6rem;
+  width: 4.6rem;
   background-color: #fff;
   border: 1px solid #b7b5c4;
 `;
@@ -113,7 +99,7 @@ export const PeriodItemButton = styled.button`
 export const Title = styled.span`
   color: #151515;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.25rem;
 `;
 
@@ -131,45 +117,47 @@ export const List = styled.div`
   gap: 0.5rem;
 `;
 
-export const ListRow = styled.div`
+export const ListHeader = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0.75rem 0;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+`;
+
+export const Item = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0.5rem;
   border-radius: 0.25rem;
 `;
 
 export const TitleHeader = styled.span`
   color: #151515;
-  font-size: 1rem;
-  font-weight: 700;
-  line-height: 1rem;
-`;
-
-export const CommonBox = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 50%;
-  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.1rem;
+  width: 8rem;
 `;
 
 export const RiskHeader = styled.span`
   color: #90909f;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 0.9rem;
-  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1rem;
+  text-align: center;
+  width: 2.7rem;
 `;
 
 export const DateHeader = styled.span`
   color: #90909f;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 0.9rem;
-  margin-right: 3rem;
-  text-align: left;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1rem;
+  width: 7rem;
 `;
 
 export const ItemTitle = styled.span`
@@ -177,18 +165,31 @@ export const ItemTitle = styled.span`
   font-size: 1rem;
   font-weight: 500;
   line-height: 1rem;
+  width: 8rem;
 `;
 
-export const CommonItem = styled.span`
+export const ItemIcon = styled.span`
+  & {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    align-items: center;
+    width: 2.7rem;
+  }
+  & svg {
+    position: absolute;
+    height: 1.2rem;
+    width: 1.2rem;
+  }
+`;
+
+export const ItemDate = styled.span`
   color: #90909f;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 0.9rem;
   text-align: left;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  width: 7rem;
 `;
 
 export const GreenIcon = styled(GreenIconSvg)`
@@ -201,57 +202,4 @@ export const YellowIcon = styled(YellowIconSvg)`
 
 export const RedIcon = styled(RedIconSvg)`
   height: 0.9rem;
-`;
-
-export const ListFooter = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.9rem;
-    font-family: Pretendard;
-  }
-  & .pagination {
-    display: flex;
-    flex-direction: row;
-    gap: 0.8rem;
-  }
-  & ul {
-    list-style: none;
-    padding: 0;
-  }
-  & ul.pagination li {
-    display: inline-block;
-    width: 1.8rem;
-    height: 1.8rem;
-    border-radius: 1.8rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #b7b5c4;
-  }
-  & ul.pagination li:hover {
-    background-color: #e9e9ee;
-    cursor: pointer;
-  }
-  & ul.pagination li:active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li.active {
-    background-color: #337ab7;
-  }
-  & ul.pagination li a {
-    text-decoration: none;
-    color: #151515;
-  }
-  & ul.pagination li:hover a {
-    color: #151515;
-  }
-  & ul.pagination li:active a {
-    color: white;
-  }
-  & ul.pagination li.active a {
-    color: white;
-  }
 `;

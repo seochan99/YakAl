@@ -2,7 +2,7 @@
 // import axios, { isAxiosError } from "axios";
 
 // import getCrypto from "@/util/get-crypto";
-import { Text, Icon, Outer, Header, Description } from "./style";
+import WarningPage from "@/component/warning-page";
 import useInterval from "@/util/use-interval";
 import { useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
@@ -58,8 +58,10 @@ function IdentificationPage() {
     //     };
 
     //     if (resultCode !== "0000") {
-    //       navigate("/login/identification/failure");
+    //       //navigate("/login/identification/failure");
     //     }
+
+    //     window.open(response.headers.location, "_blank");
 
     //     console.log(resultCode, authRequestUrl, txId, token);
     //   })
@@ -67,7 +69,7 @@ function IdentificationPage() {
     //     console.log(error);
 
     //     if (isAxiosError(error)) {
-    //       navigate("/login/identification/failure");
+    //       //navigate("/login/identification/failure");
     //     }
     //   });
 
@@ -75,13 +77,7 @@ function IdentificationPage() {
   }, [navigate]);
 
   return (
-    <Outer>
-      <Icon>{":|"}</Icon>
-      <Text>
-        <Header>본인 인증 중{dotString}</Header>
-        <Description>본인 인증 중입니다. 잠시만 기다려주세요.</Description>
-      </Text>
-    </Outer>
+    <WarningPage icon=":|" title={`본인 인증 중${dotString}`} subtitle="본인 인증 중입니다. 잠시만 기다려주세요." />
   );
 }
 
