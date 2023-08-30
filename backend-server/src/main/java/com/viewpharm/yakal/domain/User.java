@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.type.EJob;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.ESex;
@@ -85,11 +86,28 @@ public class User {
     @Column(name = "dinnerTime")
     private LocalTime dinnerTime;
 
+    //초기 직업은 환자로 설정
+    @Column(name ="job")
+    @Enumerated(EnumType.STRING)
+    private EJob job = EJob.PATIENT;
+
+    // 추후에 Enum화 해도 괜찮을듯 아직 전공 종류나 개수를 모름
+    @Column(name = "department")
+    private String department;
+
+    //의사 약사 영양사 인증 여부
+    @Column(name = "is_certified")
+    private Boolean isCertified;
+
+
     /**
      * ONE-TO-ONE RELATION
      */
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Image image;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    private Expert expert;
 
     /**
      * ONE-TO-MANY RELATION
