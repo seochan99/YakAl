@@ -7,9 +7,10 @@ import {
   LinkIcon,
   List,
   ItemTitle,
-  Title,
+  Header,
   ItemResult,
   Progress,
+  Title,
 } from "./style";
 
 function SurveyResult() {
@@ -52,8 +53,8 @@ function SurveyResult() {
 
   return (
     <>
-      <Title>
-        자가 진단 테스트 결과
+      <Header>
+        <Title>자가 진단 테스트 결과</Title>
         <LinkButton>
           <LinkIcon />
         </LinkButton>
@@ -63,7 +64,7 @@ function SurveyResult() {
             Object.values(surveyResult).length
           }%`}
         </Progress>
-      </Title>
+      </Header>
       <Bar />
       <Content>
         <FirstList>

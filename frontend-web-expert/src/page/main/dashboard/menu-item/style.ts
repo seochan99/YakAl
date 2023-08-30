@@ -6,13 +6,11 @@ export const NonLinkOuter = styled.div`
   flex-direction: column;
   justify-content: start;
   align-items: center;
-  border: 1px solid;
   text-decoration: none;
   border-radius: 0.5rem;
   border: 0.15rem solid #b7b5c4;
   background-color: #fff;
   padding: 2rem;
-  height: 18rem;
 `;
 
 export const CoomingSoonTitle = styled.div`
@@ -60,10 +58,9 @@ export const Outer = styled(Link)`
     border: 1px solid;
     text-decoration: none;
     border-radius: 0.5rem;
-    border: 0.15rem solid #b7b5c4;
+    border: 0.15rem solid #2666f6;
     background-color: #fff;
     padding: 2rem;
-    height: 18rem;
   }
   &:hover {
     transform: scale(1.05);

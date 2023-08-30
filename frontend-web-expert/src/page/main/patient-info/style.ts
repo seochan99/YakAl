@@ -8,6 +8,7 @@ export const Outer = styled.div`
   flex-direction: column;
   gap: 1.25rem;
   width: 100%;
+  font-family: Pretendard;
 `;
 
 export const Header = styled.div`
@@ -51,7 +52,6 @@ export const PatientSummary = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  padding: 0 0.5rem;
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 0.5rem;
@@ -67,7 +67,7 @@ export const NameSex = styled.div`
 export const Name = styled.span`
   color: #151515;
   font-size: 1.5rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.5rem;
 `;
 
@@ -80,9 +80,9 @@ export const Bar = styled.hr`
 
 export const Birthday = styled.span`
   color: #151515;
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.1rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  line-height: 1.2rem;
 `;
 
 export const Sex = styled.span`
@@ -91,9 +91,9 @@ export const Sex = styled.span`
     flex-direction: row;
     align-items: center;
     color: #151515;
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    line-height: 1.2rem;
     margin-left: 2rem;
   }
   & svg {
@@ -104,9 +104,17 @@ export const Sex = styled.span`
 
 export const NoteAndDoseList = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 30rem;
+
+  @media only screen and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 31rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-rows: repeat(2, 1fr);
+    height: 63rem;
+  }
 `;
 
 export const InnerBox = styled.div`
@@ -120,7 +128,15 @@ export const InnerBox = styled.div`
 
 export const PrescriptionAndHealthFunctionalFood = styled.div`
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
   gap: 1rem;
-  height: 25rem;
+
+  @media only screen and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+    height: 22.5rem;
+  }
+
+  @media only screen and (max-width: 768px) {
+    grid-template-rows: repeat(2, 1fr);
+    height: 50rem;
+  }
 `;

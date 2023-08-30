@@ -1,16 +1,12 @@
 import { LOGIN_ROUTE } from "@/router/router";
-import { Icon, Text, Outer, Header, Description, BackButton } from "./style";
+import { BackButton } from "./style";
+import WarningPage from "@/component/warning-page";
 
 function IdentificationFailure() {
   return (
-    <Outer>
-      <Icon>{":("}</Icon>
-      <Text>
-        <Header>본인인증 실패</Header>
-        <Description>본인인증 과정에서 문제가 발생했습니다. 다시 시도해주세요.</Description>
-        <BackButton to={LOGIN_ROUTE}>로그인 페이지로</BackButton>
-      </Text>
-    </Outer>
+    <WarningPage icon=":(" title="본인인증 실패" subtitle="본인인증 과정에서 문제가 발생했습니다. 다시 시도해주세요.">
+      <BackButton to={LOGIN_ROUTE}>로그인 페이지로</BackButton>
+    </WarningPage>
   );
 }
 
