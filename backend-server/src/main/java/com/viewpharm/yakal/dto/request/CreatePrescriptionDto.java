@@ -14,4 +14,5 @@ import java.time.LocalDate;
 public class CreatePrescriptionDto {
     private String pharmacyName;
     private LocalDate prescribedDate;
+    private Boolean isAllow;
 }

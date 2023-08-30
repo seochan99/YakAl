@@ -37,6 +37,7 @@ public class PrescriptionService {
                         .user(user)
                         .pharmacyName(prescription.getPharmacyName())
                         .prescribedDate(prescription.getPrescribedDate())
+                        .isAllow(prescription.getIsAllow())
                         .build()
         );
 

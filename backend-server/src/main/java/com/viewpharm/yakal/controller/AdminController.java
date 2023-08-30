@@ -17,23 +17,16 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin")
+@RequestMapping("/api/v1/admin")
 @Tag(name = "Admin", description = "관리자 전용 페이지 관련 API 제공")
 public class AdminController {
 
     private final MedicalService medicalService;
-    private final UserService userService;
 
     @GetMapping("/medical/update")
     @Operation(summary = "의료기관 업데이트", description = "의료기관 엑셀파일을 입력으로 의료기관의 정보를 업데이트 합니다. (공공데이터 포털 3개월마다 업데이트)")
     public ResponseDto<Boolean> updateMedical() throws IOException {
         return ResponseDto.ok(medicalService.updateMedical());
-    }
-
-    @GetMapping("/expert")
-    @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
-    public ResponseDto<UserExpertDto> getExpertInfo(@UserId Long userId) {
-        return ResponseDto.ok(userService.getUserExpertInfo(userId));
     }
 
     @GetMapping("/medical/{name}")
