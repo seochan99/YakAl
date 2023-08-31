@@ -43,6 +43,13 @@ public class ImageController {
         return ResponseDto.ok(map);
     }
 
+    @PostMapping("/expert")
+    public ResponseDto<Map<String,String>> uploadExpertImage(@UserId Long id, @RequestParam("image") MultipartFile file){
+        Map<String, String> map = new HashMap<>();
+        map.put("uuid_name", imageService.uploadImage(id, EImageUseType.EXPERT, file));
+        return ResponseDto.ok(map);
+    }
+
     @PostMapping("/medical/{medicalId}")
     public ResponseDto<Map<String,String>> uploadShopImage(@PathVariable Long medicalId, @RequestParam("image") MultipartFile file){
         Map<String, String> map = new HashMap<>();
@@ -56,5 +63,7 @@ public class ImageController {
         map.put("uuid_name", imageService.uploadImage(file));
         return ResponseDto.ok(map);
     }
+
+
 
 }

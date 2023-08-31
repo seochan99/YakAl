@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.domain;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,5 +25,8 @@ public class Expert {
     @OneToOne(fetch = FetchType.LAZY)
     private Image image;
 
-
+    @Builder
+    public Expert(User user) {
+        this.user = user;
+    }
 }
