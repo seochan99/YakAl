@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
-import Main from "@/expert/layout/main";
+import { Main as ExpertMain } from "@/expert/layout/main";
+import { Main as AdminMain } from "@/admin/layout/main";
 import ErrorPage from "@/expert/page/error-page";
 import { Login as ExpertLogin } from "@/expert/layout/login";
 import { Login as AdminLogin } from "../admin/page/login";
@@ -33,9 +34,12 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
           {
+            path: "",
+            element: <AdminMain />,
+          },
+          {
             path: "login",
             element: <AdminLogin />,
-            errorElement: <ErrorPage />,
           },
         ],
       },
@@ -43,6 +47,44 @@ export const router = createBrowserRouter([
         path: "/expert",
         errorElement: <ErrorPage />,
         children: [
+          {
+            path: "",
+            element: <ExpertMain />,
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                errorElement: <ErrorPage />,
+                children: [
+                  {
+                    index: true,
+                    element: <Dashboard />,
+                  },
+                  {
+                    path: "info",
+                    element: <MyInfo />,
+                  },
+                  {
+                    path: "patient",
+                    element: <PatientList />,
+                    loader: patientLoader,
+                  },
+                  {
+                    path: "registration",
+                    element: <Registration />,
+                  },
+                  {
+                    path: "certification",
+                    element: <Certification />,
+                  },
+                  {
+                    path: "patient/:patientId",
+                    element: <PatientInfo />,
+                    loader: patientInfoLoader,
+                  },
+                ],
+              },
+            ],
+          },
           {
             path: "login",
             element: <ExpertLogin />,
@@ -87,44 +129,6 @@ export const router = createBrowserRouter([
             path: "loading",
             element: <LoadingPage />,
             errorElement: <ErrorPage />,
-          },
-          {
-            path: "",
-            element: <Main />,
-            errorElement: <ErrorPage />,
-            children: [
-              {
-                errorElement: <ErrorPage />,
-                children: [
-                  {
-                    index: true,
-                    element: <Dashboard />,
-                  },
-                  {
-                    path: "info",
-                    element: <MyInfo />,
-                  },
-                  {
-                    path: "patient",
-                    element: <PatientList />,
-                    loader: patientLoader,
-                  },
-                  {
-                    path: "registration",
-                    element: <Registration />,
-                  },
-                  {
-                    path: "certification",
-                    element: <Certification />,
-                  },
-                  {
-                    path: "patient/:patientId",
-                    element: <PatientInfo />,
-                    loader: patientInfoLoader,
-                  },
-                ],
-              },
-            ],
           },
         ],
       },

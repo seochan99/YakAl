@@ -27,7 +27,7 @@ import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 
-export default function Main() {
+export function Main() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const isWideMobile = useMediaQuery({ query: "(max-width: 768px)" });

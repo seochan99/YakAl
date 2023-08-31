@@ -5,7 +5,7 @@ export const FooterOuter = styled.footer`
   flex-direction: row;
   align-items: center;
   padding: 1rem 0;
-  background-color: var(--color-surface-300);
+  background-color: var(--color-surface-200);
 `;
 
 export const ViewPharmIcon = styled.img`

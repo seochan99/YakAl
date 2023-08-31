@@ -1,22 +1,26 @@
 import {
+  HeaderOuter,
   InputBox,
+  LinkLogo,
   LoginBox,
   LoginButton,
   LoginHeader,
   LoginInput,
   LogoBox,
+  LogoText,
   Main,
   Outer,
+  Subtitle,
+  Title,
   WarningText,
   YakalIcon,
 } from "./style.ts";
 import Footer from "@/admin/layout/footer";
-import Header from "@/admin/layout/header";
 import { useMediaQuery } from "react-responsive";
-import { ADMIN_LOGIN_ROUTE } from "@/global/router.tsx";
 
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import React, { useState } from "react";
+import { ADMIN_LOGIN_ROUTE } from "@/global/router.tsx";
 
 export function Login() {
   const [username, setUsername] = useState<string>("");
@@ -44,7 +48,17 @@ export function Login() {
 
   return (
     <Outer>
-      {!isWideMobile && <Header to={ADMIN_LOGIN_ROUTE} />}
+      {!isWideMobile && (
+        <HeaderOuter>
+          <LinkLogo to={ADMIN_LOGIN_ROUTE}>
+            <YakalIcon />
+            <LogoText>
+              <Title>약 알</Title>
+              <Subtitle>관리자 WEB</Subtitle>
+            </LogoText>
+          </LinkLogo>
+        </HeaderOuter>
+      )}
       <Main>
         <LoginBox>
           <LogoBox>

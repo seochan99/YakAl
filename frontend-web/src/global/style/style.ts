@@ -29,6 +29,7 @@ export const GlobalStyle = createGlobalStyle`
 
     /** CSS DARK THEME SURFACE COLORS */
     --color-surface-100: #151515;
+    --color-surface-150: #202020;
     --color-surface-200: #2a2a2a;
     --color-surface-300: #414141;
     --color-surface-400: #595959;
