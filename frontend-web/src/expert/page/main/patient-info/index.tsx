@@ -66,7 +66,8 @@ function PatientInfo() {
           <SpecialNote patientId={id} />
         </InnerBox>
         <InnerBox>
-          <DoseList patientId={id} />
+          {/*<DoseList patientId={id} />*/}
+          <DoseList />
         </InnerBox>
       </NoteAndDoseList>
       <InnerBox>

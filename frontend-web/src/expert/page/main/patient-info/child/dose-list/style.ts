@@ -27,28 +27,33 @@ export const PeriodSelectButton = styled.button`
     border-radius: 2rem;
     width: 5.5rem;
     height: 2rem;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     color: #151515;
     font-family: Pretendard;
     font-size: 0.9rem;
     font-weight: 600;
     line-height: 0.9rem;
   }
+
   & svg {
     height: 1.2rem;
     transition: 0.3s;
   }
+
   & span {
     flex: 1;
     text-align: center;
   }
+
   &.open svg {
     transform: rotate(180deg);
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -87,10 +92,12 @@ export const PeriodItemButton = styled.button`
     line-height: 0.9rem;
     padding: 0.5rem;
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -106,7 +113,7 @@ export const Title = styled.span`
 export const Bar = styled.hr`
   border: 0;
   height: 0.125rem;
-  background: #e9e9ee;
+  background: var(--color-surface-900);
   margin: 1rem 0;
 `;
 
@@ -176,6 +183,7 @@ export const ItemIcon = styled.span`
     align-items: center;
     width: 2.7rem;
   }
+
   & svg {
     position: absolute;
     height: 1.2rem;

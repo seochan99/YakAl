@@ -27,6 +27,7 @@ import { Outlet, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import { Spin as Hamburger } from "hamburger-react";
 
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import InsightsOutlinedIcon from "@mui/icons-material/InsightsOutlined";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
@@ -42,6 +43,7 @@ import HandshakeOutlinedIcon from "@mui/icons-material/HandshakeOutlined";
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import ApprovalOutlinedIcon from "@mui/icons-material/ApprovalOutlined";
 import { SvgIconComponent } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
 
 type TSubmenu = {
   icon: SvgIconComponent;
@@ -100,7 +102,7 @@ export function Main() {
       icon: MedicalInformationOutlinedIcon,
       submenu: [
         { icon: ManageAccountsOutlinedIcon, path: "/admin/expert/management", name: "전문가 관리" },
-        { icon: ApprovalOutlinedIcon, path: "/admin/expert/certification", name: "전문가 인증 관리" },
+        { icon: ApprovalOutlinedIcon, path: "/admin/expert/facility-registration", name: "전문가 인증 관리" },
       ],
     },
     {
@@ -108,7 +110,7 @@ export function Main() {
       name: "제휴 기관",
       submenu: [
         { icon: LocalHospitalOutlinedIcon, path: "/admin/partner/management", name: "제휴 기관 관리" },
-        { icon: ApprovalOutlinedIcon, path: "/admin/partner/certification", name: "제휴 신청 관리" },
+        { icon: ApprovalOutlinedIcon, path: "/admin/partner/facility-registration", name: "제휴 신청 관리" },
       ],
     },
   ];
@@ -143,13 +145,21 @@ export function Main() {
       <StyledDrawer variant="permanent" anchor="right" open={isOpen}>
         <DrawerBox className={isOpen ? "open" : "close"}>
           <DrawerHeader>
-            <DrawerTitle>
-              안녕하세요. <PrimarySpan>홍길동</PrimarySpan>님!
-            </DrawerTitle>
-            <DrawerSubtitle>관리자</DrawerSubtitle>
+            {isOpen && (
+              <>
+                <DrawerTitle>
+                  안녕하세요. <PrimarySpan>홍길동</PrimarySpan>님!
+                </DrawerTitle>
+                <DrawerSubtitle>관리자</DrawerSubtitle>
+              </>
+            )}
           </DrawerHeader>
           {isOpen && <Bar />}
           <List className={isOpen ? "open" : "close"}>
+            <ListItem to="/admin">
+              <HomeOutlinedIcon />
+              {isOpen && "대시보드"}
+            </ListItem>
             {navList.flatMap((navItem) => {
               return [
                 <ListItemSubtitle key={navItem.name}>
@@ -157,12 +167,21 @@ export function Main() {
                   {navItem.name}
                 </ListItemSubtitle>,
               ].concat(
-                navItem.submenu.map((submenu) => (
-                  <ListItem to={submenu.path} key={submenu.name + "_" + submenu.path}>
-                    <submenu.icon />
-                    {isOpen && submenu.name}
-                  </ListItem>
-                )),
+                navItem.submenu.map((submenu) =>
+                  isOpen ? (
+                    <ListItem to={submenu.path} key={submenu.name + "_" + submenu.path}>
+                      <submenu.icon />
+                      {isOpen && submenu.name}
+                    </ListItem>
+                  ) : (
+                    <Tooltip title={submenu.name} placement="left" key={submenu.name + "_" + submenu.path}>
+                      <ListItem to={submenu.path}>
+                        <submenu.icon />
+                        {isOpen && submenu.name}
+                      </ListItem>
+                    </Tooltip>
+                  ),
+                ),
               );
             })}
           </List>

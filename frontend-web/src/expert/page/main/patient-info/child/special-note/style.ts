@@ -24,7 +24,7 @@ export const AddButton = styled.div`
     border-radius: 1.2rem;
     width: 4.5rem;
     height: 1.2rem;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     color: #151515;
     font-family: Pretendard;
     font-size: 0.9rem;
@@ -32,13 +32,16 @@ export const AddButton = styled.div`
     line-height: 0.9rem;
     text-decoration: none;
   }
+
   & svg {
     height: 1.2rem;
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -47,7 +50,7 @@ export const AddButton = styled.div`
 export const Bar = styled.hr`
   border: 0;
   height: 0.125rem;
-  background: #e9e9ee;
+  background: var(--color-surface-900);
   margin: 1rem 0;
 `;
 
@@ -76,12 +79,14 @@ export const Item = styled.div`
     padding: 1rem 0.5rem;
     border-radius: 0.25rem;
   }
+
   &:hover {
     cursor: pointer;
     background-color: #f5f5f9;
   }
+
   &:active {
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
   }
 `;
 
@@ -210,7 +215,7 @@ export const NoteTitleInput = styled.input`
     color: #151515;
     text-align: left;
     font-weight: 500;
-    border: 0.125rem solid #e9e9ee;
+    border: 0.125rem solid var(--color-surface-900);
     border-radius: 0.25rem;
     outline: none;
 
@@ -226,6 +231,7 @@ export const NoteTitleInput = styled.input`
       line-height: 1.2rem;
     }
   }
+
   &:focus {
     border: 0.15rem solid #2666f6;
     transition: all 0.2s;
@@ -237,7 +243,7 @@ export const NoteDescriptionInput = styled.textarea`
     color: #151515;
     text-align: left;
     font-weight: 500;
-    border: 0.125rem solid #e9e9ee;
+    border: 0.125rem solid var(--color-surface-900);
     border-radius: 0.25rem;
     outline: none;
     resize: none;
@@ -256,6 +262,7 @@ export const NoteDescriptionInput = styled.textarea`
       flex: 1;
     }
   }
+
   &:focus {
     border: 0.15rem solid #2666f6;
     transition: all 0.3s;
@@ -305,10 +312,12 @@ export const DialogCancleButton = styled.button`
       flex: 1;
     }
   }
+
   &:hover {
     cursor: pointer;
     background-color: #fef4f5;
   }
+
   &:active {
     background-color: #f7d1d1;
   }
@@ -340,11 +349,13 @@ export const DialogConfirmButton = styled.button`
       flex: 1;
     }
   }
+
   &:hover {
     cursor: pointer;
     border: 0.1rem solid #1348e2;
     background-color: #1348e2;
   }
+
   &:active {
     border: 0.1rem solid #163bb7;
     background-color: #163bb7;

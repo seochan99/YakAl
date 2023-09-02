@@ -40,7 +40,7 @@ export const TermsContent = styled.div`
 export const Bar = styled.hr`
   border: 0;
   height: 1px;
-  background: #e9e9ee;
+  background: var(--color-surface-900);
   margin: 1.5rem 0;
 `;
 
@@ -72,9 +72,8 @@ export const NextButton = styled.button`
   & {
     border-radius: 0.5rem;
     border: 0;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     color: #151515;
-    font-family: Pretendard;
     font-size: 1.25rem;
     font-weight: 600;
     margin: 1.5rem 0;
@@ -90,13 +89,16 @@ export const NextButton = styled.button`
       padding: 1.5rem 4rem;
     }
   }
+
   &.is-agreed {
     background-color: #2666f6;
     color: white;
   }
+
   &.is-agreed:hover {
     background-color: #1348e2;
   }
+
   &.is-agreed:active {
     background-color: #163bb7;
   }

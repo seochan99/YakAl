@@ -60,13 +60,15 @@ export const NavItem = styled(NavLink)`
     text-decoration: none;
     text-align: center;
   }
+
   &:hover {
     color: #2666f6;
     background-color: #f5f5f9;
     transition: color 0.2s;
   }
+
   &.active {
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
   }
 `;
 
@@ -86,18 +88,21 @@ export const MobileNavTitle = styled.div`
     line-height: 1.2rem;
     font-weight: 700;
     color: #151515;
-    border-top: 0.0625rem solid #e9e9ee;
-    border-bottom: 0.0625rem solid #e9e9ee;
+    border-top: 0.0625rem solid var(--color-surface-900);
+    border-bottom: 0.0625rem solid var(--color-surface-900);
     background-color: #fff;
   }
+
   &:hover {
     cursor: pointer;
   }
+
   & > svg {
     opacity: 0.5;
     transform: rotate(0deg);
     transition: 0.2s;
   }
+
   &.open > svg {
     opacity: 1;
     transform: rotate(180deg);
@@ -141,6 +146,7 @@ export const MobileCurrentNav = styled.div`
     justify-content: center;
     align-items: center;
   }
+
   & svg {
     margin-right: 0.6rem;
     height: 1.2rem;
@@ -171,6 +177,6 @@ export const MobileNavItem = styled(NavLink)`
     transition: color 0.2s;
   }
   &.active {
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
   }
 `;

@@ -1,17 +1,17 @@
 import { ReactNode } from "react";
 import {
+  Blue,
+  CertTextBox,
+  DoctorIcon,
   EnrollBox,
+  EnrollButton,
   EnrollText,
   IconText,
-  YakAlIcon,
-  EnrollButton,
-  DoctorIcon,
-  CertTextBox,
-  SubEnrollText,
-  Blue,
-  Outer,
   Menu,
+  Outer,
   PatientIcon,
+  SubEnrollText,
+  YakAlIcon,
 } from "./style.ts";
 import DashboardMenuItem from "./menu-item";
 import { useGetUserQuery } from "@/expert/api/user.ts";
@@ -24,7 +24,7 @@ export type TMenuInfo = {
   description: ReactNode;
 };
 
-function Dashboard() {
+export function Dashboard() {
   const { data } = useGetUserQuery(null);
 
   const isNarrowMobile = useMediaQuery({ query: "(max-width: 480px)" });
@@ -50,15 +50,6 @@ function Dashboard() {
     <Outer>
       <EnrollBox>
         <IconText>
-          <YakAlIcon />
-          <EnrollText>
-            약국이나 병원을 <Blue>약 알</Blue>에 등록합니다.
-          </EnrollText>
-        </IconText>
-        <EnrollButton to="/expert/registration">기관 등록</EnrollButton>
-      </EnrollBox>
-      <EnrollBox>
-        <IconText>
           <DoctorIcon />
           <CertTextBox>
             <EnrollText>
@@ -81,8 +72,15 @@ function Dashboard() {
           <DashboardMenuItem key={menuInfo.title} menuInfo={menuInfo} />
         ))}
       </Menu>
+      <EnrollBox>
+        <IconText>
+          <YakAlIcon />
+          <EnrollText>
+            약국이나 병원을 <Blue>약 알</Blue>에 등록합니다.
+          </EnrollText>
+        </IconText>
+        <EnrollButton to="/expert/registration">기관 등록</EnrollButton>
+      </EnrollBox>
     </Outer>
   );
 }
-
-export default Dashboard;

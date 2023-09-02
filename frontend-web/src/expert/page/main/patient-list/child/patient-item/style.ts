@@ -14,9 +14,10 @@ export const Outer = styled(NavLink)`
     text-decoration: none;
     color: #151515;
   }
+
   &:hover {
     cursor: pointer;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
   }
 `;
 
@@ -32,6 +33,7 @@ export const Name = styled.span`
     text-align: center;
     width: 6rem;
   }
+
   & svg {
     height: 1.1rem;
   }
@@ -49,6 +51,7 @@ export const Sex = styled.span`
     width: 4rem;
     gap: 0.1rem;
   }
+
   & svg {
     height: 1.2rem;
   }

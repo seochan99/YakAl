@@ -53,7 +53,7 @@ export const LinkIcon = styled(LinkIconSvg)`
 export const Bar = styled.hr`
   border: 0;
   height: 0.125rem;
-  background: #e9e9ee;
+  background: var(--color-surface-900);
   margin: 1rem 0;
 `;
 

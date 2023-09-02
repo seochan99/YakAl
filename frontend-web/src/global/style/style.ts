@@ -35,6 +35,9 @@ export const GlobalStyle = createGlobalStyle`
     --color-surface-400: #595959;
     --color-surface-500: #727272;
     --color-surface-600: #8d8d8d;
+    --color-surface-700: #b5b5b5;
+    --color-surface-800: #dcdcdc;
+    --color-surface-900: #e9e9ee;
 
     /** CSS DARK THEME MIXED SURFACE COLORS */
     --color-surface-mixed-100: #1c1c28;

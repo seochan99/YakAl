@@ -141,7 +141,7 @@ export const DetailProfileBox = styled.div`
 export const Bar = styled.hr`
   border: 0;
   height: 0.125rem;
-  background: #e9e9ee;
+  background: var(--color-surface-900);
   margin: 0;
 `;
 
@@ -231,7 +231,7 @@ export const AlertClearButton = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     color: #151515;
     font-family: Pretendard;
     font-size: 0.8rem;
@@ -239,10 +239,12 @@ export const AlertClearButton = styled.div`
     font-weight: 500;
     text-decoration: none;
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -280,7 +282,7 @@ export const AlertItem = styled.div`
     height: 1rem;
     width: 1rem;
     padding: 0.2rem;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     border-radius: 1rem;
   }
 `;

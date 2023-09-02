@@ -46,7 +46,7 @@ export const SearchBar = styled.div`
   flex-direction: row;
   align-items: center;
   border-radius: 2rem;
-  border: 2px solid #e9e9ee;
+  border: 2px solid var(--color-surface-900);
   height: 3rem;
 
   @media only screen and (min-width: 481px) {
@@ -87,7 +87,7 @@ export const SelectButton = styled.button`
     border: 0;
     border-radius: 3rem;
     height: 3rem;
-    background-color: #e9e9ee;
+    background-color: var(--color-surface-900);
     color: #151515;
     font-family: Pretendard;
     font-size: 1rem;

@@ -8,19 +8,20 @@ import LoginMain from "@/expert/page/login/login-main";
 import SignUpTerms from "@/expert/page/login/signup-terms";
 
 import PatientList from "@/expert/page/main/patient-list";
-import Dashboard from "@/expert/page/main/dashboard";
+import { Dashboard as ExpertDashboard } from "@/expert/page/main/dashboard";
+import { Dashboard as AdminDashboard } from "@/admin/page/main/dashboard";
 import PatientInfo from "@/expert/page/main/patient-info";
 
 import SocialLoginFailure from "@/expert/page/login/social-login-failure";
 import { loader as patientLoader } from "@/expert/page/main/patient-list/loader.ts";
 import { loader as patientInfoLoader } from "@/expert/page/main/patient-info/loader.ts";
-import Registration from "@/expert/page/main/registration";
-import Certification from "@/expert/page/main/certification";
+import FacilityRegistration from "../expert/page/main/facility-registration";
 import MyInfo from "@/expert/page/main/my-info";
 import SocialLoginProxy from "@/expert/page/login/social-login-proxy";
 import LoadingPage from "@/expert/page/loading-page";
 import IdentificationPage from "@/expert/page/login/identification-page";
 import IdentificationFailure from "@/expert/page/login/identification-failure";
+import ExpertCertification from "@/expert/page/main/expert-certification";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -36,6 +37,13 @@ export const router = createBrowserRouter([
           {
             path: "",
             element: <AdminMain />,
+            errorElement: <ErrorPage />,
+            children: [
+              {
+                index: true,
+                element: <AdminDashboard />,
+              },
+            ],
           },
           {
             path: "login",
@@ -57,7 +65,7 @@ export const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <Dashboard />,
+                    element: <ExpertDashboard />,
                   },
                   {
                     path: "info",
@@ -70,11 +78,11 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "registration",
-                    element: <Registration />,
+                    element: <FacilityRegistration />,
                   },
                   {
                     path: "certification",
-                    element: <Certification />,
+                    element: <ExpertCertification />,
                   },
                   {
                     path: "patient/:patientId",

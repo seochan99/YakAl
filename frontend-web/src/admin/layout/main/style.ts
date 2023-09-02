@@ -11,12 +11,12 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100vh;
-  min-height: -webkit-fill-available;
 `;
 
 export const HeaderOuter = styled.header`
   & {
+    position: sticky;
+    top: 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -102,24 +102,18 @@ export const MainSection = styled.main`
   align-self: flex-start;
   flex: 1;
 
-  @media only screen and (min-width: 481px) {
-    & {
-      background-color: var(--color-surface-150);
-    }
-
-    &.close {
-      width: calc(100% - var(--drawer-width-close) * 1rem);
-      transition: var(--drawer-transition);
-    }
-
-    &.open {
-      width: calc(100% - var(--drawer-width-open) * 1rem);
-      transition: var(--drawer-transition);
-    }
+  & {
+    background-color: var(--color-surface-150);
   }
 
-  @media only screen and (max-width: 480px) {
-    background-color: var(--color-surface-300);
+  &.close {
+    width: calc(100% - var(--drawer-width-close) * 1rem);
+    transition: var(--drawer-transition);
+  }
+
+  &.open {
+    width: calc(100% - var(--drawer-width-open) * 1rem);
+    transition: var(--drawer-transition);
   }
 `;
 
@@ -127,16 +121,8 @@ export const Detail = styled.div`
   & {
     display: flex;
     flex-direction: column;
-
-    @media only screen and (min-width: 769px) {
-      width: 54rem;
-      padding: 2rem;
-    }
-
-    @media only screen and (max-width: 768px) {
-      width: 100%;
-      padding: 0;
-    }
+    width: 100%;
+    padding: 0;
   }
 
   &.loading {
@@ -218,12 +204,19 @@ export const Bar = styled.hr`
 `;
 
 export const List = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin: 1rem 0;
-  overflow-y: auto;
-  flex: 1;
+  & {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin: 1rem 0;
+    overflow-y: auto;
+    scrollbar-width: none;
+    flex: 1;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 
   &.open {
     align-items: stretch;
@@ -282,7 +275,8 @@ export const ListItem = styled(NavLink)`
   }
 
   &.active {
-    background-color: #e9e9ee;
+    color: var(--color-primary-200);
+    background-color: var(--color-surface-900);
   }
 `;
 
