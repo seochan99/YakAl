@@ -29,27 +29,43 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         } catch (SecurityException e) {
             log.error("FilterException throw SecurityException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.ACCESS_DENIED_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (MalformedJwtException  e) {
             log.error("FilterException throw MalformedJwtException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.TOKEN_MALFORMED_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (IllegalArgumentException e) {
             log.error("FilterException throw IllegalArgumentException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.TOKEN_TYPE_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (ExpiredJwtException e) {
             log.error("FilterException throw ExpiredJwtException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (UnsupportedJwtException e) {
             log.error("FilterException throw UnsupportedJwtException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.TOKEN_UNSUPPORTED_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (JwtException e) {
             log.error("FilterException throw JwtException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.TOKEN_UNKNOWN_ERROR);
+
+            filterChain.doFilter(request, response);
         } catch (CommonException e) {
             log.error("FilterException throw CommonException Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", e.getErrorCode());
+
+            filterChain.doFilter(request, response);
         } catch (Exception e) {
             log.error("FilterException throw Exception Exception : {}", e.fillInStackTrace());
             request.setAttribute("exception", ErrorCode.NOT_FOUND_USER);
+
+            filterChain.doFilter(request, response);
         }
     }
 
