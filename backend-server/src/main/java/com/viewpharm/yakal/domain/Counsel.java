@@ -20,11 +20,11 @@ public class Counsel extends BaseCreateEntity {
     @Column(name = "id")
     private Long id;
 
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "patient_id", nullable = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private User patient;
 
-    @JoinColumn(name = "expert_id", nullable = false)
+    @JoinColumn(name = "expert_id", nullable = true)
     @ManyToOne(fetch = FetchType.LAZY)
     private User expert;
 

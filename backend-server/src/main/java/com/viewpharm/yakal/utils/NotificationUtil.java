@@ -41,50 +41,6 @@ public class NotificationUtil {
     private final FirebaseMessaging firebaseMessaging;
     private final UserRepository userRepository;
 
-    //ios 푸시알림
-    public void sendApnFcmtoken(NotificationUserRequestDto requestDto) throws Exception {
-        User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        if (user.getDeviceToken() != null) {
-            try {
-                PushNotificationPayload payload = PushNotificationPayload.complex();
-                payload.addAlert(requestDto.getTitle());
-                payload.getPayload().put("message", requestDto.getBody());
-                payload.addBadge(1);
-                payload.addSound("default");
-                payload.addCustomDictionary("id", "1");
-                System.out.println(payload.toString());
-                Object obj = user.getDeviceToken();
-                ClassPathResource resource = new ClassPathResource("SpringPushNotification.p12");
-                //나중에 APNS 등록하고 받은 키 경로 -> 바로 윗줄은 서버 배포용 아랫줄은 로컬용
-                //List<PushedNotification> NOTIFICATIONS = Push.payload(payload, "C:\Users\woobi\Documents\WeAreBility\2023-1-OSSP2-WeAreBility-3\backend\src\main\resources\\Certificates.p12", "naemansan@", false, obj);
-                List<PushedNotification> NOTIFICATIONS = Push.payload(payload, resource.getPath(), "naemansan@", false, obj);
-                for (PushedNotification NOTIFICATION : NOTIFICATIONS) {
-                    if (NOTIFICATION.isSuccessful()) {
-                        log.info("PUSH NOTIFICATION SENT SUCCESSFULLY TO" + NOTIFICATION.getDevice().getToken());
-                    } else {
-                        //부적절한 토큰 DB에서 삭제하기
-                        Exception THEPROBLEM = NOTIFICATION.getException();
-                        THEPROBLEM.printStackTrace();
-                        ResponsePacket THEERRORRESPONSE = NOTIFICATION.getResponse();
-                        if (THEERRORRESPONSE != null) {
-                            log.info(THEERRORRESPONSE.getMessage());
-                        }
-                    }
-                }
-            } catch (KeystoreException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (CommunicationException e) {
-                e.printStackTrace();
-            }
-            log.info("알림을 성공적으로 전송했습니다. targetUserID=" + requestDto.getTargetUserId());
-        } else {
-            log.info("서버에 저장된 해당 유저의 FirebaseToken이 존재하지 않습니다. targetUserID=" + requestDto.getTargetUserId());
-        }
-    }
-
-    //안드로이드 버전 1
     public void sendNotificationByToken(NotificationUserRequestDto requestDto) {
         User user = userRepository.findById(requestDto.getTargetUserId()).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
