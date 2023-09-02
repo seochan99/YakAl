@@ -56,7 +56,7 @@ class NicknameEditBottomDialog() : BottomSheetDialogFragment() {
         binding.nextButton.setOnClickListener {
             val pattern: Pattern = Pattern.compile("^[가-힣]+$")
             if (pattern.matcher(binding.nicknameEditText.text.toString()).matches()) {
-                (activity as MainActivity).displayToast("${binding.nicknameEditText.text}으로 변경되었습니다")
+                (activity as MainActivity).viewModel.onToastEvent("${binding.nicknameEditText.text}으로 변경되었습니다")
                 dismiss()
             } else {
                 Toast.makeText(context, "초성, 중성 입력이 존재합니다.", Toast.LENGTH_SHORT).show()

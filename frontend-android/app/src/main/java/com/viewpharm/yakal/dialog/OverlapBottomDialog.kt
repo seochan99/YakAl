@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.viewpharm.yakal.adapter.PillAdapter
+import com.viewpharm.yakal.main.view.PillAdapter
 import com.viewpharm.yakal.databinding.FragmentOverlapBottomSheetBinding
 import com.viewpharm.yakal.model.Pill
 import timber.log.Timber
