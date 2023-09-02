@@ -33,7 +33,6 @@ import {
 import React, { useRef, useState } from "react";
 import { EFacility } from "@/expert/type/facility.ts";
 import { EInfoTake } from "@/expert/type/info-take.ts";
-import { CSSTransition, SwitchTransition } from "react-transition-group";
 
 function FacilityRegistration() {
   const [selected, setSelected] = useState<EFacility | null>(null);
@@ -67,10 +66,6 @@ function FacilityRegistration() {
 
   const facilityAddressDetailRef = useRef<HTMLInputElement>(null);
   const certificationImgPreviewRef = useRef<HTMLImageElement>(null);
-
-  const selectedRef = useRef<HTMLDivElement>(null);
-  const unselectedRef = useRef<HTMLDivElement>(null);
-  const nodeRef = selected !== null ? selectedRef : unselectedRef;
 
   const handleSearchPostCodeClick = () => {
     new window.daum.Postcode({
@@ -176,189 +171,169 @@ function FacilityRegistration() {
             약국
           </SelectButtonBox>
         </SelectButtonWrapper>
-        <SwitchTransition mode="out-in">
-          <CSSTransition
-            key={selected !== null ? (selected === EFacility.HOSPITAL ? "hospital" : "pharmacy") : "unselected"}
-            nodeRef={nodeRef}
-            addEndListener={(done) => {
-              nodeRef.current?.addEventListener("transitionend", done, false);
-            }}
-            classNames="fade"
-          >
-            {selected !== null ? (
-              <div ref={selectedRef}>
-                <Subtitle>2. 전문가 인증에 필요한 정보를 입력해주세요.</Subtitle>
-                <InputBox>
-                  <CertInputBox>
-                    <CertInputLabel>{selected === EFacility.HOSPITAL ? "병원장명*" : "약국장명*"}</CertInputLabel>
+        {selected !== null && (
+          <>
+            <Subtitle>2. 전문가 인증에 필요한 정보를 입력해주세요.</Subtitle>
+            <InputBox>
+              <CertInputBox>
+                <CertInputLabel>{selected === EFacility.HOSPITAL ? "병원장명*" : "약국장명*"}</CertInputLabel>
+                <CertInput
+                  type="text"
+                  value={facilityDirectorName}
+                  onChange={(e) => setFacilityDirectorName(e.currentTarget.value)}
+                />
+              </CertInputBox>
+              <CertInputBox>
+                <CertInputLabel>
+                  {selected === EFacility.HOSPITAL ? "병원장 연락처(휴대폰)*" : "약국장 연락처(휴대폰)*"}
+                </CertInputLabel>
+                <CertInput
+                  type="tel"
+                  value={directorPhoneNumber}
+                  onChange={(e) => setDirectorPhoneNumber(e.currentTarget.value)}
+                />
+              </CertInputBox>
+              <CertInputBox>
+                <CertInputLabel>
+                  {selected === EFacility.HOSPITAL ? "병원명(요양기관명)*" : "약국명(요양기관명)*"}
+                </CertInputLabel>
+                <CertInput type="text" value={facilityName} onChange={(e) => setFacilityName(e.currentTarget.value)} />
+              </CertInputBox>
+              <CertInputBox>
+                <CertInputLabel>요양기관번호*</CertInputLabel>
+                <CertInput
+                  type="text"
+                  value={facilityNumber}
+                  onChange={(e) => setFacilityNumber(e.currentTarget.value)}
+                />
+              </CertInputBox>
+              <CertPostcodeInputBox>
+                <CertInputBox>
+                  <CertInputLabel>기관 우편번호*</CertInputLabel>
+                  <PostcodeBox>
                     <CertInput
                       type="text"
-                      value={facilityDirectorName}
-                      onChange={(e) => setFacilityDirectorName(e.currentTarget.value)}
+                      value={facilityPostcode}
+                      onChange={(e) => setFacilityPostcode(e.currentTarget.value)}
                     />
-                  </CertInputBox>
+                    <PostcodeSearchButton onClick={handleSearchPostCodeClick}>우편번호 찾기</PostcodeSearchButton>
+                  </PostcodeBox>
+                </CertInputBox>
+                <CertInputBox>
+                  <CertInputLabel>{selected === EFacility.HOSPITAL ? "병원 주소*" : "약국 주소*"}</CertInputLabel>
+                  <CertInput
+                    type="text"
+                    value={facilityAddress}
+                    onChange={(e) => setFacilityAddress(e.currentTarget.value)}
+                  />
+                </CertInputBox>
+                <CertAddressFooter>
                   <CertInputBox>
-                    <CertInputLabel>
-                      {selected === EFacility.HOSPITAL ? "병원장 연락처(휴대폰)*" : "약국장 연락처(휴대폰)*"}
-                    </CertInputLabel>
-                    <CertInput
-                      type="tel"
-                      value={directorPhoneNumber}
-                      onChange={(e) => setDirectorPhoneNumber(e.currentTarget.value)}
-                    />
-                  </CertInputBox>
-                  <CertInputBox>
-                    <CertInputLabel>
-                      {selected === EFacility.HOSPITAL ? "병원명(요양기관명)*" : "약국명(요양기관명)*"}
-                    </CertInputLabel>
-                    <CertInput
-                      type="text"
-                      value={facilityName}
-                      onChange={(e) => setFacilityName(e.currentTarget.value)}
-                    />
-                  </CertInputBox>
-                  <CertInputBox>
-                    <CertInputLabel>요양기관번호*</CertInputLabel>
+                    <CertInputLabel>상세 주소*</CertInputLabel>
                     <CertInput
                       type="text"
-                      value={facilityNumber}
-                      onChange={(e) => setFacilityNumber(e.currentTarget.value)}
-                    />
-                  </CertInputBox>
-                  <CertPostcodeInputBox>
-                    <CertInputBox>
-                      <CertInputLabel>기관 우편번호*</CertInputLabel>
-                      <PostcodeBox>
-                        <CertInput
-                          type="text"
-                          value={facilityPostcode}
-                          onChange={(e) => setFacilityPostcode(e.currentTarget.value)}
-                        />
-                        <PostcodeSearchButton onClick={handleSearchPostCodeClick}>우편번호 찾기</PostcodeSearchButton>
-                      </PostcodeBox>
-                    </CertInputBox>
-                    <CertInputBox>
-                      <CertInputLabel>{selected === EFacility.HOSPITAL ? "병원 주소*" : "약국 주소*"}</CertInputLabel>
-                      <CertInput
-                        type="text"
-                        value={facilityAddress}
-                        onChange={(e) => setFacilityAddress(e.currentTarget.value)}
-                      />
-                    </CertInputBox>
-                    <CertAddressFooter>
-                      <CertInputBox>
-                        <CertInputLabel>상세 주소*</CertInputLabel>
-                        <CertInput
-                          type="text"
-                          ref={facilityAddressDetailRef}
-                          value={facilityAddressDetail}
-                          onChange={(e) => setFacilityAddressDetail(e.currentTarget.value)}
-                        />
-                      </CertInputBox>
-                      <CertInputBox>
-                        <CertInputLabel>참고 항목</CertInputLabel>
-                        <CertInput
-                          type="text"
-                          value={facilityAddressExtra}
-                          onChange={(e) => setFacilityAddressExtra(e.currentTarget.value)}
-                        />
-                      </CertInputBox>
-                    </CertAddressFooter>
-                  </CertPostcodeInputBox>
-                  <CertInputBox>
-                    <CertInputLabel>사업자 번호*</CertInputLabel>
-                    <CertInput
-                      type="text"
-                      value={facilityBusinessNumber}
-                      onChange={(e) => setFacilityBusinessNumber(e.currentTarget.value)}
-                    />
-                  </CertInputBox>
-                  <CertImgBox>
-                    <CertInputLabel>자격증 사진*</CertInputLabel>
-                    <CertInputImgBox>
-                      <input readOnly={true} type="text" value={imgFileName} placeholder="첨부파일" />
-                      <label htmlFor="file">파일찾기</label>
-                      <input
-                        type="file"
-                        accept="image/jpg,impge/png,image/jpeg,image/gif"
-                        id="file"
-                        name="cerification_img"
-                        onChange={handleCertImgChange}
-                      />
-                    </CertInputImgBox>
-                    <CertImgPreview ref={certificationImgPreviewRef} />
-                  </CertImgBox>
-                  <CertInputBox>
-                    <CertInputLabel>
-                      {selected === EFacility.HOSPITAL ? "병원 연락처(선택)" : "약국 연락처(선택)"}
-                    </CertInputLabel>
-                    <CertInput
-                      type="text"
-                      value={facilityContact}
-                      onChange={(e) => setFacilityContact(e.currentTarget.value)}
+                      ref={facilityAddressDetailRef}
+                      value={facilityAddressDetail}
+                      onChange={(e) => setFacilityAddressDetail(e.currentTarget.value)}
                     />
                   </CertInputBox>
                   <CertInputBox>
-                    <CertInputLabel>정보 수정 수신 방법*</CertInputLabel>
-                    <InfoTakeRadioBox>
-                      <label>
-                        <input
-                          type="radio"
-                          name="info-take"
-                          value={informationTakenWay}
-                          checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.E_MAIL : false}
-                          onChange={() => setInformationTakenWay(EInfoTake.E_MAIL)}
-                        />
-                        <span>이메일</span>
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="info-take"
-                          value={informationTakenWay}
-                          checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.PHONE : false}
-                          onChange={() => setInformationTakenWay(EInfoTake.PHONE)}
-                        />
-                        <span>휴대폰</span>
-                      </label>
-                      <label>
-                        <input
-                          type="radio"
-                          name="info-take"
-                          value={informationTakenWay}
-                          checked={
-                            informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NOT_RECEIVE : false
-                          }
-                          onChange={() => setInformationTakenWay(EInfoTake.NOT_RECEIVE)}
-                        />
-                        <span>받지 않음</span>
-                      </label>
-                    </InfoTakeRadioBox>
-                  </CertInputBox>
-                  <CertInputBoxHours>
-                    <CertInputLabel>운영 시간(선택)</CertInputLabel>
+                    <CertInputLabel>참고 항목</CertInputLabel>
                     <CertInput
                       type="text"
-                      value={facilityHours}
-                      onChange={(e) => setFacilityHours(e.currentTarget.value)}
+                      value={facilityAddressExtra}
+                      onChange={(e) => setFacilityAddressExtra(e.currentTarget.value)}
                     />
-                  </CertInputBoxHours>
-                  <CertInputBoxFeatures>
-                    <CertInputLabel>
-                      {selected === EFacility.HOSPITAL ? "병원 특징(선택)" : "약국 특징(선택)"}
-                    </CertInputLabel>
-                    <CertTextarea
-                      value={facilityFeatures}
-                      onChange={(e) => setFacilityFeatures(e.currentTarget.value)}
+                  </CertInputBox>
+                </CertAddressFooter>
+              </CertPostcodeInputBox>
+              <CertInputBox>
+                <CertInputLabel>사업자 번호*</CertInputLabel>
+                <CertInput
+                  type="text"
+                  value={facilityBusinessNumber}
+                  onChange={(e) => setFacilityBusinessNumber(e.currentTarget.value)}
+                />
+              </CertInputBox>
+              <CertImgBox>
+                <CertInputLabel>자격증 사진*</CertInputLabel>
+                <CertInputImgBox>
+                  <input readOnly={true} type="text" value={imgFileName} placeholder="첨부파일" />
+                  <label htmlFor="file">파일찾기</label>
+                  <input
+                    type="file"
+                    accept="image/jpg,impge/png,image/jpeg,image/gif"
+                    id="file"
+                    name="cerification_img"
+                    onChange={handleCertImgChange}
+                  />
+                </CertInputImgBox>
+                <CertImgPreview ref={certificationImgPreviewRef} />
+              </CertImgBox>
+              <CertInputBox>
+                <CertInputLabel>
+                  {selected === EFacility.HOSPITAL ? "병원 연락처(선택)" : "약국 연락처(선택)"}
+                </CertInputLabel>
+                <CertInput
+                  type="text"
+                  value={facilityContact}
+                  onChange={(e) => setFacilityContact(e.currentTarget.value)}
+                />
+              </CertInputBox>
+              <CertInputBox>
+                <CertInputLabel>정보 수정 수신 방법*</CertInputLabel>
+                <InfoTakeRadioBox>
+                  <label>
+                    <input
+                      type="radio"
+                      name="info-take"
+                      value={informationTakenWay}
+                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.E_MAIL : false}
+                      onChange={() => setInformationTakenWay(EInfoTake.E_MAIL)}
                     />
-                  </CertInputBoxFeatures>
-                </InputBox>
-              </div>
-            ) : (
-              <div ref={unselectedRef}></div>
-            )}
-          </CSSTransition>
-        </SwitchTransition>
+                    <span>이메일</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="info-take"
+                      value={informationTakenWay}
+                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.PHONE : false}
+                      onChange={() => setInformationTakenWay(EInfoTake.PHONE)}
+                    />
+                    <span>휴대폰</span>
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="info-take"
+                      value={informationTakenWay}
+                      checked={
+                        informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NOT_RECEIVE : false
+                      }
+                      onChange={() => setInformationTakenWay(EInfoTake.NOT_RECEIVE)}
+                    />
+                    <span>받지 않음</span>
+                  </label>
+                </InfoTakeRadioBox>
+              </CertInputBox>
+              <CertInputBoxHours>
+                <CertInputLabel>운영 시간(선택)</CertInputLabel>
+                <CertInput
+                  type="text"
+                  value={facilityHours}
+                  onChange={(e) => setFacilityHours(e.currentTarget.value)}
+                />
+              </CertInputBoxHours>
+              <CertInputBoxFeatures>
+                <CertInputLabel>
+                  {selected === EFacility.HOSPITAL ? "병원 특징(선택)" : "약국 특징(선택)"}
+                </CertInputLabel>
+                <CertTextarea value={facilityFeatures} onChange={(e) => setFacilityFeatures(e.currentTarget.value)} />
+              </CertInputBoxFeatures>
+            </InputBox>
+          </>
+        )}
       </InnerBox>
       <NextButton
         className={selected !== null && isFinished ? "is-finished" : ""}

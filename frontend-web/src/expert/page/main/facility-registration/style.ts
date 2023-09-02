@@ -10,27 +10,6 @@ export const Outer = styled.div`
     gap: 1.25rem;
   }
 
-  & .fade-enter {
-    opacity: 0;
-  }
-
-  & .fade-exit {
-    opacity: 1;
-  }
-
-  & .fade-enter-active {
-    opacity: 1;
-  }
-
-  & .fade-exit-active {
-    opacity: 0;
-  }
-
-  & .fade-enter-active,
-  & .fade-exit-active {
-    transition: opacity 300ms;
-  }
-
   @media only screen and (max-width: 768px) {
     padding: 1rem;
   }
@@ -442,7 +421,6 @@ export const NextButton = styled.button`
     color: #151515;
     font-size: 1.25rem;
     font-weight: 600;
-    margin: 1.5rem 0;
 
     @media only screen and (min-width: 769px) {
       align-self: flex-end;
