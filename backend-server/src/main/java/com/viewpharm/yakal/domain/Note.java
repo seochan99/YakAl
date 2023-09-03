@@ -45,5 +45,6 @@ public class Note extends BaseCreateEntity {
         this.description = description;
         this.counsel = counsel;
         this.isDeleted = false;
+        this.isEdit = false;
     }
 }

@@ -7,12 +7,12 @@ import java.util.List;
 
 @Getter
 public class NoteAllDto {
-    private List<NoteDetailDto> data;
+    private List<NoteDetailDto> datalist;
     private PageInfo pageInfo;
 
     @Builder
-    public NoteAllDto(List<NoteDetailDto> data, PageInfo pageInfo) {
-        this.data = data;
+    public NoteAllDto(List<NoteDetailDto> datalist, PageInfo pageInfo) {
+        this.datalist = datalist;
         this.pageInfo = pageInfo;
     }
 }

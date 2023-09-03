@@ -44,7 +44,7 @@ public class SurbeyService {
 
 
         //입력값 유효성 확인
-        if ((requestDto.getContent().length() == 0) || (requestDto.getScore() >= 0)) {
+        if ((requestDto.getContent().length() == 0) || (requestDto.getScore() <= 0)) {
             throw new CommonException(ErrorCode.NOT_EXIST_PARAMETER);
         }
 
@@ -110,7 +110,7 @@ public class SurbeyService {
                 .collect(Collectors.toList());
 
         return AnswerAllDto.builder()
-                .data(listDtos)
+                .datalist(listDtos)
                 .percent(listDtos.size()/14)
                 .build();
     }
@@ -131,7 +131,7 @@ public class SurbeyService {
                 .collect(Collectors.toList());
 
         return AnswerAllDto.builder()
-                .data(listDtos)
+                .datalist(listDtos)
                 .percent(listDtos.size()/14)
                 .build();
     }

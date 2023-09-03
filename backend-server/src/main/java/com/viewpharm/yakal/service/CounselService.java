@@ -101,16 +101,16 @@ public class CounselService {
                 .build();
     }
 
-    public Boolean createNote(Long expertId, Long patientId, Long counselId, NoteRequestDto requestDto) {
+    public Boolean createNote(Long expertId, Long counselId, NoteRequestDto requestDto) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        //환자 확인
-        User patient = userRepository.findByIdAndJob(patientId, EJob.PATIENT).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
 
         //상담 확인
         Counsel counsel = counselRepository.findByIdAndIsDeleted(counselId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COUNSEL));
+
+        //환자 확인
+        User patient = userRepository.findByIdAndJob(counsel.getPatient().getId(), EJob.PATIENT).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
 
         //입력값 유효성 확인
         if ((requestDto.getTitle().length() == 0) || (requestDto.getDescription().length() == 0)) {
@@ -198,7 +198,7 @@ public class CounselService {
                 .collect(Collectors.toList());
 
         return NoteAllDto.builder()
-                .data(list)
+                .datalist(list)
                 .pageInfo(pageInfo)
                 .build();
     }

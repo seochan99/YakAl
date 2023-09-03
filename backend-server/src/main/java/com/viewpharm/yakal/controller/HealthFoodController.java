@@ -1,9 +1,7 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.dto.request.DiagnosisRequestDto;
 import com.viewpharm.yakal.dto.request.HealthFoodRequestDto;
-import com.viewpharm.yakal.dto.response.DiagnosisListDto;
 import com.viewpharm.yakal.dto.response.HealthFoodListDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.HealthFoodService;
@@ -29,16 +27,16 @@ public class HealthFoodController {
         return ResponseDto.ok(healthFoodService.createHealthFood(id, requestDto));
     }
 
-    @PutMapping("/{diagnosisId}")
+    @PutMapping("/{healthfoodId}")
     @Operation(summary = "건강 기능 식품 수정", description = "건강 기능 식품 수정")
-    public ResponseDto<Boolean> updateHealthFood(@UserId Long id, @PathVariable Long diagnosisId, @RequestBody HealthFoodRequestDto requestDto) {
-        return ResponseDto.ok(healthFoodService.updateHealthFood(id, diagnosisId, requestDto));
+    public ResponseDto<Boolean> updateHealthFood(@UserId Long id, @PathVariable Long healthfoodId, @RequestBody HealthFoodRequestDto requestDto) {
+        return ResponseDto.ok(healthFoodService.updateHealthFood(id, healthfoodId, requestDto));
     }
 
-    @DeleteMapping("/{diagnosisId}")
+    @DeleteMapping("/{healthfoodId}")
     @Operation(summary = "건강 기능 식품 삭제", description = "건강 기능 식품 삭제")
-    public ResponseDto<Boolean> deleteHealthFood(@UserId Long id, @PathVariable Long diagnosisId) {
-        return ResponseDto.ok(healthFoodService.deleteHealthFood(id, diagnosisId));
+    public ResponseDto<Boolean> deleteHealthFood(@UserId Long id, @PathVariable Long healthfoodId) {
+        return ResponseDto.ok(healthFoodService.deleteHealthFood(id, healthfoodId));
     }
 
     @GetMapping("/my")

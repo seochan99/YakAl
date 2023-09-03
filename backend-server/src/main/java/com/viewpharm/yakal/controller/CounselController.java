@@ -38,14 +38,14 @@ public class CounselController {
     //List
     @GetMapping("/patient")
     @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("page") Long page, @RequestParam(value = "num", defaultValue = "10") Long num) {
+    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
         return ResponseDto.ok(counselService.getPatientList(id, page, num));
     }
 
     @PostMapping("/{counselId}/note")
     @Operation(summary = "특이사항 추가", description = "특이사항 추가")
-    public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long counselId, @RequestParam Long patientId, @RequestBody NoteRequestDto requestDto) {
-        return ResponseDto.ok(counselService.createNote(id, patientId, counselId, requestDto));
+    public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long counselId, @RequestBody NoteRequestDto requestDto) {
+        return ResponseDto.ok(counselService.createNote(id, counselId, requestDto));
     }
 
     @PutMapping("/{counselId}/note/{noteId}")
@@ -55,7 +55,7 @@ public class CounselController {
         return ResponseDto.ok(counselService.updateNote(id, counselId, requestDto));
     }
 
-    @DeleteMapping("/{counselId}/comment/{noteId}")
+    @DeleteMapping("/{counselId}/note/{noteId}")
     @Operation(summary = "특이사항 삭제", description = "특이사항 삭제하기")
     public ResponseDto<Boolean> deleteNote(@UserId Long id, @PathVariable Long counselId, @PathVariable Long noteId) {
         return ResponseDto.ok(counselService.deleteNote(id, counselId, noteId));
