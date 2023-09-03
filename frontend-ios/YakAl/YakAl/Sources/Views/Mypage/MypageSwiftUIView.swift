@@ -88,8 +88,7 @@ struct MypageSwiftUIView: View {
                     ZStack {
                         Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1).edgesIgnoringSafeArea(.all)
                         ScrollView {
-                            
-                            Button(action: {}) {
+                            NavigationLink(destination: AnyView(TestListSwiftUIView())) {
                                 HStack{
                                     Text("자가 진단 테스트")
                                       .font(
@@ -98,19 +97,21 @@ struct MypageSwiftUIView: View {
                                       )
                                       .foregroundColor(.white)
                                     Spacer()
-                                    Text("\(user.testCnt)/6")
+                                    Text("\(user.testCnt)/7")
                                       .font(
                                         Font.custom("SUIT", size: 20)
                                           .weight(.semibold)
                                       )
                                       .foregroundColor(.white)
-                                }
-                            }.padding(.horizontal, 24)
-                                .padding(.vertical, 28)
-                                .background(Color(red: 0.15, green: 0.4, blue: 0.96))
-                                .cornerRadius(16)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 28)
+                                }.padding(.horizontal, 24)
+                                    .padding(.vertical, 28)
+                                    .background(Color(red: 0.15, green: 0.4, blue: 0.96))
+                                    .cornerRadius(16)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 28)
+                            }
+                                           
+
                             VStack(spacing: 0){
                                 SettingButton(action: {
                                     // 버튼을 클릭했을 때의 액션

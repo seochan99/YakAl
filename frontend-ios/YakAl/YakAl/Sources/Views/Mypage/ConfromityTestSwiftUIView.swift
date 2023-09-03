@@ -1,6 +1,7 @@
 import SwiftUI
 
 
+//MARK: - 버튼 컴포넌트
 struct OptionButton: View {
     var title: String
     @Binding var selected: String?
@@ -21,6 +22,7 @@ struct OptionButton: View {
     }
 }
 
+//MARK: - 질문 뷰
 struct QuestionView: View {
     var index: Int
        var question: String
@@ -49,7 +51,10 @@ struct QuestionView: View {
 
 
 
+//MARK: - 복약순응도 뷰
 struct ConfromityTestSwiftUIView: View {
+    @ObservedObject private var user = User.shared
+    
     // 질문 리스트
     let questions = [
         "얼마나 자주 약 복용하는 것을 잊어버리십니까?",
@@ -65,6 +70,7 @@ struct ConfromityTestSwiftUIView: View {
         "얼마나 자주 약값이 비싸서 다시 약 처방 받는 것을 미루십니까?",
         "약이 떨어지기 전에 얼마나 자주 미리 계획하여 약 처방을 다시 받습니까?"
     ]
+    
     // 각 질문에 대한 선택을 저장하는 배열
     @State private var selectedOptions = Array(repeating: nil as String?, count: 12)
     @State private var displayScore: Bool = false
@@ -94,27 +100,31 @@ struct ConfromityTestSwiftUIView: View {
     
     // 뷰
     var body: some View {
-        ScrollView(showsIndicators: false){
-            VStack(spacing:64){
-                InfoBoxView(title: "복약 순응도 테스트", content: "약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.")
-                
-                VStack(spacing: 80) {
-                    ForEach(questions.indices, id: \.self) { index in
-                        QuestionView(index: index, question: questions[index], selectedOption: $selectedOptions[index])
+        NavigationView{
+            ScrollView(showsIndicators: false){
+                VStack(spacing:64){
+                    InfoBoxView(title: "복약 순응도 테스트", content: "약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.")
+                    
+                    VStack(spacing: 80) {
+                        ForEach(questions.indices, id: \.self) { index in
+                            QuestionView(index: index, question: questions[index], selectedOption: $selectedOptions[index])
+                        }
+                    }.padding(.horizontal,20)
+                    
+                    NavigationLink(destination: AnyView(TestDoneSwiftUIView(score: totalScore))) {
+                        Text("완료")
+                           .font(Font.custom("SUIT", size: 20).weight(.semibold))
+                           .frame(maxWidth: .infinity)  // Fill the horizontal direction
+                           .foregroundColor(allQuestionsAnswered ? Color.white : Color(red: 0.78, green: 0.78, blue: 0.81))
+                           .frame(height: 56)
+                           .background(allQuestionsAnswered ? Color(red: 0.15, green: 0.4, blue: 0.96) : Color(UIColor(red: 0.91, green: 0.91, blue: 0.93, alpha: 1)))
+                           .cornerRadius(8)
                     }
-                }.padding(.horizontal,20)
-
-                BlueHorizontalButton(text: "완료", action: {
-                    print(totalScore)
-                },
-                isEnabled: allQuestionsAnswered
-                                     )
-                
-
-            }
-            
-            
-
+                    .disabled(!allQuestionsAnswered)
+                    .padding(.horizontal,20)
+                    
+                }
+            }.navigationBarBackButtonHidden(true)
         }
     }
 }
