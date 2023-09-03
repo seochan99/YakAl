@@ -20,12 +20,15 @@ struct SettingButton: View {
     }
 
     private var destinationView: AnyView {
-         switch imageName {
-         case "gear":
+         switch title {
+         case "앱 설정":
              return AnyView(SettingSwiftUIView())
-         case "bell":
+         case "알림 설정":
              return AnyView(AlertSettingSwiftUIView())
-//             return AnyView(NotificationSwiftUIView())
+         case "약알에게 바라는 점":
+             return AnyView(WishYakalSwiftUIView())
+         case "자주묻는 질문":
+             return AnyView(AlertSettingSwiftUIView())
          default:
              return AnyView(EmptyView())  // default view if neither matched
          }

@@ -49,6 +49,7 @@
 		98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98926FE72A7785D6001AB165 /* TodoTVC.swift */; };
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
 		9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */; };
+		9897E9BE2AA4B5D0004642CA /* WishYakalSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -119,6 +120,7 @@
 		98926FE72A7785D6001AB165 /* TodoTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTVC.swift; sourceTree = "<group>"; };
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
 		9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSettingSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishYakalSwiftUIView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -172,15 +174,14 @@
 		9811AE422A93C60200FD9B82 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				9897E9BF2AA4B5D9004642CA /* Setting */,
 				9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */,
 				9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */,
-				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
-				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
-				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
 				98470ED62A954B5F00C29ED1 /* ModeButton.swift */,
 				98470ED82A954CA700C29ED1 /* TimeSettingView.swift */,
 				98470EDC2A954EDD00C29ED1 /* KakaoSettingView.swift */,
 				9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */,
+				9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -300,6 +301,16 @@
 				9890C9032A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift */,
 			);
 			path = Calendar;
+			sourceTree = "<group>";
+		};
+		9897E9BF2AA4B5D9004642CA /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
+				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
+				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
+			);
+			name = Setting;
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -637,6 +648,7 @@
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
 				9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */,
+				9897E9BE2AA4B5D0004642CA /* WishYakalSwiftUIView.swift in Sources */,
 				9890C9042A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */,
