@@ -3,6 +3,7 @@ package com.viewpharm.yakal.service;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.UserRepository;
@@ -94,6 +95,17 @@ public class UserService {
         user.setName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
+    }
+  
+    public UserExpertDto getUserExpertInfo(final Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        return UserExpertDto.builder()
+                .userName(user.getName())
+                .eJob(user.getJob())
+                .department(user.getDepartment()).
+                build();
     }
 
     public void updateUserInfo(final Long userId, final String name, final Boolean isDetail, final LocalDate birthday, final ESex sex) {

@@ -20,6 +20,7 @@ public enum ErrorCode {
     NOT_FOUND_RISK("4048", HttpStatus.NOT_FOUND, "해당 위험도 정보가 없습니다."),
     NOT_FOUND_MEDICAL("4049",HttpStatus.NOT_FOUND,"해당 의료기관이 존재하지 않습니다"),
     NOT_FOUND_BOARD("4050", HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
+    NOT_FOUND_EXPERT("4051",HttpStatus.NOT_FOUND,"해당 전문가는 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),

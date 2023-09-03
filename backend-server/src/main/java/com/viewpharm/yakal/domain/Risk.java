@@ -18,6 +18,6 @@ public class Risk {
     @Column(name = "id", columnDefinition = "CHAR(7)")
     private String atcCode;
 
-    @Column(name = "score", columnDefinition = "TINYINT(1)", nullable = false)
+    @Column(name = "score", columnDefinition = "TINYINT", nullable = false)
     private int score;
 }

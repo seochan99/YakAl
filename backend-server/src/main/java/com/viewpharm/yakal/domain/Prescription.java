@@ -46,6 +46,10 @@ public class Prescription {
     @Column(name = "created_date", nullable = false)
     private LocalDate createdDate;
 
+    // 전문가들이 처방전을 볼 수 있는 권한
+    @Column
+    private Boolean isAllow;
+
 
     /* -------------------------------------------------- */
 
@@ -61,9 +65,10 @@ public class Prescription {
     /* -------------------------------------------------- */
 
     @Builder
-    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate) {
+    public Prescription(final User user, final String pharmacyName, final LocalDate prescribedDate,final Boolean isAllow) {
         this.user = user;
         this.pharmacyName = pharmacyName;
         this.prescribedDate = prescribedDate;
+        this.isAllow = isAllow;
     }
 }

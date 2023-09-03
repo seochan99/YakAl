@@ -260,6 +260,22 @@ public class DoseService {
         return isInserted;
     }
 
+    public List<PrescribedDto> getPrescribedDoses(final Long userId){
+        userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        List<DoseRepository.prescribed> prescribeds = doseRepository.findDistinctByKDCodeAndPrescription(userId);
+        List <PrescribedDto> prescribedDtoList = new ArrayList<>();
+        for (DoseRepository.prescribed  p: prescribeds
+             ) {
+            prescribedDtoList.add(
+            PrescribedDto.builder()
+                    .KDCode(p.getKDCode())
+                    .Score(p.getScore())
+                    .prescribedDate(p.getDate())
+                    .build());
+        }
+        return prescribedDtoList;
+    }
+
     public void deleteSchedule(final List<Long> ids) {
         doseRepository.deleteAllByIdInBatch(ids);
     }
