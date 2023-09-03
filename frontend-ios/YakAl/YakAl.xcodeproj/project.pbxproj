@@ -58,6 +58,7 @@
 		9897E9CF2AA4C179004642CA /* InsomniaTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */; };
 		9897E9D12AA4C193004642CA /* HealthFoodSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */; };
 		9897E9D42AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */; };
+		9897E9D72AA4CEB6004642CA /* InfoBoxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9D62AA4CEB6004642CA /* InfoBoxView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -137,6 +138,7 @@
 		9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsomniaTestSwiftUIView.swift; sourceTree = "<group>"; };
 		9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthFoodSwiftUIView.swift; sourceTree = "<group>"; };
 		9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9D62AA4CEB6004642CA /* InfoBoxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoBoxView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		9897E9CD2AA4C15D004642CA /* TestDetail */ = {
 			isa = PBXGroup;
 			children = (
+				9897E9D52AA4CEA1004642CA /* TestDetailCommon */,
 				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
 				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
 				9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */,
@@ -351,6 +354,14 @@
 				9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */,
 			);
 			name = TestDetail;
+			sourceTree = "<group>";
+		};
+		9897E9D52AA4CEA1004642CA /* TestDetailCommon */ = {
+			isa = PBXGroup;
+			children = (
+				9897E9D62AA4CEB6004642CA /* InfoBoxView.swift */,
+			);
+			name = TestDetailCommon;
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -738,6 +749,7 @@
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 				98C12D792A5E6C8E00175EB8 /* HomeVC.swift in Sources */,
 				98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */,
+				9897E9D72AA4CEB6004642CA /* InfoBoxView.swift in Sources */,
 				9897E9D42AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
