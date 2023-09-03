@@ -50,6 +50,14 @@
 		98926FEA2A7785D6001AB165 /* TodoTVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 98926FE82A7785D6001AB165 /* TodoTVC.xib */; };
 		9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */; };
 		9897E9BE2AA4B5D0004642CA /* WishYakalSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */; };
+		9897E9C22AA4C073004642CA /* TestListSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9C12AA4C073004642CA /* TestListSwiftUIView.swift */; };
+		9897E9C62AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */; };
+		9897E9C82AA4C0C1004642CA /* DepressionTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */; };
+		9897E9CA2AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */; };
+		9897E9CC2AA4C157004642CA /* SmokingTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9CB2AA4C157004642CA /* SmokingTestSwiftUIView.swift */; };
+		9897E9CF2AA4C179004642CA /* InsomniaTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */; };
+		9897E9D12AA4C193004642CA /* HealthFoodSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */; };
+		9897E9D42AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -121,6 +129,14 @@
 		98926FE82A7785D6001AB165 /* TodoTVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoTVC.xib; sourceTree = "<group>"; };
 		9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertSettingSwiftUIView.swift; sourceTree = "<group>"; };
 		9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WishYakalSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9C12AA4C073004642CA /* TestListSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestListSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfromityTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepressionTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrinkingTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9CB2AA4C157004642CA /* SmokingTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmokingTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsomniaTestSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthFoodSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticTestSwiftUIView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -174,6 +190,7 @@
 		9811AE422A93C60200FD9B82 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				9897E9C02AA4C062004642CA /* Test */,
 				9897E9BF2AA4B5D9004642CA /* Setting */,
 				9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */,
 				9890C8F12A93C8940007299B /* ProfileSwiftUIView.swift */,
@@ -311,6 +328,29 @@
 				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
 			);
 			name = Setting;
+			sourceTree = "<group>";
+		};
+		9897E9C02AA4C062004642CA /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				9897E9CD2AA4C15D004642CA /* TestDetail */,
+				9897E9C12AA4C073004642CA /* TestListSwiftUIView.swift */,
+			);
+			name = Test;
+			sourceTree = "<group>";
+		};
+		9897E9CD2AA4C15D004642CA /* TestDetail */ = {
+			isa = PBXGroup;
+			children = (
+				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
+				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
+				9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */,
+				9897E9CB2AA4C157004642CA /* SmokingTestSwiftUIView.swift */,
+				9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */,
+				9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */,
+				9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */,
+			);
+			name = TestDetail;
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -642,20 +682,25 @@
 				9888A2802A6D7C8800F507BD /* DetailViewController.swift in Sources */,
 				98C2AE812A925F6200A0FE6B /* CalendarViewController.swift in Sources */,
 				9890C9072A9502060007299B /* CircularProgressBarWithText.swift in Sources */,
+				9897E9C82AA4C0C1004642CA /* DepressionTestSwiftUIView.swift in Sources */,
 				98926FE92A7785D6001AB165 /* TodoTVC.swift in Sources */,
 				98470ED32A9544F600C29ED1 /* BlueHorizontalButton.swift in Sources */,
+				9897E9C22AA4C073004642CA /* TestListSwiftUIView.swift in Sources */,
 				98470EDB2A954CD100C29ED1 /* DatePickerModalView.swift in Sources */,
 				985A28BF2A76B99E00B9943D /* TabBarVC.swift in Sources */,
 				9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */,
+				9897E9CA2AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift in Sources */,
 				9814334C2A91636F00017600 /* MedicationItemRowView.swift in Sources */,
 				9897E9BE2AA4B5D0004642CA /* WishYakalSwiftUIView.swift in Sources */,
 				9890C9042A9500D90007299B /* CalendarTodoHeaderSwiftUIView.swift in Sources */,
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */,
 				98470ED72A954B5F00C29ED1 /* ModeButton.swift in Sources */,
+				9897E9CF2AA4C179004642CA /* InsomniaTestSwiftUIView.swift in Sources */,
 				98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
 				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
+				9897E9C62AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift in Sources */,
 				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
@@ -669,6 +714,7 @@
 				9811AE442A93C61B00FD9B82 /* MypageSwiftUIView.swift in Sources */,
 				9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
+				9897E9CC2AA4C157004642CA /* SmokingTestSwiftUIView.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
@@ -682,6 +728,7 @@
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
 				981433522A916A6800017600 /* MedicationData.swift in Sources */,
 				98C2AE7C2A92414C00A0FE6B /* MedicineDetailView.swift in Sources */,
+				9897E9D12AA4C193004642CA /* HealthFoodSwiftUIView.swift in Sources */,
 				9890C9092A9506200007299B /* CustomTabBar.swift in Sources */,
 				98EC8F4D2A72109300AA698C /* Step2_1VC.swift in Sources */,
 				9890C8FE2A94F6330007299B /* WeekdayHeaderSwiftUIView.swift in Sources */,
@@ -691,6 +738,7 @@
 				98C12D3C2A5E3B8B00175EB8 /* SceneDelegate.swift in Sources */,
 				98C12D792A5E6C8E00175EB8 /* HomeVC.swift in Sources */,
 				98349A892A7C043700071C5D /* CircularProgressBarView.swift in Sources */,
+				9897E9D42AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
