@@ -5,6 +5,17 @@ struct MypageSwiftUIView: View {
     @State private var showEditNicknameModal: Bool = false
     @State private var editedNickname: String = ""
 
+//    // root view
+//    @State var firstNaviLinkActive = false
+    
+//    init() {
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = .white
+//        UINavigationBar.appearance().standardAppearance = appearance
+//        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+//    }
+
     
     var body: some View {
         NavigationView {

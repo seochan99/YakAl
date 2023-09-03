@@ -96,16 +96,17 @@ struct TimeSettingView: View {
 
             }
             .padding(.vertical, 30)
-            .navigationTitle("시간 설정")
+           
+//            .navigationTitle("시간 설정")
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-                Text("뒤로")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-            })
+//            .navigationBarItems(leading: Button(action: {
+//                self.presentationMode.wrappedValue.dismiss()
+//            }) {
+//                Image(systemName: "chevron.left")
+//                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+//                Text("뒤로")
+//                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+//            })
 
             // This is our custom date picker modal
             if isShowingDatePicker {

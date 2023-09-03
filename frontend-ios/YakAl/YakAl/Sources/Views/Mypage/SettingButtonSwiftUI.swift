@@ -32,8 +32,7 @@ struct SettingButton: View {
      }
     
     var body: some View {
-        NavigationLink(destination: SettingSwiftUIView()){
-            Button(action: action) {
+        NavigationLink(destination: destinationView){
                 HStack {
                     if let validImageName = imageName {  // 옵셔널 바인딩을 사용하여 이미지 이름이 nil이 아닌 경우에만 Image를 표시
                         Image(validImageName)
@@ -53,7 +52,6 @@ struct SettingButton: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical,15)
                 .background(Color(red: 1, green: 1, blue: 1))
-            }
         }
     }
 }
