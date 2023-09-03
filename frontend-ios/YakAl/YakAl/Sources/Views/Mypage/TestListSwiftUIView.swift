@@ -75,11 +75,12 @@ struct TestListSwiftUIView: View {
             VStack(spacing: 20) {
                 ForEach(tests, id: \.0) { testName, status, destination in
                     TestButton(testName: testName, status: status, destination: destination)
-                }
+                }.padding(.horizontal,20)
                 Spacer()
+                BlueHorizontalButton(text: "완료된 결과 공유", action: {})
             }
             .padding(.top,40)
-            .padding(.horizontal,20)
+            
         }
     }
      
