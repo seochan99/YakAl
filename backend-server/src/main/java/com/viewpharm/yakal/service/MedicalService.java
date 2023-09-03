@@ -164,13 +164,45 @@ public class MedicalService {
         List<Medical> medicals = medicalRepository.findNearbyMedicalsByDistanceAndEMedical(point, distance, eMedical);
         return convertMedicalListToDtoList(medicals);
     }
-
-    public List<Medical> getAllByRegister(){
-        return medicalRepository.findAllByRegisterTrue();
+    //pagable로 변환해야 할 것 같다.
+    public List<MedicalDto> getAllByRegister(){
+        List<Medical> medicals = medicalRepository.findAllByRegisterTrue();
+        List<MedicalDto> medicalDtoList = new ArrayList<>();
+        for (Medical m: medicals
+        ) {
+            medicalDtoList.add(
+                    MedicalDto.builder()
+                            .id(m.getId())
+                            .medicalName(m.getMedicalName())
+                            .medicalAddress(m.getMedicalAddress())
+                            .medicalTel(m.getMedicalTel())
+                            .eMedical(m.getEMedical())
+                            .isRegister(m.isRegister())
+                            .medicalPoint(new PointDto(m.getMedicalPoint().getX(),m.getMedicalPoint().getY()))
+                            .build()
+            );
+        }
+        return medicalDtoList;
     }
 
-    public List<Medical> getByName(final String name){
-        return medicalRepository.findByMedicalName(name);
+    public List<MedicalDto> getByName(final String name){
+        List<Medical> medicals = medicalRepository.findByMedicalName(name);
+        List<MedicalDto> medicalDtoList = new ArrayList<>();
+        for (Medical m: medicals
+             ) {
+            medicalDtoList.add(
+                    MedicalDto.builder()
+                            .id(m.getId())
+                            .medicalName(m.getMedicalName())
+                            .medicalAddress(m.getMedicalAddress())
+                            .medicalTel(m.getMedicalTel())
+                            .eMedical(m.getEMedical())
+                            .isRegister(m.isRegister())
+                            .medicalPoint(new PointDto(m.getMedicalPoint().getX(),m.getMedicalPoint().getY()))
+                            .build()
+            );
+        }
+        return medicalDtoList;
     }
 
     public Boolean updateMedicalRegister(final Long id){
