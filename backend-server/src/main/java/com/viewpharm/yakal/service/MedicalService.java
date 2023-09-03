@@ -3,6 +3,8 @@ package com.viewpharm.yakal.service;
 import com.viewpharm.yakal.domain.Medical;
 import com.viewpharm.yakal.dto.PointDto;
 import com.viewpharm.yakal.dto.response.MedicalDto;
+import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.type.EMedical;
 import com.viewpharm.yakal.utils.GeometryUtil;
@@ -161,6 +163,21 @@ public class MedicalService {
     public List<MedicalDto> findNearbyMedicalsByDistanceAndEMedical(Point point, double distance, String eMedical) {
         List<Medical> medicals = medicalRepository.findNearbyMedicalsByDistanceAndEMedical(point, distance, eMedical);
         return convertMedicalListToDtoList(medicals);
+    }
+
+    public List<Medical> getAllByRegister(){
+        return medicalRepository.findAllByRegisterTrue();
+    }
+
+    public List<Medical> getByName(final String name){
+        return medicalRepository.findByMedicalName(name);
+    }
+
+    public Boolean updateMedicalRegister(final Long id){
+        Medical medical = medicalRepository.findById(id)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));
+        medical.setRegister(!medical.isRegister());
+        return Boolean.TRUE;
     }
 
 

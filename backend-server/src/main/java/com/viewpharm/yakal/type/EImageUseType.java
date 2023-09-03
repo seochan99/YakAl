@@ -1,5 +1,5 @@
 package com.viewpharm.yakal.type;
 
 public enum EImageUseType {
-    USER, MEDICAL, OCR
+    USER, MEDICAL, OCR , EXPERT
 }

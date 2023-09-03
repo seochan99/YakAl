@@ -44,6 +44,14 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     void deleteAllByIdInBatch(Iterable<Long> longs);
 
+    @Query(value = "SELECT  d.kd_code as KDCode, r.score as score, p.prescribed_date as date FROM doses d " +
+            "JOIN  risks r ON d.risks_id = r.id " +
+            "JOIN prescriptions p ON d.prescription_id = p.id " +
+            "where d.user_id = :userId and p.is_allow = true "+
+            "group by kd_code ,p.prescribed_date " +
+            "order by p.prescribed_date", nativeQuery = true)
+    List<prescribed> findDistinctByKDCodeAndPrescription(@Param("userId") Long userId);
+
     interface oneDaySummary {
 
         Long getTotal();
@@ -60,6 +68,12 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
         String getATCCode();
         EDosingTime getTime();
         List<String> getKDCodes();
+    }
+
+    interface prescribed{
+        String getKDCode();
+        int getScore();
+        LocalDate getDate();
     }
 
 }
