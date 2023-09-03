@@ -20,7 +20,7 @@ public enum ErrorCode {
     NOT_FOUND_RISK("4048", HttpStatus.NOT_FOUND, "해당 위험도 정보가 없습니다."),
     NOT_FOUND_MEDICAL("4049",HttpStatus.NOT_FOUND,"해당 의료기관이 존재하지 않습니다"),
     NOT_FOUND_BOARD("4050", HttpStatus.NOT_FOUND, "해당 게시글이 존재하지 않습니다."),
-    NOT_FOUND_EXPERT("4051", HttpStatus.NOT_FOUND, "해당 전문가가 존재하지 않습니다."),
+    NOT_FOUND_EXPERT("4051",HttpStatus.NOT_FOUND,"해당 전문가는 존재하지 않습니다."),
     NOT_FOUND_PATIENT("4052", HttpStatus.NOT_FOUND, "해당 환자가 존재하지 않습니다."),
     NOT_FOUND_COUNSEL("4053", HttpStatus.NOT_FOUND, "해당 상담이 존재하지 않습니다."),
     NOT_FOUND_NOTE("4054", HttpStatus.NOT_FOUND, "해당 특이사항이 존재하지 않습니다."),
@@ -28,8 +28,6 @@ public enum ErrorCode {
     NOT_FOUND_ANSWER("4056", HttpStatus.NOT_FOUND, "해당 설문결과가 존재하지 않습니다."),
     NOT_FOUND_DIAGNOSIS("4057", HttpStatus.NOT_FOUND, "해당 과거 병명이 존재하지 않습니다."),
     NOT_FOUND_HEALTHFOOD("4058", HttpStatus.NOT_FOUND, "해당 건강기능 식품이 존재하지 않습니다."),
-
-
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),

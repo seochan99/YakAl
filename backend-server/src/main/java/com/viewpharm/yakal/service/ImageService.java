@@ -1,11 +1,13 @@
 package com.viewpharm.yakal.service;
 
 
+import com.viewpharm.yakal.domain.Expert;
 import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.Medical;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.repository.ExpertRepository;
 import com.viewpharm.yakal.repository.ImageRepository;
 import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.repository.UserRepository;
@@ -28,6 +30,7 @@ public class ImageService {
     private final UserRepository userRepository;
     private final MedicalRepository medicalRepository;
     private final ImageRepository imageRepository;
+    private final ExpertRepository expertRepository;
 
     private final String IMAGE_CONTENT_PREFIX = "image/";
 
@@ -42,7 +45,7 @@ public class ImageService {
         }
 
         // File Path Fetch
-        String uuidImageName = UUID.randomUUID().toString() + "." + contentType.substring(IMAGE_CONTENT_PREFIX.length());
+        String uuidImageName = UUID.randomUUID() + "." + contentType.substring(IMAGE_CONTENT_PREFIX.length());
         String filePath = FOLDER_PATH + uuidImageName;
 
         // File Upload
@@ -57,13 +60,15 @@ public class ImageService {
         switch (imageUseType) {
             case USER -> { useObject = userRepository.findById(useId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER)); }
             case MEDICAL -> { useObject = medicalRepository.findById(useId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL)); }
+            case EXPERT -> { useObject = expertRepository.findById(useId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT)); }
         }
 
         // Image Object find
         Image findImage = null;
         switch (imageUseType) {
             case USER -> { findImage = imageRepository.findByUser((User) useObject).orElseThrow(() -> new CommonException(ErrorCode.NOT_EXIST_ENTITY_REQUEST)); }
-            case MEDICAL -> { findImage = imageRepository.findByMedical((Medical) useObject).orElseThrow(() -> new CommonException(ErrorCode.NOT_EXIST_ENTITY_REQUEST)); }
+            case MEDICAL -> { findImage = imageRepository.findByMedical((Medical) useObject).orElseThrow(() -> new CommonException(ErrorCode.NOT_EXIST_ENTITY_REQUEST));}
+            case EXPERT -> { findImage = imageRepository.findByExpert((Expert) useObject).orElseThrow(() -> new CommonException(ErrorCode.NOT_EXIST_ENTITY_REQUEST));}
         }
 
         if (!findImage.getUuidName().equals("0_default_image.png")) {
@@ -84,7 +89,7 @@ public class ImageService {
      */
     public String uploadImage(MultipartFile file) {
         // File Path Fetch
-        String uuidImageName = UUID.randomUUID().toString() + "_" + file.getOriginalFilename();
+        String uuidImageName = UUID.randomUUID() + "_" + file.getOriginalFilename();
         String filePath = FOLDER_PATH + uuidImageName;
 
         // File Upload

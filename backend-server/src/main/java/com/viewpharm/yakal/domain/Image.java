@@ -30,6 +30,10 @@ public class Image {
     @OneToOne(fetch = FetchType.LAZY)
     private Medical medical;
 
+    @JoinColumn(name = "use_expert")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Expert expert;
+
     @Column(name = "uuid_name", columnDefinition = "CHAR(41)", nullable = false)
     private String uuidName;
 
