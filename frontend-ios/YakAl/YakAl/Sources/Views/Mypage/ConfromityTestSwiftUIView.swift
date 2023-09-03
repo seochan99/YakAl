@@ -19,6 +19,8 @@ struct ConfromityTestSwiftUIView: View {
         "약이 떨어지기 전에 얼마나 자주 미리 계획하여 약 처방을 다시 받습니까?"
     ]
     
+    let options = ["전혀없음", "가끔", "대부분", "항상"]
+    
     // 각 질문에 대한 선택을 저장하는 배열
     @State private var selectedOptions = Array(repeating: nil as String?, count: 12)
     @State private var displayScore: Bool = false
@@ -32,13 +34,13 @@ struct ConfromityTestSwiftUIView: View {
       var totalScore: Int {
           selectedOptions.reduce(0) { score, option in
               switch option {
-              case "전혀없음":
+              case options[0]:
                   return score + 1
-              case "가끔":
+              case options[1]:
                   return score + 2
-              case "대부분":
+              case options[2]:
                   return score + 3
-              case "항상":
+              case options[3]:
                   return score + 4
               default:
                   return score
@@ -55,7 +57,7 @@ struct ConfromityTestSwiftUIView: View {
                     
                     VStack(spacing: 80) {
                         ForEach(questions.indices, id: \.self) { index in
-                            RowQuestionView(index: index, question: questions[index], selectedOption: $selectedOptions[index])
+                            RowQuestionView(index: index, question: questions[index], options: self.options, selectedOption: $selectedOptions[index])
                         }
                     }.padding(.horizontal,20)
                     
