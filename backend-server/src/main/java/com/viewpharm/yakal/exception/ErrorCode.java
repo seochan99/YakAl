@@ -44,6 +44,7 @@ public enum ErrorCode {
     FILE_UPLOAD("5021", HttpStatus.BAD_GATEWAY, "File Upload Fail"),
     FILE_DOWNLOAD("5022", HttpStatus.BAD_GATEWAY, "File Download Fail"),
     SEND_NOTIFICATION_ERROR("5023", HttpStatus.BAD_GATEWAY, "Failed To Send Notification"),
+    IDENTIFICATION_ERROR("5024", HttpStatus.BAD_GATEWAY, "Failed To Identify User"),
 
     // Access Denied Error
     ACCESS_DENIED_ERROR("4010", HttpStatus.UNAUTHORIZED, "Access Denied Token Error"),

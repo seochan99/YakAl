@@ -5,6 +5,7 @@ import React from "react";
 declare global {
   interface Window {
     daum?: any; // 주소지 모듈
+    IMP?: any; // 결제 및 인증 모듈
   }
 }
 
