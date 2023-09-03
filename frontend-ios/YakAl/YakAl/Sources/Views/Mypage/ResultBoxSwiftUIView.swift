@@ -9,10 +9,12 @@ struct ResultBoxSwiftUIView: View {
     
     // 결과 변환 
     func getResultText() -> String {
+        print(title)
+        print(score)
            switch title {
            case "복약 순응도 테스트":
                return "\(score)/48점 입니다"
-           case "우울증 선별검사 (PHQ-9)":
+           case "우울증 선별검사 (PHQ-9)":
                if score <= 4 {
                    return "정상 입니다."
                } else if score <= 9 {
