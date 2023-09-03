@@ -23,8 +23,8 @@ struct SettingButton: View {
          switch imageName {
          case "gear":
              return AnyView(SettingSwiftUIView())
-         case "icon-line-bell":
-             return AnyView(SettingSwiftUIView())
+         case "bell":
+             return AnyView(AlertSettingSwiftUIView())
 //             return AnyView(NotificationSwiftUIView())
          default:
              return AnyView(EmptyView())  // default view if neither matched

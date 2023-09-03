@@ -118,9 +118,10 @@ struct MypageSwiftUIView: View {
                                 SettingButton(action: {
                                     // 버튼을 클릭했을 때의 액션
                                 }, imageName: "bell", title: "알림 설정")
-                                SettingButton(action: {
-                                    // 버튼을 클릭했을 때의 액션
-                                }, imageName: "house-home", title: "내 위치 설정")
+                                // now location is next version active
+//                                SettingButton(action: {
+//                                    // 버튼을 클릭했을 때의 액션
+//                                }, imageName: "house-home", title: "내 위치 설정")
                             }
                             VStack(spacing: 0){
                                 SettingButton(action: {
