@@ -1,11 +1,12 @@
-//
-//  WishYakal.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/09/03.
-//
-
 import SwiftUI
+
+extension View {
+    func dismissKeyboardOnTap() -> some View {
+        self.onTapGesture {
+            UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        }
+    }
+}
 
 struct WishYakalSwiftUIView: View {
     @State private var feedback: String = ""
@@ -70,6 +71,8 @@ struct WishYakalSwiftUIView: View {
             
         }
             .padding(.top,40)
+            .dismissKeyboardOnTap()  // 키보드 닫기 동작 추가
+
     }
 }
 
