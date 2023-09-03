@@ -1,10 +1,3 @@
-//
-//  DepressionTestSwiftUIView.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/09/03.
-//
-
 import SwiftUI
 
 struct DepressionTestSwiftUIView: View {

@@ -1,57 +1,5 @@
 import SwiftUI
 
-
-//MARK: - 버튼 컴포넌트
-struct OptionButton: View {
-    var title: String
-    @Binding var selected: String?
-    
-    var body: some View {
-        Button(action: {
-            self.selected = self.title
-        }) {
-            VStack {
-                Image(selected == title ? "Check_fill" : "Check_disable")
-                                                   .resizable()
-                                                   .frame(width: 36, height: 36)
-                Text(title)
-                    .font(Font.custom("SUIT", size: 14).weight(.medium))
-                    .foregroundColor(selected == title ? Color.blue : Color.gray)
-            }
-        }
-    }
-}
-
-//MARK: - 질문 뷰
-struct QuestionView: View {
-    var index: Int
-       var question: String
-    @Binding var selectedOption: String?
-
-
-    
-    var body: some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("\(index + 1). \(question)") // 인덱스를 붙여서 표시
-                .font(Font.custom("SUIT", size: 15).weight(.medium))
-                .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-            HStack {
-                OptionButton(title: "전혀없음", selected: $selectedOption)
-                Spacer()
-                OptionButton(title: "가끔", selected: $selectedOption)
-                Spacer()
-                OptionButton(title: "대부분", selected: $selectedOption)
-                Spacer()
-                OptionButton(title: "항상", selected: $selectedOption)
-            }
-        }.frame(maxWidth:.infinity)
-            .padding(.horizontal,20)
-    }
-}
-
-
-
-//MARK: - 복약순응도 뷰
 struct ConfromityTestSwiftUIView: View {
     @ObservedObject private var user = User.shared
     
@@ -107,11 +55,11 @@ struct ConfromityTestSwiftUIView: View {
                     
                     VStack(spacing: 80) {
                         ForEach(questions.indices, id: \.self) { index in
-                            QuestionView(index: index, question: questions[index], selectedOption: $selectedOptions[index])
+                            RowQuestionView(index: index, question: questions[index], selectedOption: $selectedOptions[index])
                         }
                     }.padding(.horizontal,20)
                     
-                    NavigationLink(destination: AnyView(TestDoneSwiftUIView(score: totalScore))) {
+                    NavigationLink(destination: AnyView(TestDoneSwiftUIView(score: totalScore,Testtitle: "복약 순응도 테스트", testContent: "복 약 순응도가 낮은 상황에서는 의사의 처방 및 약사의 복약지도가 환자의 건강상태를 개선시키는 데 어려움이 있습니다. 해당되는 이용자에게는 적절한 복약 알림과 복약 현황 파악을 통해 복약 순응도를 높일 수 있습니다."))) {
                         Text("완료")
                            .font(Font.custom("SUIT", size: 20).weight(.semibold))
                            .frame(maxWidth: .infinity)  // Fill the horizontal direction
@@ -124,18 +72,12 @@ struct ConfromityTestSwiftUIView: View {
                     .padding(.horizontal,20)
                     
                 }
-            }.navigationBarBackButtonHidden(true)
-        }
+            }
+        }.navigationBarTitle("", displayMode: .inline)
+        .navigationBarBackButtonHidden(true)
     }
 }
 
-struct TestDoneSwiftUIView: View {
-    var score: Int
-    
-    var body: some View {
-        Text("Your Score: \(score)")
-    }
-}
 
 struct ConfromityTestSwiftUIView_Previews: PreviewProvider {
     static var previews: some View {

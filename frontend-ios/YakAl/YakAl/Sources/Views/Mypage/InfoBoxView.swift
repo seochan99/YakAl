@@ -20,10 +20,8 @@ struct InfoBoxView: View {
                 Text(content)
                     .font(Font.custom("SUIT", size: 14).weight(.medium))
                     .foregroundColor(Color(red: 0.38, green: 0.38, blue: 0.45))
-                    .frame(width: 340, alignment: .topLeading)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .frame(height: 74) // Height set to 74
             .padding(.horizontal, 20) // Side padding
             .padding(.vertical, 20) // Vertical padding
             .background(Color(red: 0.96, green: 0.96, blue: 0.98)) // Background color
