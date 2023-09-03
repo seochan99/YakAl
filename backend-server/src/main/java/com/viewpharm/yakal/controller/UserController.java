@@ -2,6 +2,7 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.dto.request.IdentifyDto;
 import com.viewpharm.yakal.dto.request.UpdateIsAllowedNotificationDto;
 import com.viewpharm.yakal.dto.request.UpdateIsDetailDto;
 import com.viewpharm.yakal.dto.request.UpdateNameDto;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import okhttp3.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +40,8 @@ public class UserController {
         final User user = userService.getUserInfo(id);
         final UserInfoDto userInfoDto = UserInfoDto.builder()
                 .name(user.getName())
+                .birthday(user.getBirthday())
+                .tel(user.getTel())
                 .build();
 
         return ResponseDto.ok(userInfoDto);
@@ -49,6 +53,13 @@ public class UserController {
         userService.updateUserInfo(
                 id, updateUserInfoDto.getName(), updateUserInfoDto.getIsDetail(), updateUserInfoDto.getBirthday(), updateUserInfoDto.getSex()
         );
+        return ResponseDto.ok(null);
+    }
+
+    @PatchMapping("/identify")
+    @Operation(summary = "사용자 본인인증")
+    public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
+        userService.identify(id, identifyDto.getImpUid());
         return ResponseDto.ok(null);
     }
 

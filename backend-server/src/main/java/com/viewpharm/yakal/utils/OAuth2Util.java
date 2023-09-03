@@ -2,7 +2,6 @@ package com.viewpharm.yakal.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nimbusds.jose.shaded.gson.JsonParser;
-import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import io.jsonwebtoken.Claims;
