@@ -79,7 +79,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:itemCount="3"
-            tools:listitem="@layout/item_home_pill_sub" />
+            tools:listitem="@layout/item_pill_childen" />
     </LinearLayout>
 
 

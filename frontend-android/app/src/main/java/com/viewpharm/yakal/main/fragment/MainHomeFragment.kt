@@ -3,6 +3,9 @@ package com.viewpharm.yakal.main.fragment
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.graphics.Color
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +19,7 @@ import com.viewpharm.yakal.main.activity.MainActivity
 import com.viewpharm.yakal.main.activity.MainCallBack
 import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
 import com.viewpharm.yakal.type.ETakingTime
+import timber.log.Timber
 
 class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
      override val baseViewModel: HomeTodoViewModel by lazy {
@@ -34,8 +38,12 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             // Data 관리
             adapter = PillParentAdapter(baseViewModel.schedules.value!!,
                 object : MainCallBack.ScheduleCallBack {
-                    override fun onScheduleCheckButtonClick(eTakingTime: ETakingTime) {
+                    override fun onTodoCheckButtonClick(eTakingTime: ETakingTime) {
                         baseViewModel.updateSchedule(eTakingTime)
+                    }
+
+                    override fun onTodoCheckButtonClick(eTakingTime: ETakingTime, todoId: Int) {
+                        baseViewModel.updateTodo(eTakingTime, todoId)
                     }
 
                     override fun onClickItemView(eTakingTime: ETakingTime) {
@@ -54,9 +62,33 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
                 }
             )
 
+            animation = null // 애니메이션 제거
+
             // 리사이클러뷰의 크기가 변할 일이 없으므로,
             // 그럼 누구 새로 들어오거나 나갈때 아이템들의 자리만 다시 잡아준다. (리소스 최적화)
             setHasFixedSize(true)
+        }
+
+        binding.todayTakingTextView.text = baseViewModel.takingText.value.let {
+            if (it!! != "오늘 복용해야 하는 약은\n없습니다.") {
+                val takingText: String = it
+                takingText.apply {
+                    val start = this.indexOf("총")
+                    val end = this.indexOf("개") + 1
+
+                    SpannableStringBuilder(this).apply {
+                        setSpan(
+                            ForegroundColorSpan(Color.parseColor("#2666F6")),
+                            start,
+                            end,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
+                    }
+                }
+            }
+            else {
+                "오늘 복용해야 하는 약은\n없습니다."
+            }
         }
     }
 
@@ -110,7 +142,7 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
         }
 
         baseViewModel.schedules.observe(viewLifecycleOwner) {
-//            (binding.todayTakingScheduleMainRecyclerView.adapter as PillParentAdapter).submitList(it)
+            (binding.todayTakingScheduleMainRecyclerView.adapter as PillParentAdapter).submitList(it)
         }
     }
 

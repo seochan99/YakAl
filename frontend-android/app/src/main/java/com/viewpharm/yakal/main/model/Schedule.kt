@@ -4,8 +4,8 @@ import com.viewpharm.yakal.type.ETakingTime
 
 data class Schedule (
     val eTakingTime: ETakingTime,
-    var isCompleted : Boolean,
-    var isExpanded : Boolean,
+    val isCompleted : Boolean,
+    val isExpanded : Boolean,
     val todos : List<PillTodo>
 ) {
     companion object {

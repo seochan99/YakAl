@@ -4,7 +4,8 @@ import com.viewpharm.yakal.type.ETakingTime
 
 class MainCallBack {
     interface ScheduleCallBack {
-        fun onScheduleCheckButtonClick(eTakingTime: ETakingTime)
+        fun onTodoCheckButtonClick(eTakingTime: ETakingTime)
+        fun onTodoCheckButtonClick(eTakingTime: ETakingTime, todoId : Int)
         fun onClickItemView(eTakingTime: ETakingTime)
     }
 
