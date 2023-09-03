@@ -26,6 +26,9 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
+import ErrorPage from "@/expert/page/error-page";
+import LoadingPage from "@/expert/page/loading-page";
+import { useGetUserQuery } from "@/expert/api/user.ts";
 
 export function Main() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,19 +44,15 @@ export function Main() {
     { path: "/expert/info", name: "내 정보", icon: AssignmentIndOutlinedIcon },
   ];
 
-  const data = {
-    name: "홍길동",
-  };
+  const { data, isLoading, isError } = useGetUserQuery(null);
 
-  // const { data, isLoading, isError } = useGetUserQuery(null);
+  if (isLoading) {
+    return <LoadingPage />;
+  }
 
-  // if (isLoading || !data) {
-  //   return <LoadingPage />;
-  // }
-
-  // if (isError) {
-  //   return <ErrorPage />;
-  // }
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   const currentNavItem = navRouter.findLast((navItem) => location.pathname.startsWith(navItem.path));
 
