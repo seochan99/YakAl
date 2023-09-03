@@ -7,7 +7,6 @@ import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.repository.NotificationRepository;
-import com.viewpharm.yakal.utils.NotificationUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +26,6 @@ import java.util.List;
 public class NotificationService {
 
     private final NotificationRepository notificationRepository;
-    private final NotificationUtil notificationUtil;
     private final UserRepository userRepository;
 
     public List<NotificationDto> readNotification(Long userId, Long pageNum, Long num) {

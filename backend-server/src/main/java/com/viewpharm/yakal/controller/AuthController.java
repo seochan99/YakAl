@@ -25,10 +25,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -77,7 +79,7 @@ public class AuthController {
      */
     @GetMapping("/kakao/callback")
     @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
         final String accessToken = oAuth2Util.getKakaoAccessToken(code);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
 
@@ -86,7 +88,7 @@ public class AuthController {
 
     @GetMapping("/google/callback")
     @Operation(summary = "Google 웹 로그인", description = "Google 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception{
+    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
         final String accessToken = oAuth2Util.getGoogleAccessToken(code);
         final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
 
@@ -162,6 +164,8 @@ public class AuthController {
         } catch (Exception e) {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
+
+        authService.saveLoginTime(LocalDate.now());
 
         map.put("validity", EValidity.VALID.toString());
         return ResponseDto.ok(map);

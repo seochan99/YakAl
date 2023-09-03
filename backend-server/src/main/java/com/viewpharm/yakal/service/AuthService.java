@@ -1,9 +1,11 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
+import com.viewpharm.yakal.domain.LoginLog;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.repository.ImageRepository;
+import com.viewpharm.yakal.repository.LoginLogRepository;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.type.EImageUseType;
@@ -22,6 +24,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -37,6 +40,7 @@ import java.util.Map;
 public class AuthService {
 
     private final UserRepository userRepository;
+    private final LoginLogRepository loginLogRepository;
     private final JwtProvider jwtProvider;
     private final OAuth2Util oAuth2Util;
     private final ImageRepository imageRepository;
@@ -53,13 +57,13 @@ public class AuthService {
                 url = oAuth2Util.getKakaoRedirectUrl();
             }
             case GOOGLE -> {
-                 url = oAuth2Util.getGoogleRedirectUrl();
+                url = oAuth2Util.getGoogleRedirectUrl();
             }
             case APPLE -> {
                 url = oAuth2Util.getAppleRedirectUrl();
             }
             default -> {
-                assert (true): "Invalid Type Error";
+                assert (true) : "Invalid Type Error";
             }
         }
 
@@ -84,7 +88,7 @@ public class AuthService {
                 socialId = oAuth2Util.getAppleUserInformation(accessToken);
             }
             default -> {
-                assert (false): "Invalid Type Error";
+                assert (false) : "Invalid Type Error";
             }
         }
 
@@ -97,22 +101,22 @@ public class AuthService {
         final User user = userRepository.findBySocialIdAndLoginProvider(socialId, loginProvider)
                 .orElseGet(() -> userRepository.save(new User(finalSocialId, loginProvider, role, null)));
 
-        if (user.getImage() == null){
+        if (user.getImage() == null) {
             user.setImage(imageRepository.save(
                     Image.builder()
-                    .useObject(user)
-                    .imageUseType(EImageUseType.USER)
-                    .uuidName("0_default_image.png")
-                    .type("image/png")
-                    .path(FOLDER_PATH + "0_default_image.png").build()));
+                            .useObject(user)
+                            .imageUseType(EImageUseType.USER)
+                            .uuidName("0_default_image.png")
+                            .type("image/png")
+                            .path(FOLDER_PATH + "0_default_image.png").build()));
 
             List<Prescription> prescriptionList = new ArrayList<>();
             prescriptionList.add(prescriptionRepository.save(
                     Prescription.builder()
-                    .user(user)
-                    .pharmacyName("default")
-                    .prescribedDate(LocalDate.now())
-                    .build()));
+                            .user(user)
+                            .pharmacyName("default")
+                            .prescribedDate(LocalDate.now())
+                            .build()));
 
             user.setPrescriptions(prescriptionList);
 
@@ -158,5 +162,10 @@ public class AuthService {
         response.addCookie(accessTokenCookie);
 
         response.sendRedirect(FRONTEND_HOST + "/login/social/" + loginProvider.toString().toLowerCase());
+    }
+
+    public void saveLoginTime(LocalDate date) {
+        loginLogRepository.save(LoginLog.builder()
+                .loginTime(date).build());
     }
 }
