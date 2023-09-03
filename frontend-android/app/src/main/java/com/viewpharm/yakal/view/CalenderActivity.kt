@@ -1,20 +1,9 @@
 package com.viewpharm.yakal.view
 
-import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.viewpharm.yakal.R
-import com.viewpharm.yakal.adapter.CalendarAdapter
-import com.viewpharm.yakal.main.view.PillTodoAdapter
 import com.viewpharm.yakal.databinding.ActivityCalenderBinding
-import com.viewpharm.yakal.main.model.Schedule
-import com.viewpharm.yakal.type.ETakingTime
-import com.viewpharm.yakal.dialog.CalendarBottomDialog
-import com.viewpharm.yakal.util.CalendarUtil
-import timber.log.Timber
 import java.time.LocalDate
 
 class CalenderActivity : AppCompatActivity() {

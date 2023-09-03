@@ -3,18 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="todo"
             type="com.viewpharm.yakal.main.model.PillTodo" />
 
     </data>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="5dp"
-        android:paddingEnd="5dp">
+        android:background="@color/white"
+        app:cardCornerRadius="0dp"
+        app:strokeWidth="0dp" >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/takingScheduleSubItem"
@@ -42,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="약품명 - 약품"
+                android:text="@{todo.name}"
                 android:textColor="@color/black"
 
                 android:textSize="17sp"
@@ -55,7 +57,7 @@
                 android:layout_width="wrap_content"
 
                 android:layout_height="wrap_content"
-                android:text="해열, 진통, 소염제"
+                android:text="@{todo.effect}"
                 android:textColor="#FF90909F"
                 android:textSize="12sp"
 
@@ -72,6 +74,8 @@
                 android:background="@drawable/btn_home_bell"
                 android:src="@drawable/ic_custom_overlap"
                 android:layout_marginEnd="10dp"
+
+                android:visibility="@{todo.isOverLap ? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toBottomOf="@+id/takingScheduleSubCheckBox"
                 app:layout_constraintEnd_toStartOf="@+id/riskColorView"
                 app:layout_constraintTop_toTopOf="@+id/takingScheduleSubCheckBox" />
@@ -92,6 +96,7 @@
                 android:layout_width="24dp"
                 android:layout_height="24dp"
 
+                android:checked="@{todo.isTaken}"
                 android:button="@null"
                 android:background="@drawable/checkbox_small_white"
                 android:layout_marginEnd="16dp"
@@ -100,6 +105,5 @@
                 app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
                 app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

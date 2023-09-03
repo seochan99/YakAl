@@ -6,5 +6,28 @@ data class Schedule (
     val eTakingTime: ETakingTime,
     var isCompleted : Boolean,
     var isExpanded : Boolean,
-    val pills : List<PillTodo>
-)
+    val todos : List<PillTodo>
+) {
+    companion object {
+        fun getInVisibleSchedule() : Schedule {
+            return Schedule(
+                ETakingTime.INVISIBLE,
+                isCompleted = false,
+                isExpanded = false,
+                todos = listOf()
+            )
+        }
+    }
+
+    fun getTotalCnt() : String {
+        return "${todos.size.toString()} 개"
+    }
+
+    override fun toString(): String {
+
+        return "Schedule(eTakingTime=$eTakingTime,\n" +
+                "isCompleted=$isCompleted,\n" +
+                "isExpanded=$isExpanded,\n" +
+                "todos=$todos)\n"
+    }
+}

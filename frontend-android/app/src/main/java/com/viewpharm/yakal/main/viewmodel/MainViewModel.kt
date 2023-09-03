@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.viewpharm.yakal.base.BaseViewModel
 import com.viewpharm.yakal.event.Event
-import com.viewpharm.yakal.model.Pill
 
 class MainViewModel: BaseViewModel() {
     private val _overLapEvent = MutableLiveData<Event<Unit>>()
     val overLapEvent : LiveData<Event<Unit>> = _overLapEvent
-    var pills : List<Pill> = listOf()
 
     private val _calendarEvent = MutableLiveData<Event<Unit>>()
     val calendarEvent : LiveData<Event<Unit>> = _calendarEvent
@@ -24,11 +22,6 @@ class MainViewModel: BaseViewModel() {
 
     private val _deleteLocationEvent = MutableLiveData<Event<Unit>>()
     val deleteLocationEvent : LiveData<Event<Unit>> = _deleteLocationEvent
-
-    fun onOverLapEvent(pills : List<Pill>) {
-        this.pills = pills
-        _overLapEvent.value = Event(Unit)
-    }
 
     fun onCalendarEvent() {
         _calendarEvent.value = Event(Unit)

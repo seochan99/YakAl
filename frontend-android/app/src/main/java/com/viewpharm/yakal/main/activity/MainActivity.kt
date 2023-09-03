@@ -34,7 +34,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
     override fun initListener() {
         super.initListener()
         viewModel.overLapEvent.observe(this) {
-            OverlapBottomDialog(viewModel.pills)
+            OverlapBottomDialog(listOf())
                 .show(supportFragmentManager, OverlapBottomDialog.TAG)
         }
 

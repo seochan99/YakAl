@@ -5,26 +5,20 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.viewpharm.yakal.main.view.PillAdapter
 import com.viewpharm.yakal.databinding.FragmentOverlapBottomSheetBinding
-import com.viewpharm.yakal.model.Pill
+import com.viewpharm.yakal.main.model.PillTodo
 import timber.log.Timber
 
 class OverlapBottomDialog(
-    private val overlapPills : List<Pill>?) : BottomSheetDialogFragment() {
+    private val overlapPills : List<PillTodo>) : BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "OverlapBottomDialog"
     }
 
     private lateinit var binding: FragmentOverlapBottomSheetBinding
-    private var temp = listOf(
-        Pill("1", false),
-        Pill("2", true),
-        Pill("3", false)
-    )
+    private var temp: List<PillTodo> = listOf()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         Timber.d("onCreateDialog")
@@ -61,11 +55,11 @@ class OverlapBottomDialog(
     }
 
     private fun _init() {
-        binding.overlapContentTextView.text = "간단한 설명 주세요..."
-        binding.overlapRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = PillAdapter(temp, null)
-            setHasFixedSize(true)
-        }
+//        binding.overlapContentTextView.text = "간단한 설명 주세요..."
+//        binding.overlapRecyclerView.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = PillAdapter(temp, null)
+//            setHasFixedSize(true)
+//        }
     }
 }

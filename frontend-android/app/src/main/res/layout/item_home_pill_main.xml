@@ -4,105 +4,110 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable
             name="schedule"
             type="com.viewpharm.yakal.main.model.Schedule" />
     </data>
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/takingScheduleMainCardView"
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="3dp"
+        app:strokeWidth="2dp"
+        app:strokeColor="@color/no_select_gray"
+        android:animateLayoutChanges="true">
 
         <LinearLayout
             android:id="@+id/takingScheduleLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:background="@drawable/view_round_todo_off"
-            android:layout_margin="5dp"
-            android:padding="3dp"
-            android:elevation="4dp">
+            android:background="@color/white"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/takingScheduleMainItem"
                 android:layout_width="match_parent"
                 android:layout_height="85dp"
-                android:background="@drawable/it_list_pill"
-                android:layout_marginTop="2dp">
+                android:layout_marginTop="2dp"
+                android:background="@drawable/it_list_pill">
 
                 <ImageView
                     android:id="@+id/takingScheduleMainImageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_custom_list_pill_off"
+                    android:layout_marginStart="16dp"
                     android:background="@drawable/view_round"
 
-                    android:layout_marginStart="16dp"
+                    android:src="@drawable/ic_custom_list_pill_off"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/takingScheduleMainTimeView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="아침"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
                     style="@style/default_font"
+                    android:layout_width="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{schedule.ETakingTime.toString()}"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView"
                     app:layout_constraintStart_toEndOf="@id/takingScheduleMainImageView"
-                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
-                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
+                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView" />
 
                 <TextView
                     android:id="@+id/takingScheduleMainCountView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="n개"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:textColor="#FF90909F"
                     style="@style/default_font"
+                    android:layout_width="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
+                    android:text="@{schedule.getTotalCnt()}"
+                    android:textColor="#FF90909F"
+                    android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView"
                     app:layout_constraintStart_toEndOf="@id/takingScheduleMainTimeView"
-                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
-                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
+                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView" />
 
                 <TextView
                     android:id="@+id/takingScheduleMainCompeletedTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-
-                    android:text="모두 완료"
-                    android:textSize="15sp"
-                    android:textColor="#C6C6CF"
-                    android:textStyle="bold"
                     style="@style/default_font"
+                    android:layout_width="wrap_content"
 
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="8dp"
+                    android:text="모두 완료"
+                    android:textColor="@color/complete_blue"
+                    android:textSize="15sp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView"
                     app:layout_constraintEnd_toStartOf="@id/takingScheduleMainCheckBox"
-                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
-                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
+                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView" />
 
                 <CheckBox
                     android:id="@+id/takingScheduleMainCheckBox"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
 
-                    android:button="@null"
-                    android:background="@drawable/checkbox_big_white"
                     android:layout_marginEnd="16dp"
+                    android:background="@drawable/checkbox_big_white"
+                    android:button="@null"
+                    android:checked="@{schedule.isCompleted}"
 
+                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView"
-                    app:layout_constraintBottom_toBottomOf="@id/takingScheduleMainImageView" />
+                    app:layout_constraintTop_toTopOf="@id/takingScheduleMainImageView" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
@@ -120,25 +125,20 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/todayTakingScheduleSubRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:elevation="3dp">
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_home_pill_sub"
+                tools:itemCount="3"
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/todayTakingScheduleSubRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_home_pill_sub"
-                    tools:itemCount="3"
+                android:visibility="gone"
 
-                    android:visibility="gone"
 
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <View
                 android:id="@+id/inactiveExpandView"
@@ -147,7 +147,7 @@
                 android:backgroundTint="#E9E9EE"
                 android:background="@drawable/view_round"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="2dp" />
+                android:layout_marginBottom="5dp" />
         </LinearLayout>
-    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
