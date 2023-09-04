@@ -1,12 +1,7 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.Date;
-import com.viewpharm.yakal.domain.Medical;
-import com.viewpharm.yakal.domain.Notification;
-import com.viewpharm.yakal.dto.response.LoginLogListDto;
-import com.viewpharm.yakal.dto.response.LoginLogListForMonthDto;
-import com.viewpharm.yakal.dto.response.NotificationPerHourListDto;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.service.LoginLogService;
 import com.viewpharm.yakal.service.MedicalService;
 import com.viewpharm.yakal.service.NotificationService;
@@ -14,22 +9,16 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
-import org.apache.xpath.operations.Bool;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.YearMonth;
-=======
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
->>>>>>> c6916a5afd9a63c95994eafe8e382a6d2753ba96
 import java.util.List;
 
 @Slf4j
