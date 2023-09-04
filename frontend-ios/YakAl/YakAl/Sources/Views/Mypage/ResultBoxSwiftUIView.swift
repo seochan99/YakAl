@@ -46,8 +46,8 @@ struct ResultBoxSwiftUIView: View {
                } else {
                    return "심한 불면증이 있습니다."
                }
-           case "현재 복용 중인 건강기능식품":
-               return "result"  // Replace with real data
+//           case "현재 복용 중인 건강기능식품":
+//               return "result"  // 
            default:
                return "결과 정보가 없습니다."
            }

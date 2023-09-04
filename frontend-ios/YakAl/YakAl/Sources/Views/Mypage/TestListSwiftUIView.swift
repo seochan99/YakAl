@@ -65,7 +65,7 @@ struct TestListSwiftUIView: View {
              ("음주력 테스트", TestStatus.inProgress, AnyView(DrinkingTestSwiftUIView())),
              ("흡연력 테스트", TestStatus.incomplete, AnyView(SmokingTestSwiftUIView())),
              ("불면증 심각도", TestStatus.complete, AnyView(InsomniaTestSwiftUIView())),
-             ("현재 복용 중인 건강기능식품", TestStatus.inProgress, AnyView(HealthFoodSwiftUIView())),
+//             ("현재 복용 중인 건강기능식품", TestStatus.inProgress, AnyView(HealthFoodSwiftUIView())),
              ("1년간 처방 받은 병의 진단명", TestStatus.incomplete, AnyView(DiagnosticTestSwiftUIView()))
       ]
       

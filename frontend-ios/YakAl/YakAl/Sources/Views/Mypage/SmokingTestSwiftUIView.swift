@@ -25,6 +25,7 @@ struct SmokingTestSwiftUIView: View {
         ])
     ]
     
+    
     var body: some View {
         NavigationView{
             ScrollView(showsIndicators: false) {
@@ -51,6 +52,7 @@ struct SmokingTestSwiftUIView: View {
                                 .keyboardType(.numberPad)
                                 .padding(.horizontal,32)
                                 .padding(.bottom, 10)
+                            
                         }else {
                             // Answer 반복문
                             ForEach(0..<questions[currentQuestionIndex].answers.count, id: \.self) { index in
