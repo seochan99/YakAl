@@ -69,6 +69,7 @@ public class BoardService {
     public BoardDetailDto readBoard(Long userId, Long boardId) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
         //게시판 확인
         Board board = boardRepository.findByIdAndIsDeleted(boardId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
@@ -110,7 +111,7 @@ public class BoardService {
         }
 
         //게시글 작성 유저와 요청 유저 비교
-        if (board.getUser().getId() != user.getId())
+        if (board.getUser().getId() != userId)
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
         //입력 유효한지 확인
@@ -144,16 +145,13 @@ public class BoardService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_BOARD));
 
         //게시글 작성 유저와 요청 유저 비교
-        if (board.getUser().getId() != user.getId())
+        if (board.getUser().getId() != userId)
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
         board.deleteBoard();
 
         return Boolean.TRUE;
     }
-
-    //최신순만 만듬, 좋아요 수, 조회수도 만들어야함
-    //슬라이드 방식인지 페이지 선택하는 방식인지?
 
     //모든게시글 리스트 가져오기
     public List<BoardListDto> getAllBoardList(Long userId, String sorting, Long pageIndex, Long pageSize) {

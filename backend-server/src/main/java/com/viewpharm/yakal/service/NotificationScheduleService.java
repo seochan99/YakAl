@@ -40,8 +40,6 @@ public class NotificationScheduleService {
         LocalDate nowDate = LocalDate.now();
         LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
-        // 레포로 옮기기
-        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
         List<UserRepository.UserNotificationForm> userInformations = userRepository.findByDateAndBreakfastTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
@@ -60,20 +58,13 @@ public class NotificationScheduleService {
 
             notificationRepository.save(notification);
 
-            if (user.getIsIos()) { //ios 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-            } else { //안드로이드 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
-            }
+
+            notificationUserRequestDto = NotificationUserRequestDto.builder()
+                    .targetUserId(userId)
+                    .title(title)
+                    .body(content).build();
+            notificationUtil.sendNotificationByToken(notificationUserRequestDto);
+
         }
     }
 
@@ -88,8 +79,6 @@ public class NotificationScheduleService {
         LocalDate nowDate = LocalDate.now();
         LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
-        // 레포로 옮기기
-        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
         List<UserRepository.UserNotificationForm> userInformations = userRepository.findByDateAndLunchTime(nowDate, nowTime);
         NotificationUserRequestDto notificationUserRequestDto;
@@ -108,20 +97,11 @@ public class NotificationScheduleService {
 
             notificationRepository.save(notification);
 
-            if (user.getIsIos()) { //ios 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-            } else { //안드로이드 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
-            }
+            notificationUserRequestDto = NotificationUserRequestDto.builder()
+                    .targetUserId(userId)
+                    .title(title)
+                    .body(content).build();
+            notificationUtil.sendNotificationByToken(notificationUserRequestDto);
         }
     }
 
@@ -136,8 +116,6 @@ public class NotificationScheduleService {
         LocalDate nowDate = LocalDate.now();
         LocalTime nowTime = LocalTime.now();
         //날짜와 시간으로 알약 리스트 찾기
-        // 레포로 옮기기
-        //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
 
         List<UserRepository.UserNotificationForm> userInformations = userRepository.findByDateAndDinnerTime(nowDate, nowTime);
         //List<User> users = userRepository.findByDateAndTime(nowDate, nowTime);
@@ -158,20 +136,11 @@ public class NotificationScheduleService {
 
             notificationRepository.save(notification);
 
-            if (user.getIsIos()) { //ios 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-            } else { //안드로이드 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
-            }
+            notificationUserRequestDto = NotificationUserRequestDto.builder()
+                    .targetUserId(userId)
+                    .title(title)
+                    .body(content).build();
+            notificationUtil.sendNotificationByToken(notificationUserRequestDto);
         }
     }
 
@@ -203,20 +172,12 @@ public class NotificationScheduleService {
 
             notificationRepository.save(notification);
 
-            if (user.getIsIos()) { //ios 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendApnFcmtoken(notificationUserRequestDto);
-            } else { //안드로이드 푸시알림
-                notificationUserRequestDto = NotificationUserRequestDto.builder()
-                        .targetUserId(userId)
-                        .title(title)
-                        .body(content).build();
-                notificationUtil.sendNotificationByToken(notificationUserRequestDto); //버전1
-                //notificationUtil.sendMessageTo(fcmNotificationDto); //버전2
-            }
+
+            notificationUserRequestDto = NotificationUserRequestDto.builder()
+                    .targetUserId(userId)
+                    .title(title)
+                    .body(content).build();
+            notificationUtil.sendNotificationByToken(notificationUserRequestDto);
         }
         return Boolean.TRUE;
     }
