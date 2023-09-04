@@ -3,6 +3,7 @@ package com.viewpharm.yakal.service;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.dto.NotificationDto;
+import com.viewpharm.yakal.dto.response.NotificationPerHourListDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.UserRepository;
@@ -16,8 +17,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -69,5 +72,15 @@ public class NotificationService {
         notification.deleteNofification();
 
         return Boolean.TRUE;
+    }
+
+    public List<NotificationPerHourListDto> getNotificationNumberPerHour(LocalDate date) {
+        List<NotificationRepository.timeInformation> listDtos = notificationRepository.getDateAndCountForHour(date);
+
+        List<NotificationPerHourListDto> list = listDtos.stream()
+                .map(l -> new NotificationPerHourListDto(l.getCDate(), l.getCount()))
+                .collect(Collectors.toList());
+
+        return list;
     }
 }

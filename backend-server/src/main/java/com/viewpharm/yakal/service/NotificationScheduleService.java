@@ -181,4 +181,17 @@ public class NotificationScheduleService {
         }
         return Boolean.TRUE;
     }
+
+    public Boolean sendPushNotificationTest2(Long userId, NotificationUserRequestDto requestDto) throws Exception {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        notificationRepository.save(Notification.builder()
+                .title(requestDto.getTitle())
+                .content(requestDto.getBody())
+                .user(user).build());
+
+        return Boolean.TRUE;
+    }
 }
