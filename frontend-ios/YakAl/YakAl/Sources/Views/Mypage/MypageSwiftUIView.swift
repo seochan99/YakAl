@@ -97,7 +97,7 @@ struct MypageSwiftUIView: View {
                                       )
                                       .foregroundColor(.white)
                                     Spacer()
-                                    Text("\(user.testCnt)/7")
+                                    Text("\(user.testCnt)/6")
                                       .font(
                                         Font.custom("SUIT", size: 20)
                                           .weight(.semibold)

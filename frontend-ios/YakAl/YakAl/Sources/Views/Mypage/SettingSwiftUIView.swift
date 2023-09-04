@@ -2,6 +2,7 @@ import SwiftUI
 import KakaoSDKUser
 
 class LogoutCoordinator: NSObject, UINavigationControllerDelegate {
+    
     func logoutAndTransitionToMainVC() {
         UserApi.shared.logout { error in
             if let error = error {
@@ -18,6 +19,7 @@ class LogoutCoordinator: NSObject, UINavigationControllerDelegate {
             }
         }
     }
+    
 }
 
 struct LogoutController: UIViewRepresentable {
@@ -172,30 +174,29 @@ struct SettingSwiftUIView: View {
                                             .foregroundColor(Color(UIColor(red: 0.08, green: 0.08, blue: 0.08, alpha: 1)))
                                     }
                                 }
-                                // 회원탈퇴 button can be similarly implemented
-                                // LogoutController(coordinator: logoutCoordinator)  // Add this if needed
                             }
                         }
                         .padding(.top, 40)
                         
                     }.padding(.vertical,20)
-                    
-                }.padding(.horizontal,20)
-                if showLogoutModal {
-                            // 반투명한 레이어 추가
-                            Color.black.opacity(0.4)
-                                .edgesIgnoringSafeArea(.all)
-                                .onTapGesture {
-                                    showLogoutModal = false
-                                }
 
-                            // 모달창 코드
-                            LogoutModalView(isPresented: $showLogoutModal)
+                }.padding(.horizontal,20)
+                    .overlay(
+                        Group {
+                            if showLogoutModal {
+                                // Semi-transparent background
+                                Color.black.opacity(0.4)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .onTapGesture {
+                                        showLogoutModal = false
+                                    }
+                                
+                                // Modal view
+                                LogoutModalView(isPresented: $showLogoutModal)
+                            }
                         }
+                    )
             }
-            //        .navigationBarBackButtonHidden(true)
-            //        .navigationBarItems(leading: backButton)
-            //        .navigationTitle(Text("앱 설정"))
         }
     }
         func logout() {
@@ -204,36 +205,51 @@ struct SettingSwiftUIView: View {
     
     
 }
-
-// 로그아웃 모달
 struct LogoutModalView: View {
     @Binding var isPresented: Bool
-
     var body: some View {
-        VStack(spacing: 20) {
-            Text("로그아웃하시겠습니까?")
-                .font(.headline)
+        VStack {
+            Text("로그아웃 하시겠습니까?")
+              .font(
+                Font.custom("SUIT", size: 20)
+                  .weight(.bold)
+              )
+              .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+              .padding(.top,36)
             
-            HStack(spacing: 20) {
-                Button("아니요") {
+            HStack(spacing:8) {
+                Button(action: {
                     isPresented = false
+                }) {
+                    Text("아니요")
+                        .font(Font.custom("SUIT", size: 20)
+                        .weight(.semibold))
+                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
+                        .background(Color(red: 0.91, green: 0.91, blue: 0.93))
+                        .cornerRadius(8)
                 }
-                .padding()
-                .background(Color.gray)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                
-                Button("로그아웃") {
-                    // Handle logout action here
+                Button(action: {
+                    
                     isPresented = false
+                }) {
+                    Text("로그아웃")
+                        .font(Font.custom("SUIT", size: 20)
+                        .weight(.semibold))
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
+                        .background(Color(red: 0.15, green: 0.4, blue: 0.96))
+                        .cornerRadius(8)
                 }
-                .padding()
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(8)
             }
+            .padding(.top,33)
+            .padding(.horizontal,16)
+
+                
+            
         }
-        .frame(width: 340, height: 174)
+        .padding(.vertical,17)
+        .frame(width: 340)
         .background(Color.white)
         .cornerRadius(16)
         .shadow(color: Color(red: 0.38, green: 0.38, blue: 0.45).opacity(0.2), radius: 3, x: 0, y: 2)
