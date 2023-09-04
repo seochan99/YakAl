@@ -6,6 +6,7 @@ import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.service.SurbeyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class SurveyController {
 
     @PostMapping("/{surveyId}/answer")
     @Operation(summary = "설문 작성", description = "설문 작성")
-    public ResponseDto<Boolean> createAnswer(@UserId Long id, @PathVariable Long surveyId, @RequestBody AnswerRequestDto requestDto) {
+    public ResponseDto<Boolean> createAnswer(@UserId Long id, @PathVariable Long surveyId, @RequestBody @Valid AnswerRequestDto requestDto) {
         return ResponseDto.ok(surbeyService.createAnswer(id, surveyId, requestDto));
     }
 

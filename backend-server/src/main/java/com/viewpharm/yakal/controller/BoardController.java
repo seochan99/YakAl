@@ -41,7 +41,7 @@ public class BoardController {
     //Update
     @PutMapping("/{boardId}")
     @Operation(summary = "게시글 수정", description = "특정 게시글 제목, 내용, 지역 수정")
-    public ResponseDto<BoardDetailDto> updateBoard(@UserId Long id, @PathVariable Long boardId, @RequestBody BoardRequestDto requestDto) {
+    public ResponseDto<BoardDetailDto> updateBoard(@UserId Long id, @PathVariable Long boardId, @RequestBody @Valid BoardRequestDto requestDto) {
         return ResponseDto.ok(boardService.updateBoard(id, boardId, requestDto));
     }
 
