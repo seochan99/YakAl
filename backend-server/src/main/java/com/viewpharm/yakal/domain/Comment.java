@@ -12,8 +12,8 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor
-@Table(name = "comments")
 @DynamicUpdate
+@Table(name = "comments")
 public class Comment extends BaseCreateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

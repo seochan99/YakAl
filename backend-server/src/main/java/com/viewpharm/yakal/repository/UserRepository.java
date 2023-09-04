@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.type.EJob;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
 import com.viewpharm.yakal.type.ESex;
@@ -74,9 +75,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
+    @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
+    Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
+
+    Optional<User> findByIdAndJob(Long userId, EJob patient);
+
     interface UserNotificationForm {
         Long getUserId();
+
         String getUsername();
+
         Integer getCount();
     }
 }
