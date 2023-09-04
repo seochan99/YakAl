@@ -15,10 +15,10 @@ import java.util.List;
 public interface DoseRepository extends JpaRepository<Dose, Long> {
 
     @Query("select d from Dose d join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
-    List<Dose> findByUserIdAndDate(Long userId, LocalDate date);
+    List<Dose> findByUserIdAndDate(@Param("userId") Long userId,@Param("date") LocalDate date);
 
     @Query("select d from Dose d where d.user.id = :userId and d.date = :date and d.time =:time")
-    List<Dose> findByUserIdAndDateAndTime(Long userId, LocalDate date, EDosingTime time);
+    List<Dose> findByUserIdAndDateAndTime(@Param("userId") Long userId,@Param("date") LocalDate date,@Param("time") EDosingTime time);
     @Query(value = "SELECT * FROM (SELECT  date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risks_id, date, time) overlap where count > 1 order by count desc ", nativeQuery = true)
     List<overlap> findOverlap(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
@@ -48,7 +48,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             "JOIN  risks r ON d.risks_id = r.id " +
             "JOIN prescriptions p ON d.prescription_id = p.id " +
             "where d.user_id = :userId and p.is_allow = true "+
-            "group by kd_code ,p.prescribed_date " +
+            "group by kd_code , score, p.prescribed_date " +
             "order by p.prescribed_date", nativeQuery = true)
     List<prescribed> findDistinctByKDCodeAndPrescription(@Param("userId") Long userId);
 

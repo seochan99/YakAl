@@ -22,6 +22,7 @@ import LoadingPage from "@/expert/page/loading-page";
 import IdentificationPage from "@/expert/page/login/identification-page";
 import IdentificationFailure from "@/expert/page/login/identification-failure";
 import ExpertCertification from "@/expert/page/main/expert-certification";
+import IdentificationSuccess from "@/expert/page/login/identification-success";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -128,6 +129,10 @@ export const router = createBrowserRouter([
                   {
                     path: "identification/failure",
                     element: <IdentificationFailure />,
+                  },
+                  {
+                    path: "identification/success",
+                    element: <IdentificationSuccess />,
                   },
                 ],
               },

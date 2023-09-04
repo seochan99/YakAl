@@ -62,7 +62,7 @@ export const Description = styled.span`
 `;
 
 export const BigLogo = styled.img`
-  content: url(");
+  content: url("/src/global/asset/yakal-logo.png");
   width: 60%;
   z-index: 1;
 `;
@@ -140,7 +140,7 @@ const ButtonText = styled.span`
 
 export const KakaoButton = styled(Button)`
   & {
-    background-color: #FEE500;
+    background-color: #fee500;
     border: 0.5px solid #d1aa00;
   }
 

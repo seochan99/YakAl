@@ -14,8 +14,10 @@ import {
   YakAlIcon,
 } from "./style.ts";
 import DashboardMenuItem from "./menu-item";
-import { useGetUserQuery } from "@/expert/api/user.ts";
 import { useMediaQuery } from "react-responsive";
+import { useGetUserQuery } from "@/expert/api/user.ts";
+import LoadingPage from "@/expert/page/loading-page";
+import ErrorPage from "@/expert/page/error-page";
 
 export type TMenuInfo = {
   path?: string;
@@ -25,7 +27,7 @@ export type TMenuInfo = {
 };
 
 export function Dashboard() {
-  const { data } = useGetUserQuery(null);
+  const { data, isLoading, isError } = useGetUserQuery(null);
 
   const isNarrowMobile = useMediaQuery({ query: "(max-width: 480px)" });
 
@@ -45,6 +47,14 @@ export function Dashboard() {
       description: "앞으로 유용한 기능들이 추가될 예정입니다!",
     },
   ];
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError) {
+    return <ErrorPage />;
+  }
 
   return (
     <Outer>

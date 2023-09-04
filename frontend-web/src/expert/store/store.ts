@@ -10,7 +10,8 @@ export const store = configureStore({
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [authSlice.name]: authSlice.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(userApiSlice.middleware, authApiSlice.middleware),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(userApiSlice.middleware, authApiSlice.middleware),
   devTools: true,
 });
 

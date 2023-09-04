@@ -58,6 +58,10 @@ public class User {
     @Column(name = "birthday")
     private LocalDate birthday;
 
+    // 하이픈("-") 없이
+    @Column(name = "tel")
+    private String tel;
+
     @Column(name = "sex")
     @Enumerated(EnumType.STRING)
     private ESex sex;
