@@ -227,8 +227,8 @@
 				9814334F2A9163F200017600 /* MedicationRowView.swift */,
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 				9890C9062A9502060007299B /* CircularProgressBarWithText.swift */,
-				98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */,
 				98470EDA2A954CD100C29ED1 /* DatePickerModalView.swift */,
+				98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
