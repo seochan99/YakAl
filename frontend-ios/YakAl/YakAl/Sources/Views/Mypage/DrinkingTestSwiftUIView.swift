@@ -4,7 +4,8 @@ struct DrinkingTestSwiftUIView: View {
     @State private var currentQuestionIndex = 0
     @State private var score = 0
     @State private var selectedAnswer: Int?
-    
+    @State private var allQuestionsAnswered = false
+
 
     let questions = [
         Question(title: "얼마나 술을 자주 마십니까?", answers: [
@@ -78,71 +79,84 @@ struct DrinkingTestSwiftUIView: View {
     ]
 
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            
-            VStack(spacing: 64) {
-                InfoBoxView(title: "음주력 테스트", content: "이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.")
-                
-                //문제 제목, 항목
-                VStack {
+        NavigationView{
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 64) {
+                    InfoBoxView(title: "음주력 테스트", content: "이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.")
                     
-                    // 설문 문제
-                    Text("\(currentQuestionIndex+1). \(questions[currentQuestionIndex].title)")
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .font(
-                        Font.custom("SUIT", size: 15)
-                        .weight(.medium)
-                        )
-                        .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
-                        .padding(.horizontal,32)
-                        .padding(.bottom,16)
-                     
-
+                    //문제 제목, 항목
+                    VStack {
                         
-                    // Answer 반복문
-                    ForEach(0..<questions[currentQuestionIndex].answers.count, id: \.self) { index in
-                        Button(action: {
-                            selectedAnswer = index
-                        }) {
-                            VStack{
-                                Text(questions[currentQuestionIndex].answers[index].text)
-                                    .padding()
-                                    .background(selectedAnswer == index ? Color(red: 0.95, green: 0.96, blue: 1) : .white)
-                                    .foregroundColor(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.38, green: 0.38, blue: 0.45))
-                                    .cornerRadius(8)
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height:60)
-                            .overlay(
-                                    RoundedRectangle(cornerRadius: 20)
+                        // 설문 문제
+                        Text("\(currentQuestionIndex+1). \(questions[currentQuestionIndex].title)")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .font(
+                                Font.custom("SUIT", size: 15)
+                                    .weight(.medium)
+                            )
+                            .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                            .padding(.horizontal,32)
+                            .padding(.bottom,16)
+                        
+                        
+                        
+                        // Answer 반복문
+                        ForEach(0..<questions[currentQuestionIndex].answers.count, id: \.self) { index in
+                            Button(action: {
+                                selectedAnswer = index
+                            }) {
+                                VStack{
+                                    Text(questions[currentQuestionIndex].answers[index].text)
+                                        .frame(maxWidth: .infinity)
+                                        .frame(height:60)
+                                        .background(selectedAnswer == index ? Color(red: 0.95, green: 0.96, blue: 1) : .white)
+                                        .foregroundColor(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.38, green: 0.38, blue: 0.45))
+                                        .cornerRadius(8)
+                                }
+                                .frame(maxWidth: .infinity)
+                                .frame(height:60)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
                                         .inset(by: 1)
                                         .stroke(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.91, green: 0.91, blue: 0.93), lineWidth: 2)
                                 )
-                            .padding(.horizontal,32)
-                            
-                     
-                            
+                                .padding(.horizontal,32)
+                                
+                                
+                                
+                            }
+                            .padding(.bottom, 15)
                         }
-                        .padding(.bottom, 15)
                     }
+                    
+                    // 다음버튼
+                    if currentQuestionIndex < questions.count - 1 {
+                                       BlueHorizontalButton(text: "다음", action: {
+                                           if let selectedAnswer = selectedAnswer {
+                                               score += questions[currentQuestionIndex].answers[selectedAnswer].score
+                                               if currentQuestionIndex < questions.count - 1 {
+                                                   currentQuestionIndex += 1
+                                                   self.selectedAnswer = nil
+                                               }
+                                           }
+                                       }, isEnabled: selectedAnswer != nil)
+                                   } else {
+                                       NavigationLink(destination: AnyView(TestDoneSwiftUIView(score: score, Testtitle: "음주력 테스트", testContent: "이 설문에서 높은 점수일수록 이용자의 음주 습관이 위험함을 의미합니. 음주 습관은 건강상태에 큰 영향을 끼칠 수 있습니다. 의존적인 음주습관을 가질 경우 가까운 센터를 방문하여 지속적인 상담 및 약물 치료가 필요합니다."))) {
+                                           Text("완료")
+                                               .font(Font.custom("SUIT", size: 20).weight(.semibold))
+                                               .frame(maxWidth: .infinity)  // Fill the horizontal direction
+                                               .foregroundColor(!allQuestionsAnswered ? Color.white : Color(red: 0.78, green: 0.78, blue: 0.81))
+                                               .frame(height: 56)
+                                               .background(!allQuestionsAnswered ? Color(red: 0.15, green: 0.4, blue: 0.96) : Color(UIColor(red: 0.91, green: 0.91, blue: 0.93, alpha: 1)))
+                                               .cornerRadius(8)
+                                       }
+                                       .padding(.horizontal,20)
+                                   }
+                    
                 }
-                
-                // 다음버튼
-                BlueHorizontalButton(text: "다음", action: {
-                    if let selectedAnswer = selectedAnswer {
-                        score += questions[currentQuestionIndex].answers[selectedAnswer].score
-                        if currentQuestionIndex < questions.count - 1 {
-                            currentQuestionIndex += 1
-                            self.selectedAnswer = nil
-                        } else {
-                            // 모든 질문이 완료되었습니다. 결과를 표시하세요.
-                            print("총점: \(score)")
-                        }
-                    }
-                },isEnabled: selectedAnswer != nil)
-
             }
-        }
+        }.navigationBarTitle("", displayMode: .inline)
+            .navigationBarBackButtonHidden(true)
     }
 }
 

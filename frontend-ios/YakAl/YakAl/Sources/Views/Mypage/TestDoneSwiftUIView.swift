@@ -25,6 +25,8 @@ struct TestDoneSwiftUIView: View {
                     )
                     .foregroundColor(.black)
                     .padding(.horizontal,20)
+                    .lineSpacing(8)
+
                 Spacer()
                 // 다른 테스트하러가기 버튼
                 // TestListSwiftUIView페이지로 이동함
