@@ -95,6 +95,7 @@ struct DrinkingTestSwiftUIView: View {
                         )
                         .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
                         .padding(.horizontal,32)
+                        .padding(.bottom,16)
                      
 
                         
@@ -109,13 +110,16 @@ struct DrinkingTestSwiftUIView: View {
                                     .background(selectedAnswer == index ? Color(red: 0.95, green: 0.96, blue: 1) : .white)
                                     .foregroundColor(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.38, green: 0.38, blue: 0.45))
                                     .cornerRadius(8)
-                        }.frame(maxWidth: .infinity)
-                        .overlay(
-                                RoundedRectangle(cornerRadius: 20)
-                                    .inset(by: 1)
-                                    .stroke(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.91, green: 0.91, blue: 0.93), lineWidth: 2)
-                            )
-                        .padding(.horizontal,32)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .frame(height:60)
+                            .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .inset(by: 1)
+                                        .stroke(selectedAnswer == index ? Color(red: 0.33, green: 0.53, blue: 0.99) : Color(red: 0.91, green: 0.91, blue: 0.93), lineWidth: 2)
+                                )
+                            .padding(.horizontal,32)
+                            
                      
                             
                         }
