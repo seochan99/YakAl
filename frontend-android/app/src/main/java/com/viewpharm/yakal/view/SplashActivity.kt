@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import com.viewpharm.yakal.R
+import com.viewpharm.yakal.main.activity.MainActivity
+import com.viewpharm.yakal.signin.SignInActivity
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 
@@ -22,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
                 this,
                 getSharedPreferences("token", MODE_PRIVATE).let {
                     if (it.getString("accessToken", null) == null || it.getString("refreshToken", null) == null) {
-                        SignInActivity::class.java
+                        MainActivity::class.java
                     } else {
                         Timber.d("AccessToken: ${it.getString("accessToken", null)}" +
                                 "\nRefreshToken: ${it.getString("refreshToken", null)}")
