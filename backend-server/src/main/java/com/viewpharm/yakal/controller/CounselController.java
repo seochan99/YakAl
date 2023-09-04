@@ -35,37 +35,7 @@ public class CounselController {
         return ResponseDto.ok(counselService.deleteCounsel(id, counselId));
     }
 
-    //List
-    @GetMapping("/patient")
-    @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(counselService.getPatientList(id, page, num));
-    }
 
-    @PostMapping("/{counselId}/note")
-    @Operation(summary = "특이사항 추가", description = "특이사항 추가")
-    public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long counselId, @RequestBody NoteRequestDto requestDto) {
-        return ResponseDto.ok(counselService.createNote(id, counselId, requestDto));
-    }
-
-    @PutMapping("/{counselId}/note/{noteId}")
-    @Operation(summary = "특이사항 수정", description = "특이사항 수정하기")
-    public ResponseDto<NoteDetailDto> updateNote(@UserId Long id, @PathVariable Long counselId,
-                                                 @PathVariable Long noteId, @RequestBody NoteRequestDto requestDto) {
-        return ResponseDto.ok(counselService.updateNote(id, counselId, requestDto));
-    }
-
-    @DeleteMapping("/{counselId}/note/{noteId}")
-    @Operation(summary = "특이사항 삭제", description = "특이사항 삭제하기")
-    public ResponseDto<Boolean> deleteNote(@UserId Long id, @PathVariable Long counselId, @PathVariable Long noteId) {
-        return ResponseDto.ok(counselService.deleteNote(id, counselId, noteId));
-    }
-
-    @GetMapping("/{counselId}/note")
-    @Operation(summary = "특이사항 가져오기", description = "특정 상담 특이사항 가져오기")
-    public ResponseDto<NoteAllDto> readNote(@UserId Long id, @PathVariable Long counselId, @RequestParam("page") Long page, @RequestParam(value = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(counselService.getAllNoteList(id, counselId, page, num));
-    }
 
 
 }

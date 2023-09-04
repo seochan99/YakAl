@@ -45,9 +45,5 @@ public class HealthFoodController {
         return ResponseDto.ok(healthFoodService.getHealthFoodList(id));
     }
 
-    @GetMapping("/expert/{patientId}")
-    @Operation(summary = "건강 기능 식품 리스트", description = "전문가가 특정 환자 건강 기능 식품 리스트 들고오기")
-    public ResponseDto<List<HealthFoodListDto>> getAllHealthFoodListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(healthFoodService.getHealthFoodListForExpert(id, patientId));
-    }
+
 }

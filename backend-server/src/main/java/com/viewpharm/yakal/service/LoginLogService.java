@@ -5,15 +5,10 @@ import com.viewpharm.yakal.dto.response.LoginLogListForMonthDto;
 import com.viewpharm.yakal.repository.LoginLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.sql.Timestamp;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,9 +23,6 @@ public class LoginLogService {
     public List<LoginLogListDto> getUserOneDayForWeek(LocalDate date) {
         LocalDate startOfWeek = date.minusDays(6);
         LocalDate endOfWeek = date;
-
-        log.info(startOfWeek.toString());
-        log.info(endOfWeek.toString());
 
         List<LoginLogRepository.oneDayInformation> listDtos = loginLogRepository.getLoginTimeAndCountForDay(startOfWeek, endOfWeek);
 

@@ -45,9 +45,5 @@ public class DiagnosisController {
         return ResponseDto.ok(diagnosisService.getDiagnosisList(id));
     }
 
-    @GetMapping("/expert/{patientId}")
-    @Operation(summary = "병명 리스트", description = "전문가가 특정 환자 과거 병명 리스트 들고오기")
-    public ResponseDto<List<DiagnosisListDto>> getAllDiagnosisListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(diagnosisService.getDiagnosisListForExpert(id, patientId));
-    }
+
 }

@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -23,6 +26,9 @@ public class Answer {
     @Column(name = "score", nullable = false)
     private int score;
 
+    @Column(name = "create_date", nullable = false)
+    private LocalDate createdDate;
+
     //-------------------------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -38,6 +44,7 @@ public class Answer {
         this.content = content;
         this.score = score;
         this.surbey = surbey;
+        this.createdDate = LocalDate.now();
         this.user = user;
     }
 }
