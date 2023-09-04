@@ -10,11 +10,15 @@ import com.viewpharm.yakal.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/admin")
@@ -31,12 +35,13 @@ public class AdminController {
 
     @GetMapping("/medical/{name}")
     @Operation(summary = "의료기관 가져오기", description = "의료기관 이름으로 가져온다")
-    public ResponseDto<List<Medical>> getMedical(@PathVariable String name) {
-        return ResponseDto.ok(medicalService.getByName(name));
+    public ResponseDto<List<MedicalDto>> getMedical(@PathVariable String name) throws UnsupportedEncodingException {
+        String decodeVal = URLDecoder.decode(name, "utf-8");
+        return ResponseDto.ok(medicalService.getByName(decodeVal));
     }
     @GetMapping("/medical/register")
     @Operation(summary = "의료기관 가져오기", description = "등록된 의료기관을 가져온다")
-    public ResponseDto<List<Medical>> getMedical() {
+    public ResponseDto<List<MedicalDto>> getMedical() {
         return ResponseDto.ok(medicalService.getAllByRegister());
     }
 
