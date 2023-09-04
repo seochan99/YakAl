@@ -20,20 +20,22 @@ struct SettingButton: View {
     }
 
     private var destinationView: AnyView {
-         switch imageName {
-         case "gear":
+         switch title {
+         case "앱 설정":
              return AnyView(SettingSwiftUIView())
-         case "icon-line-bell":
-             return AnyView(SettingSwiftUIView())
-//             return AnyView(NotificationSwiftUIView())
+         case "알림 설정":
+             return AnyView(AlertSettingSwiftUIView())
+         case "약알에게 바라는 점":
+             return AnyView(WishYakalSwiftUIView())
+         case "자주묻는 질문":
+             return AnyView(AlertSettingSwiftUIView())
          default:
              return AnyView(EmptyView())  // default view if neither matched
          }
      }
     
     var body: some View {
-        NavigationLink(destination: SettingSwiftUIView()){
-            Button(action: action) {
+        NavigationLink(destination: destinationView){
                 HStack {
                     if let validImageName = imageName {  // 옵셔널 바인딩을 사용하여 이미지 이름이 nil이 아닌 경우에만 Image를 표시
                         Image(validImageName)
@@ -53,7 +55,6 @@ struct SettingButton: View {
                 .padding(.horizontal, 20)
                 .padding(.vertical,15)
                 .background(Color(red: 1, green: 1, blue: 1))
-            }
         }
     }
 }
