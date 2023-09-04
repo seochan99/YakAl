@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.signup.viewmodel.SkipEventViewModel" />
         <variable
             name="certificationViewModel"
@@ -78,7 +78,7 @@
                     android:textSize="20sp"
                     android:textColor="#626272"
 
-                    android:onClick="@{() -> baseViewModel.onClickNextButton()}"
+                    android:onClick="@{() -> viewModel.onClickNextButton()}"
                     android:layout_marginEnd="5dp"
                     android:outlineProvider="none"
                     android:background="@drawable/btn_sign_up_skip"

@@ -16,7 +16,7 @@ import com.viewpharm.yakal.signup.viewmodel.ModeViewModel
 import com.viewpharm.yakal.type.EMode
 
 class SignUpModeFragment : BaseFragment<FragmentSignUpModeBinding, ModeViewModel>(R.layout.fragment_sign_up_mode) {
-    override val baseViewModel: ModeViewModel by viewModels {
+    override val viewModel: ModeViewModel by viewModels {
         ModeViewModel.RadioViewModelFactory()
     }
     private val nextActionViewModel: NextEventViewModel by viewModels() {
@@ -71,14 +71,14 @@ class SignUpModeFragment : BaseFragment<FragmentSignUpModeBinding, ModeViewModel
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
         binding.nextActionViewModel = nextActionViewModel
     }
 
     override fun initListener(view: View) {
         super.initListener(view)
 
-        baseViewModel.mode.observe(viewLifecycleOwner) {
+        viewModel.mode.observe(viewLifecycleOwner) {
         }
 
         nextActionViewModel.addScheduleEvent.observe(viewLifecycleOwner) {
@@ -89,7 +89,7 @@ class SignUpModeFragment : BaseFragment<FragmentSignUpModeBinding, ModeViewModel
                             safeArgs.birthday,
                             safeArgs.sex,
                             safeArgs.nickName,
-                            baseViewModel.mode.value?.mode == EMode.DETAIL
+                            viewModel.mode.value?.mode == EMode.DETAIL
                         )
                     )
             }

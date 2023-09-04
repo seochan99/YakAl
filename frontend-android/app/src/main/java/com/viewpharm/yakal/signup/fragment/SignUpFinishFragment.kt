@@ -29,7 +29,7 @@ import timber.log.Timber
 class SignUpFinishFragment : BaseFragment<FragmentSignUpFinishBinding, NextEventViewModel>(R.layout.fragment_sign_up_finish) {
     private val safeArgs: SignUpFinishFragmentArgs by navArgs()
 
-    override val baseViewModel: NextEventViewModel by viewModels {
+    override val viewModel: NextEventViewModel by viewModels {
         NextEventViewModel.ActionViewModelFactory()
     }
 
@@ -56,12 +56,12 @@ class SignUpFinishFragment : BaseFragment<FragmentSignUpFinishBinding, NextEvent
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
     }
 
     override fun initListener(view: View) {
         super.initListener(view)
-        baseViewModel.addScheduleEvent.observe(viewLifecycleOwner) {
+        viewModel.addScheduleEvent.observe(viewLifecycleOwner) {
             it.getContentIfNotHandled()?.let {
                 Timber.e("""
                     safeArgs.birthday: ${safeArgs.birthday}

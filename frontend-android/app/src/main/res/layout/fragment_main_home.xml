@@ -6,7 +6,7 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel" />
 
     </data>
@@ -83,7 +83,7 @@
                 android:fontFamily="@font/suit_medium"
                 android:gravity="center_vertical|start"
 
-                android:text="@{baseViewModel.dateText}"
+                android:text="@{viewModel.dateText}"
                 android:textColor="#626272"
                 android:textSize="15sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -200,9 +200,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#26000000"
-            android:onClick="@{() -> baseViewModel.onAddButtonEvent()}"
+            android:onClick="@{() -> viewModel.onAddButtonEvent()}"
             android:visibility="gone" />
-<!--            android:visibility="@{baseViewModel.isExpandedButton ? View.VISIBLE : View.GONE}"-->
+<!--            android:visibility="@{viewModel.isExpandedButton ? View.VISIBLE : View.GONE}"-->
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/addPillListButton"
@@ -213,7 +213,7 @@
             android:layout_marginBottom="16dp"
             android:backgroundTint="@color/blue"
 
-            android:onClick="@{() -> baseViewModel.onAddButtonEvent()}"
+            android:onClick="@{() -> viewModel.onAddButtonEvent()}"
             android:gravity="start|center_vertical"
             android:text="약 추가"
             android:textColor="@color/white"

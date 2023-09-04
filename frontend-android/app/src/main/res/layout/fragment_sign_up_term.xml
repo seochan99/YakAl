@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.signup.viewmodel.SignUpTermViewModel" />
         <variable
             name="nextActionViewModel"
@@ -47,8 +47,8 @@
                 android:background="@drawable/checkbox_big_blue"
                 android:layout_marginTop="72dp"
 
-                android:onClick="@{() -> baseViewModel.onClickAllAgree()}"
-                android:checked="@{baseViewModel.agreeState.allAgreed}"
+                android:onClick="@{() -> viewModel.onClickAllAgree()}"
+                android:checked="@{viewModel.agreeState.allAgreed}"
                 app:layout_constraintTop_toBottomOf="@id/termTitleTextView"
                 app:layout_constraintStart_toStartOf="@id/termTitleTextView" />
 
@@ -73,8 +73,8 @@
                 android:background="@drawable/checkbox_big_blue"
                 android:layout_marginTop="32dp"
 
-                android:onClick="@{() -> baseViewModel.onClickServiceAgree()}"
-                android:checked="@{baseViewModel.agreeState.serviceAgreed}"
+                android:onClick="@{() -> viewModel.onClickServiceAgree()}"
+                android:checked="@{viewModel.agreeState.serviceAgreed}"
                 app:layout_constraintTop_toBottomOf="@id/totalAgreeCheckBox"
                 app:layout_constraintStart_toStartOf="@id/totalAgreeCheckBox" />
 
@@ -112,8 +112,8 @@
                 android:background="@drawable/checkbox_big_blue"
                 android:layout_marginTop="24dp"
 
-                android:onClick="@{() -> baseViewModel.onClickLocationAgree()}"
-                android:checked="@{baseViewModel.agreeState.locationAgreed}"
+                android:onClick="@{() -> viewModel.onClickLocationAgree()}"
+                android:checked="@{viewModel.agreeState.locationAgreed}"
                 app:layout_constraintTop_toBottomOf="@id/serviceAgreeCheckBox"
                 app:layout_constraintStart_toStartOf="@id/serviceAgreeCheckBox" />
 
@@ -151,8 +151,8 @@
                 android:background="@drawable/checkbox_big_blue"
                 android:layout_marginTop="24dp"
 
-                android:onClick="@{() -> baseViewModel.onClickInformationAgree()}"
-                android:checked="@{baseViewModel.agreeState.informationAgreed}"
+                android:onClick="@{() -> viewModel.onClickInformationAgree()}"
+                android:checked="@{viewModel.agreeState.informationAgreed}"
                 app:layout_constraintTop_toBottomOf="@id/locationAgreeCheckBox"
                 app:layout_constraintStart_toStartOf="@id/locationAgreeCheckBox" />
 
@@ -190,8 +190,8 @@
                 android:background="@drawable/checkbox_big_blue"
                 android:layout_marginTop="24dp"
 
-                android:onClick="@{() -> baseViewModel.onClickMarketingAgree()}"
-                android:checked="@{baseViewModel.agreeState.marketingAgreed}"
+                android:onClick="@{() -> viewModel.onClickMarketingAgree()}"
+                android:checked="@{viewModel.agreeState.marketingAgreed}"
                 app:layout_constraintTop_toBottomOf="@id/informationAgreeCheckBox"
                 app:layout_constraintStart_toStartOf="@id/informationAgreeCheckBox" />
 
@@ -232,7 +232,7 @@
                 style="@style/default_font"
 
                 android:onClick="@{() -> nextActionViewModel.onClickNextButton()}"
-                android:enabled="@{baseViewModel.agreeState.essentialAgreed}"
+                android:enabled="@{viewModel.agreeState.essentialAgreed}"
                 android:textSize="20sp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"

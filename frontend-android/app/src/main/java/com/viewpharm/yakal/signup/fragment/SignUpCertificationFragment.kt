@@ -22,7 +22,7 @@ class SignUpCertificationFragment: BaseFragment<FragmentSignUpCertificationBindi
     R.layout.fragment_sign_up_certification) {
 
     // 스킵 ViewModel 삭제 예정
-    override val baseViewModel: SkipEventViewModel by viewModels {
+    override val viewModel: SkipEventViewModel by viewModels {
         SkipEventViewModel.SkipEventViewModelFactory()
     }
 
@@ -49,14 +49,14 @@ class SignUpCertificationFragment: BaseFragment<FragmentSignUpCertificationBindi
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
         binding.certificationViewModel = certificationViewModel
     }
 
     override fun initListener(view: View) {
         super.initListener(view)
 
-        baseViewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 Navigation.findNavController(view)
                     .navigate(

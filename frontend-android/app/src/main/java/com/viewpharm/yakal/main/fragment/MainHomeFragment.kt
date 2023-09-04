@@ -15,14 +15,16 @@ import com.viewpharm.yakal.main.adapter.PillParentAdapter
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseFragment
 import com.viewpharm.yakal.databinding.FragmentMainHomeBinding
+import com.viewpharm.yakal.dialog.OverlapBottomDialog
 import com.viewpharm.yakal.main.activity.MainActivity
 import com.viewpharm.yakal.main.activity.MainCallBack
+import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
 import com.viewpharm.yakal.type.ETakingTime
 import timber.log.Timber
 
 class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
-     override val baseViewModel: HomeTodoViewModel by lazy {
+     override val viewModel: HomeTodoViewModel by lazy {
          HomeTodoViewModel.TodoViewModelFactory().create(HomeTodoViewModel::class.java)
     }
 
@@ -36,28 +38,30 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             layoutManager = LinearLayoutManager(context)
 
             // Data 관리
-            adapter = PillParentAdapter(baseViewModel.schedules.value!!,
+            adapter = PillParentAdapter(viewModel.schedules.value!!,
                 object : MainCallBack.ScheduleCallBack {
                     override fun onTodoCheckButtonClick(eTakingTime: ETakingTime) {
-                        baseViewModel.updateSchedule(eTakingTime)
+                        viewModel.updateSchedule(eTakingTime)
                     }
 
                     override fun onTodoCheckButtonClick(eTakingTime: ETakingTime, todoId: Int) {
-                        baseViewModel.updateTodo(eTakingTime, todoId)
+                        viewModel.updateTodo(eTakingTime, todoId)
                     }
 
                     override fun onClickItemView(eTakingTime: ETakingTime) {
-                        baseViewModel.onClickScheduleItemView(eTakingTime)
+                        viewModel.onClickScheduleItemView(eTakingTime)
                     }
                 },
                 object: MainCallBack.TodoCallBack {
                     override fun onTodoCheckButtonClick(eTakingTime: ETakingTime, todoId: Int) {
-                        baseViewModel.updateTodo(eTakingTime, todoId)
+                        viewModel.updateTodo(eTakingTime, todoId)
                     }
                 },
                 object : MainCallBack.OverLapCallback {
-                    override fun onOverLapCheckButtonClick() {
-                        Toast.makeText(context, "Overlap Click", Toast.LENGTH_SHORT).show()
+                    override fun onOverLapCheckButtonClick(pillTodos: List<PillTodo>) {
+                        OverlapBottomDialog(pillTodos).also {
+                            it.show((activity as MainActivity).supportFragmentManager, OverlapBottomDialog.TAG)
+                        }
                     }
                 }
             )
@@ -69,7 +73,7 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             setHasFixedSize(true)
         }
 
-        binding.todayTakingTextView.text = baseViewModel.takingText.value.let {
+        binding.todayTakingTextView.text = viewModel.takingText.value.let {
             if (it!! != "오늘 복용해야 하는 약은\n없습니다.") {
                 val takingText: String = it
                 takingText.apply {
@@ -94,14 +98,14 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
     }
 
     override fun initListener(view: View) {
         super.initListener(view)
 
-        baseViewModel.addButtonEvent.observe(viewLifecycleOwner) {
-            if (baseViewModel.isExpandedButton.value!!) {
+        viewModel.addButtonEvent.observe(viewLifecycleOwner) {
+            if (viewModel.isExpandedButton.value!!) {
                 // 회색 처리
                 binding.addPillGrayLayout.visibility = View.VISIBLE
 
@@ -129,7 +133,7 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             }
         }
 
-        baseViewModel.progress.observe(viewLifecycleOwner) {
+        viewModel.progress.observe(viewLifecycleOwner) {
             startProgressBarAnimation(it)
 
             if (it == 0) {
@@ -141,7 +145,7 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             binding.todayPercentTextView.text = "${it}%"
         }
 
-        baseViewModel.schedules.observe(viewLifecycleOwner) {
+        viewModel.schedules.observe(viewLifecycleOwner) {
             (binding.todayTakingScheduleMainRecyclerView.adapter as PillParentAdapter).submitList(it)
         }
     }

@@ -48,6 +48,7 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageButton
+            android:id="@+id/overlapCloseButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@null"

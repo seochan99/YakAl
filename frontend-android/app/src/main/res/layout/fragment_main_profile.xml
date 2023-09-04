@@ -237,55 +237,55 @@
                     app:layout_constraintStart_toEndOf="@+id/notificationSettingImageView"
                     app:layout_constraintTop_toTopOf="@+id/notificationSettingImageView" />
 
-                <androidx.constraintlayout.helper.widget.Layer
-                    android:id="@+id/locationSettingLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/btn_white_ripple"
-                    app:constraint_referenced_ids="locationSettingImageView,
-                     locationSettingImageView, currentLocationTextView"
-                    tools:ignore="MissingConstraints" />
+<!--                <androidx.constraintlayout.helper.widget.Layer-->
+<!--                    android:id="@+id/locationSettingLayout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/btn_white_ripple"-->
+<!--                    app:constraint_referenced_ids="locationSettingImageView,-->
+<!--                     locationSettingImageView, currentLocationTextView"-->
+<!--                    tools:ignore="MissingConstraints" />-->
 
-                <ImageView
-                    android:id="@+id/locationSettingImageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+<!--                <ImageView-->
+<!--                    android:id="@+id/locationSettingImageView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
 
-                    android:paddingStart="20dp"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="17dp"
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="17dp"-->
+<!--                    android:paddingBottom="17dp"-->
 
-                    android:src="@drawable/ic_custom_house"
+<!--                    android:src="@drawable/ic_custom_house"-->
 
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/notificationSettingImageView"
-                    tools:ignore="RtlSymmetry" />
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/notificationSettingImageView"-->
+<!--                    tools:ignore="RtlSymmetry" />-->
 
-                <TextView
-                    android:id="@+id/locationSettingTextView"
-                    style="@style/profileSettingFont"
-                    android:layout_width="0dp"
+<!--                <TextView-->
+<!--                    android:id="@+id/locationSettingTextView"-->
+<!--                    style="@style/profileSettingFont"-->
+<!--                    android:layout_width="0dp"-->
 
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="내 위치 설정"
-                    app:layout_constraintBottom_toBottomOf="@+id/locationSettingImageView"
-                    app:layout_constraintEnd_toStartOf="@id/currentLocationTextView"
-                    app:layout_constraintStart_toEndOf="@+id/locationSettingImageView"
-                    app:layout_constraintTop_toTopOf="@+id/locationSettingImageView" />
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:text="내 위치 설정"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/locationSettingImageView"-->
+<!--                    app:layout_constraintEnd_toStartOf="@id/currentLocationTextView"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/locationSettingImageView"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/locationSettingImageView" />-->
 
-                <TextView
-                    android:id="@+id/currentLocationTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="경기 성남시 분당구 불정로 6"
-                    style="@style/default_font"
-                    android:textSize="12sp"
-                    android:textColor="#90909F"
-                    android:paddingEnd="20dp"
-                    app:layout_constraintTop_toTopOf="@id/locationSettingImageView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="@id/locationSettingImageView" />
+<!--                <TextView-->
+<!--                    android:id="@+id/currentLocationTextView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="경기 성남시 분당구 불정로 6"-->
+<!--                    style="@style/default_font"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="#90909F"-->
+<!--                    android:paddingEnd="20dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/locationSettingImageView"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/locationSettingImageView" />-->
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout

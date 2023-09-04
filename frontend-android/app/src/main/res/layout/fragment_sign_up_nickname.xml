@@ -6,7 +6,7 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.signup.viewmodel.NicknameViewModel" />
     </data>
 
@@ -37,14 +37,14 @@
             <EditText
                 android:id="@+id/nicknameEditText"
                 style="@style/default_font"
-                android:onTextChanged="@{(text, start, before, count) -> baseViewModel.onTextChanged(text, start, before, count)}"
+                android:onTextChanged="@{(text, start, before, count) -> viewModel.onTextChanged(text, start, before, count)}"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="70dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/et_rounded_corner_rectangle"
-                android:text="@={baseViewModel.nickname.nickname}"
+                android:text="@={viewModel.nickname.nickname}"
 
                 android:hint="5자 이내로 입력"
                 android:textSize="20sp"
@@ -63,8 +63,8 @@
                 android:src="@drawable/ic_custom_oval_cancel"
                 android:layout_marginEnd="24dp"
 
-                android:onClick="@{() -> baseViewModel.onClickClear()}"
-                android:visibility="@{baseViewModel.nickname.cancelEnable ? View.VISIBLE : View.INVISIBLE}"
+                android:onClick="@{() -> viewModel.onClickClear()}"
+                android:visibility="@{viewModel.nickname.cancelEnable ? View.VISIBLE : View.INVISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@+id/nicknameEditText"
                 app:layout_constraintEnd_toEndOf="@+id/nicknameEditText"
                 app:layout_constraintTop_toTopOf="@+id/nicknameEditText"
@@ -81,8 +81,8 @@
                 android:text="다음"
                 android:textSize="20sp"
                 android:textColor="@drawable/btn_sign_up_text_color"
-                android:onClick="@{() -> baseViewModel.onClickNext()}"
-                android:enabled="@{baseViewModel.nickname.nextEnable}"
+                android:onClick="@{() -> viewModel.onClickNext()}"
+                android:enabled="@{viewModel.nickname.nextEnable}"
                 android:outlineProvider="none"
                 android:background="@drawable/btn_sign_up_next"
                 app:layout_constraintBottom_toBottomOf="parent"

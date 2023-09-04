@@ -211,7 +211,6 @@ class HomeTodoViewModel: BaseViewModel() {
                         isTaken = false),
                 )
             ),
-            Schedule.getInVisibleSchedule()
         )
 
         // totalCnt의 크기는 스케줄 안에 있는 PillTodo의 총 갯수

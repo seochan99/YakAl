@@ -10,7 +10,7 @@ import com.viewpharm.yakal.type.ETerm
 import com.viewpharm.yakal.signup.activity.SignUpActivity
 
 class SignUpTermDetailFragment() : BaseFragment<FragmentSignUpTermDetailBinding, DefaultViewModel>(R.layout.fragment_sign_up_term_detail) {
-    override val baseViewModel: DefaultViewModel by viewModels {
+    override val viewModel: DefaultViewModel by viewModels {
         DefaultViewModel.DefaultViewModelFactory()
     }
     private val safeArgs: SignUpTermDetailFragmentArgs by navArgs()

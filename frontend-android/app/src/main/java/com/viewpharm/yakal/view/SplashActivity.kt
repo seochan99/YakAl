@@ -24,7 +24,7 @@ class SplashActivity : AppCompatActivity() {
                 this,
                 getSharedPreferences("token", MODE_PRIVATE).let {
                     if (it.getString("accessToken", null) == null || it.getString("refreshToken", null) == null) {
-                        SignInActivity::class.java
+                        MainActivity::class.java
                     } else {
                         Timber.d("AccessToken: ${it.getString("accessToken", null)}" +
                                 "\nRefreshToken: ${it.getString("refreshToken", null)}")

@@ -7,7 +7,16 @@
     <fragment
         android:id="@+id/profileMainFragment"
         android:name="com.viewpharm.yakal.main.fragment.MainProfileFragment"
-        android:label="ProfileMainFragment" />
+        android:label="ProfileMainFragment" >
+        <action
+            android:id="@+id/action_profileMainFragment_to_profileAppSettingFragment"
+            app:destination="@id/profileAppSettingFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/profileMainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/communityMainFragment"
         android:name="com.viewpharm.yakal.main.fragment.MainCommunityFragment"
@@ -21,4 +30,21 @@
         android:id="@+id/locationMainFragment"
         android:name="com.viewpharm.yakal.main.fragment.MainLocationFragment"
         android:label="LocationMainFragment" />
+    <fragment
+        android:id="@+id/profileAppSettingFragment"
+        android:name="com.viewpharm.yakal.main.fragment.ProfileAppSettingFragment"
+        android:label="ProfileAppSettingFragment" >
+        <action
+            android:id="@+id/action_profileAppSettingFragment_to_goOutFragment"
+            app:destination="@id/goOutFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/profileAppSettingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/goOutFragment"
+        android:name="com.viewpharm.yakal.main.fragment.GoOutFragment"
+        android:label="GoOutFragment" />
 </navigation>

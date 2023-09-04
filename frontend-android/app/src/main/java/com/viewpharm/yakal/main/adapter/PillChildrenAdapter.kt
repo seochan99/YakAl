@@ -2,6 +2,7 @@ package com.viewpharm.yakal.main.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +17,7 @@ class PillChildrenAdapter(
     private val isCompleted: Boolean,
     private val eTakingTime: ETakingTime,
     private val todos :List<PillTodo>,
-    private val todoCallBack: MainCallBack.TodoCallBack,
+    private val todoCallBack: MainCallBack.TodoCallBack?,
     private val onOverlapItemCallBack: MainCallBack.OverLapCallback?
     )
     : ListAdapter<PillTodo, PillChildrenAdapter.PillChildrenViewHolder>(DiffUtil) {
@@ -51,6 +52,13 @@ class PillChildrenAdapter(
             binding.todo = todo
             binding.executePendingBindings()
 
+            if (onOverlapItemCallBack == null || todoCallBack == null) {
+                binding.overLapImageBottom.visibility = View.GONE
+                binding.takingScheduleSubCheckBox.visibility = View.GONE
+                binding.riskColorView.visibility = View.GONE
+                return
+            }
+
             if (isCompleted) {
                 binding.takingScheduleSubCheckBox.setBackgroundResource(R.drawable.checkbox_small_skyblue)
             }else {
@@ -67,7 +75,7 @@ class PillChildrenAdapter(
             }
 
             binding.overLapImageBottom.setOnClickListener {
-                onOverlapItemCallBack?.onOverLapCheckButtonClick()
+                onOverlapItemCallBack.onOverLapCheckButtonClick(todos)
             }
         }
     }

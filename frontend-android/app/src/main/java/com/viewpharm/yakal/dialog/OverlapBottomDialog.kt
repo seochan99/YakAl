@@ -5,9 +5,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.viewpharm.yakal.databinding.FragmentOverlapBottomSheetBinding
+import com.viewpharm.yakal.main.activity.MainCallBack
+import com.viewpharm.yakal.main.adapter.PillChildrenAdapter
 import com.viewpharm.yakal.main.model.PillTodo
+import com.viewpharm.yakal.type.ETakingTime
 import timber.log.Timber
 
 class OverlapBottomDialog(
@@ -17,49 +23,42 @@ class OverlapBottomDialog(
         const val TAG = "OverlapBottomDialog"
     }
 
-    private lateinit var binding: FragmentOverlapBottomSheetBinding
-    private var temp: List<PillTodo> = listOf()
-
-    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        Timber.d("onCreateDialog")
-        return super.onCreateDialog(savedInstanceState)
-//        val dialog = BottomSheetDialog(requireContext(), theme)
-//        dialog.setOnShowListener {
-//            val bottomSheetDialog = it as BottomSheetDialog
-//            val parentLayout =
-//                bottomSheetDialog.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
-//            parentLayout?.let { it ->
-//                val behaviour = BottomSheetBehavior.from(it)
-//                behaviour.state = BottomSheetBehavior.STATE_EXPANDED
-//            }
-//        }
-//
-//        Timber.d("onCreateDialog")
-//        return dialog
-    }
+    private var _binding: FragmentOverlapBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentOverlapBottomSheetBinding.inflate(inflater)
-        Timber.d("onCreateView")
+    ): View {
+        _binding = FragmentOverlapBottomSheetBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Timber.d("onViewCreated")
-        _init()
         super.onViewCreated(view, savedInstanceState)
+        initView()
     }
 
-    private fun _init() {
-//        binding.overlapContentTextView.text = "간단한 설명 주세요..."
-//        binding.overlapRecyclerView.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = PillAdapter(temp, null)
-//            setHasFixedSize(true)
-//        }
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
+    private fun initView() {
+        binding.overlapContentTextView.text = "간단한 설명 주세요..."
+        binding.overlapRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context)
+            adapter = PillChildrenAdapter(isCompleted = false,
+                eTakingTime = ETakingTime.INVISIBLE,
+                todos = overlapPills,
+                todoCallBack = null,
+                onOverlapItemCallBack = null)
+            setHasFixedSize(true)
+        }
+
+        binding.overlapCloseButton.setOnClickListener {
+            dismiss()
+        }
     }
 }

@@ -1,10 +1,12 @@
 package com.viewpharm.yakal.main.activity
 
-import android.os.Bundle
 import android.os.Handler
+import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseActivity
@@ -22,7 +24,37 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
     override fun initView() {
         super.initView()
+        setSupportActionBar(binding.toolbar).apply {
+            supportActionBar?.setDisplayShowTitleEnabled(false)
+        }
+
+        this.onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                onSupportNavigateUp()
+            }
+        })
+
+
         navController = (supportFragmentManager.findFragmentById(binding.mainFrameLayout.id) as NavHostFragment).navController
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.profileAppSettingFragment, R.id.goOutFragment -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.VISIBLE
+
+                    when (destination.id) {
+                        R.id.profileAppSettingFragment -> setToolbarTitle("앱 설정")
+                        R.id.goOutFragment -> setToolbarTitle("회원 탈퇴")
+                    }
+                }
+                else -> {
+                    binding.bottomNavigationView.visibility = View.VISIBLE
+                    binding.toolbar.visibility = View.GONE
+                }
+            }
+        }
+        NavigationUI.setupActionBarWithNavController(this, navController)
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
@@ -65,5 +97,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
             val backStackEntryAt = supportFragmentManager.getBackStackEntryAt(i)
             Timber.i("backStackEntryAt: $backStackEntryAt")
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    fun setToolbarTitle(title: String) {
+        binding.signUpTitleTextView.text = title
     }
 }

@@ -59,6 +59,9 @@ android {
 }
 
 dependencies {
+    // Timer Range Picker
+    implementation 'nl.joery.timerangepicker:timerangepicker:1.0.0'
+
     // 통신 라이브러리
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -78,7 +81,7 @@ dependencies {
     implementation "com.kakao.sdk:v2-user:2.15.0"
 
     // Google SDK
-    implementation 'com.google.android.gms:play-services-auth:20.6.0'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
     // Mvvm
     implementation 'androidx.activity:activity-ktx:1.7.2'

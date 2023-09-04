@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.signup.viewmodel.NextEventViewModel" />
     </data>
 
@@ -54,7 +54,7 @@
                 android:textSize="20sp"
                 android:textColor="@drawable/btn_sign_up_text_color"
 
-                android:onClick="@{() -> baseViewModel.onClickNextButton()}"
+                android:onClick="@{() -> viewModel.onClickNextButton()}"
                 android:outlineProvider="none"
                 android:background="@drawable/btn_sign_up_next"
                 app:layout_constraintBottom_toBottomOf="parent"

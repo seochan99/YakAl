@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import com.viewpharm.yakal.databinding.FragmentMainProfileBinding
 import com.viewpharm.yakal.dialog.NicknameEditBottomDialog
 import com.viewpharm.yakal.main.activity.MainActivity
+import com.viewpharm.yakal.signup.fragment.SignUpModeFragmentDirections
+import com.viewpharm.yakal.type.EMode
 import timber.log.Timber
 
 class MainProfileFragment : Fragment() {
@@ -43,16 +46,17 @@ class MainProfileFragment : Fragment() {
         }
 
         binding.appSettingLayout.setOnClickListener {
-            Timber.d("appSettingLayout")
+            Navigation.findNavController(view)
+                .navigate(MainProfileFragmentDirections.actionProfileMainFragmentToProfileAppSettingFragment())
         }
 
         binding.notificationSettingLayout.setOnClickListener {
             Timber.d("notificationSettingLayout")
         }
 
-        binding.locationSettingLayout.setOnClickListener {
-            Timber.d("locationSettingLayout")
-        }
+//        binding.locationSettingLayout.setOnClickListener {
+//            Timber.d("locationSettingLayout")
+//        }
 
         binding.requestLayout.setOnClickListener {
             Timber.d("requestLayout")

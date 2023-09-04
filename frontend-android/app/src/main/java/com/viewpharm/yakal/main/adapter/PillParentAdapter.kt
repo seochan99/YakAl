@@ -61,11 +61,6 @@ class PillParentAdapter(
             binding.schedule = schedule
             binding.executePendingBindings()
 
-            if (schedule.eTakingTime == ETakingTime.INVISIBLE) {
-                binding.takingScheduleMainCardView.visibility = View.INVISIBLE
-                return
-            }
-
             binding.todayTakingScheduleSubRecyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
                 adapter = PillChildrenAdapter(schedule.isCompleted, schedule.eTakingTime, schedule.todos,

@@ -18,7 +18,7 @@ import timber.log.Timber
 
 class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermViewModel>(R.layout.fragment_sign_up_term) {
 
-    override val baseViewModel: SignUpTermViewModel by viewModels {
+    override val viewModel: SignUpTermViewModel by viewModels {
         SignUpTermViewModel.SignUpTermViewModelFactory()
     }
     private val nextActionViewModel: NextEventViewModel by viewModels() {
@@ -52,7 +52,7 @@ class SignUpTermFragment: BaseFragment<FragmentSignUpTermBinding, SignUpTermView
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
         binding.nextActionViewModel = nextActionViewModel
         binding.detailActionViewModel = detailActionViewModel
     }

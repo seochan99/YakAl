@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="baseViewModel"
+            name="viewModel"
             type="com.viewpharm.yakal.signup.viewmodel.ModeViewModel" />
         <variable
             name="nextActionViewModel"
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginTop="40dp"
-                android:onCheckedChanged="@{(_, checkedId) -> baseViewModel.setOnCheckedChange(checkedId)}"
+                android:onCheckedChanged="@{(_, checkedId) -> viewModel.setOnCheckedChange(checkedId)}"
                 app:layout_constraintTop_toBottomOf="@id/titleTextView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -90,7 +90,7 @@
                 android:text="다음"
                 android:textSize="20sp"
                 android:textColor="@drawable/btn_sign_up_text_color"
-                android:enabled="@{baseViewModel.mode.isNextEnable}"
+                android:enabled="@{viewModel.mode.isNextEnable}"
                 android:onClick="@{() -> nextActionViewModel.onClickNextButton()}"
                 android:outlineProvider="none"
                 android:background="@drawable/btn_sign_up_next"

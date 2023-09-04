@@ -31,7 +31,7 @@ import java.util.regex.Pattern
 class SignUpNicknameFragment : BaseFragment<FragmentSignUpNicknameBinding, NicknameViewModel>(R.layout.fragment_sign_up_nickname) {
     private val safeArgs: SignUpNicknameFragmentArgs by navArgs()
 
-    override val baseViewModel: NicknameViewModel by viewModels {
+    override val viewModel: NicknameViewModel by viewModels {
         NicknameViewModel.NicknameViewModelFactory()
     }
 
@@ -51,7 +51,7 @@ class SignUpNicknameFragment : BaseFragment<FragmentSignUpNicknameBinding, Nickn
         }
 
         val filterSpace = InputFilter { source, _, _, _, _, _ ->
-            baseViewModel.filterKorean(source)
+            viewModel.filterKorean(source)
         }
 
         binding.nicknameEditText.filters = arrayOf(filterSpace, InputFilter.LengthFilter(5))
@@ -59,32 +59,32 @@ class SignUpNicknameFragment : BaseFragment<FragmentSignUpNicknameBinding, Nickn
 
     override fun initViewModel() {
         super.initViewModel()
-        binding.baseViewModel = baseViewModel
+        binding.viewModel = viewModel
     }
 
     override fun initListener(view: View) {
         super.initListener(view)
 
-        baseViewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.addScheduleEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 Navigation.findNavController(view)
                     .navigate(
                         SignUpNicknameFragmentDirections.actionToSignUpModeFragment(
                             safeArgs.birthday,
                             safeArgs.sex,
-                            baseViewModel.nickname.value?.nickname.toString()
+                            viewModel.nickname.value?.nickname.toString()
                         )
                     )
             }
         })
 
-        baseViewModel.inputToastEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.inputToastEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(context, "한글만 입력 가능합니다", Toast.LENGTH_SHORT).show()
             }
         })
 
-        baseViewModel.buttonToastEvent.observe(viewLifecycleOwner, Observer {
+        viewModel.buttonToastEvent.observe(viewLifecycleOwner, Observer {
             it.getContentIfNotHandled()?.let {
                 Toast.makeText(context, "초성, 중성 입력이 존재합니다", Toast.LENGTH_SHORT).show()
             }
