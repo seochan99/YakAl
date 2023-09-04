@@ -7,6 +7,7 @@ import com.viewpharm.yakal.dto.request.NoteRequestDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.repository.AnswerRepository;
 import com.viewpharm.yakal.repository.CounselRepository;
 import com.viewpharm.yakal.repository.NoteRepository;
 import com.viewpharm.yakal.repository.UserRepository;
@@ -32,6 +33,7 @@ public class CounselService {
     private final UserRepository userRepository;
     private final CounselRepository counselRepository;
     private final NoteRepository noteRepository;
+    private final AnswerRepository answerRepository;
 
     public Boolean createCounsel(Long expertId, Long patientId) {
         //전문가 확인
@@ -89,6 +91,7 @@ public class CounselService {
                     .name(patient.getName())
                     .sex(patient.getSex())
                     .birthday(patient.getBirthday())
+                    .testProgress((int) (answerRepository.countAnswerByUser(patient) * 100 / 14))
                     .build());
             //테스트 퍼센트, 약 수 추가 예정
             //추가 후 방식 바꿀 예정

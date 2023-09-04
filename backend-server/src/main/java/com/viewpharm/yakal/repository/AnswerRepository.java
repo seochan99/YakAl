@@ -15,4 +15,6 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
     Optional<Answer> findBySurbeyAndUser(Surbey surbey, User user);
 
     List<Answer> findAllByUser(User user);
+
+    Long countAnswerByUser(User user);
 }
