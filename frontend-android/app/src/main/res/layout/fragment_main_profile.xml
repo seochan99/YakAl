@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffE9E9EE">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topContainer"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/lyt_home_top"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/userNameTitleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홍길동님,\n약알과 함께 건강하세요!"
+            style="@style/default_font"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:layout_marginTop="60dp"
+            android:layout_marginStart="20dp"
+            android:lineSpacingExtra="5dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/editNickNameButton"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="20dp"
+            android:text="수정"
+            style="@style/default_font"
+            android:textColor="#90909F"
+
+            android:background="@drawable/btn_sign_up_skip"
+            android:outlineProvider="none"
+            app:layout_constraintTop_toTopOf="@+id/userNameTitleTextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/userNameTitleTextView" />
+
+        <androidx.constraintlayout.helper.widget.Layer
+            android:id="@+id/exportTakingLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:background="@drawable/btn_home_taking"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingEnd="5dp"
+            app:constraint_referenced_ids="exportTakingImageView, exportTakingTextView, exportNextImageView"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/exportTakingImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:paddingStart="12dp"
+            android:layout_marginBottom="20dp"
+
+            android:src="@drawable/ic_custom_health"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/userNameTitleTextView" />
+
+        <TextView
+            android:id="@+id/exportTakingTextView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:layout_marginStart="6dp"
+            android:fontFamily="@font/suit_medium"
+            android:textSize="16dp"
+
+
+            android:text="전문가에게 복약정보 공유"
+
+            android:textColor="#626272"
+            app:layout_constraintBottom_toBottomOf="@id/exportTakingImageView"
+            app:layout_constraintEnd_toStartOf="@+id/exportNextImageView"
+            app:layout_constraintStart_toEndOf="@id/exportTakingImageView"
+            app:layout_constraintTop_toTopOf="@id/exportTakingImageView" />
+
+        <ImageView
+            android:id="@+id/exportNextImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/ic_custom_next"
+
+            app:layout_constraintBottom_toBottomOf="@+id/exportTakingImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/exportTakingImageView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topContainer">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/testContainer"
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/btn_sign_up_next">
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/selfTestLayer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_sign_up_next"
+                    app:constraint_referenced_ids="testTextView, countTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/testTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="자가 진단 테스트"
+                    android:textColor="@drawable/btn_sign_up_text_color"
+                    android:paddingTop="25dp"
+                    android:paddingBottom="25dp"
+                    android:paddingStart="20dp"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/countTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0/6"
+                    android:textColor="@drawable/btn_sign_up_text_color"
+                    android:textSize="20sp"
+                    android:paddingEnd="20dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/testTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/testTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settingContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/appSettingLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="appSettingImageView, appSettingTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/appSettingImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:paddingStart="20dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    android:src="@drawable/ic_custom_setting"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/appSettingTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="앱 설정"
+                    app:layout_constraintBottom_toBottomOf="@+id/appSettingImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/appSettingImageView"
+                    app:layout_constraintTop_toTopOf="@+id/appSettingImageView" />
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/notificationSettingLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="notificationSettingImageView, notificationSettingTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <ImageView
+                    android:id="@+id/notificationSettingImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:paddingStart="22dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    android:src="@drawable/ic_custom_empty_bell"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/appSettingImageView"
+                    tools:ignore="RtlSymmetry" />
+
+                <TextView
+                    android:id="@+id/notificationSettingTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="알림 설정"
+                    app:layout_constraintBottom_toBottomOf="@+id/notificationSettingImageView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/notificationSettingImageView"
+                    app:layout_constraintTop_toTopOf="@+id/notificationSettingImageView" />
+
+<!--                <androidx.constraintlayout.helper.widget.Layer-->
+<!--                    android:id="@+id/locationSettingLayout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/btn_white_ripple"-->
+<!--                    app:constraint_referenced_ids="locationSettingImageView,-->
+<!--                     locationSettingImageView, currentLocationTextView"-->
+<!--                    tools:ignore="MissingConstraints" />-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/locationSettingImageView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+
+<!--                    android:paddingStart="20dp"-->
+<!--                    android:paddingTop="17dp"-->
+<!--                    android:paddingBottom="17dp"-->
+
+<!--                    android:src="@drawable/ic_custom_house"-->
+
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/notificationSettingImageView"-->
+<!--                    tools:ignore="RtlSymmetry" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/locationSettingTextView"-->
+<!--                    style="@style/profileSettingFont"-->
+<!--                    android:layout_width="0dp"-->
+
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="10dp"-->
+<!--                    android:text="내 위치 설정"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@+id/locationSettingImageView"-->
+<!--                    app:layout_constraintEnd_toStartOf="@id/currentLocationTextView"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/locationSettingImageView"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/locationSettingImageView" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/currentLocationTextView"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="경기 성남시 분당구 불정로 6"-->
+<!--                    style="@style/default_font"-->
+<!--                    android:textSize="12sp"-->
+<!--                    android:textColor="#90909F"-->
+<!--                    android:paddingEnd="20dp"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/locationSettingImageView"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/locationSettingImageView" />-->
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/commonContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/requestLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="exportRequestTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/exportRequestTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:text="약알에게 바라는 점"
+                    android:paddingStart="20dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/questionLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="16dp"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="questionTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/questionTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:text="자주 묻는 질문"
+                    android:paddingStart="22dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/exportRequestTextView" />
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/versionLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="versionTextView, currentVersionTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/versionTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:text="버전 정보"
+                    android:paddingStart="22dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/currentVersionTextView"
+                    app:layout_constraintTop_toBottomOf="@id/questionTextView" />
+
+                <TextView
+                    android:id="@+id/currentVersionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ver.0.0.1"
+                    style="@style/default_font"
+                    android:textSize="12sp"
+                    android:textColor="#90909F"
+                    android:paddingEnd="20dp"
+                    app:layout_constraintTop_toTopOf="@id/versionTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@id/versionTextView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/expertContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp"
+                android:background="@color/white"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.constraintlayout.helper.widget.Layer
+                    android:id="@+id/expertLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/btn_white_ripple"
+                    app:constraint_referenced_ids="expertTextView"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/expertTextView"
+                    style="@style/profileSettingFont"
+                    android:layout_width="0dp"
+
+                    android:layout_height="wrap_content"
+                    android:text="전문가 인증"
+                    android:paddingStart="20dp"
+                    android:paddingTop="17dp"
+                    android:paddingBottom="17dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,5 @@
 package com.viewpharm.yakal.type
 
 enum class ESex {
-    MALE, FEMALE;
+    MALE, FEMALE, NONE;
 }
