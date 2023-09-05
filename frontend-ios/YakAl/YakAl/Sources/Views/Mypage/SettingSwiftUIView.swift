@@ -1,27 +1,8 @@
 import SwiftUI
 import KakaoSDKUser
 
-class LogoutCoordinator: NSObject, UINavigationControllerDelegate {
-    
-    func logoutAndTransitionToMainVC() {
-        UserApi.shared.logout { error in
-            if let error = error {
-                print(error)
-            } else {
-                UserDefaults.standard.removeObject(forKey: "KakaoAccessToken")
-                print("logout() success.")
-                
-                if let window = UIApplication.shared.windows.first,
-                   let storyboard = UIStoryboard(name: "MainVC", bundle: nil).instantiateInitialViewController() {
-                    window.rootViewController = storyboard
-                    window.makeKeyAndVisible()
-                }
-            }
-        }
-    }
-    
-}
 
+//
 struct ViewControllerKey: EnvironmentKey {
     static let defaultValue: UIViewController? = nil
 }
@@ -33,6 +14,7 @@ extension EnvironmentValues {
     }
 }
 
+// 로그아웃 컨트롤
 struct LogoutController: UIViewRepresentable {
     typealias UIViewType = UIView
     
@@ -51,6 +33,8 @@ struct LogoutController: UIViewRepresentable {
         return coordinator
     }
 }
+
+
 
 struct SettingSwiftUIView: View {
     @State private var selectedMode: Mode = .light
@@ -101,17 +85,6 @@ struct SettingSwiftUIView: View {
             }
     }
 
-    func hideTabBar() {
-        if let tabBarController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
-            tabBarController.tabBar.isHidden = true
-        }
-    }
-       
-    func showTabBar() {
-        if let tabBarController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
-            tabBarController.tabBar.isHidden = false
-        }
-    }
     
     var body: some View {
         ZStack{
@@ -229,56 +202,6 @@ struct SettingSwiftUIView: View {
             }
     }
     
-}
-struct LogoutModalView: View {
-    @Binding var isPresented: Bool
-    var body: some View {
-        VStack {
-            Text("로그아웃 하시겠습니까?")
-              .font(
-                Font.custom("SUIT", size: 20)
-                  .weight(.bold)
-              )
-              .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
-              .padding(.top,36)
-            
-            HStack(spacing:8) {
-                Button(action: {
-                    isPresented = false
-                }) {
-                    Text("아니요")
-                        .font(Font.custom("SUIT", size: 20)
-                        .weight(.semibold))
-                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
-                        .background(Color(red: 0.91, green: 0.91, blue: 0.93))
-                        .cornerRadius(8)
-                }
-                Button(action: {
-                    
-                    isPresented = false
-                }) {
-                    Text("로그아웃")
-                        .font(Font.custom("SUIT", size: 20)
-                        .weight(.semibold))
-                        .foregroundColor(.white)
-                        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
-                        .background(Color(red: 0.15, green: 0.4, blue: 0.96))
-                        .cornerRadius(8)
-                }
-            }
-            .padding(.top,33)
-            .padding(.horizontal,16)
-
-                
-            
-        }
-        .padding(.vertical,17)
-        .frame(width: 340)
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: Color(red: 0.38, green: 0.38, blue: 0.45).opacity(0.2), radius: 3, x: 0, y: 2)
-    }
 }
 
 struct SettingSwiftUIView_Previews: PreviewProvider {
