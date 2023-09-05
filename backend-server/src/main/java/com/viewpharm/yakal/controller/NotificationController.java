@@ -2,6 +2,7 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.NotificationDto;
+import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
 import com.viewpharm.yakal.service.NotificationScheduleService;
 import com.viewpharm.yakal.service.NotificationService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
@@ -54,4 +55,8 @@ public class NotificationController {
         return ResponseDto.ok(notificationScheduleService.sendPushNotificationTest());
     }
 
+    @PostMapping("/notificationTest2")
+    public ResponseDto<Boolean> createNotificationTest2(@UserId Long id, @RequestBody NotificationUserRequestDto requestDto) throws Exception {
+        return ResponseDto.ok(notificationScheduleService.sendPushNotificationTest2(id, requestDto));
+    }
 }

@@ -8,6 +8,7 @@ import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.CommentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +26,7 @@ public class CommentController {
 
     @PostMapping("/{boardId}/comment")
     @Operation(summary = "댓글 작성", description = "댓글 작성하기")
-    public ResponseDto<Boolean> createComment(@UserId Long id, @PathVariable Long boardId, @RequestBody CommentRequestDto commentRequestDto) {
+    public ResponseDto<Boolean> createComment(@UserId Long id, @PathVariable Long boardId, @RequestBody @Valid CommentRequestDto commentRequestDto) {
         return ResponseDto.ok(commentService.createComment(id, boardId, commentRequestDto));
     }
 
@@ -40,7 +41,7 @@ public class CommentController {
     @PutMapping("/{boardId}/comment/{commentId}")
     @Operation(summary = "댓글 수정", description = "댓글 수정하기")
     public ResponseDto<Boolean> updateComment(@UserId Long id, @PathVariable Long boardId,
-                                              @PathVariable Long commentId, @RequestBody CommentForUpdateRequestDto commentForUpdateRequestDto) {
+                                              @PathVariable Long commentId, @RequestBody @Valid CommentForUpdateRequestDto commentForUpdateRequestDto) {
         return ResponseDto.ok(commentService.updateComment(id, boardId, commentId, commentForUpdateRequestDto));
     }
 

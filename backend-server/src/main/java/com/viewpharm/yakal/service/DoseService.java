@@ -152,6 +152,7 @@ public class DoseService {
 
 
     public Map<LocalDate, OneDaySummaryWithoutDateDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
+        log.info("시작");
         final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();
 
         final LocalDate startOfMonth = yearMonth.atDay(1);
