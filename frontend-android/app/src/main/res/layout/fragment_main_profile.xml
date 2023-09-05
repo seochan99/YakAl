@@ -321,28 +321,28 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"/>
 
-                <androidx.constraintlayout.helper.widget.Layer
-                    android:id="@+id/questionLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="16dp"
-                    android:background="@drawable/btn_white_ripple"
-                    app:constraint_referenced_ids="questionTextView"
-                    tools:ignore="MissingConstraints" />
+<!--                <androidx.constraintlayout.helper.widget.Layer-->
+<!--                    android:id="@+id/questionLayout"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:background="@drawable/btn_white_ripple"-->
+<!--                    app:constraint_referenced_ids="questionTextView"-->
+<!--                    tools:ignore="MissingConstraints" />-->
 
-                <TextView
-                    android:id="@+id/questionTextView"
-                    style="@style/profileSettingFont"
-                    android:layout_width="0dp"
+<!--                <TextView-->
+<!--                    android:id="@+id/questionTextView"-->
+<!--                    style="@style/profileSettingFont"-->
+<!--                    android:layout_width="0dp"-->
 
-                    android:layout_height="wrap_content"
-                    android:text="자주 묻는 질문"
-                    android:paddingStart="22dp"
-                    android:paddingTop="17dp"
-                    android:paddingBottom="17dp"
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="자주 묻는 질문"-->
+<!--                    android:paddingStart="22dp"-->
+<!--                    android:paddingTop="17dp"-->
+<!--                    android:paddingBottom="17dp"-->
 
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/exportRequestTextView" />
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/exportRequestTextView" />-->
 
                 <androidx.constraintlayout.helper.widget.Layer
                     android:id="@+id/versionLayout"
@@ -365,7 +365,7 @@
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/currentVersionTextView"
-                    app:layout_constraintTop_toBottomOf="@id/questionTextView" />
+                    app:layout_constraintTop_toBottomOf="@id/exportRequestTextView" />
 
                 <TextView
                     android:id="@+id/currentVersionTextView"

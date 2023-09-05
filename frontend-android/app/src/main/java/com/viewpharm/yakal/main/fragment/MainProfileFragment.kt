@@ -51,7 +51,8 @@ class MainProfileFragment : Fragment() {
         }
 
         binding.notificationSettingLayout.setOnClickListener {
-            Timber.d("notificationSettingLayout")
+            Navigation.findNavController(view)
+                .navigate(MainProfileFragmentDirections.actionProfileMainFragmentToNotificationSettingFragment())
         }
 
 //        binding.locationSettingLayout.setOnClickListener {
@@ -59,12 +60,13 @@ class MainProfileFragment : Fragment() {
 //        }
 
         binding.requestLayout.setOnClickListener {
-            Timber.d("requestLayout")
+            Navigation.findNavController(view)
+                .navigate(MainProfileFragmentDirections.actionProfileMainFragmentToRequestFragment())
         }
 
-        binding.questionLayout.setOnClickListener {
-            Timber.d("questionLayout")
-        }
+//        binding.questionLayout.setOnClickListener {
+//            Timber.d("questionLayout")
+//        }
 
         binding.expertLayout.setOnClickListener {
             Timber.d("expertLayout")

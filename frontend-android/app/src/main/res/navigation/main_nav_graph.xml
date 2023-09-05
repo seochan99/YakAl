@@ -16,6 +16,22 @@
             app:popEnterAnim="@anim/slide_from_left"
             app:popExitAnim="@anim/slide_to_right"
             app:popUpTo="@id/profileMainFragment" />
+        <action
+            android:id="@+id/action_profileMainFragment_to_notificationSettingFragment"
+            app:destination="@id/notificationSettingFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/profileMainFragment" />
+        <action
+            android:id="@+id/action_profileMainFragment_to_requestFragment"
+            app:destination="@id/opinionFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/profileMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/communityMainFragment"
@@ -47,4 +63,25 @@
         android:id="@+id/goOutFragment"
         android:name="com.viewpharm.yakal.main.fragment.GoOutFragment"
         android:label="GoOutFragment" />
+    <fragment
+        android:id="@+id/notificationSettingFragment"
+        android:name="com.viewpharm.yakal.main.fragment.NotificationSettingFragment"
+        android:label="NotificationSettingFragment" />
+    <fragment
+        android:id="@+id/opinionFragment"
+        android:name="com.viewpharm.yakal.main.fragment.OpinionFragment"
+        android:label="OpinionFragment">
+        <action
+            android:id="@+id/action_requestFragment_to_opinionExitFragment"
+            app:destination="@id/opinionExitFragment"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/profileMainFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/opinionExitFragment"
+        android:name="com.viewpharm.yakal.main.fragment.OpinionExitFragment"
+        android:label="OpinionExitFragment" />
 </navigation>
