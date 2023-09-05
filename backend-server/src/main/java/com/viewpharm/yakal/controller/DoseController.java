@@ -82,11 +82,11 @@ public class DoseController {
 
     @GetMapping("/month/{month}")
     @Operation(summary = "한 달 복용 달성도 가져오기", description = "환자가 지정한 달의 약 복용 달성도를 하루 단위로 가져온다.")
-    public ResponseDto<Map<LocalDate, OneDaySummaryWithoutDateDto>> getMonthDosePercent(
+    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
             @UserId Long id,
-            @PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+            @PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
-        final Map<LocalDate, OneDaySummaryWithoutDateDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
+        final List<OneDaySummaryDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
         return ResponseDto.ok(oneMonthSummary);
     }
 

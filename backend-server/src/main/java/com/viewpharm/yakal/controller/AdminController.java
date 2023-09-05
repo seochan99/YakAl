@@ -86,7 +86,7 @@ public class AdminController {
     @PatchMapping("expert/register/{id}")
     @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
     public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody UpdateAdminRequestDto updateAdminRequestDto){
-        userService.updateIsCertified(id,updateAdminRequestDto.getIsAllow());
+        userService.updateIsCertified(id,updateAdminRequestDto);
         return ResponseDto.ok(null);
     }
 
