@@ -30,9 +30,14 @@ struct RowQuestionView: View {
                 OptionButton(title: options[2], selected: $selectedOption)
                 Spacer()
                 OptionButton(title: options[3], selected: $selectedOption)
+                // if options length가 5일때
+                if options.count == 5 {
+                       Spacer()
+                       OptionButton(title: options[4], selected: $selectedOption)
+                   }
             }
         }.frame(maxWidth:.infinity)
-            .padding(.horizontal,20)
+            .padding(.horizontal,5)
     }
 }
 

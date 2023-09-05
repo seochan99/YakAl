@@ -63,6 +63,11 @@
 		9897E9DC2AA4E465004642CA /* ResultBoxSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9DB2AA4E465004642CA /* ResultBoxSwiftUIView.swift */; };
 		9897E9DF2AA4F637004642CA /* OptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9DE2AA4F637004642CA /* OptionButton.swift */; };
 		9897E9E12AA4F69F004642CA /* RowQuetionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E02AA4F69F004642CA /* RowQuetionView.swift */; };
+		9897E9E52AA6D5DA004642CA /* LogoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E42AA6D5DA004642CA /* LogoutCoordinator.swift */; };
+		9897E9EA2AA6D728004642CA /* LogoutModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E92AA6D728004642CA /* LogoutModalView.swift */; };
+		9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EC2AA6D833004642CA /* ViewExtension.swift */; };
+		9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */; };
+		9897E9F22AA6EB93004642CA /* SignOutSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -147,6 +152,11 @@
 		9897E9DB2AA4E465004642CA /* ResultBoxSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultBoxSwiftUIView.swift; sourceTree = "<group>"; };
 		9897E9DE2AA4F637004642CA /* OptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionButton.swift; sourceTree = "<group>"; };
 		9897E9E02AA4F69F004642CA /* RowQuetionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RowQuetionView.swift; sourceTree = "<group>"; };
+		9897E9E42AA6D5DA004642CA /* LogoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutCoordinator.swift; sourceTree = "<group>"; };
+		9897E9E92AA6D728004642CA /* LogoutModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutModalView.swift; sourceTree = "<group>"; };
+		9897E9EC2AA6D833004642CA /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
+		9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutSwiftUIView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -209,15 +219,10 @@
 				98470EDC2A954EDD00C29ED1 /* KakaoSettingView.swift */,
 				9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */,
 				9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */,
+				9897E9E92AA6D728004642CA /* LogoutModalView.swift */,
+				9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */,
 			);
 			path = Mypage;
-			sourceTree = "<group>";
-		};
-		9814334D2A9163C300017600 /* New Group */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "New Group";
 			sourceTree = "<group>";
 		};
 		9814334E2A9163CD00017600 /* Common */ = {
@@ -227,8 +232,8 @@
 				9814334F2A9163F200017600 /* MedicationRowView.swift */,
 				98349A882A7C043700071C5D /* CircularProgressBarView.swift */,
 				9890C9062A9502060007299B /* CircularProgressBarWithText.swift */,
-				98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */,
 				98470EDA2A954CD100C29ED1 /* DatePickerModalView.swift */,
+				98470ED22A9544F600C29ED1 /* BlueHorizontalButton.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
 				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
 				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
+				9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -352,12 +358,12 @@
 		9897E9CD2AA4C15D004642CA /* TestDetail */ = {
 			isa = PBXGroup;
 			children = (
-				9897E9DD2AA4F60C004642CA /* DepressionTest */,
-				9897E9D82AA4E159004642CA /* ConfromityTest */,
 				9897E9D52AA4CEA1004642CA /* TestDetailCommon */,
 				9897E9D92AA4E169004642CA /* TestDoneSwiftUIView.swift */,
+				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
 				9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */,
 				9897E9CB2AA4C157004642CA /* SmokingTestSwiftUIView.swift */,
+				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
 				9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */,
 				9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */,
 				9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */,
@@ -376,20 +382,12 @@
 			name = TestDetailCommon;
 			sourceTree = "<group>";
 		};
-		9897E9D82AA4E159004642CA /* ConfromityTest */ = {
+		9897E9EB2AA6D80E004642CA /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
+				9897E9EC2AA6D833004642CA /* ViewExtension.swift */,
 			);
-			name = ConfromityTest;
-			sourceTree = "<group>";
-		};
-		9897E9DD2AA4F60C004642CA /* DepressionTest */ = {
-			isa = PBXGroup;
-			children = (
-				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
-			);
-			name = DepressionTest;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		98AEEBBF2A76AF1000675378 /* Home */ = {
@@ -491,7 +489,7 @@
 		98C12D502A5E3C7700175EB8 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				9814334D2A9163C300017600 /* New Group */,
+				9897E9EB2AA6D80E004642CA /* Extensions */,
 				98349A872A7C041400071C5D /* Views */,
 				98C12D542A5E3C8F00175EB8 /* Models */,
 				98C12D532A5E3C8900175EB8 /* Cells */,
@@ -522,6 +520,7 @@
 				980BF8F12A61015100ADE034 /* ProgressNavController.swift */,
 				981433512A916A6800017600 /* MedicationData.swift */,
 				9890C9082A9506200007299B /* CustomTabBar.swift */,
+				9897E9E42AA6D5DA004642CA /* LogoutCoordinator.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -735,6 +734,7 @@
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */,
 				98470ED72A954B5F00C29ED1 /* ModeButton.swift in Sources */,
+				9897E9F22AA6EB93004642CA /* SignOutSwiftUIView.swift in Sources */,
 				9897E9CF2AA4C179004642CA /* InsomniaTestSwiftUIView.swift in Sources */,
 				98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
@@ -743,11 +743,13 @@
 				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				9897E9DF2AA4F637004642CA /* OptionButton.swift in Sources */,
+				9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				9897E9DA2AA4E169004642CA /* TestDoneSwiftUIView.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
+				9897E9E52AA6D5DA004642CA /* LogoutCoordinator.swift in Sources */,
 				98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */,
 				98470ED52A9545D400C29ED1 /* TimeSlotView.swift in Sources */,
 				9814334A2A91597200017600 /* MedicationModel.swift in Sources */,
@@ -758,6 +760,7 @@
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				9897E9CC2AA4C157004642CA /* SmokingTestSwiftUIView.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
+				9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
 				980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */,
@@ -770,6 +773,7 @@
 				980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */,
 				9888A2782A6D690200F507BD /* Step3VC.swift in Sources */,
 				981433522A916A6800017600 /* MedicationData.swift in Sources */,
+				9897E9EA2AA6D728004642CA /* LogoutModalView.swift in Sources */,
 				98C2AE7C2A92414C00A0FE6B /* MedicineDetailView.swift in Sources */,
 				9897E9D12AA4C193004642CA /* HealthFoodSwiftUIView.swift in Sources */,
 				9890C9092A9506200007299B /* CustomTabBar.swift in Sources */,

@@ -1,25 +1,21 @@
 import SwiftUI
 import KakaoSDKUser
 
-class LogoutCoordinator: NSObject, UINavigationControllerDelegate {
-    func logoutAndTransitionToMainVC() {
-        UserApi.shared.logout { error in
-            if let error = error {
-                print(error)
-            } else {
-                UserDefaults.standard.removeObject(forKey: "KakaoAccessToken")
-                print("logout() success.")
-                
-                if let window = UIApplication.shared.windows.first,
-                   let storyboard = UIStoryboard(name: "MainVC", bundle: nil).instantiateInitialViewController() {
-                    window.rootViewController = storyboard
-                    window.makeKeyAndVisible()
-                }
-            }
-        }
+
+//
+struct ViewControllerKey: EnvironmentKey {
+    static let defaultValue: UIViewController? = nil
+}
+
+extension EnvironmentValues {
+    var viewController: UIViewController? {
+        get { self[ViewControllerKey.self] }
+        set { self[ViewControllerKey.self] = newValue }
     }
 }
 
+
+// 로그아웃 컨트롤
 struct LogoutController: UIViewRepresentable {
     typealias UIViewType = UIView
     
@@ -39,6 +35,8 @@ struct LogoutController: UIViewRepresentable {
     }
 }
 
+
+//MARK: - 셋팅 뷰
 struct SettingSwiftUIView: View {
     @State private var selectedMode: Mode = .light
     @State private var morningStartTime: Date = Date()
@@ -46,6 +44,7 @@ struct SettingSwiftUIView: View {
     @State private var showLogoutModal = false
     @State private var isLoggedIn = true  // Assuming the user is logged in when they see this view
     private var logoutCoordinator = LogoutCoordinator()
+    @State private var showingAlert = false
 
     @State private var noonStartTime: Date = Date().addingTimeInterval(3600 * 5) // 5 hours later
     @State private var noonEndTime: Date = Date().addingTimeInterval(3600 * 6) // 6 hours later
@@ -53,6 +52,10 @@ struct SettingSwiftUIView: View {
     @State private var eveningStartTime: Date = Date().addingTimeInterval(3600 * 11) // 11 hours later
     @State private var eveningEndTime: Date = Date().addingTimeInterval(3600 * 13) // 13 hours later
     
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+
+    
+       
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -83,11 +86,8 @@ struct SettingSwiftUIView: View {
                 }
             }
     }
-
-    
     var body: some View {
-        ZStack{            
-            NavigationView {
+        ZStack{
                 ScrollView(showsIndicators: false){
                     VStack(alignment: .leading) {
                         
@@ -162,7 +162,8 @@ struct SettingSwiftUIView: View {
                                             .foregroundColor(Color(UIColor(red: 0.08, green: 0.08, blue: 0.08, alpha: 1)))
                                     }
                                 }
-                                Button(action: {}) {
+                                // NavigationLink
+                                NavigationLink(destination: SignOutSwiftUIView()) {
                                     HStack {
                                         Text("회원탈퇴")
                                             .font(Font.custom("SUIT", size: 16).weight(.medium))
@@ -172,71 +173,46 @@ struct SettingSwiftUIView: View {
                                             .foregroundColor(Color(UIColor(red: 0.08, green: 0.08, blue: 0.08, alpha: 1)))
                                     }
                                 }
-                                // 회원탈퇴 button can be similarly implemented
-                                // LogoutController(coordinator: logoutCoordinator)  // Add this if needed
                             }
                         }
                         .padding(.top, 40)
                         
                     }.padding(.vertical,20)
-                    
+
                 }.padding(.horizontal,20)
-                if showLogoutModal {
-                            // 반투명한 레이어 추가
-                            Color.black.opacity(0.4)
-                                .edgesIgnoringSafeArea(.all)
-                                .onTapGesture {
-                                    showLogoutModal = false
-                                }
-
-                            // 모달창 코드
-                            LogoutModalView(isPresented: $showLogoutModal)
+                    .overlay(
+                        Group {
+                            if showLogoutModal {
+                                // Semi-transparent background
+                                Color.black.opacity(0.4)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .onTapGesture {
+                                        showLogoutModal = false
+                                    }
+                                // Modal view
+                                LogoutModalView(isPresented: $showLogoutModal)
+                            }
                         }
+                    )
+            }.onAppear {
+                self.hideTabBar()
             }
-            //        .navigationBarBackButtonHidden(true)
-            //        .navigationBarItems(leading: backButton)
-            //        .navigationTitle(Text("앱 설정"))
-        }
-    }
-        func logout() {
-            logoutCoordinator.logoutAndTransitionToMainVC()
-        }
-    
-    
-}
-
-// 로그아웃 모달
-struct LogoutModalView: View {
-    @Binding var isPresented: Bool
-
-    var body: some View {
-        VStack(spacing: 20) {
-            Text("로그아웃하시겠습니까?")
-                .font(.headline)
-            
-            HStack(spacing: 20) {
-                Button("아니요") {
-                    isPresented = false
+            .navigationTitle("앱 설정")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
                 }
-                .padding()
-                .background(Color.gray)
-                .foregroundColor(.white)
-                .cornerRadius(8)
-                
-                Button("로그아웃") {
-                    // Handle logout action here
-                    isPresented = false
-                }
-                .padding()
-                .background(Color.red)
-                .foregroundColor(.white)
-                .cornerRadius(8)
             }
-        }
-        .frame(width: 340, height: 174)
-        .background(Color.white)
-        .cornerRadius(16)
-        .shadow(color: Color(red: 0.38, green: 0.38, blue: 0.45).opacity(0.2), radius: 3, x: 0, y: 2)
     }
 }
 
@@ -245,3 +221,5 @@ struct SettingSwiftUIView_Previews: PreviewProvider {
         SettingSwiftUIView()
     }
 }
+
+

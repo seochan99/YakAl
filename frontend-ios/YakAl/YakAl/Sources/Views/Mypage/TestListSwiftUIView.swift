@@ -10,7 +10,6 @@ struct TestButton: View {
     let testName: String
     let status: TestStatus
     let destination: AnyView
-
     
     var body: some View {
         NavigationLink(destination: destination) {
@@ -58,20 +57,20 @@ struct TestButton: View {
 }
 
 struct TestListSwiftUIView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     //TestStatus.complete는 현재 더미데이터
     let tests = [
-        ("북약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
+        ("복약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
              ("우울증 선별검사 (PHQ-9)", TestStatus.incomplete, AnyView(DepressionTestSwiftUIView())),
              ("음주력 테스트", TestStatus.inProgress, AnyView(DrinkingTestSwiftUIView())),
              ("흡연력 테스트", TestStatus.incomplete, AnyView(SmokingTestSwiftUIView())),
              ("불면증 심각도", TestStatus.complete, AnyView(InsomniaTestSwiftUIView())),
-             ("현재 복용 중인 건강기능식품", TestStatus.inProgress, AnyView(HealthFoodSwiftUIView())),
+//             ("현재 복용 중인 건강기능식품", TestStatus.inProgress, AnyView(HealthFoodSwiftUIView())),
              ("1년간 처방 받은 병의 진단명", TestStatus.incomplete, AnyView(DiagnosticTestSwiftUIView()))
       ]
       
     
     var body: some View {
-        NavigationView {
             VStack(spacing: 20) {
                 ForEach(tests, id: \.0) { testName, status, destination in
                     TestButton(testName: testName, status: status, destination: destination)
@@ -79,9 +78,31 @@ struct TestListSwiftUIView: View {
                 Spacer()
                 BlueHorizontalButton(text: "완료된 결과 공유", action: {})
             }
+            .onAppear {
+                self.hideTabBar()
+            }
+            .onDisappear {
+                self.showTabBar()
+            }
+            .navigationTitle("자가 진단 테스트")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
+        
+        
             .padding(.top,40)
-            
-        }
     }
      
 }
