@@ -3,6 +3,7 @@ package com.viewpharm.yakal.service;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
@@ -149,8 +150,8 @@ public class UserService {
         }
     }
 
-    public void updateIsCertified(final Long userId,final Boolean isAllow){
-        final Integer isUpdated = userRepository.updateIsCertified(userId, isAllow);
+    public void updateIsCertified(final Long userId, final UpdateAdminRequestDto updateAdminRequestDto){
+        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(),updateAdminRequestDto.getJob());
 
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);

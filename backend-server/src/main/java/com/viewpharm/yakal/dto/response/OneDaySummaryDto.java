@@ -10,12 +10,12 @@ import java.time.LocalDate;
 @Setter
 public class OneDaySummaryDto {
 
-    private LocalDate date;
+    private String date;
     private Long progressOrNull;
     private Boolean isOverlapped;
 
     @Builder
-    public OneDaySummaryDto(final LocalDate date,
+    public OneDaySummaryDto(final String date,
                             final Long progressOrNull,
                             final Boolean isOverlapped) {
         this.date = date;
