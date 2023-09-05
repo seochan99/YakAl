@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.SignInActivity">
+    tools:context=".signin.SignInActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -37,23 +37,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/kakaoLoginButton"
         android:layout_width="320dp"
         android:layout_height="64dp"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_kakao_login"
         android:layout_marginTop="10dp"
+        android:background="@drawable/view_oval_next"
         app:layout_constraintTop_toTopOf="@id/bottomView"
         app:layout_constraintStart_toStartOf="@id/bottomView"
         app:layout_constraintEnd_toEndOf="@id/bottomView"
         app:layout_constraintBottom_toTopOf="@id/googleLoginButton"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/googleLoginButton"
         android:layout_width="320dp"
         android:layout_height="64dp"
         android:src="@drawable/ic_google_login"
+        android:scaleType="fitCenter"
         android:layout_marginBottom="60dp"
+        android:background="@drawable/view_oval_next"
         app:layout_constraintTop_toBottomOf="@id/kakaoLoginButton"
         app:layout_constraintBottom_toBottomOf="@id/bottomView"
         app:layout_constraintStart_toStartOf="@id/bottomView"

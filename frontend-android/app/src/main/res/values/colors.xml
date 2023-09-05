@@ -9,4 +9,8 @@
     <color name="risk_red">#FFFB5D5D</color>
     <color name="risk_yellow">#FFFFC100</color>
     <color name="risk_green">#FF63DC68</color>
+    <color name="complete_gray">#FFC6C6CF</color>
+    <color name="complete_blue">#FF2666F6</color>
+
+    <color name="time_picker_background">#EDEDED</color>
 </resources>

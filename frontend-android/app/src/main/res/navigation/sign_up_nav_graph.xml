@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signUpTermFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpTermFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpTermFragment"
         android:label="fragment_sign_up_term"
         tools:layout="@layout/fragment_sign_up_term" >
         <action
@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpTermDetailFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpTermDetailFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpTermDetailFragment"
         android:label="fragment_sign_up_term_detail"
         tools:layout="@layout/fragment_sign_up_term_detail" >
         <argument
@@ -39,7 +39,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpCertificationFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpCertificationFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpCertificationFragment"
         android:label="fragment_sign_up_certification"
         tools:layout="@layout/fragment_sign_up_certification" >
         <action
@@ -53,7 +53,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpNicknameFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpNicknameFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpNicknameFragment"
         android:label="fragment_sign_up_nickname"
         tools:layout="@layout/fragment_sign_up_nickname" >
         <action
@@ -75,7 +75,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpModeFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpModeFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpModeFragment"
         android:label="fragment_sign_up_mode"
         tools:layout="@layout/fragment_sign_up_mode" >
         <action
@@ -101,7 +101,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFinishFragment"
-        android:name="com.viewpharm.yakal.ui.SignUpFinishFragment"
+        android:name="com.viewpharm.yakal.signup.fragment.SignUpFinishFragment"
         android:label="fragment_sign_up_finish"
         tools:layout="@layout/fragment_sign_up_finish" >
         <action
@@ -126,7 +126,7 @@
     </fragment>
     <activity
         android:id="@+id/mainActivity"
-        android:name="com.viewpharm.yakal.view.MainActivity"
+        android:name="com.viewpharm.yakal.main.activity.MainActivity"
         android:label="activity_main"
         tools:layout="@layout/activity_main" />
 </navigation>
