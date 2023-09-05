@@ -1,9 +1,9 @@
 import SwiftUI
 
 extension Medicine: Equatable {
-    static func == (lhs: Medicine, rhs: Medicine) -> Bool {
-        return lhs.id == rhs.id
-    }
+//    static func == (lhs: Medicine, rhs: Medicine) -> Bool {
+//        return lhs.id == rhs.id
+//    }
 }
 
 struct Medicine:Identifiable,Hashable {
