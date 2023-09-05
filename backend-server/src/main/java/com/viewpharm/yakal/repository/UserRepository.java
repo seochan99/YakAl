@@ -40,8 +40,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateNameAndBirthdayAndIsDetailAndSexById(Long userId, String name, LocalDate birthday, Boolean isDetail, ESex sex);
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.isCertified = :isCertified where u.id = :userId")
-    Integer updateIsCertified(Long userId, Boolean isCertified);
+    @Query("update User u set u.isCertified = :isCertified, u.job = :job  where u.id = :userId")
+    Integer updateIsCertified(Long userId, Boolean isCertified, EJob job);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
             " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
