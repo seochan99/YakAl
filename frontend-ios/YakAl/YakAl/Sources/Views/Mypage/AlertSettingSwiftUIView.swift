@@ -9,8 +9,8 @@ struct AlertSettingSwiftUIView: View {
     var body: some View {
         VStack(spacing: 32){
             alertToggle(title: "복약 알림", subtitle: "등록한 약의 복용 알림", isOn: $ateAlert, key: "ateAlert")
-            alertToggle(title: "커뮤니티 알림", subtitle: "커뮤니티 내의 댓글, 좋아요 등의 알림", isOn: $communityAlert, key: "communityAlert")
-            alertToggle(title: "마케팅 정보 알림", subtitle: "다양한 이벤트, 혜택 알림", isOn: $marketingAlert, key: "marketingAlert")
+//            alertToggle(title: "커뮤니티 알림", subtitle: "커뮤니티 내의 댓글, 좋아요 등의 알림", isOn: $communityAlert, key: "communityAlert")
+//            alertToggle(title: "마케팅 정보 알림", subtitle: "다양한 이벤트, 혜택 알림", isOn: $marketingAlert, key: "marketingAlert")
             Spacer()
         }
         .padding(.horizontal, 20)

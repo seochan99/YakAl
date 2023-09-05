@@ -25,7 +25,7 @@ struct WishYakalSwiftUIView: View {
                         .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
                     
                     BlueHorizontalButton(text: "돌아가기", action: {
-                        
+                        self.presentationMode.wrappedValue.dismiss()
                     })
                 }.padding(.horizontal,100)
 
