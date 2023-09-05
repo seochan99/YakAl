@@ -19,6 +19,7 @@ export const store = configureStore({
       userApiSlice.middleware,
       authApiSlice.middleware,
       identificationApiSlice.middleware,
+      registrationApiSlice.middleware,
     ),
   devTools: true,
 });

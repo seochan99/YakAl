@@ -26,6 +26,8 @@ import IdentificationFailure from "@/expert/page/login/identification-failure";
 import ExpertCertification from "@/expert/page/main/expert-certification";
 import IdentificationSuccess from "@/expert/page/login/identification-success";
 import FacilityRegistrationInfo from "@/admin/page/main/facility-registration-info";
+import RegistrationSuccess from "@/expert/page/main/registration-success";
+import RegistrationFailure from "@/expert/page/main/registration-failure";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -92,6 +94,14 @@ export const router = createBrowserRouter([
                   {
                     path: "registration",
                     element: <ExpertFacilityRegistration />,
+                  },
+                  {
+                    path: "registration/success",
+                    element: <RegistrationSuccess />,
+                  },
+                  {
+                    path: "registration/failure",
+                    element: <RegistrationFailure />,
                   },
                   {
                     path: "certification",

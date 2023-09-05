@@ -5,7 +5,7 @@ import { HttpStatusCode } from "axios";
 
 export type TResponse = {
   success: boolean;
-  data: object | null;
+  data: object | number | null;
   error: object | null;
 };
 
