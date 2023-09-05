@@ -13,7 +13,7 @@ struct WishYakalSwiftUIView: View {
     @State private var placeholderText: String = "특정 주제의 도배글, 내용없는 글쓰기는 자제해주세요."
     @State private var isSubmitted: Bool = false  // 제출 상태를 추적하는 변수
     @State private var showHomeVC: Bool = false  // HomeVC를 표시할지 결정하는 변수
-
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
         VStack(alignment: .leading){
@@ -88,7 +88,22 @@ struct WishYakalSwiftUIView: View {
         }
             .padding(.top,40)
             .dismissKeyboardOnTap()  // 키보드 닫기 동작 추가
-
+            .navigationTitle("약알에게 바라는 점")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
     }
 }
 

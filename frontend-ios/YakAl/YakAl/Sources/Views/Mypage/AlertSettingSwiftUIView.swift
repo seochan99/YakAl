@@ -4,7 +4,8 @@ struct AlertSettingSwiftUIView: View {
     @State private var ateAlert: Bool = UserDefaults.standard.bool(forKey: "ateAlert")
     @State private var communityAlert: Bool = UserDefaults.standard.bool(forKey: "communityAlert")
     @State private var marketingAlert: Bool = UserDefaults.standard.bool(forKey: "marketingAlert")
-
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    
     var body: some View {
         VStack(spacing: 32){
             alertToggle(title: "복약 알림", subtitle: "등록한 약의 복용 알림", isOn: $ateAlert, key: "ateAlert")
@@ -14,6 +15,22 @@ struct AlertSettingSwiftUIView: View {
         }
         .padding(.horizontal, 20)
         .padding(.top, 50)
+        .navigationTitle("알림 설정")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        Text("뒤로")
+                            .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                    }
+                }
+            }
+        }
     }
     
     // 알림토글
