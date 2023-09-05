@@ -25,6 +25,8 @@ struct ModeButton: View {
                         Text(description)
                             .font(Font.custom("SUIT", size: 15).weight(.bold))
                             .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                            .multilineTextAlignment(.leading) // 왼쪽 정렬
+
                     }.padding(.horizontal,20)
                     Spacer()
                 }
