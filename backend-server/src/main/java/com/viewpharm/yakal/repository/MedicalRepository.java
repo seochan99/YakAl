@@ -3,6 +3,8 @@ package com.viewpharm.yakal.repository;
 import com.viewpharm.yakal.domain.Medical;
 import com.viewpharm.yakal.type.EMedical;
 import org.locationtech.jts.geom.Point;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -52,8 +54,7 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
             "ORDER BY distance", nativeQuery = true)
     List<Medical> findNearbyMedicalsByDistanceAndEMedical(Point point,double distance,String eMedical);
 
-    @Query(value = "select * from medicals m where m.is_register = TRUE ", nativeQuery = true)
-    List<Medical> findAllByRegisterTrue();
+    Page<Medical> findAllByRegisterTrueAndEMedical(Pageable pageable,EMedical eMedical);
 
     List<Medical> findByMedicalName(String name);
 }

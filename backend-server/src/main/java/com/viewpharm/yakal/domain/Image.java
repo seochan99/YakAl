@@ -30,9 +30,13 @@ public class Image {
     @OneToOne(fetch = FetchType.LAZY)
     private Medical medical;
 
-    @JoinColumn(name = "use_expert")
-    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "expert_id")
+    @ManyToOne(fetch = FetchType.LAZY)
     private Expert expert;
+
+    @JoinColumn(name = "registration_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Registration registration;
 
     @Column(name = "uuid_name", columnDefinition = "CHAR(41)", nullable = false)
     private String uuidName;
@@ -49,10 +53,26 @@ public class Image {
             case USER -> {
                 this.user = (User) useObject;
                 this.medical = null;
+                this.expert = null;
+                this.registration = null;
             }
             case MEDICAL -> {
                 this.medical = (Medical) useObject;
                 this.user = null;
+                this.expert = null;
+                this.registration = null;
+            }
+            case EXPERT -> {
+                this.expert = (Expert) useObject;
+                this.user = null;
+                this.medical = null;
+                this.registration = null;
+            }
+            case REGISTER -> {
+                this.registration = (Registration) useObject;
+                this.user = null;
+                this.expert = null;
+                this.medical = null;
             }
         }
         this.uuidName = uuidName;

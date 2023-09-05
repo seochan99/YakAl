@@ -11,4 +11,10 @@ public class PrescribedDto {
     private String KDCode;
     private int Score;
     private LocalDate prescribedDate;
+
+    public PrescribedDto(String KDCode, int score, LocalDate prescribedDate) {
+        this.KDCode = KDCode;
+        Score = score;
+        this.prescribedDate = prescribedDate;
+    }
 }
