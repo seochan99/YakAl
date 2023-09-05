@@ -8,6 +8,7 @@ import android.os.Handler
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.main.activity.MainActivity
 import com.viewpharm.yakal.signin.SignInActivity
+import com.viewpharm.yakal.signup.activity.SignUpActivity
 import timber.log.Timber
 import timber.log.Timber.Forest.plant
 

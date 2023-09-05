@@ -39,14 +39,23 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.profileAppSettingFragment, R.id.goOutFragment -> {
+                R.id.profileAppSettingFragment,
+                R.id.goOutFragment,
+                R.id.notificationSettingFragment,
+                R.id.opinionFragment -> {
                     binding.bottomNavigationView.visibility = View.GONE
                     binding.toolbar.visibility = View.VISIBLE
 
                     when (destination.id) {
                         R.id.profileAppSettingFragment -> setToolbarTitle("앱 설정")
                         R.id.goOutFragment -> setToolbarTitle("회원 탈퇴")
+                        R.id.notificationSettingFragment -> setToolbarTitle("알림 설정")
+                        R.id.opinionFragment -> setToolbarTitle("약알에게 바라는 점")
                     }
+                }
+                R.id.opinionExitFragment -> {
+                    binding.bottomNavigationView.visibility = View.GONE
+                    binding.toolbar.visibility = View.GONE
                 }
                 else -> {
                     binding.bottomNavigationView.visibility = View.VISIBLE
