@@ -2,7 +2,7 @@ import SwiftUI
 //MARK: - 약 개별 Row
 struct MedicationItemRow: View {
     @Binding var medicine: Medicine
-    let isAllCompleted: Bool // Add this parameter
+    let isAllCompleted: Bool
     @Binding var isCompleted: Bool
 
     var body: some View {
@@ -17,7 +17,7 @@ struct MedicationItemRow: View {
                 .weight(.medium)
                 )
                 .foregroundColor(medicine.atcCode.score == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
-                Text("해열, 진통, 소염제")
+                Text(medicine.effect)
                 .font(
                 Font.custom("SUIT", size: 10)
                 .weight(.medium)
@@ -44,9 +44,8 @@ struct MedicationItemRow: View {
             }
             Button(action: {
                 medicine.isTaken.toggle()
+                print(medicine.isTaken)
                 isCompleted = medicine.isTaken
-//                print("isCompleted : \(isCompleted)")
-//                print("medicine.isTaken : \(medicine.isTaken)")
             }) {
                 Image(isAllCompleted ? "Check_disable_end" : (medicine.isTaken ? "Check_disable_ing" : "Check_disable"))
                     .resizable()

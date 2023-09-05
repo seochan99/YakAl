@@ -14,7 +14,7 @@ struct Medicine:Identifiable,Hashable {
     let kdCode: String
     let atcCode: AtcCode
     var count: Int // 갯수
-    var isTaken: Bool // 복용여부
+    var isTaken: Bool //
     let isOverLap: Bool // 중복여부
     
     // hash

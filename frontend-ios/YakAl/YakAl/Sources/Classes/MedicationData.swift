@@ -54,13 +54,79 @@ class MedicationData: ObservableObject {
 
         ]),
         Medication(name: "점심",medication: [
+            Medicine(
+                id: 5,
+                image: "image_코푸정",
+                name: "코푸정",
+                effect: "진해거담제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            ),
+            Medicine(
+                id: 6,
+                image: "image_베스티온정",
+                name: "베스티온정",
+                effect: "해열, 진통, 소염제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            )
 
 
         ]),
         Medication(name: "저녁", medication: [
+            Medicine(
+                id: 7,
+                image: "image_코푸정",
+                name: "코푸정",
+                effect: "진해거담제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            ),
+            Medicine(
+                id: 8,
+                image: "image_베스티온정",
+                name: "베스티온정",
+                effect: "해열, 진통, 소염제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            )
            
         ]),
         Medication(name: "기타",medication: [
+            Medicine(
+                id: 9,
+                image: "image_코푸정",
+                name: "코푸정",
+                effect: "진해거담제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            ),
+            Medicine(
+                id: 10,
+                image: "image_베스티온정",
+                name: "베스티온정",
+                effect: "해열, 진통, 소염제",
+                kdCode: "KD001",
+                atcCode: AtcCode(code: "ATC001", score: 1),
+                count: 10,
+                isTaken: false,
+                isOverLap: false
+            )
          
         ]),
     ]
