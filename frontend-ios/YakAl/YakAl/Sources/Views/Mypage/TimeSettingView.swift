@@ -12,16 +12,18 @@ struct TimeSettingView: View {
     
     @Binding var startTime: Date
     @Binding var endTime: Date
+    
     var title: String
     var iconName: String
-    
-    
-    @Environment(\.presentationMode) var presentationMode
     
     @State private var isShowingAlert = false
     @State private var isShowingDatePicker: Bool = false
     @State private var isSettingStartTime: Bool = true  // Start with startTime by default
-    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+    
+    
+    @Environment(\.viewController) private var viewControllerHolder:
+    UIViewController?
+    @Environment(\.presentationMode) var presentationMode
     
     var isValidTime: Bool {
         return startTime < endTime
@@ -37,21 +39,6 @@ struct TimeSettingView: View {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         return formatter.string(from: endTime)
-    }
-    // bar가리기
-    func hideTabBar() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
-            tabBarController.tabBar.isHidden = true
-        }
-    }
-
-    // bar보이게
-    func showTabBar() {
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
-            tabBarController.tabBar.isHidden = false
-        }
     }
     
     var body: some View {
@@ -112,7 +99,6 @@ struct TimeSettingView: View {
 
             }
             .padding(.vertical, 30)
-           
             .navigationTitle("시간 설정")
             .navigationBarBackButtonHidden(true)
             .navigationBarItems(leading: Button(action: {
@@ -123,11 +109,18 @@ struct TimeSettingView: View {
                 Text("뒤로")
                     .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
             })
+            
             if isShowingDatePicker {
                 DatePickerModalView(isPresented: $isShowingDatePicker, date: isSettingStartTime ? $startTime : $endTime)
             }
         }.alert(isPresented: $isShowingAlert) {
             Alert(title: Text("경고"), message: Text("시작시간이 종료시간보다 뒤에 있습니다."), dismissButton: .default(Text("확인")))
+        }
+        .onAppear {
+            self.hideTabBar()
+        }
+        .onDisappear {
+            self.showTabBar()
         }
     }
 }
