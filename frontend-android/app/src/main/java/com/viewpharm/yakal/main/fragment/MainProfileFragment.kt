@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
 import com.viewpharm.yakal.databinding.FragmentMainProfileBinding
 import com.viewpharm.yakal.dialog.NicknameEditBottomDialog
 import com.viewpharm.yakal.main.activity.MainActivity
-import com.viewpharm.yakal.signup.fragment.SignUpModeFragmentDirections
-import com.viewpharm.yakal.type.EMode
 import timber.log.Timber
 
 class MainProfileFragment : Fragment() {
@@ -69,7 +68,7 @@ class MainProfileFragment : Fragment() {
 //        }
 
         binding.expertLayout.setOnClickListener {
-            Timber.d("expertLayout")
+            Toast.makeText(context, "준비중입니다", Toast.LENGTH_SHORT).show()
         }
 
         (activity as MainActivity).onLogBackStack()
