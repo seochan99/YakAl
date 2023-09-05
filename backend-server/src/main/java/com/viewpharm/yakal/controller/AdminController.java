@@ -98,21 +98,21 @@ public class AdminController {
 
     @GetMapping("/loginLog/day/month/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "하루 단위로 한달 치 가져오기")
-    public ResponseDto<List<LoginLogListDto>> getLoginLogForMonth(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListDto>> getLoginLogForMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneDayForMonth(yearMonth));
     }
 
     @GetMapping("/loginLog/month/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 6개월 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForSixMonth(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForSixMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneMonthForSixMonth(yearMonth));
     }
 
     @GetMapping("/loginLog/year/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 일년 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForYear(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForYear(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneMonthForYear(yearMonth));
     }
