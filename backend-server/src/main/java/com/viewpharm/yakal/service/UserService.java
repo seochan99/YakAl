@@ -148,4 +148,14 @@ public class UserService {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
     }
+
+    public void updateIsCertified(final Long userId,final Boolean isAllow){
+        final Integer isUpdated = userRepository.updateIsCertified(userId, isAllow);
+
+        if (isUpdated == 0) {
+            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+        }
+    }
+
+
 }

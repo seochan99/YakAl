@@ -1,11 +1,13 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.dto.response.MedicalRegisterDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.service.ExpertService;
 import com.viewpharm.yakal.service.ImageService;
+import com.viewpharm.yakal.service.RegistrationService;
 import com.viewpharm.yakal.type.EImageUseType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,6 +27,7 @@ public class ImageController {
 
     private final ImageService imageService;
     private final ExpertService expertService;
+
     @GetMapping("")
     @Operation(summary = "이미지 가져오기", description = "이미지 경로로 이미지 다운로드")
     public ResponseDto<Object> downloadImage(@RequestParam("uuid") String fileName) throws IOException {
@@ -45,10 +48,16 @@ public class ImageController {
     }
 
     @PostMapping("/expert")
-    public ResponseDto<Map<String,String>> uploadExpertImage(@UserId Long id, @RequestParam("image") MultipartFile file){
-        expertService.createExpert(id);
+    public ResponseDto<Boolean> uploadExpertImage(@UserId Long id, @RequestParam Long medicalId, @RequestParam("image") MultipartFile[] files){
+        Long expertId = expertService.createExpert(id,medicalId,false);
+        return ResponseDto.ok(imageService.uploadImages(expertId,EImageUseType.EXPERT,files));
+    }
+
+    //의료기관 등록용
+    @PostMapping("/medical")
+    public ResponseDto<Map<String,String>> uploadMedicalImage(@RequestParam Long registerId, @RequestParam("image") MultipartFile file){
         Map<String, String> map = new HashMap<>();
-        map.put("uuid_name", imageService.uploadImage(id, EImageUseType.EXPERT, file));
+        map.put("uuid_name", imageService.uploadImage(registerId, EImageUseType.REGISTER, file));
         return ResponseDto.ok(map);
     }
 

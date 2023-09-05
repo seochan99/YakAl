@@ -28,6 +28,7 @@ public enum ErrorCode {
     NOT_FOUND_ANSWER("4056", HttpStatus.NOT_FOUND, "해당 설문결과가 존재하지 않습니다."),
     NOT_FOUND_DIAGNOSIS("4057", HttpStatus.NOT_FOUND, "해당 과거 병명이 존재하지 않습니다."),
     NOT_FOUND_HEALTHFOOD("4058", HttpStatus.NOT_FOUND, "해당 건강기능 식품이 존재하지 않습니다."),
+    NOT_FOUND_REGISTRATION("4059",HttpStatus.NOT_FOUND,"해당 등록신청 사항이 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),
