@@ -60,7 +60,7 @@ struct TestButton: View {
 struct TestListSwiftUIView: View {
     //TestStatus.complete는 현재 더미데이터
     let tests = [
-        ("북약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
+        ("복약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
              ("우울증 선별검사 (PHQ-9)", TestStatus.incomplete, AnyView(DepressionTestSwiftUIView())),
              ("음주력 테스트", TestStatus.inProgress, AnyView(DrinkingTestSwiftUIView())),
              ("흡연력 테스트", TestStatus.incomplete, AnyView(SmokingTestSwiftUIView())),
@@ -71,7 +71,6 @@ struct TestListSwiftUIView: View {
       
     
     var body: some View {
-        NavigationView {
             VStack(spacing: 20) {
                 ForEach(tests, id: \.0) { testName, status, destination in
                     TestButton(testName: testName, status: status, destination: destination)
@@ -80,8 +79,6 @@ struct TestListSwiftUIView: View {
                 BlueHorizontalButton(text: "완료된 결과 공유", action: {})
             }
             .padding(.top,40)
-            
-        }
     }
      
 }

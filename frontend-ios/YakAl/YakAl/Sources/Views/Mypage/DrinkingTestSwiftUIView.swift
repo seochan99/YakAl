@@ -79,7 +79,6 @@ struct DrinkingTestSwiftUIView: View {
     ]
 
     var body: some View {
-        NavigationView{
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 64) {
                     InfoBoxView(title: "음주력 테스트", content: "이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.")
@@ -155,8 +154,8 @@ struct DrinkingTestSwiftUIView: View {
                     
                 }
             }
-        }.navigationBarTitle("", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
+//        }.navigationBarTitle("", displayMode: .inline)
+//            .navigationBarBackButtonHidden(true)
     }
 }
 

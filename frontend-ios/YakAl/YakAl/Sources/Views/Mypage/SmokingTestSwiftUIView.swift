@@ -27,7 +27,6 @@ struct SmokingTestSwiftUIView: View {
     
     
     var body: some View {
-        NavigationView{
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 64) {
                     InfoBoxView(title: "흡연력 테스트", content: "이용자의 흡연 여부와 흡연 습관을 파악하기 위한 설문입니다.")
@@ -113,8 +112,8 @@ struct SmokingTestSwiftUIView: View {
                     }
                 }
             }
-        }.navigationBarTitle("", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
+//        }.navigationBarTitle("", displayMode: .inline)
+//            .navigationBarBackButtonHidden(true)
     }
 }
 

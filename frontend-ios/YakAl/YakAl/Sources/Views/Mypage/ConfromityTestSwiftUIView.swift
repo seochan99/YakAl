@@ -50,7 +50,6 @@ struct ConfromityTestSwiftUIView: View {
     
     // 뷰
     var body: some View {
-        NavigationView{
             ScrollView(showsIndicators: false){
                 VStack(spacing:64){
                     InfoBoxView(title: "복약 순응도 테스트", content: "약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.")
@@ -75,8 +74,6 @@ struct ConfromityTestSwiftUIView: View {
                     
                 }
             }
-        }.navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

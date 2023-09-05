@@ -43,7 +43,6 @@ struct DepressionTestSwiftUIView: View {
       }
     
     var body: some View {
-        NavigationView{
             ScrollView(showsIndicators: false){
                 VStack(spacing:64){
                     InfoBoxView(title: "우울증 선별검사 (PHQ-9)", content: "이용자의 우울 여부는 일상생활의 동기부여나 의약품 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.")
@@ -79,8 +78,6 @@ struct DepressionTestSwiftUIView: View {
                     
                 }
             }
-        }.navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

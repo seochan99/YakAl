@@ -14,7 +14,6 @@ struct TestDoneSwiftUIView: View {
     
     
     var body: some View {
-        NavigationView{
             VStack(spacing:32){
                 ResultBoxSwiftUIView(title:self.Testtitle, score: self.score)
                 
@@ -42,9 +41,6 @@ struct TestDoneSwiftUIView: View {
                         .cornerRadius(10)
                 }
             }
-        }
-        .navigationBarTitle("", displayMode: .inline)
-        .navigationBarBackButtonHidden(true)
     }
 }
 

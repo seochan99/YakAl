@@ -70,7 +70,7 @@ struct InsomniaTestSwiftUIView: View {
 
     
     var body: some View {
-        NavigationView{
+//        NavigationView{
             
             
             ScrollView(showsIndicators:false){
@@ -106,8 +106,8 @@ struct InsomniaTestSwiftUIView: View {
                 
                 
             }
-        }.navigationBarTitle("", displayMode: .inline)
-            .navigationBarBackButtonHidden(true)
+//        }.navigationBarTitle("", displayMode: .inline)
+//            .navigationBarBackButtonHidden(true)
 
     }
 }
