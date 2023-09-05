@@ -14,5 +14,5 @@ public class ExpertRegisterDto {
     private LocalDate birthday;
     private String expertPath;
     private String medicalPath;
-    private LocalDateTime requestDate;
+    private LocalDate requestDate;
 }

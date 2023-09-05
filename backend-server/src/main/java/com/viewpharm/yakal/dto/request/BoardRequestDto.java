@@ -19,5 +19,4 @@ public class BoardRequestDto {
     private String content;
     @NotNull
     private String region;
-
 }

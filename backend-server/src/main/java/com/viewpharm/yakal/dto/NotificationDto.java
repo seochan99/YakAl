@@ -12,9 +12,9 @@ public class NotificationDto {
     private String title;
     private String content;
     private Boolean isRead;
-    private Timestamp createdDate;
+    private String createdDate;
 
-    public NotificationDto(Long id, String title, String content, Boolean isRead, Timestamp createdDate) {
+    public NotificationDto(Long id, String title, String content, Boolean isRead, String createdDate) {
         this.id = id;
         this.title = title;
         this.content = content;

@@ -87,8 +87,8 @@ public class BoardService {
                 .likeCnt((long) board.getLikes().size())
                 .isLike(boardUtil.existLike(user, board))
                 .region(board.getRegion().toString())
-                .createDate(board.getCreateDate())
-                .lastModifiedDate(board.getLastModifiedDate())
+                .createDate(board.getCreateDate().toString())
+                .lastModifiedDate(board.getLastModifiedDate().toString())
                 .build();
     }
 
@@ -133,8 +133,8 @@ public class BoardService {
                 .userId(board.getUser().getId())
                 .likeCnt((long) board.getLikes().size())
                 .region(board.getRegion().toString())
-                .createDate(board.getCreateDate())
-                .lastModifiedDate(board.getLastModifiedDate())
+                .createDate(board.getCreateDate().toString())
+                .lastModifiedDate(board.getLastModifiedDate().toString())
                 .build();
     }
 
@@ -176,7 +176,7 @@ public class BoardService {
         //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
-                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                        b.getLastModifiedDate().toString(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
         return list;
     }
@@ -205,7 +205,7 @@ public class BoardService {
         //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
-                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                        b.getLastModifiedDate().toString(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -236,7 +236,7 @@ public class BoardService {
         //Dto 변환
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
-                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                        b.getLastModifiedDate().toString(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;
@@ -266,7 +266,7 @@ public class BoardService {
 
         List<BoardListDto> list = page.stream()
                 .map(b -> new BoardListDto(b.getId(), b.getTitle(), b.getContent(), b.getUser().getName(), b.getRegion(),
-                        b.getLastModifiedDate(), b.getReadCnt(), boardUtil.existLike(user, b)))
+                        b.getLastModifiedDate().toString(), b.getReadCnt(), boardUtil.existLike(user, b)))
                 .collect(Collectors.toList());
 
         return list;

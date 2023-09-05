@@ -34,7 +34,7 @@ public class NotificationService {
     public List<NotificationDto> readNotification(Long userId, Long pageNum, Long num) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
+        Pageable paging = PageRequest.of(pageNum.intValue(), num.intValue(), Sort.by(Sort.Direction.DESC, "createdDate"));
         Page<Notification> notifications = notificationRepository.findByUserAndStatus(user, paging, true);
 
         List<NotificationDto> notificationDtoList = new ArrayList<>();
@@ -43,7 +43,7 @@ public class NotificationService {
                     .id(notification.getId())
                     .title(notification.getTitle())
                     .content(notification.getContent())
-                    .createdDate(notification.getCreatedDate())
+                    .createdDate(notification.getCreatedDate().toString())
                     .isRead(notification.getIsRead()).build());
         }
         return notificationDtoList;
