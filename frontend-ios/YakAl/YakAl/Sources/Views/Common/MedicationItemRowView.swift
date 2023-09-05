@@ -16,7 +16,7 @@ struct MedicationItemRow: View {
                 Font.custom("SUIT", size: 14)
                 .weight(.medium)
                 )
-                .foregroundColor(medicine.dangerStat == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
+                .foregroundColor(medicine.atcCode.score == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
                 Text("해열, 진통, 소염제")
                 .font(
                 Font.custom("SUIT", size: 10)
@@ -29,15 +29,15 @@ struct MedicationItemRow: View {
             
             
             Spacer()
-            if medicine.dangerStat == 0 {
+            if medicine.atcCode.score == 0 {
                 Image("Green-Light")
                     .resizable()
                     .frame(width: 16, height: 16)
-            } else if medicine.dangerStat == 1 {
+            } else if medicine.atcCode.score == 1 {
                 Image("Yellow-Light") // Change to the appropriate image
                     .resizable()
                     .frame(width: 16, height: 16)
-            } else if medicine.dangerStat == 2 {
+            } else if medicine.atcCode.score == 2 {
                 Image("Red-Light")
                     .resizable()
                     .frame(width: 16, height: 16)
@@ -59,7 +59,20 @@ struct MedicationItemRow: View {
 struct MedicationItemRowView_Previews: PreviewProvider {
     static var previews: some View {
         let medicine = Binding<Medicine>(
-            get: { Medicine(id: 1, image: "image_덱시로펜정", name: "Medicine Name", ingredients: "Ingredient 1, Ingredient 2", dangerStat: 0, isTaken: false) },
+            get: {
+                Medicine(
+                    id: 1,
+                    image: "image_덱시로펜정",
+                    name: "데크시로펜정",
+                    effect: "해열, 진통, 소염제",
+                    kdCode: "KD001",
+                    atcCode: AtcCode(code: "ATC001", score: 1),
+                    count: 10,
+                    isTaken: false,
+                    isOverLap: false
+                )
+                
+            },
             set: { newValue in }
         )
         

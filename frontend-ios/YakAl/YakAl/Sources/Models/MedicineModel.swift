@@ -7,17 +7,15 @@ extension Medicine: Equatable {
 }
 
 struct Medicine:Identifiable,Hashable {
-    let id: Int
-    let image: String
-    let name: String
-    let ingredients: String
-    let dangerStat : Int
+    let id: Int     // id값
+    let image: String // image
+    let name: String // 이름
+    var effect: String // 효과
     let kdCode: String
     let atcCode: AtcCode
-    var count: Int
-    var isTaken: Bool
-    var effect: String
-    let isOverLap: Bool
+    var count: Int // 갯수
+    var isTaken: Bool // 복용여부
+    let isOverLap: Bool // 중복여부
     
     // hash
     func hash(into hasher: inout Hasher) {
