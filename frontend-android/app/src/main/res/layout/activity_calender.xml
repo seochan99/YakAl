@@ -283,7 +283,7 @@
                 tools:itemCount="4"
                 android:overScrollMode="never"
                 android:nestedScrollingEnabled="false"
-                tools:listitem="@layout/item_home_pill_main" />
+                tools:listitem="@layout/item_pill_parent" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

@@ -2,6 +2,7 @@
 <resources>
     <style name="default_font" parent="" >
         <item name="fontFamily">@font/suit_medium</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="profileSettingFont" parent="default_font">

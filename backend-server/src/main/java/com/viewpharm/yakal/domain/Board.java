@@ -16,8 +16,8 @@ import java.util.List;
 @Getter
 @DynamicUpdate
 @NoArgsConstructor
-@Table(name = "boards")
 @Entity
+@Table(name = "boards")
 public class Board extends BaseCreateEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
