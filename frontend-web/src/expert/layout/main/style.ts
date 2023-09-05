@@ -24,7 +24,7 @@ export const Detail = styled.div`
     flex-direction: column;
 
     @media only screen and (min-width: 769px) {
-      width: 54rem;
+      width: var(--width-standard);
       padding: 2rem;
     }
 
@@ -33,6 +33,7 @@ export const Detail = styled.div`
       padding: 0;
     }
   }
+
   &.loading {
     opacity: 0.25;
     transition: opacity 200ms;
@@ -116,6 +117,7 @@ export const DrawableList = styled.div`
     height: 0;
     transition: all 0.3s ease-out;
   }
+
   &.open {
     height: 9.5rem;
   }
@@ -132,6 +134,7 @@ export const MobileNavList = styled.div`
     transition: all 0.3s ease-out;
     background-color: #fff;
   }
+
   &.open {
     visibility: visible;
     transform: translateY(0%);
@@ -166,16 +169,19 @@ export const MobileNavItem = styled(NavLink)`
     text-decoration: none;
     border-radius: 0.25rem;
   }
+
   & svg {
     height: 1.1rem;
     margin-right: 0.6rem;
   }
+
   &:hover {
     cursor: pointer;
     color: #2666f6;
     background-color: #f5f5f9;
     transition: color 0.2s;
   }
+
   &.active {
     background-color: var(--color-surface-900);
   }

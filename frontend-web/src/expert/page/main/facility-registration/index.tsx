@@ -34,7 +34,7 @@ import React, { useRef, useState } from "react";
 import { EFacility } from "@/expert/type/facility.ts";
 import { EInfoTake } from "@/expert/type/info-take.ts";
 
-function FacilityRegistration() {
+export function FacilityRegistration() {
   const [selected, setSelected] = useState<EFacility | null>(null);
   const [facilityDirectorName, setFacilityDirectorName] = useState<string>("");
   const [directorPhoneNumber, setDirectorPhoneNumber] = useState<string>("");
@@ -345,5 +345,3 @@ function FacilityRegistration() {
     </Outer>
   );
 }
-
-export default FacilityRegistration;

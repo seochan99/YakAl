@@ -15,7 +15,9 @@ import PatientInfo from "@/expert/page/main/patient-info";
 import SocialLoginFailure from "@/expert/page/login/social-login-failure";
 import { loader as patientLoader } from "@/expert/page/main/patient-list/loader.ts";
 import { loader as patientInfoLoader } from "@/expert/page/main/patient-info/loader.ts";
-import FacilityRegistration from "../expert/page/main/facility-registration";
+import { loader as facilityRegistrationInfoLoader } from "@/admin/page/main/facility-registration-info/loader.ts";
+import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
+import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/facility-registration";
 import MyInfo from "@/expert/page/main/my-info";
 import SocialLoginProxy from "@/expert/page/login/social-login-proxy";
 import LoadingPage from "@/expert/page/loading-page";
@@ -23,6 +25,7 @@ import IdentificationPage from "@/expert/page/login/identification-page";
 import IdentificationFailure from "@/expert/page/login/identification-failure";
 import ExpertCertification from "@/expert/page/main/expert-certification";
 import IdentificationSuccess from "@/expert/page/login/identification-success";
+import FacilityRegistrationInfo from "@/admin/page/main/facility-registration-info";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -43,6 +46,15 @@ export const router = createBrowserRouter([
               {
                 index: true,
                 element: <AdminDashboard />,
+              },
+              {
+                path: "partner/facility-registration",
+                element: <AdminFacilityRegistration />,
+              },
+              {
+                path: "partner/facility-registration/:facilityId",
+                element: <FacilityRegistrationInfo />,
+                loader: facilityRegistrationInfoLoader,
               },
             ],
           },
@@ -79,7 +91,7 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "registration",
-                    element: <FacilityRegistration />,
+                    element: <ExpertFacilityRegistration />,
                   },
                   {
                     path: "certification",

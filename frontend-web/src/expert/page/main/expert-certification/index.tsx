@@ -5,13 +5,20 @@ import {
   BelongInput,
   BelongInputBox,
   BelongInputBoxWrapper,
+  CertBelongExplanation,
+  CertBelongImgPreview,
+  CertDoctorImgExample,
+  CertExampleBox,
+  CertExampleText,
   CertHeader,
   CertImgBox,
   CertImgPreview,
+  CertImgPreviewBox,
   CertInputImgBox,
   CertInputLabel,
+  CertPharmacistEmgExample,
   DoctorIcon,
-  ImgBoxWrapper,
+  Emphasis,
   InnerBox,
   Item,
   ItemAddress,
@@ -227,38 +234,53 @@ function ExpertCertification() {
                 />
               </ListFooter>
             </BelongInputBoxWrapper>
-            <ImgBoxWrapper>
-              <CertImgBox>
-                <CertInputLabel>자격증 사진*</CertInputLabel>
-                <CertInputImgBox>
-                  <input readOnly={true} type="text" value={certImgFileName} placeholder="첨부파일" />
-                  <label htmlFor="cert">파일찾기</label>
-                  <input
-                    type="file"
-                    accept="image/jpg,impge/png,image/jpeg,image/gif"
-                    id="cert"
-                    name="cerification_img"
-                    onChange={handleCertImgChange}
-                  />
-                </CertInputImgBox>
+            <CertImgBox>
+              <CertInputLabel>자격증 사진*</CertInputLabel>
+              <CertInputImgBox>
+                <input readOnly={true} type="text" value={certImgFileName} placeholder="첨부파일" />
+                <label htmlFor="cert">파일찾기</label>
+                <input
+                  type="file"
+                  accept="image/jpg,impge/png,image/jpeg,image/gif"
+                  id="cert"
+                  name="cerification_img"
+                  onChange={handleCertImgChange}
+                />
+              </CertInputImgBox>
+              <CertImgPreviewBox>
+                <CertExampleBox>
+                  {selected === EJob.DOCTOR ? <CertDoctorImgExample /> : <CertPharmacistEmgExample />}
+                  <CertExampleText>
+                    {selected === EJob.DOCTOR
+                      ? "* 전문의 자격증을 성명과 주민등록번호가 잘 드러나도록 찍어서 제출해주세요."
+                      : "* 약사 면허증을 성명, 생년월일이 잘 드러나도록 찍어서 제출해주세요."}
+                  </CertExampleText>
+                </CertExampleBox>
                 <CertImgPreview ref={certificationImgPreviewRef} />
-              </CertImgBox>
-              <CertImgBox>
-                <CertInputLabel>소속 증명 사진*</CertInputLabel>
-                <CertInputImgBox>
-                  <input readOnly={true} type="text" value={belongImgFileName} placeholder="첨부파일" />
-                  <label htmlFor="belong">파일찾기</label>
-                  <input
-                    type="file"
-                    accept="image/jpg,impge/png,image/jpeg,image/gif"
-                    id="belong"
-                    name="belong_img"
-                    onChange={handleBelongImgChange}
-                  />
-                </CertInputImgBox>
-                <CertImgPreview ref={belongImgPreviewRef} />
-              </CertImgBox>
-            </ImgBoxWrapper>
+              </CertImgPreviewBox>
+            </CertImgBox>
+            <CertImgBox>
+              <CertInputLabel>{"소속 증명 사진*"}</CertInputLabel>
+              <CertBelongExplanation>
+                {"소속 증명 사진이라 함은 소속 기관이 기재되어 있는 명함 등 "}
+                <Emphasis>{"해당 기관에 재직 중임을 확인할 수 있는 사진"}</Emphasis>
+                {
+                  "입니다. (예: 대학병원라면 내과 000 전문의 이름 적혀있는 사진, 개인병원이라면 해당 병원에 있는 의사 팻말 등)"
+                }
+              </CertBelongExplanation>
+              <CertInputImgBox>
+                <input readOnly={true} type="text" value={belongImgFileName} placeholder="첨부파일" />
+                <label htmlFor="belong">파일찾기</label>
+                <input
+                  type="file"
+                  accept="image/jpg,impge/png,image/jpeg,image/gif"
+                  id="belong"
+                  name="belong_img"
+                  onChange={handleBelongImgChange}
+                />
+              </CertInputImgBox>
+              <CertBelongImgPreview ref={belongImgPreviewRef} />
+            </CertImgBox>
           </>
         )}
       </InnerBox>

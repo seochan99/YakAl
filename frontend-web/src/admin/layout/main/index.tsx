@@ -102,7 +102,7 @@ export function Main() {
       icon: MedicalInformationOutlinedIcon,
       submenu: [
         { icon: ManageAccountsOutlinedIcon, path: "/admin/expert/management", name: "전문가 관리" },
-        { icon: ApprovalOutlinedIcon, path: "/admin/expert/facility-registration", name: "전문가 인증 관리" },
+        { icon: ApprovalOutlinedIcon, path: "/admin/expert/certification", name: "전문가 인증 관리" },
       ],
     },
     {
@@ -156,7 +156,7 @@ export function Main() {
           </DrawerHeader>
           {isOpen && <Bar />}
           <List className={isOpen ? "open" : "close"}>
-            <ListItem to="/admin">
+            <ListItem to="/admin" end={true}>
               <HomeOutlinedIcon />
               {isOpen && "대시보드"}
             </ListItem>

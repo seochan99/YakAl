@@ -17,9 +17,6 @@ import { useMediaQuery } from "react-responsive";
 import Footer from "../footer";
 import Header from "../header";
 import Profile from "@/expert/layout/main/child/profile";
-// import { useGetUserQuery } from "@/api/user";
-// import ErrorPage from "@/page/error-page";
-// import LoadingPage from "@/page/loading-page";
 import { useState } from "react";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
@@ -92,6 +89,7 @@ export function Main() {
             <MobileNavList className={isOpen ? "open" : ""}>
               {navRouter.map((itemRouter) => (
                 <MobileNavItem
+                  end={itemRouter.path === "/expert"}
                   key={itemRouter.path + "_" + itemRouter.name}
                   to={itemRouter.path}
                   onClick={() => setIsOpen(false)}
