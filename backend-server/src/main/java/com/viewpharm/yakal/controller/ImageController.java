@@ -74,7 +74,4 @@ public class ImageController {
         map.put("uuid_name", imageService.uploadImage(file));
         return ResponseDto.ok(map);
     }
-
-
-
 }
