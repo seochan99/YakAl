@@ -71,7 +71,8 @@ export function Main() {
           </NavOuter>
         )}
         <Profile
-          job="가정의학과 의사"
+          job={data?.job}
+          department={data?.department}
           name={data?.name ? data?.name : ""}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />

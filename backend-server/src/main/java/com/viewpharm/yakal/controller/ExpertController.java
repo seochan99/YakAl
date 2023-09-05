@@ -64,7 +64,6 @@ public class ExpertController {
 
     @PostMapping("/patient/{patientId}/note")
     @Operation(summary = "특이사항 추가", description = "특이사항 추가")
-
     public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long patientId, @Valid @RequestBody NoteRequestDto requestDto) {
         return ResponseDto.ok(counselService.createNote(id, patientId, requestDto));
     }

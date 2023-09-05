@@ -133,8 +133,10 @@ const ButtonSymbol = css`
 `;
 
 const ButtonText = styled.span`
-  font-size: 1.2rem;
+  font-size: 1rem;
+  line-height: 1rem;
   font-weight: 600;
+  padding: 0.6rem 0;
   vertical-align: -0.1rem;
 `;
 

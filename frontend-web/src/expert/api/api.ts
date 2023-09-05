@@ -1,5 +1,5 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { setCredentials, logout } from "@/expert/store/auth.ts";
+import { logout, setCredentials } from "@/expert/store/auth.ts";
 import { RootState } from "@/expert/store/store.ts";
 import { HttpStatusCode } from "axios";
 
@@ -46,7 +46,7 @@ export const baseQueryWithReauth = async (args: any, api: any, extraOptions: any
       api.dispatch(logout());
 
       console.log(reissueResult);
-      // window.location.href = "/expert/login";
+      window.location.href = "/expert/login";
     } else {
       api.dispatch(setCredentials({ token: (reissueResult.data as TReissueResult).data.accessToken }));
       result = await baseQuery(args, api, extraOptions);
