@@ -96,7 +96,7 @@ public class CounselService {
                 .collect(Collectors.toList());
 
         return PatientAllDto.builder()
-                .data(patientDtoList)
+                .datalist(patientDtoList)
                 .pageInfo(pageInfo)
                 .build();
     }
@@ -127,7 +127,7 @@ public class CounselService {
                 .collect(Collectors.toList());
 
         return PatientAllDto.builder()
-                .data(patientDtoList)
+                .datalist(patientDtoList)
                 .pageInfo(pageInfo)
                 .build();
     }
