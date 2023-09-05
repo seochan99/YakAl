@@ -72,7 +72,7 @@ public class ExpertController {
 
     @PutMapping("/note/{noteId}")
     @Operation(summary = "특이사항 수정", description = "특이사항 수정하기")
-    public ResponseDto<NoteDetailDto> updateNote(@UserId Long id, @PathVariable Long noteId, @RequestBody NoteRequestDto requestDto) {
+    public ResponseDto<NoteDetailDto> updateNote(@UserId Long id, @PathVariable Long noteId, @Valid @RequestBody NoteRequestDto requestDto) {
         return ResponseDto.ok(counselService.updateNote(id, noteId, requestDto));
     }
 
