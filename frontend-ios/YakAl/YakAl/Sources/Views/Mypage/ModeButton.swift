@@ -16,24 +16,18 @@ struct ModeButton: View {
         Button(action: {
             selectedMode = mode
         }) {
-            
             VStack {
                 HStack{
                     VStack(alignment: .leading,spacing: 16){
                         Text(title)
                             .font(Font.custom("SUIT", size: 24).weight(.medium))
                             .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        
                         Text(description)
                             .font(Font.custom("SUIT", size: 15).weight(.bold))
                             .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                            
-
                     }.padding(.horizontal,20)
-                    
                     Spacer()
                 }
-
             }
             .padding(EdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 20))
             .frame(maxWidth: .infinity)

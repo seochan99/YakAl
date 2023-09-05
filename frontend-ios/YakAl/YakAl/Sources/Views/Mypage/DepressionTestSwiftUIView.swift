@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct DepressionTestSwiftUIView: View {
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // 질문 리스트
     let questions = [
         "일을 하는 것에 대한 흥미나 재미가 거의 없음",
@@ -76,6 +76,22 @@ struct DepressionTestSwiftUIView: View {
                     .disabled(!allQuestionsAnswered)
                     .padding(.horizontal,20)
                     
+                }
+            }
+            .navigationTitle("우울증 선별검사 (PHQ-9)")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
                 }
             }
     }

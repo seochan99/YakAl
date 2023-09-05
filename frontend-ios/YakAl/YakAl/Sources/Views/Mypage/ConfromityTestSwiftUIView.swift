@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ConfromityTestSwiftUIView: View {
     @ObservedObject private var user = User.shared
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     // 질문 리스트
     let questions = [
         "얼마나 자주 약 복용하는 것을 잊어버리십니까?",
@@ -72,6 +72,22 @@ struct ConfromityTestSwiftUIView: View {
                     .disabled(!allQuestionsAnswered)
                     .padding(.horizontal,20)
                     
+                }
+            }
+            .navigationTitle("복약 순응도 테스트")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
                 }
             }
 

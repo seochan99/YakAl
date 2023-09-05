@@ -11,8 +11,7 @@ struct TestDoneSwiftUIView: View {
     var score: Int
     var Testtitle : String
     var testContent: String
-    
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     var body: some View {
             VStack(spacing:32){
                 ResultBoxSwiftUIView(title:self.Testtitle, score: self.score)
@@ -39,6 +38,22 @@ struct TestDoneSwiftUIView: View {
                         .frame(width: 300, height: 50)
                         .background(Color("MainColor"))
                         .cornerRadius(10)
+                }
+            }
+            .navigationTitle("자가 진단 테스트")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
                 }
             }
     }

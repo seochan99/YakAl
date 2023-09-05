@@ -1,14 +1,9 @@
-//
-//  InsomniaTestSwiftUIView.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/09/03.
-//
-
 import SwiftUI
 
 struct InsomniaTestSwiftUIView: View {
     @State private var selectedOptions = Array(repeating: nil as String?, count: 7)
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+
     // 질문 리스트
     let questions = [
         "잠들기 어렵나요?",
@@ -106,8 +101,22 @@ struct InsomniaTestSwiftUIView: View {
                 
                 
             }
-//        }.navigationBarTitle("", displayMode: .inline)
-//            .navigationBarBackButtonHidden(true)
+            .navigationTitle("불면증 심각도")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
 
     }
 }

@@ -7,7 +7,7 @@ struct SmokingTestSwiftUIView: View {
     @State private var allQuestionsAnswered = false
     @State private var smokingYears: String = ""
     @State private var dailySmokingAmount: String?
-    
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let questions = [
         Question(title: "흡연을 하고 있습니까?", answers: [
             Answer(text: "피우지 않는다", score: 0),
@@ -112,8 +112,22 @@ struct SmokingTestSwiftUIView: View {
                     }
                 }
             }
-//        }.navigationBarTitle("", displayMode: .inline)
-//            .navigationBarBackButtonHidden(true)
+            .navigationTitle("흡연력 테스트")
+            .navigationBarBackButtonHidden(true)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
     }
 }
 
