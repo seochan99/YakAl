@@ -390,7 +390,7 @@
                 </hostingController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obh-Jd-74N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3294" y="1246"/>
+            <point key="canvasLocation" x="3474" y="1174"/>
         </scene>
         <!--알림-->
         <scene sceneID="bqh-b2-bQz">

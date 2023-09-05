@@ -16,7 +16,7 @@ struct MedicationItemRow: View {
                 Font.custom("SUIT", size: 14)
                 .weight(.medium)
                 )
-                .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                .foregroundColor(medicine.dangerStat == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
                 Text("해열, 진통, 소염제")
                 .font(
                 Font.custom("SUIT", size: 10)
