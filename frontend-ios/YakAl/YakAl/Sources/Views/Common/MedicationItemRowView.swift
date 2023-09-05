@@ -1,15 +1,119 @@
 import SwiftUI
+import Combine
+
+struct DrugInfoResponse: Codable {
+    let DrugInfo: DrugInfo
+    let Message: String
+}
+
+struct DrugInfo: Codable {
+    let IdentaImage: String
+    let Pictogram: [Pictogram]?
+    let BriefMonoContraIndication: String
+    let BriefMonoSpecialPrecaution: String
+    let BriefMono: String
+    let BriefIndication: String
+    let Interaction: String
+}
+
+struct Pictogram: Codable {
+    let Image: String
+    let Description: String
+}
+
+class MedicineViewModel: ObservableObject {
+    @Published var medicine: Medicine?
+    @Published var identaImage: Image?
+    @Published var responseString = "Loading..."
+
+    private var imageCache: [String: Image] = [:]
+    
+    
+    
+    func fetchDrugInfo(kdCode: String) {
+         print("kdcode는 이거임!! \(kdCode)")
+
+         // 이미 캐시된 이미지가 있는 경우 그것을 사용
+         if let cachedImage = imageCache[kdCode] {
+             self.identaImage = cachedImage
+             self.responseString = "Data fetched from cache"
+             return
+         }
+
+         guard let url = URL(string: "https://api2.kims.co.kr/api/drug/info?drugcode=\(kdCode)&drugType=N") else {
+             self.responseString = "Invalid URL"
+             return
+         }
+  
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        
+        let username = "DIVWPM"
+        let password = "DIVWPM"
+        let loginString = "\(username):\(password)"
+        if let utf8Data = loginString.data(using: .utf8) {
+            let base64LoginString = utf8Data.base64EncodedString()
+            request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+        }
+        
+        
+
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            if let data = data {
+                do {
+                    let response = try JSONDecoder().decode(DrugInfoResponse.self, from: data)
+                    let base64String = response.DrugInfo.IdentaImage
+                    if let imageData = Data(base64Encoded: base64String), let uiImage = UIImage(data: imageData) {
+                        DispatchQueue.main.async {
+                            let image = Image(uiImage: uiImage)
+                            self.identaImage = image
+                            self.imageCache[kdCode] = image // 이미지 캐시에 저장
+                            self.responseString = "Data fetched successfully"
+                        }
+                    }else {
+                        DispatchQueue.main.async {
+                            self.responseString = "Image decoding failed"
+                        }
+                    }
+                } catch {
+                    print("Error decoding JSON: \(error)")
+                    DispatchQueue.main.async {
+                        self.responseString = "Error decoding JSON: \(error.localizedDescription)"
+                    }
+                }
+            } else if let error = error {
+                DispatchQueue.main.async {
+                    self.responseString = "Request failed: \(error.localizedDescription)"
+                }
+            }
+        }
+
+        task.resume()
+    }
+}
+
+
+
 //MARK: - 약 개별 Row
 struct MedicationItemRow: View {
     @Binding var medicine: Medicine
+    @ObservedObject var viewModel = MedicineViewModel()
     let isAllCompleted: Bool
     @Binding var isCompleted: Bool
+    @State private var responseString = "Loading..."
 
+    
     var body: some View {
         HStack(spacing: 16) {
-            Image(medicine.image)
-                .resizable()
-                .frame(width: 64, height: 32)
+            if let image = viewModel.identaImage {
+                image
+                    .resizable()
+                    .frame(width: 64, height: 32)
+                    .cornerRadius(8)
+            } else {
+                ProgressView()  // Show loading spinner
+            }
             VStack(alignment: .leading,spacing:2){
                 Text(medicine.name)
                 .font(
@@ -53,7 +157,11 @@ struct MedicationItemRow: View {
             }
         }
         .padding(.horizontal,16)
+        .onAppear {
+                 viewModel.fetchDrugInfo(kdCode: medicine.kdCode)
+             }
           }
+    
 }
 struct MedicationItemRowView_Previews: PreviewProvider {
     static var previews: some View {
@@ -64,7 +172,7 @@ struct MedicationItemRowView_Previews: PreviewProvider {
                     image: "image_덱시로펜정",
                     name: "데크시로펜정",
                     effect: "해열, 진통, 소염제",
-                    kdCode: "KD001",
+                    kdCode: "645900210",
                     atcCode: AtcCode(code: "ATC001", score: 1),
                     count: 10,
                     isTaken: false,

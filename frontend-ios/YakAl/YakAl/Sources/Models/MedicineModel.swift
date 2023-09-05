@@ -16,6 +16,7 @@ struct Medicine:Identifiable,Hashable {
     var count: Int // 갯수
     var isTaken: Bool //
     let isOverLap: Bool // 중복여부
+    var image2: Image?
     
     // hash
     func hash(into hasher: inout Hasher) {
