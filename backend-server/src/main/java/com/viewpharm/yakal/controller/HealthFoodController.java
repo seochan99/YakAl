@@ -7,6 +7,7 @@ import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.HealthFoodService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,13 @@ public class HealthFoodController {
 
     @PostMapping("")
     @Operation(summary = "건강 기능 식품 작성", description = "건강 기능 식품 작성")
-    public ResponseDto<Boolean> createHealthFood(@UserId Long id, @RequestBody HealthFoodRequestDto requestDto) {
+    public ResponseDto<Boolean> createHealthFood(@UserId Long id, @RequestBody @Valid HealthFoodRequestDto requestDto) {
         return ResponseDto.ok(healthFoodService.createHealthFood(id, requestDto));
     }
 
     @PutMapping("/{healthfoodId}")
     @Operation(summary = "건강 기능 식품 수정", description = "건강 기능 식품 수정")
-    public ResponseDto<Boolean> updateHealthFood(@UserId Long id, @PathVariable Long healthfoodId, @RequestBody HealthFoodRequestDto requestDto) {
+    public ResponseDto<Boolean> updateHealthFood(@UserId Long id, @PathVariable Long healthfoodId, @RequestBody @Valid HealthFoodRequestDto requestDto) {
         return ResponseDto.ok(healthFoodService.updateHealthFood(id, healthfoodId, requestDto));
     }
 
