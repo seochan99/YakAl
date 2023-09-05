@@ -44,11 +44,7 @@ public class SurveyController {
         return ResponseDto.ok(surbeyService.getAllAnswerList(id));
     }
 
-    @GetMapping("/expert/{patientId}")
-    @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
-    public ResponseDto<AnswerAllDto> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
-    }
+
 
 
 

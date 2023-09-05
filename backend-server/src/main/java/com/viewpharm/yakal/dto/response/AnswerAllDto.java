@@ -7,12 +7,12 @@ import java.util.List;
 
 @Getter
 public class AnswerAllDto {
-    private List<AnswerListDto> data;
+    private List<AnswerListDto> datalist;
     private int percent;
 
     @Builder
-    public AnswerAllDto(List<AnswerListDto> data, int percent) {
-        this.data = data;
+    public AnswerAllDto(List<AnswerListDto> datalist, int percent) {
+        this.datalist = datalist;
         this.percent = percent;
     }
 }

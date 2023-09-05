@@ -13,15 +13,15 @@ public class PatientDto {
     private ESex sex;
     private LocalDate birthday;
     private int testProgress;
-    private DoseCountDto doseCount;
+    private LocalDate lastSurbey;
 
     @Builder
-    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, int testProgress, DoseCountDto doseCount) {
+    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, int testProgress, LocalDate lastSurbey) {
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.birthday = birthday;
         this.testProgress = testProgress;
-        this.doseCount = doseCount;
+        this.lastSurbey = lastSurbey;
     }
 }

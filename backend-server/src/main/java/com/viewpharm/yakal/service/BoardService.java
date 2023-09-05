@@ -154,17 +154,21 @@ public class BoardService {
     }
 
     //모든게시글 리스트 가져오기
-    public List<BoardListDto> getAllBoardList(Long userId, String sorting, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getAllBoardList(Long userId, String sorting, String ordering, Long pageIndex, Long pageSize) {
         Pageable paging = null;
+        Sort.Direction order = Sort.Direction.ASC;
 
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
+        
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
         else if (sorting.equals("view"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "readCnt"));
         else if (sorting.equals("like"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "likeCount"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
         List<Board> page = boardRepository.findAllByIsDeleted(false, paging);
@@ -179,17 +183,21 @@ public class BoardService {
 
 
     //제목으로 검색
-    public List<BoardListDto> getBoardListByTitle(Long userId, String title, String sorting, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getBoardListByTitle(Long userId, String title, String sorting, String ordering, Long pageIndex, Long pageSize) {
         Pageable paging = null;
+        Sort.Direction order = Sort.Direction.ASC;
+
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
 
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
         else if (sorting.equals("view"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "readCnt"));
         else if (sorting.equals("like"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "likeCount"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
         List<Board> page = boardRepository.findListByTitleContainingAndIsDeleted(title, false, paging);
@@ -204,17 +212,21 @@ public class BoardService {
     }
 
     //지역으로 검색
-    public List<BoardListDto> getBoardListByRegion(Long userId, String region, String sorting, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getBoardListByRegion(Long userId, String region, String sorting, String ordering, Long pageIndex, Long pageSize) {
         Pageable paging = null;
+        Sort.Direction order = Sort.Direction.ASC;
+
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
 
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
         else if (sorting.equals("view"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "readCnt"));
         else if (sorting.equals("like"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "likeCount"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
         ERegion boardRegion = ERegion.from(region);
@@ -232,18 +244,22 @@ public class BoardService {
 
 
     //유저로 검색
-    public List<BoardListDto> getBoardListByUser(Long userId, Long boardUserId, String sorting, Long pageIndex, Long pageSize) {
+    public List<BoardListDto> getBoardListByUser(Long userId, Long boardUserId, String sorting, String ordering, Long pageIndex, Long pageSize) {
         Pageable paging = null;
+        Sort.Direction order = Sort.Direction.ASC;
+
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
 
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User boardUser = userRepository.findById(boardUserId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "lastModifiedDate"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
         else if (sorting.equals("view"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "readCnt"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "readCnt"));
         else if (sorting.equals("like"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "likeCount"));
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "likeCount"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
         List<Board> page = boardRepository.findListByUserAndIsDeleted(boardUser, false, paging);

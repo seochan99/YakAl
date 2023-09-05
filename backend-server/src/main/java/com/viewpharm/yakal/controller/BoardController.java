@@ -55,26 +55,26 @@ public class BoardController {
     //List
     @GetMapping("/list/all")
     @Operation(summary = "게시글 리스트", description = "모든 게시글 들고오기")
-    public ResponseDto<List<BoardListDto>> getAllBoardList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("page") Long page, @RequestParam("num") Long num) {
-        return ResponseDto.ok(boardService.getAllBoardList(id, sort, page, num));
+    public ResponseDto<List<BoardListDto>> getAllBoardList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+        return ResponseDto.ok(boardService.getAllBoardList(id, sort, order, page, num));
     }
 
     @GetMapping("/list/title")
     @Operation(summary = "게시글 리스트", description = "제목을 포함하는 게시글 들고오기")
-    public ResponseDto<List<BoardListDto>> getBoardListByTitle(@UserId Long id, @RequestParam("title") String title, @RequestParam("sort") String sort, @RequestParam("page") Long page, @RequestParam("num") Long num) {
-        return ResponseDto.ok(boardService.getBoardListByTitle(id, title, sort, page, num));
+    public ResponseDto<List<BoardListDto>> getBoardListByTitle(@UserId Long id, @RequestParam("title") String title, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+        return ResponseDto.ok(boardService.getBoardListByTitle(id, title, sort, order, page, num));
     }
 
     @GetMapping("/list/region")
     @Operation(summary = "게시글 리스트", description = "지역기반 게시글 들고오기")
-    public ResponseDto<List<BoardListDto>> getBoardListByRegion(@UserId Long id, @RequestParam("region") String region, @RequestParam("sort") String sort, @RequestParam("page") Long page, @RequestParam("num") Long num) {
-        return ResponseDto.ok(boardService.getBoardListByRegion(id, region, sort, page, num));
+    public ResponseDto<List<BoardListDto>> getBoardListByRegion(@UserId Long id, @RequestParam("region") String region, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+        return ResponseDto.ok(boardService.getBoardListByRegion(id, region, sort, order, page, num));
     }
 
     @GetMapping("/list/user")
     @Operation(summary = "게시글 리스트", description = "유저가 작성한 게시글 들고오기")
-    public ResponseDto<List<BoardListDto>> getBoardListByUser(@UserId Long id, @RequestParam("userId") Long userId, @RequestParam("sort") String sort, @RequestParam("page") Long page, @RequestParam("num") Long num) {
-        return ResponseDto.ok(boardService.getBoardListByUser(id, userId, sort, page, num));
+    public ResponseDto<List<BoardListDto>> getBoardListByUser(@UserId Long id, @RequestParam("userId") Long userId, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam("num") Long num) {
+        return ResponseDto.ok(boardService.getBoardListByUser(id, userId, sort, order, page, num));
     }
 
     //Like

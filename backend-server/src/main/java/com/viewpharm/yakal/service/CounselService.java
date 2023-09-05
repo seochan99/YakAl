@@ -7,6 +7,7 @@ import com.viewpharm.yakal.dto.request.NoteRequestDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.repository.AnswerRepository;
 import com.viewpharm.yakal.repository.CounselRepository;
 import com.viewpharm.yakal.repository.NoteRepository;
 import com.viewpharm.yakal.repository.UserRepository;
@@ -20,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +32,7 @@ public class CounselService {
     private final UserRepository userRepository;
     private final CounselRepository counselRepository;
     private final NoteRepository noteRepository;
+    private final AnswerRepository answerRepository;
 
     public Boolean createCounsel(Long expertId, Long patientId) {
         //전문가 확인
@@ -70,30 +71,29 @@ public class CounselService {
         return Boolean.TRUE;
     }
 
-    public PatientAllDto getPatientList(Long expertId, Long pageIndex, Long pageSize) {
+    public PatientAllDto getPatientList(Long expertId, String sorting, String ordering, Long pageIndex, Long pageSize) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        Sort.Direction order = Sort.Direction.ASC;
+        Pageable paging = null;
 
-        Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
 
-        Page<Counsel> counselList = counselRepository.findByExpertIdAndIsDeleted(expertId, false, paging);
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
+        else if (sorting.equals("name"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.name"));
+        else if (sorting.equals("birth"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.birthday"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+
+        Page<Counsel> counselList = counselRepository.findListByExpert(expert, paging);
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
-        List<PatientDto> patientDtoList = new ArrayList<>();
-
-        for (Counsel counsel : counselList) {
-            User patient = userRepository.findByIdAndJob(counsel.getPatient().getId(), EJob.PATIENT)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
-            patientDtoList.add(PatientDto.builder()
-                    .id(patient.getId())
-                    .name(patient.getName())
-                    .sex(patient.getSex())
-                    .birthday(patient.getBirthday())
-                    .build());
-            //테스트 퍼센트, 약 수 추가 예정
-            //추가 후 방식 바꿀 예정
-        }
-
+        List<PatientDto> patientDtoList = counselList.stream()
+                .map(c -> new PatientDto(c.getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient())))
+                .collect(Collectors.toList());
 
         return PatientAllDto.builder()
                 .data(patientDtoList)
@@ -101,16 +101,47 @@ public class CounselService {
                 .build();
     }
 
-    public Boolean createNote(Long expertId, Long patientId, Long counselId, NoteRequestDto requestDto) {
+
+    public PatientAllDto getPatientListByName(Long expertId, String name, String sorting, String ordering, Long pageIndex, Long pageSize) {
+        //전문가 확인
+        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        Sort.Direction order = Sort.Direction.ASC;
+        Pageable paging = null;
+
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
+
+        if (sorting.equals("date"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "lastModifiedDate"));
+        else if (sorting.equals("name"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.name"));
+        else if (sorting.equals("birth"))
+            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.birthday"));
+        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+
+        Page<Counsel> counselList = counselRepository.findListByExpertAndPatientName(expert, name, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
+
+        List<PatientDto> patientDtoList = counselList.stream()
+                .map(c -> new PatientDto(c.getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient())))
+                .collect(Collectors.toList());
+
+        return PatientAllDto.builder()
+                .data(patientDtoList)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+    public Boolean createNote(Long expertId, Long patientId, NoteRequestDto requestDto) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        //환자 확인
-        User patient = userRepository.findByIdAndJob(patientId, EJob.PATIENT).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
-
         //상담 확인
-        Counsel counsel = counselRepository.findByIdAndIsDeleted(counselId, false)
+        Counsel counsel = counselRepository.findByPatientIdAndIsDeleted(patientId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COUNSEL));
+
+        //환자 확인
+        User patient = userRepository.findByIdAndJob(counsel.getPatient().getId(), EJob.PATIENT).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
 
         //입력값 유효성 확인
         if ((requestDto.getTitle().length() == 0) || (requestDto.getDescription().length() == 0)) {
@@ -159,13 +190,8 @@ public class CounselService {
                 .build();
     }
 
-    public Boolean deleteNote(Long expertId, Long counselId, Long noteId) {
+    public Boolean deleteNote(Long expertId, Long noteId) {
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        //상담 확인
-        Counsel counsel = counselRepository.findByIdAndIsDeleted(counselId, false)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COUNSEL));
-
 
         Note note = noteRepository.findByIdAndIsDeleted(noteId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTE));
@@ -180,11 +206,11 @@ public class CounselService {
     }
 
 
-    public NoteAllDto getAllNoteList(Long expertId, Long counselId, Long pageIndex, Long pageSize) {
+    public NoteAllDto getAllNoteList(Long expertId, Long patientId, Long pageIndex, Long pageSize) {
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         //상담 확인
-        Counsel counsel = counselRepository.findByIdAndIsDeleted(counselId, false)
+        Counsel counsel = counselRepository.findByPatientIdAndIsDeleted(patientId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COUNSEL));
 
         Pageable paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Direction.DESC, "createDate"));
@@ -198,7 +224,7 @@ public class CounselService {
                 .collect(Collectors.toList());
 
         return NoteAllDto.builder()
-                .data(list)
+                .datalist(list)
                 .pageInfo(pageInfo)
                 .build();
     }
