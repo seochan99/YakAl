@@ -10,7 +10,6 @@ struct TestButton: View {
     let testName: String
     let status: TestStatus
     let destination: AnyView
-
     
     var body: some View {
         NavigationLink(destination: destination) {
@@ -58,6 +57,7 @@ struct TestButton: View {
 }
 
 struct TestListSwiftUIView: View {
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     //TestStatus.complete는 현재 더미데이터
     let tests = [
         ("복약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
@@ -78,6 +78,24 @@ struct TestListSwiftUIView: View {
                 Spacer()
                 BlueHorizontalButton(text: "완료된 결과 공유", action: {})
             }
+            .onAppear {
+                self.hideTabBar()
+            }
+            .onDisappear {
+                self.showTabBar()
+            }
+            .navigationTitle("자가 진단 테스트")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarItems(leading: Button(action: {
+                self.presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "chevron.left")
+                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                Text("뒤로")
+                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+            })
+        
+        
             .padding(.top,40)
     }
      

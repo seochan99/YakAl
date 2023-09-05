@@ -1,10 +1,3 @@
-//
-//  LogoutModalView.swift
-//  YakAl
-//
-//  Created by 서희찬 on 2023/09/05.
-//
-
 import SwiftUI
 
 struct LogoutModalView: View {

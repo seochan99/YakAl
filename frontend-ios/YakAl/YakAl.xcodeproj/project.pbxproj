@@ -66,6 +66,7 @@
 		9897E9E52AA6D5DA004642CA /* LogoutCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E42AA6D5DA004642CA /* LogoutCoordinator.swift */; };
 		9897E9EA2AA6D728004642CA /* LogoutModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E92AA6D728004642CA /* LogoutModalView.swift */; };
 		9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EC2AA6D833004642CA /* ViewExtension.swift */; };
+		9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -153,6 +154,7 @@
 		9897E9E42AA6D5DA004642CA /* LogoutCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutCoordinator.swift; sourceTree = "<group>"; };
 		9897E9E92AA6D728004642CA /* LogoutModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutModalView.swift; sourceTree = "<group>"; };
 		9897E9EC2AA6D833004642CA /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
+		9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 				9897E9BB2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift */,
 				9897E9BD2AA4B5D0004642CA /* WishYakalSwiftUIView.swift */,
 				9897E9E92AA6D728004642CA /* LogoutModalView.swift */,
+				9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -352,12 +355,12 @@
 		9897E9CD2AA4C15D004642CA /* TestDetail */ = {
 			isa = PBXGroup;
 			children = (
-				9897E9DD2AA4F60C004642CA /* DepressionTest */,
-				9897E9D82AA4E159004642CA /* ConfromityTest */,
 				9897E9D52AA4CEA1004642CA /* TestDetailCommon */,
 				9897E9D92AA4E169004642CA /* TestDoneSwiftUIView.swift */,
+				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
 				9897E9C92AA4C0E1004642CA /* DrinkingTestSwiftUIView.swift */,
 				9897E9CB2AA4C157004642CA /* SmokingTestSwiftUIView.swift */,
+				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
 				9897E9CE2AA4C179004642CA /* InsomniaTestSwiftUIView.swift */,
 				9897E9D02AA4C193004642CA /* HealthFoodSwiftUIView.swift */,
 				9897E9D32AA4C1AE004642CA /* DiagnosticTestSwiftUIView.swift */,
@@ -374,22 +377,6 @@
 				9897E9E02AA4F69F004642CA /* RowQuetionView.swift */,
 			);
 			name = TestDetailCommon;
-			sourceTree = "<group>";
-		};
-		9897E9D82AA4E159004642CA /* ConfromityTest */ = {
-			isa = PBXGroup;
-			children = (
-				9897E9C52AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift */,
-			);
-			name = ConfromityTest;
-			sourceTree = "<group>";
-		};
-		9897E9DD2AA4F60C004642CA /* DepressionTest */ = {
-			isa = PBXGroup;
-			children = (
-				9897E9C72AA4C0C1004642CA /* DepressionTestSwiftUIView.swift */,
-			);
-			name = DepressionTest;
 			sourceTree = "<group>";
 		};
 		9897E9EB2AA6D80E004642CA /* Extensions */ = {
@@ -752,6 +739,7 @@
 				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
 				9897E9DF2AA4F637004642CA /* OptionButton.swift in Sources */,
+				9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */,
 				98C12D692A5E564E00175EB8 /* MainVC.swift in Sources */,
 				9897E9DA2AA4E169004642CA /* TestDoneSwiftUIView.swift in Sources */,
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,

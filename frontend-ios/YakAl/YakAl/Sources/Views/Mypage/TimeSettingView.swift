@@ -15,7 +15,7 @@ struct TimeSettingView: View {
     
     var title: String
     var iconName: String
-    
+     
     @State private var isShowingAlert = false
     @State private var isShowingDatePicker: Bool = false
     @State private var isSettingStartTime: Bool = true  // Start with startTime by default
