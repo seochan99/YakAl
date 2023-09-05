@@ -16,8 +16,13 @@ import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.repository.RiskRepository;
 import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.type.EPeriod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +30,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -261,19 +267,27 @@ public class DoseService {
         return isInserted;
     }
 
-    public List<PrescribedDto> getPrescribedDoses(final Long userId){
+    public List<PrescribedDto> getPrescribedDoses(final Long userId, Long pageIndex, Long pageSize, EPeriod ePeriod){
         userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        List<DoseRepository.prescribed> prescribeds = doseRepository.findDistinctByKDCodeAndPrescription(userId);
-        List <PrescribedDto> prescribedDtoList = new ArrayList<>();
-        for (DoseRepository.prescribed  p: prescribeds
-             ) {
-            prescribedDtoList.add(
-            PrescribedDto.builder()
-                    .KDCode(p.getKDCode())
-                    .Score(p.getScore())
-                    .prescribedDate(p.getDate())
-                    .build());
+
+        Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
+        LocalDate lastDate = LocalDate.now();
+        switch (ePeriod){
+            case WEEK -> lastDate.minusDays(7);
+            case MONTH -> lastDate.minusMonths(1);
+            case THREEMONTH -> lastDate.minusMonths(3);
+            case HALFYEAR -> lastDate.minusMonths(6);
+            case YEAR -> lastDate.minusYears(1L);
+            case ALL -> lastDate.minusYears(100L);
         }
+
+        List<DoseRepository.prescribed> prescribeds = doseRepository.findDistinctByKDCodeAndPrescription(userId,lastDate,pageable);
+
+        //Dto 변환
+        List<PrescribedDto> prescribedDtoList = prescribeds.stream()
+                .map(b -> new PrescribedDto(b.getKDCode(),b.getScore(),b.getDate()))
+                .collect(Collectors.toList());
+
         return prescribedDtoList;
     }
 
