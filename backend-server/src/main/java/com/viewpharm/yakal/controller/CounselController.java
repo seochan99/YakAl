@@ -34,8 +34,4 @@ public class CounselController {
     public ResponseDto<Boolean> deleteBoard(@UserId Long id, @PathVariable Long counselId) {
         return ResponseDto.ok(counselService.deleteCounsel(id, counselId));
     }
-
-
-
-
 }
