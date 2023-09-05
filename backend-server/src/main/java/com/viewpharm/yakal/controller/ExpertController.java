@@ -6,13 +6,11 @@ import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.service.DoseService;
 import com.viewpharm.yakal.service.UserService;
+import com.viewpharm.yakal.type.EPeriod;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -33,7 +31,8 @@ public class ExpertController {
     // 권한에 관한 부분 추가 해야 함 (만료기한)
     @GetMapping("/patient/{userId}/dose")
     @Operation(summary = "약정보 가져오기", description = "환자의 Id로 처방받은 약을 가져온다")
-    public ResponseDto<List<PrescribedDto>> getPrescrbiedDoses(@PathVariable Long userId){
-        return ResponseDto.ok(doseService.getPrescribedDoses(userId));
+    public ResponseDto<List<PrescribedDto>> getPrescrbiedDoses(@PathVariable Long userId
+            , @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam EPeriod ePeriod){
+        return ResponseDto.ok(doseService.getPrescribedDoses(userId,page,num,ePeriod));
     }
 }

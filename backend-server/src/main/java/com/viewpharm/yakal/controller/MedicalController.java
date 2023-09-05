@@ -2,8 +2,10 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.dto.request.MedicalRequestDto;
 import com.viewpharm.yakal.dto.response.MedicalDto;
+import com.viewpharm.yakal.dto.response.MedicalRegisterDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.MedicalService;
+import com.viewpharm.yakal.service.RegistrationService;
 import com.viewpharm.yakal.utils.GeometryUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +24,8 @@ import java.util.List;
 public class MedicalController {
     private final MedicalService medicalService;
     private final GeometryUtil geometryUtil;
+
+    private final RegistrationService registrationService;
 
     @GetMapping("/point")
     @Operation(summary = "의료기관 추출", description = "내 좌표를 기준으로 가장 가까운 10개의 의료기관을 뽑는다.")
@@ -49,6 +53,11 @@ public class MedicalController {
     public ResponseDto<List<MedicalDto>> findNearestMedicalsByPointAndEMedical(@RequestBody MedicalRequestDto medicalRequestDto, @PathVariable String medicalValue) {
         Point point = geometryUtil.getLatLng2Point(medicalRequestDto.getLocation().getLatitude(),medicalRequestDto.getLocation().getLongitude());
         return ResponseDto.ok(medicalService.findNearbyMedicalsByDistanceAndEMedical(point,medicalRequestDto.getDistance(),medicalValue));
+    }
+
+    @PostMapping("/register")
+    public ResponseDto<Long> createRegister(@RequestBody MedicalRegisterDto medicalRegisterDto){
+        return ResponseDto.ok(registrationService.createRegistration(medicalRegisterDto));
     }
 
 }
