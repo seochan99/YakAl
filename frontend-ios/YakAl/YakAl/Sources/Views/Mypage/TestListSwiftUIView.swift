@@ -86,14 +86,20 @@ struct TestListSwiftUIView: View {
             }
             .navigationTitle("자가 진단 테스트")
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-                Text("뒤로")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-            })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
         
         
             .padding(.top,40)

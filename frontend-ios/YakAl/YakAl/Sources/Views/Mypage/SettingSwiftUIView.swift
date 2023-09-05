@@ -14,6 +14,7 @@ extension EnvironmentValues {
     }
 }
 
+
 // 로그아웃 컨트롤
 struct LogoutController: UIViewRepresentable {
     typealias UIViewType = UIView
@@ -198,14 +199,20 @@ struct SettingSwiftUIView: View {
             }
             .navigationTitle("앱 설정")
             .navigationBarBackButtonHidden(true)
-            .navigationBarItems(leading: Button(action: {
-                self.presentationMode.wrappedValue.dismiss()
-            }) {
-                Image(systemName: "chevron.left")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-                Text("뒤로")
-                    .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
-            })
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        self.presentationMode.wrappedValue.dismiss()
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                            Text("뒤로")
+                                .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        }
+                    }
+                }
+            }
     }
 }
 

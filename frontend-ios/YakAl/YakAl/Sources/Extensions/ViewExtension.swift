@@ -1,6 +1,6 @@
 import SwiftUI
 
-// 뷰 익스텐션
+//MARK: - 바 숨기기
 extension View {
     // 바 숨기기
     func hideTabBar() {
@@ -15,5 +15,17 @@ extension View {
            let tabBarController = windowScene.windows.first?.rootViewController as? UITabBarController {
             tabBarController.tabBar.isHidden = false
         }
+    }
+}
+
+//MARK: - 슬라이드 닫기
+extension UINavigationController: UIGestureRecognizerDelegate {
+    override open func viewDidLoad() {
+        super.viewDidLoad()
+        interactivePopGestureRecognizer?.delegate = self
+    }
+
+    public func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return viewControllers.count > 1
     }
 }
