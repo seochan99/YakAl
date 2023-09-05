@@ -67,6 +67,7 @@
 		9897E9EA2AA6D728004642CA /* LogoutModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9E92AA6D728004642CA /* LogoutModalView.swift */; };
 		9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EC2AA6D833004642CA /* ViewExtension.swift */; };
 		9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */; };
+		9897E9F22AA6EB93004642CA /* SignOutSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -155,6 +156,7 @@
 		9897E9E92AA6D728004642CA /* LogoutModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoutModalView.swift; sourceTree = "<group>"; };
 		9897E9EC2AA6D833004642CA /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
+		9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutSwiftUIView.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				9890C8F52A93DCCA0007299B /* SettingButtonSwiftUI.swift */,
 				98470ED02A95367900C29ED1 /* SettingSwiftUIView.swift */,
 				98470ED42A9545D400C29ED1 /* TimeSlotView.swift */,
+				9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */,
 			);
 			name = Setting;
 			sourceTree = "<group>";
@@ -731,6 +734,7 @@
 				986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */,
 				9897E9BC2AA4B0C0004642CA /* AlertSettingSwiftUIView.swift in Sources */,
 				98470ED72A954B5F00C29ED1 /* ModeButton.swift in Sources */,
+				9897E9F22AA6EB93004642CA /* SignOutSwiftUIView.swift in Sources */,
 				9897E9CF2AA4C179004642CA /* InsomniaTestSwiftUIView.swift in Sources */,
 				98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,

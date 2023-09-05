@@ -39,9 +39,6 @@ struct LogoutModalView: View {
             }
             .padding(.top,33)
             .padding(.horizontal,16)
-
-                
-            
         }
         .padding(.vertical,17)
         .frame(width: 340)

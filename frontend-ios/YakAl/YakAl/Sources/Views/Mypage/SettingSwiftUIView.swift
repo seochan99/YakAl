@@ -35,7 +35,7 @@ struct LogoutController: UIViewRepresentable {
 }
 
 
-
+//MARK: - 셋팅 뷰
 struct SettingSwiftUIView: View {
     @State private var selectedMode: Mode = .light
     @State private var morningStartTime: Date = Date()
@@ -43,6 +43,7 @@ struct SettingSwiftUIView: View {
     @State private var showLogoutModal = false
     @State private var isLoggedIn = true  // Assuming the user is logged in when they see this view
     private var logoutCoordinator = LogoutCoordinator()
+    @State private var showingAlert = false
 
     @State private var noonStartTime: Date = Date().addingTimeInterval(3600 * 5) // 5 hours later
     @State private var noonEndTime: Date = Date().addingTimeInterval(3600 * 6) // 6 hours later
@@ -160,7 +161,8 @@ struct SettingSwiftUIView: View {
                                             .foregroundColor(Color(UIColor(red: 0.08, green: 0.08, blue: 0.08, alpha: 1)))
                                     }
                                 }
-                                Button(action: {}) {
+                                // NavigationLink
+                                NavigationLink(destination: SignOutSwiftUIView()) {
                                     HStack {
                                         Text("회원탈퇴")
                                             .font(Font.custom("SUIT", size: 16).weight(.medium))
@@ -186,7 +188,6 @@ struct SettingSwiftUIView: View {
                                     .onTapGesture {
                                         showLogoutModal = false
                                     }
-                                
                                 // Modal view
                                 LogoutModalView(isPresented: $showLogoutModal)
                             }
@@ -206,7 +207,6 @@ struct SettingSwiftUIView: View {
                     .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
             })
     }
-    
 }
 
 struct SettingSwiftUIView_Previews: PreviewProvider {
@@ -214,3 +214,5 @@ struct SettingSwiftUIView_Previews: PreviewProvider {
         SettingSwiftUIView()
     }
 }
+
+
