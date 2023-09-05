@@ -22,6 +22,17 @@ class LogoutCoordinator: NSObject, UINavigationControllerDelegate {
     
 }
 
+struct ViewControllerKey: EnvironmentKey {
+    static let defaultValue: UIViewController? = nil
+}
+
+extension EnvironmentValues {
+    var viewController: UIViewController? {
+        get { self[ViewControllerKey.self] }
+        set { self[ViewControllerKey.self] = newValue }
+    }
+}
+
 struct LogoutController: UIViewRepresentable {
     typealias UIViewType = UIView
     
@@ -55,6 +66,10 @@ struct SettingSwiftUIView: View {
     @State private var eveningStartTime: Date = Date().addingTimeInterval(3600 * 11) // 11 hours later
     @State private var eveningEndTime: Date = Date().addingTimeInterval(3600 * 13) // 13 hours later
     
+    @Environment(\.viewController) private var viewControllerHolder: UIViewController?
+
+    
+       
     
     init() {
         let appearance = UINavigationBarAppearance()
@@ -86,10 +101,20 @@ struct SettingSwiftUIView: View {
             }
     }
 
+    func hideTabBar() {
+        if let tabBarController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
+            tabBarController.tabBar.isHidden = true
+        }
+    }
+       
+    func showTabBar() {
+        if let tabBarController = UIApplication.shared.windows.first(where: { $0.isKeyWindow })?.rootViewController as? UITabBarController {
+            tabBarController.tabBar.isHidden = false
+        }
+    }
     
     var body: some View {
-        ZStack{            
-            NavigationView {
+        ZStack{
                 ScrollView(showsIndicators: false){
                     VStack(alignment: .leading) {
                         
@@ -196,13 +221,13 @@ struct SettingSwiftUIView: View {
                             }
                         }
                     )
+            }.onAppear {
+                self.hideTabBar()
             }
-        }
+            .onDisappear {
+                self.showTabBar()
+            }
     }
-        func logout() {
-            logoutCoordinator.logoutAndTransitionToMainVC()
-        }
-    
     
 }
 struct LogoutModalView: View {
