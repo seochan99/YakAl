@@ -53,7 +53,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(R.layout.a
                         R.id.opinionFragment -> setToolbarTitle("약알에게 바라는 점")
                     }
                 }
-                R.id.opinionExitFragment -> {
+                R.id.opinionExitFragment,
+                R.id.calenderActivity-> {
                     binding.bottomNavigationView.visibility = View.GONE
                     binding.toolbar.visibility = View.GONE
                 }

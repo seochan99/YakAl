@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav_graph"
     app:startDestination="@id/homeMainFragment">
 
@@ -41,6 +42,14 @@
         android:id="@+id/homeMainFragment"
         android:name="com.viewpharm.yakal.main.fragment.MainHomeFragment"
         android:label="HomeMainFragment" >
+        <action
+            android:id="@+id/action_homeMainFragment_to_calenderActivity"
+            app:destination="@id/calenderActivity"
+            app:enterAnim="@anim/slide_from_right"
+            app:exitAnim="@anim/slide_to_left"
+            app:popEnterAnim="@anim/slide_from_left"
+            app:popExitAnim="@anim/slide_to_right"
+            app:popUpTo="@id/homeMainFragment" />
     </fragment>
     <fragment
         android:id="@+id/locationMainFragment"
@@ -84,4 +93,9 @@
         android:id="@+id/opinionExitFragment"
         android:name="com.viewpharm.yakal.main.fragment.OpinionExitFragment"
         android:label="OpinionExitFragment" />
+    <activity
+        android:id="@+id/calenderActivity"
+        android:name="com.viewpharm.yakal.main.activity.CalenderActivity"
+        android:label="activity_calender"
+        tools:layout="@layout/activity_calender" />
 </navigation>
