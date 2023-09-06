@@ -124,6 +124,7 @@ class CalenderActivity : BaseActivity<ActivityCalenderBinding, CalendarViewModel
 
         todoViewModel.progress.observe(this) {
             startProgressBarAnimation(it)
+            viewModel.updatePercentBar(viewModel.selectedDate.value!!, it)
 
             if (it == 0) {
                 binding.todayPercentTextView.setTextColor(Color.parseColor("#FFC1D2FF"))

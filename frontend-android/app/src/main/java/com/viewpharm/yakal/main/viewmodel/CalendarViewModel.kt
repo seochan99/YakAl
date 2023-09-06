@@ -49,6 +49,17 @@ class CalendarViewModel: BaseViewModel() {
         }
     }
 
+    fun updatePercentBar(date: LocalDate, percent: Int) {
+        isChange = true
+        _calendarTakings.value = _calendarTakings.value!!.map {
+            if (it.date == date) {
+                it.copy(percent = percent)
+            } else {
+                it
+            }
+        }
+    }
+
     fun onClickExpandBottomEvent() {
         _expandBottomEvent.value = Event(Unit)
         isExpanded = !isExpanded
