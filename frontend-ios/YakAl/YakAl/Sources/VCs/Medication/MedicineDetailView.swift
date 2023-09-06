@@ -5,6 +5,7 @@ struct MedicineDetailView: View {
     
     var body: some View {
         ScrollView(showsIndicators: false){
+            // 약물 설명
             VStack(spacing: 10){
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(alignment: .top,spacing:18){
@@ -17,6 +18,7 @@ struct MedicineDetailView: View {
                                 .frame(width: 96, height: 48)
                                 .cornerRadius(8)
                         }
+                        // 약물 설명
                         VStack(alignment: .leading){
                             Text(medicine.name)
                                 .font(
@@ -34,13 +36,85 @@ struct MedicineDetailView: View {
                                 .frame(width: 228, alignment: .bottomLeading)
                         }
                     }
-                    // 복약 정보, 음식/약물, 금기, 신중 투여 tab
+                    // 복약 정보, 음식/약물, 금기, 신중 투여 tab bar 누르면 해당페이지로 이동함
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 20) // Side padding
                 .padding(.vertical, 20) // Vertical padding
                 //            .background(Color(red: 0.96, green: 0.96, blue: 0.98)) // Background color
-                // 약물 설명
+                
+                
+                
+//MARK: - 이러한 약물이에요!
+                VStack(alignment: .leading, spacing: 10){
+                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
+                    Text(medicine.drugInfo?.BriefIndication ?? "준비중 입니다!")
+                        .font(
+                            Font.custom("SUIT", size: 15)
+                                .weight(.medium)
+                        )
+                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                        .frame(width: 340, alignment: .topLeading)
+                }
+                .padding(.horizontal, 20) // Side padding
+                .padding(.vertical, 20) // Vertical padding
+                .background(.white)
+                
+                
+//MARK: - 복약 정보
+                VStack(alignment: .leading, spacing: 10){
+                    PillDetailComponent(imageName: "icon-detail-pill-gray", text: "복약 정보")
+                    Text(medicine.drugInfo?.BriefMono.replacingOccurrences(of: "<br>", with: "") ?? "준비중 입니다!")
+                        .font(
+                            Font.custom("SUIT", size: 15)
+                                .weight(.medium)
+                        )
+                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                        .lineSpacing(7) // Adjust line spacing as needed
+                    HStack{
+                        VStack {
+                              ScrollView(.horizontal, showsIndicators: false) {
+                                  HStack(spacing: 10) {
+                                      ForEach(medicine.drugInfo?.Pictogram ?? [], id: \.self) { pictogram in
+                                          if let imageData = Data(base64Encoded: pictogram.Image),
+                                             let uiImage = UIImage(data: imageData) {
+                                              VStack{
+                                                  Image(uiImage: uiImage)
+                                                      .resizable()
+                                                      .frame(width: 80, height: 112)
+                                                      .cornerRadius(8)
+                                                  }   
+                                              }
+                                          }
+                                      }
+                                  }
+                                  .padding()
+                              }
+                    }
+                }.padding(.horizontal, 20) // Side padding
+                .padding(.vertical, 20) // Vertical padding
+                .background(.white)
+                
+                
+                // 방광근을
+                VStack(alignment: .leading, spacing: 10){
+                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이런 음식/약물은 조심해요")
+                    Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
+                        .font(
+                            Font.custom("SUIT", size: 15)
+                                .weight(.medium)
+                        )
+                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                        .frame(width: 340, alignment: .topLeading)
+                    
+                    
+                    
+                }.padding(.horizontal, 20) // Side padding
+                    .padding(.vertical, 20) // Vertical padding
+                    .background(.white)
+                
+                
+                // 방광근을
                 VStack(alignment: .leading, spacing: 10){
                     PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
                     Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
@@ -56,51 +130,8 @@ struct MedicineDetailView: View {
                 }.padding(.horizontal, 20) // Side padding
                     .padding(.vertical, 20) // Vertical padding
                     .background(.white)
-                VStack(alignment: .leading, spacing: 10){
-                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
-                    Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
-                        .font(
-                            Font.custom("SUIT", size: 15)
-                                .weight(.medium)
-                        )
-                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        .frame(width: 340, alignment: .topLeading)
-                    
-                    
-                    
-                }.padding(.horizontal, 20) // Side padding
-                    .padding(.vertical, 20) // Vertical padding
-                    .background(.white)
-                VStack(alignment: .leading, spacing: 10){
-                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
-                    Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
-                        .font(
-                            Font.custom("SUIT", size: 15)
-                                .weight(.medium)
-                        )
-                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        .frame(width: 340, alignment: .topLeading)
-                    
-                    
-                    
-                }.padding(.horizontal, 20) // Side padding
-                    .padding(.vertical, 20) // Vertical padding
-                    .background(.white)
-                VStack(alignment: .leading, spacing: 10){
-                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
-                    Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
-                        .font(
-                            Font.custom("SUIT", size: 15)
-                                .weight(.medium)
-                        )
-                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        .frame(width: 340, alignment: .topLeading)
-                    
-                    
-                    
-                }.padding(.horizontal, 20) // Side padding
-                    .padding(.vertical, 20) // Vertical padding
-                    .background(.white)
+                
+                // 방광근을
                 VStack(alignment: .leading, spacing: 10){
                     PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이러한 약물이에요!")
                     Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
