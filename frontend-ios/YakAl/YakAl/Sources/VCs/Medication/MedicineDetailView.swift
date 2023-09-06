@@ -6,7 +6,7 @@ struct MedicineDetailView: View {
     var body: some View {
         ScrollView(showsIndicators: false){
             // 약물 설명
-            VStack(spacing: 10){
+            VStack(spacing: 5){
                 VStack(alignment: .leading, spacing: 10) {
                     HStack(alignment: .top,spacing:18){
                         // Convert base64 string to Image and display it
@@ -83,7 +83,7 @@ struct MedicineDetailView: View {
                                                       .resizable()
                                                       .frame(width: 80, height: 112)
                                                       .cornerRadius(8)
-                                                  }   
+                                                  }
                                               }
                                           }
                                       }
@@ -96,23 +96,45 @@ struct MedicineDetailView: View {
                 .background(.white)
                 
                 
-                // 방광근을
-                VStack(alignment: .leading, spacing: 10){
-                    PillDetailComponent(imageName: "icon-detail-pill-blue", text: "이런 음식/약물은 조심해요")
-                    Text("방광근을 이완시켜 빈뇨, 요실금 등을 치료합니다. 두 줄일 경우 행간 24px")
-                        .font(
-                            Font.custom("SUIT", size: 15)
-                                .weight(.medium)
-                        )
-                        .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
-                        .frame(width: 340, alignment: .topLeading)
+                // div처리 알고리즘
+                VStack(alignment: .leading, spacing: 10) {
+                    PillDetailComponent(imageName: "icon-detail-food", text: "이런 음식/약물은 조심해요")
                     
+                    let interactionText = medicine.drugInfo?.Interaction ?? "준비중 입니다!"
                     
+                    let styledText = interactionText
+                        .replacingOccurrences(of: "<div style=\"margin-left:20px\">", with: "")
+                        .replacingOccurrences(of: "<br>", with: "")
+                        .replacingOccurrences(of: "</div>", with: "\n")
                     
-                }.padding(.horizontal, 20) // Side padding
-                    .padding(.vertical, 20) // Vertical padding
-                    .background(.white)
-                
+                    if let range = styledText.range(of: "<div>(.*?)</div>", options: .regularExpression, range: nil, locale: nil) {
+                        Text(styledText[..<range.lowerBound])
+                            .font(Font.custom("SUIT", size: 15).weight(.medium))
+                            .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                            .frame(width: 340, alignment: .topLeading)
+                        
+                        Text(styledText[range])
+                            .font(Font.custom("SUIT", size: 15).weight(.medium))
+                            .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                            .frame(width: 340, alignment: .topLeading)
+                            .padding(.leading, 20) // Add padding for the div content
+                        
+                        if range.upperBound < styledText.endIndex {
+                            Text(styledText[range.upperBound...])
+                                .font(Font.custom("SUIT", size: 15).weight(.medium))
+                                .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                                .frame(width: 340, alignment: .topLeading)
+                        }
+                    } else {
+                        Text(styledText)
+                            .font(Font.custom("SUIT", size: 15).weight(.medium))
+                            .foregroundColor(Color(red: 0.27, green: 0.27, blue: 0.33))
+                            .frame(width: 340, alignment: .topLeading)
+                    }
+                }
+                .padding(.horizontal, 20) // Side padding
+                .padding(.vertical, 20) // Vertical padding
+                .background(.white)
                 
                 // 방광근을
                 VStack(alignment: .leading, spacing: 10){
