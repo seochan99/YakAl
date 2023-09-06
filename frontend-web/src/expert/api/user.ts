@@ -1,6 +1,6 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQueryWithReauth, TResponse } from "./api.ts";
-import { EJob } from "@/expert/type/job.ts";
+import { EJob } from "../type/job.ts";
 
 export type TUser = {
   name: string;

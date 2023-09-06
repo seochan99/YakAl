@@ -1,30 +1,45 @@
-import { ESex } from "@/expert/type/sex.ts";
-import { DateBox, Name, Outer, Sex, TestProgress } from "./style.ts";
-import getAge from "@/expert/util/get-age.ts";
-import { TUser } from "@/expert/store/user.ts";
+import { DateBox, DummyOuter, Name, Outer, Sex, TestProgress } from "./style.ts";
 
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
-import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { ESex } from "../../../../../type/sex.ts";
+import getAge from "../../../../../util/get-age.ts";
 
 type PatientItemProps = {
-  userInfo: TUser;
+  userInfo?: {
+    id: number;
+    name: string;
+    sex: string;
+    birthday: number[];
+    testProgress: number;
+    lastSurbey: number[];
+  };
 };
 
 function PatientItem({ userInfo }: PatientItemProps) {
-  const { id, name, sex, birthday, testProgress, submitDate } = userInfo;
-
-  const [dateDiff, setDateDiff] = useState<number>(-1);
-
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
-  useEffect(() => {
-    setDateDiff(Math.floor((Date.now() - submitDate.getTime()) / (1000 * 60 * 60 * 24)));
-  }, [submitDate]);
+  if (!userInfo) {
+    return <DummyOuter />;
+  }
+
+  const { id, name, sex, birthday, testProgress, lastSurbey } = userInfo;
+
+  const dateDiff = Math.floor(
+    (Date.now() - new Date(lastSurbey[0], lastSurbey[1] - 1, lastSurbey[2]).getTime()) / (1000 * 60 * 60 * 24),
+  );
 
   return (
-    <Outer to={`/expert/patient/${id}`}>
+    <Outer
+      to={`/expert/patient/${id}`}
+      state={{
+        id,
+        name,
+        sex: ESex[sex as keyof typeof ESex],
+        birthday,
+      }}
+    >
       <Name>
         {name.length > 4 ? name.substring(0, 4) + "..." : name}
         {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}
@@ -36,20 +51,16 @@ function PatientItem({ userInfo }: PatientItemProps) {
         </Sex>
       )}
       <DateBox>
-        {`${birthday.getFullYear()}.
-          ${birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1}.
-          ${birthday.getDate()}.`}
-        {!isMiddleMobile && ` (${getAge(birthday)}세)`}
+        {`${birthday[0]}.
+          ${birthday[1] < 10 ? "0".concat(birthday[1].toString()) : birthday[1]}.
+          ${birthday[2]}.`}
+        {!isMiddleMobile && ` (${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
       </DateBox>
       {!isMiddleMobile && <TestProgress>{`${testProgress}%`}</TestProgress>}
       <DateBox>
-        {`${submitDate.getFullYear()}.
-          ${
-            submitDate.getMonth() + 1 < 10
-              ? "0".concat((submitDate.getMonth() + 1).toString())
-              : submitDate.getMonth() + 1
-          }.
-          ${submitDate.getDate()}.`}
+        {`${lastSurbey[0]}.
+          ${lastSurbey[1] < 10 ? "0".concat(lastSurbey[1].toString()) : lastSurbey[1]}.
+          ${lastSurbey[2]}.`}
         {!isMiddleMobile &&
           (dateDiff > 365
             ? ` (${Math.floor(dateDiff / 365)}년 전)`

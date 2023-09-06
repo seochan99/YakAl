@@ -1,5 +1,5 @@
 import { TFacility } from "../facility-registration-list";
-import { facilityList } from "@/expert/store/facility-list.ts";
+import { facilityList } from "/src/expert/store/facility-list.ts";
 
 export type TFacilityRegistrationInfoLoaderArgs = {
   facilityId: string;

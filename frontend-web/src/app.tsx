@@ -1,10 +1,10 @@
 import { RouterProvider } from "react-router-dom";
-import { router } from "@/global/router.tsx";
 import { Provider } from "react-redux";
-import { store } from "@/expert/store/store";
 import { CookiesProvider } from "react-cookie";
-import { GlobalStyle } from "@/global/style/style.ts";
 import { useEffect } from "react";
+import { router } from "./global/router.tsx";
+import { GlobalStyle } from "./global/style/style.ts";
+import { store } from "./expert/store/store.ts";
 
 function App() {
   const pathname = window.location.pathname;

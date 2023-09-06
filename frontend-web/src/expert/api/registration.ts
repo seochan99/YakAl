@@ -1,7 +1,7 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { baseQueryWithReauth, TResponse } from "@/expert/api/api.ts";
-import { EFacility } from "@/expert/type/facility.ts";
-import { EInfoTake } from "@/expert/type/info-take.ts";
+import { baseQueryWithReauth, TResponse } from "./api.ts";
+import { EFacility } from "../type/facility.ts";
+import { EInfoTake } from "../type/info-take.ts";
 
 type TRegisterResponse = {
   registrationId: number;

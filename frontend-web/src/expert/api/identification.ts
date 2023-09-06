@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/dist/query/react";
-import { baseQueryWithReauth, TResponse } from "@/expert/api/api.ts";
+import { baseQueryWithReauth, TResponse } from "./api.ts";
 
 type TIdentification = {
   isIdentified: boolean;

@@ -1,13 +1,7 @@
 import { useLoaderData } from "react-router-dom";
-import { TFacilityRegistrationInfoLoaderReturn } from "@/admin/page/main/facility-registration-info/loader.ts";
-import ErrorPage from "@/expert/page/error-page";
-import {
-  BackButton,
-  BackIcon,
-  FacilityMain,
-  Header,
-  Outer,
-} from "@/admin/page/main/facility-registration-info/style.ts";
+import { TFacilityRegistrationInfoLoaderReturn } from "./loader.ts";
+import ErrorPage from "../../../../expert/page/error-page";
+import { BackButton, BackIcon, FacilityMain, Header, Outer } from "./style.ts";
 
 function FacilityRegistrationInfo() {
   const { facilityInfo } = useLoaderData() as TFacilityRegistrationInfoLoaderReturn;

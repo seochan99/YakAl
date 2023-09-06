@@ -1,13 +1,13 @@
 import { TFacility } from "../.";
 import { DummyOuter, Outer } from "./style.ts";
-import { EFacility } from "@/expert/type/facility.ts";
+import { EFacility } from "/src/expert/type/facility.ts";
 import {
   DirectorName,
   DirectorPhone,
   FacilityType,
   Name,
   RequestedAt,
-} from "@/admin/page/main/facility-registration-list/style.ts";
+} from "/src/admin/page/main/facility-registration-list/style.ts";
 
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import LocalPharmacyOutlinedIcon from "@mui/icons-material/LocalPharmacyOutlined";

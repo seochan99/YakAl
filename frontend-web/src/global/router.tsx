@@ -1,33 +1,31 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Main as ExpertMain } from "@/expert/layout/main";
-import { Main as AdminMain } from "@/admin/layout/main";
-import ErrorPage from "@/expert/page/error-page";
-import { Login as ExpertLogin } from "@/expert/layout/login";
+import { Main as ExpertMain } from "../expert/layout/main";
+import { Main as AdminMain } from "../admin/layout/main";
+import ErrorPage from "../expert/page/error-page";
+import { Login as ExpertLogin } from "../expert/layout/login";
 import { Login as AdminLogin } from "../admin/page/login";
-import LoginMain from "@/expert/page/login/login-main";
-import SignUpTerms from "@/expert/page/login/signup-terms";
+import LoginMain from "../expert/page/login/login-main";
+import SignUpTerms from "../expert/page/login/signup-terms";
 
-import PatientList from "@/expert/page/main/patient-list";
-import { Dashboard as ExpertDashboard } from "@/expert/page/main/dashboard";
-import { Dashboard as AdminDashboard } from "@/admin/page/main/dashboard";
-import PatientInfo from "@/expert/page/main/patient-info";
+import PatientList from "../expert/page/main/patient-list";
+import { Dashboard as ExpertDashboard } from "../expert/page/main/dashboard";
+import { Dashboard as AdminDashboard } from "../admin/page/main/dashboard";
+import PatientInfo from "../expert/page/main/patient-info";
 
-import SocialLoginFailure from "@/expert/page/login/social-login-failure";
-import { loader as patientLoader } from "@/expert/page/main/patient-list/loader.ts";
-import { loader as patientInfoLoader } from "@/expert/page/main/patient-info/loader.ts";
-import { loader as facilityRegistrationInfoLoader } from "@/admin/page/main/facility-registration-info/loader.ts";
+import SocialLoginFailure from "../expert/page/login/social-login-failure";
+import { loader as facilityRegistrationInfoLoader } from "../admin/page/main/facility-registration-info/loader.ts";
 import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
 import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/facility-registration";
-import MyInfo from "@/expert/page/main/my-info";
-import SocialLoginProxy from "@/expert/page/login/social-login-proxy";
-import LoadingPage from "@/expert/page/loading-page";
-import IdentificationPage from "@/expert/page/login/identification-page";
-import IdentificationFailure from "@/expert/page/login/identification-failure";
-import ExpertCertification from "@/expert/page/main/expert-certification";
-import IdentificationSuccess from "@/expert/page/login/identification-success";
-import FacilityRegistrationInfo from "@/admin/page/main/facility-registration-info";
-import RegistrationSuccess from "@/expert/page/main/registration-success";
-import RegistrationFailure from "@/expert/page/main/registration-failure";
+import MyInfo from "../expert/page/main/my-info";
+import SocialLoginProxy from "../expert/page/login/social-login-proxy";
+import LoadingPage from "../expert/page/loading-page";
+import IdentificationPage from "../expert/page/login/identification-page";
+import IdentificationFailure from "../expert/page/login/identification-failure";
+import ExpertCertification from "../expert/page/main/expert-certification";
+import IdentificationSuccess from "../expert/page/login/identification-success";
+import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
+import RegistrationSuccess from "../expert/page/main/registration-success";
+import RegistrationFailure from "../expert/page/main/registration-failure";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -89,7 +87,6 @@ export const router = createBrowserRouter([
                   {
                     path: "patient",
                     element: <PatientList />,
-                    loader: patientLoader,
                   },
                   {
                     path: "registration",
@@ -110,7 +107,6 @@ export const router = createBrowserRouter([
                   {
                     path: "patient/:patientId",
                     element: <PatientInfo />,
-                    loader: patientInfoLoader,
                   },
                 ],
               },

@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { authSlice } from "./auth.ts";
-import { userApiSlice } from "@/expert/api/user.ts";
-import { authApiSlice } from "@/expert/api/auth.ts";
-import { identificationApiSlice } from "@/expert/api/identification.ts";
-import { registrationApiSlice } from "@/expert/api/registration.ts";
+import { userApiSlice } from "../api/user.ts";
+import { authApiSlice } from "../api/auth.ts";
+import { identificationApiSlice } from "../api/identification.ts";
+import { registrationApiSlice } from "../api/registration.ts";
+import { patientListApiSlice } from "../api/patient-list.ts";
+import { noteListApiSlice } from "../api/note-list.ts";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +14,8 @@ export const store = configureStore({
     [authApiSlice.reducerPath]: authApiSlice.reducer,
     [identificationApiSlice.reducerPath]: identificationApiSlice.reducer,
     [registrationApiSlice.reducerPath]: registrationApiSlice.reducer,
+    [patientListApiSlice.reducerPath]: patientListApiSlice.reducer,
+    [noteListApiSlice.reducerPath]: noteListApiSlice.reducer,
     [authSlice.name]: authSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -20,6 +24,8 @@ export const store = configureStore({
       authApiSlice.middleware,
       identificationApiSlice.middleware,
       registrationApiSlice.middleware,
+      patientListApiSlice.middleware,
+      noteListApiSlice.middleware,
     ),
   devTools: true,
 });

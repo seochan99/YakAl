@@ -14,11 +14,11 @@ import {
   Title,
 } from "./style.ts";
 import { ReactNode, useState } from "react";
-import { ListFooter } from "@/admin/style.ts";
+import { ListFooter } from "/src/admin/style.ts";
 import Pagination from "react-js-pagination";
-import { EFacility } from "@/expert/type/facility.ts";
-import FacilityItem from "@/admin/page/main/facility-registration-list/child/facility-item";
-import { facilityList } from "@/expert/store/facility-list.ts";
+import { EFacility } from "/src/expert/type/facility.ts";
+import FacilityItem from "/src/admin/page/main/facility-registration-list/child/facility-item";
+import { facilityList } from "/src/expert/store/facility-list.ts";
 
 export type TFacility = {
   id: number;

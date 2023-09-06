@@ -1,7 +1,7 @@
-import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { logout, setCredentials } from "@/expert/store/auth.ts";
-import { RootState } from "@/expert/store/store.ts";
 import { HttpStatusCode } from "axios";
+import { RootState } from "../store/store.ts";
+import { logout, setCredentials } from "../store/auth.ts";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 
 export type TResponse = {
   success: boolean;

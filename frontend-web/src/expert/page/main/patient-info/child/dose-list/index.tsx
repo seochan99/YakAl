@@ -1,31 +1,31 @@
 import Pagination from "react-js-pagination";
 import {
   Bar,
+  DateHeader,
+  GreenIcon,
   Header,
+  Item,
   ItemDate,
+  ItemIcon,
   ItemTitle,
   List,
   ListHeader,
+  PeriodItem,
+  PeriodItemButton,
+  PeriodList,
   PeriodSelectBox,
   PeriodSelectButton,
+  RedIcon,
   RiskHeader,
   Title,
   TitleHeader,
-  DateHeader,
-  PeriodList,
-  PeriodItem,
-  PeriodItemButton,
-  GreenIcon,
   YellowIcon,
-  RedIcon,
-  Item,
-  ItemIcon,
 } from "./style.ts";
 import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { EPeriod } from "@/expert/type/period.ts";
-import { ListFooter } from "@/expert/style.ts";
+import { EPeriod } from "/src/expert/type/period.ts";
+import { ListFooter } from "/src/expert/style.ts";
 
 // type TDoseListProps = {
 //   patientId: number;

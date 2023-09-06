@@ -1,4 +1,4 @@
 export enum EJob {
-  DOCTOR,
-  PHARMACIST,
+  DOCTOR = "DOCTOR",
+  PHARMACIST = "PHARMACIST",
 }

@@ -33,19 +33,18 @@ import {
 } from "./style.ts";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLazyLogoutQuery } from "@/expert/api/auth.ts";
 import { useDispatch } from "react-redux";
-
-import { EXPERT_LOGIN_ROUTE } from "@/global/router.tsx";
 
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { EJob } from "@/expert/type/job.ts";
-import { logout } from "@/expert/store/auth.ts";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useMediaQuery } from "react-responsive";
+import { useLazyLogoutQuery } from "../../../../api/auth.ts";
+import { logout } from "../../../../store/auth.ts";
+import { EXPERT_LOGIN_ROUTE } from "../../../../../global/router.tsx";
+import { EJob } from "../../../../type/job.ts";
 
 type TProfileProps = {
   job?: EJob;
@@ -104,16 +103,15 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
     return `${count} notifications`;
   };
 
-  const jobDetail: string | undefined = department
-    ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "")
-    : undefined;
+  const jobDetail: string | undefined =
+    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
 
   return (
     <Outer>
       <ProfileBox onClick={toggleDrawer(true)}>
         {!isMobile && (
           <ProfileText>
-            {jobDetail ? <Job>jobDetail</Job> : null}
+            {jobDetail ? <Job>{jobDetail}</Job> : null}
             <NameBox>
               <Name>{name}</Name>
               <NamePostfix>님</NamePostfix>
@@ -158,7 +156,7 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")
                   ) : (
-                    job
+                    jobDetail
                   )
                 ) : (
                   <Red>전문가 인증 미완료</Red>

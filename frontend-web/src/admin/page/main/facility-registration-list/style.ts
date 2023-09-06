@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-import { ReactComponent as SearchIconSvg } from "@/expert/asset/magnifying-glass.svg";
+import { ReactComponent as SearchIconSvg } from "/src/expert/asset/magnifying-glass.svg";
 
 export const Outer = styled.div`
   & {

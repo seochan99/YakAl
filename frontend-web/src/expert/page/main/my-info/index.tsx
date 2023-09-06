@@ -15,9 +15,10 @@ import {
   VerifiedIcon,
   VerifiedText,
 } from "./style.ts";
-import { useGetUserQuery } from "@/expert/api/user.ts";
-import LoadingPage from "@/expert/page/loading-page";
-import ErrorPage from "@/expert/page/error-page";
+import LoadingPage from "../../loading-page";
+import ErrorPage from "../../error-page";
+import { useGetUserQuery } from "../../../api/user.ts";
+import { EJob } from "../../../type/job.ts";
 
 function MyInfo() {
   const { data, isLoading, isError } = useGetUserQuery(null);
@@ -30,10 +31,14 @@ function MyInfo() {
     return <ErrorPage />;
   }
 
-  const birthday = data.birthday;
+  const { name, birthday, tel, job, department, belong } = data;
+
   const formattedBirthday = `${birthday.getFullYear()}. ${
     birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1
   }. ${birthday.getDate()}.`;
+
+  const jobDetail: string | undefined =
+    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
 
   return (
     <Outer>
@@ -61,7 +66,7 @@ function MyInfo() {
         <InnerBox>
           <InputBox>
             <StyledInputLabel>성함</StyledInputLabel>
-            <StyledInput value={data.name} readOnly={true} />
+            <StyledInput value={name} readOnly={true} />
           </InputBox>
           <InputBox>
             <StyledInputLabel>생년월일</StyledInputLabel>
@@ -69,15 +74,15 @@ function MyInfo() {
           </InputBox>
           <InputBox>
             <StyledInputLabel>직종 및 분과</StyledInputLabel>
-            <StyledInput />
+            <StyledInput value={jobDetail} readOnly={true} />
           </InputBox>
           <InputBox>
             <StyledInputLabel>연락처</StyledInputLabel>
-            <StyledInput value={data.tel} readOnly={true} />
+            <StyledInput value={tel} readOnly={true} />
           </InputBox>
           <BelongInputBox>
             <StyledInputLabel>소속</StyledInputLabel>
-            <StyledInput readOnly={true} />
+            <StyledInput value={belong} readOnly={true} />
           </BelongInputBox>
         </InnerBox>
       </MainSection>
