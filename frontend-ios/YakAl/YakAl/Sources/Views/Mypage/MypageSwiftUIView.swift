@@ -128,9 +128,9 @@ struct MypageSwiftUIView: View {
                                 SettingButton(action: {
                                     // 버튼을 클릭했을 때의 액션
                                 }, imageName: nil, title: "약알에게 바라는 점")
-                                SettingButton(action: {
-                                    // 버튼을 클릭했을 때의 액션
-                                }, imageName: nil, title: "자주묻는 질문")
+//                                SettingButton(action: {
+//                                    // 버튼을 클릭했을 때의 액션
+//                                }, imageName: nil, title: "자주묻는 질문")
                                     HStack {
                                         Text("버전 정보")
                                             .font(Font.custom("SUIT", size: 16).weight(.medium))
