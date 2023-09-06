@@ -52,7 +52,7 @@ public class DoseController {
     @Operation(summary = "하루 복용 스케줄 가져오기", description = "지정된 날짜에 복용해야 하는 약 목록을 가져온다.")
     public ResponseDto<OneDayScheduleDto> getOneDayDoseSchedule(
             @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+            @PathVariable("date") @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
         final OneDayScheduleDto oneDayScheduleDto = doseService.getOneDaySchedule(id, date);
         return ResponseDto.ok(oneDayScheduleDto);
@@ -62,10 +62,10 @@ public class DoseController {
     @Operation(summary = "하루 복용 달성도 가져오기", description = "환자가 지정한 날짜의 약 복용 달성도를 가져온다.")
     public ResponseDto<OneDayProgressDto> getOneDayDoseProgress(
             @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+            @PathVariable("date") @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
         final Long progressOrNull = doseService.getOneDayProgressOrNull(id, date);
-        final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date, progressOrNull);
+        final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date.toString(), progressOrNull);
         return ResponseDto.ok(oneDayProgressDto);
     }
 
@@ -74,7 +74,7 @@ public class DoseController {
     @Operation(summary = "일주일 복용 달성도와 성분 중복 여부 가져오기", description = "환자가 지정한 날짜가 포함된 일주일동안의 약 복용 달성도를 하루 단위로 가져온다.")
     public ResponseDto<Map<DayOfWeek, OneDaySummaryDto>> getOneWeekDose(
             @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
+            @PathVariable("date")  @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
         final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(id, date);
         return ResponseDto.ok(oneDaySummary);
@@ -84,7 +84,7 @@ public class DoseController {
     @Operation(summary = "한 달 복용 달성도 가져오기", description = "환자가 지정한 달의 약 복용 달성도를 하루 단위로 가져온다.")
     public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
             @UserId Long id,
-            @PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+            @PathVariable("month")  @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         final List<OneDaySummaryDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
         return ResponseDto.ok(oneMonthSummary);
@@ -104,9 +104,9 @@ public class DoseController {
     @Operation(summary = "특정 시간대의 스케줄 모두 복용 처리 혹은 취소", description = "특정 시간대의 복용 스케줄을 모두 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenByTime(
             @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
-            @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
-            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
+            @PathVariable("date")  @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+            @PathVariable(value = "time") @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
+            @RequestBody  UpdateIsTakenDto updateIsTakenDto
     ) {
         doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
@@ -116,8 +116,8 @@ public class DoseController {
     @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
     public ResponseDto<Boolean> updateIsTakenById(
             @UserId Long id,
-            @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
-            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
+            @PathVariable("id")  @Range(min = 1L) Long doesId,
+            @RequestBody  UpdateIsTakenDto updateIsTakenDto
     ) {
         doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
         return ResponseDto.ok(null);
@@ -127,7 +127,7 @@ public class DoseController {
     @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
-            @Valid @RequestBody CreateScheduleDto createScheduleDto
+            @RequestBody CreateScheduleDto createScheduleDto
     ) {
         final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
         return ResponseDto.created(isInserted);

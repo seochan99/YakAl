@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @Setter
 public class OneDayProgressDto {
 
-    private LocalDate date;
+    private String date;
     private Long progressOrNull;
 
     @Builder
-    public OneDayProgressDto(final LocalDate date, final Long progressOrNull) {
+    public OneDayProgressDto(final String date, final Long progressOrNull) {
         this.date = date;
         this.progressOrNull = progressOrNull;
     }
