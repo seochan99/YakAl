@@ -88,39 +88,49 @@ struct MedicationItemRow: View {
     @Binding var medicine: Medicine
     @ObservedObject var viewModel = MedicineViewModel()
     let isAllCompleted: Bool
+    @State private var isDetailViewPresented: Bool = false
+
     @Binding var isCompleted: Bool
     @State private var responseString = "Loading..."
 
     
     var body: some View {
         HStack(spacing: 16) {
-            if let image = viewModel.identaImage {
-                image
-                    .resizable()
-                    .frame(width: 64, height: 32)
-                    .cornerRadius(8)
-            } else {
-                ProgressView()  // Show loading spinner
+            HStack{
+                if let image = viewModel.identaImage {
+                    image
+                        .resizable()
+                        .frame(width: 64, height: 32)
+                        .cornerRadius(8)
+                } else {
+                    ProgressView()  // Show loading spinner
+                }
+                VStack(alignment: .leading,spacing:2){
+                    Text(medicine.name)
+                    .font(
+                    Font.custom("SUIT", size: 14)
+                    .weight(.medium)
+                    )
+                    .foregroundColor(medicine.atcCode.score == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
+                    Text(medicine.effect)
+                    .font(
+                    Font.custom("SUIT", size: 10)
+                    .weight(.medium)
+                    )
+                    .foregroundColor(Color(red: 0.51, green: 0.5, blue: 0.59))
+                }
+                Spacer()
             }
-            VStack(alignment: .leading,spacing:2){
-                Text(medicine.name)
-                .font(
-                Font.custom("SUIT", size: 14)
-                .weight(.medium)
-                )
-                .foregroundColor(medicine.atcCode.score == 2 ?  Color(red: 0.88, green: 0.06, blue: 0.16) : Color(red: 0.08, green: 0.08, blue: 0.08))
-                Text(medicine.effect)
-                .font(
-                Font.custom("SUIT", size: 10)
-                .weight(.medium)
-                )
-                .foregroundColor(Color(red: 0.51, green: 0.5, blue: 0.59))
+            .padding(.vertical, 3)
+            .onTapGesture {
+                isDetailViewPresented = true
             }
-            .padding(.vertical,3)
+            .sheet(isPresented: $isDetailViewPresented) {
+                if let medicine = medicine ?? nil {
+                    MedicineDetailViewControllerWrapper(medicine: medicine)
+                }
+            }
             
-            
-            
-            Spacer()
             if medicine.atcCode.score == 0 {
                 Image("Green-Light")
                     .resizable()

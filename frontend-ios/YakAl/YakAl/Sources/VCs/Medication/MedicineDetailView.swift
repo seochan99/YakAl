@@ -268,9 +268,6 @@ struct MedicineDetailView: View {
                     }
                     }
                 }
-                
-                
-                
         }.background(Color(red: 0.96, green: 0.96, blue: 0.98, opacity: 1))
             .navigationTitle("약 세부정보")
             .navigationBarBackButtonHidden(true)
