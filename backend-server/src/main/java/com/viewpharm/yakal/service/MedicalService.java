@@ -158,7 +158,7 @@ public class MedicalService {
                             .medicalAddress(medical.getMedicalAddress())
                             .medicalPoint(new PointDto(medical.getMedicalPoint().getX(),medical.getMedicalPoint().getY()))
                             .medicalTel(medical.getMedicalTel())
-                            .eMedical(medical.getEMedical())
+                            .eMedical(medical.getType())
                             .build()
             );
         }
@@ -186,13 +186,15 @@ public class MedicalService {
         return convertMedicalListToDtoList(medicals);
     }
 
-    public List<MedicalDto> getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical){
+    public List<MedicalDto> getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
-        Page<Medical> medicals = medicalRepository.findAllByRegisterTrueAndEMedical(pageable,eMedical);
+        List<Medical> medicals = name == null ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
+                                                : medicalRepository.findAllByIsRegisterTrueAndTypeAndMedicalName(eMedical,name,pageable);
+
         List<MedicalDto> medicalDtoList = medicals.stream()
                 .map(b -> new MedicalDto(b.getId(),b.getMedicalName(),b.getMedicalAddress()
                 ,b.getMedicalTel(),new PointDto(b.getMedicalPoint().getX(),b.getMedicalPoint().getY())
-                        ,b.getEMedical(),b.isRegister()))
+                        ,b.getType(),b.isRegister()))
                 .collect(Collectors.toList());
 
 

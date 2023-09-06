@@ -34,9 +34,9 @@ public class Medical {
     @Column(columnDefinition = "point")
     private Point medicalPoint;
 
-    @Column
+    @Column(name="type")
     @Enumerated(EnumType.STRING)
-    private EMedical eMedical;
+    private EMedical type;
 
     @Column
     private boolean isRegister;
@@ -53,6 +53,6 @@ public class Medical {
         this.medicalAddress = medicalAddress;
         this.medicalTel = medicalTel;
         this.medicalPoint = medicalPoint;
-        this.eMedical = eMedical;
+        this.type = eMedical;
     }
 }
