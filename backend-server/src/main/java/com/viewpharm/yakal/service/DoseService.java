@@ -86,7 +86,7 @@ public class DoseService {
             scheduleMap.get(result.getTime()).add(oneTimeScheduleDto);
         }
 
-        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date,totalCnt,scheduleMap,overlapMap);
+        final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date.toString(),totalCnt,scheduleMap,overlapMap);
 
         return oneDayScheduleDto;
     }
