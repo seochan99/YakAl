@@ -84,7 +84,6 @@ class CalenderActivity : BaseActivity<ActivityCalenderBinding, CalendarViewModel
             adapter = CalendarAdapter(viewModel.calendarTakings.value!!,
                 object:MainCallBack.CalendarCallback {
                     override fun onCalendarButtonClick(date: LocalDate) {
-                        todoViewModel.updateDate(date)
                         viewModel.updateSelectedDate(date)
                     }
                 })
@@ -117,7 +116,10 @@ class CalenderActivity : BaseActivity<ActivityCalenderBinding, CalendarViewModel
                 }
                 (binding.calendarRecyclerView.adapter as CalendarAdapter).submitList(it)
             }
+        }
 
+        viewModel.selectedDate.observe(this) {
+            todoViewModel.updateDate(it)
         }
 
         todoViewModel.progress.observe(this) {

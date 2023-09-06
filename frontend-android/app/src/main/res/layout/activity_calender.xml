@@ -191,140 +191,124 @@
                     android:layout_gravity="center" />
 
             </LinearLayout>
-            <androidx.core.widget.NestedScrollView
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/todayTakingScheduleMainLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:fillViewport="true"
-                app:layout_constraintTop_toBottomOf="@id/calendarLayout"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/calendarLayout">
 
-                <LinearLayout
+                <TextView
+                    android:id="@+id/todayDateTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:text="@{todoViewModel.dateText}"
+                    android:textSize="15sp"
+
+                    app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/todayPercentBar"
+                    app:layout_constraintVertical_bias="0.20" />
+
+                <TextView
+                    android:id="@+id/todayTakingNumberTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{todoViewModel.takenCntText}"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/todayDateTextView"
+                    app:layout_constraintTop_toBottomOf="@id/todayDateTextView" />
+
+                <TextView
+                    android:id="@+id/todayTakingTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="개 복용"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toBottomOf="@id/todayTakingNumberTextView"
+                    app:layout_constraintStart_toEndOf="@+id/todayTakingNumberTextView"
+                    app:layout_constraintTop_toTopOf="@id/todayTakingNumberTextView" />
+
+                <TextView
+                    android:id="@+id/todayTotalNumberView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="@{todoViewModel.totalCntText}"
+
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/todayTakingNumberTextView"
+                    app:layout_constraintStart_toEndOf="@+id/todayTakingTextView"
+                    app:layout_constraintTop_toTopOf="@id/todayTakingNumberTextView" />
+
+                <ProgressBar
+                    android:id="@+id/todayPercentBar"
+                    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="22dp"
+                    android:max="100"
+
+                    android:progressDrawable="@drawable/bar_home_taking_percent"
+                    android:progressTint="@color/blue"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/todayPercentTextView"
+                    style="@style/default_font"
+                    android:layout_width="wrap_content"
+
+                    android:layout_height="wrap_content"
+                    android:text="100%"
+                    android:textAlignment="center"
+                    android:textColor="#FF5588FD"
+                    android:textSize="16dp"
+
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@id/todayPercentBar"
+                    app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
+                    app:layout_constraintStart_toStartOf="@id/todayPercentBar"
+                    app:layout_constraintTop_toTopOf="@id/todayPercentBar" />
+
+                <TextView
+                    android:id="@+id/overLapTextView"
+                    style="@style/default_font"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="40dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/view_oval_overlap"
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/todayTakingScheduleMainLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="parent">
+                    android:padding="12dp"
+                    android:text="약물 중 성분이 같은 중복 약물이 있습니다!"
+                    android:textAlignment="center"
+                    android:textColor="#E01029"
+                    android:textSize="15sp"
 
-                        <TextView
-                            android:id="@+id/todayDateTextView"
-                            style="@style/default_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
-                            android:text="@{todoViewModel.dateText}"
-                            android:textSize="15sp"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/todayPercentBar" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                            app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/todayPercentBar"
-                            app:layout_constraintVertical_bias="0.20" />
-
-                        <TextView
-                            android:id="@+id/todayTakingNumberTextView"
-                            style="@style/default_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="16dp"
-                            android:text="@{todoViewModel.takenCntText}"
-                            android:textSize="20sp"
-                            android:textStyle="bold"
-                            app:layout_constraintStart_toStartOf="@+id/todayDateTextView"
-                            app:layout_constraintTop_toBottomOf="@id/todayDateTextView" />
-
-                        <TextView
-                            android:id="@+id/todayTakingTextView"
-                            style="@style/default_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="개 복용"
-                            android:textSize="20sp"
-                            app:layout_constraintBottom_toBottomOf="@id/todayTakingNumberTextView"
-                            app:layout_constraintStart_toEndOf="@+id/todayTakingNumberTextView"
-                            app:layout_constraintTop_toTopOf="@id/todayTakingNumberTextView" />
-
-                        <TextView
-                            android:id="@+id/todayTotalNumberView"
-                            style="@style/default_font"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="@{todoViewModel.totalCntText}"
-
-                            android:textSize="15sp"
-                            app:layout_constraintBottom_toBottomOf="@id/todayTakingNumberTextView"
-                            app:layout_constraintStart_toEndOf="@+id/todayTakingTextView"
-                            app:layout_constraintTop_toTopOf="@id/todayTakingNumberTextView" />
-
-                        <ProgressBar
-                            android:id="@+id/todayPercentBar"
-                            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-                            android:layout_width="80dp"
-                            android:layout_height="80dp"
-                            android:layout_marginEnd="22dp"
-                            android:max="100"
-
-                            android:progressDrawable="@drawable/bar_home_taking_percent"
-                            android:progressTint="@color/blue"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="parent" />
-
-                        <TextView
-                            android:id="@+id/todayPercentTextView"
-                            style="@style/default_font"
-                            android:layout_width="wrap_content"
-
-                            android:layout_height="wrap_content"
-                            android:text="100%"
-                            android:textAlignment="center"
-                            android:textColor="#FF5588FD"
-                            android:textSize="16dp"
-
-                            android:textStyle="bold"
-                            app:layout_constraintBottom_toBottomOf="@id/todayPercentBar"
-                            app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
-                            app:layout_constraintStart_toStartOf="@id/todayPercentBar"
-                            app:layout_constraintTop_toTopOf="@id/todayPercentBar" />
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <TextView
-                        android:id="@+id/overLapTextView"
-                        style="@style/default_font"
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginEnd="20dp"
-                        android:layout_marginBottom="5dp"
-                        android:background="@drawable/view_oval_overlap"
-
-                        android:padding="12dp"
-                        android:text="약물 중 성분이 같은 중복 약물이 있습니다!"
-                        android:textAlignment="center"
-                        android:textColor="#E01029"
-                        android:textSize="15sp" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/todayTakingScheduleMainRecyclerView"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        tools:itemCount="3"
-                        android:overScrollMode="never"
-                        android:nestedScrollingEnabled="true"
-                        tools:listitem="@layout/item_pill_parent" />
-                </LinearLayout>
-
-
-            </androidx.core.widget.NestedScrollView>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/todayTakingScheduleMainRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_pill_parent"
+                app:layout_constraintTop_toBottomOf="@id/todayTakingScheduleMainLayout"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
