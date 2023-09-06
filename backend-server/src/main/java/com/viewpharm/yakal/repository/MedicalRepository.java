@@ -54,7 +54,9 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
             "ORDER BY distance", nativeQuery = true)
     List<Medical> findNearbyMedicalsByDistanceAndEMedical(Point point,double distance,String eMedical);
 
-    Page<Medical> findAllByRegisterTrueAndEMedical(Pageable pageable,EMedical eMedical);
+    List<Medical> findAllByIsRegisterTrueAndType(EMedical eMedical,Pageable pageable);
+
+    List<Medical> findAllByIsRegisterTrueAndTypeAndMedicalName(EMedical eMedical,String name,Pageable pageable);
 
     List<Medical> findByMedicalName(String name);
 }

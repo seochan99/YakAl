@@ -7,6 +7,7 @@ import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.type.EMedical;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -49,16 +50,18 @@ public class AdminController {
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
     public ResponseDto<List<MedicalDto>> getRegisterHospital(
             @RequestParam("page") Long page, @RequestParam("num") Long num
+            ,@RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.HOSPITAL));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.HOSPITAL, name));
     }
 
     @GetMapping("/medical/register/pharmacy")
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
     public ResponseDto<List<MedicalDto>> getRegisterPharmacy(
             @RequestParam("page") Long page, @RequestParam("num") Long num
+            ,@RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.PHARMACY));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.PHARMACY, name));
     }
 
     @GetMapping("medical/register/request")
