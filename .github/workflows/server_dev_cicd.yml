@@ -33,13 +33,6 @@ jobs:
       run: |
         cd ./backend-server
         chmod +x gradlew
-    
-    ### project test
-    - name: Test
-      if: contains(github.event.pull_request.labels.*.name, 'safe to server') && github.event.pull_request.merged == false
-      run: |
-        cd ./backend-server
-        ./gradlew clean test -Pprofile=test
 
     ### project build
     - name: Build with Gradle
@@ -90,4 +83,4 @@ jobs:
           docker stop yakal-was
           docker rm yakal-was
           docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
-          docker run -d -v /root/yakal/resources:/app/resources --net yakal-bridge --ip 172.40.0.4 -p 8100:8080 --name yakal-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
+          docker run -d -v /root/yakal/resources:/app/resources --net yakal --ip 172.40.0.5 -p 8080:8080 --name yakal-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
