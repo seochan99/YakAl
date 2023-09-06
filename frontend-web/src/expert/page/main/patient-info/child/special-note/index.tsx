@@ -53,9 +53,9 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
   const [currentDescription, setCurrentDescription] = useState<string>("");
 
   const { data, isError, isLoading } = useGetNoteListQuery({ patientId, page: page - 1 });
-  const [triggerCreateNote, currentCreateNoteData] = useCreateNoteMutation();
-  const [triggerModifyNote, currentModifyNoteData] = useModifyNoteMutation();
-  const [triggerDeleteNote, currentDeleteNoteData] = useDeleteNoteMutation();
+  const [triggerCreateNote] = useCreateNoteMutation();
+  const [triggerModifyNote] = useModifyNoteMutation();
+  const [triggerDeleteNote] = useDeleteNoteMutation();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm")); // width: 600px

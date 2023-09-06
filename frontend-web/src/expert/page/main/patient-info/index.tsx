@@ -98,11 +98,11 @@ function PatientInfo() {
           <SpecialNote patientId={Number(id)} />
         </InnerBox>
         <InnerBox>
-          <DoseList />
+          <DoseList patientId={Number(id)} />
         </InnerBox>
       </NoteAndDoseList>
       <InnerBox>
-        <SurveyResult />
+        <SurveyResult patientId={Number(id)} />
       </InnerBox>
       <PrescriptionAndHealthFunctionalFood>
         <InnerBox>
