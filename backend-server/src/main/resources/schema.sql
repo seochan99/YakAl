@@ -165,6 +165,15 @@ CREATE TABLE `shedlock`
     PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `surbeys`
+(
+    `id`           bigint       NOT NULL AUTO_INCREMENT,
+    `introduction` varchar(255) NOT NULL,
+    `title`        varchar(255) NOT NULL,
+    `total_score`  varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 CREATE TABLE `answers`
 (
     `id`          bigint       NOT NULL AUTO_INCREMENT,
@@ -238,13 +247,4 @@ CREATE TABLE `notes`
     `counsel_id`         bigint NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`counsel_id`) REFERENCES `counsels` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `surbeys`
-(
-    `id`           bigint       NOT NULL AUTO_INCREMENT,
-    `introduction` varchar(255) NOT NULL,
-    `title`        varchar(255) NOT NULL,
-    `total_score`  varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
