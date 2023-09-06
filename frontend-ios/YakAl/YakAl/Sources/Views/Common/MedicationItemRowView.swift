@@ -126,9 +126,7 @@ struct MedicationItemRow: View {
                 isDetailViewPresented = true
             }
             .sheet(isPresented: $isDetailViewPresented) {
-                if let medicine = medicine ?? nil {
-                    MedicineDetailViewControllerWrapper(medicine: medicine)
-                }
+                MedicineDetailViewControllerWrapper(medicine: medicine)
             }
             
             if medicine.atcCode.score == 0 {

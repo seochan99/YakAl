@@ -1,6 +1,9 @@
 import UIKit
 import SwiftUI
 
+class MedicineObject: ObservableObject {
+    @Published var medicine: Medicine? // Not optional anymore, initialize it with a default value if necessary
+}
 
 struct MedicineDetailViewControllerWrapper: UIViewControllerRepresentable {
     var medicine: Medicine
@@ -19,22 +22,25 @@ struct MedicineDetailViewControllerWrapper: UIViewControllerRepresentable {
 
 class MedicineDetailVC: UIViewController {
     var medicine: Medicine? // New property to hold the medicine object
+    var medicineObject = MedicineObject() // This is the observable object
 
     var calendarHostingController: UIHostingController<MedicineDetailView>?
-    var medicationData = MedicationData.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
         guard let medicine = medicine else {
-            return
-         }
-        let medicineBinding = Binding<Medicine>(
-                  get: { medicine },
-                  set: { self.medicine = $0 }
+                  return // Handle this case appropriately
+              }
+              
+              medicineObject.medicine = medicine // Setting the medicine object here
+
+              let medicineBinding = Binding<Medicine>(
+                get: { self.medicineObject.medicine! },
+                  set: { self.medicineObject.medicine = $0 }
               )
-        
+
         let calendarSwiftUIView = MedicineDetailView(medicine: medicineBinding)
-            .environmentObject(medicationData)
+
         
         let calendarHostingController = UIHostingController(rootView: calendarSwiftUIView)
         addChild(calendarHostingController)
