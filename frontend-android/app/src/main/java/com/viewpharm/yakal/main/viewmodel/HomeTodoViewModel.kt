@@ -32,11 +32,20 @@ class HomeTodoViewModel: BaseViewModel() {
     private val _isExpandedButton = MutableLiveData<Boolean>()
     val isExpandedButton: LiveData<Boolean> = _isExpandedButton
 
+    private val _totalCntText = MutableLiveData<String>()
+    val totalCntText: LiveData<String> = _totalCntText
+    private val _takenCntText = MutableLiveData<String>()
+    val takenCntText: LiveData<String> = _takenCntText
+
     private var totalCnt: Int = 0
     private var takenCnt: Int = 0
     private var date: LocalDate = LocalDate.now()
 
     init {
+        _init()
+    }
+
+    fun _init() {
         _dateText.value = CalendarUtil.getFormattedDayFromDate(date)
         _schedules.value = listOf(
             Schedule(
@@ -211,17 +220,26 @@ class HomeTodoViewModel: BaseViewModel() {
                         isTaken = false),
                 )
             ),
+            Schedule.getInVisibleSchedule()
         )
 
         // totalCnt의 크기는 스케줄 안에 있는 PillTodo의 총 갯수
         totalCnt = _schedules.value?.sumOf { it.todos.size } ?: 0
+        _totalCntText.value = "(${totalCnt}개)"
         // 먹은 횟수는 PillTodo 안에서 isTaking가 true인 것의 갯수
         takenCnt = _schedules.value?.sumOf { it.todos.filter { todo -> todo.isTaken }.size } ?: 0
+        _takenCntText.value = takenCnt.toString()
 
         _progress.value = (takenCnt * 100 / totalCnt)
 
         _isExpandedButton.value = false
         _takingText.value = if (totalCnt != 0) { "오늘 복용해야 하는 약은\n총 ${totalCnt}개입니다" } else { "오늘 복용해야 하는 약은\n없습니다." }
+    }
+
+    fun updateDate(date: LocalDate) {
+        this.date = date
+        _dateText.value = CalendarUtil.getFormattedDayFromDate(date)
+        _init()
     }
 
     fun updateSchedule(eTakingTime: ETakingTime) {
@@ -242,6 +260,7 @@ class HomeTodoViewModel: BaseViewModel() {
 
         // takenCnt update
         takenCnt = _schedules.value?.sumOf { it.todos.filter { todo -> todo.isTaken }.size } ?: 0
+        _takenCntText.value = takenCnt.toString()
 
         // progress update
         _progress.value = (takenCnt * 100 / totalCnt)
@@ -271,6 +290,7 @@ class HomeTodoViewModel: BaseViewModel() {
 
         // takenCnt update
         takenCnt = _schedules.value?.sumOf { it.todos.filter { todo -> todo.isTaken }.size } ?: 0
+        _takenCntText.value = takenCnt.toString()
 
         // progress update
         _progress.value = (takenCnt * 100 / totalCnt)

@@ -3,6 +3,7 @@ package com.viewpharm.yakal.main.activity
 import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.model.TakingTime
 import com.viewpharm.yakal.type.ETakingTime
+import java.time.LocalDate
 
 class MainCallBack {
     interface ScheduleCallBack {
@@ -25,5 +26,9 @@ class MainCallBack {
 
     interface LogOutCallback {
         fun onLogOutButtonClick()
+    }
+
+    interface CalendarCallback {
+        fun onCalendarButtonClick(date: LocalDate)
     }
 }
