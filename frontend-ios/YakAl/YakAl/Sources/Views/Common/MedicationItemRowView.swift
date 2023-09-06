@@ -6,20 +6,6 @@ struct DrugInfoResponse: Codable {
     let Message: String
 }
 
-struct DrugInfo: Codable {
-    let IdentaImage: String
-    let Pictogram: [Pictogram]?
-    let BriefMonoContraIndication: String
-    let BriefMonoSpecialPrecaution: String
-    let BriefMono: String
-    let BriefIndication: String
-    let Interaction: String
-}
-
-struct Pictogram: Codable {
-    let Image: String
-    let Description: String
-}
 
 class MedicineViewModel: ObservableObject {
     @Published var medicine: Medicine?
@@ -49,6 +35,7 @@ class MedicineViewModel: ObservableObject {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         
+        // 유저네임, 패스워드
         let username = "DIVWPM"
         let password = "DIVWPM"
         let loginString = "\(username):\(password)"
@@ -63,19 +50,19 @@ class MedicineViewModel: ObservableObject {
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(DrugInfoResponse.self, from: data)
-                    let base64String = response.DrugInfo.IdentaImage
-                    if let imageData = Data(base64Encoded: base64String), let uiImage = UIImage(data: imageData) {
-                        DispatchQueue.main.async {
-                            let image = Image(uiImage: uiImage)
-                            self.identaImage = image
-                            self.imageCache[kdCode] = image // 이미지 캐시에 저장
-                            self.responseString = "Data fetched successfully"
-                        }
-                    }else {
-                        DispatchQueue.main.async {
-                            self.responseString = "Image decoding failed"
-                        }
-                    }
+                     DispatchQueue.main.async {
+                         self.medicine?.drugInfo = response.DrugInfo // DrugInfo 저장
+
+                         let base64String = response.DrugInfo.IdentaImage
+                         if let imageData = Data(base64Encoded: base64String), let uiImage = UIImage(data: imageData) {
+                             let image = Image(uiImage: uiImage)
+                             self.identaImage = image
+                             self.imageCache[kdCode] = image
+                             self.responseString = "Data fetched successfully"
+                         } else {
+                             self.responseString = "Image decoding failed"
+                         }
+                     }
                 } catch {
                     print("Error decoding JSON: \(error)")
                     DispatchQueue.main.async {
@@ -92,6 +79,7 @@ class MedicineViewModel: ObservableObject {
         task.resume()
     }
 }
+
 
 
 
@@ -163,6 +151,9 @@ struct MedicationItemRow: View {
           }
     
 }
+
+
+//MARK: - preview
 struct MedicationItemRowView_Previews: PreviewProvider {
     static var previews: some View {
         let medicine = Binding<Medicine>(
