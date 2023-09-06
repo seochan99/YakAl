@@ -17,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Getter
@@ -65,7 +66,7 @@ public class Notification {
         this.title = title;
         this.content = content;
         this.isRead = false;
-        this.createdDate = Timestamp.valueOf(LocalDateTime.now());
+        this.createdDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
         this.status = true;
         this.user = user;
     }

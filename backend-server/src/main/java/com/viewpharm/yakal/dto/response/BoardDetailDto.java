@@ -3,6 +3,7 @@ package com.viewpharm.yakal.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -17,11 +18,11 @@ public class BoardDetailDto {
     private Long userId;
     private Long likeCnt;
     private String region;
-    private LocalDateTime createDate;
-    private LocalDateTime lastModifiedDate;
+    private String createDate;
+    private String lastModifiedDate;
 
     @Builder
-    public BoardDetailDto(Long id, String title, String content, String userName, Boolean isEdit, Boolean isLike, Long readCnt, Long userId, Long likeCnt, String region, LocalDateTime createDate, LocalDateTime lastModifiedDate) {
+    public BoardDetailDto(Long id, String title, String content, String userName, Boolean isEdit, Boolean isLike, Long readCnt, Long userId, Long likeCnt, String region, String createDate, String lastModifiedDate) {
         this.id = id;
         this.title = title;
         this.content = content;
