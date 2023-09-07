@@ -34,7 +34,7 @@ function PatientList() {
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
 
-  const { data, isLoading, isError, refetch } = useGetPatientListQuery({
+  const { data, isLoading, isError } = useGetPatientListQuery({
     sort:
       selected === EPatientFilter.SUBMISSION_DATE
         ? "date"
@@ -43,7 +43,7 @@ function PatientList() {
         : selected === EPatientFilter.BIRTHDAY
         ? "birth"
         : "",
-    order: "desc",
+    order: "asc",
     page: page - 1,
     name: searchName,
   });
@@ -79,10 +79,6 @@ function PatientList() {
     setPage(page);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [page, refetch, selected]);
-
   if (isLoading) {
     return <></>;
   }
@@ -106,6 +102,8 @@ function PatientList() {
 
   const userList = data.datalist;
 
+  console.log(userList);
+
   return (
     <Outer>
       <OptionBar>
@@ -116,11 +114,6 @@ function PatientList() {
             placeholder="환자 이름으로 검색"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
-            onKeyUp={(e) => {
-              if (e.key === "Enter") {
-                refetch();
-              }
-            }}
           />
         </SearchBar>
         <SelectBox data-role="selectbox">

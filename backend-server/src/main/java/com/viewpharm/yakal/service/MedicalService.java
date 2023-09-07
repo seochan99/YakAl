@@ -30,10 +30,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
 @Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class MedicalService {
 
     private final MedicalRepository medicalRepository;
@@ -189,9 +189,9 @@ public class MedicalService {
 
     public MedicalListAndTotalDto getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
-        List<Medical> medicals = name == null ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
+        List<Medical> medicals = name.equals("") ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
                                                 : medicalRepository.findAllByIsRegisterTrueAndTypeAndMedicalName(eMedical,name,pageable);
-        Long count = name == null ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
+        Long count = name.equals("") ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
                                     : medicalRepository.countAllByIsRegisterTrueAndTypeAndMedicalName(eMedical, name);
 
         List<MedicalDto> medicalDtoList = medicals.stream()
