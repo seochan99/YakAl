@@ -9,6 +9,8 @@ import { patientListApiSlice } from "../api/patient-list.ts";
 import { noteListApiSlice } from "../api/note-list.ts";
 import { doseListApiSlice } from "../api/dose-list.ts";
 import { surveyResultApiSlice } from "../api/survey-result.ts";
+import { historyApiSlice } from "../api/history.ts";
+import { healthApiSlice } from "../api/healthfood.ts";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +22,8 @@ export const store = configureStore({
     [noteListApiSlice.reducerPath]: noteListApiSlice.reducer,
     [doseListApiSlice.reducerPath]: doseListApiSlice.reducer,
     [surveyResultApiSlice.reducerPath]: surveyResultApiSlice.reducer,
+    [historyApiSlice.reducerPath]: historyApiSlice.reducer,
+    [healthApiSlice.reducerPath]: healthApiSlice.reducer,
     [authSlice.name]: authSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -32,6 +36,8 @@ export const store = configureStore({
       noteListApiSlice.middleware,
       doseListApiSlice.middleware,
       surveyResultApiSlice.middleware,
+      historyApiSlice.middleware,
+      healthApiSlice.middleware,
     ),
   devTools: true,
 });

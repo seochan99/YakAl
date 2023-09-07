@@ -106,10 +106,10 @@ function PatientInfo() {
       </InnerBox>
       <PrescriptionAndHealthFunctionalFood>
         <InnerBox>
-          <PrescriptionList />
+          <PrescriptionList patientId={Number(id)} />
         </InnerBox>
         <InnerBox>
-          <HealthFoodList />
+          <HealthFoodList patientId={Number(id)} />
         </InnerBox>
       </PrescriptionAndHealthFunctionalFood>
     </Outer>

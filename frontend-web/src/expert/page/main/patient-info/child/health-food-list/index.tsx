@@ -1,24 +1,24 @@
-import Pagination from "react-js-pagination";
 import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
-import { useState } from "react";
-import { ListFooter } from "/src/expert/style.ts";
+import { useGetHealthFoodQuery } from "../../../../../api/healthfood.ts";
+import LoadingPage from "../../../../loading-page";
+import ErrorPage from "../../../../error-page";
 
-function HealthFoodList() {
-  const [page, setPage] = useState<number>(1);
+type THealthFoodListProps = {
+  patientId: number;
+};
 
-  const handlePageChange = (page: number) => {
-    setPage(page);
-    console.log(page);
-  };
+function HealthFoodList({ patientId }: THealthFoodListProps) {
+  const { data, isLoading, isError } = useGetHealthFoodQuery({ patientId });
 
-  const prescriptionList = [
-    { name: "오메가-3" },
-    { name: "비타민 E" },
-    { name: "비타민 A" },
-    { name: "비타민 B" },
-    { name: "비타민 C" },
-    { name: "비타민 D" },
-  ];
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError || !data) {
+    return <ErrorPage />;
+  }
+
+  const slice = data.length > 5 ? data.slice(0, 4) : data;
 
   return (
     <>
@@ -27,7 +27,7 @@ function HealthFoodList() {
       </Header>
       <Bar />
       <List>
-        {prescriptionList.slice(5 * (page - 1), 5 * page).map((prescription) => (
+        {slice.map((prescription) => (
           <Item key={prescription.name}>
             <ItemTitle>
               {prescription.name.length > 15 ? prescription.name.substring(0, 14).concat("...") : prescription.name}
@@ -35,17 +35,6 @@ function HealthFoodList() {
           </Item>
         ))}
       </List>
-      <ListFooter>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={5}
-          totalItemsCount={prescriptionList.length}
-          pageRangeDisplayed={3}
-          prevPageText={"‹"}
-          nextPageText={"›"}
-          onChange={handlePageChange}
-        />
-      </ListFooter>
     </>
   );
 }
