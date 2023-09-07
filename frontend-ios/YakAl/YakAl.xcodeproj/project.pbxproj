@@ -30,6 +30,7 @@
 		986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */; };
 		986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8332A76B51000F442B4 /* CommunityVC.swift */; };
 		986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8362A76B52500F442B4 /* ProfileVC.swift */; };
+		986B01772AA903E800745AFA /* MedicineDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B01762AA903E800745AFA /* MedicineDetailVC.swift */; };
 		9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2752A6D686A00F507BD /* Step2VC.swift */; };
 		9888A2782A6D690200F507BD /* Step3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2772A6D690200F507BD /* Step3VC.swift */; };
 		9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2792A6D694F00F507BD /* Step4VC.swift */; };
@@ -120,6 +121,7 @@
 		986AF8312A76B4FA00F442B4 /* MyLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLocationVC.swift; sourceTree = "<group>"; };
 		986AF8332A76B51000F442B4 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
 		986AF8362A76B52500F442B4 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		986B01762AA903E800745AFA /* MedicineDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDetailVC.swift; sourceTree = "<group>"; };
 		9888A2752A6D686A00F507BD /* Step2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2VC.swift; sourceTree = "<group>"; };
 		9888A2772A6D690200F507BD /* Step3VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step3VC.swift; sourceTree = "<group>"; };
 		9888A2792A6D694F00F507BD /* Step4VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step4VC.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 		98C2AE7A2A92412D00A0FE6B /* Medication */ = {
 			isa = PBXGroup;
 			children = (
+				986B01762AA903E800745AFA /* MedicineDetailVC.swift */,
 				98C2AE7B2A92414C00A0FE6B /* MedicineDetailView.swift */,
 			);
 			path = Medication;
@@ -766,6 +769,7 @@
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,
+				986B01772AA903E800745AFA /* MedicineDetailVC.swift in Sources */,
 				98C12D712A5E666100175EB8 /* UserModel.swift in Sources */,
 				980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */,
 				9890C8F22A93C8940007299B /* ProfileSwiftUIView.swift in Sources */,
