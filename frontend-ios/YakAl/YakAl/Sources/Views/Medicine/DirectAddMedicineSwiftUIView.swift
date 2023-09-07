@@ -10,6 +10,7 @@ struct SearchMedicineModel: Identifiable {
 
 struct DirectAddMedicineSwiftUIView: View {
     @State private var keyword: String = ""
+    @State private var kimsCode: String = ""
     @State private var isLoading: Bool = false
     @State private var isEditing: Bool = false
     @State private var medicineList: [SearchMedicineModel] = []
@@ -42,9 +43,10 @@ struct DirectAddMedicineSwiftUIView: View {
                         VStack(alignment: .leading, spacing: 30) {
                             if medicineList.isEmpty {
                                 if !keyword.isEmpty {
-                                    Text("\(keyword) 검색결과 없습니다")
-                                        .font(Font.custom("SUIT", size: 14).weight(.medium))
+                                    Text("\(keyword) 검색결과 없습니다\n다음을 누르면 입력한 약물이 등록됩니다!")
+                                        .font(Font.custom("SUIT", size: 20).weight(.medium))
                                         .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                                        .padding(.top,40)
                                 }
                             } else {
                                 ForEach(medicineList) { medicine in
@@ -55,6 +57,7 @@ struct DirectAddMedicineSwiftUIView: View {
                                         .padding() // Add padding to increase the tappable area
                                         .onTapGesture {
                                             self.keyword = medicine.Name
+                                            self.kimsCode = medicine.Code
                                         }
                                 }
                                 Spacer()
@@ -67,7 +70,7 @@ struct DirectAddMedicineSwiftUIView: View {
                     BlueHorizontalButton(text: "다음", action: {},isEnabled: false)
                 }else{
                     // 다음버튼
-                    NavigationLink(destination: NextPageView(keyword: $keyword)){
+                    NavigationLink(destination: NextPageView(keyword: $keyword,code: $kimsCode)){
                         Text("다음")
                             .font(
                             Font.custom("SUIT", size: 20)
@@ -157,21 +160,24 @@ struct DirectAddMedicineSwiftUIView: View {
 
 }
 
+//MARK: - 다음페이지
 struct NextPageView: View {
     @Binding var keyword: String
+    @Binding var code: String
     @State private var selectedDuration = "1일"
     @State private var timeSelections: [String: Bool] = ["아침": false, "점심": false, "저녁": false, "기타": false]
-
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let durations = ["1일", "2일", "3일", "4일", "5일", "6일", "7일", "1주", "2주", "1달", "3달"]
 
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("복약 기간과 시간을\n설정해주세요")
               .font(
                 Font.custom("SUIT", size: 24)
                   .weight(.medium)
               )
               .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+              .padding(.top,20)
 
             Picker("기간 선택", selection: $selectedDuration) {
                 ForEach(durations, id: \.self) {
@@ -181,8 +187,12 @@ struct NextPageView: View {
             .pickerStyle(MenuPickerStyle())
             .padding()
 
-            Text("\(keyword)")
-                .padding()
+            HStack{
+                
+                Text("\(keyword)")
+                    .padding()
+            }
+            
 
             VStack(alignment: .leading) {
                 Text("기간 설정 버튼(중복) :")
@@ -201,7 +211,23 @@ struct NextPageView: View {
 
             Spacer()
         }
-        .padding()
+        .padding(.horizontal,20)
+        .navigationTitle("약 추가하기")
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button(action: {
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    HStack {
+                        Image(systemName: "chevron.left")
+                            .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                        Text("뒤로")
+                            .foregroundColor(Color(UIColor(red: 0.38, green: 0.38, blue: 0.45, alpha: 1)))
+                    }
+                }
+            }
+        }
     }
 }
 
