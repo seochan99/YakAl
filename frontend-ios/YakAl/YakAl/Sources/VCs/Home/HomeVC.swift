@@ -216,7 +216,14 @@ class HomeVC: UIViewController{
             print("normalMedicineButtonAction")
         }
         @IBAction func DirectMedicineButtonAction(_ sender: UIButton) {
-            print("DirectMedicineButtonAction")
+            print("직접추가")
+            
+            let storyboard = UIStoryboard(name: "Home", bundle: nil)
+            if let SearchView = storyboard.instantiateViewController(withIdentifier: "MedicineAddDirectVC") as? MedicineAddDirectVC {
+                navigationController?.pushViewController(SearchView, animated: true)
+            } else {
+                print("Failed to instantiate CalendarViewController")
+            }
         }
         
     @IBAction func goCalendarViewAction(_ sender: Any) {
@@ -229,9 +236,11 @@ class HomeVC: UIViewController{
     
     
     
+    
+    
+    
     @IBAction func goToCaldendarViewAction(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: "Home", bundle: nil)
-        print("클리됨!")
         if let CalenderView = storyboard.instantiateViewController(withIdentifier: "CalendarViewController") as? CalendarViewController {
             navigationController?.pushViewController(CalenderView, animated: true)
         } else {

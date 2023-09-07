@@ -10,6 +10,7 @@
 		8CE80EF4604FC4229A794C5E /* Pods_YakAl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0F1246EC00D3B5E32CB59DE /* Pods_YakAl.framework */; };
 		98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A0D2A85699B00D6282F /* MedicineModel.swift */; };
 		98019A122A862B6800D6282F /* TodoCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019A102A862B6800D6282F /* TodoCVC.swift */; };
+		98019ED02AA9E4BF00C389B9 /* MedicineAddDirectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98019ECF2AA9E4BF00C389B9 /* MedicineAddDirectVC.swift */; };
 		980531922A6F7C2F00E094C3 /* Step0_1VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980531912A6F7C2F00E094C3 /* Step0_1VC.swift */; };
 		980BF8F22A61015100ADE034 /* ProgressNavController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 980BF8F12A61015100ADE034 /* ProgressNavController.swift */; };
 		9811AE442A93C61B00FD9B82 /* MypageSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */; };
@@ -31,6 +32,7 @@
 		986AF8342A76B51000F442B4 /* CommunityVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8332A76B51000F442B4 /* CommunityVC.swift */; };
 		986AF8372A76B52500F442B4 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AF8362A76B52500F442B4 /* ProfileVC.swift */; };
 		986B01772AA903E800745AFA /* MedicineDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B01762AA903E800745AFA /* MedicineDetailVC.swift */; };
+		986B017C2AA9DDBD00745AFA /* DirectAddMedicineSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986B017B2AA9DDBD00745AFA /* DirectAddMedicineSwiftUIView.swift */; };
 		9888A2762A6D686A00F507BD /* Step2VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2752A6D686A00F507BD /* Step2VC.swift */; };
 		9888A2782A6D690200F507BD /* Step3VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2772A6D690200F507BD /* Step3VC.swift */; };
 		9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9888A2792A6D694F00F507BD /* Step4VC.swift */; };
@@ -100,6 +102,7 @@
 		2169274B3BE5AE0E0D7DAFDE /* Pods-YakAl.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-YakAl.debug.xcconfig"; path = "Target Support Files/Pods-YakAl/Pods-YakAl.debug.xcconfig"; sourceTree = "<group>"; };
 		98019A0D2A85699B00D6282F /* MedicineModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineModel.swift; sourceTree = "<group>"; };
 		98019A102A862B6800D6282F /* TodoCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCVC.swift; sourceTree = "<group>"; };
+		98019ECF2AA9E4BF00C389B9 /* MedicineAddDirectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineAddDirectVC.swift; sourceTree = "<group>"; };
 		980531912A6F7C2F00E094C3 /* Step0_1VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step0_1VC.swift; sourceTree = "<group>"; };
 		980BF8F12A61015100ADE034 /* ProgressNavController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressNavController.swift; sourceTree = "<group>"; };
 		9811AE432A93C61B00FD9B82 /* MypageSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageSwiftUIView.swift; sourceTree = "<group>"; };
@@ -122,6 +125,7 @@
 		986AF8332A76B51000F442B4 /* CommunityVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityVC.swift; sourceTree = "<group>"; };
 		986AF8362A76B52500F442B4 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		986B01762AA903E800745AFA /* MedicineDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicineDetailVC.swift; sourceTree = "<group>"; };
+		986B017B2AA9DDBD00745AFA /* DirectAddMedicineSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectAddMedicineSwiftUIView.swift; sourceTree = "<group>"; };
 		9888A2752A6D686A00F507BD /* Step2VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step2VC.swift; sourceTree = "<group>"; };
 		9888A2772A6D690200F507BD /* Step3VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step3VC.swift; sourceTree = "<group>"; };
 		9888A2792A6D694F00F507BD /* Step4VC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Step4VC.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 		98349A872A7C041400071C5D /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				986B01782AA9DAC500745AFA /* Medicine */,
 				9890C8FC2A94F4D40007299B /* Calendar */,
 				9811AE422A93C60200FD9B82 /* Mypage */,
 				9814334E2A9163CD00017600 /* Common */,
@@ -292,6 +297,14 @@
 				985A28BE2A76B99E00B9943D /* TabBarVC.swift */,
 			);
 			path = Main;
+			sourceTree = "<group>";
+		};
+		986B01782AA9DAC500745AFA /* Medicine */ = {
+			isa = PBXGroup;
+			children = (
+				986B017B2AA9DDBD00745AFA /* DirectAddMedicineSwiftUIView.swift */,
+			);
+			path = Medicine;
 			sourceTree = "<group>";
 		};
 		9888A2742A6D680800F507BD /* SignIn */ = {
@@ -568,6 +581,7 @@
 			children = (
 				986B01762AA903E800745AFA /* MedicineDetailVC.swift */,
 				98C2AE7B2A92414C00A0FE6B /* MedicineDetailView.swift */,
+				98019ECF2AA9E4BF00C389B9 /* MedicineAddDirectVC.swift */,
 			);
 			path = Medication;
 			sourceTree = "<group>";
@@ -745,6 +759,7 @@
 				98470ED92A954CA700C29ED1 /* TimeSettingView.swift in Sources */,
 				98019A122A862B6800D6282F /* TodoCVC.swift in Sources */,
 				981433462A9104DE00017600 /* UIHomeVC.swift in Sources */,
+				98019ED02AA9E4BF00C389B9 /* MedicineAddDirectVC.swift in Sources */,
 				9897E9C62AA4C0AC004642CA /* ConfromityTestSwiftUIView.swift in Sources */,
 				98470ED12A95367900C29ED1 /* SettingSwiftUIView.swift in Sources */,
 				98019A0E2A85699B00D6282F /* MedicineModel.swift in Sources */,
@@ -755,6 +770,7 @@
 				986AF8322A76B4FA00F442B4 /* MyLocationVC.swift in Sources */,
 				9888A27C2A6D697E00F507BD /* Step1VC.swift in Sources */,
 				98EC8F4F2A721C3400AA698C /* SignUpDoneViewController.swift in Sources */,
+				986B017C2AA9DDBD00745AFA /* DirectAddMedicineSwiftUIView.swift in Sources */,
 				9897E9E52AA6D5DA004642CA /* LogoutCoordinator.swift in Sources */,
 				98C2AE7F2A925E1900A0FE6B /* CalendarSwiftUIView.swift in Sources */,
 				98470ED52A9545D400C29ED1 /* TimeSlotView.swift in Sources */,

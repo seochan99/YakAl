@@ -161,7 +161,7 @@ struct MedicationRowView_Previews: PreviewProvider {
                 Medicine(
                     id: 1,
                     image: "image_덱시로펜정",
-                    name: "데크시로펜정",
+                    name: "덱시로펜정",
                     effect: "해열, 진통, 소염제",
                     kdCode: "KD001",
                     atcCode: AtcCode(code: "ATC001", score: 1),
