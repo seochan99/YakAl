@@ -17,7 +17,7 @@ class MainCallBack {
     }
 
     interface OverLapCallback {
-        fun onOverLapCheckButtonClick(pillTodos: List<PillTodo>)
+        fun onOverLapCheckButtonClick(eTakingTime: ETakingTime, atcCodeStr: String)
     }
 
     interface TimeSettingCallback {

@@ -13,6 +13,7 @@ import com.viewpharm.yakal.main.adapter.PillParentAdapter
 import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.viewmodel.CalendarViewModel
 import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
+import com.viewpharm.yakal.repository.DoseRepository
 import com.viewpharm.yakal.type.ETakingTime
 import java.time.LocalDate
 
@@ -23,7 +24,7 @@ class CalenderActivity : BaseActivity<ActivityCalenderBinding, CalendarViewModel
     }
 
     private val todoViewModel: HomeTodoViewModel by lazy {
-        HomeTodoViewModel.TodoViewModelFactory().create(HomeTodoViewModel::class.java)
+        HomeTodoViewModel.TodoViewModelFactory(DoseRepository()).create(HomeTodoViewModel::class.java)
     }
 
     override fun initView() {
@@ -63,7 +64,7 @@ class CalenderActivity : BaseActivity<ActivityCalenderBinding, CalendarViewModel
                     }
                 },
                 object : MainCallBack.OverLapCallback {
-                    override fun onOverLapCheckButtonClick(pillTodos: List<PillTodo>) {
+                    override fun onOverLapCheckButtonClick(eTakingTime: ETakingTime, atcCodeStr: String) {
                     }
                 }
             )

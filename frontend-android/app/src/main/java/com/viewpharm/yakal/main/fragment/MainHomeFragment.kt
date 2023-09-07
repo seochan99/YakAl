@@ -20,13 +20,14 @@ import com.viewpharm.yakal.main.activity.MainActivity
 import com.viewpharm.yakal.main.activity.MainCallBack
 import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
+import com.viewpharm.yakal.repository.DoseRepository
 import com.viewpharm.yakal.type.ETakingTime
 import java.time.LocalDate
 
 class MainHomeFragment()
     : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
      override val viewModel: HomeTodoViewModel by lazy {
-         HomeTodoViewModel.TodoViewModelFactory().create(HomeTodoViewModel::class.java)
+         HomeTodoViewModel.TodoViewModelFactory(DoseRepository()).create(HomeTodoViewModel::class.java)
     }
 
     override fun initView() {
@@ -59,7 +60,8 @@ class MainHomeFragment()
                     }
                 },
                 object : MainCallBack.OverLapCallback {
-                    override fun onOverLapCheckButtonClick(pillTodos: List<PillTodo>) {
+                    override fun onOverLapCheckButtonClick(eTakingTime: ETakingTime, atcCodeStr: String) {
+                        val pillTodos = viewModel.getOverLapList(eTakingTime, atcCodeStr)
                         OverlapBottomDialog(pillTodos).also {
                             it.show((activity as MainActivity).supportFragmentManager, OverlapBottomDialog.TAG)
                         }
