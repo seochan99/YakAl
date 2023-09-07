@@ -37,7 +37,7 @@ import {
 } from "../../../../../api/note-list.ts";
 import { ListFooter } from "../../../../../style.ts";
 import ErrorPage from "../../../../error-page";
-import LoadingPage from "../../../../loading-page";
+import Skeleton from "@mui/material/Skeleton";
 
 type TSpecialNoteProps = {
   patientId: number;
@@ -111,7 +111,7 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
   };
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Skeleton variant="rectangular" animation="wave" />;
   }
 
   if (isError || !data) {

@@ -1,7 +1,7 @@
 import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
 import { useGetHealthFoodQuery } from "../../../../../api/healthfood.ts";
-import LoadingPage from "../../../../loading-page";
 import ErrorPage from "../../../../error-page";
+import Skeleton from "@mui/material/Skeleton";
 
 type THealthFoodListProps = {
   patientId: number;
@@ -11,7 +11,7 @@ function HealthFoodList({ patientId }: THealthFoodListProps) {
   const { data, isLoading, isError } = useGetHealthFoodQuery({ patientId });
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Skeleton variant="rectangular" animation="wave" />;
   }
 
   if (isError || !data) {

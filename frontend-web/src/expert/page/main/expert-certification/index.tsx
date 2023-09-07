@@ -45,6 +45,8 @@ import {
 import React, { useRef, useState } from "react";
 import Pagination from "react-js-pagination";
 import { EJob } from "../../../type/job.ts";
+import { useGetFacilityListQuery } from "../../../api/facility-list.ts";
+import { EFacility } from "../../../type/facility.ts";
 
 type TFacility = {
   id: number;
@@ -60,6 +62,13 @@ function ExpertCertification() {
   const [belongImgFileName, setBelongImgFileName] = useState<string>("첨부파일");
   const [page, setPage] = useState<number>(1);
   const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(null);
+  const [facilityNameSearchQuery, setFacilityNameSearchQuery] = useState<string>("");
+
+  const { data, isError, isLoading } = useGetFacilityListQuery({
+    name: facilityNameSearchQuery,
+    type: selected === EJob.DOCTOR ? EFacility.HOSPITAL : EFacility.PHARMACY,
+    page: page - 1,
+  });
 
   const certificationImgPreviewRef = useRef<HTMLImageElement>(null);
   const belongImgPreviewRef = useRef<HTMLImageElement>(null);
@@ -203,7 +212,12 @@ function ExpertCertification() {
               </BelongInputBox>
               <SearchBar>
                 <SearchButton />
-                <SearchInput type="text" placeholder="기관명으로 검색" />
+                <SearchInput
+                  type="text"
+                  placeholder="기관명으로 검색"
+                  value={facilityNameSearchQuery}
+                  onChange={(e) => setFacilityNameSearchQuery(e.target.value)}
+                />
               </SearchBar>
               <SearchResultBox>
                 <ListHeader>
