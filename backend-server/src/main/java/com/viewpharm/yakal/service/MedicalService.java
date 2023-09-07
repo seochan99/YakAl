@@ -5,6 +5,7 @@ import com.viewpharm.yakal.domain.Registration;
 import com.viewpharm.yakal.dto.PointDto;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.dto.response.MedicalDto;
+import com.viewpharm.yakal.dto.response.MedicalDtoListAndTotal;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MedicalRepository;
@@ -186,10 +187,12 @@ public class MedicalService {
         return convertMedicalListToDtoList(medicals);
     }
 
-    public List<MedicalDto> getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
+    public MedicalDtoListAndTotal getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
         List<Medical> medicals = name == null ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
                                                 : medicalRepository.findAllByIsRegisterTrueAndTypeAndMedicalName(eMedical,name,pageable);
+        int count = name == null ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
+                                    : medicalRepository.countAllByIsRegisterTrueAndTypeAndMedicalName(eMedical, name);
 
         List<MedicalDto> medicalDtoList = medicals.stream()
                 .map(b -> new MedicalDto(b.getId(),b.getMedicalName(),b.getMedicalAddress()
@@ -198,7 +201,7 @@ public class MedicalService {
                 .collect(Collectors.toList());
 
 
-        return medicalDtoList;
+        return new MedicalDtoListAndTotal(medicalDtoList,count);
     }
 
     public List<MedicalDto> getByName(final String name){
