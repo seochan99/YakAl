@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signin.service
+package com.viewpharm.yakal.service
 
 import com.viewpharm.yakal.BuildConfig
 import com.viewpharm.yakal.common.GoogleTokenResponse

@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.signin
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,12 +8,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.viewpharm.yakal.base.BaseViewModel
 import com.viewpharm.yakal.event.Event
-import com.viewpharm.yakal.signin.repository.YakalAuthRepository
+import com.viewpharm.yakal.repository.AuthRepository
 import com.viewpharm.yakal.signin.response.JwtValidEnum
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class SplashViewModel(
-    private val authRepository: YakalAuthRepository
+    private val authRepository: AuthRepository
 ): BaseViewModel() {
     companion object {
         enum class EventTag {
@@ -53,18 +55,17 @@ class SplashViewModel(
                     .subscribe({
                         when(it.validity) {
                             JwtValidEnum.VALID -> {
-                                _inputEvent.value = Event(Unit)
                                 eventTag = EventTag.LOAD_TOKEN_VALID
+                                _inputEvent.value = Event(Unit)
                             }
                             JwtValidEnum.INVALID -> {
-                                _inputEvent.value = Event(Unit)
                                 eventTag = EventTag.FAIL_TOKEN_VALID
+                                _inputEvent.value = Event(Unit)
                             }
                             JwtValidEnum.EXPIRED -> {
 
                             }
                         }
-                _inputEvent.value = Event(Unit)
             }, {
                 it.printStackTrace()
             }))
@@ -76,12 +77,12 @@ class SplashViewModel(
             addDisposable(
                 authRepository.isValidUser(accessToken.value!!)
                     .subscribe({
-                        if (it.isIdentified!!) {
-                            _inputEvent.value = Event(Unit)
+                        if (it.isRegistered!!) {
                             eventTag = EventTag.LOAD_USER_VALID
-                        } else {
                             _inputEvent.value = Event(Unit)
+                        } else {
                             eventTag = EventTag.FAIL_USER_VALID
+                            _inputEvent.value = Event(Unit)
                         }
                     }, {
                         it.printStackTrace()
@@ -90,7 +91,7 @@ class SplashViewModel(
     }
 
     class SplashViewModelFactory(
-        private val authRepository: YakalAuthRepository
+        private val authRepository: AuthRepository
     ) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return SplashViewModel(authRepository) as T

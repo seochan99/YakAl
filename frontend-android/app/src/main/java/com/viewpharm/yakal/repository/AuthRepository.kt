@@ -1,19 +1,18 @@
-package com.viewpharm.yakal.signin.repository
+package com.viewpharm.yakal.repository
 
 import android.content.Context
 import android.content.SharedPreferences
 import com.viewpharm.yakal.service.YakalRetrofitManager
 import com.viewpharm.yakal.signin.response.Jwt
-import com.viewpharm.yakal.signin.response.JwtResponse
 import com.viewpharm.yakal.signin.response.JwtValid
-import com.viewpharm.yakal.signin.response.JwtValidResponse
 import com.viewpharm.yakal.signin.response.UserValid
+import com.viewpharm.yakal.signup.UserInfoRequestDto
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class YakalAuthRepository(private val context: Context) {
+class AuthRepository(private val context: Context) {
     fun getTokenInRemoteByKakao(accessToken: String): Single<Jwt> = YakalRetrofitManager.yakalAuthService.getJwtByKakao("Bearer $accessToken")
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -23,7 +22,6 @@ class YakalAuthRepository(private val context: Context) {
                 item.data.refreshToken,
             ))
         }
-
 
     fun getJwtTokenInDevice(): Single<Jwt> {
         val perf: SharedPreferences = context.getSharedPreferences("token", Context.MODE_PRIVATE)
@@ -58,7 +56,14 @@ class YakalAuthRepository(private val context: Context) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap { item ->
-                Single.just(UserValid(item.data?.isIdentified!!))
+                Single.just(UserValid(item.data?.isRegistered!!))
             }
     }
+
+    suspend fun postUserInfo(infoRequestDto: UserInfoRequestDto) = YakalRetrofitManager.yakalAuthService.postUserInfo("Bearer ${getJwtTokenInDevice().blockingGet().accessToken}", body = infoRequestDto)
+        .subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+        .flatMap { item ->
+            Single.just(item.success)
+        }
 }

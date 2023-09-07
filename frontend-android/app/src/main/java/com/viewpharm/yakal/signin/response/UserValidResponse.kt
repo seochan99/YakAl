@@ -9,5 +9,5 @@ data class UserValidResponse(
 )
 
 data class UserValid(
-    val isIdentified: Boolean?,
+    val isRegistered: Boolean?,
 )

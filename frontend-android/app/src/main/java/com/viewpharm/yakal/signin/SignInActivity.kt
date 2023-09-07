@@ -1,10 +1,8 @@
 package com.viewpharm.yakal.signin
 
 import android.content.Intent
-import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -17,18 +15,16 @@ import com.viewpharm.yakal.BuildConfig
 import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseActivity
 import com.viewpharm.yakal.databinding.ActivitySignInBinding
-import com.viewpharm.yakal.signin.repository.GoogleAuthRepository
-import com.viewpharm.yakal.signin.repository.OAuth2Repository
-import com.viewpharm.yakal.signin.repository.YakalAuthRepository
+import com.viewpharm.yakal.repository.GoogleAuthRepository
+import com.viewpharm.yakal.repository.AuthRepository
 import com.viewpharm.yakal.signup.activity.SignUpActivity
-import com.viewpharm.yakal.type.ESignInProvider
 import timber.log.Timber
 
 
 class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.layout.activity_sign_in) {
     override val viewModel: SignInViewModel by lazy {
         SignInViewModel.SignInViewModelFactory(
-            YakalAuthRepository(context = this),
+            AuthRepository(context = this),
             GoogleAuthRepository()
         ).create(SignInViewModel::class.java)
     }

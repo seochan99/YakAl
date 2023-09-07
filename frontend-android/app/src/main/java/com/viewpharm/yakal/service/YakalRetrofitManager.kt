@@ -2,7 +2,7 @@ package com.viewpharm.yakal.service
 
 import com.google.gson.GsonBuilder
 import com.viewpharm.yakal.BuildConfig
-import com.viewpharm.yakal.signin.service.YakalAuthService
+import com.viewpharm.yakal.service.YakalAuthService
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signin.repository
+package com.viewpharm.yakal.repository
 
 import com.viewpharm.yakal.common.GoogleTokenResponse
 import com.viewpharm.yakal.service.OauthRetrofitManager

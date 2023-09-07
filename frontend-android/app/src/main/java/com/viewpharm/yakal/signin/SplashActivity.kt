@@ -6,16 +6,15 @@ import com.viewpharm.yakal.R
 import com.viewpharm.yakal.base.BaseActivity
 import com.viewpharm.yakal.databinding.ActivitySplashBinding
 import com.viewpharm.yakal.main.activity.MainActivity
-import com.viewpharm.yakal.signin.repository.YakalAuthRepository
+import com.viewpharm.yakal.repository.AuthRepository
 import com.viewpharm.yakal.signup.activity.SignUpActivity
-import com.viewpharm.yakal.signin.SplashViewModel
 import timber.log.Timber
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<ActivitySplashBinding, SplashViewModel>(R.layout.activity_splash){
     override val viewModel: SplashViewModel by lazy {
         SplashViewModel.SplashViewModelFactory(
-            YakalAuthRepository(context = this),
+            AuthRepository(context = this),
         ).create(SplashViewModel::class.java)
     }
 

@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.signin.repository
+package com.viewpharm.yakal.repository
 
 
 interface OAuth2Repository {

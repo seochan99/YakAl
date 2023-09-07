@@ -61,8 +61,8 @@ class SignUpCertificationFragment: BaseFragment<FragmentSignUpCertificationBindi
                 Navigation.findNavController(view)
                     .navigate(
                         SignUpCertificationFragmentDirections.actionToSignUpNicknameFragment(
-                            "0000-00-00",
-                            ESex.FEMALE
+                            "1999-07-16",
+                            ESex.MALE
                         )
                     )
             }

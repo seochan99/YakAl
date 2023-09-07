@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.viewpharm.yakal.base.BaseViewModel
 import com.viewpharm.yakal.event.Event
-import com.viewpharm.yakal.signin.repository.OAuth2Repository
-import com.viewpharm.yakal.signin.repository.YakalAuthRepository
+import com.viewpharm.yakal.repository.OAuth2Repository
+import com.viewpharm.yakal.repository.AuthRepository
 
 class SignInViewModel(
-    private val yakalAuthRepository: YakalAuthRepository,
+    private val authRepository: AuthRepository,
     private val oAuth2Repository: OAuth2Repository,
 ): BaseViewModel() {
     companion object {
@@ -35,7 +35,7 @@ class SignInViewModel(
     }
 
     fun signInWithKakao(accessToken: String) {
-        addDisposable(yakalAuthRepository.getTokenInRemoteByKakao(accessToken)
+        addDisposable(authRepository.getTokenInRemoteByKakao(accessToken)
             .subscribe({
                 eventTag = EventTag.LOAD_REMOTE_TOKEN
                 _accessToken.value = it.accessToken
@@ -47,15 +47,15 @@ class SignInViewModel(
     }
 
     fun saveJwtInDevice() {
-        yakalAuthRepository.setJwtTokenInDevice(accessToken.value!!, refreshToken.value!!)
+        authRepository.setJwtTokenInDevice(accessToken.value!!, refreshToken.value!!)
     }
 
     class SignInViewModelFactory(
-        private val yakalAuthRepository: YakalAuthRepository,
+        private val authRepository: AuthRepository,
         private val oAuth2Repository: OAuth2Repository
     ):  ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return SignInViewModel(yakalAuthRepository, oAuth2Repository) as T
+            return SignInViewModel(authRepository, oAuth2Repository) as T
         }
     }
 }
