@@ -164,11 +164,85 @@ struct DirectAddMedicineSwiftUIView: View {
 struct NextPageView: View {
     @Binding var keyword: String
     @Binding var code: String
+//    @State private var medicine: DrugInfo? = nil
+    @State private var identaImage: Image? = nil
     @State private var selectedDuration = "1일"
+    @State private var responseString: String = ""
     @State private var timeSelections: [String: Bool] = ["아침": false, "점심": false, "저녁": false, "기타": false]
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     let durations = ["1일", "2일", "3일", "4일", "5일", "6일", "7일", "1주", "2주", "1달", "3달"]
 
+    
+    //MARK: - 약정보 불러오기
+//    private func fetchDrugInfo() {
+//           guard let url = URL(string: "https://api2.kims.co.kr/api/drug/info") else {
+//               print("Invalid URL")
+//               return
+//           }
+//
+//           var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false)
+//           urlComponents?.queryItems = [
+//               URLQueryItem(name: "drugcode", value: code),
+//               URLQueryItem(name: "drugtype", value: "K")
+//           ]
+//
+//           var request = URLRequest(url: (urlComponents?.url)!)
+//           request.httpMethod = "GET"
+//           request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+//
+//
+//
+//
+//        // 유저네임, 패스워드
+//        let username = "DIVWPM"
+//        let password = "DIVWPM"
+//        let loginString = "\(username):\(password)"
+//
+//        if let utf8Data = loginString.data(using: .utf8) {
+//            let base64LoginString = utf8Data.base64EncodedString()
+//            request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization")
+//        }
+//
+//
+//
+//        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+//            if let data = data {
+//                do {
+//                    let response = try JSONDecoder().decode(DrugInfoResponse.self, from: data)
+//
+//                     DispatchQueue.main.async {
+//                         if  response.DrugInfo != nil {
+//                             self.medicine.drugInfo = response.DrugInfo
+//                         } else {
+//                             print("medicine property is nil")
+//                         }
+//
+//                         let base64String = response.DrugInfo.IdentaImage
+//                         if let imageData = Data(base64Encoded: base64String), let uiImage = UIImage(data: imageData) {
+//                             let image = Image(uiImage: uiImage)
+//                             self.identaImage = image
+//                             self.responseString = "Data fetched successfully"
+//                         } else {
+//                             self.responseString = "Image decoding failed"
+//                         }
+//                     }
+//                } catch {
+//                    print("Error decoding JSON: \(error)")
+//                    DispatchQueue.main.async {
+//                        self.responseString = "Error decoding JSON: \(error.localizedDescription)"
+//                    }
+//                }
+//            } else if let error = error {
+//                DispatchQueue.main.async {
+//                    self.responseString = "Request failed: \(error.localizedDescription)"
+//                }
+//            }
+//        }
+//
+//
+//           task.resume()
+//       }
+//
     var body: some View {
         VStack(alignment: .leading) {
             Text("복약 기간과 시간을\n설정해주세요")
@@ -188,7 +262,7 @@ struct NextPageView: View {
             .padding()
 
             HStack{
-                
+                Image("image_덱시로펜정")
                 Text("\(keyword)")
                     .padding()
             }
@@ -210,6 +284,8 @@ struct NextPageView: View {
             .padding()
 
             Spacer()
+            
+            BlueHorizontalButton(text: "완료", action: {}, isEnabled: true)
         }
         .padding(.horizontal,20)
         .navigationTitle("약 추가하기")
