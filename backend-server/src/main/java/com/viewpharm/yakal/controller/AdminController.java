@@ -49,19 +49,18 @@ public class AdminController {
 
     @GetMapping("/medical/register/hospital")
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
-    public ResponseDto<List<MedicalDto>> getRegisterHospital(
+    public ResponseDto<MedicalListAndTotalDto> getRegisterHospital(
             @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.HOSPITAL, name));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num,EMedical.HOSPITAL,name));
     }
 
     @GetMapping("/medical/register/pharmacy")
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
-    public ResponseDto<List<MedicalDto>> getRegisterPharmacy(
-            @RequestParam("page") Long page, @RequestParam("num") Long num
-            ,@RequestParam("name") @Nullable String name
+    public ResponseDto<MedicalListAndTotalDto> getRegisterPharmacy(
+            @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.PHARMACY, name));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num,EMedical.PHARMACY,name));
     }
 
     @GetMapping("medical/register/request")
