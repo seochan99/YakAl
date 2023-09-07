@@ -22,8 +22,28 @@ struct CalendarSwiftUIView: View {
     
     /* --------------- 예시 약물 --------------- */
     var sampleMedications: [Medicine] = [
-        Medicine(id: 1, image: "image_덱시로펜정", name: "약물A", ingredients: "성분 A", dangerStat: 0, isTaken: false),
-        Medicine(id: 2, image: "image_덱시로펜정", name: "약물B", ingredients: "성분 B", dangerStat: 1, isTaken: false)
+        Medicine(
+            id: 1,
+            image: "image_덱시로펜정",
+            name: "데크시로펜정",
+            effect: "해열, 진통, 소염제",
+            kdCode: "KD001",
+            atcCode: AtcCode(code: "ATC001", score: 1),
+            count: 10,
+            isTaken: false,
+            isOverLap: false
+        ),
+        Medicine(
+            id: 2,
+            image: "image_동광레바미피드정",
+            name: "동광레바미피드정",
+            effect: "소화성 궤양용제",
+            kdCode: "KD001",
+            atcCode: AtcCode(code: "ATC001", score: 1),
+            count: 10,
+            isTaken: false,
+            isOverLap: false
+        ),
         
     ]
     

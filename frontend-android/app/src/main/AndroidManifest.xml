@@ -44,7 +44,7 @@
             android:name=".view.NotificationActivity"
             android:exported="false" />
         <activity
-            android:name=".view.CalenderActivity"
+            android:name=".main.activity.CalenderActivity"
             android:exported="false" />
         <activity
             android:name=".main.activity.MainActivity"

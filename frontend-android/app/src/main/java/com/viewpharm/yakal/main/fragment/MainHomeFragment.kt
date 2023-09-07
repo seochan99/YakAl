@@ -7,9 +7,9 @@ import android.text.SpannableStringBuilder
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import android.view.View
-import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.viewpharm.yakal.view.CalenderActivity
+import com.viewpharm.yakal.main.activity.CalenderActivity
 import com.viewpharm.yakal.view.NotificationActivity
 import com.viewpharm.yakal.main.adapter.PillParentAdapter
 import com.viewpharm.yakal.R
@@ -21,7 +21,7 @@ import com.viewpharm.yakal.main.activity.MainCallBack
 import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
 import com.viewpharm.yakal.type.ETakingTime
-import timber.log.Timber
+import java.time.LocalDate
 
 class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
      override val viewModel: HomeTodoViewModel by lazy {
@@ -133,6 +133,7 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
             }
         }
 
+        LocalDate.of(2021, 9, 1)
         viewModel.progress.observe(viewLifecycleOwner) {
             startProgressBarAnimation(it)
 
@@ -147,6 +148,11 @@ class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel
 
         viewModel.schedules.observe(viewLifecycleOwner) {
             (binding.todayTakingScheduleMainRecyclerView.adapter as PillParentAdapter).submitList(it)
+        }
+
+        binding.anotherTakingLayout.setOnClickListener {
+            Navigation.findNavController(view)
+                .navigate(MainHomeFragmentDirections.actionHomeMainFragmentToCalenderActivity())
         }
     }
 

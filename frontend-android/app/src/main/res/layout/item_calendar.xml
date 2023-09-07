@@ -1,72 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_gravity="center_horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content" >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ProgressBar
-        android:id="@+id/todayPercentBar"
-        android:layout_marginTop="10dp"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+    <data>
+        <import type="android.view.View" />
 
-        android:max="100"
-        android:progressDrawable="@drawable/bar_home_taking_percent"
-        android:progressTint="@color/blue"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        <variable
+            name="state"
+            type="com.viewpharm.yakal.main.model.DayState" />
+    </data>
 
-<!--    <View-->
-<!--        android:id="@+id/fullColorView"-->
-<!--        android:layout_width="32dp"-->
-<!--        android:layout_height="32dp"-->
-<!--        android:background="@drawable/view_oval"-->
-<!--        app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"-->
-<!--        app:layout_constraintEnd_toEndOf="@+id/todayPercentBar"-->
-<!--        app:layout_constraintStart_toStartOf="@id/todayPercentBar"-->
-<!--        app:layout_constraintTop_toTopOf="@id/todayPercentBar" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/calendarItemLayout"
+        android:visibility="@{state.isVisible ? View.VISIBLE : View.INVISIBLE}"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <View
-        android:id="@+id/todayColorView"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:background="@drawable/view_oval_today"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
-        app:layout_constraintEnd_toEndOf="@+id/todayPercentBar"
-        app:layout_constraintStart_toStartOf="@id/todayPercentBar"
-        app:layout_constraintTop_toTopOf="@id/todayPercentBar" />
+        <ProgressBar
+            android:id="@+id/todayPercentBar"
+            android:layout_marginTop="10dp"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
 
-    <TextView
-        android:id="@+id/calendarDayTextView"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:text="00"
-        android:textColor="@color/black"
-        android:textSize="15sp"
+            android:max="100"
+            android:progress="@{state.percent}"
+            android:progressDrawable="@drawable/bar_home_taking_percent"
+            android:progressTint="@color/blue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        android:gravity="center_horizontal|center_vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
-        app:layout_constraintEnd_toEndOf="@+id/todayPercentBar"
-        app:layout_constraintStart_toStartOf="@+id/todayPercentBar"
-        app:layout_constraintTop_toTopOf="@+id/todayPercentBar" />
+        <View
+            android:id="@+id/todayColorView"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:background="@drawable/view_oval_today"
+            android:visibility="@{state.isSelected ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
+            app:layout_constraintEnd_toEndOf="@+id/todayPercentBar"
+            app:layout_constraintStart_toStartOf="@id/todayPercentBar"
+            app:layout_constraintTop_toTopOf="@id/todayPercentBar" />
 
-    <ImageView
-        android:id="@+id/overLapImageView"
-        android:layout_width="36dp"
-        android:layout_height="18dp"
-        android:layout_gravity="end"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="5dp"
+        <TextView
+            android:id="@+id/calendarDayTextView"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:text="@{state.dateOfDay}"
+            android:textColor="@color/black"
+            android:textSize="15sp"
 
-        android:src="@drawable/ic_custom_overlap"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
-        app:layout_constraintStart_toStartOf="@id/todayPercentBar"
-        app:layout_constraintTop_toBottomOf="@id/todayPercentBar" />
+            android:gravity="center_horizontal|center_vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/todayPercentBar"
+            app:layout_constraintEnd_toEndOf="@+id/todayPercentBar"
+            app:layout_constraintStart_toStartOf="@+id/todayPercentBar"
+            app:layout_constraintTop_toTopOf="@+id/todayPercentBar" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/overLapImageView"
+            android:layout_width="36dp"
+            android:layout_height="18dp"
+            android:layout_gravity="end"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="5dp"
+
+            android:visibility="@{state.isOverlap ? View.VISIBLE : View.INVISIBLE}"
+            android:src="@drawable/ic_custom_overlap"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/todayPercentBar"
+            app:layout_constraintStart_toStartOf="@id/todayPercentBar"
+            app:layout_constraintTop_toBottomOf="@id/todayPercentBar" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

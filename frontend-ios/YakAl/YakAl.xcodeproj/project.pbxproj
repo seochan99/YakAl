@@ -68,6 +68,7 @@
 		9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EC2AA6D833004642CA /* ViewExtension.swift */; };
 		9897E9F02AA6E2CD004642CA /* EditNicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */; };
 		9897E9F22AA6EB93004642CA /* SignOutSwiftUIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */; };
+		9897E9F42AA76516004642CA /* AtcCodeModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9897E9F32AA76516004642CA /* AtcCodeModel.swift */; };
 		98AEEBBE2A76ADF400675378 /* TabRouter.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */; };
 		98AEEBC42A76AF8600675378 /* MyLocation.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC32A76AF8600675378 /* MyLocation.storyboard */; };
 		98AEEBC62A76AF9100675378 /* Community.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 98AEEBC52A76AF9100675378 /* Community.storyboard */; };
@@ -157,6 +158,7 @@
 		9897E9EC2AA6D833004642CA /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		9897E9EF2AA6E2CD004642CA /* EditNicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditNicknameView.swift; sourceTree = "<group>"; };
 		9897E9F12AA6EB93004642CA /* SignOutSwiftUIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutSwiftUIView.swift; sourceTree = "<group>"; };
+		9897E9F32AA76516004642CA /* AtcCodeModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AtcCodeModel.swift; sourceTree = "<group>"; };
 		98AEEBBD2A76ADF400675378 /* TabRouter.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TabRouter.storyboard; sourceTree = "<group>"; };
 		98AEEBC32A76AF8600675378 /* MyLocation.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = MyLocation.storyboard; sourceTree = "<group>"; };
 		98AEEBC52A76AF9100675378 /* Community.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Community.storyboard; sourceTree = "<group>"; };
@@ -544,6 +546,7 @@
 				98926FE52A778537001AB165 /* TodoModel.swift */,
 				98019A0D2A85699B00D6282F /* MedicineModel.swift */,
 				981433492A91597200017600 /* MedicationModel.swift */,
+				9897E9F32AA76516004642CA /* AtcCodeModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -759,6 +762,7 @@
 				9890C8F62A93DCCA0007299B /* SettingButtonSwiftUI.swift in Sources */,
 				9888A27A2A6D694F00F507BD /* Step4VC.swift in Sources */,
 				9897E9CC2AA4C157004642CA /* SmokingTestSwiftUIView.swift in Sources */,
+				9897E9F42AA76516004642CA /* AtcCodeModel.swift in Sources */,
 				98926FE62A778537001AB165 /* TodoModel.swift in Sources */,
 				9897E9ED2AA6D833004642CA /* ViewExtension.swift in Sources */,
 				98C12D3A2A5E3B8A00175EB8 /* AppDelegate.swift in Sources */,

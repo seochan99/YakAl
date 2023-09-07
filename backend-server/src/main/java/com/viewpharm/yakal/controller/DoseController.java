@@ -39,7 +39,6 @@ import java.util.List;
 import java.util.Map;
 
 @Slf4j
-@Validated
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/dose")
@@ -65,7 +64,7 @@ public class DoseController {
             @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
     ) {
         final Long progressOrNull = doseService.getOneDayProgressOrNull(id, date);
-        final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date, progressOrNull);
+        final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date.toString(), progressOrNull);
         return ResponseDto.ok(oneDayProgressDto);
     }
 

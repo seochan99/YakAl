@@ -33,8 +33,8 @@ public class ImageService {
 
     private final String IMAGE_CONTENT_PREFIX = "image/";
 
-    // @Value("${spring.image.path}")
-    private final String FOLDER_PATH = "C:\\workspace\\YakAl\\backend-server\\src\\main\\resources";
+    @Value("${spring.image.path}")
+    private String FOLDER_PATH;
 
     public String uploadImage(Long useId, EImageUseType imageUseType, MultipartFile file) {
         final String contentType = file.getContentType();
