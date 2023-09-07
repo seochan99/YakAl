@@ -116,6 +116,11 @@ function PatientList() {
             placeholder="환자 이름으로 검색"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
+            onKeyUp={(e) => {
+              if (e.key === "Enter") {
+                refetch();
+              }
+            }}
           />
         </SearchBar>
         <SelectBox data-role="selectbox">
