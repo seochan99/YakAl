@@ -68,6 +68,7 @@ struct DirectAddMedicineSwiftUIView: View {
                 if(keyword.isEmpty)
                 {
                     BlueHorizontalButton(text: "다음", action: {},isEnabled: false)
+                        .padding(.bottom,20)
                 }else{
                     // 다음버튼
                     NavigationLink(destination: NextPageView(keyword: $keyword,code: $kimsCode)){
@@ -168,8 +169,10 @@ struct NextPageView: View {
     @State private var identaImage: Image? = nil
     @State private var selectedDuration = "1일"
     @State private var responseString: String = ""
-    @State private var timeSelections: [String: Bool] = ["아침": false, "점심": false, "저녁": false, "기타": false]
+    @State private var timeSelections: [String: Bool] = ["아침": true, "점심": true, "저녁": true, "기타": false]
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    let timeSelectionOrder = ["아침", "점심", "저녁", "기타"]
+    
     let durations = ["1일", "2일", "3일", "4일", "5일", "6일", "7일", "1주", "2주", "1달", "3달"]
 
     
@@ -272,7 +275,7 @@ struct NextPageView: View {
                 Text("기간 설정 버튼(중복) :")
                     .padding(.bottom, 10)
 
-                ForEach(timeSelections.keys.sorted(), id: \.self) { key in
+                ForEach(timeSelectionOrder, id: \.self) { key in
                     if let isOn = timeSelections[key] {
                         Toggle(key, isOn: Binding(
                             get: { isOn },
@@ -282,10 +285,16 @@ struct NextPageView: View {
                 }
             }
             .padding()
+            
 
             Spacer()
             
-            BlueHorizontalButton(text: "완료", action: {}, isEnabled: true)
+            BlueHorizontalButton(text: "완료", action: {
+                
+                self.presentationMode.wrappedValue.dismiss()
+                self.presentationMode.wrappedValue.dismiss()
+
+            }, isEnabled: true)
         }
         .padding(.horizontal,20)
         .navigationTitle("약 추가하기")

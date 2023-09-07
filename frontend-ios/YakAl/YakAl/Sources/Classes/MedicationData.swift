@@ -7,127 +7,127 @@ class MedicationData: ObservableObject {
 
     @Published var medications: [Medication] = [
         Medication(name: "아침",medication: [
-            Medicine(
-                id: 1,
-                image: "image_덱시로펜정",
-                name: "데크시로펜정",
-                effect: "해열, 진통, 소염제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 2,
-                image: "image_동광레바미피드정",
-                name: "동광레바미피드정",
-                effect: "소화성 궤양용제",
-                kdCode: "645905640",
-                atcCode: AtcCode(code: "ATC001", score: 2),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 3,
-                image: "image_코푸정",
-                name: "코푸정",
-                effect: "진해거담제",
-                kdCode: "642102300",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 4,
-                image: "image_베스티온정",
-                name: "베스티온정",
-                effect: "해열, 진통, 소염제",
-                kdCode: "647303390",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            )
+//            Medicine(
+//                id: 1,
+//                image: "image_덱시로펜정",
+//                name: "데크시로펜정",
+//                effect: "해열, 진통, 소염제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 2,
+//                image: "image_동광레바미피드정",
+//                name: "동광레바미피드정",
+//                effect: "소화성 궤양용제",
+//                kdCode: "645905640",
+//                atcCode: AtcCode(code: "ATC001", score: 2),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 3,
+//                image: "image_코푸정",
+//                name: "코푸정",
+//                effect: "진해거담제",
+//                kdCode: "642102300",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 4,
+//                image: "image_베스티온정",
+//                name: "베스티온정",
+//                effect: "해열, 진통, 소염제",
+//                kdCode: "647303390",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            )
 
         ]),
         Medication(name: "점심",medication: [
-            Medicine(
-                id: 5,
-                image: "image_코푸정",
-                name: "코푸정",
-                effect: "진해거담제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 6,
-                image: "image_베스티온정",
-                name: "베스티온정",
-                effect: "해열, 진통, 소염제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            )
+//            Medicine(
+//                id: 5,
+//                image: "image_코푸정",
+//                name: "코푸정",
+//                effect: "진해거담제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 6,
+//                image: "image_베스티온정",
+//                name: "베스티온정",
+//                effect: "해열, 진통, 소염제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            )
 
 
         ]),
         Medication(name: "저녁", medication: [
-            Medicine(
-                id: 7,
-                image: "image_코푸정",
-                name: "코푸정",
-                effect: "진해거담제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 8,
-                image: "image_베스티온정",
-                name: "베스티온정",
-                effect: "해열, 진통, 소염제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            )
-           
+//            Medicine(
+//                id: 7,
+//                image: "image_코푸정",
+//                name: "코푸정",
+//                effect: "진해거담제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 8,
+//                image: "image_베스티온정",
+//                name: "베스티온정",
+//                effect: "해열, 진통, 소염제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            )
+//
         ]),
         Medication(name: "기타",medication: [
-            Medicine(
-                id: 9,
-                image: "image_코푸정",
-                name: "코푸정",
-                effect: "진해거담제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            ),
-            Medicine(
-                id: 10,
-                image: "image_베스티온정",
-                name: "베스티온정",
-                effect: "해열, 진통, 소염제",
-                kdCode: "645900210",
-                atcCode: AtcCode(code: "ATC001", score: 1),
-                count: 10,
-                isTaken: false,
-                isOverLap: false
-            )
-         
+//            Medicine(
+//                id: 9,
+//                image: "image_코푸정",
+//                name: "코푸정",
+//                effect: "진해거담제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            ),
+//            Medicine(
+//                id: 10,
+//                image: "image_베스티온정",
+//                name: "베스티온정",
+//                effect: "해열, 진통, 소염제",
+//                kdCode: "645900210",
+//                atcCode: AtcCode(code: "ATC001", score: 1),
+//                count: 10,
+//                isTaken: false,
+//                isOverLap: false
+//            )
+//         
         ]),
     ]
     var totalMedicineCount: Int {
