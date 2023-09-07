@@ -9,7 +9,7 @@ import {
   Outer,
   PartnerAnalysis,
   UserStatistics,
-} from "@/admin/page/main/dashboard/style.ts";
+} from "./style.ts";
 
 import KeyboardArrowRightOutlinedIcon from "@mui/icons-material/KeyboardArrowRightOutlined";
 

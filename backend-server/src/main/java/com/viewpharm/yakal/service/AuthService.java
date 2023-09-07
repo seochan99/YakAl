@@ -119,13 +119,15 @@ public class AuthService {
                             .build()));
 
             user.setPrescriptions(prescriptionList);
-
         }
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
-        user.setName("user#" + String.format("%06d", user.getId()));
         user.setIsLogin(true);
+
+        if (user.getName() == null) {
+            user.setName("user#" + String.format("%06d", user.getId()));
+        }
 
         return jwtTokenDto;
     }
@@ -161,7 +163,7 @@ public class AuthService {
         response.addCookie(refreshTokenSecureCookie);
         response.addCookie(accessTokenCookie);
 
-        response.sendRedirect(FRONTEND_HOST + "/login/social/" + loginProvider.toString().toLowerCase());
+        response.sendRedirect(FRONTEND_HOST + "/expert/login/social/" + loginProvider.toString().toLowerCase());
     }
 
     public void saveLoginTime(LocalDate date) {

@@ -28,31 +28,33 @@ import {
   ProfileBox,
   ProfileImg,
   ProfileText,
+  Red,
   SmallBadge,
 } from "./style.ts";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLazyLogoutQuery } from "@/expert/api/auth.ts";
 import { useDispatch } from "react-redux";
-
-import { EXPERT_LOGIN_ROUTE } from "@/global/router.tsx";
 
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import { EJob } from "@/expert/type/job.ts";
-import { logout } from "@/expert/store/auth.ts";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useMediaQuery } from "react-responsive";
+import { useLazyLogoutQuery } from "../../../../api/auth.ts";
+import { logout } from "../../../../store/auth.ts";
+import { EXPERT_LOGIN_ROUTE } from "../../../../../global/router.tsx";
+import { EJob } from "../../../../type/job.ts";
 
 type TProfileProps = {
-  job: string;
+  job?: EJob;
+  department?: string;
+  belong?: string;
   name: string;
   imgSrc: string;
 };
 
-function Profile({ job, name, imgSrc }: TProfileProps) {
+function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const [trigger, currentResult] = useLazyLogoutQuery();
@@ -62,18 +64,7 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const jobType = EJob.DOCTOR;
-  const belong = "중앙대학교 부속병원 소속";
-  const alertList = [
-    { id: 1, title: "알림입니다.", description: "알림입니다. 알림알림알림알림" },
-    { id: 2, title: "알람입니다.", description: "알람입니다. 알림알림알림알림" },
-    { id: 3, title: "알라트입니다.", description: "알림입니다. 알림알림알림알림" },
-    { id: 4, title: "알라암입니다.", description: "알림입니다. 알림알림알림알림" },
-    { id: 5, title: "알림입니다.", description: "알림입니다. 알림알림알림알림" },
-    { id: 6, title: "알람입니다.", description: "알람입니다. 알림알림알림알림" },
-    { id: 7, title: "알라트입니다.", description: "알림입니다. 알림알림알림알림" },
-    { id: 8, title: "알라암입니다.", description: "알림입니다. 알림알림알림알림" },
-  ];
+  const alertList = [{ id: 1, title: "알림입니다.", description: "알림 기능은 추가예정입니다." }];
 
   const iOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -90,7 +81,7 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
   };
 
   const handleLogoutClick = async () => {
-    // trigger(null);
+    trigger(null);
   };
 
   useEffect(() => {
@@ -112,12 +103,15 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
     return `${count} notifications`;
   };
 
+  const jobDetail: string | undefined =
+    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
+
   return (
     <Outer>
       <ProfileBox onClick={toggleDrawer(true)}>
         {!isMobile && (
           <ProfileText>
-            <Job>{job}</Job>
+            {jobDetail ? <Job>{jobDetail}</Job> : null}
             <NameBox>
               <Name>{name}</Name>
               <NamePostfix>님</NamePostfix>
@@ -125,8 +119,8 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
           </ProfileText>
         )}
         <SmallBadge
-          aria-label={notificationsLabel(1)}
-          badgeContent={1}
+          aria-label={notificationsLabel(0)}
+          badgeContent={0}
           color="error"
           max={99}
           anchorOrigin={{
@@ -157,12 +151,28 @@ function Profile({ job, name, imgSrc }: TProfileProps) {
                 <DetailNamePostfix>{"님"}</DetailNamePostfix>
               </DetailNameBox>
               <DetailJob>
-                {jobType === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon />}
-                {job.replace(" ", "").length > 12 ? job.slice(0, 12).concat("...") : job}
+                {job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon />}
+                {jobDetail ? (
+                  jobDetail.replace(" ", "").length > 12 ? (
+                    jobDetail.slice(0, 12).concat("...")
+                  ) : (
+                    jobDetail
+                  )
+                ) : (
+                  <Red>전문가 인증 미완료</Red>
+                )}
               </DetailJob>
               <DetailBelong>
                 <LocationOnIcon />
-                {belong.replace(" ", "").length > 12 ? belong.slice(0, 12).concat("...") : belong}
+                {belong ? (
+                  belong.replace(" ", "").length > 12 ? (
+                    belong.slice(0, 12).concat("...")
+                  ) : (
+                    belong
+                  )
+                ) : (
+                  <Red>전문가 인증 미완료</Red>
+                )}
               </DetailBelong>
             </DetailProfileBox>
             <DrawerProfileImg src={imgSrc} />

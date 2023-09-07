@@ -15,9 +15,9 @@ import {
 } from "./style.ts";
 import DashboardMenuItem from "./menu-item";
 import { useMediaQuery } from "react-responsive";
-import { useGetUserQuery } from "@/expert/api/user.ts";
-import LoadingPage from "@/expert/page/loading-page";
-import ErrorPage from "@/expert/page/error-page";
+import { useGetUserQuery } from "../../../api/user.ts";
+import LoadingPage from "../../../../expert/page/loading-page";
+import ErrorPage from "../../../../expert/page/error-page";
 
 export type TMenuInfo = {
   path?: string;

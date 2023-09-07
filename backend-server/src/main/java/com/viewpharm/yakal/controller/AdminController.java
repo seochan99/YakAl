@@ -46,6 +46,7 @@ public class AdminController {
     public ResponseDto<List<MedicalDto>> getMedicalByName(@RequestParam String name) {
         return ResponseDto.ok(medicalService.getByName(name));
     }
+
     @GetMapping("/medical/register/hospital")
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
     public ResponseDto<List<MedicalDto>> getRegisterHospital(

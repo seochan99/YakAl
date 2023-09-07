@@ -15,12 +15,12 @@ import {
   WarningText,
   YakalIcon,
 } from "./style.ts";
-import Footer from "@/admin/layout/footer";
 import { useMediaQuery } from "react-responsive";
+import React, { useState } from "react";
+import Footer from "../../layout/footer";
 
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
-import React, { useState } from "react";
-import { ADMIN_LOGIN_ROUTE } from "@/global/router.tsx";
+import { ADMIN_LOGIN_ROUTE } from "../../../global/router.tsx";
 
 export function Login() {
   const [username, setUsername] = useState<string>("");

@@ -41,6 +41,7 @@ export const ProfileImg = styled.img`
     border-radius: 50%;
     margin-right: 2rem;
   }
+
   &:hover {
     cursor: pointer;
   }
@@ -53,6 +54,7 @@ export const DrawerProfileImg = styled.img`
     height: 4rem;
     border-radius: 50%;
   }
+
   &:hover {
     cursor: pointer;
   }
@@ -175,7 +177,6 @@ export const DetailNamePostfix = styled.span`
 
 export const DetailJob = styled.span`
   & {
-    display: inline-block;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -184,9 +185,14 @@ export const DetailJob = styled.span`
     font-weight: 500;
     color: #7c7c94;
   }
+
   & svg {
     height: 0.9rem;
   }
+`;
+
+export const Red = styled.span`
+  color: var(--red-500);
 `;
 
 export const DetailBelong = styled.span`
@@ -200,6 +206,7 @@ export const DetailBelong = styled.span`
     font-weight: 500;
     color: #7c7c94;
   }
+
   & svg {
     height: 0.9rem;
   }
@@ -275,6 +282,7 @@ export const AlertItem = styled.div`
     background-color: #f5f5f9;
     padding: 1rem;
   }
+
   & svg {
     position: absolute;
     top: 0.5rem;
@@ -322,10 +330,12 @@ export const LogoutButton = styled.div`
     color: #fff;
     background-color: #c61a24;
   }
+
   &:hover {
     background-color: #b7141f;
     cursor: pointer;
   }
+
   &:active {
     background-color: #cf5658;
   }

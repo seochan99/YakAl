@@ -200,32 +200,58 @@ export const SearchInput = styled.input`
   outline: none;
 `;
 
-export const ImgBoxWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 2rem;
-`;
-
 export const CertImgBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
   border-radius: 0.25rem;
   border: 0.15rem solid var(--color-surface-800);
-  padding: 1rem;
+  padding: 1.5rem;
   flex: 1;
 `;
 
-export const CertImgPreview = styled.img`
-  align-self: center;
+export const CertImgPreviewBox = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-  margin: 1rem;
-  height: 10rem;
+  justify-content: space-between;
+  height: 24rem;
+`;
+
+export const CertExampleBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+`;
+
+export const CertDoctorImgExample = styled.img`
+  content: url("/src/expert/asset/doctor-example.jpeg");
   object-fit: contain;
+  height: 21rem;
+`;
+
+export const CertPharmacistEmgExample = styled.img`
+  content: url("/src/expert/asset/pharmacist-example.jpg");
+  object-fit: contain;
+  height: 21rem;
+`;
+
+export const CertExampleText = styled.span`
+  color: var(--color-surface-600);
+  font-size: 0.9rem;
+  line-height: 1.2rem;
+  font-weight: 500;
+  margin: 0 1rem;
+`;
+
+export const CertImgPreview = styled.img`
+  object-fit: contain;
+  width: 50%;
+`;
+
+export const CertBelongImgPreview = styled.img`
+  object-fit: contain;
+  margin: 1rem;
+  height: 20rem;
 `;
 
 export const BelongInputBoxWrapper = styled.div`
@@ -234,14 +260,14 @@ export const BelongInputBoxWrapper = styled.div`
   gap: 1rem;
   border-radius: 0.25rem;
   border: 0.15rem solid var(--color-surface-800);
-  padding: 1rem;
+  padding: 1.5rem;
 `;
 
 export const CertInputLabel = styled.span`
   color: var(--color-surface-500);
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 0.9rem;
+  line-height: 1rem;
 `;
 
 export const BelongInputBox = styled.div`
@@ -417,4 +443,16 @@ export const NextButton = styled.button`
   &.is-finished:active {
     background-color: #163bb7;
   }
+`;
+
+export const CertBelongExplanation = styled.span`
+  color: var(--color-surface-600);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.4rem;
+`;
+
+export const Emphasis = styled.span`
+  color: var(--color-primary-100);
+  font-weight: 600;
 `;

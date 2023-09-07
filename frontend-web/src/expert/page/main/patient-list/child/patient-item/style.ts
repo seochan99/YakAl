@@ -1,6 +1,17 @@
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 
+export const DummyOuter = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 3.2rem;
+  border: 0;
+  border-radius: 0.25rem;
+  margin: 0.45rem 0;
+`;
+
 export const Outer = styled(NavLink)`
   & {
     display: flex;

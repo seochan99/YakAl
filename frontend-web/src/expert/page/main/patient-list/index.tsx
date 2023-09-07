@@ -1,4 +1,3 @@
-import PatientItem from "@/expert/page/main/patient-list/child/patient-item";
 import {
   DateBox,
   List,
@@ -17,22 +16,39 @@ import {
   TableHeader,
   TestProgress,
 } from "./style.ts";
-import { useLoaderData } from "react-router-dom";
-import { TPatientLoaderReturn } from "./loader.ts";
 import Pagination from "react-js-pagination";
-import React, { useEffect, useRef, useState } from "react";
+import React, { ReactNode, useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import { EPatientFilter } from "@/expert/type/patient-filter.ts";
-import { ListFooter } from "@/expert/style.ts";
 import { useMediaQuery } from "react-responsive";
+import { useGetPatientListQuery } from "../../../api/patient-list.ts";
+import { EPatientFilter } from "../../../type/patient-filter.ts";
+import { ListFooter } from "../../../style.ts";
+import LoadingPage from "../../loading-page";
+import ErrorPage from "../../error-page";
+import PatientItem from "./child/patient-item";
+
+const PAGING_SIZE = 10;
 
 function PatientList() {
-  const { userList } = useLoaderData() as TPatientLoaderReturn;
-
+  const [searchName, setSearchName] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
+
+  const { data, isLoading, isError, refetch } = useGetPatientListQuery({
+    sort:
+      selected === EPatientFilter.SUBMISSION_DATE
+        ? "date"
+        : selected === EPatientFilter.NAME
+        ? "name"
+        : selected === EPatientFilter.BIRTHDAY
+        ? "birth"
+        : "",
+    order: "desc",
+    page: page - 1,
+    name: searchName,
+  });
 
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
@@ -65,12 +81,44 @@ function PatientList() {
     setPage(page);
   };
 
+  useEffect(() => {
+    refetch();
+  }, [page, refetch, selected]);
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError || !data || !data.datalist) {
+    return <ErrorPage />;
+  }
+
+  const getDummyList = (): ReactNode[] => {
+    const dummyList: ReactNode[] = [];
+
+    if (PAGING_SIZE * page <= data.datalist.length) {
+      return dummyList;
+    }
+
+    for (let i = 0; i < PAGING_SIZE - (data.datalist.length % PAGING_SIZE); ++i) {
+      dummyList.push(<PatientItem key={i} />);
+    }
+    return dummyList;
+  };
+
+  const userList = data.datalist;
+
   return (
     <Outer>
       <OptionBar>
         <SearchBar>
           <SearchButton />
-          <SearchInput type="text" placeholder="환자 이름으로 검색" />
+          <SearchInput
+            type="text"
+            placeholder="환자 이름으로 검색"
+            value={searchName}
+            onChange={(e) => setSearchName(e.target.value)}
+          />
         </SearchBar>
         <SelectBox data-role="selectbox">
           <SelectButton
@@ -107,15 +155,16 @@ function PatientList() {
           {!isMiddleMobile && <TestProgress>{`설문 완료율`}</TestProgress>}
           <DateBox>{`최근 설문 제출일`}</DateBox>
         </TableHeader>
-        {userList.slice(10 * (page - 1), 10 * page).map((user) => {
+        {userList.map((user) => {
           return <PatientItem key={user.id} userInfo={user} />;
         })}
+        {getDummyList()}
       </List>
       <ListFooter>
         <Pagination
           activePage={page}
-          itemsCountPerPage={10}
-          totalItemsCount={userList.length}
+          itemsCountPerPage={PAGING_SIZE}
+          totalItemsCount={data.pageInfo.totalElements}
           pageRangeDisplayed={5}
           prevPageText={"‹"}
           nextPageText={"›"}

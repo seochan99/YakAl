@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-import { ReactComponent as RedIconSvg } from "@/expert/asset/red-icon.svg";
-import { ReactComponent as YellowIconSvg } from "@/expert/asset/yellow-icon.svg";
-import { ReactComponent as GreenIconSvg } from "@/expert/asset/green-icon.svg";
+import { ReactComponent as RedIconSvg } from "/src/expert/asset/red-icon.svg";
+import { ReactComponent as YellowIconSvg } from "/src/expert/asset/yellow-icon.svg";
+import { ReactComponent as GreenIconSvg } from "/src/expert/asset/green-icon.svg";
+import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 
 export const Header = styled.div`
   display: flex;
@@ -209,5 +210,9 @@ export const YellowIcon = styled(YellowIconSvg)`
 `;
 
 export const RedIcon = styled(RedIconSvg)`
+  height: 0.9rem;
+`;
+
+export const QuestionIcon = styled(HelpOutlineOutlinedIcon)`
   height: 0.9rem;
 `;
