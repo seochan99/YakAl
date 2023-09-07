@@ -1,39 +1,40 @@
-CREATE
-DATABASE IF NOT EXISTS yakal default CHARACTER SET UTF8;
-
-USE
-yakal;
-
 CREATE TABLE `users`
 (
     `id`              bigint       NOT NULL AUTO_INCREMENT,
     `birthday`        date         DEFAULT NULL,
     `breakfast_time`  time(6)      DEFAULT NULL,
     `created_date`    date         NOT NULL,
+    `department`      varchar(255) DEFAULT NULL,
     `device_token`    varchar(255) DEFAULT NULL,
     `dinner_time`     time(6)      DEFAULT NULL,
-    `is_detail`       tinyint      NOT NULL,
-    `is_ios`          tinyint      DEFAULT NULL,
-    `is_login`        tinyint      NOT NULL,
+    `is_certified`    bit(1)       DEFAULT NULL,
+    `is_detail`       tinyint(1) NOT NULL,
+    `is_ios`          tinyint(1) DEFAULT NULL,
+    `is_login`        tinyint(1) NOT NULL,
+    `job`             enum('DIETITIAN','DOCTOR','PATIENT','PHARMACIST') DEFAULT NULL,
     `login_provider`  enum('APPLE','GOOGLE','KAKAO') NOT NULL,
     `lunch_time`      time(6)      DEFAULT NULL,
     `name`            char(20)     DEFAULT NULL,
-    `noti_is_allowed` tinyint      NOT NULL,
+    `noti_is_allowed` tinyint(1) NOT NULL,
     `refresh_token`   varchar(255) DEFAULT NULL,
     `role`            enum('ROLE_MOBILE','ROLE_WEB') NOT NULL,
     `sex`             enum('FEMALE','MALE') DEFAULT NULL,
     `social_id`       varchar(255) NOT NULL,
-    `job`             enum('DIETITIAN','DOCTOR','PATIENT','PHARMACIST') DEFAULT NULL,
-    `department`      varchar(255) DEFAULT NULL,
-    `is_certified`    bit(1)       DEFAULT NULL,
     `tel`             varchar(255) DEFAULT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `risks`
 (
     `id`    char(7) NOT NULL,
     `score` tinyint NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+CREATE TABLE `dose_names`
+(
+    `id`        varchar(255) NOT NULL,
+    `dose_name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -65,29 +66,63 @@ CREATE TABLE `notifications`
 CREATE TABLE `medicals`
 (
     `id`              bigint       NOT NULL AUTO_INCREMENT,
+    `is_register`     bit(1)       DEFAULT NULL,
+    `medical_address` varchar(255) DEFAULT NULL,
     `medical_name`    varchar(255) NOT NULL,
     `medical_point`   point        DEFAULT NULL,
-    `e_medical`       enum('HOSPITAL','PHARMACY') DEFAULT NULL,
-    `medical_address` varchar(255) DEFAULT NULL,
-    `medical_tel`     char(20)     DEFAULT NULL,
-    `is_register`     bit(1)       DEFAULT NULL,
+    `medical_tel`     varchar(255) DEFAULT NULL,
+    `type`            enum('HOSPITAL','PHARMACY') DEFAULT NULL,
     PRIMARY KEY (`id`)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `registrations`
+(
+    `id`                           bigint       NOT NULL AUTO_INCREMENT,
+    `business_registration_number` varchar(255) NOT NULL,
+    `director_name`                varchar(255) NOT NULL,
+    `director_tel`                 varchar(255) NOT NULL,
+    `e_medical`                    enum('HOSPITAL','PHARMACY') NOT NULL,
+    `e_recive`                     tinyint      NOT NULL,
+    `is_precessed`                 bit(1)       DEFAULT NULL,
+    `medical_address`              varchar(255) NOT NULL,
+    `medical_characteristics`      varchar(255) DEFAULT NULL,
+    `medical_detail_address`       varchar(255) NOT NULL,
+    `medical_name`                 varchar(255) NOT NULL,
+    `medical_runtime`              varchar(255) DEFAULT NULL,
+    `medical_tel`                  varchar(255) NOT NULL,
+    `zip_code`                     varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `experts`
+(
+    `id`                 bigint NOT NULL AUTO_INCREMENT,
+    `create_date`        date   NOT NULL,
+    `last_modified_date` date   DEFAULT NULL,
+    `is_processed`       bit(1) DEFAULT NULL,
+    `use_medical`        bigint DEFAULT NULL,
+    `use_user`           bigint DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`use_user`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`use_medical`) REFERENCES `medicals` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `images`
 (
-    `id`          bigint       NOT NULL AUTO_INCREMENT,
-    `path`        varchar(255) NOT NULL,
-    `type`        varchar(255) NOT NULL,
-    `uuid_name`   char(41)     NOT NULL,
-    `use_medical` bigint DEFAULT NULL,
-    `use_user`    bigint DEFAULT NULL,
+    `id`              bigint       NOT NULL AUTO_INCREMENT,
+    `path`            varchar(255) NOT NULL,
+    `type`            varchar(255) NOT NULL,
+    `uuid_name`       char(41)     NOT NULL,
+    `expert_id`       bigint DEFAULT NULL,
+    `use_medical`     bigint DEFAULT NULL,
+    `registration_id` bigint DEFAULT NULL,
+    `use_user`        bigint DEFAULT NULL,
     PRIMARY KEY (`id`),
+    FOREIGN KEY (`registration_id`) REFERENCES `registrations` (`id`),
+    FOREIGN KEY (`expert_id`) REFERENCES `experts` (`id`),
     FOREIGN KEY (`use_user`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`use_medical`) REFERENCES `medicals` (`id`),
-    CONSTRAINT `uc_use_user` UNIQUE (`use_user`),
-    CONSTRAINT `uc_use_medical` UNIQUE (`use_medical`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    FOREIGN KEY (`use_medical`) REFERENCES `medicals` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `doses`
 (
@@ -104,6 +139,7 @@ CREATE TABLE `doses`
     `risks_id`        char(7) DEFAULT NULL,
     `prescription_id` bigint       NOT NULL,
     `user_id`         bigint       NOT NULL,
+    `dosename_id`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
@@ -113,8 +149,8 @@ CREATE TABLE `doses`
 CREATE TABLE `boards`
 (
     `id`                 bigint       NOT NULL AUTO_INCREMENT,
-    `create_date`        datetime(6) NOT NULL,
-    `last_modified_date` datetime(6) DEFAULT NULL,
+    `create_date`        date         NOT NULL,
+    `last_modified_date` date   DEFAULT NULL,
     `content`            varchar(255) NOT NULL,
     `is_deleted`         tinyint      NOT NULL,
     `is_edit`            tinyint      NOT NULL,
@@ -122,7 +158,7 @@ CREATE TABLE `boards`
     `region`             enum('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구',
         '도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구',
         '용산구','은평구','종로구','중구','중랑구') DEFAULT NULL,
-    `title`              char(20)     NOT NULL,
+    `title`              varchar(255) NOT NULL,
     `user_id`            bigint DEFAULT NULL,
     `disease`            enum('감기몸살','기타질환','남성질환','눈질환','만성질환','소아진료','소화기질환','암관련질환','여성질환','정신질환','치아','통증','피부질환') DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -131,12 +167,12 @@ CREATE TABLE `boards`
 
 CREATE TABLE `comments`
 (
-    `id`                 bigint   NOT NULL AUTO_INCREMENT,
-    `create_date`        datetime(6) NOT NULL,
-    `last_modified_date` datetime(6) DEFAULT NULL,
-    `context`            char(50) NOT NULL,
-    `is_deleted`         tinyint  NOT NULL,
-    `is_edit`            tinyint  NOT NULL,
+    `id`                 bigint       NOT NULL AUTO_INCREMENT,
+    `create_date`        date         NOT NULL,
+    `last_modified_date` date   DEFAULT NULL,
+    `context`            varchar(255) NOT NULL,
+    `is_deleted`         tinyint      NOT NULL,
+    `is_edit`            tinyint      NOT NULL,
     `board_id`           bigint DEFAULT NULL,
     `parent_comment`     bigint DEFAULT NULL,
     `user_id`            bigint DEFAULT NULL,
@@ -156,13 +192,22 @@ CREATE TABLE `likes`
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-CREATE TABLE `shedlock`
+CREATE TABLE `surbeys`
 (
-    `name`       varchar(64) NOT NULL,
-    `lock_until` timestamp(3) NULL DEFAULT NULL,
-    `locked_at`  timestamp(3) NULL DEFAULT NULL,
-    `locked_by`  varchar(255) DEFAULT NULL,
-    PRIMARY KEY (`name`)
+    `id`           bigint       NOT NULL AUTO_INCREMENT,
+    `introduction` varchar(255) NOT NULL,
+    `title`        varchar(255) NOT NULL,
+    `total_score`  varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `surbeys`
+(
+    `id`           bigint       NOT NULL AUTO_INCREMENT,
+    `introduction` varchar(255) NOT NULL,
+    `title`        varchar(255) NOT NULL,
+    `total_score`  varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `answers`
@@ -181,8 +226,8 @@ CREATE TABLE `answers`
 CREATE TABLE `counsels`
 (
     `id`                 bigint NOT NULL AUTO_INCREMENT,
-    `create_date`        datetime(6) NOT NULL,
-    `last_modified_date` datetime(6) DEFAULT NULL,
+    `create_date`        date   NOT NULL,
+    `last_modified_date` date DEFAULT NULL,
     `is_deleted`         tinyint(1) NOT NULL,
     `expert_id`          bigint NOT NULL,
     `patient_id`         bigint NOT NULL,
@@ -198,16 +243,6 @@ CREATE TABLE `diagnosis`
     `user_id` bigint       NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `experts`
-(
-    `id`       bigint NOT NULL AUTO_INCREMENT,
-    `image_id` bigint DEFAULT NULL,
-    `use_user` bigint DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`use_user`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`image_id`) REFERENCES `images` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `healthfoods`
@@ -229,8 +264,8 @@ CREATE TABLE `login_logs`
 CREATE TABLE `notes`
 (
     `id`                 bigint NOT NULL AUTO_INCREMENT,
-    `create_date`        datetime(6) NOT NULL,
-    `last_modified_date` datetime(6) DEFAULT NULL,
+    `create_date`        date   NOT NULL,
+    `last_modified_date` date         DEFAULT NULL,
     `description`        varchar(255) DEFAULT NULL,
     `is_deleted`         tinyint(1) NOT NULL,
     `is_edit`            tinyint(1) NOT NULL,
@@ -238,13 +273,4 @@ CREATE TABLE `notes`
     `counsel_id`         bigint NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`counsel_id`) REFERENCES `counsels` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `surbeys`
-(
-    `id`           bigint       NOT NULL AUTO_INCREMENT,
-    `introduction` varchar(255) NOT NULL,
-    `title`        varchar(255) NOT NULL,
-    `total_score`  varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

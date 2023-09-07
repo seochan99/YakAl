@@ -7,6 +7,7 @@ import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.type.EMedical;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,8 +18,6 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 
 @Slf4j
@@ -52,16 +51,18 @@ public class AdminController {
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
     public ResponseDto<List<MedicalDto>> getRegisterHospital(
             @RequestParam("page") Long page, @RequestParam("num") Long num
+            ,@RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.HOSPITAL));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.HOSPITAL, name));
     }
 
     @GetMapping("/medical/register/pharmacy")
     @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
     public ResponseDto<List<MedicalDto>> getRegisterPharmacy(
             @RequestParam("page") Long page, @RequestParam("num") Long num
+            ,@RequestParam("name") @Nullable String name
     ) {
-        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.PHARMACY));
+        return ResponseDto.ok(medicalService.getAllByRegister(page,num, EMedical.PHARMACY, name));
     }
 
     @GetMapping("medical/register/request")
@@ -89,7 +90,7 @@ public class AdminController {
     @PatchMapping("expert/register/{id}")
     @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
     public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody UpdateAdminRequestDto updateAdminRequestDto){
-        userService.updateIsCertified(id,updateAdminRequestDto.getIsAllow());
+        userService.updateIsCertified(id,updateAdminRequestDto);
         return ResponseDto.ok(null);
     }
 
@@ -101,21 +102,21 @@ public class AdminController {
 
     @GetMapping("/loginLog/day/month/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "하루 단위로 한달 치 가져오기")
-    public ResponseDto<List<LoginLogListDto>> getLoginLogForMonth(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListDto>> getLoginLogForMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneDayForMonth(yearMonth));
     }
 
     @GetMapping("/loginLog/month/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 6개월 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForSixMonth(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForSixMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneMonthForSixMonth(yearMonth));
     }
 
     @GetMapping("/loginLog/year/{month}")
     @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 일년 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForYear(@PathVariable("month") @Valid @com.viewpharm.yakal.annotation.YearMonth @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
+    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForYear(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
     ) {
         return ResponseDto.ok(loginLogService.getUserOneMonthForYear(yearMonth));
     }

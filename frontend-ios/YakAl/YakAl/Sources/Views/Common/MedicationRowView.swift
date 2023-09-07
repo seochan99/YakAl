@@ -76,7 +76,6 @@ struct MedicationRow: View {
                                      .weight(.semibold)
                              )
                              .foregroundColor(Color(red: 0.15, green: 0.4, blue: 0.96))
-
                      }
                      Button(action: {
                          medication.completedCount = medication.count // Mark all as completed
@@ -159,9 +158,28 @@ struct MedicationRowView_Previews: PreviewProvider {
     static var previews: some View {
         MedicationRow(
             medication: Medication(name: "아침", medication: [
-                Medicine(id: 1, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
-                Medicine(id: 2, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false),
-                Medicine(id: 3, image: "image_덱시로펜정", name: "덱시로펜정", ingredients: "해열, 진통, 소염제", dangerStat: 0, isTaken: false)
+                Medicine(
+                    id: 1,
+                    image: "image_덱시로펜정",
+                    name: "데크시로펜정",
+                    effect: "해열, 진통, 소염제",
+                    kdCode: "KD001",
+                    atcCode: AtcCode(code: "ATC001", score: 1),
+                    count: 10,
+                    isTaken: false,
+                    isOverLap: false
+                ),
+                Medicine(
+                    id: 2,
+                    image: "image_동광레바미피드정",
+                    name: "동광레바미피드정",
+                    effect: "소화성 궤양용제",
+                    kdCode: "KD001",
+                    atcCode: AtcCode(code: "ATC001", score: 1),
+                    count: 10,
+                    isTaken: false,
+                    isOverLap: false
+                ),
                 
             ]),
             isExpanded: true, // or false, depending on your use case

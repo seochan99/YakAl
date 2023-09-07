@@ -73,7 +73,7 @@ class HomeVC: UIViewController{
 
             updateTodayDateLabel()
             
-            if medicationData.medications.isEmpty {
+            if medicationData.medications.allSatisfy({ $0.medication.isEmpty }) {
                 emptyView.isHidden = false
                 self.view.bringSubviewToFront(floatingStackView)
             }else{

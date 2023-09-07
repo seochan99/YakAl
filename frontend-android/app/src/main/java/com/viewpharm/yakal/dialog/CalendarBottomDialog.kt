@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.viewpharm.yakal.adapter.CalendarAdapter
+import com.viewpharm.yakal.main.adapter.CalendarAdapter
 import com.viewpharm.yakal.databinding.FragmentCalenderBottomSheetBinding
 import com.viewpharm.yakal.util.CalendarUtil
 import timber.log.Timber
@@ -41,7 +41,7 @@ class CalendarBottomDialog(private var currentDate : LocalDate) : BottomSheetDia
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentCalenderBottomSheetBinding.inflate(inflater)
         return binding.root
     }
@@ -52,25 +52,25 @@ class CalendarBottomDialog(private var currentDate : LocalDate) : BottomSheetDia
     }
 
     private fun _init() {
-        setDateTextView()
-        setPreviousButton()
-        setNextButton()
-
-        binding.calendarMonthRecyclerView.apply {
-            layoutManager = GridLayoutManager(context, 7)
-            adapter = CalendarAdapter(currentDate, CalendarUtil.daysInMonthArray(currentDate))
-            setHasFixedSize(true)
-        }
+//        setDateTextView()
+//        setPreviousButton()
+//        setNextButton()
+//
+//        binding.calendarMonthRecyclerView.apply {
+//            layoutManager = GridLayoutManager(context, 7)
+//            adapter = CalendarAdapter(currentDate, CalendarUtil.daysInMonthArray(currentDate))
+//            setHasFixedSize(true)
+//        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
     private fun setDateView() {
-        setDateTextView()
-
-        binding.calendarMonthRecyclerView.adapter?.let {
-            (it as CalendarAdapter).setCalendarTakingList(currentDate, CalendarUtil.daysInMonthArray(currentDate))
-            it.notifyItemRangeChanged(0, 42)
-        }
+//        setDateTextView()
+//
+//        binding.calendarMonthRecyclerView.adapter?.let {
+//            (it as CalendarAdapter).setCalendarTakingList(currentDate, CalendarUtil.daysInMonthArray(currentDate))
+//            it.notifyItemRangeChanged(0, 42)
+//        }
     }
 
     private fun setDateTextView() {

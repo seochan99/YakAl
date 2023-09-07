@@ -13,7 +13,7 @@ struct MedicationSwiftUIView: View {
     var body: some View {
         ScrollView {
             LazyVStack(spacing: 16) {
-                ForEach(medicationData.medications.indices, id: \.self) { index in
+                ForEach(medicationData.medications.indices.filter { !medicationData.medications[$0].medication.isEmpty }, id: \.self) { index in
                     MedicationRow(
                         medication: medicationData.medications[index],
                         isExpanded: expandedIndex == index,

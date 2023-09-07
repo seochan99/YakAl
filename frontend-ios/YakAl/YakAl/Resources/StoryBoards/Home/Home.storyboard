@@ -382,6 +382,21 @@
             </objects>
             <point key="canvasLocation" x="2441.9847328244273" y="734.50704225352115"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="weu-Q6-8XX">
+            <objects>
+                <viewController storyboardIdentifier="medicineDetail" id="Oi6-94-jTE" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Y0T-rQ-xzV">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="YNZ-RA-jZO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9Bh-wK-Uxr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2442" y="1555"/>
+        </scene>
         <!--Calendar View Controller-->
         <scene sceneID="AEv-Gt-RxT">
             <objects>
@@ -390,7 +405,7 @@
                 </hostingController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Obh-Jd-74N" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3294" y="1246"/>
+            <point key="canvasLocation" x="3474" y="1174"/>
         </scene>
         <!--알림-->
         <scene sceneID="bqh-b2-bQz">
