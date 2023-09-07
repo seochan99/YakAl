@@ -59,4 +59,8 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
     List<Medical> findAllByIsRegisterTrueAndTypeAndMedicalName(EMedical eMedical,String name,Pageable pageable);
 
     List<Medical> findByMedicalName(String name);
+
+    Long countAllByIsRegisterTrueAndType(EMedical eMedical);
+
+    Long countAllByIsRegisterTrueAndTypeAndMedicalName(EMedical eMedical,String name);
 }
