@@ -4,7 +4,7 @@
 
 # 👋 팀원 소개
 
-## Front-End
+## Front-End([Android](./frontend-android/README.md), [iOS](./frontend-ios/README.md), [Web](./frontend-web/README.md))
 
 | 이름                                      | 개발 파트                              |
 | ----------------------------------------- | -------------------------------------- |
@@ -12,7 +12,7 @@
 | [손형준](https://github.com/HyungJoonSon) | 모바일(Android, Kotlin), 인프라(CI/CD) |
 | [김도훈](https://github.com/DoHunKim1215) | 웹(React)                              |
 
-## Back-end
+## Back-end([WAS](./backend-server/README.md), [OCR](./ocr/README.md))
 
 | 이름                                  | 개발 파트    |
 | ------------------------------------- | ------------ |
