@@ -1,69 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".signin.SignInActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="380dp"
-        android:layout_height="220dp"
-        android:src="@drawable/logo_splash"
-        app:layout_constraintBottom_toTopOf="@id/bottomView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9" />
+    <data>
+        <variable
+            name="viewModel"
+            type="com.viewpharm.yakal.signin.SignInViewModel" />
+    </data>
 
-    <ImageView
-        android:layout_width="228dp"
-        android:layout_height="100dp"
-        android:src="@drawable/text_splash"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.2" />
-
-    <View
-        android:id="@+id/bottomView"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="260dp"
-        android:background="#F5F5F9"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".signin.SignInActivity">
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/kakaoLoginButton"
-        android:layout_width="320dp"
-        android:layout_height="64dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_kakao_login"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/view_oval_next"
-        app:layout_constraintTop_toTopOf="@id/bottomView"
-        app:layout_constraintStart_toStartOf="@id/bottomView"
-        app:layout_constraintEnd_toEndOf="@id/bottomView"
-        app:layout_constraintBottom_toTopOf="@id/googleLoginButton"/>
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="380dp"
+            android:layout_height="220dp"
+            android:src="@drawable/logo_splash"
+            app:layout_constraintBottom_toTopOf="@id/bottomView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/googleLoginButton"
-        android:layout_width="320dp"
-        android:layout_height="64dp"
-        android:src="@drawable/ic_google_login"
-        android:scaleType="fitCenter"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/view_oval_next"
-        app:layout_constraintTop_toBottomOf="@id/kakaoLoginButton"
-        app:layout_constraintBottom_toBottomOf="@id/bottomView"
-        app:layout_constraintStart_toStartOf="@id/bottomView"
-        app:layout_constraintEnd_toEndOf="@id/bottomView" />
+        <ImageView
+            android:layout_width="228dp"
+            android:layout_height="100dp"
+            android:src="@drawable/text_splash"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.2" />
+
+        <View
+            android:id="@+id/bottomView"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:background="#F5F5F9"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/kakaoLoginButton"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_kakao_login"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/view_oval_next"
+            app:layout_constraintTop_toTopOf="@id/bottomView"
+            app:layout_constraintStart_toStartOf="@id/bottomView"
+            app:layout_constraintEnd_toEndOf="@id/bottomView"
+            app:layout_constraintBottom_toTopOf="@id/googleLoginButton" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/googleLoginButton"
+            android:layout_width="320dp"
+            android:layout_height="64dp"
+            android:src="@drawable/ic_google_login"
+            android:scaleType="fitCenter"
+            android:layout_marginBottom="60dp"
+            android:background="@drawable/view_oval_next"
+            app:layout_constraintTop_toBottomOf="@id/kakaoLoginButton"
+            app:layout_constraintBottom_toBottomOf="@id/bottomView"
+            app:layout_constraintStart_toStartOf="@id/bottomView"
+            app:layout_constraintEnd_toEndOf="@id/bottomView" />
 
 
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

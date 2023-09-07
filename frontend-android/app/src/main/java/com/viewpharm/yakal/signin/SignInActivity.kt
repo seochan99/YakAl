@@ -14,18 +14,24 @@ import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
 import com.viewpharm.yakal.BuildConfig
+import com.viewpharm.yakal.R
+import com.viewpharm.yakal.base.BaseActivity
 import com.viewpharm.yakal.databinding.ActivitySignInBinding
-import com.viewpharm.yakal.repository.GoogleAuthRepository
-import com.viewpharm.yakal.repository.OAuth2Repository
-import com.viewpharm.yakal.repository.YakalRepository
-import com.viewpharm.yakal.repository.YakalRepositoryImpl
+import com.viewpharm.yakal.signin.repository.GoogleAuthRepository
+import com.viewpharm.yakal.signin.repository.OAuth2Repository
+import com.viewpharm.yakal.signin.repository.YakalAuthRepository
 import com.viewpharm.yakal.signup.activity.SignUpActivity
 import com.viewpharm.yakal.type.ESignInProvider
 import timber.log.Timber
 
 
-class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepository.CallBack {
-    private lateinit var binding: ActivitySignInBinding
+class SignInActivity : BaseActivity<ActivitySignInBinding, SignInViewModel>(R.layout.activity_sign_in) {
+    override val viewModel: SignInViewModel by lazy {
+        SignInViewModel.SignInViewModelFactory(
+            YakalAuthRepository(context = this),
+            GoogleAuthRepository()
+        ).create(SignInViewModel::class.java)
+    }
 
     private val options : GoogleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestServerAuthCode(BuildConfig.GOOGLE_CLIENT_ID)
@@ -35,7 +41,7 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
         .StartActivityForResult()) { result ->
         try {
             val authCode = GoogleSignIn.getSignedInAccountFromIntent(result.data).getResult(ApiException::class.java).serverAuthCode!!
-            googleAuthRepository.getOauth2Token(authCode, this@SignInActivity)
+//            googleAuthRepository.getOauth2Token(authCode, this@SignInActivity)
         } catch (e: ApiException) {
             Timber.e("로그인 실패 ${e.message}")
             e.printStackTrace()
@@ -43,14 +49,9 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
         }
     }
 
-    private val googleAuthRepository: OAuth2Repository = GoogleAuthRepository()
-    private val yakalRepository: YakalRepository = YakalRepositoryImpl()
+    override fun initView() {
+        super.initView()
 
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySignInBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         googleSignInClient = GoogleSignIn.getClient(this, options)
 
         binding.kakaoLoginButton.setOnClickListener {
@@ -76,7 +77,7 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
                     }
                     // 로그인 성공 부분
                     else if (token != null) {
-                        yakalRepository.getYakalToken(token.accessToken, ESignInProvider.KAKAO,this@SignInActivity)
+                        viewModel.signInWithKakao(token.accessToken)
                     }
                 }
             } else {
@@ -92,41 +93,36 @@ class SignInActivity : AppCompatActivity(), OAuth2Repository.CallBack, YakalRepo
         }
     }
 
+    override fun initViewModel() {
+        super.initViewModel()
+        binding.viewModel = viewModel
+    }
+
+    override fun initListener() {
+        super.initListener()
+        viewModel.inputEvent.observe(this) { event ->
+            event.getContentIfNotHandled()?.let {
+                when(viewModel.eventTag) {
+                    SignInViewModel.Companion.EventTag.LOAD_GOOGLE_TOKEN,
+                    SignInViewModel.Companion.EventTag.LOAD_REMOTE_TOKEN -> {
+                        viewModel.saveJwtInDevice()
+                        startActivity(Intent(this@SignInActivity, SignUpActivity::class.java))
+                    }
+                    SignInViewModel.Companion.EventTag.FAIL -> {
+                        Toast.makeText(this, "로그인 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
     private fun mCallback(): (OAuthToken?, Throwable?) -> Unit {
         return { token, error ->
             if (error != null) {
                 Timber.e("소셜 로그인 실패 $error")
             } else if (token != null) {
-                yakalRepository.getYakalToken(token.accessToken, ESignInProvider.KAKAO,this@SignInActivity)
+                viewModel.signInWithKakao(token.accessToken)
             }
         }
-    }
-
-
-
-    override fun onSuccess(token: String) {
-        yakalRepository.getYakalToken(token, ESignInProvider.GOOGLE,this@SignInActivity)
-    }
-
-    override fun onFailure() {
-        Timber.d("소셜 로그인 실패")
-    }
-
-    override fun getToken(accessToken: String, refreshToken: String) {
-        getSharedPreferences("token", MODE_PRIVATE).edit().apply {
-            putString("accessToken", accessToken)
-            putString("refreshToken", refreshToken)
-            apply()
-        }
-
-        startActivity(Intent(this, SignUpActivity::class.java))
-
-        Timber.d("AccessToken: $accessToken" +
-                "\nRefreshToken: $refreshToken")
-        finish()
-    }
-
-    override fun failToken() {
-        Timber.d("서버 로그인 실패")
     }
 }

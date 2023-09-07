@@ -23,7 +23,8 @@ import com.viewpharm.yakal.main.viewmodel.HomeTodoViewModel
 import com.viewpharm.yakal.type.ETakingTime
 import java.time.LocalDate
 
-class MainHomeFragment : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
+class MainHomeFragment()
+    : BaseFragment<FragmentMainHomeBinding, HomeTodoViewModel>(R.layout.fragment_main_home) {
      override val viewModel: HomeTodoViewModel by lazy {
          HomeTodoViewModel.TodoViewModelFactory().create(HomeTodoViewModel::class.java)
     }

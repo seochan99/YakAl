@@ -2,7 +2,12 @@ package com.viewpharm.yakal.service
 
 import com.google.gson.GsonBuilder
 import com.viewpharm.yakal.BuildConfig
+import com.viewpharm.yakal.signin.service.YakalAuthService
 import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
+import timber.log.Timber
 import java.util.concurrent.TimeUnit
 
 object YakalRetrofitManager {
@@ -16,11 +21,12 @@ object YakalRetrofitManager {
         .setLenient()
         .create()
 
-    private val retrofit = retrofit2.Retrofit.Builder()
+    private val retrofit = Retrofit.Builder()
         .baseUrl(BuildConfig.YAKAL_API_SERVER_URL)
+        .addConverterFactory(GsonConverterFactory.create(gson))
+        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(okHttpClient)
-        .addConverterFactory(retrofit2.converter.gson.GsonConverterFactory.create(gson))
         .build()
 
-    val yakalService : YakalService by lazy { retrofit.create(YakalService::class.java) }
+    val yakalAuthService : YakalAuthService by lazy { retrofit.create(YakalAuthService::class.java) }
 }

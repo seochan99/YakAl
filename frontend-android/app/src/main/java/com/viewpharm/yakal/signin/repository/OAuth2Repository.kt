@@ -1,8 +1,8 @@
-package com.viewpharm.yakal.repository
+package com.viewpharm.yakal.signin.repository
 
 
 interface OAuth2Repository {
-    fun getOauth2Token(code: String, callBack: OAuth2Repository.CallBack)
+    fun getOauth2Token(code: String, callBack: CallBack)
 
     interface CallBack {
         fun onSuccess(token: String)
