@@ -48,12 +48,65 @@ struct MedicineDetailView: View {
                 //            .background(Color(red: 0.96, green: 0.96, blue: 0.98)) // Background color
                 // 복약 정보, 음식/약물, 금기, 신중 투여 tab bar 누르면 해당페이지로 이동함
                 Picker(selection: $selectedTab, label: Text("Information Tabs")) {
-                    Text("복약 정보").tag(0)
-                    Text("음식/약물").tag(1)
-                    Text("금기").tag(2)
-                    Text("신중 투여").tag(3)
+                    Text("복약 정보")
+                    .font(
+                    Font.custom("SUIT", size: 13)
+                    .weight(.bold)
+                    )
+                    .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                    .tag(0)
+                    Text("음식/약물")
+                        .tag(1)
+                        .font(
+                        Font.custom("SUIT", size: 13)
+                        .weight(.bold)
+                        )
+                        .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                    Text("금기")
+                        .tag(2)
+                        .font(
+                        Font.custom("SUIT", size: 13)
+                        .weight(.bold)
+                        )
+                        .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
+                    Text("신중 투여")
+                        .tag(3)
+                        .font(
+                        Font.custom("SUIT", size: 13)
+                        .weight(.bold)
+                        )
+                        .foregroundColor(Color(red: 0.08, green: 0.08, blue: 0.08))
                 }
                 .pickerStyle(SegmentedPickerStyle())
+                .background(Color.white) // 피커의 배경색을 흰색으로 설정
+                .padding(.horizontal, 10) // 양옆에 패딩을 추가
+                .overlay(
+                    Rectangle() // 선택된 탭에 밑줄을 추가
+                        .frame(height: 2)
+                        .foregroundColor(.blue) // 밑줄의 색상 (여기서는 파란색으로 설정)
+                        .offset(y: 28) // 밑줄의 위치 조정
+                        .animation(.default) // 애니메이션 추가
+                        .padding(.horizontal, 10) // 밑줄의 양옆에 패딩 추가
+                        .opacity(selectedTab == 0 ? 1 : 0), alignment: .leading
+                )
+                .overlay(
+                    Rectangle() // 위와 동일한 방식으로 다른 탭에도 밑줄을 추가
+                        .frame(height: 2)
+                        .foregroundColor(.blue)
+                        .offset(y: 28)
+                        .animation(.default)
+                        .padding(.horizontal, 10)
+                        .opacity(selectedTab == 1 ? 1 : 0), alignment: .center
+                )
+                .overlay(
+                    Rectangle()
+                        .frame(height: 2)
+                        .foregroundColor(.blue)
+                        .offset(y: 28)
+                        .animation(.default)
+                        .padding(.horizontal, 10)
+                        .opacity(selectedTab == 2 ? 1 : 0), alignment: .trailing
+                )
                 
                 ScrollView(showsIndicators: false){
                 Group {
