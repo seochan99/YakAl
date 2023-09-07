@@ -1,4 +1,4 @@
-import { ESex } from "@/expert/type/sex.ts";
+import { ESex } from "../type/sex.ts";
 
 export type TUser = {
   id: number;

@@ -31,10 +31,10 @@ import {
   Title,
 } from "./style.ts";
 import React, { useEffect, useRef, useState } from "react";
-import { EFacility } from "@/expert/type/facility.ts";
-import { EInfoTake } from "@/expert/type/info-take.ts";
-import { useRegisterImageMutation, useRegisterMutation } from "@/expert/api/registration.ts";
 import { useNavigate } from "react-router-dom";
+import { useRegisterImageMutation, useRegisterMutation } from "../../../api/registration.ts";
+import { EFacility } from "../../../type/facility.ts";
+import { EInfoTake } from "../../../type/info-take.ts";
 
 export function FacilityRegistration() {
   const [selected, setSelected] = useState<EFacility | null>(null);

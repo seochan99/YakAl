@@ -81,6 +81,7 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
   };
 
   const handleLogoutClick = async () => {
+    window.localStorage.clear();
     trigger(null);
   };
 

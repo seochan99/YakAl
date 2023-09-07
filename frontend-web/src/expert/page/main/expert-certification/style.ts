@@ -220,7 +220,7 @@ export const CertImgPreviewBox = styled.div`
 export const CertExampleBox = styled.div`
   display: flex;
   flex-direction: column;
-  width: 50%;
+  flex: 1;
 `;
 
 export const CertDoctorImgExample = styled.img`
@@ -243,9 +243,17 @@ export const CertExampleText = styled.span`
   margin: 0 1rem;
 `;
 
+export const CertImgPreviewWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 4rem;
+  flex: 1;
+`;
+
 export const CertImgPreview = styled.img`
   object-fit: contain;
-  width: 50%;
 `;
 
 export const CertBelongImgPreview = styled.img`

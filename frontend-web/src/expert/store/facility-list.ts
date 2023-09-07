@@ -1,5 +1,5 @@
-import { EFacility } from "@/expert/type/facility.ts";
 import { TFacility } from "../../admin/page/main/facility-registration-list";
+import { EFacility } from "../type/facility.ts";
 
 export const facilityList: TFacility[] = [
   {

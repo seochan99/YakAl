@@ -1,3 +1,4 @@
+import { ListFooter } from "../../../style.ts";
 import {
   AddressHeader,
   BackButton,
@@ -14,6 +15,7 @@ import {
   CertImgBox,
   CertImgPreview,
   CertImgPreviewBox,
+  CertImgPreviewWrapper,
   CertInputImgBox,
   CertInputLabel,
   CertPharmacistEmgExample,
@@ -39,11 +41,10 @@ import {
   SelectButtonWrapper,
   Subtitle,
   Title,
-} from "@/expert/page/main/expert-certification/style.ts";
-import { EJob } from "@/expert/type/job.ts";
+} from "./style.ts";
 import React, { useRef, useState } from "react";
 import Pagination from "react-js-pagination";
-import { ListFooter } from "@/expert/style.ts";
+import { EJob } from "../../../type/job.ts";
 
 type TFacility = {
   id: number;
@@ -256,7 +257,9 @@ function ExpertCertification() {
                       : "* 약사 면허증을 성명, 생년월일이 잘 드러나도록 찍어서 제출해주세요."}
                   </CertExampleText>
                 </CertExampleBox>
-                <CertImgPreview ref={certificationImgPreviewRef} />
+                <CertImgPreviewWrapper>
+                  <CertImgPreview ref={certificationImgPreviewRef} />
+                </CertImgPreviewWrapper>
               </CertImgPreviewBox>
             </CertImgBox>
             <CertImgBox>
