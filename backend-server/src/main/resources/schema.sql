@@ -31,6 +31,13 @@ CREATE TABLE `risks`
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+CREATE TABLE `dose_names`
+(
+    `id`        varchar(255) NOT NULL,
+    `dose_name` varchar(255) NOT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 CREATE TABLE `prescriptions`
 (
     `id`              bigint       NOT NULL AUTO_INCREMENT,
@@ -132,6 +139,7 @@ CREATE TABLE `doses`
     `risks_id`        char(7) DEFAULT NULL,
     `prescription_id` bigint       NOT NULL,
     `user_id`         bigint       NOT NULL,
+    `dosename_id`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
@@ -150,7 +158,7 @@ CREATE TABLE `boards`
     `region`             enum('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구',
         '도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구',
         '용산구','은평구','종로구','중구','중랑구') DEFAULT NULL,
-    `title`              varchar(255)     NOT NULL,
+    `title`              varchar(255) NOT NULL,
     `user_id`            bigint DEFAULT NULL,
     `disease`            enum('감기몸살','기타질환','남성질환','눈질환','만성질환','소아진료','소화기질환','암관련질환','여성질환','정신질환','치아','통증','피부질환') DEFAULT NULL,
     PRIMARY KEY (`id`),
@@ -159,12 +167,12 @@ CREATE TABLE `boards`
 
 CREATE TABLE `comments`
 (
-    `id`                 bigint   NOT NULL AUTO_INCREMENT,
-    `create_date`        date     NOT NULL,
+    `id`                 bigint       NOT NULL AUTO_INCREMENT,
+    `create_date`        date         NOT NULL,
     `last_modified_date` date   DEFAULT NULL,
     `context`            varchar(255) NOT NULL,
-    `is_deleted`         tinyint  NOT NULL,
-    `is_edit`            tinyint  NOT NULL,
+    `is_deleted`         tinyint      NOT NULL,
+    `is_edit`            tinyint      NOT NULL,
     `board_id`           bigint DEFAULT NULL,
     `parent_comment`     bigint DEFAULT NULL,
     `user_id`            bigint DEFAULT NULL,
