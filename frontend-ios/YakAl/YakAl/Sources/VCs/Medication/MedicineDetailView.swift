@@ -5,9 +5,9 @@ struct MedicineDetailView: View {
     @State private var selectedTab: Int = 0
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
     
+
     var body: some View {
         
-        ScrollView(showsIndicators: false){
             //MARK: - title
             VStack(spacing: 5){
                 VStack(alignment: .leading, spacing: 10) {
@@ -44,6 +44,7 @@ struct MedicineDetailView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal, 20) // Side padding
                 .padding(.vertical, 20) // Vertical padding
+                .padding(.vertical,30)
                 //            .background(Color(red: 0.96, green: 0.96, blue: 0.98)) // Background color
                 // 복약 정보, 음식/약물, 금기, 신중 투여 tab bar 누르면 해당페이지로 이동함
                 Picker(selection: $selectedTab, label: Text("Information Tabs")) {
@@ -54,7 +55,7 @@ struct MedicineDetailView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 
-                
+                ScrollView(showsIndicators: false){
                 Group {
                     if selectedTab == 0 {
                         //MARK: - 이러한 약물이에요!
@@ -284,6 +285,8 @@ struct MedicineDetailView: View {
                         }
                     }
                 }
+            }    .onAppear {
+                print(medicine) // This will print the medicine object when the view first appears
             }
     }
 }

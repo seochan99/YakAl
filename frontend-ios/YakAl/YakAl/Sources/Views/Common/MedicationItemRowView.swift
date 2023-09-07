@@ -8,15 +8,20 @@ struct DrugInfoResponse: Codable {
 
 
 class MedicineViewModel: ObservableObject {
-    @Published var medicine: Medicine?
     @Published var identaImage: Image?
     @Published var responseString = "Loading..."
+    @Binding var medicine: Medicine
 
     private var imageCache: [String: Image] = [:]
     
-    
+    init(medicine: Binding<Medicine>) { // non-optional로 변경
+        _medicine = medicine
+    }
+
     
     func fetchDrugInfo(kdCode: String) {
+        self.medicine = medicine
+
          print("kdcode는 이거임!! \(kdCode)")
 
          // 이미 캐시된 이미지가 있는 경우 그것을 사용
@@ -50,8 +55,13 @@ class MedicineViewModel: ObservableObject {
             if let data = data {
                 do {
                     let response = try JSONDecoder().decode(DrugInfoResponse.self, from: data)
+                    
                      DispatchQueue.main.async {
-                         self.medicine?.drugInfo = response.DrugInfo // DrugInfo 저장
+                         if  response.DrugInfo != nil {
+                             self.medicine.drugInfo = response.DrugInfo
+                         } else {
+                             print("medicine property is nil")
+                         }
 
                          let base64String = response.DrugInfo.IdentaImage
                          if let imageData = Data(base64Encoded: base64String), let uiImage = UIImage(data: imageData) {
@@ -86,7 +96,16 @@ class MedicineViewModel: ObservableObject {
 //MARK: - 약 개별 Row
 struct MedicationItemRow: View {
     @Binding var medicine: Medicine
-    @ObservedObject var viewModel = MedicineViewModel()
+    @ObservedObject var viewModel: MedicineViewModel
+    
+    init(medicine: Binding<Medicine>, isAllCompleted: Bool, isCompleted: Binding<Bool>) {
+        _medicine = medicine
+        self.isAllCompleted = isAllCompleted
+        _isCompleted = isCompleted
+        viewModel = MedicineViewModel(medicine: medicine)
+    }
+
+
     let isAllCompleted: Bool
     @State private var isDetailViewPresented: Bool = false
 
@@ -162,32 +181,33 @@ struct MedicationItemRow: View {
 
 
 //MARK: - preview
-struct MedicationItemRowView_Previews: PreviewProvider {
-    static var previews: some View {
-        let medicine = Binding<Medicine>(
-            get: {
-                Medicine(
-                    id: 1,
-                    image: "image_덱시로펜정",
-                    name: "데크시로펜정",
-                    effect: "해열, 진통, 소염제",
-                    kdCode: "645900210",
-                    atcCode: AtcCode(code: "ATC001", score: 1),
-                    count: 10,
-                    isTaken: false,
-                    isOverLap: false
-                )
-                
-            },
-            set: { newValue in }
-        )
-        
-        MedicationItemRow(
-            medicine: medicine,
-            isAllCompleted: false,
-            isCompleted: .constant(false)
-        )
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
-}
+//struct MedicationItemRowView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let medicine = Binding<Medicine>(
+//            get: {
+//                Medicine(
+//                    id: 1,
+//                    image: "image_덱시로펜정",
+//                    name: "데크시로펜정",
+//                    effect: "해열, 진통, 소염제",
+//                    kdCode: "645900210",
+//                    atcCode: AtcCode(code: "ATC001", score: 1),
+//                    count: 10,
+//                    isTaken: false,
+//                    isOverLap: false
+//                )
+//
+//            },
+//            set: { newValue in }
+//        )
+//
+//        MedicationItemRow(
+//            medicine: medicine, // 바인딩을 직접 전달
+//            isAllCompleted: false,
+//            isCompleted: .constant(false) // SwiftUI의 .constant 메서드를 사용
+//)
+//
+//        .previewLayout(.sizeThatFits)
+//        .padding()
+//    }
+//}
