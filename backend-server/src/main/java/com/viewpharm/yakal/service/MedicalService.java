@@ -5,13 +5,12 @@ import com.viewpharm.yakal.domain.Registration;
 import com.viewpharm.yakal.dto.PointDto;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.dto.response.MedicalDto;
-import com.viewpharm.yakal.dto.response.MedicalDtoListAndTotal;
+import com.viewpharm.yakal.dto.response.MedicalListAndTotalDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.repository.RegistrationRepository;
 import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.EPeriod;
 import com.viewpharm.yakal.utils.GeometryUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.locationtech.jts.geom.Point;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,16 +30,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-@Transactional
 @Slf4j
+@Service
+@Transactional
+@RequiredArgsConstructor
 public class MedicalService {
 
     private final MedicalRepository medicalRepository;
     private final RegistrationRepository registrationRepository;
     private final GeometryUtil geometryUtil;
     private final ImageService imageService;
+
     public Boolean updateMedical() throws IOException {
         // 엑셀 파일을 읽어들입니다.
         FileInputStream fileInputStream;
@@ -121,6 +120,7 @@ public class MedicalService {
         workbook.close();
         return true;
     }
+
     public Boolean updateRegister(Long medicalId, UpdateAdminRequestDto updateAdminRequestDto){
         Medical medical = medicalRepository.findById(medicalId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));
         Registration registration = registrationRepository.findById(updateAdminRequestDto.getRegistrationId()).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_REGISTRATION));
@@ -187,11 +187,11 @@ public class MedicalService {
         return convertMedicalListToDtoList(medicals);
     }
 
-    public MedicalDtoListAndTotal getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
+    public MedicalListAndTotalDto getAllByRegister(Long pageIndex, Long pageSize, EMedical eMedical, String name){
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
-        List<Medical> medicals = name == null ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
+        List<Medical> medicals = name.equals("") ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
                                                 : medicalRepository.findAllByIsRegisterTrueAndTypeAndMedicalName(eMedical,name,pageable);
-        Long count = name == null ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
+        Long count = name.equals("") ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
                                     : medicalRepository.countAllByIsRegisterTrueAndTypeAndMedicalName(eMedical, name);
 
         List<MedicalDto> medicalDtoList = medicals.stream()
@@ -201,7 +201,7 @@ public class MedicalService {
                 .collect(Collectors.toList());
 
 
-        return new MedicalDtoListAndTotal(medicalDtoList,count);
+        return new MedicalListAndTotalDto(medicalDtoList, count);
     }
 
     public List<MedicalDto> getByName(final String name){
@@ -221,8 +221,4 @@ public class MedicalService {
         }
         return medicalDtoList;
     }
-
-
-
-
 }

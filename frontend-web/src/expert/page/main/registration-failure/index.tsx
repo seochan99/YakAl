@@ -1,4 +1,4 @@
-import WarningPage from "@/expert/component/warning-page";
+import WarningPage from "../../../../expert/component/warning-page";
 import { BackButton } from "./style.ts";
 
 function RegistrationFailure() {

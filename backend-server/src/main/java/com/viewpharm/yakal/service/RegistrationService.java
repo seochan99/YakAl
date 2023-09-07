@@ -15,6 +15,7 @@ import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EImageUseType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,8 +31,8 @@ public class RegistrationService {
     private final RegistrationRepository registrationRepository;
     private final ImageRepository imageRepository;
 
-    // @Value("${spring.image.path}")
-    private final String FOLDER_PATH = "C:\\workspace\\YakAl\\backend-server\\src\\main\\resources";
+    @Value("${spring.image.path}")
+    private String FOLDER_PATH;
 
     public Long createRegistration(MedicalRegisterDto medicalRegisterDto){
 

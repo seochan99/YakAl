@@ -248,12 +248,14 @@ export const CertImgPreviewWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2rem 4rem;
-  flex: 1;
+  width: 24rem;
+  height: 24rem;
 `;
 
 export const CertImgPreview = styled.img`
   object-fit: contain;
+  width: 24rem;
+  height: 24rem;
 `;
 
 export const CertBelongImgPreview = styled.img`

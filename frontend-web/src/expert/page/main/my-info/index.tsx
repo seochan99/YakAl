@@ -51,7 +51,7 @@ function MyInfo() {
       <MainSection>
         <MainHeader>
           <Title>내 정보</Title>
-          {data.belong ? (
+          {true ? (
             <VerifiedText>
               <VerifiedIcon />
               전문가 인증이 완료된 사용자입니다.
@@ -82,7 +82,7 @@ function MyInfo() {
           </InputBox>
           <BelongInputBox>
             <StyledInputLabel>소속</StyledInputLabel>
-            <StyledInput value={belong} readOnly={true} />
+            <StyledInput value={"중앙대학교 부속병원"} readOnly={true} />
           </BelongInputBox>
         </InnerBox>
       </MainSection>

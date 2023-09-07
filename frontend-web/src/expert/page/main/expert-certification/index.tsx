@@ -45,12 +45,13 @@ import {
 import React, { useRef, useState } from "react";
 import Pagination from "react-js-pagination";
 import { EJob } from "../../../type/job.ts";
+import { TFacility, useGetFacilityListQuery } from "../../../api/facility-list.ts";
+import { EFacility } from "../../../type/facility.ts";
+import Skeleton from "@mui/material/Skeleton";
+import ErrorPage from "../../error-page";
+import { useNavigate } from "react-router-dom";
 
-type TFacility = {
-  id: number;
-  name: string;
-  address: string;
-};
+const PAGING_SIZE = 5;
 
 function ExpertCertification() {
   const [selected, setSelected] = useState<EJob | null>(null);
@@ -60,21 +61,20 @@ function ExpertCertification() {
   const [belongImgFileName, setBelongImgFileName] = useState<string>("첨부파일");
   const [page, setPage] = useState<number>(1);
   const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(null);
+  const [facilityNameSearchQuery, setFacilityNameSearchQuery] = useState<string>("");
+
+  const navigate = useNavigate();
+
+  const { data, isError, isLoading } = useGetFacilityListQuery({
+    name: facilityNameSearchQuery,
+    type: selected === EJob.DOCTOR ? EFacility.HOSPITAL : EFacility.PHARMACY,
+    page: page - 1,
+  });
 
   const certificationImgPreviewRef = useRef<HTMLImageElement>(null);
   const belongImgPreviewRef = useRef<HTMLImageElement>(null);
 
   const isFinished = selectedFacility !== null && certificationImg !== null && belongImg !== null;
-
-  const facilityList: TFacility[] = [
-    { id: 1, name: "분당 차병원A", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 2, name: "분당 차병원B", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 3, name: "분당 차병원D", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 4, name: "분당 차병원C", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 5, name: "분당 차병원E", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 6, name: "분당 차병원F", address: "경기도 성남시 분당구 야탑로 59" },
-    { id: 7, name: "분당 차병원G", address: "경기도 성남시 분당구 야탑로 59" },
-  ];
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -142,8 +142,18 @@ function ExpertCertification() {
     }
   };
 
+  if (isLoading) {
+    return <Skeleton variant="rectangular" animation="wave" />;
+  }
+
+  if (isError || !data) {
+    return <ErrorPage />;
+  }
+
+  const facilityList = data.medicalList;
+
   const handleSubmit = () => {
-    console.log("Submit!!");
+    navigate("/expert/certification/success");
   };
 
   return (
@@ -167,14 +177,20 @@ function ExpertCertification() {
         <SelectButtonWrapper>
           <SelectButtonBox
             className={selected === EJob.DOCTOR ? "selected" : "unselected"}
-            onClick={() => setSelected(EJob.DOCTOR)}
+            onClick={() => {
+              setSelected(EJob.DOCTOR);
+              setSelectedFacility(null);
+            }}
           >
             <DoctorIcon />
             의사입니다.
           </SelectButtonBox>
           <SelectButtonBox
             className={selected === EJob.PHARMACIST ? "selected" : "unselected"}
-            onClick={() => setSelected(EJob.PHARMACIST)}
+            onClick={() => {
+              setSelected(EJob.PHARMACIST);
+              setSelectedFacility(null);
+            }}
           >
             <PharmacistIcon />
             약사입니다.
@@ -191,34 +207,41 @@ function ExpertCertification() {
                   name={"facility-name"}
                   placeholder={"기관명"}
                   readOnly={true}
-                  value={selectedFacility ? selectedFacility.name : ""}
+                  value={selectedFacility ? selectedFacility.medicalName : ""}
                 />
                 <BelongInput
                   type={"text"}
                   name={"facility-address"}
                   placeholder={"기관 주소"}
                   readOnly={true}
-                  value={selectedFacility ? selectedFacility.address : ""}
+                  value={selectedFacility ? selectedFacility.medicalAddress : ""}
                 />
               </BelongInputBox>
               <SearchBar>
                 <SearchButton />
-                <SearchInput type="text" placeholder="기관명으로 검색" />
+                <SearchInput
+                  type="text"
+                  placeholder="기관명으로 검색"
+                  value={facilityNameSearchQuery}
+                  onChange={(e) => setFacilityNameSearchQuery(e.target.value)}
+                />
               </SearchBar>
               <SearchResultBox>
                 <ListHeader>
                   <NameHeader>기관명</NameHeader>
                   <AddressHeader>기관 주소</AddressHeader>
                 </ListHeader>
-                {facilityList.slice(5 * (page - 1), 5 * page).map((facility) => (
-                  <Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
+                {facilityList.map((facility) => (
+                  <Item key={facility.medicalName} onClick={handleFacilityItemClick(facility.id)}>
                     <ItemName>
-                      {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
+                      {facility.medicalName.length > 21
+                        ? facility.medicalName.substring(0, 20).concat("...")
+                        : facility.medicalName}
                     </ItemName>
                     <ItemAddress>
-                      {facility.address.length > 41
-                        ? facility.address.substring(0, 40).concat("...")
-                        : facility.address}
+                      {facility.medicalAddress.length > 41
+                        ? facility.medicalAddress.substring(0, 40).concat("...")
+                        : facility.medicalAddress}
                     </ItemAddress>
                   </Item>
                 ))}
@@ -226,9 +249,9 @@ function ExpertCertification() {
               <ListFooter>
                 <Pagination
                   activePage={page}
-                  itemsCountPerPage={5}
+                  itemsCountPerPage={PAGING_SIZE}
                   totalItemsCount={facilityList.length}
-                  pageRangeDisplayed={5}
+                  pageRangeDisplayed={PAGING_SIZE}
                   prevPageText={"‹"}
                   nextPageText={"›"}
                   onChange={handlePageChange}

@@ -16,17 +16,15 @@ import {
   TableHeader,
   TestProgress,
 } from "./style.ts";
-import Pagination from "react-js-pagination";
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useMediaQuery } from "react-responsive";
 import { useGetPatientListQuery } from "../../../api/patient-list.ts";
 import { EPatientFilter } from "../../../type/patient-filter.ts";
-import { ListFooter } from "../../../style.ts";
-import LoadingPage from "../../loading-page";
 import ErrorPage from "../../error-page";
 import PatientItem from "./child/patient-item";
+import { ListFooter } from "../../../style.ts";
+import Pagination from "react-js-pagination";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const PAGING_SIZE = 10;
 
@@ -36,7 +34,7 @@ function PatientList() {
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
 
-  const { data, isLoading, isError, refetch } = useGetPatientListQuery({
+  const { data, isLoading, isError } = useGetPatientListQuery({
     sort:
       selected === EPatientFilter.SUBMISSION_DATE
         ? "date"
@@ -45,7 +43,7 @@ function PatientList() {
         : selected === EPatientFilter.BIRTHDAY
         ? "birth"
         : "",
-    order: "desc",
+    order: "asc",
     page: page - 1,
     name: searchName,
   });
@@ -81,12 +79,8 @@ function PatientList() {
     setPage(page);
   };
 
-  useEffect(() => {
-    refetch();
-  }, [page, refetch, selected]);
-
   if (isLoading) {
-    return <LoadingPage />;
+    return <></>;
   }
 
   if (isError || !data || !data.datalist) {
@@ -107,6 +101,8 @@ function PatientList() {
   };
 
   const userList = data.datalist;
+
+  console.log(userList);
 
   return (
     <Outer>

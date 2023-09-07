@@ -14,11 +14,10 @@ import {
   Title,
 } from "./style.ts";
 import { ReactNode, useState } from "react";
-import { ListFooter } from "/src/admin/style.ts";
+import { ListFooter } from "../../../style.ts";
 import Pagination from "react-js-pagination";
-import { EFacility } from "/src/expert/type/facility.ts";
-import FacilityItem from "/src/admin/page/main/facility-registration-list/child/facility-item";
-import { facilityList } from "/src/expert/store/facility-list.ts";
+import FacilityItem from "./child/facility-item";
+import { EFacility } from "../../../../expert/type/facility.ts";
 
 export type TFacility = {
   id: number;
@@ -30,6 +29,17 @@ export type TFacility = {
 };
 
 const PAGING_SIZE = 10;
+
+const facilityList = [
+  {
+    id: 1,
+    type: EFacility.HOSPITAL,
+    directorPhone: "01022222222",
+    directorName: "조차현",
+    name: "분당 차병원!",
+    requested_at: new Date("2023-09-07"),
+  },
+];
 
 export function FacilityRegistration() {
   const [page, setPage] = useState<number>(1);
