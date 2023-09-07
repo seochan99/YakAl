@@ -46,7 +46,6 @@ class OverlapBottomDialog(
     }
 
     private fun initView() {
-        binding.overlapContentTextView.text = "간단한 설명 주세요..."
         binding.overlapRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = PillChildrenAdapter(isCompleted = false,

@@ -2,6 +2,7 @@ package com.viewpharm.yakal.service
 
 import com.viewpharm.yakal.BuildConfig
 import com.viewpharm.yakal.common.GoogleTokenResponse
+import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -17,5 +18,5 @@ interface GoogleAuthService {
         @Query("client_secret") clientSecret: String = BuildConfig.GOOGLE_CLIENT_SECRET,
         @Query("redirect_uri") redirectUri: String = BuildConfig.GOOGLE_REDIRECT_URI,
         @Query("code") code: String
-    ) : Call<GoogleTokenResponse>
+    ) : Single<GoogleTokenResponse>
 }

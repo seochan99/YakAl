@@ -75,7 +75,7 @@ class PillChildrenAdapter(
             }
 
             binding.overLapImageBottom.setOnClickListener {
-                onOverlapItemCallBack.onOverLapCheckButtonClick(todos)
+                onOverlapItemCallBack.onOverLapCheckButtonClick(eTakingTime, todo.atcCode.code)
             }
         }
     }

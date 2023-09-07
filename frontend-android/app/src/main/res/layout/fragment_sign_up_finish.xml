@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.viewpharm.yakal.signup.viewmodel.NextEventViewModel" />
+            type="com.viewpharm.yakal.signup.viewmodel.FinishViewModel" />
     </data>
 
     <FrameLayout
@@ -55,6 +55,7 @@
                 android:textColor="@drawable/btn_sign_up_text_color"
 
                 android:onClick="@{() -> viewModel.onClickNextButton()}"
+                android:enabled="@{viewModel.nextEnable}"
                 android:outlineProvider="none"
                 android:background="@drawable/btn_sign_up_next"
                 app:layout_constraintBottom_toBottomOf="parent"

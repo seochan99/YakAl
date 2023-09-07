@@ -7,14 +7,18 @@ import androidx.lifecycle.ViewModelProvider
 import com.viewpharm.yakal.base.BaseViewModel
 import com.viewpharm.yakal.event.Event
 import com.viewpharm.yakal.main.model.AtcCode
+import com.viewpharm.yakal.main.model.OverlapDoses
 import com.viewpharm.yakal.main.model.PillTodo
 import com.viewpharm.yakal.main.model.Schedule
+import com.viewpharm.yakal.repository.DoseRepository
 import com.viewpharm.yakal.type.ETakingTime
 import com.viewpharm.yakal.util.CalendarUtil
 import timber.log.Timber
 import java.time.LocalDate
 
-class HomeTodoViewModel: BaseViewModel() {
+class HomeTodoViewModel(
+    private val doseRepository: DoseRepository
+): BaseViewModel() {
     private val _dateText = MutableLiveData<String>()
     val dateText: LiveData<String> = _dateText
     private val _progress = MutableLiveData<Int>()
@@ -37,191 +41,19 @@ class HomeTodoViewModel: BaseViewModel() {
     private val _takenCntText = MutableLiveData<String>()
     val takenCntText: LiveData<String> = _takenCntText
 
+    private lateinit var overlapDoses: Map<ETakingTime, List<OverlapDoses>>
     private var totalCnt: Int = 0
     private var takenCnt: Int = 0
     private var date: LocalDate = LocalDate.now()
 
     init {
-        _init()
+        initData()
     }
 
-    fun _init() {
+    private fun initData() {
         _dateText.value = CalendarUtil.getFormattedDayFromDate(date)
-        _schedules.value = listOf(
-            Schedule(
-                ETakingTime.MORNING,
-                isCompleted = false,
-                isExpanded = false,
-                listOf(
-                    PillTodo(
-                        id = 1,
-                        name = "덱시로펜정",
-                        effect = "해열, 진통, 소염제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 0),
-                        2,
-                        isOverLap = true,
-                        isTaken = true),
-                    PillTodo(
-                        id = 2,
-                        name = "동광레바미피드정",
-                        effect = "소화성 궤양용제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 2),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 3,
-                        name = "코푸정",
-                        effect = "진해거담제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 4,
-                        name = "베스티온정",
-                        effect = "항히스타민제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                )
-            ),
-            Schedule(
-                ETakingTime.AFTERNOON,
-                isCompleted = false,
-                isExpanded = false,
-                listOf(
-                    PillTodo(
-                        id = 1,
-                        name = "덱시로펜정",
-                        effect = "해열, 진통, 소염제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 0),
-                        2,
-                        isOverLap = true,
-                        isTaken = true),
-                    PillTodo(
-                        id = 2,
-                        name = "동광레바미피드정",
-                        effect = "소화성 궤양용제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 2),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 3,
-                        name = "코푸정",
-                        effect = "진해거담제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 4,
-                        name = "베스티온정",
-                        effect = "항히스타민제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                )
-            ),
-            Schedule(
-                ETakingTime.EVENING,
-                isCompleted = false,
-                isExpanded = false,
-                listOf(
-                    PillTodo(
-                        id = 1,
-                        name = "덱시로펜정",
-                        effect = "해열, 진통, 소염제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 0),
-                        2,
-                        isOverLap = true,
-                        isTaken = true),
-                    PillTodo(
-                        id = 2,
-                        name = "동광레바미피드정",
-                        effect = "소화성 궤양용제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 2),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 3,
-                        name = "코푸정",
-                        effect = "진해거담제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 4,
-                        name = "베스티온정",
-                        effect = "항히스타민제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                )
-            ),
-            Schedule(
-                ETakingTime.DEFAULT,
-                isCompleted = false,
-                isExpanded = false,
-                listOf(
-                    PillTodo(
-                        id = 1,
-                        name = "덱시로펜정",
-                        effect = "해열, 진통, 소염제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 0),
-                        2,
-                        isOverLap = true,
-                        isTaken = true),
-                    PillTodo(
-                        id = 2,
-                        name = "동광레바미피드정",
-                        effect = "소화성 궤양용제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 2),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 3,
-                        name = "코푸정",
-                        effect = "진해거담제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                    PillTodo(
-                        id = 4,
-                        name = "베스티온정",
-                        effect = "항히스타민제",
-                        kdCode = "00000000",
-                        AtcCode(code = "00000000", score = 3),
-                        1,
-                        isOverLap = false,
-                        isTaken = false),
-                )
-            ),
-            Schedule.getInVisibleSchedule()
-        )
+        _schedules.value = doseRepository.getTodoSchedules()
+        overlapDoses = doseRepository.getOverlapDoses()
 
         // totalCnt의 크기는 스케줄 안에 있는 PillTodo의 총 갯수
         totalCnt = _schedules.value?.sumOf { it.todos.size } ?: 0
@@ -236,10 +68,18 @@ class HomeTodoViewModel: BaseViewModel() {
         _takingText.value = if (totalCnt != 0) { "오늘 복용해야 하는 약은\n총 ${totalCnt}개입니다" } else { "오늘 복용해야 하는 약은\n없습니다." }
     }
 
+    fun getOverLapList(eTakingTime: ETakingTime, atcCodeStr: String): List<PillTodo> {
+        // overlapDoses에서 시간에 해당하며 ,atc인 코드 찾기
+        val pillTodos: List<String> = overlapDoses[eTakingTime]?.filter { it.atcCode == atcCodeStr }?.flatMap { it.kdCodes } ?: listOf()
+
+        // 해당시간에 해당하는 스케줄를 통해 pillTodos에 있는 pill 찾기
+        return _schedules.value?.filter { it.eTakingTime == eTakingTime }?.flatMap { it.todos }?.filter { pillTodos.contains(it.kdCode) } ?: listOf()
+    }
+
     fun updateDate(date: LocalDate) {
         this.date = date
         _dateText.value = CalendarUtil.getFormattedDayFromDate(date)
-        _init()
+        initData()
     }
 
     fun updateSchedule(eTakingTime: ETakingTime) {
@@ -316,9 +156,11 @@ class HomeTodoViewModel: BaseViewModel() {
         _addButtonEvent.value = Event(Unit)
     }
 
-    class TodoViewModelFactory: ViewModelProvider.Factory {
+    class TodoViewModelFactory(
+        private val doseRepository: DoseRepository
+    ): ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return HomeTodoViewModel() as T
+            return HomeTodoViewModel(doseRepository) as T
         }
     }
 }
