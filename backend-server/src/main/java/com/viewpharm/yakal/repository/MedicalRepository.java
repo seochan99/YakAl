@@ -60,7 +60,7 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
 
     List<Medical> findByMedicalName(String name);
 
-    int countAllByIsRegisterTrueAndType(EMedical eMedical);
+    Long countAllByIsRegisterTrueAndType(EMedical eMedical);
 
-    int countAllByIsRegisterTrueAndTypeAndMedicalName(EMedical eMedical,String name);
+    Long countAllByIsRegisterTrueAndTypeAndMedicalName(EMedical eMedical,String name);
 }

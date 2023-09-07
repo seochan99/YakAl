@@ -191,7 +191,7 @@ public class MedicalService {
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
         List<Medical> medicals = name == null ? medicalRepository.findAllByIsRegisterTrueAndType(eMedical,pageable)
                                                 : medicalRepository.findAllByIsRegisterTrueAndTypeAndMedicalName(eMedical,name,pageable);
-        int count = name == null ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
+        Long count = name == null ? medicalRepository.countAllByIsRegisterTrueAndType(eMedical)
                                     : medicalRepository.countAllByIsRegisterTrueAndTypeAndMedicalName(eMedical, name);
 
         List<MedicalDto> medicalDtoList = medicals.stream()
