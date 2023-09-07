@@ -18,8 +18,8 @@ import org.hibernate.annotations.DynamicUpdate;
 public class DoseName {
     @Id
     @Column(name = "id")
-    private String atcCode;
+    private String kdCode;
 
     @Column(name = "dose_name", nullable = false)
-    private int doseName;
+    private String doseName;
 }
