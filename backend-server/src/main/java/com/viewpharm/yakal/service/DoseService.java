@@ -23,6 +23,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -268,28 +269,36 @@ public class DoseService {
         return isInserted;
     }
 
-    public List<PrescribedDto> getPrescribedDoses(final Long userId, Long pageIndex, Long pageSize, EPeriod ePeriod){
+    public PrescribedDto getPrescribedDoses(final Long userId, Integer pageIndex, Integer pageSize, EPeriod ePeriod) {
         userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
-        LocalDate lastDate = LocalDate.now();
-        switch (ePeriod){
-            case WEEK -> lastDate.minusDays(7);
-            case MONTH -> lastDate.minusMonths(1);
-            case THREEMONTH -> lastDate.minusMonths(3);
-            case HALFYEAR -> lastDate.minusMonths(6);
-            case YEAR -> lastDate.minusYears(1L);
-            case ALL -> lastDate.minusYears(100L);
+        final LocalDate today = LocalDate.now();
+        LocalDate lastDate = null;
+
+        switch (ePeriod) {
+            case WEEK -> lastDate = today.minusDays(7);
+            case MONTH -> lastDate = today.minusMonths(1);
+            case THREEMONTH -> lastDate = today.minusMonths(3);
+            case HALFYEAR -> lastDate = today.minusMonths(6);
+            case YEAR -> lastDate = today.minusYears(1L);
+            case ALL -> lastDate = today.minusYears(100L);
         }
 
-        List<DoseRepository.prescribed> prescribeds = doseRepository.findDistinctByKDCodeAndPrescription(userId,lastDate,pageable);
+        List<DoseRepository.prescribed> prescribeds = doseRepository.findAllByUserIdAndLastDate(userId, lastDate);
 
-        //Dto 변환
-        List<PrescribedDto> prescribedDtoList = prescribeds.stream()
-                .map(b -> new PrescribedDto(b.getKDCode(),b.getScore(),b.getDate()))
+        List<DoseRepository.prescribed> sublist;
+
+        if (prescribeds.size() <= (pageIndex + 1) * pageSize) {
+            sublist = prescribeds.subList(pageIndex * pageSize, prescribeds.size());
+        } else {
+            sublist = prescribeds.subList(pageIndex * pageSize, (pageIndex + 1) * pageSize);
+        }
+
+        List<PrescribedItemDto> prescribedDtoList = sublist.stream()
+                .map(b -> new PrescribedItemDto(b.getName(), b.getScore(), b.getPrescribedDate()))
                 .collect(Collectors.toList());
 
-        return prescribedDtoList;
+        return new PrescribedDto(prescribedDtoList, prescribeds.size());
     }
 
     public void deleteSchedule(final List<Long> ids) {

@@ -30,11 +30,13 @@ import {
   Subtitle,
   Title,
 } from "./style.ts";
-import React, { useRef, useState } from "react";
-import { EFacility } from "@/expert/type/facility.ts";
-import { EInfoTake } from "@/expert/type/info-take.ts";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useRegisterImageMutation, useRegisterMutation } from "../../../api/registration.ts";
+import { EFacility } from "../../../type/facility.ts";
+import { EInfoTake } from "../../../type/info-take.ts";
 
-function FacilityRegistration() {
+export function FacilityRegistration() {
   const [selected, setSelected] = useState<EFacility | null>(null);
   const [facilityDirectorName, setFacilityDirectorName] = useState<string>("");
   const [directorPhoneNumber, setDirectorPhoneNumber] = useState<string>("");
@@ -51,6 +53,11 @@ function FacilityRegistration() {
   const [facilityHours, setFacilityHours] = useState<string>("");
   const [facilityFeatures, setFacilityFeatures] = useState<string>("");
   const [informationTakenWay, setInformationTakenWay] = useState<EInfoTake | undefined>(undefined);
+
+  const [trigger, currentResult] = useRegisterMutation();
+  const [triggerSecond, currentSecondResult] = useRegisterImageMutation();
+
+  const navigate = useNavigate();
 
   const isFinished =
     facilityDirectorName.length > 0 &&
@@ -133,8 +140,55 @@ function FacilityRegistration() {
   };
 
   const handleSubmit = () => {
-    console.log("Submit!!");
+    if (selected === null || informationTakenWay === undefined) {
+      return;
+    }
+
+    trigger({
+      medicalType: selected,
+      directorName: facilityDirectorName,
+      directorTel: directorPhoneNumber,
+      medicalName: facilityName,
+      medicalTel: facilityContact,
+      zipCode: facilityPostcode,
+      medicalAddress: facilityAddress,
+      medicalDetailAddress: facilityAddressDetail,
+      businessRegistrationNumber: facilityBusinessNumber,
+      reciveType: informationTakenWay,
+      medicalRuntime: facilityHours,
+      medicalCharacteristics: facilityFeatures,
+    });
   };
+
+  useEffect(() => {
+    const { isSuccess, isLoading } = currentResult;
+
+    if (!isLoading && isSuccess) {
+      if (certificationImg === null) {
+        return;
+      }
+
+      const form = new FormData();
+      form.append("file", certificationImg);
+
+      triggerSecond({
+        registerId: currentResult.data.registrationId,
+        image: form,
+      });
+    }
+  }, [certificationImg, currentResult, triggerSecond]);
+
+  useEffect(() => {
+    const { isSuccess, isLoading, isError } = currentSecondResult;
+
+    if (isError) {
+      navigate("/expert/registration/failure");
+    }
+
+    if (!isLoading && isSuccess) {
+      navigate("/expert/registration/success");
+    }
+  }, [currentSecondResult, navigate]);
 
   return (
     <Outer>
@@ -288,8 +342,8 @@ function FacilityRegistration() {
                       type="radio"
                       name="info-take"
                       value={informationTakenWay}
-                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.E_MAIL : false}
-                      onChange={() => setInformationTakenWay(EInfoTake.E_MAIL)}
+                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.EMAIL : false}
+                      onChange={() => setInformationTakenWay(EInfoTake.EMAIL)}
                     />
                     <span>이메일</span>
                   </label>
@@ -308,10 +362,8 @@ function FacilityRegistration() {
                       type="radio"
                       name="info-take"
                       value={informationTakenWay}
-                      checked={
-                        informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NOT_RECEIVE : false
-                      }
-                      onChange={() => setInformationTakenWay(EInfoTake.NOT_RECEIVE)}
+                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NONE : false}
+                      onChange={() => setInformationTakenWay(EInfoTake.NONE)}
                     />
                     <span>받지 않음</span>
                   </label>
@@ -345,5 +397,3 @@ function FacilityRegistration() {
     </Outer>
   );
 }
-
-export default FacilityRegistration;

@@ -15,7 +15,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import okhttp3.Response;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +60,17 @@ public class UserController {
     public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
         userService.identify(id, identifyDto.getImpUid());
         return ResponseDto.ok(null);
+    }
+
+    @GetMapping("/check/identification")
+    @Operation(summary = "사용자 본인인증 여부 확인")
+    public ResponseDto<Map<String, Boolean>> checkIdentification(@UserId Long id) {
+        final Map<String, Boolean> map = new HashMap<>(1);
+        map.put("isIdentified", userService.checkIdentification(id));
+
+        log.info("isIdentified: {}", userService.checkIdentification(id));
+
+        return ResponseDto.ok(map);
     }
 
     @GetMapping("/register")

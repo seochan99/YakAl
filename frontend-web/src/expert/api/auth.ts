@@ -1,5 +1,5 @@
+import { baseQueryWithReauth, TResponse } from "./api.ts";
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { TResponse, baseQueryWithReauth } from "./api.ts";
 
 export type TLogout = {
   success: boolean;

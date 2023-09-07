@@ -22,8 +22,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 @Service
@@ -96,6 +94,14 @@ public class UserService {
         user.setName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
+        user.setIsIdentified(true);
+    }
+
+    public Boolean checkIdentification(final Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        return user.getIsIdentified();
     }
   
     public UserExpertDto getUserExpertInfo(final Long userId) {
@@ -103,10 +109,13 @@ public class UserService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         return UserExpertDto.builder()
-                .userName(user.getName())
-                .eJob(user.getJob())
-                .department(user.getDepartment()).
-                build();
+                .name(user.getName())
+                .tel(user.getTel())
+                .birthday(user.getBirthday())
+                .job(user.getJob())
+                .department(user.getDepartment())
+
+                .build();
     }
 
     public void updateUserInfo(final Long userId, final String name, final Boolean isDetail, final LocalDate birthday, final ESex sex) {

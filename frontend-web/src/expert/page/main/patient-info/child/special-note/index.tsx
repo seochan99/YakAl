@@ -1,50 +1,61 @@
 import {
+  AddButton,
   Bar,
-  ItemRecordedDate,
-  RecordedDateHeader,
-  ItemTitle,
-  TitleHeader,
+  DialogBox,
+  DialogCancelButton,
+  DialogConfirmButton,
+  DialogDeleteButton,
+  DialogFooter,
+  DialogHeader,
+  DialogInputBox,
+  DialogRecordDate,
+  DialogTitle,
+  Header,
   Item,
+  ItemRecordedDate,
+  ItemTitle,
+  Label,
   List,
   ListHeader,
-  Title,
-  Header,
-  AddButton,
-  DialogBox,
-  DialogCancleButton,
-  DialogConfirmButton,
-  DialogFooter,
-  DialogInputBox,
-  DialogTitle,
-  NoteTitleInput,
   NoteDescriptionInput,
-  Label,
-  DialogHeader,
-  DialogRecordDate,
+  NoteTitleInput,
+  RecordedDateHeader,
+  Title,
+  TitleHeader,
 } from "./style.ts";
 
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Pagination from "react-js-pagination";
 import { useState } from "react";
-import { ListFooter } from "@/expert/style.ts";
 import { Dialog, useMediaQuery, useTheme } from "@mui/material";
+import {
+  TNoteItem,
+  useCreateNoteMutation,
+  useDeleteNoteMutation,
+  useGetNoteListQuery,
+  useModifyNoteMutation,
+} from "../../../../../api/note-list.ts";
+import { ListFooter } from "../../../../../style.ts";
+import ErrorPage from "../../../../error-page";
+import LoadingPage from "../../../../loading-page";
 
 type TSpecialNoteProps = {
   patientId: number;
 };
 
-type TNoteItem = {
-  id: number;
-  title: string;
-  description: string;
-  recorded_at: Date;
-};
+const PAGING_PAGE = 5;
 
 function SpecialNote({ patientId }: TSpecialNoteProps) {
+  const [createIsOpen, setCreateIsOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const [currentNote, setCurrentNote] = useState<TNoteItem | null>(null);
   const [currentTitle, setCurrentTitle] = useState<string>("");
   const [currentDescription, setCurrentDescription] = useState<string>("");
+
+  const { data, isError, isLoading } = useGetNoteListQuery({ patientId, page: page - 1 });
+  const [triggerCreateNote] = useCreateNoteMutation();
+  const [triggerModifyNote] = useModifyNoteMutation();
+  const [triggerDeleteNote] = useDeleteNoteMutation();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm")); // width: 600px
@@ -69,25 +80,51 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
     setCurrentDescription("");
   };
 
-  const noteList: TNoteItem[] = [
-    { id: 6, title: "특이사항6", description: "괜찮으십니까?", recorded_at: new Date("2023-08-19") },
-    { id: 5, title: "특이사항5", description: "괜찮으십니까?", recorded_at: new Date("2023-08-18") },
-    { id: 4, title: "특이사항4", description: "괜찮으십니까?", recorded_at: new Date("2023-08-17") },
-    { id: 3, title: "특이사항3", description: "괜찮으십니까?", recorded_at: new Date("2023-08-16") },
-    { id: 2, title: "특이사항2", description: "괜찮으십니까?", recorded_at: new Date("2023-08-15") },
-    {
-      id: 1,
-      title: "특이사항1",
-      description: "괜찮으십니까?",
-      recorded_at: new Date("2023-08-14"),
-    },
-  ];
+  const handleCreateDialogClose = () => {
+    setCreateIsOpen(false);
+    setCurrentTitle("");
+    setCurrentDescription("");
+  };
+
+  const handleModifyDialogSubmit = () => {
+    if (currentNote?.id) {
+      triggerModifyNote({ noteId: currentNote?.id, title: currentTitle, description: currentDescription });
+    }
+
+    handleDialogClose();
+  };
+
+  const handleCreateDialogSubmit = () => {
+    if (patientId) {
+      triggerCreateNote({ patientId, title: currentTitle, description: currentDescription });
+    }
+
+    handleCreateDialogClose();
+  };
+
+  const handleDeleteDialogSubmit = () => {
+    if (currentNote?.id) {
+      triggerDeleteNote({ noteId: currentNote?.id });
+    }
+
+    handleDialogClose();
+  };
+
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError || !data) {
+    return <ErrorPage />;
+  }
+
+  const noteList: TNoteItem[] = data.datalist;
 
   return (
     <>
       <Header>
         <Title>특이 사항</Title>
-        <AddButton>
+        <AddButton onClick={() => setCreateIsOpen(true)}>
           <AddOutlinedIcon />
           추가
         </AddButton>
@@ -98,17 +135,13 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
           <TitleHeader>제목</TitleHeader>
           <RecordedDateHeader>기록일</RecordedDateHeader>
         </ListHeader>
-        {noteList.slice(5 * (page - 1), 5 * page).map((note) => (
+        {noteList.map((note) => (
           <Item key={note.id} onClick={handleDialogOpen(note.id)}>
             <ItemTitle>{note.title.length > 15 ? note.title.substring(0, 14).concat("...") : note.title}</ItemTitle>
             <ItemRecordedDate>
-              {`${note.recorded_at.getFullYear()}.
-              ${
-                note.recorded_at.getMonth() + 1 < 10
-                  ? "0".concat((note.recorded_at.getMonth() + 1).toString())
-                  : note.recorded_at.getMonth() + 1
-              }.
-              ${note.recorded_at.getDate()}.`}
+              {`${note.createDate[0]}.
+              ${note.createDate[1] < 10 ? "0".concat(note.createDate[1].toString()) : note.createDate[1]}.
+              ${note.createDate[2] < 10 ? "0".concat(note.createDate[2].toString()) : note.createDate[2]}.`}
             </ItemRecordedDate>
           </Item>
         ))}
@@ -116,7 +149,7 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
       <ListFooter>
         <Pagination
           activePage={page}
-          itemsCountPerPage={5}
+          itemsCountPerPage={PAGING_PAGE}
           totalItemsCount={noteList.length}
           pageRangeDisplayed={3}
           prevPageText={"‹"}
@@ -131,13 +164,16 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
             <DialogRecordDate>
               {"기록일: "}
               {currentNote &&
-                `${currentNote.recorded_at.getFullYear()}.
-              ${
-                currentNote.recorded_at.getMonth() + 1 < 10
-                  ? "0".concat((currentNote.recorded_at.getMonth() + 1).toString())
-                  : currentNote.recorded_at.getMonth() + 1
-              }.
-              ${currentNote.recorded_at.getDate()}.`}
+                currentNote.createDate &&
+                `${currentNote.createDate[0]}. ${
+                  currentNote.createDate[1] < 10
+                    ? "0".concat(currentNote.createDate[1].toString())
+                    : currentNote.createDate[1]
+                }. ${
+                  currentNote.createDate[2] < 10
+                    ? "0".concat(currentNote.createDate[2].toString())
+                    : currentNote.createDate[2]
+                }.`}
             </DialogRecordDate>
           </DialogHeader>
           <Bar />
@@ -148,8 +184,27 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
             <NoteDescriptionInput value={currentDescription} onChange={(e) => setCurrentDescription(e.target.value)} />
           </DialogInputBox>
           <DialogFooter>
-            <DialogCancleButton onClick={handleDialogClose}>취소</DialogCancleButton>
-            <DialogConfirmButton onClick={handleDialogClose}>수정</DialogConfirmButton>
+            <DialogDeleteButton onClick={handleDeleteDialogSubmit}>삭제</DialogDeleteButton>
+            <DialogCancelButton onClick={handleDialogClose}>취소</DialogCancelButton>
+            <DialogConfirmButton onClick={handleModifyDialogSubmit}>수정</DialogConfirmButton>
+          </DialogFooter>
+        </DialogBox>
+      </Dialog>
+      <Dialog open={createIsOpen} onClose={handleCreateDialogClose} fullScreen={fullScreen} keepMounted>
+        <DialogBox>
+          <DialogHeader>
+            <DialogTitle>특이 사항 추가</DialogTitle>
+          </DialogHeader>
+          <Bar />
+          <DialogInputBox>
+            <Label>제목</Label>
+            <NoteTitleInput value={currentTitle} onChange={(e) => setCurrentTitle(e.target.value)} />
+            <Label>내용</Label>
+            <NoteDescriptionInput value={currentDescription} onChange={(e) => setCurrentDescription(e.target.value)} />
+          </DialogInputBox>
+          <DialogFooter>
+            <DialogCancelButton onClick={handleDialogClose}>취소</DialogCancelButton>
+            <DialogConfirmButton onClick={handleCreateDialogSubmit}>추가</DialogConfirmButton>
           </DialogFooter>
         </DialogBox>
       </Dialog>

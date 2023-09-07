@@ -286,7 +286,44 @@ export const DialogFooter = styled.div`
   }
 `;
 
-export const DialogCancleButton = styled.button`
+export const DialogDeleteButton = styled.button`
+  & {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border: 0;
+    border-radius: 0.5rem;
+    background-color: #c61a24;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: none;
+    justify-self: start;
+
+    @media only screen and (min-width: 600px) {
+      font-size: 1rem;
+      line-height: 1rem;
+      padding: 0.6rem 1.2rem;
+    }
+
+    @media only screen and (max-width: 599px) {
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+      padding: 1rem 0;
+      flex: 1;
+    }
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: #fef4f5;
+  }
+
+  &:active {
+    background-color: #f7d1d1;
+  }
+`;
+
+export const DialogCancelButton = styled.button`
   & {
     display: inline-flex;
     justify-content: center;
@@ -295,7 +332,6 @@ export const DialogCancleButton = styled.button`
     border-radius: 0.5rem;
     background-color: #fff;
     color: #c61a24;
-    font-family: Pretendard;
     font-weight: 600;
     text-decoration: none;
 
@@ -332,7 +368,6 @@ export const DialogConfirmButton = styled.button`
     border-radius: 0.5rem;
     background-color: #2666f6;
     color: #fff;
-    font-family: Pretendard;
     font-weight: 600;
     text-decoration: none;
 

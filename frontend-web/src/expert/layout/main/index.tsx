@@ -10,25 +10,22 @@ import {
   NavItem,
   NavOuter,
   Outer,
-} from "@/expert/layout/main/style.ts";
+} from "./style.ts";
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
 import Footer from "../footer";
 import Header from "../header";
-import Profile from "@/expert/layout/main/child/profile";
-// import { useGetUserQuery } from "@/api/user";
-// import ErrorPage from "@/page/error-page";
-// import LoadingPage from "@/page/loading-page";
+import Profile from "../../../expert/layout/main/child/profile";
 import { useState } from "react";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
-import ErrorPage from "@/expert/page/error-page";
-import LoadingPage from "@/expert/page/loading-page";
-import { useGetUserQuery } from "@/expert/api/user.ts";
+import ErrorPage from "../../../expert/page/error-page";
+import LoadingPage from "../../../expert/page/loading-page";
+import { useGetUserQuery } from "../../api/user.ts";
 
 export function Main() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -74,7 +71,8 @@ export function Main() {
           </NavOuter>
         )}
         <Profile
-          job="가정의학과 의사"
+          job={data?.job}
+          department={data?.department}
           name={data?.name ? data?.name : ""}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />
@@ -92,6 +90,7 @@ export function Main() {
             <MobileNavList className={isOpen ? "open" : ""}>
               {navRouter.map((itemRouter) => (
                 <MobileNavItem
+                  end={itemRouter.path === "/expert"}
                   key={itemRouter.path + "_" + itemRouter.name}
                   to={itemRouter.path}
                   onClick={() => setIsOpen(false)}

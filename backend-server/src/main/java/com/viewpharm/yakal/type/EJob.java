@@ -4,5 +4,4 @@ public enum EJob {
     PATIENT,
     DOCTOR,
     PHARMACIST,
-    DIETITIAN
 }

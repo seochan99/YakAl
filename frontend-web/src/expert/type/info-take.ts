@@ -1,5 +1,5 @@
 export enum EInfoTake {
-  E_MAIL,
+  EMAIL,
   PHONE,
-  NOT_RECEIVE,
+  NONE,
 }
