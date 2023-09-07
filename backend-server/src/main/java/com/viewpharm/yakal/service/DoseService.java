@@ -268,7 +268,7 @@ public class DoseService {
 
         return isInserted;
     }
-    
+
     public PrescribedDto getPrescribedDoses(final Long userId, Integer pageIndex, Integer pageSize, EPeriod ePeriod) {
         userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -295,7 +295,7 @@ public class DoseService {
         }
 
         List<PrescribedItemDto> prescribedDtoList = sublist.stream()
-                .map(b -> new PrescribedItemDto(b.getKDCode(), b.getScore(), b.getPrescribedDate()))
+                .map(b -> new PrescribedItemDto(b.getName(), b.getScore(), b.getPrescribedDate()))
                 .collect(Collectors.toList());
 
         return new PrescribedDto(prescribedDtoList, prescribeds.size());

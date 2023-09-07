@@ -48,10 +48,10 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     @Modifying(clearAutomatically = true, flushAutomatically = true)
     void deleteAllByIdInBatch(Iterable<Long> longs);
 
-    @Query(value = "SELECT d.kd_code as KDCode, r.score as Score, p.prescribed_date as prescribedDate FROM doses d " +
-            "JOIN risks r ON d.risks_id = r.id JOIN prescriptions p ON d.prescription_id = p.id " +
+    @Query(value = "SELECT dn.dose_name as name, r.score as score, p.prescribed_date as prescribedDate FROM doses d " +
+            "JOIN risks r ON d.risks_id = r.id JOIN prescriptions p ON d.prescription_id = p.id JOIN dosenames dn ON d.dosename_id = dn.id " +
             "where d.user_id = :userId and p.is_allow = true and p.prescribed_date >= :lastDate " +
-            "group by KDCode, Score, prescribedDate order by prescribedDate", nativeQuery = true)
+            "group by name, score, prescribedDate order by prescribedDate", nativeQuery = true)
     List<prescribed> findAllByUserIdAndLastDate(@Param("userId") Long userId, @Param("lastDate") LocalDate lastDate);
 
     interface oneDaySummary {
@@ -78,7 +78,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     }
 
     interface prescribed {
-        String getKDCode();
+        String getName();
 
         int getScore();
 

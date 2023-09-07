@@ -30,7 +30,6 @@ import { EPeriod } from "../../../../../type/period.ts";
 import { useGetDoseListQuery } from "../../../../../api/dose-list.ts";
 import LoadingPage from "../../../../loading-page";
 import ErrorPage from "../../../../error-page";
-import axios from "axios";
 
 type TDoseListProps = {
   patientId: number;
@@ -42,7 +41,6 @@ function DoseList({ patientId }: TDoseListProps) {
   const [page, setPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(5);
-  const [drugName, setDrugName] = useState<Map<string, string>>(new Map<string, string>());
 
   const { data, isError, isLoading } = useGetDoseListQuery({
     patientId,
@@ -69,31 +67,6 @@ function DoseList({ patientId }: TDoseListProps) {
       document.removeEventListener("mouseup", handleOutOfMenuClick);
     };
   }, [isOpen]);
-
-  useEffect(() => {
-    if (!data) {
-      return;
-    }
-
-    const map = new Map<string, string>();
-
-    for (const doseItem in data.prescribedList) {
-      axios
-        .get(`${import.meta.env.VITE_KIMS_HOST}?drugcode=${doseItem.kdcode}&drugType=N`, {
-          headers: {
-            Authorization: `Basic ${btoa(
-              import.meta.env.VITE_KIMS_USERNAME + ":" + import.meta.env.VITE_KIMS_PASSWORD,
-            )}`,
-          },
-        })
-        .then((response) => {
-          map.set(doseItem.kdcode, response.name);
-        })
-        .catch(() => {
-          map.set(doseItem.kdcode, "알수없음");
-        });
-    }
-  }, [data]);
 
   const handlePageChange = (page: number) => {
     setPage(page);
@@ -122,11 +95,13 @@ function DoseList({ patientId }: TDoseListProps) {
     return <LoadingPage />;
   }
 
-  if (isError || !data) {
+  if (isError || !data || !data.prescribedList) {
     return <ErrorPage />;
   }
 
   const doseList = data.prescribedList;
+
+  console.log(doseList);
 
   return (
     <>
@@ -158,8 +133,8 @@ function DoseList({ patientId }: TDoseListProps) {
           <DateHeader>처방일</DateHeader>
         </ListHeader>
         {doseList.map((dose) => (
-          <Item key={dose.kdcode}>
-            <ItemTitle>{dose.kdcode.length > 9 ? dose.kdcode.substring(0, 8).concat("...") : dose.kdcode}</ItemTitle>
+          <Item key={dose.name}>
+            <ItemTitle>{dose.name.length > 9 ? dose.name.substring(0, 8).concat("...") : dose.name}</ItemTitle>
             <ItemIcon>{getRiskIcon(dose.score)}</ItemIcon>
             <ItemDate>
               {`${dose.prescribedDate[0]}. ${

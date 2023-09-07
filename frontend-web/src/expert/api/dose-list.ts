@@ -7,7 +7,7 @@ type TDoseListResponse = {
 };
 
 export type TDoseList = {
-  kdcode: string;
+  name: string;
   score: number;
   prescribedDate: number[];
 };

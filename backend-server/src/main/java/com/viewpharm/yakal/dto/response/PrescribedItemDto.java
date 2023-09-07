@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class PrescribedItemDto {
 
-    private final String KDCode;
-    private final Integer Score;
+    private final String name;
+    private final Integer score;
     private final LocalDate prescribedDate;
 }
