@@ -99,6 +99,10 @@ public class User {
     @Column(name = "department")
     private String department;
 
+    // 인증 여부
+    @Column(name = "is_identified", columnDefinition = "TINYINT(1)")
+    private Boolean isIdentified;
+
     //의사 약사 영양사 인증 여부
     @Column(name = "is_certified")
     private Boolean isCertified;
@@ -155,6 +159,7 @@ public class User {
         this.isDetail = true;
         this.notiIsAllowed = true;
         this.image = image;
+        this.isIdentified = false;
     }
 
     public void logout() {

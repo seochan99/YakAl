@@ -7,7 +7,6 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-  font-family: Pretendard;
 
   @media only screen and (min-width: 769px) {
     margin: 0;
@@ -105,6 +104,7 @@ export const Sex = styled.span`
     line-height: 1.2rem;
     margin-left: 2rem;
   }
+
   & svg {
     height: 1.4rem;
     margin-left: 0.4rem;

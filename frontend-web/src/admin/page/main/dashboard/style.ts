@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const Outer = styled.div`
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(4, 15rem);
+  grid-template-rows: repeat(4, 10rem);
   gap: 2rem;
   padding: 2rem;
 `;
@@ -20,8 +20,8 @@ export const InnerBoxTitle = styled.span`
     flex-direction: row;
     align-items: center;
     color: #fff;
-    font-size: 1.1rem;
-    line-height: 1.1rem;
+    font-size: 1rem;
+    line-height: 1rem;
     font-weight: 500;
     gap: 0.6rem;
   }

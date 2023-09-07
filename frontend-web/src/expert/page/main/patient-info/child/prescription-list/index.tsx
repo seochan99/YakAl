@@ -1,17 +1,24 @@
-import Pagination from "react-js-pagination";
-import { Header, Title, Bar, Item, ItemTitle, List } from "./style.ts";
-import { useState } from "react";
-import { ListFooter } from "@/expert/style.ts";
+import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
+import LoadingPage from "../../../../loading-page";
+import ErrorPage from "../../../../error-page";
+import { useGetHistoryQuery } from "../../../../../api/history.ts";
 
-function PrescriptionList() {
-  const [page, setPage] = useState<number>(1);
+type TPrescriptionListProps = {
+  patientId: number;
+};
 
-  const handlePageChange = (page: number) => {
-    setPage(page);
-    console.log(page);
-  };
+function PrescriptionList({ patientId }: TPrescriptionListProps) {
+  const { data, isLoading, isError } = useGetHistoryQuery({ patientId });
 
-  const prescriptionList = [{ name: "우울증" }, { name: "고혈압" }, { name: "당뇨" }];
+  if (isLoading) {
+    return <LoadingPage />;
+  }
+
+  if (isError || !data) {
+    return <ErrorPage />;
+  }
+
+  const slice = data.length > 5 ? data.slice(0, 5) : data;
 
   return (
     <>
@@ -20,7 +27,7 @@ function PrescriptionList() {
       </Header>
       <Bar />
       <List>
-        {prescriptionList.slice(5 * (page - 1), 5 * page).map((prescription) => (
+        {slice.map((prescription) => (
           <Item key={prescription.name}>
             <ItemTitle>
               {prescription.name.length > 15 ? prescription.name.substring(0, 14).concat("...") : prescription.name}
@@ -28,17 +35,6 @@ function PrescriptionList() {
           </Item>
         ))}
       </List>
-      <ListFooter>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={5}
-          totalItemsCount={prescriptionList.length}
-          pageRangeDisplayed={3}
-          prevPageText={"‹"}
-          nextPageText={"›"}
-          onChange={handlePageChange}
-        />
-      </ListFooter>
     </>
   );
 }

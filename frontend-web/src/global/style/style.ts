@@ -7,6 +7,8 @@ export const GlobalStyle = createGlobalStyle`
     -ms-user-select: none;
     user-select: none;
 
+    --width-standard: 54rem;
+
     --red-50: #fff0f0;
     --red-100: #ffdddd;
     --red-200: #ffc0c0;

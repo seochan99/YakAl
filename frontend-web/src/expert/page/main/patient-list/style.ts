@@ -2,6 +2,22 @@ import { styled } from "styled-components";
 
 import { ReactComponent as SearchIconSvg } from "@/expert/asset/magnifying-glass.svg";
 
+export const ErrorOuter = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1.25rem;
+`;
+
+export const ErrorMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.5rem;
+  background-color: #fff;
+  flex: 1;
+`;
+
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
@@ -98,22 +114,27 @@ export const SelectButton = styled.button`
       width: 8rem;
     }
   }
+
   & svg {
     height: 1.5rem;
     transition: 0.3s;
     margin-left: 0.4rem;
   }
+
   & span {
     flex: 1;
     text-align: center;
   }
+
   &.open svg {
     transform: rotate(180deg);
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -160,10 +181,12 @@ export const SelectItemButton = styled.button`
     line-height: 1rem;
     padding: 1rem;
   }
+
   &:hover {
     cursor: pointer;
     background-color: #e0dfe6;
   }
+
   &:active {
     background-color: #cbcbd6;
   }
@@ -172,7 +195,7 @@ export const SelectItemButton = styled.button`
 export const List = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.5rem 0;
+  padding: 1rem 0;
   margin: 0;
   width: 100%;
   flex: 1;
@@ -202,6 +225,7 @@ export const Sex = styled.span`
     width: 4rem;
     text-align: center;
   }
+
   & svg {
     height: 1.2rem;
   }

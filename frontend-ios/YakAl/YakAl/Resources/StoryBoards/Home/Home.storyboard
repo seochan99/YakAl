@@ -382,10 +382,10 @@
             </objects>
             <point key="canvasLocation" x="2441.9847328244273" y="734.50704225352115"/>
         </scene>
-        <!--View Controller-->
+        <!--Medicine DetailVC-->
         <scene sceneID="weu-Q6-8XX">
             <objects>
-                <viewController storyboardIdentifier="medicineDetail" id="Oi6-94-jTE" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MedicineDetailVC" id="Oi6-94-jTE" customClass="MedicineDetailVC" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Y0T-rQ-xzV">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -35,9 +35,9 @@ public class ExpertController {
     // 권한에 관한 부분 추가 해야 함 (만료기한)
     @GetMapping("/patient/{userId}/dose")
     @Operation(summary = "약정보 가져오기", description = "환자의 Id로 처방받은 약을 가져온다")
-    public ResponseDto<List<PrescribedDto>> getPrescrbiedDoses(@PathVariable Long userId
-            , @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam EPeriod ePeriod){
-        return ResponseDto.ok(doseService.getPrescribedDoses(userId,page,num,ePeriod));
+    public ResponseDto<PrescribedDto> getPrescrbiedDoses(@PathVariable Long userId
+            , @RequestParam("page") Integer page, @RequestParam("num") Integer num, @RequestParam("period") EPeriod ePeriod){
+        return ResponseDto.ok(doseService.getPrescribedDoses(userId, page, num, ePeriod));
     }
 
     @GetMapping("/patient/{patientId}/surbey")

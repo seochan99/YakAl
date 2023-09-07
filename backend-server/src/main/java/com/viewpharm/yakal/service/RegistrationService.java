@@ -62,7 +62,6 @@ public class RegistrationService {
                 )
         );
 
-
         registrationRepository.save(registration);
 
         return registration.getId();

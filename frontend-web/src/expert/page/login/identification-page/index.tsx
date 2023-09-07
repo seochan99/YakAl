@@ -1,13 +1,11 @@
-// import cryptoJs from "crypto-js";
-// import axios, { isAxiosError } from "axios";
-
-// import getCrypto from "@/util/get-crypto";
 import WarningPage from "@/expert/component/warning-page";
-import useInterval from "@/expert/util/use-interval.ts";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useIdentifyMutation } from "@/expert/api/user.ts";
+import { BackButton } from "./style.ts";
+import LoadingPage from "@/expert/page/loading-page";
+import { useCheckIdentificationQuery } from "@/expert/api/identification.ts";
 
 type TIdResponse = {
   error_code: string | null;
@@ -20,17 +18,31 @@ type TIdResponse = {
 };
 
 function IdentificationPage() {
-  const [dotString, setDotString] = useState<string>(".");
+  const navigate = useNavigate();
+
+  const [title, setTitle] = useState<string>("본인인증을 수행해야합니다.");
+  const [subtitle, setSubtitle] = useState<string>("아래 버튼을 눌러서 본인인증을 수행해주세요.");
 
   const [trigger, { isLoading, isError, isSuccess }] = useIdentifyMutation();
 
-  const navigate = useNavigate();
+  const { data, isError: isCheckError, isLoading: isCkeckLoading } = useCheckIdentificationQuery(null);
 
-  useInterval(() => {
-    setDotString(dotString === "..." ? "." : dotString.concat("."));
-  }, 1000);
+  if (isCkeckLoading) {
+    return <LoadingPage />;
+  }
 
-  useEffect(() => {
+  if (isCheckError) {
+    navigate("/expert/login/identification/failure");
+  }
+
+  if (data && data.isIdentified) {
+    navigate("/expert");
+  }
+
+  const handleIdentificationClick = () => {
+    setSubtitle("");
+    setTitle("본인인증 수행 중");
+
     const cookies = new Cookies();
     cookies.remove("accessToken", { path: "/" });
 
@@ -46,7 +58,7 @@ function IdentificationPage() {
         trigger(response.imp_uid);
       },
     );
-  }, [trigger]);
+  };
 
   if (isError) {
     navigate("/expert/login/identification/failure");
@@ -57,7 +69,9 @@ function IdentificationPage() {
   }
 
   return (
-    <WarningPage icon=":|" title={`본인 인증 중${dotString}`} subtitle="본인 인증 중입니다. 잠시만 기다려주세요." />
+    <WarningPage icon=":)" title={title} subtitle={subtitle}>
+      <BackButton onClick={handleIdentificationClick}>본인 인증</BackButton>
+    </WarningPage>
   );
 }
 

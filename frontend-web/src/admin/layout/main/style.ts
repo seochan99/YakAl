@@ -121,8 +121,8 @@ export const Detail = styled.div`
   & {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    padding: 0;
+    width: 74rem;
+    padding: 2rem;
   }
 
   &.loading {
