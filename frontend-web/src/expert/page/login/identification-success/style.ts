@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as LogoShadeSvg } from "@/expert/asset/logo-shade.svg";
+import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logo-shade.svg";
 import { Link } from "react-router-dom";
 
 export const LogoSection = styled.div`
@@ -24,7 +24,7 @@ export const Description = styled.span`
 `;
 
 export const BigLogo = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
+  content: url("/src/global/assets/yakal-logo.png");
   width: 50%;
   z-index: 1;
 `;

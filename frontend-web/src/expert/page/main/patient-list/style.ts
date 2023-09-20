@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-import { ReactComponent as SearchIconSvg } from "@/expert/asset/magnifying-glass.svg";
+import { ReactComponent as SearchIconSvg } from "@/expert/assets/icons/magnifying-glass-icon.svg";
 
 export const ErrorOuter = styled.div`
   display: flex;

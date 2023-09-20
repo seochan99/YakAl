@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-import { ReactComponent as RedIconSvg } from "/src/expert/asset/red-icon.svg";
-import { ReactComponent as YellowIconSvg } from "/src/expert/asset/yellow-icon.svg";
-import { ReactComponent as GreenIconSvg } from "/src/expert/asset/green-icon.svg";
+import { ReactComponent as RedIconSvg } from "/src/expert/assets/icons/red-icon.svg";
+import { ReactComponent as YellowIconSvg } from "/src/expert/assets/icons/yellow-icon.svg";
+import { ReactComponent as GreenIconSvg } from "/src/expert/assets/icons/green-icon.svg";
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
 
 export const Header = styled.div`

@@ -1,11 +1,11 @@
-import WarningPage from "@/expert/component/warning-page";
+import WarningPage from "../../../../expert/component/warning-page";
 import { useState } from "react";
 import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useIdentifyMutation } from "@/expert/api/user.ts";
+import { useIdentifyMutation } from "../../../api/user.ts";
 import { BackButton } from "./style.ts";
-import LoadingPage from "@/expert/page/loading-page";
-import { useCheckIdentificationQuery } from "@/expert/api/identification.ts";
+import LoadingPage from "../../../../expert/page/loading-page";
+import { useCheckIdentificationQuery } from "../../../api/identification.ts";
 
 type TIdResponse = {
   error_code: string | null;

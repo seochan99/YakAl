@@ -48,7 +48,7 @@ export const IconText = styled.div`
 `;
 
 export const YakAlIcon = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
+  content: url("/src/global/assets/yakal-logo.png");
   width: 5rem;
 `;
 
@@ -105,7 +105,7 @@ export const EnrollButton = styled(Link)`
 `;
 
 export const DoctorIcon = styled.img`
-  content: url("/src/expert/asset/doctor-icon.png");
+  content: url("/src/expert/assets/icons/doctor-icon.png");
   width: 5rem;
 `;
 
@@ -159,7 +159,7 @@ export const Menu = styled.div`
 `;
 
 export const PatientIcon = styled.img`
-  content: url("/src/expert/asset/patient-icon.png");
+  content: url("/src/expert/assets/icons/patient-icon.png");
   width: 6rem;
   height: 6rem;
 `;

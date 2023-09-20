@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
-import { ReactComponent as KakaoIconSvg } from "@/expert/asset/kakao-logo.svg";
-import { ReactComponent as GoogleIconSvg } from "@/expert/asset/google-logo.svg";
-import { ReactComponent as LogoShadeSvg } from "@/expert/asset/logo-shade.svg";
+import { ReactComponent as KakaoIconSvg } from "@/expert/assets/logos/kakao-logo.svg";
+import { ReactComponent as GoogleIconSvg } from "@/expert/assets/logos/google-logo.svg";
+import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logos/logo-shade.svg";
 
 export const InnerCenter = styled.div`
   display: flex;
@@ -62,7 +62,7 @@ export const Description = styled.span`
 `;
 
 export const BigLogo = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
+  content: url("/src/global/assets/yakal-logo.png");
   width: 60%;
   z-index: 1;
 `;
@@ -94,7 +94,7 @@ export const LoginSection = styled.div`
 `;
 
 export const YakalSymbol = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
+  content: url("/src/global/assets/yakal-logo.png");
   width: 16rem;
 `;
 

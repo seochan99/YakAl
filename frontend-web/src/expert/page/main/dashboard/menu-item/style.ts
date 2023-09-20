@@ -26,7 +26,7 @@ export const CoomingSoonTitle = styled.div`
 `;
 
 export const CoomingSoonIcon = styled.img`
-  content: url("/src/expert/asset/cooming-soon-icon.png");
+  content: url("/src/expert/assets/icons/cooming-soon-icon.png");
   width: 6rem;
   height: 6rem;
 `;
@@ -44,6 +44,7 @@ export const CoomingSoonDescription = styled.div`
     line-height: 1.6rem;
     flex: 1;
   }
+
   & * {
     line-height: 1.6rem;
   }
@@ -62,6 +63,7 @@ export const Outer = styled(Link)`
     background-color: #fff;
     padding: 2rem;
   }
+
   &:hover {
     transform: scale(1.05);
     transition: all 0.5s;
@@ -101,6 +103,7 @@ export const Description = styled.div`
     line-height: 1.6rem;
     flex: 1;
   }
+
   & * {
     line-height: 1.6rem;
   }

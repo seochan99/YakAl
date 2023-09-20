@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "@/expert/asset/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "@/expert/assets/icons/back-icon.svg";
 
 export const Outer = styled.div`
   & {
@@ -149,13 +149,13 @@ export const SelectButtonBox = styled.div`
 `;
 
 export const HospitalIcon = styled.img`
-  content: url("/src/expert/asset/hospital-icon.png");
+  content: url("/src/expert/assets/icons/hospital-icon.png");
   width: 3rem;
   height: 3rem;
 `;
 
 export const PharmacyIcon = styled.img`
-  content: url("/src/expert/asset/pharmacy-icon.png");
+  content: url("/src/expert/assets/icons/pharmacy-icon.png");
   width: 3rem;
   height: 3rem;
 `;

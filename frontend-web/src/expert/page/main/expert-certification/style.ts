@@ -1,8 +1,8 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "@/expert/asset/back-icon.svg";
-import { ReactComponent as SearchIconSvg } from "@/expert/asset/magnifying-glass.svg";
+import { ReactComponent as LinkIconSvg } from "@/expert/assets/icons/back-icon.svg";
+import { ReactComponent as SearchIconSvg } from "@/expert/assets/icons/magnifying-glass-icon.svg";
 
 export const Outer = styled.div`
   & {
@@ -149,13 +149,13 @@ export const SelectButtonBox = styled.div`
 `;
 
 export const DoctorIcon = styled.img`
-  content: url("/src/expert/asset/doctor-icon.png");
+  content: url("/src/expert/assets/icons/doctor-icon.png");
   width: 3rem;
   height: 3rem;
 `;
 
 export const PharmacistIcon = styled.img`
-  content: url("/src/expert/asset/pharmacist-icon.png");
+  content: url("/src/expert/assets/icons/pharmacist-icon.png");
   width: 3rem;
   height: 3rem;
 `;
@@ -224,13 +224,13 @@ export const CertExampleBox = styled.div`
 `;
 
 export const CertDoctorImgExample = styled.img`
-  content: url("/src/expert/asset/doctor-example.jpeg");
+  content: url("/src/expert/assets/images/doctor-example.jpeg");
   object-fit: contain;
   height: 21rem;
 `;
 
 export const CertPharmacistEmgExample = styled.img`
-  content: url("/src/expert/asset/pharmacist-example.jpg");
+  content: url("/src/expert/assets/images/pharmacist-example.jpg");
   object-fit: contain;
   height: 21rem;
 `;

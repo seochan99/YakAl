@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "/src/expert/asset/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "/src/expert/assets/icons/back-icon.svg";
 
 export const Outer = styled.div`
   display: flex;
@@ -81,13 +81,13 @@ export const MainHeader = styled.div`
 `;
 
 export const VerifiedIcon = styled.img`
-  content: url("/src/expert/asset/verified-icon.png");
+  content: url("/src/expert/assets/icons/verified-icon.png");
   height: 1.2rem;
   width: 1.2rem;
 `;
 
 export const UnverifiedIcon = styled.img`
-  content: url("/src/expert/asset/unverified-icon.png");
+  content: url("/src/expert/assets/icons/unverified-icon.png");
   height: 1.2rem;
   width: 1.2rem;
 `;

@@ -76,7 +76,7 @@ export const GlobalStyle = createGlobalStyle`
 
   @font-face {
     font-family: "SUIT";
-    src: url("/src/expert/asset/SUIT-Variable.ttf") format("truetype");
+    src: url("/src/global/assets/fonts/SUIT-Variable.ttf") format("truetype");
   }
 
   @font-face {
@@ -84,6 +84,6 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 45 920;
     font-style: normal;
     font-display: swap;
-    src: url('/src/expert/asset/PretendardVariable.woff2') format('woff2-variations');
+    src: url('/src/global/assets/fonts/PretendardVariable.woff2') format('woff2-variations');
   }
 `;

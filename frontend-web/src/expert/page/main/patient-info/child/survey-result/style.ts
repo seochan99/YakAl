@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as LinkIconSvg } from "@/expert/asset/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "@/expert/assets/icons/back-icon.svg";
 
 export const Header = styled.div`
   display: flex;
@@ -26,6 +26,7 @@ export const LinkButton = styled.button`
     border: 0;
     background-color: transparent;
   }
+
   &:hover {
     cursor: pointer;
   }
