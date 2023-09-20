@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FooterOuter = styled.footer`
+export const OuterFooter = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,7 +8,7 @@ export const FooterOuter = styled.footer`
   background-color: var(--color-surface-900);
 `;
 
-export const ViewPharmIcon = styled.img`
+export const IconImg = styled.img`
   & {
     content: url("/src/expert/assets/logos/view-pharm-logo.png");
     margin-left: 10vw;
@@ -22,7 +22,7 @@ export const ViewPharmIcon = styled.img`
   }
 `;
 
-export const ViewPharmExplain = styled.p`
+export const ExplanationParagraph = styled.p`
   margin-left: 2rem;
   margin-right: 10vw;
   line-height: 1.6rem;

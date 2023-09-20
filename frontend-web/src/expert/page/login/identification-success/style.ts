@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logo-shade.svg";
+import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logos/logo-shade.svg";
 import { Link } from "react-router-dom";
 
 export const LogoSection = styled.div`
