@@ -2,13 +2,29 @@
 
 ## 로컬 서버로 시작하기
 
-- 의존성 패키지 다운로드
+---
+
+1. 의존성 패키지 다운로드
 
 ```shell
 npm i
 ```
 
+1. 로컬 개발 서버 가동
+
+```shell
+npm run dev
+```
+
+1. 네트워크 개발 서버 가동
+
+```shell
+npm run dev -- --host
+```
+
 ## Cooperation Rule
+
+---
 
 ### Commit Convention
 
