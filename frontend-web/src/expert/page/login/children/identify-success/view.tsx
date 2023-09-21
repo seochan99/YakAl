@@ -1,6 +1,6 @@
 import { BigLogo, Description, LogoSection, LogoShade, NextButton } from "./style.ts";
 
-function IdentificationSuccess() {
+function IdentifySuccessPage() {
   return (
     <LogoSection>
       <Description>본인 인증을 성공적으로 마쳤습니다.</Description>
@@ -11,4 +11,4 @@ function IdentificationSuccess() {
   );
 }
 
-export default IdentificationSuccess;
+export default IdentifySuccessPage;

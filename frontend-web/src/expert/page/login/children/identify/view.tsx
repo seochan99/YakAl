@@ -13,7 +13,7 @@ type TIdResponse = {
   success: boolean;
 };
 
-function IdentificationPage() {
+function IdentifyPage() {
   const [title, setTitle] = useState<string>("본인인증을 수행해야합니다.");
   const [subtitle, setSubtitle] = useState<string>("아래 버튼을 눌러서 본인인증을 수행해주세요.");
 
@@ -45,4 +45,4 @@ function IdentificationPage() {
   );
 }
 
-export default IdentificationPage;
+export default IdentifyPage;

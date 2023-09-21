@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { Bar, Agreement, NextButton, Outer, TermsContent, TermsHeader, TermsBox } from "./style.ts";
+import { Agreement, Bar, NextButton, Outer, TermsBox, TermsContent, TermsHeader } from "./style.ts";
 
-function SignUpTerms() {
+function TermsPage() {
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   return (
@@ -45,4 +45,4 @@ function SignUpTerms() {
   );
 }
 
-export default SignUpTerms;
+export default TermsPage;

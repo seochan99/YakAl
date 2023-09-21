@@ -5,24 +5,24 @@ import ErrorPage from "../expert/page/error/view.tsx";
 import { Login as AdminLogin } from "../admin/page/login";
 import { LoginPage as ExpertLogin } from "../expert/page/login/view.tsx";
 import LoginMainPage from "../expert/page/login/children/main/view.tsx";
-import SignUpTerms from "../expert/page/login/children/signup-terms";
+import TermsPage from "../expert/page/login/children/terms/view.tsx";
 
 import PatientList from "../expert/page/main/children/patient-list";
 import { Dashboard as ExpertDashboard } from "../expert/page/main/children/dashboard";
 import { Dashboard as AdminDashboard } from "../admin/page/main/dashboard";
 import PatientInfo from "../expert/page/main/children/patient-info";
 
-import SocialLoginFailure from "../expert/page/login/children/social-login-failure";
+import SocialLoginFailurePage from "../expert/page/login/children/social-login-failure/view.tsx";
 import { loader as facilityRegistrationInfoLoader } from "../admin/page/main/facility-registration-info/loader.ts";
 import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
 import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/children/facility-registration";
 import MyInfo from "../expert/page/main/children/my-info";
-import SocialLoginProxy from "../expert/page/login/children/social-login-proxy";
+import SocialLogin from "../expert/page/login/children/social-login/view.tsx";
 import LoadingPage from "../expert/page/loading/view.tsx";
-import IdentificationPage from "../expert/page/login/children/identify/index.tsx";
-import IdentificationFailure from "../expert/page/login/children/identification-failure";
+import IdentifyPage from "../expert/page/login/children/identify/view.tsx";
+import IdentifyFailurePage from "../expert/page/login/children/identify-failure/view.tsx";
 import ExpertCertification from "../expert/page/main/children/expert-certification";
-import IdentificationSuccess from "../expert/page/login/children/identification-success";
+import IdentifySuccessPage from "../expert/page/login/children/identify-success/view.tsx";
 import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
 import RegistrationSuccess from "../expert/page/main/children/registration-success";
 import RegistrationFailure from "../expert/page/main/children/registration-failure";
@@ -136,31 +136,31 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "terms",
-                    element: <SignUpTerms />,
+                    element: <TermsPage />,
                   },
                   {
                     path: "social/failure",
-                    element: <SocialLoginFailure />,
+                    element: <SocialLoginFailurePage />,
                   },
                   {
                     path: "social/kakao",
-                    element: <SocialLoginProxy />,
+                    element: <SocialLogin />,
                   },
                   {
                     path: "social/google",
-                    element: <SocialLoginProxy />,
+                    element: <SocialLogin />,
                   },
                   {
                     path: "identify",
-                    element: <IdentificationPage />,
+                    element: <IdentifyPage />,
                   },
                   {
                     path: "identify/failure",
-                    element: <IdentificationFailure />,
+                    element: <IdentifyFailurePage />,
                   },
                   {
                     path: "identify/success",
-                    element: <IdentificationSuccess />,
+                    element: <IdentifySuccessPage />,
                   },
                 ],
               },

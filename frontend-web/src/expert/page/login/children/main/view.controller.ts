@@ -19,7 +19,7 @@ export const useLoginMainPageViewController = () => {
         openSnackbar();
       }
     }
-  }, [openSnackbar]);
+  }, [setOpen, openSnackbar]);
 
   const onGoogleLoginClick = useCallback(async () => {
     try {
@@ -34,7 +34,7 @@ export const useLoginMainPageViewController = () => {
         openSnackbar();
       }
     }
-  }, [openSnackbar]);
+  }, [setOpen, openSnackbar]);
 
   return {
     onKakaoLoginClick,

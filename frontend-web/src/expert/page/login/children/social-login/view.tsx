@@ -3,7 +3,7 @@ import { Cookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function SocialLoginProxy() {
+function SocialLogin() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -23,4 +23,4 @@ function SocialLoginProxy() {
   return <></>;
 }
 
-export default SocialLoginProxy;
+export default SocialLogin;
