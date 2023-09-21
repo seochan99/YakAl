@@ -1,46 +1,54 @@
 import * as S from "./style.ts";
 import { useLoginMainPageViewController } from "./view.controller.ts";
-import { Snackbar } from "@mui/material";
+import { Alert, Slide, SlideProps, Snackbar } from "@mui/material";
 
 function LoginMainPage() {
   const {
     onKakaoLoginClick,
     onGoogleLoginClick,
-    snackbarController: { open, onClose, actionComponent },
+    snackbarController: { open, onClose },
   } = useLoginMainPageViewController();
 
   return (
-    <S.InnerCenter>
-      <S.LogoSection>
-        <S.TitleBox>
-          <S.Title>{"약 알"}</S.Title>
-          <S.Subtitle>{"전문가 WEB"}</S.Subtitle>
-        </S.TitleBox>
-        <S.Description>{"쉽고 편한 환자관리 솔루"}션</S.Description>
-        <S.BigLogo />
-        <S.LogoShade />
-      </S.LogoSection>
-      <S.LoginSection>
-        <S.LoginTitle>{"로그인"}</S.LoginTitle>
-        <S.ButtonBox>
+    <S.OuterDiv>
+      <S.ServiceIntroDiv>
+        <S.TextDiv>
+          <S.TitleDiv>
+            <S.TitleSpan>{"약 알"}</S.TitleSpan>
+            <S.SubtitleSpan>{"전문가 WEB"}</S.SubtitleSpan>
+          </S.TitleDiv>
+          <S.DescriptionSpan>{"쉽고 편한 환자관리 솔루션"}</S.DescriptionSpan>
+        </S.TextDiv>
+        <S.LogoDiv>
+          <S.LogoImg />
+          <S.StyledLogoShadeSvg />
+        </S.LogoDiv>
+      </S.ServiceIntroDiv>
+      <S.LoginDiv>
+        <S.LoginTitleSpan>{"로그인"}</S.LoginTitleSpan>
+        <S.InnerButtonsDiv>
           <S.KakaoButton onClick={onKakaoLoginClick}>
-            <S.KakaoSymbol />
-            <S.KakaoText>{"카카오로 로그인"}</S.KakaoText>
+            <S.StyledKakaoIconSvg />
+            <S.ButtonTextSpan>{"카카오로 로그인"}</S.ButtonTextSpan>
           </S.KakaoButton>
           <S.GoogleButton onClick={onGoogleLoginClick}>
-            <S.GoogleSymbol />
-            <S.GoogleText>{"Google로 로그인"}</S.GoogleText>
+            <S.StyledGoogleSymbol />
+            <S.ButtonTextSpan>{"Google로 로그인"}</S.ButtonTextSpan>
           </S.GoogleButton>
-        </S.ButtonBox>
-      </S.LoginSection>
+        </S.InnerButtonsDiv>
+      </S.LoginDiv>
       <Snackbar
         open={open}
-        autoHideDuration={6000}
+        autoHideDuration={4000}
         onClose={onClose}
-        message="Note archived"
-        action={actionComponent}
-      />
-    </S.InnerCenter>
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        TransitionComponent={(props: SlideProps) => <Slide {...props} direction="up" children={props.children} />}
+      >
+        <Alert onClose={onClose} severity="error" elevation={6} variant="filled">
+          {"로그인 화면으로 이동하는데 실패했습니다. 다시 시도해주세요."}
+        </Alert>
+      </Snackbar>
+    </S.OuterDiv>
   );
 }
 

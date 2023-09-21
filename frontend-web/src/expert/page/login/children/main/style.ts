@@ -4,7 +4,7 @@ import { ReactComponent as KakaoIconSvg } from "@/expert/assets/logos/kakao-logo
 import { ReactComponent as GoogleIconSvg } from "@/expert/assets/logos/google-logo.svg";
 import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logos/logo-shade.svg";
 
-export const InnerCenter = styled.div`
+export const OuterDiv = styled.div`
   display: flex;
   justify-content: center;
 
@@ -20,130 +20,141 @@ export const InnerCenter = styled.div`
   }
 `;
 
-export const LogoSection = styled.div`
+export const ServiceIntroDiv = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 6rem;
 
   @media only screen and (min-width: 481px) {
     width: 27rem;
   }
 `;
 
-export const TitleBox = styled.div`
+export const TextDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+`;
+
+export const TitleDiv = styled.div`
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 1rem;
+`;
+
+export const TitleSpan = styled.span`
+  color: var(--main, #2666f6);
   text-align: center;
+  font-family: SUIT, serif;
+  font-size: 2.5rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.5rem;
+`;
+
+export const SubtitleSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 2rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem;
+`;
+
+export const DescriptionSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.5rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.5rem;
+`;
+
+export const LogoDiv = styled.div`
+  display: flex;
+  flex-direction: column;
   align-items: center;
 `;
 
-export const Title = styled.span`
-  text-align: center;
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #2666f6;
-  line-height: 4rem;
-`;
-
-export const Subtitle = styled.span`
-  font-size: 2rem;
-  font-weight: 600;
-  color: #90909f;
-  margin-left: 1rem;
-  line-height: 3.2rem;
-`;
-
-export const Description = styled.span`
-  color: #90909f;
-  font-size: 1.5rem;
-  font-weight: 500;
-  text-align: center;
-  margin-bottom: 2rem;
-`;
-
-export const BigLogo = styled.img`
+export const LogoImg = styled.img`
   content: url("/src/global/assets/yakal-logo.png");
-  width: 60%;
   z-index: 1;
+  width: 12.78538rem;
+  height: 7.53425rem;
+  flex-shrink: 0;
 `;
 
-export const LogoShade = styled(LogoShadeSvg)`
-  width: 100%;
-  margin-top: -6rem;
-  fill: radial-gradient(50% 50% at 50% 50%, #8ca9d4 0%, rgba(246, 246, 246, 0) 100%);
+export const StyledLogoShadeSvg = styled(LogoShadeSvg)`
+  /* Variables */
+  --ShadeHeight: 4.395rem;
+
+  /* Styles */
+  width: 25rem;
+  height: var(--ShadeHeight);
+  margin-top: calc((-1) * var(--ShadeHeight) / 2);
+  flex-shrink: 0;
 `;
 
-export const LoginSection = styled.div`
+export const LoginDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   border-radius: 1rem;
-  background-color: white;
-
-  @media only screen and (min-width: 541px) {
-    width: 22rem;
-    padding: 3rem 2rem;
-    gap: 2.5rem;
-  }
-
-  @media only screen and (max-width: 540px) {
-    margin: 0 2rem 4rem;
-    padding: 1.5rem;
-    gap: 1rem;
-  }
+  background: var(--White, #fff);
+  padding: 3rem;
 `;
 
-export const YakalSymbol = styled.img`
-  content: url("/src/global/assets/yakal-logo.png");
-  width: 16rem;
-`;
-
-export const LoginTitle = styled.span`
-  color: #151515;
+export const LoginTitleSpan = styled.span`
+  color: var(--Black, #151515);
   text-align: center;
-  font-size: 1.6rem;
+  font-family: Pretendard, serif;
+  font-size: 1.5rem;
   font-style: normal;
-  font-weight: 600;
-  line-height: 1.5;
+  font-weight: 700;
+  line-height: 1.5rem;
 `;
 
-export const ButtonBox = styled.div`
+export const InnerButtonsDiv = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #fff;
-  border: 0;
+  gap: 1.5rem;
 `;
 
-// Button Style
-const Button = styled.button`
+const CommonButton = styled.button`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 0.5rem;
-  margin: 0.75rem;
-  border-radius: 0.25rem;
+  border-radius: 0.5rem;
+  width: 20rem;
+  height: 4rem;
+  flex-shrink: 0;
 `;
 
-const ButtonSymbol = css`
-  display: inline-block;
-  height: 1.125rem;
-  vertical-align: -0.25rem;
+const ButtonSymbolCSS = css`
+  width: 1.5rem;
+  height: 1.5rem;
+  flex-shrink: 0;
 `;
 
-const ButtonText = styled.span`
-  font-size: 1rem;
-  line-height: 1rem;
+export const ButtonTextSpan = styled.span`
+  color: var(--Black, #151515);
+  text-align: center;
+  font-family: SUIT, serif;
+  font-size: 1.125rem;
+  font-style: normal;
   font-weight: 600;
-  padding: 0.6rem 0;
-  vertical-align: -0.1rem;
+  line-height: 1.89563rem;
 `;
 
-export const KakaoButton = styled(Button)`
+export const KakaoButton = styled(CommonButton)`
   & {
     background-color: #fee500;
-    border: 0.5px solid #d1aa00;
+    border: 0;
   }
 
   &:hover {
@@ -155,18 +166,14 @@ export const KakaoButton = styled(Button)`
   }
 `;
 
-export const KakaoSymbol = styled(KakaoIconSvg)`
-  ${ButtonSymbol}
+export const StyledKakaoIconSvg = styled(KakaoIconSvg)`
+  ${ButtonSymbolCSS}
 `;
 
-export const KakaoText = styled(ButtonText)`
-  color: #151515;
-`;
-
-export const GoogleButton = styled(Button)`
+export const GoogleButton = styled(CommonButton)`
   & {
-    background-color: #fff;
-    border: 0.5px solid #bdbdbd;
+    background-color: var(--White, #fff);
+    border: 1px solid var(--Gray3, #c6c6cf);
   }
 
   &:hover {
@@ -178,10 +185,6 @@ export const GoogleButton = styled(Button)`
   }
 `;
 
-export const GoogleSymbol = styled(GoogleIconSvg)`
-  ${ButtonSymbol}
-`;
-
-export const GoogleText = styled(ButtonText)`
-  color: #151515;
+export const StyledGoogleSymbol = styled(GoogleIconSvg)`
+  ${ButtonSymbolCSS}
 `;

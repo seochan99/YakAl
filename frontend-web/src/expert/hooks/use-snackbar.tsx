@@ -1,7 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { Button, IconButton } from "@mui/material";
-
-import CloseIcon from "@mui/icons-material/Close";
+import { SyntheticEvent, useCallback, useState } from "react";
+import { SnackbarCloseReason } from "@mui/material";
 
 const useSnackbar = () => {
   const [open, setOpen] = useState<boolean>(false);
@@ -11,28 +9,16 @@ const useSnackbar = () => {
   }, [setOpen]);
 
   const onClose = useCallback(
-    (event: React.SyntheticEvent | Event, reason?: string) => {
+    (event: Event | SyntheticEvent<any, Event>, reason?: SnackbarCloseReason) => {
       if (reason === "clickaway") {
         return;
       }
-
       setOpen(false);
     },
     [setOpen],
   );
 
-  const actionComponent = (
-    <React.Fragment>
-      <Button color="secondary" size="small" onClick={onClose}>
-        UNDO
-      </Button>
-      <IconButton size="small" aria-label="close" color="inherit" onClick={onClose}>
-        <CloseIcon fontSize="small" />
-      </IconButton>
-    </React.Fragment>
-  );
-
-  return { open, onClose, actionComponent, openSnackbar };
+  return { open, setOpen, onClose, openSnackbar };
 };
 
 export default useSnackbar;
