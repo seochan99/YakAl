@@ -1,22 +1,27 @@
-import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "../../../../api/noauth/auth/api.ts";
+import { getGoogleRedirectUrl } from "../../../../api/noauth/auth/api.ts";
 import { HttpStatusCode, isAxiosError } from "axios";
+import { useCallback } from "react";
+import useSnackbar from "../../../../hooks/use-snackbar.tsx";
 
-export class LoginMainPageViewController {
-  static onKakaoLoginClick = async () => {
-    try {
-      const response = await getKakaoRedirectUrl();
+export const useLoginMainPageViewController = () => {
+  const { open, onClose, actionComponent, openSnackbar } = useSnackbar();
 
-      if (response.status === HttpStatusCode.Ok) {
-        window.location.href = response.data.data.url;
-      }
-    } catch (error) {
-      if (isAxiosError(error)) {
-        console.log(error);
-      }
-    }
-  };
+  const onKakaoLoginClick = useCallback(async () => {
+    openSnackbar();
+    // try {
+    //   const response = await getKakaoRedirectUrl();
+    //
+    //   if (response.status === HttpStatusCode.Ok) {
+    //     window.location.href = response.data.data.url;
+    //   }
+    // } catch (error) {
+    //   if (isAxiosError(error)) {
+    //     openSnackbar();
+    //   }
+    // }
+  }, [openSnackbar]);
 
-  static onGoogleLoginClick = async () => {
+  const onGoogleLoginClick = useCallback(async () => {
     try {
       const response = await getGoogleRedirectUrl();
 
@@ -25,8 +30,14 @@ export class LoginMainPageViewController {
       }
     } catch (error) {
       if (isAxiosError(error)) {
-        console.log(error);
+        openSnackbar();
       }
     }
+  }, [openSnackbar]);
+
+  return {
+    onKakaoLoginClick,
+    onGoogleLoginClick,
+    snackbarController: { open, onClose, actionComponent, openSnackbar },
   };
-}
+};

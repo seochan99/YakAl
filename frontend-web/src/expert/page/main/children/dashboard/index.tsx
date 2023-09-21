@@ -15,9 +15,6 @@ import {
 } from "./style.ts";
 import DashboardMenuItem from "./menu-item";
 import { useMediaQuery } from "react-responsive";
-import { useGetUserQuery } from "../../../../api/user.ts";
-import LoadingPage from "../../../loading/view.tsx";
-import ErrorPage from "../../../error/view.tsx";
 
 export type TMenuInfo = {
   path?: string;
@@ -27,8 +24,6 @@ export type TMenuInfo = {
 };
 
 export function Dashboard() {
-  const { data, isLoading, isError } = useGetUserQuery(null);
-
   const isNarrowMobile = useMediaQuery({ query: "(max-width: 480px)" });
 
   const menuInfos: TMenuInfo[] = [
@@ -38,7 +33,7 @@ export function Dashboard() {
       title: "환자 정보",
       description: (
         <span>
-          <Blue>{data?.name}</Blue>님께 테스트 결과를 보냈거나 상담을 요청한 환자들의 정보를 열람합니다.
+          <Blue>{"홍길동"}</Blue>님께 테스트 결과를 보냈거나 상담을 요청한 환자들의 정보를 열람합니다.
         </span>
       ),
     },
@@ -47,14 +42,6 @@ export function Dashboard() {
       description: "앞으로 유용한 기능들이 추가될 예정입니다!",
     },
   ];
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
 
   return (
     <Outer>

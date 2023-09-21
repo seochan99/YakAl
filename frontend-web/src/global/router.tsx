@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MainPage as ExpertMain } from "../expert/page/main";
+import { MainPage as ExpertMain } from "../expert/page/main/view.tsx";
 import { Main as AdminMain } from "../admin/layout/main";
 import ErrorPage from "../expert/page/error/view.tsx";
 import { Login as AdminLogin } from "../admin/page/login";

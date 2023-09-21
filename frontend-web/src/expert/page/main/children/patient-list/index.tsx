@@ -16,12 +16,9 @@ import {
   TableHeader,
   TestProgress,
 } from "./style.ts";
-import React, { ReactNode, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { useGetPatientListQuery } from "../../../../api/patient-list.ts";
 import { EPatientFilter } from "../../../../type/patient-filter.ts";
-import ErrorPage from "../../../error/view.tsx";
-import PatientItem from "./child/patient-item";
 import { ListFooter } from "../../../../style.ts";
 import Pagination from "react-js-pagination";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -33,20 +30,6 @@ function PatientList() {
   const [page, setPage] = useState<number>(1);
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
-
-  const { data, isLoading, isError } = useGetPatientListQuery({
-    sort:
-      selected === EPatientFilter.SUBMISSION_DATE
-        ? "date"
-        : selected === EPatientFilter.NAME
-        ? "name"
-        : selected === EPatientFilter.BIRTHDAY
-        ? "birth"
-        : "",
-    order: "asc",
-    page: page - 1,
-    name: searchName,
-  });
 
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
@@ -78,31 +61,6 @@ function PatientList() {
   const handlePageChange = (page: number) => {
     setPage(page);
   };
-
-  if (isLoading) {
-    return <></>;
-  }
-
-  if (isError || !data || !data.datalist) {
-    return <ErrorPage />;
-  }
-
-  const getDummyList = (): ReactNode[] => {
-    const dummyList: ReactNode[] = [];
-
-    if (PAGING_SIZE * page <= data.datalist.length) {
-      return dummyList;
-    }
-
-    for (let i = 0; i < PAGING_SIZE - (data.datalist.length % PAGING_SIZE); ++i) {
-      dummyList.push(<PatientItem key={i} />);
-    }
-    return dummyList;
-  };
-
-  const userList = data.datalist;
-
-  console.log(userList);
 
   return (
     <Outer>
@@ -151,16 +109,12 @@ function PatientList() {
           {!isMiddleMobile && <TestProgress>{`설문 완료율`}</TestProgress>}
           <DateBox>{`최근 설문 제출일`}</DateBox>
         </TableHeader>
-        {userList.map((user) => {
-          return <PatientItem key={user.id} userInfo={user} />;
-        })}
-        {getDummyList()}
       </List>
       <ListFooter>
         <Pagination
           activePage={page}
           itemsCountPerPage={PAGING_SIZE}
-          totalItemsCount={data.pageInfo.totalElements}
+          totalItemsCount={10}
           pageRangeDisplayed={5}
           prevPageText={"‹"}
           nextPageText={"›"}

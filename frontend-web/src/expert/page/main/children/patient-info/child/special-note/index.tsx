@@ -28,34 +28,19 @@ import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import Pagination from "react-js-pagination";
 import { useState } from "react";
 import { Dialog, useMediaQuery, useTheme } from "@mui/material";
-import {
-  TNoteItem,
-  useCreateNoteMutation,
-  useDeleteNoteMutation,
-  useGetNoteListQuery,
-  useModifyNoteMutation,
-} from "../../../../../../api/note-list.ts";
 import { ListFooter } from "../../../../../../style.ts";
-import ErrorPage from "../../../../../error/view.tsx";
-import Skeleton from "@mui/material/Skeleton";
 
-type TSpecialNoteProps = {
+export type TSpecialNoteProps = {
   patientId: number;
 };
 
 const PAGING_PAGE = 5;
 
-function SpecialNote({ patientId }: TSpecialNoteProps) {
+function SpecialNote() {
   const [createIsOpen, setCreateIsOpen] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
-  const [currentNote, setCurrentNote] = useState<TNoteItem | null>(null);
   const [currentTitle, setCurrentTitle] = useState<string>("");
   const [currentDescription, setCurrentDescription] = useState<string>("");
-
-  const { data, isError, isLoading } = useGetNoteListQuery({ patientId, page: page - 1 });
-  const [triggerCreateNote] = useCreateNoteMutation();
-  const [triggerModifyNote] = useModifyNoteMutation();
-  const [triggerDeleteNote] = useDeleteNoteMutation();
 
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down("sm")); // width: 600px
@@ -64,18 +49,7 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
     setPage(page);
   };
 
-  const handleDialogOpen = (noteId: number) => () => {
-    const note = noteList.findLast((note) => note.id === noteId);
-
-    if (note) {
-      setCurrentNote(note);
-      setCurrentTitle(note.title);
-      setCurrentDescription(note.description);
-    }
-  };
-
   const handleDialogClose = () => {
-    setCurrentNote(null);
     setCurrentTitle("");
     setCurrentDescription("");
   };
@@ -86,39 +60,9 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
     setCurrentDescription("");
   };
 
-  const handleModifyDialogSubmit = () => {
-    if (currentNote?.id) {
-      triggerModifyNote({ noteId: currentNote?.id, title: currentTitle, description: currentDescription });
-    }
-
-    handleDialogClose();
+  const currentNote = {
+    createDate: [2022, 12, 12],
   };
-
-  const handleCreateDialogSubmit = () => {
-    if (patientId) {
-      triggerCreateNote({ patientId, title: currentTitle, description: currentDescription });
-    }
-
-    handleCreateDialogClose();
-  };
-
-  const handleDeleteDialogSubmit = () => {
-    if (currentNote?.id) {
-      triggerDeleteNote({ noteId: currentNote?.id });
-    }
-
-    handleDialogClose();
-  };
-
-  if (isLoading) {
-    return <Skeleton variant="rectangular" animation="wave" />;
-  }
-
-  if (isError || !data) {
-    return <ErrorPage />;
-  }
-
-  const noteList: TNoteItem[] = data.datalist;
 
   return (
     <>
@@ -135,22 +79,16 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
           <TitleHeader>제목</TitleHeader>
           <RecordedDateHeader>기록일</RecordedDateHeader>
         </ListHeader>
-        {noteList.map((note) => (
-          <Item key={note.id} onClick={handleDialogOpen(note.id)}>
-            <ItemTitle>{note.title.length > 15 ? note.title.substring(0, 14).concat("...") : note.title}</ItemTitle>
-            <ItemRecordedDate>
-              {`${note.createDate[0]}.
-              ${note.createDate[1] < 10 ? "0".concat(note.createDate[1].toString()) : note.createDate[1]}.
-              ${note.createDate[2] < 10 ? "0".concat(note.createDate[2].toString()) : note.createDate[2]}.`}
-            </ItemRecordedDate>
-          </Item>
-        ))}
+        <Item key={1} onClick={() => console.log("haha")}>
+          <ItemTitle>{"안녕하세요".length > 15 ? "안녕하세요".substring(0, 14).concat("...") : "안녕하세요"}</ItemTitle>
+          <ItemRecordedDate>{`2022. 12. 12.`}</ItemRecordedDate>
+        </Item>
       </List>
       <ListFooter>
         <Pagination
           activePage={page}
           itemsCountPerPage={PAGING_PAGE}
-          totalItemsCount={noteList.length}
+          totalItemsCount={10}
           pageRangeDisplayed={3}
           prevPageText={"‹"}
           nextPageText={"›"}
@@ -184,9 +122,9 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
             <NoteDescriptionInput value={currentDescription} onChange={(e) => setCurrentDescription(e.target.value)} />
           </DialogInputBox>
           <DialogFooter>
-            <DialogDeleteButton onClick={handleDeleteDialogSubmit}>삭제</DialogDeleteButton>
+            <DialogDeleteButton onClick={() => console.log("삭제")}>삭제</DialogDeleteButton>
             <DialogCancelButton onClick={handleDialogClose}>취소</DialogCancelButton>
-            <DialogConfirmButton onClick={handleModifyDialogSubmit}>수정</DialogConfirmButton>
+            <DialogConfirmButton onClick={() => console.log("수정")}>수정</DialogConfirmButton>
           </DialogFooter>
         </DialogBox>
       </Dialog>
@@ -204,7 +142,7 @@ function SpecialNote({ patientId }: TSpecialNoteProps) {
           </DialogInputBox>
           <DialogFooter>
             <DialogCancelButton onClick={handleDialogClose}>취소</DialogCancelButton>
-            <DialogConfirmButton onClick={handleCreateDialogSubmit}>추가</DialogConfirmButton>
+            <DialogConfirmButton onClick={() => console.log("추가")}>추가</DialogConfirmButton>
           </DialogFooter>
         </DialogBox>
       </Dialog>

@@ -1,4 +1,4 @@
-import WarningPage from "../../../../component/warning-page/view.tsx";
+import WarningPage from "../../../warning/view.tsx";
 import { BackButton } from "./style.ts";
 
 function CertificationSuccess() {

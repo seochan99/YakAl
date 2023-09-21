@@ -1,25 +1,10 @@
 import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
-import ErrorPage from "../../../../../error/view.tsx";
-import { useGetHistoryQuery } from "../../../../../../api/history.ts";
-import Skeleton from "@mui/material/Skeleton";
 
-type TPrescriptionListProps = {
+export type TPrescriptionListProps = {
   patientId: number;
 };
 
-function PrescriptionList({ patientId }: TPrescriptionListProps) {
-  const { data, isLoading, isError } = useGetHistoryQuery({ patientId });
-
-  if (isLoading) {
-    return <Skeleton variant="rectangular" animation="wave" />;
-  }
-
-  if (isError || !data) {
-    return <ErrorPage />;
-  }
-
-  const slice = data.length > 5 ? data.slice(0, 5) : data;
-
+function PrescriptionList() {
   return (
     <>
       <Header>
@@ -27,13 +12,9 @@ function PrescriptionList({ patientId }: TPrescriptionListProps) {
       </Header>
       <Bar />
       <List>
-        {slice.map((prescription) => (
-          <Item key={prescription.name}>
-            <ItemTitle>
-              {prescription.name.length > 15 ? prescription.name.substring(0, 14).concat("...") : prescription.name}
-            </ItemTitle>
-          </Item>
-        ))}
+        <Item key={"치매"}>
+          <ItemTitle>{"치매".length > 15 ? "치매".substring(0, 14).concat("...") : "치매"}</ItemTitle>
+        </Item>
       </List>
     </>
   );

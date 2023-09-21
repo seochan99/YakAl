@@ -1,6 +1,6 @@
 import { EXPERT_LOGIN_ROUTE } from "../../../../../global/router.tsx";
 import { BackButton } from "./style.ts";
-import WarningPage from "../../../../component/warning-page/view.tsx";
+import WarningPage from "../../../warning/view.tsx";
 
 function IdentificationFailure() {
   return (

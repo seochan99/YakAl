@@ -15,23 +15,14 @@ import {
   VerifiedIcon,
   VerifiedText,
 } from "./style.ts";
-import LoadingPage from "../../../loading/view.tsx";
-import ErrorPage from "../../../error/view.tsx";
-import { useGetUserQuery } from "../../../../api/user.ts";
 import { EJob } from "../../../../type/job.ts";
 
 function MyInfo() {
-  const { data, isLoading, isError } = useGetUserQuery(null);
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError || !data) {
-    return <ErrorPage />;
-  }
-
-  const { name, birthday, tel, job, department, belong } = data;
+  const name = "홍길동";
+  const birthday = new Date("2022-01-01");
+  const tel = "010-9999-9999";
+  const job = EJob.DOCTOR;
+  const department = "가정의학과";
 
   const formattedBirthday = `${birthday.getFullYear()}. ${
     birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1

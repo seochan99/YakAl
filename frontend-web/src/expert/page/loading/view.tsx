@@ -1,6 +1,6 @@
 import { useState } from "react";
 import useInterval from "../../../expert/util/use-interval.ts";
-import WarningPage from "../../component/warning-page/view.tsx";
+import WarningPage from "../warning/view.tsx";
 
 function LoadingPage() {
   const [dotString, setDotString] = useState<string>(".");

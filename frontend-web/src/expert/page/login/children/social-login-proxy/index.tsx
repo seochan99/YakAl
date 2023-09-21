@@ -1,4 +1,3 @@
-import { setCredentials } from "@/expert/store/api.ts";
 import { useEffect } from "react";
 import { Cookies } from "react-cookie";
 import { useDispatch } from "react-redux";
@@ -16,7 +15,7 @@ function SocialLoginProxy() {
       navigate("/expert/login/social/failure");
     }
 
-    dispatch(setCredentials({ token: accessToken }));
+    // dispatch(setCredentials({ token: accessToken }));
 
     navigate("/expert/login/identification");
   }, [dispatch, navigate]);

@@ -1,6 +1,6 @@
-import { EXPERT_LOGIN_ROUTE } from "@/global/router.tsx";
+import { EXPERT_LOGIN_ROUTE } from "../../../../../global/router.tsx";
 import { BackButton } from "./style.ts";
-import WarningPage from "@/expert/component/warning-page";
+import WarningPage from "../../../../../expert/page/warning/view.tsx";
 
 function SocialLoginFailure() {
   return (

@@ -23,9 +23,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
 import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
 import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
-import ErrorPage from "../error/view.tsx";
-import LoadingPage from "../loading/view.tsx";
-import { useGetUserQuery } from "../../api/user.ts";
+import { EJob } from "../../type/job.ts";
 
 export function MainPage() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -40,16 +38,6 @@ export function MainPage() {
     { path: "/expert/patient", name: "환자 목록", icon: LocalHotelOutlinedIcon },
     { path: "/expert/info", name: "내 정보", icon: AssignmentIndOutlinedIcon },
   ];
-
-  const { data, isLoading, isError } = useGetUserQuery(null);
-
-  if (isLoading) {
-    return <LoadingPage />;
-  }
-
-  if (isError) {
-    return <ErrorPage />;
-  }
 
   const currentNavItem = navRouter.findLast((navItem) => location.pathname.startsWith(navItem.path));
 
@@ -71,10 +59,10 @@ export function MainPage() {
           </NavOuter>
         )}
         <Profile
-          job={data?.job}
-          department={data?.department}
+          job={EJob.DOCTOR}
+          department={"가정의학과"}
           belong={"중앙대학교 부속병원"}
-          name={data?.name ? data?.name : ""}
+          name={"홍길동"}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />
       </Header>

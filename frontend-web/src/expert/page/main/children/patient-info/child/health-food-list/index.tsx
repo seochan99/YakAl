@@ -1,25 +1,10 @@
 import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
-import { useGetHealthFoodQuery } from "../../../../../../api/healthfood.ts";
-import ErrorPage from "../../../../../error/view.tsx";
-import Skeleton from "@mui/material/Skeleton";
 
-type THealthFoodListProps = {
+export type THealthFoodListProps = {
   patientId: number;
 };
 
-function HealthFoodList({ patientId }: THealthFoodListProps) {
-  const { data, isLoading, isError } = useGetHealthFoodQuery({ patientId });
-
-  if (isLoading) {
-    return <Skeleton variant="rectangular" animation="wave" />;
-  }
-
-  if (isError || !data) {
-    return <ErrorPage />;
-  }
-
-  const slice = data.length > 5 ? data.slice(0, 4) : data;
-
+function HealthFoodList() {
   return (
     <>
       <Header>
@@ -27,13 +12,9 @@ function HealthFoodList({ patientId }: THealthFoodListProps) {
       </Header>
       <Bar />
       <List>
-        {slice.map((prescription) => (
-          <Item key={prescription.name}>
-            <ItemTitle>
-              {prescription.name.length > 15 ? prescription.name.substring(0, 14).concat("...") : prescription.name}
-            </ItemTitle>
-          </Item>
-        ))}
+        <Item key={"고혈압"}>
+          <ItemTitle>{"고혈압".length > 15 ? "고혈압".substring(0, 14).concat("...") : "고혈압"}</ItemTitle>
+        </Item>
       </List>
     </>
   );

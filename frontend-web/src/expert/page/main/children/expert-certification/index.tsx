@@ -46,6 +46,8 @@ import React, { useRef, useState } from "react";
 import Pagination from "react-js-pagination";
 import { EJob } from "../../../../type/job.ts";
 import { useNavigate } from "react-router-dom";
+import { facilityList } from "../../../../store/facility-list.ts";
+import { TFacility } from "../../../../../admin/page/main/facility-registration-list";
 
 const PAGING_SIZE = 5;
 
@@ -131,7 +133,7 @@ function ExpertCertification() {
       setSelectedFacility(selectedItem);
     }
   };
-  
+
   const handleSubmit = () => {
     navigate("/expert/certification/success");
   };
@@ -187,14 +189,14 @@ function ExpertCertification() {
                   name={"facility-name"}
                   placeholder={"기관명"}
                   readOnly={true}
-                  value={selectedFacility ? selectedFacility.medicalName : ""}
+                  value={selectedFacility ? selectedFacility.name : ""}
                 />
                 <BelongInput
                   type={"text"}
                   name={"facility-address"}
                   placeholder={"기관 주소"}
                   readOnly={true}
-                  value={selectedFacility ? selectedFacility.medicalAddress : ""}
+                  value={selectedFacility ? selectedFacility.directorName : ""}
                 />
               </BelongInputBox>
               <SearchBar>
@@ -212,16 +214,14 @@ function ExpertCertification() {
                   <AddressHeader>기관 주소</AddressHeader>
                 </ListHeader>
                 {facilityList.map((facility) => (
-                  <Item key={facility.medicalName} onClick={handleFacilityItemClick(facility.id)}>
+                  <Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
                     <ItemName>
-                      {facility.medicalName.length > 21
-                        ? facility.medicalName.substring(0, 20).concat("...")
-                        : facility.medicalName}
+                      {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
                     </ItemName>
                     <ItemAddress>
-                      {facility.medicalAddress.length > 41
-                        ? facility.medicalAddress.substring(0, 40).concat("...")
-                        : facility.medicalAddress}
+                      {facility.directorName.length > 41
+                        ? facility.directorName.substring(0, 40).concat("...")
+                        : facility.directorName}
                     </ItemAddress>
                   </Item>
                 ))}

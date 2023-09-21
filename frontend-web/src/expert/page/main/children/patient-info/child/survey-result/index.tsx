@@ -12,17 +12,12 @@ import {
   Progress,
   Title,
 } from "./style.ts";
-import { useGetSurveyResultQuery } from "../../../../../../api/survey-result.ts";
-import ErrorPage from "../../../../../error/view.tsx";
-import Skeleton from "@mui/material/Skeleton";
 
-type TSurveyResultProps = {
+export type TSurveyResultProps = {
   patientId: number;
 };
 
-function SurveyResult({ patientId }: TSurveyResultProps) {
-  const { data, isLoading, isError } = useGetSurveyResultQuery({ patientId });
-
+function SurveyResult() {
   // const surveyKeyName = {
   //   medicationAdherence: "북약 순응도 체크리스트",
   //   depressionMeasure: "우울 척도 진단",
@@ -40,16 +35,6 @@ function SurveyResult({ patientId }: TSurveyResultProps) {
   //   sleepApnea: "폐쇄성 수면 무호흡증",
   // };
 
-  if (isLoading) {
-    return <Skeleton variant="rectangular" animation="wave" />;
-  }
-
-  if (isError || !data) {
-    return <ErrorPage />;
-  }
-
-  const surveyCount = data.datalist.length;
-
   return (
     <>
       <Header>
@@ -57,25 +42,21 @@ function SurveyResult({ patientId }: TSurveyResultProps) {
         <LinkButton>
           <LinkIcon />
         </LinkButton>
-        <Progress>{`완료율 : ${Math.floor(data.percent * 100)}%`}</Progress>
+        <Progress>{`완료율 : ${Math.floor(80)}%`}</Progress>
       </Header>
       <Bar />
       <Content>
         <FirstList>
-          {data.datalist.slice(0, surveyCount / 2).map((survey) => (
-            <Item key={survey.title}>
-              <ItemTitle>{survey.title}</ItemTitle>
-              <ItemResult>{survey.result}</ItemResult>
-            </Item>
-          ))}
+          <Item key={"치매"}>
+            <ItemTitle>{"치매"}</ItemTitle>
+            <ItemResult>{"치매"}</ItemResult>
+          </Item>
         </FirstList>
         <List>
-          {data.datalist.slice(surveyCount / 2, surveyCount).map((survey) => (
-            <Item key={survey.title}>
-              <ItemTitle>{survey.title}</ItemTitle>
-              <ItemResult>{survey.result}</ItemResult>
-            </Item>
-          ))}
+          <Item key={"섬망"}>
+            <ItemTitle>{"섬망"}</ItemTitle>
+            <ItemResult>{"섬망"}</ItemResult>
+          </Item>
         </List>
       </Content>
     </>

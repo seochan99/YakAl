@@ -1,8 +1,13 @@
 import * as S from "./style.ts";
-import { LoginMainPageViewController } from "./view.controller.ts";
+import { useLoginMainPageViewController } from "./view.controller.ts";
+import { Snackbar } from "@mui/material";
 
 function LoginMainPage() {
-  const { onKakaoLoginClick, onGoogleLoginClick } = LoginMainPageViewController;
+  const {
+    onKakaoLoginClick,
+    onGoogleLoginClick,
+    snackbarController: { open, onClose, actionComponent },
+  } = useLoginMainPageViewController();
 
   return (
     <S.InnerCenter>
@@ -28,6 +33,13 @@ function LoginMainPage() {
           </S.GoogleButton>
         </S.ButtonBox>
       </S.LoginSection>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={onClose}
+        message="Note archived"
+        action={actionComponent}
+      />
     </S.InnerCenter>
   );
 }

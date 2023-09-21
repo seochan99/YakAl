@@ -31,9 +31,7 @@ import {
   Red,
   SmallBadge,
 } from "./style.ts";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
 
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
@@ -41,9 +39,6 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useMediaQuery } from "react-responsive";
-import { useLazyLogoutQuery } from "../../../../api/api.ts";
-import { logout } from "../../../../store/api.ts";
-import { EXPERT_LOGIN_ROUTE } from "../../../../../global/router.tsx";
 import { EJob } from "../../../../type/job.ts";
 
 type TProfileProps = {
@@ -57,12 +52,7 @@ type TProfileProps = {
 function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const [trigger, currentResult] = useLazyLogoutQuery();
-
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const alertList = [{ id: 1, title: "알림입니다.", description: "알림 기능은 추가예정입니다." }];
 
@@ -82,17 +72,7 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
 
   const handleLogoutClick = async () => {
     window.localStorage.clear();
-    trigger(null);
   };
-
-  useEffect(() => {
-    const { isSuccess, isLoading } = currentResult;
-
-    if (isSuccess && !isLoading) {
-      dispatch(logout());
-      navigate(EXPERT_LOGIN_ROUTE);
-    }
-  }, [currentResult, dispatch, navigate]);
 
   const notificationsLabel = (count: number) => {
     if (count === 0) {

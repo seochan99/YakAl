@@ -30,9 +30,7 @@ import {
   Subtitle,
   Title,
 } from "./style.ts";
-import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useRegisterImageMutation, useRegisterMutation } from "../../../../api/registration.ts";
+import React, { useRef, useState } from "react";
 import { EFacility } from "../../../../type/facility.ts";
 import { EInfoTake } from "../../../../type/info-take.ts";
 
@@ -53,11 +51,6 @@ export function FacilityRegistration() {
   const [facilityHours, setFacilityHours] = useState<string>("");
   const [facilityFeatures, setFacilityFeatures] = useState<string>("");
   const [informationTakenWay, setInformationTakenWay] = useState<EInfoTake | undefined>(undefined);
-
-  const [trigger, currentResult] = useRegisterMutation();
-  const [triggerSecond, currentSecondResult] = useRegisterImageMutation();
-
-  const navigate = useNavigate();
 
   const isFinished =
     facilityDirectorName.length > 0 &&
@@ -143,52 +136,7 @@ export function FacilityRegistration() {
     if (selected === null || informationTakenWay === undefined) {
       return;
     }
-
-    trigger({
-      medicalType: selected,
-      directorName: facilityDirectorName,
-      directorTel: directorPhoneNumber,
-      medicalName: facilityName,
-      medicalTel: facilityContact,
-      zipCode: facilityPostcode,
-      medicalAddress: facilityAddress,
-      medicalDetailAddress: facilityAddressDetail,
-      businessRegistrationNumber: facilityBusinessNumber,
-      reciveType: informationTakenWay,
-      medicalRuntime: facilityHours,
-      medicalCharacteristics: facilityFeatures,
-    });
   };
-
-  useEffect(() => {
-    const { isSuccess, isLoading } = currentResult;
-
-    if (!isLoading && isSuccess) {
-      if (certificationImg === null) {
-        return;
-      }
-
-      const form = new FormData();
-      form.append("file", certificationImg);
-
-      triggerSecond({
-        registerId: currentResult.data.registrationId,
-        image: form,
-      });
-    }
-  }, [certificationImg, currentResult, triggerSecond]);
-
-  useEffect(() => {
-    const { isSuccess, isLoading, isError } = currentSecondResult;
-
-    if (isError) {
-      navigate("/expert/registration/failure");
-    }
-
-    if (!isLoading && isSuccess) {
-      navigate("/expert/registration/success");
-    }
-  }, [currentSecondResult, navigate]);
 
   return (
     <Outer>

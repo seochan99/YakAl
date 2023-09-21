@@ -1,5 +1,5 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
-import WarningPage from "../../component/warning-page/view.tsx";
+import WarningPage from "../warning/view.tsx";
 
 export default function ErrorPage() {
   const error = useRouteError();
