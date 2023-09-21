@@ -7,6 +7,22 @@ export const GlobalStyle = createGlobalStyle`
     -ms-user-select: none;
     user-select: none;
 
+    --Main: #2666F6;
+    --Sub1: #5588FD;
+    --Sub2: #C1D2FF;
+    --Sub3: #F1F5FE;
+    --Black: #151515;
+    --Gray6: #464655;
+    --Gray5: #626272;
+    --Gray4: #90909F;
+    --Gray3: #C6C6CF;
+    --Gray2: #E9E9EE;
+    --Gray1: #F5F5F9;
+    --White: #FFF;
+    --Green: #63DC68;
+    --Yellow: #FFC100;
+    --Red: #FB5D5D;
+
     --width-standard: 54rem;
 
     --red-50: #fff0f0;

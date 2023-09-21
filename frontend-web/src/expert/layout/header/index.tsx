@@ -1,4 +1,4 @@
-import { Description, HeaderOuter, Icon, LogoOuter, LogoText, Title } from "./style.ts";
+import * as S from "./style.ts";
 import React from "react";
 
 type THeaderProps = {
@@ -8,16 +8,16 @@ type THeaderProps = {
 
 function Header({ children, to }: THeaderProps) {
   return (
-    <HeaderOuter>
-      <LogoOuter to={to}>
-        <Icon />
-        <LogoText>
-          <Title>약 알</Title>
-          <Description>전문가 WEB</Description>
-        </LogoText>
-      </LogoOuter>
+    <S.OuterHeader>
+      <S.LogoLink to={to}>
+        <S.IconImg />
+        <S.LogoTextDiv>
+          <S.TitleSpan>약 알</S.TitleSpan>
+          <S.DescriptionSpan>전문가 WEB</S.DescriptionSpan>
+        </S.LogoTextDiv>
+      </S.LogoLink>
       {children}
-    </HeaderOuter>
+    </S.OuterHeader>
   );
 }
 
