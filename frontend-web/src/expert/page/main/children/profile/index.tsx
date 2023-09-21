@@ -182,4 +182,4 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
   );
 }
 
-export default Profile;
+export default React.memo(Profile);

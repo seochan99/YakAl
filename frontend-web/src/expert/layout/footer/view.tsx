@@ -1,4 +1,5 @@
 import * as S from "./style.ts";
+import React from "react";
 
 function Footer() {
   const viewPharmInfo = {
@@ -28,4 +29,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

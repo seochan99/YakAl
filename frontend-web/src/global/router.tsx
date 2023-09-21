@@ -19,7 +19,7 @@ import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/pa
 import MyInfo from "../expert/page/main/children/my-info";
 import SocialLoginProxy from "../expert/page/login/children/social-login-proxy";
 import LoadingPage from "../expert/page/loading/view.tsx";
-import IdentificationPage from "../expert/page/login/children/identification-page";
+import IdentificationPage from "../expert/page/login/children/identify/index.tsx";
 import IdentificationFailure from "../expert/page/login/children/identification-failure";
 import ExpertCertification from "../expert/page/main/children/expert-certification";
 import IdentificationSuccess from "../expert/page/login/children/identification-success";
@@ -151,15 +151,15 @@ export const router = createBrowserRouter([
                     element: <SocialLoginProxy />,
                   },
                   {
-                    path: "identification",
+                    path: "identify",
                     element: <IdentificationPage />,
                   },
                   {
-                    path: "identification/failure",
+                    path: "identify/failure",
                     element: <IdentificationFailure />,
                   },
                   {
-                    path: "identification/success",
+                    path: "identify/success",
                     element: <IdentificationSuccess />,
                   },
                 ],

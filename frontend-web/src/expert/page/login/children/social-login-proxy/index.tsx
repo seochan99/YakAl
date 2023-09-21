@@ -17,7 +17,7 @@ function SocialLoginProxy() {
 
     // dispatch(setCredentials({ token: accessToken }));
 
-    navigate("/expert/login/identification");
+    navigate("/expert/login/identify");
   }, [dispatch, navigate]);
 
   return <></>;

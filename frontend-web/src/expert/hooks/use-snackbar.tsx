@@ -9,7 +9,7 @@ const useSnackbar = () => {
   }, [setOpen]);
 
   const onClose = useCallback(
-    (event: Event | SyntheticEvent<any, Event>, reason?: SnackbarCloseReason) => {
+    (_event: Event | SyntheticEvent<any, Event>, reason?: SnackbarCloseReason) => {
       if (reason === "clickaway") {
         return;
       }

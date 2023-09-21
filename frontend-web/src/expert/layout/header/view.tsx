@@ -21,4 +21,4 @@ function Header({ children, to }: THeaderProps) {
   );
 }
 
-export default Header;
+export default React.memo(Header);
