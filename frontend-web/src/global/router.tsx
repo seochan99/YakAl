@@ -1,33 +1,33 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Main as ExpertMain } from "../expert/layout/main";
+import { MainPage as ExpertMain } from "../expert/page/main";
 import { Main as AdminMain } from "../admin/layout/main";
-import ErrorPage from "../expert/page/error-page";
+import ErrorPage from "../expert/page/error/view.tsx";
 import { Login as AdminLogin } from "../admin/page/login";
-import { Login as ExpertLogin } from "../expert/layout/login";
-import LoginMain from "../expert/page/login/login-main";
-import SignUpTerms from "../expert/page/login/signup-terms";
+import { LoginPage as ExpertLogin } from "../expert/page/login/view.tsx";
+import LoginMainPage from "../expert/page/login/children/main/view.tsx";
+import SignUpTerms from "../expert/page/login/children/signup-terms";
 
-import PatientList from "../expert/page/main/patient-list";
-import { Dashboard as ExpertDashboard } from "../expert/page/main/dashboard";
+import PatientList from "../expert/page/main/children/patient-list";
+import { Dashboard as ExpertDashboard } from "../expert/page/main/children/dashboard";
 import { Dashboard as AdminDashboard } from "../admin/page/main/dashboard";
-import PatientInfo from "../expert/page/main/patient-info";
+import PatientInfo from "../expert/page/main/children/patient-info";
 
-import SocialLoginFailure from "../expert/page/login/social-login-failure";
+import SocialLoginFailure from "../expert/page/login/children/social-login-failure";
 import { loader as facilityRegistrationInfoLoader } from "../admin/page/main/facility-registration-info/loader.ts";
 import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
-import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/facility-registration";
-import MyInfo from "../expert/page/main/my-info";
-import SocialLoginProxy from "../expert/page/login/social-login-proxy";
-import LoadingPage from "../expert/page/loading-page";
-import IdentificationPage from "../expert/page/login/identification-page";
-import IdentificationFailure from "../expert/page/login/identification-failure";
-import ExpertCertification from "../expert/page/main/expert-certification";
-import IdentificationSuccess from "../expert/page/login/identification-success";
+import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/children/facility-registration";
+import MyInfo from "../expert/page/main/children/my-info";
+import SocialLoginProxy from "../expert/page/login/children/social-login-proxy";
+import LoadingPage from "../expert/page/loading/view.tsx";
+import IdentificationPage from "../expert/page/login/children/identification-page";
+import IdentificationFailure from "../expert/page/login/children/identification-failure";
+import ExpertCertification from "../expert/page/main/children/expert-certification";
+import IdentificationSuccess from "../expert/page/login/children/identification-success";
 import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
-import RegistrationSuccess from "../expert/page/main/registration-success";
-import RegistrationFailure from "../expert/page/main/registration-failure";
-import CertificationSuccess from "../expert/page/main/certification-success/index.tsx";
-import CertificationFailure from "../expert/page/main/certification-failure";
+import RegistrationSuccess from "../expert/page/main/children/registration-success";
+import RegistrationFailure from "../expert/page/main/children/registration-failure";
+import CertificationSuccess from "../expert/page/main/children/certification-success/index.tsx";
+import CertificationFailure from "../expert/page/main/children/certification-failure";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -132,7 +132,7 @@ export const router = createBrowserRouter([
                 children: [
                   {
                     index: true,
-                    element: <LoginMain />,
+                    element: <LoginMainPage />,
                   },
                   {
                     path: "terms",

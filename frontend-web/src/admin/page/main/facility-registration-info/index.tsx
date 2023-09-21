@@ -1,6 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import { TFacilityRegistrationInfoLoaderReturn } from "./loader.ts";
-import ErrorPage from "../../../../expert/page/error-page";
+import ErrorPage from "../../../../expert/page/error/view.tsx";
 import { BackButton, BackIcon, FacilityMain, Header, Outer } from "./style.ts";
 
 function FacilityRegistrationInfo() {
