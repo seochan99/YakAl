@@ -1,13 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 import { TFacilityRegistrationInfoLoaderReturn } from "./loader.ts";
-import ErrorPage from "../../../../expert/page/error/view.tsx";
+import NotFoundPage from "../../../../expert/page/not-found/view.tsx";
 import { BackButton, BackIcon, FacilityMain, Header, Outer } from "./style.ts";
 
 function FacilityRegistrationInfo() {
   const { facilityInfo } = useLoaderData() as TFacilityRegistrationInfoLoaderReturn;
 
   if (!facilityInfo) {
-    return <ErrorPage />;
+    return <NotFoundPage />;
   }
 
   return (

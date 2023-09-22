@@ -1,14 +1,14 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 import WarningPage from "../warning/view.tsx";
 
-export default function ErrorPage() {
+export default function NotFoundPage() {
   const error = useRouteError();
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
       return (
         <WarningPage
-          icon=":("
+          iconPath="/src/expert/assets/icons/not-found-icon.png"
           title="404 Error"
           subtitle="죄송합니다. 페이지를 찾을 수 없습니다."
           description={
@@ -22,6 +22,6 @@ export default function ErrorPage() {
       );
     }
   } else {
-    return <WarningPage icon=":(" title="Error Page" />;
+    return <WarningPage iconPath="/src/expert/assets/icons/not-found-icon.png" title="Error Page" />;
   }
 }

@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { MainPage as ExpertMain } from "../expert/page/main/view.tsx";
 import { Main as AdminMain } from "../admin/layout/main";
-import ErrorPage from "../expert/page/error/view.tsx";
+import NotFoundPage from "../expert/page/not-found/view.tsx";
 import { Login as AdminLogin } from "../admin/page/login";
 import { LoginPage as ExpertLogin } from "../expert/page/login/view.tsx";
 import LoginMainPage from "../expert/page/login/children/main/view.tsx";
@@ -34,16 +34,16 @@ export const ADMIN_LOGIN_ROUTE = "/admin/login";
 
 export const router = createBrowserRouter([
   {
-    errorElement: <ErrorPage />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/admin",
-        errorElement: <ErrorPage />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: "",
             element: <AdminMain />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
                 index: true,
@@ -68,15 +68,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/expert",
-        errorElement: <ErrorPage />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: "",
             element: <ExpertMain />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
-                errorElement: <ErrorPage />,
+                errorElement: <NotFoundPage />,
                 children: [
                   {
                     index: true,
@@ -125,10 +125,10 @@ export const router = createBrowserRouter([
           {
             path: "login",
             element: <ExpertLogin />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
-                errorElement: <ErrorPage />,
+                errorElement: <NotFoundPage />,
                 children: [
                   {
                     index: true,
@@ -169,7 +169,7 @@ export const router = createBrowserRouter([
           {
             path: "loading",
             element: <LoadingPage />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
           },
         ],
       },

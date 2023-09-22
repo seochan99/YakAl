@@ -39,7 +39,7 @@ function IdentifyPage() {
   };
 
   return (
-    <WarningPage icon=":)" title={title} subtitle={subtitle}>
+    <WarningPage iconPath=":)" title={title} subtitle={subtitle}>
       <BackButton onClick={handleIdentificationClick}>본인 인증</BackButton>
     </WarningPage>
   );
