@@ -16,7 +16,6 @@ export const IconImg = styled.img`
 export const ContentDiv = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
   align-items: start;
   gap: 2rem;
 

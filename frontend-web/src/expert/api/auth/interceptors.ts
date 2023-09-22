@@ -1,16 +1,19 @@
-import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig } from "axios";
 import { authAxios } from "./instance.ts";
+import { logOnDev } from "../../util/log-on-dev.ts";
+import { reissueToken } from "./auth/api.ts";
+import { redirect } from "react-router-dom";
 
 authAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     /* Logging */
     const { method, url } = config;
-    console.log(`🚀 [${method?.toUpperCase()}] ${url} | START`);
+    logOnDev(`🚀 [${method?.toUpperCase()}] ${url} | START`);
     return config;
   },
   (error: Error | AxiosError): Promise<AxiosError> => {
     /* Logging */
-    console.log(`🚨 ${error.message}`);
+    logOnDev(`🚨 ${error.message}`);
     return Promise.reject(error);
   },
 );
@@ -23,17 +26,36 @@ authAxios.interceptors.response.use(
       config: { method, url },
     } = response;
 
-    console.log(`🎉 [${method?.toUpperCase()}] ${url} | SUCCESS (${status})`);
+    logOnDev(`🎉 [${method?.toUpperCase()}] ${url} | SUCCESS (${status})`);
     return response;
   },
-  (error: Error | AxiosError): Promise<AxiosError> => {
-    /* Logging */
+  async (error: Error | AxiosError): Promise<AxiosError> => {
     if (axios.isAxiosError(error) && error.response && error.config) {
+      /* Logging */
       const { statusText, status } = error.response;
       const { method, url } = error.config;
-      console.log(`🚨 [${method?.toUpperCase()}] ${url?.toUpperCase()} | ${statusText} ${status}`);
+      logOnDev(`🚨 [${method?.toUpperCase()}] ${url} | ${statusText} ${status}`);
+
+      const originalRequest = error.config as InternalAxiosRequestConfig & { _retry: boolean };
+      if (
+        (error.response.status === HttpStatusCode.Forbidden || error.response.status === HttpStatusCode.Unauthorized) &&
+        !originalRequest._retry
+      ) {
+        /* Reissue Token */
+        logOnDev(`♻️ [${method?.toUpperCase()}] ${url}`);
+        originalRequest._retry = true;
+        const accessTokenResponse = await reissueToken();
+
+        if (accessTokenResponse.status === HttpStatusCode.Created) {
+          authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessTokenResponse.data.data.accessToken}`;
+          return authAxios(originalRequest);
+        } else {
+          redirect("/expert/login");
+        }
+      }
     } else {
-      console.log(`🚨 ${error.message}`);
+      /* Logging */
+      logOnDev(`🚨 ${error.message}`);
     }
     return Promise.reject(error);
   },

@@ -1,16 +1,17 @@
 import axios, { AxiosError, AxiosResponse, InternalAxiosRequestConfig } from "axios";
 import { noAuthAxios } from "./instance.ts";
+import { logOnDev } from "../../util/log-on-dev.ts";
 
 noAuthAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     /* Logging */
     const { method, url } = config;
-    console.log(`🚀 [${method?.toUpperCase()}] ${url} | START`);
+    logOnDev(`🚀 [${method?.toUpperCase()}] ${url} | START`);
     return config;
   },
   (error: Error | AxiosError): Promise<AxiosError> => {
     /* Logging */
-    console.log(`🚨 ${error.message}`);
+    logOnDev(`🚨 ${error.message}`);
     return Promise.reject(error);
   },
 );
@@ -23,7 +24,7 @@ noAuthAxios.interceptors.response.use(
       config: { method, url },
     } = response;
 
-    console.log(`🎉 [${method?.toUpperCase()}] ${url} | SUCCESS (${status})`);
+    logOnDev(`🎉 [${method?.toUpperCase()}] ${url} | SUCCESS (${status})`);
     return response;
   },
   (error: Error | AxiosError): Promise<AxiosError> => {
@@ -31,9 +32,9 @@ noAuthAxios.interceptors.response.use(
     if (axios.isAxiosError(error) && error.response && error.config) {
       const { statusText, status } = error.response;
       const { method, url } = error.config;
-      console.log(`🚨 [${method?.toUpperCase()}] ${url?.toUpperCase()} | ${statusText} ${status}`);
+      logOnDev(`🚨 [${method?.toUpperCase()}] ${url?.toUpperCase()} | ${statusText} ${status}`);
     } else {
-      console.log(`🚨 ${error.message}`);
+      logOnDev(`🚨 ${error.message}`);
     }
     return Promise.reject(error);
   },

@@ -28,6 +28,7 @@ import RegistrationSuccess from "../expert/page/main/children/registration-succe
 import RegistrationFailure from "../expert/page/main/children/registration-failure";
 import CertificationSuccess from "../expert/page/main/children/certification-success/index.tsx";
 import CertificationFailure from "../expert/page/main/children/certification-failure";
+import SocialLoginNotYetPage from "../expert/page/login/children/social-login-not-yet/view.tsx";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
@@ -141,6 +142,10 @@ export const router = createBrowserRouter([
                   {
                     path: "social/failure",
                     element: <SocialLoginFailurePage />,
+                  },
+                  {
+                    path: "social/not-yet",
+                    element: <SocialLoginNotYetPage />,
                   },
                   {
                     path: "social/kakao",

@@ -23,7 +23,7 @@ export const GlobalStyle = createGlobalStyle`
     --Yellow: #FFC100;
     --Red: #FB5D5D;
     --TextRed: #E01029;
-    
+
 
     --width-standard: 54rem;
 
@@ -80,13 +80,13 @@ export const GlobalStyle = createGlobalStyle`
     font-family: Pretendard, SUIT, serif;
   }
 
-  @media only screen and (min-width: 971px) {
+  @media only screen and (min-width: 1081px) {
     html {
       font-size: 100%;
     }
   }
 
-  @media only screen and (max-width: 970px) {
+  @media only screen and (max-width: 1080px) {
     html {
       font-size: 85%;
     }

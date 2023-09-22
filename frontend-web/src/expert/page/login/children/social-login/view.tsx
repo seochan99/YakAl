@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Cookies } from "react-cookie";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { authAxios } from "../../../../api/auth/instance.ts";
 
 function SocialLogin() {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function SocialLogin() {
       navigate("/expert/login/social/failure");
     }
 
-    // dispatch(setCredentials({ token: accessToken }));
+    authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
     navigate("/expert/login/identify");
   }, [dispatch, navigate]);

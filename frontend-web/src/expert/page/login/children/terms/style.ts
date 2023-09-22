@@ -1,6 +1,6 @@
 import { styled } from "styled-components";
 
-export const Outer = styled.div`
+export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -10,7 +10,7 @@ export const Outer = styled.div`
   }
 `;
 
-export const TermsBox = styled.div`
+export const TermsDiv = styled.div`
   display: flex;
   flex-direction: column;
   background-color: white;
@@ -30,7 +30,7 @@ export const TermsHeader = styled.h1`
   margin: 0.5rem 0 1.5rem;
 `;
 
-export const TermsContent = styled.div`
+export const TermsContentDiv = styled.div`
   color: #464655;
   font-size: 1rem;
   font-weight: 500;
@@ -44,7 +44,7 @@ export const Bar = styled.hr`
   margin: 1.5rem 0;
 `;
 
-export const Agreement = styled.input`
+export const AgreementCheckInput = styled.input`
   & {
     display: none;
   }
@@ -56,7 +56,7 @@ export const Agreement = styled.input`
     background-image: url("/src/expert/assets/icons/checker-off-icon.svg");
     background-size: contain;
     color: #151515;
-    font-family: Pretendard;
+    font-family: Pretendard, serif;
     font-size: 1.25rem;
     font-weight: 700;
     line-height: 2.4rem;

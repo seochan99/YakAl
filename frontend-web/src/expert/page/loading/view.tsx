@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useInterval from "../../../expert/util/use-interval.ts";
+import useInterval from "../../hooks/use-interval.ts";
 import WarningPage from "../warning/view.tsx";
 
 function LoadingPage() {

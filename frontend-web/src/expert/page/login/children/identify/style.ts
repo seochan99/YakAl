@@ -1,26 +1,25 @@
 import styled from "styled-components";
 
-export const BackButton = styled.div`
+export const ButtonDiv = styled.div`
   & {
     display: inline-flex;
-    padding: 0.875rem 2.125rem;
+    padding: 1rem 2.25rem;
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background-color: #2666f6;
-    color: #fff;
-    font-size: 1rem;
-    font-weight: 700;
-    line-height: 1rem;
-    text-decoration: none;
+    background-color: var(--Main, #2666f6);
+    color: var(--White, #2666f6);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.2rem;
   }
 
   &:hover {
     cursor: pointer;
-    background-color: #1348e2;
+    opacity: 0.85;
   }
 
   &:active {
-    background-color: #163bb7;
+    opacity: 0.7;
   }
 `;

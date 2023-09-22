@@ -1,14 +1,14 @@
 import { useState } from "react";
-import { Agreement, Bar, NextButton, Outer, TermsBox, TermsContent, TermsHeader } from "./style.ts";
+import * as S from "./style.ts";
 
 function TermsPage() {
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   return (
-    <Outer>
-      <TermsBox>
-        <TermsHeader>약관을 확인해주세요</TermsHeader>
-        <TermsContent>
+    <S.OuterDiv>
+      <S.TermsDiv>
+        <S.TermsHeader>약관을 확인해주세요</S.TermsHeader>
+        <S.TermsContentDiv>
           {`1. 개인정보의 수집 및 이용 동의서`}
           <br />
           {`- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용 하며, 하기 목적 이외의
@@ -33,15 +33,20 @@ function TermsPage() {
           <br />
           {`- 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하 여 동의를 거부하실 권리가 있습니다.
         다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우 에 장학생 선발 과정에 있어 불이익이 발생할 수 있음을 알려드립니다.`}
-        </TermsContent>
-        <Bar />
-        <Agreement type="checkbox" id="agreement" checked={isAgreed} onChange={() => setIsAgreed(!isAgreed)} />
+        </S.TermsContentDiv>
+        <S.Bar />
+        <S.AgreementCheckInput
+          type="checkbox"
+          id="agreement"
+          checked={isAgreed}
+          onChange={() => setIsAgreed(!isAgreed)}
+        />
         <label htmlFor="agreement">개인정보 수집 및 이용 동의</label>
-      </TermsBox>
-      <NextButton className={isAgreed ? "is-agreed" : ""} disabled={!isAgreed} onClick={() => console.log("next")}>
+      </S.TermsDiv>
+      <S.NextButton className={isAgreed ? "is-agreed" : ""} disabled={!isAgreed} onClick={() => console.log("next")}>
         다음
-      </NextButton>
-    </Outer>
+      </S.NextButton>
+    </S.OuterDiv>
   );
 }
 
