@@ -26,8 +26,8 @@ import IdentifySuccessPage from "../expert/page/login/children/identify-success/
 import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
 import RegistrationSuccess from "../expert/page/main/children/registration-success";
 import RegistrationFailure from "../expert/page/main/children/registration-failure";
-import CertificationSuccess from "../expert/page/main/children/certification-success/index.tsx";
-import CertificationFailure from "../expert/page/main/children/certification-failure";
+import CertificationSuccess from "../expert/page/main/children/certify-success/view.tsx";
+import CertifyFailurePage from "../expert/page/main/children/certify-failure/view.tsx";
 import SocialLoginNotYetPage from "../expert/page/login/children/social-login-not-yet/view.tsx";
 
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -109,7 +109,7 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "certification/failure",
-                    element: <CertificationFailure />,
+                    element: <CertifyFailurePage />,
                   },
                   {
                     path: "certification",

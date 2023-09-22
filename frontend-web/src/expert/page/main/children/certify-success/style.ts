@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-export const BackButton = styled(Link)`
+export const BackLink = styled(Link)`
   & {
     display: inline-flex;
     padding: 0.875rem 2.125rem;

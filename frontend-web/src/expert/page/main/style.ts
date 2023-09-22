@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { styled } from "styled-components";
 
-export const Outer = styled.div`
+export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -9,7 +9,7 @@ export const Outer = styled.div`
   width: 100vw;
 `;
 
-export const MainSection = styled.div`
+export const MainDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -18,7 +18,7 @@ export const MainSection = styled.div`
   background-color: #f5f5f9;
 `;
 
-export const Detail = styled.div`
+export const DetailDiv = styled.div`
   & {
     display: flex;
     flex-direction: column;
@@ -41,7 +41,7 @@ export const Detail = styled.div`
   }
 `;
 
-export const NavOuter = styled.div`
+export const NavOuterDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -49,7 +49,7 @@ export const NavOuter = styled.div`
   gap: 1rem;
 `;
 
-export const NavItem = styled(NavLink)`
+export const ItemNavLink = styled(NavLink)`
   & {
     color: #151515;
     font-size: 1.1rem;
@@ -73,12 +73,12 @@ export const NavItem = styled(NavLink)`
   }
 `;
 
-export const MobileNavOuter = styled.div`
+export const MobileNavOuterDiv = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-export const MobileNavTitle = styled.div`
+export const MobileTitleDiv = styled.div`
   & {
     display: flex;
     flex-direction: row;
@@ -110,7 +110,7 @@ export const MobileNavTitle = styled.div`
   }
 `;
 
-export const DrawableList = styled.div`
+export const DrawableListDiv = styled.div`
   & {
     overflow: hidden;
     background-color: transparent;
@@ -123,7 +123,7 @@ export const DrawableList = styled.div`
   }
 `;
 
-export const MobileNavList = styled.div`
+export const MobileNavListDiv = styled.div`
   & {
     display: flex;
     flex-direction: column;
@@ -142,7 +142,7 @@ export const MobileNavList = styled.div`
   }
 `;
 
-export const MobileCurrentNav = styled.div`
+export const MobileCurrentNavDiv = styled.div`
   & {
     display: flex;
     flex-direction: row;
@@ -156,7 +156,7 @@ export const MobileCurrentNav = styled.div`
   }
 `;
 
-export const MobileNavItem = styled(NavLink)`
+export const MobileItemNavLink = styled(NavLink)`
   & {
     display: flex;
     flex-direction: row;

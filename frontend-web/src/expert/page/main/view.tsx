@@ -1,16 +1,4 @@
-import {
-  Detail,
-  DrawableList,
-  MainSection,
-  MobileCurrentNav,
-  MobileNavItem,
-  MobileNavList,
-  MobileNavOuter,
-  MobileNavTitle,
-  NavItem,
-  NavOuter,
-  Outer,
-} from "./style.ts";
+import * as S from "./style.ts";
 import { Outlet, useLocation, useNavigation } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 
@@ -42,21 +30,21 @@ export function MainPage() {
   const currentNavItem = navRouter.findLast((navItem) => location.pathname.startsWith(navItem.path));
 
   return (
-    <Outer>
+    <S.OuterDiv>
       <Header to="/expert">
         {!isWideMobile && (
-          <NavOuter>
+          <S.NavOuterDiv>
             {navRouter.map((itemRouter) => (
-              <NavItem
+              <S.ItemNavLink
                 key={itemRouter.path + "_" + itemRouter.name}
                 to={itemRouter.path}
                 end={itemRouter.path === "/expert"}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
                 {itemRouter.name}
-              </NavItem>
+              </S.ItemNavLink>
             ))}
-          </NavOuter>
+          </S.NavOuterDiv>
         )}
         <Profile
           job={EJob.DOCTOR}
@@ -67,18 +55,18 @@ export function MainPage() {
         />
       </Header>
       {isWideMobile && currentNavItem && (
-        <MobileNavOuter>
-          <MobileNavTitle onClick={() => setIsOpen(!isOpen)} className={isOpen ? "open" : ""}>
-            <MobileCurrentNav>
+        <S.MobileNavOuterDiv>
+          <S.MobileTitleDiv onClick={() => setIsOpen(!isOpen)} className={isOpen ? "open" : ""}>
+            <S.MobileCurrentNavDiv>
               <currentNavItem.icon />
               {currentNavItem.name}
-            </MobileCurrentNav>
+            </S.MobileCurrentNavDiv>
             <KeyboardArrowDownIcon />
-          </MobileNavTitle>
-          <DrawableList className={isOpen ? "open" : ""}>
-            <MobileNavList className={isOpen ? "open" : ""}>
+          </S.MobileTitleDiv>
+          <S.DrawableListDiv className={isOpen ? "open" : ""}>
+            <S.MobileNavListDiv className={isOpen ? "open" : ""}>
               {navRouter.map((itemRouter) => (
-                <MobileNavItem
+                <S.MobileItemNavLink
                   end={itemRouter.path === "/expert"}
                   key={itemRouter.path + "_" + itemRouter.name}
                   to={itemRouter.path}
@@ -87,18 +75,18 @@ export function MainPage() {
                 >
                   <itemRouter.icon />
                   {itemRouter.name}
-                </MobileNavItem>
+                </S.MobileItemNavLink>
               ))}
-            </MobileNavList>
-          </DrawableList>
-        </MobileNavOuter>
+            </S.MobileNavListDiv>
+          </S.DrawableListDiv>
+        </S.MobileNavOuterDiv>
       )}
-      <MainSection>
-        <Detail className={navigation.state === "loading" ? "loading" : ""}>
+      <S.MainDiv>
+        <S.DetailDiv className={navigation.state === "loading" ? "loading" : ""}>
           <Outlet />
-        </Detail>
-      </MainSection>
+        </S.DetailDiv>
+      </S.MainDiv>
       <Footer />
-    </Outer>
+    </S.OuterDiv>
   );
 }
