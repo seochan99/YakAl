@@ -1,23 +1,10 @@
-import {
-  BackButton,
-  BackIcon,
-  Birthday,
-  Header,
-  InnerBox,
-  Name,
-  NameSex,
-  NoteAndDoseList,
-  Outer,
-  PatientSummary,
-  PrescriptionAndHealthFunctionalFood,
-  Sex,
-} from "./style.ts";
-import PatientInfoText from "./child/patient-info-text";
-import SpecialNote from "./child/special-note";
-import DoseList from "./child/dose-list";
-import SurveyResult from "./child/survey-result";
-import PrescriptionList from "./child/prescription-list";
-import HealthFoodList from "./child/health-food-list";
+import * as S from "./style.ts";
+import PatientNotFound from "./child/patient-not-found/view.tsx";
+import SpecialNote from "./child/notes/view.tsx";
+import Doses from "./child/doses/view.tsx";
+import Questionnaires from "./child/questionnaires/view.tsx";
+import Prescriptions from "./child/prescriptions/view.tsx";
+import HealthFunctionalFoods from "./child/health-functional-foods/view.tsx";
 
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
@@ -34,7 +21,7 @@ type TParam = {
   birthday: number[];
 };
 
-function PatientInfo() {
+function PatientPage() {
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
 
   const location = useLocation();
@@ -43,14 +30,14 @@ function PatientInfo() {
   if (!userInfo && !localStorage.getItem("id")) {
     return (
       <ErrorOuter>
-        <Header>
-          <BackButton to="/expert/patient">
-            <BackIcon />
+        <S.Header>
+          <S.BackButton to="/expert/patient">
+            <S.BackIcon />
             환자 목록으로
-          </BackButton>
-        </Header>
+          </S.BackButton>
+        </S.Header>
         <ErrorMain>
-          <PatientInfoText text="해당 환자에 대한 정보가 없습니다." />
+          <PatientNotFound text="해당 환자에 대한 정보가 없습니다." />
         </ErrorMain>
       </ErrorOuter>
     );
@@ -71,49 +58,49 @@ function PatientInfo() {
   const date = Number(localStorage.getItem("date"));
 
   return (
-    <Outer>
-      <Header>
-        <BackButton to="/expert/patient">
-          <BackIcon />
+    <S.Outer>
+      <S.Header>
+        <S.BackButton to="/expert/patient">
+          <S.BackIcon />
           환자 목록으로
-        </BackButton>
-      </Header>
-      <PatientSummary>
-        <NameSex>
-          <Name>{name}</Name>
-          <Sex>
+        </S.BackButton>
+      </S.Header>
+      <S.PatientSummary>
+        <S.NameSex>
+          <S.Name>{name}</S.Name>
+          <S.Sex>
             {sex === ESex.MALE ? "남성" : "여성"}
             {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-          </Sex>
-        </NameSex>
-        <Birthday>
+          </S.Sex>
+        </S.NameSex>
+        <S.Birthday>
           {`${year}.
           ${month < 10 ? "0".concat(month.toString()) : month}.
           ${date < 10 ? "0".concat(date.toString()) : date}. `}
           {!isMobile && `(${getAge(new Date(year, month - 1, date))}세)`}
-        </Birthday>
-      </PatientSummary>
-      <NoteAndDoseList>
-        <InnerBox>
+        </S.Birthday>
+      </S.PatientSummary>
+      <S.NoteAndDoseList>
+        <S.InnerBox>
           <SpecialNote patientId={Number(id)} />
-        </InnerBox>
-        <InnerBox>
-          <DoseList patientId={Number(id)} />
-        </InnerBox>
-      </NoteAndDoseList>
-      <InnerBox>
-        <SurveyResult patientId={Number(id)} />
-      </InnerBox>
-      <PrescriptionAndHealthFunctionalFood>
-        <InnerBox>
-          <PrescriptionList patientId={Number(id)} />
-        </InnerBox>
-        <InnerBox>
-          <HealthFoodList patientId={Number(id)} />
-        </InnerBox>
-      </PrescriptionAndHealthFunctionalFood>
-    </Outer>
+        </S.InnerBox>
+        <S.InnerBox>
+          <Doses patientId={Number(id)} />
+        </S.InnerBox>
+      </S.NoteAndDoseList>
+      <S.InnerBox>
+        <Questionnaires patientId={Number(id)} />
+      </S.InnerBox>
+      <S.PrescriptionAndHealthFunctionalFood>
+        <S.InnerBox>
+          <Prescriptions patientId={Number(id)} />
+        </S.InnerBox>
+        <S.InnerBox>
+          <HealthFunctionalFoods patientId={Number(id)} />
+        </S.InnerBox>
+      </S.PrescriptionAndHealthFunctionalFood>
+    </S.Outer>
   );
 }
 
-export default PatientInfo;
+export default PatientPage;

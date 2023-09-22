@@ -1,4 +1,4 @@
-import { TMenuInfo } from "../index.tsx";
+import { TMenuInfo } from "../view.tsx";
 import {
   CoomingSoonDescription,
   CoomingSoonIcon,

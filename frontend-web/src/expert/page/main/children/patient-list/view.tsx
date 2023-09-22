@@ -1,21 +1,4 @@
-import {
-  DateBox,
-  List,
-  Name,
-  OptionBar,
-  Outer,
-  SearchBar,
-  SearchButton,
-  SearchInput,
-  SelectBox,
-  SelectButton,
-  SelectItem,
-  SelectItemButton,
-  SelectList,
-  Sex,
-  TableHeader,
-  TestProgress,
-} from "./style.ts";
+import * as S from "./style.ts";
 import React, { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { EPatientFilter } from "../../../../type/patient-filter.ts";
@@ -25,7 +8,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const PAGING_SIZE = 10;
 
-function PatientList() {
+function PatientListPage() {
   const [searchName, setSearchName] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
@@ -63,53 +46,53 @@ function PatientList() {
   };
 
   return (
-    <Outer>
-      <OptionBar>
-        <SearchBar>
-          <SearchButton />
-          <SearchInput
+    <S.Outer>
+      <S.OptionBar>
+        <S.SearchBar>
+          <S.SearchButton />
+          <S.SearchInput
             type="text"
             placeholder="환자 이름으로 검색"
             value={searchName}
             onChange={(e) => setSearchName(e.target.value)}
           />
-        </SearchBar>
-        <SelectBox data-role="selectbox">
-          <SelectButton
+        </S.SearchBar>
+        <S.SelectBox data-role="selectbox">
+          <S.SelectButton
             className={filterOptionIsOpen ? "open" : ""}
             onClick={() => setFilterOptionIsOpen(!filterOptionIsOpen)}
           >
             <ArrowDropDownIcon />
             <span>{selected ? selected : "필터"}</span>
-          </SelectButton>
+          </S.SelectButton>
           {filterOptionIsOpen && (
-            <SelectList ref={selectListRef}>
+            <S.SelectList ref={selectListRef}>
               {Object.keys(EPatientFilter).map((patientFilter) => {
                 const value = EPatientFilter[patientFilter as keyof typeof EPatientFilter];
                 return (
-                  <SelectItem key={patientFilter}>
-                    <SelectItemButton value={value} onClick={handleSelect}>
+                  <S.SelectItem key={patientFilter}>
+                    <S.SelectItemButton value={value} onClick={handleSelect}>
                       {value}
-                    </SelectItemButton>
-                  </SelectItem>
+                    </S.SelectItemButton>
+                  </S.SelectItem>
                 );
               })}
-            </SelectList>
+            </S.SelectList>
           )}
-        </SelectBox>
-      </OptionBar>
-      <List>
-        <TableHeader>
-          <Name>{`이름`}</Name>
-          {!isMiddleMobile && <Sex>{`성별`}</Sex>}
-          <DateBox>
+        </S.SelectBox>
+      </S.OptionBar>
+      <S.List>
+        <S.TableHeader>
+          <S.Name>{`이름`}</S.Name>
+          {!isMiddleMobile && <S.Sex>{`성별`}</S.Sex>}
+          <S.DateBox>
             {`생년월일`}
             {!isMiddleMobile && `(만 나이)`}
-          </DateBox>
-          {!isMiddleMobile && <TestProgress>{`설문 완료율`}</TestProgress>}
-          <DateBox>{`최근 설문 제출일`}</DateBox>
-        </TableHeader>
-      </List>
+          </S.DateBox>
+          {!isMiddleMobile && <S.TestProgress>{`설문 완료율`}</S.TestProgress>}
+          <S.DateBox>{`최근 설문 제출일`}</S.DateBox>
+        </S.TableHeader>
+      </S.List>
       <ListFooter>
         <Pagination
           activePage={page}
@@ -121,8 +104,8 @@ function PatientList() {
           onChange={handlePageChange}
         />
       </ListFooter>
-    </Outer>
+    </S.Outer>
   );
 }
 
-export default PatientList;
+export default PatientListPage;

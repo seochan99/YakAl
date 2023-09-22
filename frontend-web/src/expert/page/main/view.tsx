@@ -4,7 +4,7 @@ import { useMediaQuery } from "react-responsive";
 
 import Footer from "../../layout/footer/view.tsx";
 import Header from "../../layout/header/view.tsx";
-import Profile from "./children/profile";
+import Profile from "./children/profile/view.tsx";
 import { useState } from "react";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";

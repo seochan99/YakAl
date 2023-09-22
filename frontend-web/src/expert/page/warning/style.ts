@@ -17,7 +17,7 @@ export const ContentDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
-  gap: 2rem;
+  gap: 2.5rem;
 
   @media only screen and (max-width: 768px) {
     margin: 0 15%;

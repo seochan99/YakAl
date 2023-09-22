@@ -1,4 +1,4 @@
-import { DateBox, DummyOuter, Name, Outer, Sex, TestProgress } from "./style.ts";
+import * as S from "./style.ts";
 
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
@@ -21,7 +21,7 @@ function PatientItem({ userInfo }: PatientItemProps) {
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
   if (!userInfo) {
-    return <DummyOuter />;
+    return <S.DummyOuter />;
   }
 
   const { id, name, sex, birthday, testProgress, lastSurbey } = userInfo;
@@ -31,7 +31,7 @@ function PatientItem({ userInfo }: PatientItemProps) {
   );
 
   return (
-    <Outer
+    <S.Outer
       to={`/expert/patient/${id}`}
       state={{
         id,
@@ -40,24 +40,24 @@ function PatientItem({ userInfo }: PatientItemProps) {
         birthday,
       }}
     >
-      <Name>
+      <S.Name>
         {name.length > 4 ? name.substring(0, 4) + "..." : name}
         {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}
-      </Name>
+      </S.Name>
       {!isMiddleMobile && (
-        <Sex>
+        <S.Sex>
           {sex === ESex.MALE ? "남성" : "여성"}
           {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-        </Sex>
+        </S.Sex>
       )}
-      <DateBox>
+      <S.DateBox>
         {`${birthday[0]}.
           ${birthday[1] < 10 ? "0".concat(birthday[1].toString()) : birthday[1]}.
           ${birthday[2] < 10 ? "0".concat(birthday[2].toString()) : birthday[2]}.`}
         {!isMiddleMobile && ` (${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
-      </DateBox>
-      {!isMiddleMobile && <TestProgress>{`${testProgress}%`}</TestProgress>}
-      <DateBox>
+      </S.DateBox>
+      {!isMiddleMobile && <S.TestProgress>{`${testProgress}%`}</S.TestProgress>}
+      <S.DateBox>
         {`${lastSurbey[0]}.
           ${lastSurbey[1] < 10 ? "0".concat(lastSurbey[1].toString()) : lastSurbey[1]}.
           ${lastSurbey[2] < 10 ? "0".concat(lastSurbey[2].toString()) : lastSurbey[2]}.`}
@@ -67,8 +67,8 @@ function PatientItem({ userInfo }: PatientItemProps) {
             : dateDiff > 30
             ? ` (${Math.floor(dateDiff / 30)}개월 전)`
             : ` (${dateDiff}일 전)`)}
-      </DateBox>
-    </Outer>
+      </S.DateBox>
+    </S.Outer>
   );
 }
 

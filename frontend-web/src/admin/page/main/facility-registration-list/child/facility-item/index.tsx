@@ -7,7 +7,7 @@ import {
   FacilityType,
   Name,
   RequestedAt,
-} from "/src/admin/page/main/facility-registration-list/style.ts";
+} from "/src/admin/page/main/register-list/style.ts";
 
 import LocalHospitalOutlinedIcon from "@mui/icons-material/LocalHospitalOutlined";
 import LocalPharmacyOutlinedIcon from "@mui/icons-material/LocalPharmacyOutlined";

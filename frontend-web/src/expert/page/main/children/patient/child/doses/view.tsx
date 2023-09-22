@@ -1,27 +1,5 @@
 import Pagination from "react-js-pagination";
-import {
-  Bar,
-  DateHeader,
-  GreenIcon,
-  Header,
-  Item,
-  ItemDate,
-  ItemIcon,
-  ItemTitle,
-  List,
-  ListHeader,
-  PeriodItem,
-  PeriodItemButton,
-  PeriodList,
-  PeriodSelectBox,
-  PeriodSelectButton,
-  QuestionIcon,
-  RedIcon,
-  RiskHeader,
-  Title,
-  TitleHeader,
-  YellowIcon,
-} from "./style.ts";
+import * as S from "./style.ts";
 import { useEffect, useRef, useState } from "react";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -34,7 +12,7 @@ export type TDoseListProps = {
 
 const PAGING_SIZE = 5;
 
-function DoseList() {
+function Doses() {
   const [page, setPage] = useState<number>(1);
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [selected, setSelected] = useState<number>(5);
@@ -72,53 +50,55 @@ function DoseList() {
     switch (polypharmacyRisk) {
       case 0:
       case 1:
-        return <GreenIcon />;
+        return <S.GreenIcon />;
       case 2:
-        return <YellowIcon />;
+        return <S.YellowIcon />;
       case 3:
-        return <RedIcon />;
+        return <S.RedIcon />;
       default:
-        return <QuestionIcon />;
+        return <S.QuestionIcon />;
     }
   };
 
   return (
     <>
-      <Header>
-        <Title>복약 목록</Title>
-        <PeriodSelectBox data-role="selectbox">
-          <PeriodSelectButton className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
+      <S.Header>
+        <S.Title>복약 목록</S.Title>
+        <S.PeriodSelectBox data-role="selectbox">
+          <S.PeriodSelectButton className={isOpen ? "open" : ""} onClick={() => setIsOpen(!isOpen)}>
             <ArrowDropDownIcon />
             <span>{Object.values(EPeriod)[selected]}</span>
-          </PeriodSelectButton>
+          </S.PeriodSelectButton>
           {isOpen && (
-            <PeriodList ref={periodListRef}>
+            <S.PeriodList ref={periodListRef}>
               {[0, 1, 2, 3, 4, 5].map((period) => {
                 return (
-                  <PeriodItem key={period}>
-                    <PeriodItemButton onClick={handleSelect(period)}>{Object.values(EPeriod)[period]}</PeriodItemButton>
-                  </PeriodItem>
+                  <S.PeriodItem key={period}>
+                    <S.PeriodItemButton onClick={handleSelect(period)}>
+                      {Object.values(EPeriod)[period]}
+                    </S.PeriodItemButton>
+                  </S.PeriodItem>
                 );
               })}
-            </PeriodList>
+            </S.PeriodList>
           )}
-        </PeriodSelectBox>
-      </Header>
-      <Bar />
-      <List>
-        <ListHeader>
-          <TitleHeader>약품명</TitleHeader>
-          <RiskHeader>위험도</RiskHeader>
-          <DateHeader>처방일</DateHeader>
-        </ListHeader>
-        <Item key={"동화디트로판정"}>
-          <ItemTitle>
+        </S.PeriodSelectBox>
+      </S.Header>
+      <S.Bar />
+      <S.List>
+        <S.ListHeader>
+          <S.TitleHeader>약품명</S.TitleHeader>
+          <S.RiskHeader>위험도</S.RiskHeader>
+          <S.DateHeader>처방일</S.DateHeader>
+        </S.ListHeader>
+        <S.Item key={"동화디트로판정"}>
+          <S.ItemTitle>
             {"동화디트로판정".length > 9 ? "동화디트로판정".substring(0, 8).concat("...") : "동화디트로판정"}
-          </ItemTitle>
-          <ItemIcon>{getRiskIcon(2)}</ItemIcon>
-          <ItemDate>{`2022. 12. 12.`}</ItemDate>
-        </Item>
-      </List>
+          </S.ItemTitle>
+          <S.ItemIcon>{getRiskIcon(2)}</S.ItemIcon>
+          <S.ItemDate>{`2022. 12. 12.`}</S.ItemDate>
+        </S.Item>
+      </S.List>
       <ListFooter>
         <Pagination
           activePage={page}
@@ -134,4 +114,4 @@ function DoseList() {
   );
 }
 
-export default DoseList;
+export default Doses;
