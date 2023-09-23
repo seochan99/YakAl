@@ -2,94 +2,114 @@ import { styled } from "styled-components";
 
 import { ReactComponent as SearchIconSvg } from "@/expert/assets/icons/magnifying-glass-icon.svg";
 
-export const ErrorOuter = styled.div`
+export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%;
-  gap: 1.25rem;
+  width: 45rem;
+  margin: 2rem 0;
+  gap: 0.1rem;
 `;
 
-export const ErrorMain = styled.div`
+export const InnerDiv = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border-radius: 0.5rem;
-  background-color: #fff;
-  flex: 1;
+  background-color: var(--White, #fff);
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  gap: 1.5rem;
 `;
 
-export const Outer = styled.div`
+export const TabBarDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  border-radius: 0.5rem;
-  background-color: #fff;
-
-  @media only screen and (min-width: 541px) {
-    padding: 2rem;
-  }
-
-  @media only screen and (max-width: 540px) {
-    padding: 1.5rem;
-  }
-
-  @media only screen and (min-width: 381px) {
-    border-radius: 0.5rem;
-  }
-
-  @media only screen and (max-width: 380px) {
-    border-radius: 0;
-  }
+  flex-direction: row;
+  gap: 0.25rem;
 `;
 
-export const OptionBar = styled.div`
-  display: flex;
-
-  @media only screen and (min-width: 481px) {
-    flex-direction: row;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  @media only screen and (max-width: 480px) {
+export const TabDiv = styled.div`
+  & {
+    display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+    border-radius: 0.25rem 0.25rem 0 0;
+    font-family: SUIT, serif;
+    font-style: normal;
+    font-weight: 700;
+    text-align: center;
+    padding: 0.5rem 0;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &.unselected {
+    border: 1px solid var(--Gray3, #c6c6cf);
+    background: var(--Gray1, #f5f5f9);
+    color: var(--Gray4, #90909f);
+  }
+
+  &.selected {
+    border: 1px solid var(--Sub2, #c1d2ff);
+    border-bottom: 0.3125rem solid var(--Sub1, #5588fd);
+    background: var(--Sub3, #f1f5fe);
+    color: var(--main, #2666f6);
   }
 `;
 
-export const SearchBar = styled.div`
+export const TabTitleSpan = styled.span`
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+`;
+
+export const TabSubtitleSpan = styled.span`
+  font-size: 1rem;
+  line-height: 1.75rem;
+`;
+
+export const OptionBarDiv = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  border-radius: 2rem;
-  border: 2px solid var(--color-surface-900);
-  height: 3rem;
-
-  @media only screen and (min-width: 481px) {
-    flex: 1;
-  }
+  justify-content: space-between;
+  gap: 1rem;
 `;
 
-export const SearchButton = styled(SearchIconSvg)`
-  width: 1.4rem;
-  height: 1.4rem;
-  margin-left: 1.4rem;
+export const SearchBarDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border-radius: 0.5rem;
+  border: 0.125rem solid var(--Gray2, #e9e9ee);
+  height: 2.5rem;
+  gap: 0.8rem;
+  flex: 1;
+`;
+
+export const StyledSearchIconSvg = styled(SearchIconSvg)`
+  /* Variable */
+  --IconSize: 1.2rem;
+
+  /* Style */
+  width: var(--IconSize);
+  height: var(--IconSize);
+  margin-left: var(--IconSize);
 `;
 
 export const SearchInput = styled.input`
   flex: 1;
-  color: #90909f;
+  color: var(--Gray4, #90909f);
   text-align: left;
   font-size: 1rem;
   font-weight: 500;
   line-height: 1rem;
-  margin-left: 0.8rem;
   margin-right: 1.4rem;
   border: 0;
   outline: none;
 `;
 
-export const SelectBox = styled.div`
+export const SelectDiv = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -98,32 +118,30 @@ export const SelectBox = styled.div`
 export const SelectButton = styled.button`
   & {
     display: inline-flex;
-    padding: 0.4rem 0.8rem 0.4rem 0.4rem;
     align-items: center;
+    justify-content: start;
+    padding: 0 0.4rem;
     border: 0;
-    border-radius: 3rem;
-    height: 3rem;
-    background-color: var(--color-surface-900);
-    color: #151515;
-    font-family: Pretendard;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1rem;
-
-    @media only screen and (min-width: 481px) {
-      width: 8rem;
-    }
+    border-radius: 0.5rem;
+    height: 2.5rem;
+    width: 8rem;
+    background-color: var(--Gray2, #e9e9ee);
   }
 
   & svg {
     height: 1.5rem;
     transition: 0.3s;
-    margin-left: 0.4rem;
   }
 
   & span {
     flex: 1;
     text-align: center;
+    white-space: nowrap;
+    color: var(--Black, #151515);
+    font-family: Pretendard, serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1rem;
   }
 
   &.open svg {
@@ -132,11 +150,7 @@ export const SelectButton = styled.button`
 
   &:hover {
     cursor: pointer;
-    background-color: #e0dfe6;
-  }
-
-  &:active {
-    background-color: #cbcbd6;
+    background-color: var(--Gray3, #c6c6cf);
   }
 `;
 
@@ -144,24 +158,16 @@ export const SelectList = styled.ul`
   position: absolute;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
   align-items: center;
-  top: 2rem;
+  gap: 0.5rem;
+  top: 1.5rem;
   list-style: none;
   border-radius: 0.5rem;
   padding: 0.4rem;
-  background-color: #fff;
-  border: 1px solid #b7b5c4;
-
-  @media only screen and (min-width: 481px) {
-    right: 0;
-    width: 7rem;
-  }
-
-  @media only screen and (max-width: 480px) {
-    left: 0;
-    width: calc(100% - 1rem);
-  }
+  background-color: var(--White, #fff);
+  border: 0.1rem solid var(--Gray3, #c6c6cf);
+  right: 0;
+  width: 7.1rem;
 `;
 
 export const SelectItem = styled.li`
@@ -174,78 +180,59 @@ export const SelectItemButton = styled.button`
     background-color: transparent;
     border: 0;
     border-radius: 0.5rem;
-    color: #151515;
-    font-family: Pretendard;
+    color: var(--Black, #151515);
+    font-family: Pretendard, serif;
     font-size: 1rem;
     font-weight: 500;
     line-height: 1rem;
-    padding: 1rem;
+    padding: 0.8rem 0;
   }
 
   &:hover {
     cursor: pointer;
-    background-color: #e0dfe6;
+    background-color: var(--Gray2, #e9e9ee);
   }
 
   &:active {
-    background-color: #cbcbd6;
+    background-color: var(--Gray3, #c6c6cf);
   }
 `;
 
-export const List = styled.div`
+export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1rem 0;
-  margin: 0;
-  width: 100%;
-  flex: 1;
+  gap: 0.5rem;
+  height: 48.7rem;
 `;
 
-export const TableHeader = styled.div`
+export const TableHeaderDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 1rem;
+  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 3rem;
   border: 0;
-  color: #7c7c94;
-  font-weight: 500;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
   font-size: 1rem;
-`;
-
-export const Name = styled.span`
-  line-height: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2rem;
   text-align: center;
-  width: 6rem;
 `;
 
-export const Sex = styled.span`
-  & {
-    line-height: 1rem;
-    width: 4rem;
-    text-align: center;
-  }
-
-  & svg {
-    height: 1.2rem;
-  }
+export const NameSpan = styled.span`
+  width: calc(100% / 4);
 `;
 
-export const TestProgress = styled.span`
-  line-height: 1rem;
-  text-align: center;
-  width: 5rem;
+export const SexBirthdaySpan = styled.span`
+  width: calc(100% / 8 * 3);
 `;
 
-export const DateBox = styled.span`
-  line-height: 1rem;
-  text-align: center;
+export const TelephoneSpan = styled.span`
+  width: calc(100% / 8 * 3);
+`;
 
-  @media only screen and (min-width: 541px) {
-    width: 12rem;
-  }
-
-  @media only screen and (max-width: 540px) {
-    width: 7rem;
-  }
+export const LastQuestionnaireDateSpan = styled.span`
+  width: calc(100% / 2);
 `;

@@ -1,92 +1,94 @@
-import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import StarIcon from "@mui/icons-material/Star";
+import { IconButton } from "@mui/material";
+import { Link } from "react-router-dom";
 
-export const DummyOuter = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 3.2rem;
-  border: 0;
-  border-radius: 0.25rem;
-  margin: 0.45rem 0;
-`;
-
-export const Outer = styled(NavLink)`
+export const OuterDiv = styled.div`
   & {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    border: 0;
-    border-radius: 0.25rem;
-    margin: 0.45rem 0;
-    text-decoration: none;
-    color: #151515;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid var(--Gray2, #e9e9ee);
+    background: var(--White, #fff);
   }
 
   &:hover {
-    cursor: pointer;
-    background-color: var(--color-surface-900);
+    background: var(--Gray2, #e9e9ee);
   }
 `;
 
-export const Name = styled.span`
+export const StyledLink = styled(Link)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  text-decoration: none;
+  text-align: center;
+  flex: 1;
+`;
+
+export const ProfileImg = styled.img`
+  height: 2rem;
+  width: 2rem;
+`;
+
+export const NameSpan = styled.span`
+  width: calc(100% / 4);
+  color: var(--Black, #151515);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.25rem;
+`;
+
+const CommonFontStyle = css`
+  color: var(--Gray6, #464655);
+  font-family: SUIT, serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2rem;
+`;
+
+export const SexBirthdaySpan = styled.span`
   & {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.1rem;
-    font-weight: 600;
-    line-height: 1.1rem;
-    text-align: center;
-    width: 6rem;
+    width: calc(100% / 8 * 3);
+    ${CommonFontStyle}
   }
 
   & svg {
-    height: 1.1rem;
+    height: 1rem;
   }
 `;
 
-export const Sex = styled.span`
+export const TelephoneSpan = styled.span`
+  width: calc(100% / 8 * 3);
+  ${CommonFontStyle}
+`;
+
+export const LastQuestionnaireDateSpan = styled.span`
+  width: calc(100% / 2);
+  ${CommonFontStyle}
+`;
+
+export const StyledStarIcon = styled(StarIcon)`
   & {
-    display: inline-flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1rem;
-    width: 4rem;
-    gap: 0.1rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
-  & svg {
-    height: 1.2rem;
+  &.managed {
+    fill: var(--yellow, #ffc100);
+  }
+
+  &.unmanaged {
+    fill: var(--Gray2, #e9e9ee);
   }
 `;
 
-export const TestProgress = styled.span`
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1rem;
-  text-align: center;
-  width: 5rem;
-`;
-
-export const DateBox = styled.span`
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1rem;
-  text-align: center;
-
-  @media only screen and (min-width: 541px) {
-    width: 12rem;
-  }
-
-  @media only screen and (max-width: 540px) {
-    width: 7rem;
-  }
-`;
+export const StyledIconButton = styled(IconButton)``;

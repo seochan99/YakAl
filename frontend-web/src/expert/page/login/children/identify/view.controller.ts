@@ -48,16 +48,16 @@ export const useIdentifyPageViewController = () => {
           const sendIdentifyResponse = await identify(response.imp_uid);
 
           if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            naviagte("/expert/login/social/success");
+            naviagte("/expert/login/identify/success");
             return;
           } else {
-            naviagte("/expert/login/social/failure");
+            naviagte("/expert/login/identify/failure");
             return;
           }
         } else {
           logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
           /* Identification Failure Logic */
-          naviagte("/expert/login/social/failure");
+          naviagte("/expert/login/identify/failure");
           return;
         }
       },

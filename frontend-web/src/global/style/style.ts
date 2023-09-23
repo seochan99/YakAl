@@ -24,9 +24,6 @@ export const GlobalStyle = createGlobalStyle`
     --Red: #FB5D5D;
     --TextRed: #E01029;
 
-
-    --width-standard: 54rem;
-
     --red-50: #fff0f0;
     --red-100: #ffdddd;
     --red-200: #ffc0c0;

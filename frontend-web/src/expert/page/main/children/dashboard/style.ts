@@ -4,6 +4,8 @@ import styled from "styled-components";
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
+  width: 54rem;
+  padding: 2rem 0;
 
   @media only screen and (max-width: 768px) {
     margin: 2rem;

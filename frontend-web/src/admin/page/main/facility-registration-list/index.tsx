@@ -16,7 +16,6 @@ import {
 import { ReactNode, useState } from "react";
 import { ListFooter } from "../../../style.ts";
 import Pagination from "react-js-pagination";
-import FacilityItem from "./child/facility-item";
 import { EFacility } from "../../../../expert/type/facility.ts";
 
 export type TFacility = {
@@ -51,9 +50,6 @@ export function FacilityRegistration() {
       return dummyList;
     }
 
-    for (let i = 0; i < PAGING_SIZE - (facilityList.length % PAGING_SIZE); ++i) {
-      dummyList.push(<FacilityItem key={i} />);
-    }
     return dummyList;
   };
 
@@ -78,9 +74,6 @@ export function FacilityRegistration() {
           <Name>{`기관명`}</Name>
           <RequestedAt>{`등록 요청일`}</RequestedAt>
         </TableHeader>
-        {facilityList.slice(PAGING_SIZE * (page - 1), PAGING_SIZE * page).map((facility) => {
-          return <FacilityItem facility={facility} key={facility.id} />;
-        })}
         {getDummyList()}
       </List>
       <ListFooter>

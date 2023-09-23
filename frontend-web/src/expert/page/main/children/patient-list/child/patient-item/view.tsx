@@ -7,68 +7,63 @@ import { ESex } from "../../../../../../type/sex.ts";
 import getAge from "../../../../../../util/get-age.ts";
 
 type PatientItemProps = {
-  userInfo?: {
+  patientInfo: {
     id: number;
+    profileImg: string;
     name: string;
     sex: string;
     birthday: number[];
-    testProgress: number;
-    lastSurbey: number[];
+    tel: string;
+    lastQuestionnaireDate: number[];
+    isManaged: boolean;
   };
+  onClickToManage: () => void;
+  onClickToNotManage: () => void;
 };
 
-function PatientItem({ userInfo }: PatientItemProps) {
+function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: PatientItemProps) {
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
-  if (!userInfo) {
-    return <S.DummyOuter />;
-  }
-
-  const { id, name, sex, birthday, testProgress, lastSurbey } = userInfo;
+  const { id, profileImg, name, sex, birthday, tel, lastQuestionnaireDate, isManaged } = patientInfo;
 
   const dateDiff = Math.floor(
-    (Date.now() - new Date(lastSurbey[0], lastSurbey[1] - 1, lastSurbey[2]).getTime()) / (1000 * 60 * 60 * 24),
+    (Date.now() -
+      new Date(lastQuestionnaireDate[0], lastQuestionnaireDate[1] - 1, lastQuestionnaireDate[2]).getTime()) /
+      (1000 * 60 * 60 * 24),
   );
 
   return (
-    <S.Outer
-      to={`/expert/patient/${id}`}
-      state={{
-        id,
-        name,
-        sex: ESex[sex as keyof typeof ESex],
-        birthday,
-      }}
-    >
-      <S.Name>
-        {name.length > 4 ? name.substring(0, 4) + "..." : name}
-        {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}
-      </S.Name>
-      {!isMiddleMobile && (
-        <S.Sex>
+    <S.OuterDiv>
+      <S.StyledLink to={`/expert/patient/${id}`}>
+        <S.ProfileImg src={profileImg === "" ? "/src/expert/assets/icons/no-profile-icon.png" : profileImg} />
+        <S.NameSpan>
+          {name.length > 4 ? name.substring(0, 4) + "..." : name}
+          {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}
+        </S.NameSpan>
+        <S.SexBirthdaySpan>
+          {`(`}
           {sex === ESex.MALE ? "남성" : "여성"}
           {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-        </S.Sex>
-      )}
-      <S.DateBox>
-        {`${birthday[0]}.
-          ${birthday[1] < 10 ? "0".concat(birthday[1].toString()) : birthday[1]}.
-          ${birthday[2] < 10 ? "0".concat(birthday[2].toString()) : birthday[2]}.`}
-        {!isMiddleMobile && ` (${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
-      </S.DateBox>
-      {!isMiddleMobile && <S.TestProgress>{`${testProgress}%`}</S.TestProgress>}
-      <S.DateBox>
-        {`${lastSurbey[0]}.
-          ${lastSurbey[1] < 10 ? "0".concat(lastSurbey[1].toString()) : lastSurbey[1]}.
-          ${lastSurbey[2] < 10 ? "0".concat(lastSurbey[2].toString()) : lastSurbey[2]}.`}
-        {!isMiddleMobile &&
-          (dateDiff > 365
+          {`, ${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
+        </S.SexBirthdaySpan>
+        <S.TelephoneSpan>{tel}</S.TelephoneSpan>
+        <S.LastQuestionnaireDateSpan>
+          {`${lastQuestionnaireDate[0]}.
+          ${lastQuestionnaireDate[1] < 10 ? "0".concat(lastQuestionnaireDate[1].toString()) : lastQuestionnaireDate[1]}.
+          ${
+            lastQuestionnaireDate[2] < 10 ? "0".concat(lastQuestionnaireDate[2].toString()) : lastQuestionnaireDate[2]
+          }.`}
+          {dateDiff > 365
             ? ` (${Math.floor(dateDiff / 365)}년 전)`
             : dateDiff > 30
             ? ` (${Math.floor(dateDiff / 30)}개월 전)`
-            : ` (${dateDiff}일 전)`)}
-      </S.DateBox>
-    </S.Outer>
+            : ` (${dateDiff}일 전)`}
+        </S.LastQuestionnaireDateSpan>
+      </S.StyledLink>
+      <S.StyledIconButton onClick={isManaged ? onClickToNotManage : onClickToManage}>
+        <S.StyledStarIcon className={isManaged ? "managed" : "unmanaged"} />
+      </S.StyledIconButton>
+    </S.OuterDiv>
   );
 }
 

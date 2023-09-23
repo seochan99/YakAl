@@ -30,6 +30,7 @@ import CertificationSuccess from "../expert/page/main/children/certify-success/v
 import CertifyFailurePage from "../expert/page/main/children/certify-failure/view.tsx";
 import SocialLoginNotYetPage from "../expert/page/login/children/social-login-not-yet/view.tsx";
 
+export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
 

@@ -13,32 +13,9 @@ export const MainDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  align-items: start;
   flex: 1;
-  width: 100%;
-  background-color: #f5f5f9;
-`;
-
-export const DetailDiv = styled.div`
-  & {
-    display: flex;
-    flex-direction: column;
-
-    @media only screen and (min-width: 769px) {
-      width: var(--width-standard);
-      padding: 2rem;
-    }
-
-    @media only screen and (max-width: 768px) {
-      width: 100%;
-      padding: 0;
-    }
-  }
-
-  &.loading {
-    opacity: 0.25;
-    transition: opacity 200ms;
-    transition-delay: 200ms;
-  }
+  background-color: var(--Gray1, #f5f5f9);
 `;
 
 export const NavOuterDiv = styled.div`
@@ -89,8 +66,8 @@ export const MobileTitleDiv = styled.div`
     line-height: 1.2rem;
     font-weight: 700;
     color: #151515;
-    border-top: 0.0625rem solid var(--color-surface-900);
-    border-bottom: 0.0625rem solid var(--color-surface-900);
+    border-top: 0.0625rem solid var(--Gray2, #e9e9ee);
+    border-bottom: 0.0625rem solid var(--Gray2, #e9e9ee);
     background-color: #fff;
   }
 
@@ -183,6 +160,6 @@ export const MobileItemNavLink = styled(NavLink)`
   }
 
   &.active {
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
   }
 `;

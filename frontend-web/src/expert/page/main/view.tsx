@@ -1,47 +1,34 @@
 import * as S from "./style.ts";
-import { Outlet, useLocation, useNavigation } from "react-router-dom";
-import { useMediaQuery } from "react-responsive";
+import { Outlet } from "react-router-dom";
 
 import Footer from "../../layout/footer/view.tsx";
 import Header from "../../layout/header/view.tsx";
 import Profile from "./children/profile/view.tsx";
-import { useState } from "react";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import DashboardOutlinedIcon from "@mui/icons-material/DashboardOutlined";
-import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
-import AssignmentIndOutlinedIcon from "@mui/icons-material/AssignmentIndOutlined";
 import { EJob } from "../../type/job.ts";
+import { useMainPageViewController } from "./view.controller.ts";
+import { EXPERT_HOME } from "../../../global/router.tsx";
 
 export function MainPage() {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const isWideMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
-  const navigation = useNavigation();
-  const location = useLocation();
-
-  const navRouter = [
-    { path: "/expert", name: "대시보드", icon: DashboardOutlinedIcon },
-    { path: "/expert/patient", name: "환자 목록", icon: LocalHotelOutlinedIcon },
-    { path: "/expert/info", name: "내 정보", icon: AssignmentIndOutlinedIcon },
-  ];
-
-  const currentNavItem = navRouter.findLast((navItem) => location.pathname.startsWith(navItem.path));
+  const {
+    nav: { navList, currentNavItem },
+    mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
+  } = useMainPageViewController();
 
   return (
     <S.OuterDiv>
       <Header to="/expert">
         {!isWideMobile && (
           <S.NavOuterDiv>
-            {navRouter.map((itemRouter) => (
+            {navList.map((navItem) => (
               <S.ItemNavLink
-                key={itemRouter.path + "_" + itemRouter.name}
-                to={itemRouter.path}
-                end={itemRouter.path === "/expert"}
+                key={navItem.path + "_" + navItem.name}
+                to={navItem.path}
+                end={navItem.path === EXPERT_HOME}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
-                {itemRouter.name}
+                {navItem.name}
               </S.ItemNavLink>
             ))}
           </S.NavOuterDiv>
@@ -56,25 +43,25 @@ export function MainPage() {
       </Header>
       {isWideMobile && currentNavItem && (
         <S.MobileNavOuterDiv>
-          <S.MobileTitleDiv onClick={() => setIsOpen(!isOpen)} className={isOpen ? "open" : ""}>
+          <S.MobileTitleDiv onClick={onClickMobileNavTitle} className={mobileNavOpen ? "open" : ""}>
             <S.MobileCurrentNavDiv>
               <currentNavItem.icon />
               {currentNavItem.name}
             </S.MobileCurrentNavDiv>
             <KeyboardArrowDownIcon />
           </S.MobileTitleDiv>
-          <S.DrawableListDiv className={isOpen ? "open" : ""}>
-            <S.MobileNavListDiv className={isOpen ? "open" : ""}>
-              {navRouter.map((itemRouter) => (
+          <S.DrawableListDiv className={mobileNavOpen ? "open" : ""}>
+            <S.MobileNavListDiv className={mobileNavOpen ? "open" : ""}>
+              {navList.map((navItem) => (
                 <S.MobileItemNavLink
-                  end={itemRouter.path === "/expert"}
-                  key={itemRouter.path + "_" + itemRouter.name}
-                  to={itemRouter.path}
-                  onClick={() => setIsOpen(false)}
+                  end={navItem.path === EXPERT_HOME}
+                  key={navItem.path + "_" + navItem.name}
+                  to={navItem.path}
+                  onClick={closeMobileNavList}
                   className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
                 >
-                  <itemRouter.icon />
-                  {itemRouter.name}
+                  <navItem.icon />
+                  {navItem.name}
                 </S.MobileItemNavLink>
               ))}
             </S.MobileNavListDiv>
@@ -82,9 +69,7 @@ export function MainPage() {
         </S.MobileNavOuterDiv>
       )}
       <S.MainDiv>
-        <S.DetailDiv className={navigation.state === "loading" ? "loading" : ""}>
-          <Outlet />
-        </S.DetailDiv>
+        <Outlet />
       </S.MainDiv>
       <Footer />
     </S.OuterDiv>

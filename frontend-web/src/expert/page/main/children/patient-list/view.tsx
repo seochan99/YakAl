@@ -1,110 +1,110 @@
 import * as S from "./style.ts";
-import React, { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { EPatientFilter } from "../../../../type/patient-filter.ts";
+import { usePatientListPageViewController } from "./view.controller.ts";
+import { EPatientField } from "../../../../type/patient-field.ts";
 import { ListFooter } from "../../../../style.ts";
 import Pagination from "react-js-pagination";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
-const PAGING_SIZE = 10;
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import PatientItem from "./child/patient-item/view.tsx";
+import { PatientListModel } from "./model.ts";
 
 function PatientListPage() {
-  const [searchName, setSearchName] = useState<string>("");
-  const [page, setPage] = useState<number>(1);
-  const [filterOptionIsOpen, setFilterOptionIsOpen] = useState<boolean>(false);
-  const [selected, setSelected] = useState<string>(EPatientFilter.SUBMISSION_DATE);
+  const {
+    selectListRef,
+    onChangePage,
+    managed: {
+      isOnlyManaged,
+      onSelectMangedList,
+      onSelectEntireList,
+      onClickToManageFactory,
+      onClickToNotManageFactory,
+    },
+    searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
+    sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
+    data: { isLoading, patientList, paging, sorting },
+  } = usePatientListPageViewController();
 
-  const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
-
-  const selectListRef = useRef<HTMLUListElement>(null);
-
-  useEffect(() => {
-    const handleOutOfMenuClick = (e: MouseEvent) => {
-      if (selectListRef.current) {
-        if (!(e.target instanceof Node) || !selectListRef.current.contains(e.target)) {
-          if (filterOptionIsOpen) {
-            setTimeout(() => setFilterOptionIsOpen(false), 20);
-          }
-        }
-      }
-    };
-
-    document.addEventListener("mouseup", handleOutOfMenuClick);
-
-    return () => {
-      document.removeEventListener("mouseup", handleOutOfMenuClick);
-    };
-  }, [filterOptionIsOpen]);
-
-  const handleSelect = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSelected(e.currentTarget.value);
-    setFilterOptionIsOpen(false);
-  };
-
-  const handlePageChange = (page: number) => {
-    setPage(page);
-  };
+  if (isLoading || patientList === null) {
+    return <></>;
+  }
 
   return (
-    <S.Outer>
-      <S.OptionBar>
-        <S.SearchBar>
-          <S.SearchButton />
-          <S.SearchInput
-            type="text"
-            placeholder="환자 이름으로 검색"
-            value={searchName}
-            onChange={(e) => setSearchName(e.target.value)}
+    <S.OuterDiv>
+      <S.TabBarDiv>
+        <S.TabDiv className={isOnlyManaged ? "selected" : "unselected"} onClick={onSelectMangedList}>
+          <S.TabTitleSpan>관리 환자 리스트</S.TabTitleSpan>
+          <S.TabSubtitleSpan>Managed Patient List</S.TabSubtitleSpan>
+        </S.TabDiv>
+        <S.TabDiv className={isOnlyManaged ? "unselected" : "selected"} onClick={onSelectEntireList}>
+          <S.TabTitleSpan>전체 환자 리스트</S.TabTitleSpan>
+          <S.TabSubtitleSpan>Entire Patient List</S.TabSubtitleSpan>
+        </S.TabDiv>
+      </S.TabBarDiv>
+      <S.InnerDiv>
+        <S.OptionBarDiv>
+          <S.SearchBarDiv>
+            <S.StyledSearchIconSvg />
+            <S.SearchInput
+              type="text"
+              placeholder="환자 이름으로 검색"
+              value={nameQueryCache}
+              onChange={(e) => setNameQueryCache(e.target.value)}
+              onKeyUp={onSearchBarEnter}
+            />
+          </S.SearchBarDiv>
+          <S.SelectDiv data-role="selectbox">
+            <S.SelectButton
+              className={sortingOptionOpen ? "open" : ""}
+              onClick={() => setSortingOptionOpen(!sortingOptionOpen)}
+            >
+              <ArrowDropDownIcon />
+              <span>{sorting.field}</span>
+            </S.SelectButton>
+            {sortingOptionOpen && (
+              <S.SelectList ref={selectListRef}>
+                {Object.keys(EPatientField).map((patientFilter) => {
+                  const value = EPatientField[patientFilter as keyof typeof EPatientField];
+                  return (
+                    <S.SelectItem key={patientFilter}>
+                      <S.SelectItemButton value={value} onClick={onSelectSortingOption}>
+                        {value}
+                      </S.SelectItemButton>
+                    </S.SelectItem>
+                  );
+                })}
+              </S.SelectList>
+            )}
+          </S.SelectDiv>
+        </S.OptionBarDiv>
+        <S.ListDiv>
+          <S.TableHeaderDiv>
+            <S.NameSpan>{`이름`}</S.NameSpan>
+            <S.SexBirthdaySpan>{`(성별, 나이)`}</S.SexBirthdaySpan>
+            <S.TelephoneSpan>{`전화번호`}</S.TelephoneSpan>
+            <S.LastQuestionnaireDateSpan>{`최근 설문일`}</S.LastQuestionnaireDateSpan>
+          </S.TableHeaderDiv>
+          {patientList.map((patientItem) => (
+            <PatientItem
+              key={patientItem.id}
+              patientInfo={patientItem}
+              onClickToManage={onClickToManageFactory(patientItem.id)}
+              onClickToNotManage={onClickToNotManageFactory(patientItem.id)}
+            />
+          ))}
+        </S.ListDiv>
+        <ListFooter>
+          <Pagination
+            activePage={paging.pageNumber}
+            itemsCountPerPage={PatientListModel.PATIENT_COUNT_PER_PAGE}
+            totalItemsCount={paging.totalCount as number}
+            pageRangeDisplayed={5}
+            prevPageText={"‹"}
+            nextPageText={"›"}
+            onChange={onChangePage}
           />
-        </S.SearchBar>
-        <S.SelectBox data-role="selectbox">
-          <S.SelectButton
-            className={filterOptionIsOpen ? "open" : ""}
-            onClick={() => setFilterOptionIsOpen(!filterOptionIsOpen)}
-          >
-            <ArrowDropDownIcon />
-            <span>{selected ? selected : "필터"}</span>
-          </S.SelectButton>
-          {filterOptionIsOpen && (
-            <S.SelectList ref={selectListRef}>
-              {Object.keys(EPatientFilter).map((patientFilter) => {
-                const value = EPatientFilter[patientFilter as keyof typeof EPatientFilter];
-                return (
-                  <S.SelectItem key={patientFilter}>
-                    <S.SelectItemButton value={value} onClick={handleSelect}>
-                      {value}
-                    </S.SelectItemButton>
-                  </S.SelectItem>
-                );
-              })}
-            </S.SelectList>
-          )}
-        </S.SelectBox>
-      </S.OptionBar>
-      <S.List>
-        <S.TableHeader>
-          <S.Name>{`이름`}</S.Name>
-          {!isMiddleMobile && <S.Sex>{`성별`}</S.Sex>}
-          <S.DateBox>
-            {`생년월일`}
-            {!isMiddleMobile && `(만 나이)`}
-          </S.DateBox>
-          {!isMiddleMobile && <S.TestProgress>{`설문 완료율`}</S.TestProgress>}
-          <S.DateBox>{`최근 설문 제출일`}</S.DateBox>
-        </S.TableHeader>
-      </S.List>
-      <ListFooter>
-        <Pagination
-          activePage={page}
-          itemsCountPerPage={PAGING_SIZE}
-          totalItemsCount={10}
-          pageRangeDisplayed={5}
-          prevPageText={"‹"}
-          nextPageText={"›"}
-          onChange={handlePageChange}
-        />
-      </ListFooter>
-    </S.Outer>
+        </ListFooter>
+      </S.InnerDiv>
+    </S.OuterDiv>
   );
 }
 

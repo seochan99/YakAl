@@ -1,29 +1,23 @@
 import * as S from "./style.ts";
 import React from "react";
+import { FooterModel } from "./model.ts";
 
 function Footer() {
-  const viewPharmInfo = {
-    introductionUrl: "https://viewpharm1.oopy.io/",
-    name: "VIEW PHARM (뷰팜)",
-    address: "충청북도 청주시 흥덕구 오송읍 오송생명3로 31",
-    tel: "010-9229-9531",
-    email: "Viewpharm1@gmail.com",
-    businessRegistrationNumber: "220-87-17483",
-  };
+  const { introductionUrl, name, address, tel, email, businessRegistrationNumber } = FooterModel;
 
   return (
     <S.OuterFooter>
       <S.IconImg
         onClick={() => {
-          window.location.href = viewPharmInfo.introductionUrl;
+          window.location.href = introductionUrl;
         }}
       />
       <S.ExplanationParagraph>
-        {`${viewPharmInfo.name}`}
+        {`${name}`}
         <br />
-        {`주소: ${viewPharmInfo.address}  |  전화문의 ${viewPharmInfo.tel}`}
+        {`주소: ${address}  |  전화문의 ${tel}`}
         <br />
-        {`E-mail: ${viewPharmInfo.email}  |  사업자등록번호: ${viewPharmInfo.businessRegistrationNumber}호`}
+        {`E-mail: ${email}  |  사업자등록번호: ${businessRegistrationNumber}호`}
       </S.ExplanationParagraph>
     </S.OuterFooter>
   );
