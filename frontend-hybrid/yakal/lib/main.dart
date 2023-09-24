@@ -3,10 +3,10 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
-  // 환경 변수 불러오기
+  // Load environment variables
   // await dotenv.load(fileName: 'assets/config/.env');
 
-  // spalsh
+  // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -22,41 +22,56 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: '약 알',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => const MyTabBar(),
-        '/home': (context) => const HomeTab(),
-        '/mypage': (context) => const MyPageTab(),
-      },
+      home: const MyBottomNavigationBar(),
     );
   }
 }
 
-class MyTabBar extends StatelessWidget {
-  const MyTabBar({Key? key}) : super(key: key);
+class MyBottomNavigationBar extends StatefulWidget {
+  const MyBottomNavigationBar({Key? key}) : super(key: key);
+
+  @override
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
+}
+
+class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  int _currentIndex = 0;
+
+  final List<Widget> _screens = <Widget>[
+    const HomeTab(),
+    const MyPageTab(),
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('약 알'),
-          bottom: const TabBar(
-            tabs: [
-              Tab(text: '홈'),
-              Tab(text: '마이페이지'),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('약 알'),
+      ),
+      body: _screens[_currentIndex],
+      bottomNavigationBar: Theme(
+        data: ThemeData(
+          canvasColor: Colors.white, // Set the background color to white
         ),
-        body: const TabBarView(
-          children: [
-            HomeTab(),
-            MyPageTab(),
+        child: BottomNavigationBar(
+          currentIndex: _currentIndex,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: '홈',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: '마이페이지',
+            ),
           ],
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
         ),
       ),
     );
@@ -69,13 +84,8 @@ class HomeTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'This is the Home Tab',
-          ),
-        ],
+      child: Text(
+        'This is the Home Tab',
       ),
     );
   }
@@ -87,13 +97,8 @@ class MyPageTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'This is the MyPage Tab',
-          ),
-        ],
+      child: Text(
+        'This is the MyPage Tab',
       ),
     );
   }
