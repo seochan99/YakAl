@@ -24,7 +24,7 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
     // 내 좌표를 기준으로 가장 가까운 10개의 병원 혹은 약국을 뽑는다.
     @Query(value = "SELECT *, ST_Distance_Sphere(m.medical_point, :point) AS distance " +
             "FROM medicals m " +
-            "WHERE m.e_medical = :eMedical " +
+            "WHERE m.type = :eMedical " +
             "ORDER BY distance " +
             "LIMIT 10", nativeQuery = true)
     List<Medical> findNearestMedicalsByPointAndEMedical(Point point, String eMedical);
@@ -50,7 +50,7 @@ public interface MedicalRepository extends JpaRepository<Medical ,Long> {
             "    FROM medicals " +
             "    WHERE ST_Distance_Sphere(medical_point, :point) <= :distance" +
             ") AS m " +
-            "WHERE m.e_medical = :eMedical " +
+            "WHERE m.type = :eMedical " +
             "ORDER BY distance", nativeQuery = true)
     List<Medical> findNearbyMedicalsByDistanceAndEMedical(Point point,double distance,String eMedical);
 

@@ -158,6 +158,7 @@ public class MedicalService {
         for (Medical medical : medicalList) {
             result.add(
                     MedicalDto.builder()
+                            .id(medical.getId())
                             .medicalName(medical.getMedicalName())
                             .medicalAddress(medical.getMedicalAddress())
                             .medicalPoint(new PointDto(medical.getMedicalPoint().getX(),medical.getMedicalPoint().getY()))
