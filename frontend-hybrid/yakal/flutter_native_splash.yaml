@@ -1,0 +1,17 @@
+flutter_native_splash:
+    color: "#FFFFFF"
+    image: assets/images/splash.png
+    android_12:
+    android: true
+    ios: true
+    web: true
+    # 지속시간
+    splash_duration: 1000
+    resize_mode: "contain"
+    ios_content_mode: "scaleAspectFill"
+    # If you have changed the name(s) of your info.plist file(s), you can specify the filename(s)
+    # with the info_plist_files parameter.  Remove only the # characters in the three lines below,
+    # do not remove any spaces:
+    #info_plist_files:
+    #  - 'ios/Runner/Info-Debug.plist'
+    #  - 'ios/Runner/Info-Release.plist'
