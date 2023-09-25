@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: '약 알',
       theme: ThemeData(
+        fontFamily: 'Pretendard',
         useMaterial3: true,
         scaffoldBackgroundColor:
             const Color(0xFFf6f6f8), // Set the background color here
