@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.type.EMedicalProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,10 @@ public class Risk {
 
     @Column(name = "score", columnDefinition = "TINYINT", nullable = false)
     private int score;
+
+    @Column(name = "is_beers_criteria")
+    private Boolean isBeersCriteria;
+
+    @Column(name = "anticholinergic")
+    private EMedicalProperties properties;
 }

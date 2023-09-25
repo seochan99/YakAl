@@ -1,29 +1,18 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.domain.Dose;
+import com.viewpharm.yakal.domain.*;
 
-import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.domain.Prescription;
-import com.viewpharm.yakal.domain.Risk;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.request.OneMedicineScheduleDto;
 import com.viewpharm.yakal.dto.request.OneScheduleDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.repository.DoseRepository;
-import com.viewpharm.yakal.repository.PrescriptionRepository;
-import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.repository.RiskRepository;
+import com.viewpharm.yakal.repository.*;
 import com.viewpharm.yakal.type.EDosingTime;
 import com.viewpharm.yakal.type.EPeriod;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +32,7 @@ public class DoseService {
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final RiskRepository riskRepository;
+    private final DoesNameRepository doesNameRepository;
 
     public <T> Map<EDosingTime, List<T>> createMap() {
         Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
@@ -76,7 +66,7 @@ public class DoseService {
 
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
                     .id(result.getId())
-                    .KDCode(result.getKDCode())
+                    .KDCode(result.getKDCode().getKdCode())
                     .ATCCode(result.getATCCode())
                     .isTaken(result.getIsTaken())
                     .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
@@ -153,7 +143,7 @@ public class DoseService {
 
 
     public List<OneDaySummaryDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
-        log.info("시작");
+
         final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();
 
         final LocalDate startOfMonth = yearMonth.atDay(1);
@@ -236,11 +226,11 @@ public class DoseService {
         for (final OneMedicineScheduleDto oneMedicineScheduleDto : createScheduleDto.getMedicines()) {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
-
+            DoseName doseName = doesNameRepository.findById(KDCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
                 final Boolean isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndTime(
-                        userId, KDCode, oneScheduleDto.getDate(), oneScheduleDto.getTime()
+                        userId, doseName, oneScheduleDto.getDate(), oneScheduleDto.getTime()
                 );
 
                 isInserted.add(!isOverlapped);
@@ -248,7 +238,7 @@ public class DoseService {
                 if (!isOverlapped) {
                     Risk risk = riskRepository.findById(ATCCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_RISK));
                     final Dose dose = Dose.builder()
-                            .kdCode(KDCode)
+                            .kdCode(doseName)
                             .ATCCode(risk)
                             .date(oneScheduleDto.getDate())
                             .time(oneScheduleDto.getTime())
