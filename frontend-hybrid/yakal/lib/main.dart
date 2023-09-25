@@ -27,13 +27,15 @@ class MyApp extends StatelessWidget {
       title: '약 알',
       theme: ThemeData(
         useMaterial3: true,
+        scaffoldBackgroundColor:
+            const Color(0xFFf6f6f8), // Set the background color here
       ),
       initialRoute: '/',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
-        GetPage(name: '/profile', page: () => const ProfileScreen()),
+        GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: '/login', page: () => const AuthLoginScreen()),
       ],
     );

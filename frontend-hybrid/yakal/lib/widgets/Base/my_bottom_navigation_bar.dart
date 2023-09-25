@@ -8,13 +8,9 @@ class MyBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('약 알'),
-      ),
-      body:
-          const MyBottomNavigationBarContent(), // Use a separate widget for content
-      bottomNavigationBar: const MyBottomNavBar(),
+    return const Scaffold(
+      body: MyBottomNavigationBarContent(), // Use a separate widget for content
+      bottomNavigationBar: MyBottomNavBar(),
     );
   }
 }
@@ -30,8 +26,8 @@ class MyBottomNavigationBarContent extends StatelessWidget {
     return Obx(() {
       return IndexedStack(
         index: controller.currentIndex.value,
-        children: const [
-          HomeScreen(),
+        children: [
+          const HomeScreen(),
           ProfileScreen(),
         ],
       );
