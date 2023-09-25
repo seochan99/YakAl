@@ -38,14 +38,19 @@ class ProfileScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(8),
                         border: Border.all(
                           color: Colors.grey,
                           width: 1,
                         ),
                       ),
-                      child: const Center(
-                        child: Text("전문가에게 복약정보 공유"),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.edit),
+                          Text('닉네임 수정'),
+                          SizedBox(width: 10),
+                        ],
                       ),
                     ),
                   ),
