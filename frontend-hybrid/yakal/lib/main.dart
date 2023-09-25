@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:get/get.dart';
+import 'package:yakal/screens/Auth/auth_login_screen.dart';
+import 'package:yakal/screens/Home/home_screen.dart';
+import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
@@ -19,13 +23,19 @@ class MyApp extends StatelessWidget {
     FlutterNativeSplash.remove();
 
     // 앱 실행
-    return MaterialApp(
+    return GetMaterialApp(
       title: '약 알',
       theme: ThemeData(
         useMaterial3: true,
       ),
-      // 하단 탭
-      home: const MyBottomNavigationBar(),
+      initialRoute: '/',
+      // 라우팅 설정
+      getPages: [
+        GetPage(name: '/', page: () => const MyBottomNavigationBar()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(name: '/profile', page: () => const ProfileScreen()),
+        GetPage(name: '/login', page: () => const AuthLoginScreen()),
+      ],
     );
   }
 }

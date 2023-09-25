@@ -1,24 +1,10 @@
-// my_bottom_navigation_bar.dart
 import 'package:flutter/material.dart';
+import 'package:get/get.dart'; // Import GetX
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 
-class MyBottomNavigationBar extends StatefulWidget {
+class MyBottomNavigationBar extends StatelessWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
-
-  @override
-  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
-}
-
-class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
-  // 현재 선택된 탭
-  int _currentIndex = 0;
-
-  // 홈, 마이페이지
-  final List<Widget> _screens = <Widget>[
-    const HomeScreen(),
-    const ProfileScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +12,71 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
       appBar: AppBar(
         title: const Text('약 알'),
       ),
-      body: _screens[_currentIndex],
-      bottomNavigationBar: Theme(
-        data: ThemeData(
-          canvasColor: Colors.white,
-        ),
-        child: BottomNavigationBar(
-          currentIndex: _currentIndex,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: '홈',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: '마이페이지',
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
-          },
-        ),
+      body:
+          const MyBottomNavigationBarContent(), // Use a separate widget for content
+      bottomNavigationBar: const MyBottomNavBar(),
+    );
+  }
+}
+
+class MyBottomNavigationBarContent extends StatelessWidget {
+  const MyBottomNavigationBarContent({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final MyBottomNavigationBarController controller =
+        Get.put(MyBottomNavigationBarController());
+
+    return Obx(() {
+      return IndexedStack(
+        index: controller.currentIndex.value,
+        children: const [
+          HomeScreen(),
+          ProfileScreen(),
+        ],
+      );
+    });
+  }
+}
+
+class MyBottomNavBar extends StatelessWidget {
+  const MyBottomNavBar({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: ThemeData(
+        canvasColor: Colors.white,
+      ),
+      child: GetX<MyBottomNavigationBarController>(
+        builder: (controller) {
+          // GetX를 사용하여 컨트롤러의 currentIndex를 가져옴
+          return BottomNavigationBar(
+            currentIndex: controller.currentIndex.value,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: '홈',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: '마이페이지',
+              ),
+            ],
+            onTap: controller.changeTabIndex,
+          );
+        },
       ),
     );
+  }
+}
+
+class MyBottomNavigationBarController extends GetxController {
+  // rXInt는 currentIndex의 값이 변경될 때마다 화면을 다시 그리게
+  RxInt currentIndex = 0.obs;
+
+// 탭을 변경하는 메서드
+  void changeTabIndex(int index) {
+    currentIndex.value = index;
   }
 }
