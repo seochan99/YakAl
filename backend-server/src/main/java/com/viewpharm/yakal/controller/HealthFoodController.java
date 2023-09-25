@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+//비타민으로 변경 예정
+@Deprecated
 @Slf4j
 @RestController
 @RequiredArgsConstructor

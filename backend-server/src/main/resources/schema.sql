@@ -31,12 +31,12 @@ CREATE TABLE `risks`
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
-CREATE TABLE `dose_names`
+CREATE TABLE `dosenames`
 (
     `id`        varchar(255) NOT NULL,
     `dose_name` varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `prescriptions`
 (
@@ -131,20 +131,23 @@ CREATE TABLE `doses`
     `created_at`      datetime(6) NOT NULL,
     `date`            date         NOT NULL,
     `deleted_at`      datetime(6) DEFAULT NULL,
-    `is_deleted`      tinyint      NOT NULL,
-    `is_half`         tinyint      NOT NULL,
-    `is_taken`        tinyint      NOT NULL,
+    `is_deleted`      tinyint(1) NOT NULL,
+    `is_half`         tinyint(1) NOT NULL,
+    `is_taken`        tinyint(1) NOT NULL,
     `pill_cnt`        bigint       NOT NULL,
     `time`            enum('AFTERNOON','DEFAULT','EVENING','MORNING') NOT NULL,
-    `risks_id`        char(7) DEFAULT NULL,
+    `risks_id`        char(7)      DEFAULT NULL,
+    `dosename_id`     varchar(255) DEFAULT NULL,
     `prescription_id` bigint       NOT NULL,
     `user_id`         bigint       NOT NULL,
-    `dosename_id`     varchar(255) NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
-    FOREIGN KEY (`risks_id`) REFERENCES `risks` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+    KEY               `FK33nr5l4v5kcu28q0bi76qqu55` (`dosename_id`),
+    KEY               `FKbombg2eew20wy2skjyko02kr3` (`prescription_id`),
+    KEY               `FK31ck2prxo9c95rqumfmaiuoyu` (`user_id`),
+    CONSTRAINT `FK31ck2prxo9c95rqumfmaiuoyu` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+    CONSTRAINT `FK33nr5l4v5kcu28q0bi76qqu55` FOREIGN KEY (`dosename_id`) REFERENCES `dosenames` (`id`),
+    CONSTRAINT `FKbombg2eew20wy2skjyko02kr3` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `boards`
 (
@@ -152,15 +155,13 @@ CREATE TABLE `boards`
     `create_date`        date         NOT NULL,
     `last_modified_date` date   DEFAULT NULL,
     `content`            varchar(255) NOT NULL,
-    `is_deleted`         tinyint      NOT NULL,
-    `is_edit`            tinyint      NOT NULL,
+    `disease`            enum('감기몸살','기타질환','남성질환','눈질환','만성질환','소아진료','소화기질환','암관련질환','여성질환','정신질환','치아','통증','피부질환') DEFAULT NULL,
+    `is_deleted`         tinyint(1) NOT NULL,
+    `is_edit`            tinyint(1) NOT NULL,
     `read_cnt`           bigint       NOT NULL,
-    `region`             enum('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구',
-        '도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구',
-        '용산구','은평구','종로구','중구','중랑구') DEFAULT NULL,
+    `region`             enum('강남구','강동구','강북구','강서구','관악구','광진구','구로구','금천구','노원구','도봉구','동대문구','동작구','마포구','서대문구','서초구','성동구','성북구','송파구','양천구','영등포구','용산구','은평구','종로구','중구','중랑구') DEFAULT NULL,
     `title`              varchar(255) NOT NULL,
     `user_id`            bigint DEFAULT NULL,
-    `disease`            enum('감기몸살','기타질환','남성질환','눈질환','만성질환','소아진료','소화기질환','암관련질환','여성질환','정신질환','치아','통증','피부질환') DEFAULT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -199,28 +200,6 @@ CREATE TABLE `surbeys`
     `title`        varchar(255) NOT NULL,
     `total_score`  varchar(255) NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `surbeys`
-(
-    `id`           bigint       NOT NULL AUTO_INCREMENT,
-    `introduction` varchar(255) NOT NULL,
-    `title`        varchar(255) NOT NULL,
-    `total_score`  varchar(255) NOT NULL,
-    PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-CREATE TABLE `answers`
-(
-    `id`          bigint       NOT NULL AUTO_INCREMENT,
-    `content`     varchar(255) NOT NULL,
-    `score`       int          NOT NULL,
-    `surbey_id`   bigint DEFAULT NULL,
-    `user_id`     bigint DEFAULT NULL,
-    `create_date` date         NOT NULL,
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`surbey_id`) REFERENCES `surbeys` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `counsels`
@@ -273,4 +252,17 @@ CREATE TABLE `notes`
     `counsel_id`         bigint NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`counsel_id`) REFERENCES `counsels` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `answers`
+(
+    `id`          bigint       NOT NULL AUTO_INCREMENT,
+    `content`     varchar(255) NOT NULL,
+    `score`       int          NOT NULL,
+    `surbey_id`   bigint DEFAULT NULL,
+    `user_id`     bigint DEFAULT NULL,
+    `create_date` date         NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`surbey_id`) REFERENCES `surbeys` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

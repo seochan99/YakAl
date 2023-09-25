@@ -18,7 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+//비타민으로 변경 예정
+@Deprecated
 @Slf4j
 @Service
 @Transactional
