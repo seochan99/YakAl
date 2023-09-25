@@ -1,7 +1,7 @@
 import { Bar, Header, Item, ItemTitle, List, Title } from "./style.ts";
-import LoadingPage from "../../../../loading-page";
 import ErrorPage from "../../../../error-page";
 import { useGetHistoryQuery } from "../../../../../api/history.ts";
+import Skeleton from "@mui/material/Skeleton";
 
 type TPrescriptionListProps = {
   patientId: number;
@@ -11,7 +11,7 @@ function PrescriptionList({ patientId }: TPrescriptionListProps) {
   const { data, isLoading, isError } = useGetHistoryQuery({ patientId });
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Skeleton variant="rectangular" animation="wave" />;
   }
 
   if (isError || !data) {

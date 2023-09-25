@@ -73,6 +73,7 @@ export function Main() {
         <Profile
           job={data?.job}
           department={data?.department}
+          belong={"중앙대학교 부속병원"}
           name={data?.name ? data?.name : ""}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />

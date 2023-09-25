@@ -13,8 +13,8 @@ import {
   Title,
 } from "./style.ts";
 import { useGetSurveyResultQuery } from "../../../../../api/survey-result.ts";
-import LoadingPage from "../../../../loading-page";
 import ErrorPage from "../../../../error-page";
+import Skeleton from "@mui/material/Skeleton";
 
 type TSurveyResultProps = {
   patientId: number;
@@ -41,7 +41,7 @@ function SurveyResult({ patientId }: TSurveyResultProps) {
   // };
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Skeleton variant="rectangular" animation="wave" />;
   }
 
   if (isError || !data) {

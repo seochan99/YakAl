@@ -28,13 +28,15 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class ExpertService {
+
     private final ExpertRepository expertRepository;
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final MedicalRepository medicalRepository;
 
-     @Value("${spring.image.path}")
+    @Value("${spring.image.path}")
     private String FOLDER_PATH;
+
     public Long createExpert(final Long userId,final Long medicalId,Boolean type){
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Medical medical = medicalRepository.findById(medicalId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));

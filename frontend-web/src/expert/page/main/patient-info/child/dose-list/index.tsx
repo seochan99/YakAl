@@ -28,8 +28,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { ListFooter } from "../../../../../style.ts";
 import { EPeriod } from "../../../../../type/period.ts";
 import { useGetDoseListQuery } from "../../../../../api/dose-list.ts";
-import LoadingPage from "../../../../loading-page";
 import ErrorPage from "../../../../error-page";
+import Skeleton from "@mui/material/Skeleton";
 
 type TDoseListProps = {
   patientId: number;
@@ -92,7 +92,7 @@ function DoseList({ patientId }: TDoseListProps) {
   };
 
   if (isLoading) {
-    return <LoadingPage />;
+    return <Skeleton variant="rectangular" animation="wave" />;
   }
 
   if (isError || !data || !data.prescribedList) {
@@ -100,8 +100,6 @@ function DoseList({ patientId }: TDoseListProps) {
   }
 
   const doseList = data.prescribedList;
-
-  console.log(doseList);
 
   return (
     <>

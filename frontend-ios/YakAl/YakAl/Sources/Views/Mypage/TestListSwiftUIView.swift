@@ -21,7 +21,7 @@ struct TestButton: View {
                     Spacer()
                     Text(textForStatus(status))
                         .font(Font.custom("SUIT", size: 14).weight(.medium))
-                        .foregroundColor(status == .inProgress ? Color(red: 0.33, green: 0.53, blue: 0.99) : .black)
+                        .foregroundColor(status == .complete ? Color(red: 0.33, green: 0.53, blue: 0.99) : .black)
                     
                 }
             .padding()
@@ -48,9 +48,9 @@ struct TestButton: View {
     
     private func colorForStatus(_ status: TestStatus) -> Color {
         switch status {
-        case .inProgress:
+        case .complete:
             return Color(red: 0.33, green: 0.53, blue: 0.99)
-        case .incomplete, .complete:
+        case .incomplete, .inProgress:
             return Color(red: 0.91, green: 0.91, blue: 0.93)
         }
     }
@@ -62,11 +62,11 @@ struct TestListSwiftUIView: View {
     let tests = [
         ("복약 순응도 테스트", TestStatus.complete, AnyView(ConfromityTestSwiftUIView())),
              ("우울증 선별검사 (PHQ-9)", TestStatus.incomplete, AnyView(DepressionTestSwiftUIView())),
-             ("음주력 테스트", TestStatus.inProgress, AnyView(DrinkingTestSwiftUIView())),
-             ("흡연력 테스트", TestStatus.incomplete, AnyView(SmokingTestSwiftUIView())),
+             ("음주력 테스트", TestStatus.incomplete, AnyView(DrinkingTestSwiftUIView())),
+             ("흡연력 테스트", TestStatus.complete, AnyView(SmokingTestSwiftUIView())),
              ("불면증 심각도", TestStatus.complete, AnyView(InsomniaTestSwiftUIView())),
 //             ("현재 복용 중인 건강기능식품", TestStatus.inProgress, AnyView(HealthFoodSwiftUIView())),
-             ("1년간 처방 받은 병의 진단명", TestStatus.incomplete, AnyView(DiagnosticTestSwiftUIView()))
+             ("1년간 처방 받은 병의 진단명", TestStatus.complete, AnyView(DiagnosticTestSwiftUIView()))
       ]
       
     

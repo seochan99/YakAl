@@ -53,14 +53,14 @@ function PatientItem({ userInfo }: PatientItemProps) {
       <DateBox>
         {`${birthday[0]}.
           ${birthday[1] < 10 ? "0".concat(birthday[1].toString()) : birthday[1]}.
-          ${birthday[2]}.`}
+          ${birthday[2] < 10 ? "0".concat(birthday[2].toString()) : birthday[2]}.`}
         {!isMiddleMobile && ` (${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
       </DateBox>
       {!isMiddleMobile && <TestProgress>{`${testProgress}%`}</TestProgress>}
       <DateBox>
         {`${lastSurbey[0]}.
           ${lastSurbey[1] < 10 ? "0".concat(lastSurbey[1].toString()) : lastSurbey[1]}.
-          ${lastSurbey[2]}.`}
+          ${lastSurbey[2] < 10 ? "0".concat(lastSurbey[2].toString()) : lastSurbey[2]}.`}
         {!isMiddleMobile &&
           (dateDiff > 365
             ? ` (${Math.floor(dateDiff / 365)}년 전)`
