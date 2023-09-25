@@ -9,7 +9,7 @@ class ProfileScreen extends StatelessWidget {
   final bool showEditNicknameModal = false;
   final UserViewModel userViewModel = Get.put(UserViewModel());
 
-  EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
+  final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
   ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
