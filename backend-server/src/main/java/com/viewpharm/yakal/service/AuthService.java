@@ -46,8 +46,8 @@ public class AuthService {
     private final ImageRepository imageRepository;
     private final PrescriptionRepository prescriptionRepository;
 
-    // @Value("${spring.image.path}")
-    private final String FOLDER_PATH = "/image";
+     @Value("${spring.image.path}")
+    private String FOLDER_PATH;
 
     public Map<String, String> getRedirectUrl(final ELoginProvider loginProvider) {
         String url = null;

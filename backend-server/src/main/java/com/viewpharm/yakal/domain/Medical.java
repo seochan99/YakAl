@@ -39,7 +39,7 @@ public class Medical {
     private EMedical type;
 
     @Column
-    private boolean isRegister;
+    private boolean isRegister = false;
 
     // ----------------------------------------------------------
 

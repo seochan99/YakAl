@@ -14,6 +14,7 @@ import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EImageUseType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,8 +32,9 @@ public class ExpertService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final MedicalRepository medicalRepository;
-    // @Value("${spring.image.path}")
-    private final String FOLDER_PATH = "C:\\workspace\\YakAl\\backend-server\\src\\main\\resources";
+
+     @Value("${spring.image.path}")
+    private String FOLDER_PATH;
     public Long createExpert(final Long userId,final Long medicalId,Boolean type){
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Medical medical = medicalRepository.findById(medicalId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));

@@ -11,7 +11,6 @@ import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.MedicalRepository;
 import com.viewpharm.yakal.repository.RegistrationRepository;
 import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.EPeriod;
 import com.viewpharm.yakal.utils.GeometryUtil;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.locationtech.jts.geom.Point;
-import org.springframework.data.domain.Page;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -42,13 +41,15 @@ public class MedicalService {
     private final RegistrationRepository registrationRepository;
     private final GeometryUtil geometryUtil;
     private final ImageService imageService;
+    @Value("spring.excel.path")
+    private String EXCEL_PATH;
     public Boolean updateMedical() throws IOException {
         // 엑셀 파일을 읽어들입니다.
         FileInputStream fileInputStream;
 
         {
             try {
-                fileInputStream = new FileInputStream(new File("C:\\workspace\\YakAl\\backend-server\\medical.xlsx"));
+                fileInputStream = new FileInputStream(new File(EXCEL_PATH));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -129,6 +130,8 @@ public class MedicalService {
         imageService.removeImage(registration.getImage());
         //등록
         medical.setRegister(updateAdminRequestDto.getIsAllow());
+        //Register 처리 상태 변경
+        registration.setIsPrecessed(Boolean.TRUE);
 
         return Boolean.TRUE;
     }
@@ -216,6 +219,8 @@ public class MedicalService {
                             .medicalAddress(m.getMedicalAddress())
                             .medicalTel(m.getMedicalTel())
                             .isRegister(m.isRegister())
+                            .eMedical(m.getType())
+                            .medicalPoint(new PointDto(m.getMedicalPoint().getX(),m.getMedicalPoint().getY()))
                             .build()
             );
         }
