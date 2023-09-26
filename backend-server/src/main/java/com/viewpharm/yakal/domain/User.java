@@ -91,7 +91,7 @@ public class User {
     private LocalTime dinnerTime;
 
     //초기 직업은 환자로 설정
-    @Column(name ="job")
+    @Column(name = "job")
     @Enumerated(EnumType.STRING)
     private EJob job = EJob.PATIENT;
 
@@ -116,6 +116,13 @@ public class User {
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Expert expert;
+
+    @OneToOne(mappedBy = "patient", fetch = FetchType.LAZY)
+    private Guardian protectedPerson;
+
+    @OneToOne(mappedBy = "guardian", fetch = FetchType.LAZY)
+    private Guardian myGuardian;
+
 
     /**
      * ONE-TO-MANY RELATION

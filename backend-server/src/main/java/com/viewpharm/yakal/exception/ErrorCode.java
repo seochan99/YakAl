@@ -30,6 +30,7 @@ public enum ErrorCode {
     NOT_FOUND_HEALTHFOOD("4058", HttpStatus.NOT_FOUND, "해당 건강기능 식품이 존재하지 않습니다."),
     NOT_FOUND_REGISTRATION("4059",HttpStatus.NOT_FOUND,"해당 등록신청 사항이 존재하지 않습니다."),
     NOT_FOUND_DOSENAME("4060",HttpStatus.NOT_FOUND,"해당 약의 이름이 존재하지 않습니다."),
+    NOT_FOUND_GUARDIAN("4061",HttpStatus.NOT_FOUND,"해당 보호자 관계가 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "Not Exist End Point Error"),
