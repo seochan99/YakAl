@@ -62,10 +62,10 @@ public class GuardianService {
     //유저의 보호자 찾기
     public PatientDto readGuardian(Long patientId) {
         //유저 찾기
-        User patatient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         //보호자 관계 찾기
-        Guardian guard = guardianRepository.findByGuardian(patatient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+        Guardian guard = guardianRepository.findByGuardian(patient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
         //유저의 보호자 찾기
         User guardian = guard.getPatient();
@@ -80,5 +80,15 @@ public class GuardianService {
                 .tel(guardian.getTel()).build();
     }
 
+    public Boolean deleteGuardian(Long guardianId, Long patientId) {
+        User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        Guardian guard = guardianRepository.findByPatientAndGuardian(patient, guardian).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+
+        guardianRepository.delete(guard);
+
+        return Boolean.TRUE;
+    }
 
 }
