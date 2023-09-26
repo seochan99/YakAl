@@ -127,7 +127,6 @@ CREATE TABLE `images`
 CREATE TABLE `doses`
 (
     `id`              bigint       NOT NULL AUTO_INCREMENT,
-    `kd_code`         varchar(255) NOT NULL,
     `created_at`      datetime(6) NOT NULL,
     `date`            date         NOT NULL,
     `deleted_at`      datetime(6) DEFAULT NULL,

@@ -36,8 +36,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateNameById(Long userId, String name);
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.name = :name, u.birthday = :birthday, u.isDetail = :isDetail, u.sex = :sex where u.id = :userId")
-    Integer updateNameAndBirthdayAndIsDetailAndSexById(Long userId, String name, LocalDate birthday, Boolean isDetail, ESex sex);
+    @Query("update User u set u.name = :name, u.isDetail = :isDetail where u.id = :userId")
+    Integer updateNameAndIsDetailById(Long userId, String name, Boolean isDetail);
 
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.isCertified = :isCertified, u.job = :job  where u.id = :userId")

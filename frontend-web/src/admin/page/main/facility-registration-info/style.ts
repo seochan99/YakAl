@@ -1,7 +1,7 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "/src/expert/asset/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "/src/expert/assets/icons/back-icon.svg";
 
 export const Outer = styled.div`
   display: flex;

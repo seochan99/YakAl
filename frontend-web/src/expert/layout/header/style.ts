@@ -1,50 +1,52 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-export const HeaderOuter = styled.header`
+export const OuterHeader = styled.header`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  height: 6.75rem;
-  line-height: 6.75rem;
+  height: 6.875rem;
+  line-height: 6.875rem;
   box-sizing: border-box;
 `;
 
-export const LogoOuter = styled(Link)`
-  position: relative;
+export const LogoLink = styled(Link)`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  height: 6.75rem;
-  padding: 0 2rem;
+  height: 6.875rem;
+  padding: 0 3rem;
   gap: 1rem;
   text-decoration: none;
 `;
 
-export const Icon = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
-  width: 4.2rem;
+export const IconImg = styled.img`
+  content: url("/src/global/assets/yakal-logo.png");
+  width: 5rem;
 `;
 
-export const LogoText = styled.div`
+export const LogoTextDiv = styled.div`
   display: flex;
-  align-items: start;
-  flex-direction: column;
-  gap: 0.4rem;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1.25rem;
 `;
 
-export const Title = styled.span`
-  text-align: center;
+export const TitleSpan = styled.span`
+  color: var(--main, #2666f6);
+  font-family: SUIT, serif;
+  font-size: 2rem;
+  font-style: normal;
   font-weight: 700;
-  color: #2666f6;
-  font-size: 1.6rem;
-  line-height: 1.6rem;
+  line-height: 3.2rem;
 `;
 
-export const Description = styled.span`
-  font-size: 1.1rem;
-  font-weight: 600;
-  line-height: 1.1rem;
-  color: #90909f;
+export const DescriptionSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2rem;
 `;

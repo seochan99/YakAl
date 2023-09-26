@@ -81,13 +81,13 @@ public class AdminController {
 
     @PatchMapping("medical/register/{id}")
     @Operation(summary = "의료기관 등록", description = "의료기관을 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody UpdateAdminRequestDto updateAdminRequestDto){
+    public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
         return ResponseDto.ok(medicalService.updateRegister(id,updateAdminRequestDto));
     }
 
     @PatchMapping("expert/register/{id}")
     @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody UpdateAdminRequestDto updateAdminRequestDto){
+    public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
         userService.updateIsCertified(id,updateAdminRequestDto);
         return ResponseDto.ok(null);
     }
