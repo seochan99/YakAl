@@ -19,11 +19,10 @@ class ProfileHeader extends StatelessWidget {
       // height: 260,
 
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 30, 20, 24),
+        padding: const EdgeInsets.fromLTRB(20, 88, 20, 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 80),
             ProfileHeaderText(userViewModel: userViewModel),
             const SizedBox(height: 30),
             const ProfileHeaderShareButton(),

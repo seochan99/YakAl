@@ -54,7 +54,36 @@ class ProfileHeaderText extends StatelessWidget {
               color: Color.fromRGBO(233, 233, 238, 1),
             ),
           ),
-          onPressed: () => {},
+          onPressed: () => {
+            showModalBottomSheet<void>(
+              context: context,
+              builder: (BuildContext context) {
+                return Container(
+                  height: 200,
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30.0),
+                      topRight: Radius.circular(30.0),
+                    ),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        const Text('Modal BottomSheet'),
+                        ElevatedButton(
+                          child: const Text('Done!'),
+                          onPressed: () => Navigator.pop(context),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+              },
+            )
+          },
           child: const Text(
             '수정',
             // color rgba(144, 144, 159, 1)
