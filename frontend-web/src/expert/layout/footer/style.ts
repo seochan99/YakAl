@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const FooterOuter = styled.footer`
+export const OuterFooter = styled.footer`
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -8,12 +8,12 @@ export const FooterOuter = styled.footer`
   background-color: var(--color-surface-900);
 `;
 
-export const ViewPharmIcon = styled.img`
+export const IconImg = styled.img`
   & {
-    content: url("/src/expert/asset/view-pharm-logo.png");
+    content: url("/src/expert/assets/logos/view-pharm-logo.png");
     margin-left: 10vw;
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
   }
 
   &:hover {
@@ -22,11 +22,13 @@ export const ViewPharmIcon = styled.img`
   }
 `;
 
-export const ViewPharmExplain = styled.p`
+export const ExplanationParagraph = styled.p`
   margin-left: 2rem;
   margin-right: 10vw;
-  line-height: 1.6rem;
-  font-size: 0.9rem;
-  color: #90909f;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 0.9375rem;
+  font-style: normal;
   font-weight: 500;
+  line-height: 1.6875rem;
 `;

@@ -1,12 +1,11 @@
 import { RouterProvider } from "react-router-dom";
-import { Provider } from "react-redux";
 import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
 import { router } from "./global/router.tsx";
 import { GlobalStyle } from "./global/style/style.ts";
-import { store } from "./expert/store/store.ts";
 
 function App() {
+  /* Dynamic page title */
   const pathname = window.location.pathname;
 
   useEffect(() => {
@@ -17,13 +16,24 @@ function App() {
     }
   }, [pathname]);
 
+  /* iOS Viewport Bug Fix */
+  useEffect(() => {
+    const handleResize = () => {
+      const vh = window.innerHeight * 0.01;
+      document.documentElement.style.setProperty("--vh", `${vh}px`);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <>
       <GlobalStyle />
       <CookiesProvider>
-        <Provider store={store}>
-          <RouterProvider router={router} />
-        </Provider>
+        <RouterProvider router={router} />
       </CookiesProvider>
     </>
   );
