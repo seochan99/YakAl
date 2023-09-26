@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Profile/profie_header_widget.dart'; // Import the AuthLoginScreen
-
+import 'package:flutter_svg/flutter_svg.dart';
 // 임시 유저 클래스
 
 class ProfileScreen extends StatelessWidget {
@@ -20,38 +20,47 @@ class ProfileScreen extends StatelessWidget {
           Container(
             color: Colors.white,
             // height 240px
-            height: 240,
+            height: 260,
 
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 80),
                   ProfileHeader(userViewModel: userViewModel),
-                  const SizedBox(height: 20),
-                  GestureDetector(
-                    onTap: () {
-                      // 닉네임 수정 모달 띄우기
-                      // showEditNicknameModal = true;
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
+                  const SizedBox(height: 30),
+                  OutlinedButton(
+                    // backgorund : rgba(233, 233, 238, 1)
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12), // Adjust padding
+                      foregroundColor: Colors.black,
+                      backgroundColor: const Color.fromRGBO(233, 233, 238, 1),
+                      shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: 1,
-                        ),
                       ),
-                      child: const Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.edit),
-                          Text('닉네임 수정'),
-                          SizedBox(width: 10),
-                        ],
+                      // border none
+                      side: const BorderSide(
+                        color: Color.fromRGBO(233, 233, 238, 1),
                       ),
+                    ),
+
+                    onPressed: () {
+                      // Get.toNamed("/login");
+                    },
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        // SvgPicture.asset(
+                        //   'assets/images/icon-health.svg',
+                        //   width: 20,
+                        //   height: 20,
+                        // ),
+                        Icon(Icons.edit),
+                        Text('닉네임 수정'),
+                        SizedBox(width: 10),
+                      ],
                     ),
                   ),
                 ],
