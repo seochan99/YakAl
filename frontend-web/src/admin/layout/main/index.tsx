@@ -21,8 +21,8 @@ import {
   Subtitle,
   Title,
   YakalIcon,
-} from "/src//admin/layout/main/style.ts";
-import Footer from "/src/admin/layout/footer";
+} from "./style.ts";
+import Footer from "../footer";
 import { Outlet, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import { Spin as Hamburger } from "hamburger-react";

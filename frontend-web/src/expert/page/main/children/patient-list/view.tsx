@@ -1,7 +1,6 @@
 import * as S from "./style.ts";
 import { usePatientListPageViewController } from "./view.controller.ts";
 import { EPatientField } from "../../../../type/patient-field.ts";
-import { ListFooter } from "../../../../style.ts";
 import Pagination from "react-js-pagination";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
@@ -92,7 +91,7 @@ function PatientListPage() {
             />
           ))}
         </S.ListDiv>
-        <ListFooter>
+        <S.PaginationDiv>
           <Pagination
             activePage={paging.pageNumber}
             itemsCountPerPage={PatientListModel.PATIENT_COUNT_PER_PAGE}
@@ -102,7 +101,7 @@ function PatientListPage() {
             nextPageText={"›"}
             onChange={onChangePage}
           />
-        </ListFooter>
+        </S.PaginationDiv>
       </S.InnerDiv>
     </S.OuterDiv>
   );

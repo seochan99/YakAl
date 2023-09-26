@@ -1,7 +1,6 @@
 export enum EPatientInfoTab {
   SUMMARY,
   MEDICATION,
-  NOTE,
   GERIATRIC_SYNDROME,
   SCREENING,
 }

@@ -7,14 +7,7 @@ export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
-
-  @media only screen and (min-width: 769px) {
-    margin: 0;
-  }
-
-  @media only screen and (max-width: 768px) {
-    margin: 1rem;
-  }
+  margin: 2rem;
 `;
 
 export const Header = styled.div`
