@@ -16,10 +16,10 @@ class ProfileHeader extends StatelessWidget {
     return Container(
       color: Colors.white,
       // height 240px
-      height: 260,
+      // height: 260,
 
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.fromLTRB(20, 30, 20, 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
