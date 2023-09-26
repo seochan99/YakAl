@@ -16,9 +16,6 @@ class ProfileHeaderText extends StatefulWidget {
 
 class _ProfileHeaderTextState extends State<ProfileHeaderText> {
   final TextEditingController _nickNameController = TextEditingController();
-
-  bool isButtonEnabled = false;
-
   @override
   void dispose() {
     _nickNameController.dispose();
@@ -26,7 +23,10 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
   }
 
   _handleButtonPress() {
-    // Update the nickname in the userViewModel
+    // no nickname
+    if (_nickNameController.text.isEmpty) {
+      return;
+    }
     String newNickName = _nickNameController.text;
     widget.userViewModel.updateNickName(newNickName);
     _nickNameController.clear(); // Clear the text field
@@ -116,6 +116,11 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                         const SizedBox(height: 20),
                         TextField(
                           controller: _nickNameController,
+                          onChanged: (text) {
+                            setState(() {
+                              print(_nickNameController.text.isNotEmpty);
+                            });
+                          },
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
@@ -129,20 +134,27 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            foregroundColor: Colors.white,
-                            backgroundColor: const Color(0xff2666f6),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          onPressed:
-                              isButtonEnabled ? null : _handleButtonPress,
-                          child: const Text("완료",
-                              style: TextStyle(fontSize: 20.0)),
-                        ),
+
+                        ValueListenableBuilder<TextEditingValue>(
+                          valueListenable: _nickNameController,
+                          builder: (context, value, child) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                minimumSize: const Size(double.infinity, 50),
+                                foregroundColor: Colors.white,
+                                backgroundColor: const Color(0xff2666f6),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                ),
+                              ),
+                              onPressed: value.text.isNotEmpty
+                                  ? _handleButtonPress
+                                  : null,
+                              child: const Text("완료",
+                                  style: TextStyle(fontSize: 20.0)),
+                            );
+                          },
+                        )
                       ],
                     ),
                   ),
