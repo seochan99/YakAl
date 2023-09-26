@@ -55,7 +55,7 @@ public class ImageController {
 
     //의료기관 등록용
     @PostMapping("/medical")
-    public ResponseDto<Map<String,String>> uploadMedicalImage(@RequestParam("registerId") Long registerId, @RequestParam MultipartFile file){
+    public ResponseDto<Map<String,String>> uploadMedicalImage(@RequestParam("registerId") Long registerId, @RequestParam("image") MultipartFile file){
         Map<String, String> map = new HashMap<>();
         map.put("uuid_name", imageService.uploadImage(registerId, EImageUseType. REGISTER, file));
         return ResponseDto.ok(map);
