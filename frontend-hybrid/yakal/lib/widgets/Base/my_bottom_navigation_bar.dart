@@ -56,7 +56,7 @@ class MyBottomNavBar extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),
-                label: '마이페이지',
+                label: '내 정보',
               ),
             ],
             onTap: controller.changeTabIndex,

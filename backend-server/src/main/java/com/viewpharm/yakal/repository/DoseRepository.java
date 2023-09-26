@@ -1,10 +1,8 @@
 package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.Dose;
+import com.viewpharm.yakal.domain.DoseName;
 import com.viewpharm.yakal.type.EDosingTime;
-import com.viewpharm.yakal.type.EPeriod;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,7 +24,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     @Query(value = "SELECT * FROM (SELECT  date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risks_id, date, time) overlap where count > 1 order by count desc ", nativeQuery = true)
     List<overlap> findOverlap(@Param("userId") Long userId, @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query(value = "SELECT * FROM (SELECT risks_id as ATCCode, time ,GROUP_CONCAT(DISTINCT kd_code) AS KDCodes ,COUNT(*) as count FROM doses" +
+    @Query(value = "SELECT * FROM (SELECT risks_id as ATCCode, time ,GROUP_CONCAT(DISTINCT dosename_id) AS KDCodes ,COUNT(*) as count FROM doses" +
             " WHERE user_id = :userId AND date = :date GROUP BY risks_id, date, time) overlap" +
             " WHERE count > 1", nativeQuery = true)
     List<overlapDetail> findOverlapDetail(@Param("userId") Long userId, @Param("date") LocalDate date);
@@ -42,7 +40,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     @Query("update Dose d set d.pillCnt = :pillCnt, d.isHalf = :isHalf where d.id = :doseId")
     Integer updateCountById(Long doseId, Long pillCnt, Boolean isHalf);
 
-    Boolean existsByUserIdAndKDCodeAndDateAndTime(Long userId, String KDCode, LocalDate date, EDosingTime time);
+    Boolean existsByUserIdAndKDCodeAndDateAndTime(Long userId, DoseName KDCode, LocalDate date, EDosingTime time);
 
     @Override
     @Modifying(clearAutomatically = true, flushAutomatically = true)

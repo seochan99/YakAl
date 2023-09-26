@@ -34,16 +34,14 @@ public class Dose {
     /**
      * COLUMNS
      */
-    @Column(name = "kd_code", nullable = false)
-    private String KDCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dosename_id")
+    private DoseName KDCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "risks_id")
     private Risk ATCCode;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dosename_id")
-    private DoseName doseName;
 
     @Column(name = "date", nullable = false)
     private LocalDate date;
@@ -82,15 +80,14 @@ public class Dose {
     private User user;
 
     @Builder
-    public Dose(final String kdCode,
+    public Dose(final DoseName kdCode,
                 final Risk ATCCode,
                 final LocalDate date,
                 final EDosingTime time,
                 final Long pillCnt,
                 final Boolean isHalf,
                 final Prescription prescription,
-                final User user,
-                final DoseName doseName) {
+                final User user) {
         this.KDCode = kdCode;
         this.date = date;
         this.time = time;
@@ -102,7 +99,6 @@ public class Dose {
         this.isDeleted = false;
         this.ATCCode = ATCCode;
         this.created = new Timestamp(System.currentTimeMillis());
-        this.doseName = doseName;
     }
 
     public void updateIsTaken(final Boolean isTaken) {

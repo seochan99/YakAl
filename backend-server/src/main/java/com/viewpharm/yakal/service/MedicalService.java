@@ -18,6 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.locationtech.jts.geom.Point;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,22 +33,23 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
+@Transactional
 public class MedicalService {
 
     private final MedicalRepository medicalRepository;
     private final RegistrationRepository registrationRepository;
     private final GeometryUtil geometryUtil;
     private final ImageService imageService;
-
+    @Value("spring.excel.path")
+    private String EXCEL_PATH;
     public Boolean updateMedical() throws IOException {
         // 엑셀 파일을 읽어들입니다.
         FileInputStream fileInputStream;
 
         {
             try {
-                fileInputStream = new FileInputStream(new File("C:\\workspace\\YakAl\\backend-server\\medical.xlsx"));
+                fileInputStream = new FileInputStream(new File(EXCEL_PATH));
             } catch (FileNotFoundException e) {
                 throw new RuntimeException(e);
             }
@@ -129,6 +131,8 @@ public class MedicalService {
         imageService.removeImage(registration.getImage());
         //등록
         medical.setRegister(updateAdminRequestDto.getIsAllow());
+        //Register 처리 상태 변경
+        registration.setIsPrecessed(Boolean.TRUE);
 
         return Boolean.TRUE;
     }
@@ -155,6 +159,7 @@ public class MedicalService {
         for (Medical medical : medicalList) {
             result.add(
                     MedicalDto.builder()
+                            .id(medical.getId())
                             .medicalName(medical.getMedicalName())
                             .medicalAddress(medical.getMedicalAddress())
                             .medicalPoint(new PointDto(medical.getMedicalPoint().getX(),medical.getMedicalPoint().getY()))
@@ -216,6 +221,8 @@ public class MedicalService {
                             .medicalAddress(m.getMedicalAddress())
                             .medicalTel(m.getMedicalTel())
                             .isRegister(m.isRegister())
+                            .eMedical(m.getType())
+                            .medicalPoint(new PointDto(m.getMedicalPoint().getX(),m.getMedicalPoint().getY()))
                             .build()
             );
         }
