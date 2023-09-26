@@ -1,60 +1,62 @@
 import { createBrowserRouter } from "react-router-dom";
-import { Main as ExpertMain } from "../expert/layout/main";
+import { MainPage as ExpertMain } from "../expert/page/main/view.tsx";
 import { Main as AdminMain } from "../admin/layout/main";
-import ErrorPage from "../expert/page/error-page";
-import { Login as ExpertLogin } from "../expert/layout/login";
+import NotFoundPage from "../expert/page/not-found/view.tsx";
 import { Login as AdminLogin } from "../admin/page/login";
-import LoginMain from "../expert/page/login/login-main";
-import SignUpTerms from "../expert/page/login/signup-terms";
+import { LoginPage as ExpertLogin } from "../expert/page/login/view.tsx";
+import LoginMainPage from "../expert/page/login/children/main/view.tsx";
+import TermsPage from "../expert/page/login/children/terms/view.tsx";
 
-import PatientList from "../expert/page/main/patient-list";
-import { Dashboard as ExpertDashboard } from "../expert/page/main/dashboard";
+import PatientListPage from "../expert/page/main/children/patient-list/view.tsx";
+import { DashboardPage as ExpertDashboard } from "../expert/page/main/children/dashboard/view.tsx";
 import { Dashboard as AdminDashboard } from "../admin/page/main/dashboard";
-import PatientInfo from "../expert/page/main/patient-info";
+import PatientPage from "../expert/page/main/children/patient/view.tsx";
 
-import SocialLoginFailure from "../expert/page/login/social-login-failure";
+import SocialLoginFailurePage from "../expert/page/login/children/social-login-failure/view.tsx";
 import { loader as facilityRegistrationInfoLoader } from "../admin/page/main/facility-registration-info/loader.ts";
 import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
-import { FacilityRegistration as ExpertFacilityRegistration } from "../expert/page/main/facility-registration";
-import MyInfo from "../expert/page/main/my-info";
-import SocialLoginProxy from "../expert/page/login/social-login-proxy";
-import LoadingPage from "../expert/page/loading-page";
-import IdentificationPage from "../expert/page/login/identification-page";
-import IdentificationFailure from "../expert/page/login/identification-failure";
-import ExpertCertification from "../expert/page/main/expert-certification";
-import IdentificationSuccess from "../expert/page/login/identification-success";
+import { RegisterPage as ExpertFacilityRegistration } from "../expert/page/main/children/register/view.tsx";
+import MyPage from "../expert/page/main/children/my/view.tsx";
+import SocialLogin from "../expert/page/login/children/social-login/view.tsx";
+import LoadingPage from "../expert/page/loading/view.tsx";
+import IdentifyPage from "../expert/page/login/children/identify/view.tsx";
+import IdentifyFailurePage from "../expert/page/login/children/identify-failure/view.tsx";
+import CertifyPage from "../expert/page/main/children/certify/view.tsx";
+import IdentifySuccessPage from "../expert/page/login/children/identify-success/view.tsx";
 import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
-import RegistrationSuccess from "../expert/page/main/registration-success";
-import RegistrationFailure from "../expert/page/main/registration-failure";
-import CertificationSuccess from "../expert/page/main/certification-success/index.tsx";
-import CertificationFailure from "../expert/page/main/certification-failure";
+import RegisterSuccessPage from "../expert/page/main/children/register-success/view.tsx";
+import RegisterFailurePage from "../expert/page/main/children/register-failure/view.tsx";
+import CertificationSuccess from "../expert/page/main/children/certify-success/view.tsx";
+import CertifyFailurePage from "../expert/page/main/children/certify-failure/view.tsx";
+import SocialLoginNotYetPage from "../expert/page/login/children/social-login-not-yet/view.tsx";
 
+export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
 export const ADMIN_LOGIN_ROUTE = "/admin/login";
 
 export const router = createBrowserRouter([
   {
-    errorElement: <ErrorPage />,
+    errorElement: <NotFoundPage />,
     children: [
       {
         path: "/admin",
-        errorElement: <ErrorPage />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: "",
             element: <AdminMain />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
                 index: true,
                 element: <AdminDashboard />,
               },
               {
-                path: "partner/facility-registration",
+                path: "partner/register",
                 element: <AdminFacilityRegistration />,
               },
               {
-                path: "partner/facility-registration/:facilityId",
+                path: "partner/register/:facilityId",
                 element: <FacilityRegistrationInfo />,
                 loader: facilityRegistrationInfoLoader,
               },
@@ -68,15 +70,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/expert",
-        errorElement: <ErrorPage />,
+        errorElement: <NotFoundPage />,
         children: [
           {
             path: "",
             element: <ExpertMain />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
-                errorElement: <ErrorPage />,
+                errorElement: <NotFoundPage />,
                 children: [
                   {
                     index: true,
@@ -84,11 +86,11 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "info",
-                    element: <MyInfo />,
+                    element: <MyPage />,
                   },
                   {
                     path: "patient",
-                    element: <PatientList />,
+                    element: <PatientListPage />,
                   },
                   {
                     path: "registration",
@@ -96,11 +98,11 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "registration/success",
-                    element: <RegistrationSuccess />,
+                    element: <RegisterSuccessPage />,
                   },
                   {
                     path: "registration/failure",
-                    element: <RegistrationFailure />,
+                    element: <RegisterFailurePage />,
                   },
                   {
                     path: "certification/success",
@@ -108,15 +110,15 @@ export const router = createBrowserRouter([
                   },
                   {
                     path: "certification/failure",
-                    element: <CertificationFailure />,
+                    element: <CertifyFailurePage />,
                   },
                   {
                     path: "certification",
-                    element: <ExpertCertification />,
+                    element: <CertifyPage />,
                   },
                   {
                     path: "patient/:patientId",
-                    element: <PatientInfo />,
+                    element: <PatientPage />,
                   },
                 ],
               },
@@ -125,42 +127,46 @@ export const router = createBrowserRouter([
           {
             path: "login",
             element: <ExpertLogin />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
             children: [
               {
-                errorElement: <ErrorPage />,
+                errorElement: <NotFoundPage />,
                 children: [
                   {
                     index: true,
-                    element: <LoginMain />,
+                    element: <LoginMainPage />,
                   },
                   {
                     path: "terms",
-                    element: <SignUpTerms />,
+                    element: <TermsPage />,
                   },
                   {
                     path: "social/failure",
-                    element: <SocialLoginFailure />,
+                    element: <SocialLoginFailurePage />,
+                  },
+                  {
+                    path: "social/not-yet",
+                    element: <SocialLoginNotYetPage />,
                   },
                   {
                     path: "social/kakao",
-                    element: <SocialLoginProxy />,
+                    element: <SocialLogin />,
                   },
                   {
                     path: "social/google",
-                    element: <SocialLoginProxy />,
+                    element: <SocialLogin />,
                   },
                   {
-                    path: "identification",
-                    element: <IdentificationPage />,
+                    path: "identify",
+                    element: <IdentifyPage />,
                   },
                   {
-                    path: "identification/failure",
-                    element: <IdentificationFailure />,
+                    path: "identify/failure",
+                    element: <IdentifyFailurePage />,
                   },
                   {
-                    path: "identification/success",
-                    element: <IdentificationSuccess />,
+                    path: "identify/success",
+                    element: <IdentifySuccessPage />,
                   },
                 ],
               },
@@ -169,7 +175,7 @@ export const router = createBrowserRouter([
           {
             path: "loading",
             element: <LoadingPage />,
-            errorElement: <ErrorPage />,
+            errorElement: <NotFoundPage />,
           },
         ],
       },

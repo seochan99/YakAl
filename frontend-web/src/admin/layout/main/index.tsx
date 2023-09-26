@@ -21,8 +21,8 @@ import {
   Subtitle,
   Title,
   YakalIcon,
-} from "/src//admin/layout/main/style.ts";
-import Footer from "/src/admin/layout/footer";
+} from "./style.ts";
+import Footer from "../footer";
 import { Outlet, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import { Spin as Hamburger } from "hamburger-react";
@@ -110,7 +110,7 @@ export function Main() {
       name: "제휴 기관",
       submenu: [
         { icon: LocalHospitalOutlinedIcon, path: "/admin/partner/management", name: "제휴 기관 관리" },
-        { icon: ApprovalOutlinedIcon, path: "/admin/partner/facility-registration", name: "제휴 신청 관리" },
+        { icon: ApprovalOutlinedIcon, path: "/admin/partner/register", name: "제휴 신청 관리" },
       ],
     },
   ];

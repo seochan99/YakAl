@@ -53,7 +53,7 @@ export const LinkLogo = styled(Link)`
 `;
 
 export const YakalIcon = styled.img`
-  content: url("/src/global/asset/yakal-logo.png");
+  content: url("/src/global/assets/yakal-logo.png");
   width: 3rem;
 `;
 
