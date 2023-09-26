@@ -116,11 +116,6 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                         const SizedBox(height: 20),
                         TextField(
                           controller: _nickNameController,
-                          onChanged: (text) {
-                            setState(() {
-                              print(_nickNameController.text.isNotEmpty);
-                            });
-                          },
                           decoration: const InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius:
