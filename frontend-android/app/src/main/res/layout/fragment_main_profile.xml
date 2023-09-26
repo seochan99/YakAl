@@ -21,7 +21,7 @@
             android:id="@+id/userNameTitleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홍길동님,\n약알과 함께 건강하세요!"
+            android:text="손형준님,\n약알과 함께 건강하세요!"
             style="@style/default_font"
             android:textSize="25sp"
             android:textColor="@color/black"

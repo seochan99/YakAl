@@ -40,7 +40,7 @@ class CalendarUtil {
                     DayState(
                         LocalDate.of(previousMonth.year, previousMonth.month, i),
                         i.toString(),
-                        Random.nextInt(0, 101),
+                        0,
                         isOverlap = false,
                         isVisible = false,
                         isSelected = false
@@ -54,7 +54,7 @@ class CalendarUtil {
                     DayState(
                         LocalDate.of(date.year, date.month, i),
                         i.toString(),
-                        Random.nextInt(0, 101),
+                        0,
                         isOverlap = false,
                         isVisible = true,
                         isSelected = LocalDate.of(date.year, date.month, i) == date
@@ -69,7 +69,7 @@ class CalendarUtil {
                     DayState(
                         LocalDate.of(nextMonth.year, nextMonth.month, i),
                         i.toString(),
-                        Random.nextInt(0, 101),
+                        0,
                         isOverlap = false,
                         isVisible = false,
                         isSelected = false
@@ -92,7 +92,7 @@ class CalendarUtil {
                 val dayState = DayState(
                     currentDate,
                     currentDate.dayOfMonth.toString(),
-                    Random.nextInt(0, 101), // percent
+                    0, // percent
                     isOverlap = false, // isOverlap
                     isVisible = true, // isVisible
                     isSelected = currentDate == date

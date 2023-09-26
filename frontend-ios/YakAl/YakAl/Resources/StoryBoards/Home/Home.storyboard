@@ -143,132 +143,49 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="z8I-Ct-4tv">
                                                 <rect key="frame" x="10" y="12" width="120" height="120"/>
                                                 <subviews>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fu-c1-fZf">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8q1-5G-CYP">
                                                         <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="teG-Hh-Ox0">
-                                                                <rect key="frame" x="0.0" y="8" width="77.666666666666671" height="24"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-envelope" translatesAutoresizingMaskIntoConstraints="NO" id="fzu-4z-I17">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="width" constant="24" id="bxl-Oc-H3h"/>
-                                                                            <constraint firstAttribute="height" constant="24" id="fd9-Hr-FBX"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="약 봉투" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ew6-Re-wOS">
-                                                                        <rect key="frame" x="28.999999999999996" y="0.0" width="48.666666666666657" height="24"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8q1-5G-CYP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="40" id="rYs-3z-p35"/>
-                                                                </constraints>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="EnvelopeMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="Cnh-hk-ynf"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="8q1-5G-CYP" firstAttribute="leading" secondItem="5fu-c1-fZf" secondAttribute="leading" id="1mO-Mp-GXe"/>
-                                                            <constraint firstItem="teG-Hh-Ox0" firstAttribute="leading" secondItem="5fu-c1-fZf" secondAttribute="leading" id="3lB-Kv-mPj"/>
-                                                            <constraint firstAttribute="bottom" secondItem="8q1-5G-CYP" secondAttribute="bottom" id="ADb-En-7Hk"/>
-                                                            <constraint firstItem="8q1-5G-CYP" firstAttribute="top" secondItem="5fu-c1-fZf" secondAttribute="top" id="L6I-5E-rtz"/>
-                                                            <constraint firstAttribute="trailing" secondItem="8q1-5G-CYP" secondAttribute="trailing" id="tv7-Ov-LEl"/>
-                                                            <constraint firstItem="teG-Hh-Ox0" firstAttribute="centerY" secondItem="5fu-c1-fZf" secondAttribute="centerY" id="vMY-Nt-L1l"/>
+                                                            <constraint firstAttribute="height" constant="40" id="rYs-3z-p35"/>
                                                         </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hyj-6w-HGu">
+                                                        <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="약 봉투" image="icon-envelope">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="EnvelopeMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="Cnh-hk-ynf"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1p-nu-P1R">
                                                         <rect key="frame" x="0.0" y="40" width="120" height="40"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="e0I-FO-MJz">
-                                                                <rect key="frame" x="0.0" y="8" width="107" height="24"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-OTC" translatesAutoresizingMaskIntoConstraints="NO" id="d17-4Z-QSg">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="24" id="FV5-nd-WqK"/>
-                                                                            <constraint firstAttribute="width" constant="24" id="uHV-jK-qqo"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="일반 의약품" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LMC-I9-hGl">
-                                                                        <rect key="frame" x="29" y="0.0" width="78" height="24"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="m1p-nu-P1R">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="40" id="vy8-VR-Ybg"/>
-                                                                </constraints>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="normalMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="aAy-Dt-iNW"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstItem="m1p-nu-P1R" firstAttribute="leading" secondItem="hyj-6w-HGu" secondAttribute="leading" id="Q8P-YP-HJc"/>
-                                                            <constraint firstItem="e0I-FO-MJz" firstAttribute="leading" secondItem="hyj-6w-HGu" secondAttribute="leading" id="Zrw-RQ-FVo"/>
-                                                            <constraint firstItem="e0I-FO-MJz" firstAttribute="centerY" secondItem="hyj-6w-HGu" secondAttribute="centerY" id="eEn-2a-30t"/>
-                                                            <constraint firstAttribute="bottom" secondItem="m1p-nu-P1R" secondAttribute="bottom" id="gCC-ZA-Nhm"/>
-                                                            <constraint firstItem="m1p-nu-P1R" firstAttribute="top" secondItem="hyj-6w-HGu" secondAttribute="top" id="w01-0q-kv9"/>
-                                                            <constraint firstAttribute="trailing" secondItem="m1p-nu-P1R" secondAttribute="trailing" id="yvx-II-iCn"/>
+                                                            <constraint firstAttribute="height" constant="40" id="vy8-VR-Ybg"/>
                                                         </constraints>
-                                                    </view>
-                                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gbA-h0-ipB">
+                                                        <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="일반 의약품" image="icon-OTC">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="normalMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="aAy-Dt-iNW"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mx1-1Y-IVc">
                                                         <rect key="frame" x="0.0" y="80" width="120" height="40"/>
-                                                        <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="T66-PL-NiP">
-                                                                <rect key="frame" x="0.0" y="8" width="92.333333333333329" height="24"/>
-                                                                <subviews>
-                                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon-pencil-box" translatesAutoresizingMaskIntoConstraints="NO" id="cnq-6A-tJa">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="24" height="24"/>
-                                                                        <constraints>
-                                                                            <constraint firstAttribute="height" constant="24" id="BDf-Xd-uAJ"/>
-                                                                            <constraint firstAttribute="width" constant="24" id="ZJk-Xq-3vG"/>
-                                                                        </constraints>
-                                                                    </imageView>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="직접 입력" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="exJ-eV-nkO">
-                                                                        <rect key="frame" x="29.000000000000004" y="0.0" width="63.333333333333343" height="24"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                                        <nil key="textColor"/>
-                                                                        <nil key="highlightedColor"/>
-                                                                    </label>
-                                                                </subviews>
-                                                            </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mx1-1Y-IVc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="120" height="40"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="height" constant="40" id="Ee9-lX-Lh5"/>
-                                                                </constraints>
-                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                <connections>
-                                                                    <action selector="DirectMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="0Sb-N9-Ikk"/>
-                                                                </connections>
-                                                            </button>
-                                                        </subviews>
-                                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="bottom" secondItem="Mx1-1Y-IVc" secondAttribute="bottom" id="GcL-8k-PD4"/>
-                                                            <constraint firstItem="Mx1-1Y-IVc" firstAttribute="top" secondItem="gbA-h0-ipB" secondAttribute="top" id="b0p-IR-S4F"/>
-                                                            <constraint firstItem="Mx1-1Y-IVc" firstAttribute="leading" secondItem="gbA-h0-ipB" secondAttribute="leading" id="diS-rD-zie"/>
-                                                            <constraint firstAttribute="trailing" secondItem="Mx1-1Y-IVc" secondAttribute="trailing" id="huG-Kx-wrF"/>
-                                                            <constraint firstItem="T66-PL-NiP" firstAttribute="leading" secondItem="gbA-h0-ipB" secondAttribute="leading" id="on6-Me-066"/>
-                                                            <constraint firstItem="T66-PL-NiP" firstAttribute="centerY" secondItem="gbA-h0-ipB" secondAttribute="centerY" id="pjK-Gr-zD8"/>
+                                                            <constraint firstAttribute="height" constant="40" id="Ee9-lX-Lh5"/>
                                                         </constraints>
-                                                    </view>
+                                                        <inset key="titleEdgeInsets" minX="3" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                        <state key="normal" title="직접 입력" image="icon-pencil-box">
+                                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="DirectMedicineButtonAction:" destination="gsW-TC-H92" eventType="touchUpInside" id="0Sb-N9-Ikk"/>
+                                                            <segue destination="hee-Ys-wMc" kind="show" id="bEB-ik-59o"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
@@ -395,7 +312,23 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9Bh-wK-Uxr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2442" y="1555"/>
+            <point key="canvasLocation" x="1636" y="1544"/>
+        </scene>
+        <!--Medicine Add DirectVC-->
+        <scene sceneID="JTi-SR-7j0">
+            <objects>
+                <viewController storyboardIdentifier="MedicineAddDirectVC" id="hee-Ys-wMc" customClass="MedicineAddDirectVC" customModule="YakAl" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C1J-iy-D9s">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="ouN-w2-nNx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dRq-t4-bsm"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GeM-2S-6nF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2500" y="1538"/>
         </scene>
         <!--Calendar View Controller-->
         <scene sceneID="AEv-Gt-RxT">
