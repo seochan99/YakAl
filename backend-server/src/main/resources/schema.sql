@@ -9,9 +9,10 @@ CREATE TABLE `users`
     `dinner_time`     time(6)      DEFAULT NULL,
     `is_certified`    bit(1)       DEFAULT NULL,
     `is_detail`       tinyint(1) NOT NULL,
+    `is_identified`   tinyint(1) DEFAULT NULL,
     `is_ios`          tinyint(1) DEFAULT NULL,
     `is_login`        tinyint(1) NOT NULL,
-    `job`             enum('DIETITIAN','DOCTOR','PATIENT','PHARMACIST') DEFAULT NULL,
+    `job`             enum('DOCTOR','PATIENT','PHARMACIST') DEFAULT NULL,
     `login_provider`  enum('APPLE','GOOGLE','KAKAO') NOT NULL,
     `lunch_time`      time(6)      DEFAULT NULL,
     `name`            char(20)     DEFAULT NULL,
@@ -26,10 +27,12 @@ CREATE TABLE `users`
 
 CREATE TABLE `risks`
 (
-    `id`    char(7) NOT NULL,
-    `score` tinyint NOT NULL,
+    `id`                char(7) NOT NULL,
+    `is_beers_criteria` bit(1)  DEFAULT NULL,
+    `properties`        tinyint DEFAULT NULL,
+    `score`             tinyint NOT NULL,
     PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `dosenames`
 (
@@ -42,13 +45,13 @@ CREATE TABLE `prescriptions`
 (
     `id`              bigint       NOT NULL AUTO_INCREMENT,
     `created_date`    date         NOT NULL,
+    `is_allow`        bit(1) DEFAULT NULL,
     `pharmacy_name`   varchar(255) NOT NULL,
     `prescribed_date` date         NOT NULL,
     `user_id`         bigint       NOT NULL,
-    `is_allow`        bit(1) DEFAULT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `notifications`
 (
@@ -126,26 +129,28 @@ CREATE TABLE `images`
 
 CREATE TABLE `doses`
 (
-    `id`              bigint       NOT NULL AUTO_INCREMENT,
+    `id`              bigint NOT NULL AUTO_INCREMENT,
     `created_at`      datetime(6) NOT NULL,
-    `date`            date         NOT NULL,
+    `date`            date   NOT NULL,
     `deleted_at`      datetime(6) DEFAULT NULL,
     `is_deleted`      tinyint(1) NOT NULL,
     `is_half`         tinyint(1) NOT NULL,
     `is_taken`        tinyint(1) NOT NULL,
-    `pill_cnt`        bigint       NOT NULL,
+    `pill_cnt`        bigint NOT NULL,
     `time`            enum('AFTERNOON','DEFAULT','EVENING','MORNING') NOT NULL,
     `risks_id`        char(7)      DEFAULT NULL,
     `dosename_id`     varchar(255) DEFAULT NULL,
-    `prescription_id` bigint       NOT NULL,
-    `user_id`         bigint       NOT NULL,
+    `prescription_id` bigint NOT NULL,
+    `user_id`         bigint NOT NULL,
     PRIMARY KEY (`id`),
+    KEY               `FKopvpsje1yswua17uie823eot8` (`risks_id`),
     KEY               `FK33nr5l4v5kcu28q0bi76qqu55` (`dosename_id`),
     KEY               `FKbombg2eew20wy2skjyko02kr3` (`prescription_id`),
     KEY               `FK31ck2prxo9c95rqumfmaiuoyu` (`user_id`),
     CONSTRAINT `FK31ck2prxo9c95rqumfmaiuoyu` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     CONSTRAINT `FK33nr5l4v5kcu28q0bi76qqu55` FOREIGN KEY (`dosename_id`) REFERENCES `dosenames` (`id`),
-    CONSTRAINT `FKbombg2eew20wy2skjyko02kr3` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`)
+    CONSTRAINT `FKbombg2eew20wy2skjyko02kr3` FOREIGN KEY (`prescription_id`) REFERENCES `prescriptions` (`id`),
+    CONSTRAINT `FKopvpsje1yswua17uie823eot8` FOREIGN KEY (`risks_id`) REFERENCES `risks` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `boards`
@@ -264,4 +269,15 @@ CREATE TABLE `answers`
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`surbey_id`) REFERENCES `surbeys` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `guardians`
+(
+    `id`          bigint NOT NULL AUTO_INCREMENT,
+    `created_at`  datetime(6) DEFAULT NULL,
+    `guardian_id` bigint NOT NULL,
+    `patient_id`  bigint NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`patient_id`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`guardian_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

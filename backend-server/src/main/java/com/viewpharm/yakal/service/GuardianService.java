@@ -23,12 +23,19 @@ public class GuardianService {
     private final AnswerRepository answerRepository;
 
     public Boolean createGuardian(Long guardianId, Long patientId) {
+
+        if(guardianId == patientId) throw new CommonException(ErrorCode.EQUAL_GUARDIAN);
+
         User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        //보호자 환자 관계가 이미 있는지 확인
-        guardianRepository.findByPatientAndGuardian(patient, guardian).ifPresent(g -> {
-            throw new CommonException(ErrorCode.NOT_FOUND_GUARDIAN);
+        //보호자 환자 관계가 이미 있는지 확인 서로 한명씩만 있어야 함
+        guardianRepository.findByPatient(patient).ifPresent(g -> {
+            throw new CommonException(ErrorCode.DUPLICATION_GUARDIAN);
+        });
+
+        guardianRepository.findByGuardian(guardian).ifPresent(g -> {
+            throw new CommonException(ErrorCode.DUPLICATION_GUARDIAN);
         });
 
         guardianRepository.save(Guardian.builder()
@@ -65,7 +72,7 @@ public class GuardianService {
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         //보호자 관계 찾기
-        Guardian guard = guardianRepository.findByGuardian(patient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+        Guardian guard = guardianRepository.findByPatient(patient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
         //유저의 보호자 찾기
         User guardian = guard.getPatient();
@@ -84,7 +91,7 @@ public class GuardianService {
         User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        Guardian guard = guardianRepository.findByPatientAndGuardian(patient, guardian).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+        Guardian guard = guardianRepository.findByPatientAndGuardian(patient, guardian).orElseThrow(() -> new CommonException(ErrorCode.DUPLICATION_GUARDIAN));
 
         guardianRepository.delete(guard);
 

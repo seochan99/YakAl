@@ -26,15 +26,15 @@ public class GuardianController {
         return ResponseDto.ok(guardianService.createGuardian(guardianId, id));
     }
 
-    @GetMapping("/{guardianId}")
+    @GetMapping("/guardian/{guardianId}")
     @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
-    public ResponseDto<PatientDto> readPatient(@UserId Long id, @PathVariable Long guardianId) {
+    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
         return ResponseDto.ok(guardianService.readPatient(guardianId));
     }
 
-    @GetMapping("/{patientId}")
+    @GetMapping("/patient/{patientId}")
     @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
-    public ResponseDto<PatientDto> readGuardian(@UserId Long id, @PathVariable Long patientId) {
+    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
         return ResponseDto.ok(guardianService.readGuardian(patientId));
     }
 

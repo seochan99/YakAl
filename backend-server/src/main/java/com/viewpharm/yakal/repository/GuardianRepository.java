@@ -14,5 +14,4 @@ public interface GuardianRepository extends JpaRepository<Guardian, Long> {
     Optional<Guardian> findByGuardian(User guardian);
 
     Optional<Guardian> findByPatientAndGuardian(User patient, User guardian);
-
 }
