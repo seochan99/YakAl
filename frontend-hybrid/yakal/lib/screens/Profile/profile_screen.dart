@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
@@ -19,13 +20,45 @@ class ProfileScreen extends StatelessWidget {
         children: [
           // 프로필 헤더
           ProfileHeader(userViewModel: userViewModel),
+          Container(
+              // width 꽉 차게
+              width: double.infinity,
+              height: 2,
+              decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
 
-          Obx(() {
-            return Text('Nickname: ${userViewModel.user.value.nickName}');
-          }),
-          Obx(() {
-            return Text('Test Count: ${userViewModel.user.value.testCnt}');
-          }),
+          const SizedBox(height: 26),
+          // 아이콘 + text : 아이콘 "자가 진단 테스트"
+          Padding(
+            padding: sideMargin,
+            child: Row(
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/circle-emphasis.svg',
+                  width: 20,
+                  height: 20,
+                ),
+                const SizedBox(width: 10),
+                const Text(
+                  '자가 진단 테스트',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w700,
+                    color: Color(0xff454545),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 18),
+          // row 둥근 사각형 버튼 두개
+
+          // Obx(() {
+          //   return Text('Nickname: ${userViewModel.user.value.nickName}');
+          // }),
+          // Obx(() {
+          //   return Text('Test Count: ${userViewModel.user.value.testCnt}');
+          // }),
           const SizedBox(height: 20),
           ElevatedButton(
               onPressed: () {

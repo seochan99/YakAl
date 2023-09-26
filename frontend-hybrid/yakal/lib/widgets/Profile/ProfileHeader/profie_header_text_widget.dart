@@ -65,7 +65,8 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
         ),
 
         const Spacer(),
-        // 닉네임 수정 네모 버튼 안에는 수정 이라고 글자 적혀있다.
+
+        // 수정 버튼
         OutlinedButton(
           style: OutlinedButton.styleFrom(
             padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
@@ -80,13 +81,13 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
           ),
           onPressed: () {
             double screenHeight = MediaQuery.of(context).size.height;
-            double targetHeight = 0.7 * screenHeight; // 70% of screen height
+            // 70% of screen height
+            double targetHeight = 0.7 * screenHeight;
             showModalBottomSheet<void>(
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
                 return Container(
-                  //keyboard 보다 높게 올라오게 하기 위해
                   height: targetHeight,
                   width: double.infinity,
                   decoration: const BoxDecoration(
@@ -102,17 +103,35 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Text(
-                          '닉네임 수정',
-                          style: TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w700,
-                          ),
+                        Row(
+                          children: [
+                            const Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  '닉네임 수정',
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  '약알이 어떻게 불러드릴까요?',
+                                  style: TextStyle(fontSize: 16.0),
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            // X버튼 아이콘 누르면 sheet 닫힘
+                            IconButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              icon: const Icon(Icons.close),
+                            ),
+                          ],
                         ),
-                        const Text(
-                          '약알이 어떻게 불러드릴까요?',
-                          style: TextStyle(fontSize: 16.0),
-                        ),
+
                         // text input box
                         const SizedBox(height: 20),
                         InputHorizontalTextFieldWidget(
