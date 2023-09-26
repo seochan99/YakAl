@@ -9,6 +9,7 @@ class ProfileScreen extends StatelessWidget {
   final UserViewModel userViewModel = Get.put(UserViewModel());
 
   final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
+
   ProfileScreen({super.key});
   @override
   Widget build(BuildContext context) {
@@ -33,13 +34,6 @@ class ProfileScreen extends StatelessWidget {
               child: const Text('로그인')),
 
           // 닉네임 변경
-
-          ElevatedButton(
-            onPressed: () {
-              userViewModel.updateNickName('New Nickname');
-            },
-            child: const Text('Change Nickname'),
-          ),
           // test 올리기
           ElevatedButton(
             onPressed: () {

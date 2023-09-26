@@ -7,11 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Column(
-        children: [
-          Text('홈'),
-        ],
-      ),
+      child: Text('홈'),
     );
   }
 }
