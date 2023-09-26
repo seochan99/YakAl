@@ -19,17 +19,8 @@ import java.time.LocalDate;
 public class UpdateUserInfoDto {
 
     @NotBlank
-    private String name;
+    private String nickname;
 
     @NotNull
     private Boolean isDetail;
-
-    // @Date
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate birthday;
-
-    @NotNull
-    @Enum(enumClass = ESex.class)
-    private ESex sex;
 }

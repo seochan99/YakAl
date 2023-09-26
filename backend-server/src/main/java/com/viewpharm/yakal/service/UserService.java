@@ -7,8 +7,8 @@ import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.repository.AnswerRepository;
 import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.type.ESex;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AnswerRepository answerRepository;
 
     @Value("${iamport.api-key}")
     private String impKey;
@@ -118,8 +119,8 @@ public class UserService {
                 .build();
     }
 
-    public void updateUserInfo(final Long userId, final String name, final Boolean isDetail, final LocalDate birthday, final ESex sex) {
-        final Integer isUpdated = userRepository.updateNameAndBirthdayAndIsDetailAndSexById(userId, name, birthday, isDetail, sex);
+    public void updateUserInfo(final Long userId, final String name, final Boolean isDetail) {
+        final Integer isUpdated = userRepository.updateNameAndIsDetailById(userId, name, isDetail);
 
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
@@ -165,6 +166,10 @@ public class UserService {
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
+    }
+
+    public Long countAnswer(final User user){
+        return answerRepository.countAnswerByUser(user);
     }
 
 

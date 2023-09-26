@@ -2,18 +2,15 @@ package com.viewpharm.yakal.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-
-import java.time.LocalDate;
 
 @Getter
-@Setter
 @Builder
-@RequiredArgsConstructor
 public class UserInfoDto {
-
-    private final String name;
-    private final LocalDate birthday;
-    private final String tel;
+    private final String Nickname;
+    private Boolean isDetail;
+    private Boolean notiIsAllowed;
+    private String breakfastTime;
+    private String lunchTime;
+    private String dinnerTime;
+    private Long AnswerCount;
 }
