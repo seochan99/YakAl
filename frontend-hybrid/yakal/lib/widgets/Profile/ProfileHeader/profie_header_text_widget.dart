@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
-class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({
+class ProfileHeaderText extends StatelessWidget {
+  const ProfileHeaderText({
     super.key,
     required this.userViewModel,
   });
