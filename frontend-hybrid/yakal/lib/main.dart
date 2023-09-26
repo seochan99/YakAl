@@ -28,8 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
-        scaffoldBackgroundColor:
-            const Color(0xFFf6f6f8), // Set the background color here
+        scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       initialRoute: '/',
       // 라우팅 설정
