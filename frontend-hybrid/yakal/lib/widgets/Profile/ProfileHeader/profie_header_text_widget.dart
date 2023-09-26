@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
+import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
 class ProfileHeaderText extends StatefulWidget {
   const ProfileHeaderText({
@@ -114,20 +115,8 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                         ),
                         // text input box
                         const SizedBox(height: 20),
-                        TextField(
-                          controller: _nickNameController,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(8.0)),
-                              borderSide: BorderSide(
-                                color: Color.fromRGBO(84, 135, 252,
-                                    1), // UIColor(red: 0.33, green: 0.53, blue: 0.99, alpha: 1)
-                              ),
-                            ),
-                            labelText: '닉네임',
-                          ),
-                        ),
+                        InputHorizontalTextFieldWidget(
+                            nickNameController: _nickNameController),
                         const SizedBox(height: 20),
 
                         ValueListenableBuilder<TextEditingValue>(
