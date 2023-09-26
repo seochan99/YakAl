@@ -129,7 +129,7 @@ function SummaryScreening({ screeningDetail }: TSummaryScreeningProps) {
             <S.NormalSpan>
               {totalScore.smoking[0] === 0 && `흡연 경력 없음`}
               {totalScore.smoking[0] !== 0 &&
-                `흡연 경력: ${totalScore.smoking[1]}년 / 하루 흡연량: ${
+                `총 흡연 기간: ${totalScore.smoking[1]}년 / 하루 흡연량: ${
                   totalScore.smoking[2] === 0
                     ? "1/2갑 미만"
                     : totalScore.smoking[2] === 1
