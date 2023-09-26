@@ -25,6 +25,6 @@ public class Risk {
     @Column(name = "is_beers_criteria")
     private Boolean isBeersCriteria;
 
-    @Column(name = "anticholinergic")
+    @Column(name = "properties")
     private EMedicalProperties properties;
 }
