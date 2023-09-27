@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
 import 'package:yakal/widgets/Profile/profile_info_icon_btn_widget.dart';
+import 'package:yakal/widgets/Profile/profile_setting_row_box_widget.dart';
+import 'package:yakal/widgets/Profile/profile_setting_row_btn_widget.dart';
 import 'package:yakal/widgets/Profile/profile_test_button_widget.dart';
 // 임시 유저 클래스
 
@@ -125,37 +127,27 @@ class ProfileScreen extends StatelessWidget {
 
             /* ----------------- setting List View -----------------  */
             const SizedBox(height: 8),
-            Material(
-              color: Colors.white, // Set the background color to white
-              child: InkWell(
-                onTap: () {
-                  Get.toNamed("/profile");
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 16,
-                  ),
-                  child: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/icons/icon-setting.svg',
-                        width: 24,
-                        height: 24,
-                      ),
-                      const SizedBox(
-                          width: 16), // Add some space between icon and text
-                      const Text('앱 설정',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xff151515),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            )
+            const ProfileSettingRowBtnWidget(
+                iconImg: 'assets/icons/icon-setting.svg',
+                text: '앱 설정',
+                routeLinkText: "/appSetting"),
+            const ProfileSettingRowBtnWidget(
+                iconImg: 'assets/icons/icon-line-bell.svg',
+                text: '알림 설정',
+                routeLinkText: "/alertSetting"),
+            /* ----------------- 위치 나중에 -----------------  */
+            // const ProfileSettingRowBtnWidget(
+            //   iconImg: 'assets/icons/icon-location.svg',
+            //   text: '내 위치 설정',
+            // )
+            const SizedBox(height: 8),
+            const ProfileSettingRowBoxWidget(
+                text: '약알에게 바라는 점', routerLinkText: "/wishList"),
+            const ProfileSettingRowBoxWidget(
+                text: '버전 정보', routerLinkText: null),
+            const SizedBox(height: 8),
+            const ProfileSettingRowBoxWidget(
+                text: '전문가 인증', routerLinkText: "/wishList"),
           ],
         ),
       ),
