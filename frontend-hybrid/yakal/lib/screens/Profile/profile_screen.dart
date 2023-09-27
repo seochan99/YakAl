@@ -12,6 +12,16 @@ class ProfileScreen extends StatelessWidget {
   final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
 
   ProfileScreen({super.key});
+
+  // test normal preesed function go test1 page
+  void testNormalPressed() {
+    Get.toNamed("/noamalTest");
+  }
+
+  void testSeniorPressed() {
+    Get.toNamed("/seniorTest");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,21 +40,48 @@ class ProfileScreen extends StatelessWidget {
           // 아이콘 + text : 아이콘 "자가 진단 테스트"
           Padding(
             padding: sideMargin,
-            child: Row(
+            child: Column(
               children: [
-                SvgPicture.asset(
-                  'assets/icons/circle-emphasis.svg',
-                  width: 20,
-                  height: 20,
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      'assets/icons/circle-emphasis.svg',
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    const Text(
+                      '자가 진단 테스트',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xff454545),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 10),
-                const Text(
-                  '자가 진단 테스트',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xff454545),
-                  ),
+                const SizedBox(height: 18),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: ProfileTestButtonWidget(
+                          // function
+                          boldText: "일반",
+                          normalText: " (65세 미만)",
+                          testPressed: testNormalPressed,
+                          btnColor: const Color(0xff5588FD)),
+                    ),
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: ProfileTestButtonWidget(
+                          // function
+                          boldText: "시니어",
+                          normalText: " (65세 이상)",
+                          testPressed: testNormalPressed,
+                          btnColor: const Color(0xff2666F6)),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -77,5 +114,56 @@ class ProfileScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class ProfileTestButtonWidget extends StatelessWidget {
+  final String boldText;
+  final String normalText;
+  final Function testPressed;
+  final Color btnColor;
+
+  const ProfileTestButtonWidget(
+      {Key? key,
+      required this.boldText,
+      required this.normalText,
+      required this.testPressed,
+      required this.btnColor})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+        // padding 20
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          backgroundColor: btnColor,
+          // border none
+        ),
+        onPressed: () {
+          testPressed;
+        },
+        // rich text 일반만 bold체
+        child: RichText(
+          text: TextSpan(children: [
+            TextSpan(
+                text: boldText,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white,
+                )),
+            TextSpan(
+                text: normalText,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white,
+                )),
+          ]),
+        ));
   }
 }
