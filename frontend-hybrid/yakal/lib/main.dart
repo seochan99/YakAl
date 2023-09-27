@@ -10,10 +10,12 @@ import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
-  dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: "assets/config/.env");
+
   // kakao sdk init
-  KakaoSdk.init(nativeAppKey: '네이티브 앱 키');
+  KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
   // Setup splash
+
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
