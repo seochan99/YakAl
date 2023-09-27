@@ -28,8 +28,8 @@ class ProfileInfoIconBtnWidget extends StatelessWidget {
           children: [
             SvgPicture.asset(
               iconImg,
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
             ),
             const SizedBox(
                 height: 8.0), // Add some space between the icon and the text
