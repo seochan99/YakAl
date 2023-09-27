@@ -24,17 +24,13 @@ public class GuardianService {
 
     public Boolean createGuardian(Long guardianId, Long patientId) {
 
-        if(guardianId == patientId) throw new CommonException(ErrorCode.EQUAL_GUARDIAN);
+        if (guardianId == patientId) throw new CommonException(ErrorCode.EQUAL_GUARDIAN);
 
         User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         //보호자 환자 관계가 이미 있는지 확인 서로 한명씩만 있어야 함
-        guardianRepository.findByPatient(patient).ifPresent(g -> {
-            throw new CommonException(ErrorCode.DUPLICATION_GUARDIAN);
-        });
-
-        guardianRepository.findByGuardian(guardian).ifPresent(g -> {
+        guardianRepository.findByPatientAndGuardian(patient, guardian).ifPresent(g -> {
             throw new CommonException(ErrorCode.DUPLICATION_GUARDIAN);
         });
 
@@ -51,7 +47,7 @@ public class GuardianService {
         User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         //보호자 관계 찾기
-        Guardian guard = guardianRepository.findByGuardian(guardian).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+        Guardian guard = guardianRepository.findFirstByGuardianOrderByCreatedDateDesc(guardian).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
         //보호자의 환자 찾기
         User patient = guard.getPatient();
@@ -72,10 +68,10 @@ public class GuardianService {
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         //보호자 관계 찾기
-        Guardian guard = guardianRepository.findByPatient(patient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+        Guardian guard = guardianRepository.findFirstByPatientOrderByCreatedDateDesc(patient).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
         //유저의 보호자 찾기
-        User guardian = guard.getPatient();
+        User guardian = guard.getGuardian();
 
         return PatientDto.builder()
                 .id(guardian.getId())

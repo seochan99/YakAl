@@ -22,11 +22,11 @@ public class Guardian {
     private Long id;
 
     @JoinColumn(name = "patient_id", nullable = false)
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User patient;
 
     @JoinColumn(name = "guardian_id", nullable = false)
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User guardian;
 
     @Column(name = "created_at")
