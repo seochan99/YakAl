@@ -12,7 +12,7 @@ class ProfileHeaderShareButton extends StatelessWidget {
       // backgorund : rgba(233, 233, 238, 1)
       style: OutlinedButton.styleFrom(
         padding: const EdgeInsets.symmetric(
-            vertical: 8, horizontal: 12), // Adjust padding
+            vertical: 11, horizontal: 12), // Adjust padding
         foregroundColor: Colors.black,
         backgroundColor: const Color.fromRGBO(245, 245, 249, 1),
         shape: RoundedRectangleBorder(

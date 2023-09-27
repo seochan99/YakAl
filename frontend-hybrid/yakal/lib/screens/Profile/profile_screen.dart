@@ -30,17 +30,16 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // 프로필 헤더
+            /* ----------------- 프로필 헤더 뷰 -----------------  */
             ProfileHeader(userViewModel: userViewModel),
-            // 구분선
+            /* ----------------- 구분선 -----------------  */
             Container(
                 // width 꽉 차게
                 width: double.infinity,
                 height: 2,
                 decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-
             const SizedBox(height: 26),
-            // 아이콘 + text : 아이콘 "자가 진단 테스트"
+            /* ----------------- 자가 진단 테스트 뷰 -----------------  */
             Padding(
               padding: sideMargin,
               child: Column(
@@ -90,45 +89,72 @@ class ProfileScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 30),
-            // 보호자, 병원기록, 특이사항 둥근 버튼
-            // 흰색 배경 박스
-            // Row
+
+            /* ----------------- 보호자, 병원기록, 특이사항 3개 버튼 뷰 -----------------  */
             Container(
               color: Colors.white,
               // top 24 bottom 26 padding
-              padding: const EdgeInsets.symmetric(vertical: 24),
+              // padding: const EdgeInsets.symmetric(vertical: 24),
               child: const Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  InfoIconBtnWidget(
-                    iconImg: 'assets/icons/icon-mypage-protector.svg',
-                    text: '보호자',
+                  Expanded(
+                    child: InfoIconBtnWidget(
+                      goPage: "/login",
+                      iconImg: 'assets/icons/icon-mypage-protector.svg',
+                      text: '보호자',
+                    ),
                   ),
-                  InfoIconBtnWidget(
-                    iconImg: 'assets/icons/icon-mypage-hospital.svg',
-                    text: '병원 기록',
+                  Expanded(
+                    child: InfoIconBtnWidget(
+                      goPage: "/login",
+                      iconImg: 'assets/icons/icon-mypage-hospital.svg',
+                      text: '병원 기록',
+                    ),
                   ),
-                  InfoIconBtnWidget(
-                    iconImg: 'assets/icons/icon-mypage-special.svg',
-                    text: '특이사항',
+                  Expanded(
+                    child: InfoIconBtnWidget(
+                      goPage: "/login",
+                      iconImg: 'assets/icons/icon-mypage-special.svg',
+                      text: '특이사항',
+                    ),
                   )
                 ],
               ),
             ),
-            ElevatedButton(
-                onPressed: () {
-                  Get.toNamed("/login");
-                },
-                child: const Text('로그인')),
 
-            // 닉네임 변경
-            // test 올리기
-            ElevatedButton(
-              onPressed: () {
-                userViewModel.incrementTestCount();
-              },
-              child: const Text('Increment Test Count'),
-            ),
+            /* ----------------- setting List View -----------------  */
+            const SizedBox(height: 8),
+            Material(
+              color: Colors.white, // Set the background color to white
+              child: InkWell(
+                onTap: () {
+                  Get.toNamed("/profile");
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 16,
+                  ),
+                  child: Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/icon-setting.svg',
+                        width: 24,
+                        height: 24,
+                      ),
+                      const SizedBox(
+                          width: 16), // Add some space between icon and text
+                      const Text('앱 설정',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Color(0xff151515),
+                          )),
+                    ],
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),
@@ -137,6 +163,7 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class InfoIconBtnWidget extends StatelessWidget {
+  final String goPage;
   final String iconImg;
   final String text;
 
@@ -144,30 +171,39 @@ class InfoIconBtnWidget extends StatelessWidget {
     Key? key,
     required this.iconImg,
     required this.text,
+    required this.goPage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // icon button
-        IconButton(
-          onPressed: () {
-            Get.toNamed("/login");
-          },
-          icon: SvgPicture.asset(
-            iconImg,
-            width: 50,
-            height: 50,
-          ),
+    return InkWell(
+      onTap: () {
+        Get.toNamed(goPage); // Navigate to the specified page
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
         ),
-        Text(text,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Color(0xff151515),
-            ))
-      ],
+        child: Column(
+          children: [
+            SvgPicture.asset(
+              iconImg,
+              width: 60,
+              height: 60,
+            ),
+            const SizedBox(
+                height: 8.0), // Add some space between the icon and the text
+            Text(
+              text,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff151515),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
