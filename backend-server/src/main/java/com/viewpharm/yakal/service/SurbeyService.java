@@ -111,7 +111,7 @@ public class SurbeyService {
 
         return AnswerAllDto.builder()
                 .datalist(listDtos)
-                .percent(listDtos.size()/14)
+                .percent(listDtos.size() * 100 / 14)
                 .build();
     }
 
@@ -132,11 +132,9 @@ public class SurbeyService {
 
         return AnswerAllDto.builder()
                 .datalist(listDtos)
-                .percent(listDtos.size()/14)
+                .percent(listDtos.size() * 100 / 14)
                 .build();
     }
-
-
 
 
 }
