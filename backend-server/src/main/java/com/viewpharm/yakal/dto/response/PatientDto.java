@@ -14,14 +14,16 @@ public class PatientDto {
     private LocalDate birthday;
     private int testProgress;
     private LocalDate lastSurbey;
+    private String tel;
 
     @Builder
-    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, int testProgress, LocalDate lastSurbey) {
+    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, int testProgress, LocalDate lastSurbey, String tel) {
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.birthday = birthday;
         this.testProgress = testProgress;
         this.lastSurbey = lastSurbey;
+        this.tel = tel;
     }
 }

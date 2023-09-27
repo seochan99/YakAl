@@ -17,6 +17,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+//기저 질환 및 알러지으로 변경 예정
+@Deprecated
 @Slf4j
 @Service
 @Transactional

@@ -13,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//기저 질환 및 알러지로 변경예정
+@Deprecated
 @Slf4j
 @RestController
 @RequiredArgsConstructor

@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+//특이 사항 삭제 예정
+@Deprecated
 @Entity
 @Getter
 @NoArgsConstructor

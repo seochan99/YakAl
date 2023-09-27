@@ -6,6 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 
+//사용자 통계용 로그인 로그 저장
 @Entity
 @Getter
 @Setter

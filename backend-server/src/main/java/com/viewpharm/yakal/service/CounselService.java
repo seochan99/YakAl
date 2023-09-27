@@ -92,7 +92,7 @@ public class CounselService {
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
         List<PatientDto> patientDtoList = counselList.stream()
-                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient())))
+                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient()), c.getPatient().getTel()))
                 .collect(Collectors.toList());
 
         return PatientAllDto.builder()
@@ -123,7 +123,7 @@ public class CounselService {
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
         List<PatientDto> patientDtoList = counselList.stream()
-                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient())))
+                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient()), c.getPatient().getTel()))
                 .collect(Collectors.toList());
 
         return PatientAllDto.builder()
@@ -132,6 +132,8 @@ public class CounselService {
                 .build();
     }
 
+    //특이사항 삭제 예정
+    @Deprecated
     public Boolean createNote(Long expertId, Long patientId, NoteRequestDto requestDto) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
@@ -158,7 +160,8 @@ public class CounselService {
         return Boolean.TRUE;
     }
 
-    //특이사항 자세히 읽어야 하는지?
+    //특이사항 삭제 예정
+    @Deprecated
     public NoteDetailDto updateNote(Long expertId, Long noteId, NoteRequestDto requestDto) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
@@ -190,6 +193,8 @@ public class CounselService {
                 .build();
     }
 
+    //특이사항 삭제 예정
+    @Deprecated
     public Boolean deleteNote(Long expertId, Long noteId) {
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
@@ -205,7 +210,8 @@ public class CounselService {
         return Boolean.TRUE;
     }
 
-
+    //특이사항 삭제 예정
+    @Deprecated
     public NoteAllDto getAllNoteList(Long expertId, Long patientId, Long pageIndex, Long pageSize) {
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
