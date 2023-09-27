@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
+import 'package:yakal/widgets/Profile/profile_info_icon_btn_widget.dart';
 import 'package:yakal/widgets/Profile/profile_test_button_widget.dart';
 // 임시 유저 클래스
 
@@ -98,21 +99,21 @@ class ProfileScreen extends StatelessWidget {
               child: const Row(
                 children: [
                   Expanded(
-                    child: InfoIconBtnWidget(
+                    child: ProfileInfoIconBtnWidget(
                       goPage: "/login",
                       iconImg: 'assets/icons/icon-mypage-protector.svg',
                       text: '보호자',
                     ),
                   ),
                   Expanded(
-                    child: InfoIconBtnWidget(
+                    child: ProfileInfoIconBtnWidget(
                       goPage: "/login",
                       iconImg: 'assets/icons/icon-mypage-hospital.svg',
                       text: '병원 기록',
                     ),
                   ),
                   Expanded(
-                    child: InfoIconBtnWidget(
+                    child: ProfileInfoIconBtnWidget(
                       goPage: "/login",
                       iconImg: 'assets/icons/icon-mypage-special.svg',
                       text: '특이사항',
@@ -155,52 +156,6 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class InfoIconBtnWidget extends StatelessWidget {
-  final String goPage;
-  final String iconImg;
-  final String text;
-
-  const InfoIconBtnWidget({
-    Key? key,
-    required this.iconImg,
-    required this.text,
-    required this.goPage,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Get.toNamed(goPage); // Navigate to the specified page
-      },
-      child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16,
-        ),
-        child: Column(
-          children: [
-            SvgPicture.asset(
-              iconImg,
-              width: 60,
-              height: 60,
-            ),
-            const SizedBox(
-                height: 8.0), // Add some space between the icon and the text
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff151515),
-              ),
-            ),
           ],
         ),
       ),
