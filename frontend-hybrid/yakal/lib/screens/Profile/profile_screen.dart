@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
+import 'package:yakal/widgets/Profile/profile_test_button_widget.dart';
 // 임시 유저 클래스
 
 class ProfileScreen extends StatelessWidget {
@@ -25,145 +26,148 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          // 프로필 헤더
-          ProfileHeader(userViewModel: userViewModel),
-          Container(
-              // width 꽉 차게
-              width: double.infinity,
-              height: 2,
-              decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            // 프로필 헤더
+            ProfileHeader(userViewModel: userViewModel),
+            // 구분선
+            Container(
+                // width 꽉 차게
+                width: double.infinity,
+                height: 2,
+                decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
 
-          const SizedBox(height: 26),
-          // 아이콘 + text : 아이콘 "자가 진단 테스트"
-          Padding(
-            padding: sideMargin,
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/icons/circle-emphasis.svg',
-                      width: 20,
-                      height: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    const Text(
-                      '자가 진단 테스트',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Color(0xff454545),
+            const SizedBox(height: 26),
+            // 아이콘 + text : 아이콘 "자가 진단 테스트"
+            Padding(
+              padding: sideMargin,
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/icons/circle-emphasis.svg',
+                        width: 20,
+                        height: 20,
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 18),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: ProfileTestButtonWidget(
-                          // function
-                          boldText: "일반",
-                          normalText: " (65세 미만)",
-                          testPressed: testNormalPressed,
-                          btnColor: const Color(0xff5588FD)),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: ProfileTestButtonWidget(
-                          // function
-                          boldText: "시니어",
-                          normalText: " (65세 이상)",
-                          testPressed: testNormalPressed,
-                          btnColor: const Color(0xff2666F6)),
-                    ),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 10),
+                      const Text(
+                        '자가 진단 테스트',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          color: Color(0xff454545),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 18),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: ProfileTestButtonWidget(
+                            // function
+                            boldText: "일반",
+                            normalText: " (65세 미만)",
+                            testPressed: testNormalPressed,
+                            btnColor: const Color(0xff5588FD)),
+                      ),
+                      const SizedBox(width: 8),
+                      Expanded(
+                        child: ProfileTestButtonWidget(
+                            // function
+                            boldText: "시니어",
+                            normalText: " (65세 이상)",
+                            testPressed: testNormalPressed,
+                            btnColor: const Color(0xff2666F6)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ),
+            const SizedBox(height: 30),
+            // 보호자, 병원기록, 특이사항 둥근 버튼
+            // 흰색 배경 박스
+            // Row
+            Container(
+              color: Colors.white,
+              // top 24 bottom 26 padding
+              padding: const EdgeInsets.symmetric(vertical: 24),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InfoIconBtnWidget(
+                    iconImg: 'assets/icons/icon-mypage-protector.svg',
+                    text: '보호자',
+                  ),
+                  InfoIconBtnWidget(
+                    iconImg: 'assets/icons/icon-mypage-hospital.svg',
+                    text: '병원 기록',
+                  ),
+                  InfoIconBtnWidget(
+                    iconImg: 'assets/icons/icon-mypage-special.svg',
+                    text: '특이사항',
+                  )
+                ],
+              ),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Get.toNamed("/login");
+                },
+                child: const Text('로그인')),
 
-          const SizedBox(height: 18),
-          // row 둥근 사각형 버튼 두개
-
-          // Obx(() {
-          //   return Text('Nickname: ${userViewModel.user.value.nickName}');
-          // }),
-          // Obx(() {
-          //   return Text('Test Count: ${userViewModel.user.value.testCnt}');
-          // }),
-          const SizedBox(height: 20),
-          ElevatedButton(
+            // 닉네임 변경
+            // test 올리기
+            ElevatedButton(
               onPressed: () {
-                Get.toNamed("/login");
+                userViewModel.incrementTestCount();
               },
-              child: const Text('로그인')),
-
-          // 닉네임 변경
-          // test 올리기
-          ElevatedButton(
-            onPressed: () {
-              userViewModel.incrementTestCount();
-            },
-            child: const Text('Increment Test Count'),
-          ),
-        ],
+              child: const Text('Increment Test Count'),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class ProfileTestButtonWidget extends StatelessWidget {
-  final String boldText;
-  final String normalText;
-  final Function testPressed;
-  final Color btnColor;
+class InfoIconBtnWidget extends StatelessWidget {
+  final String iconImg;
+  final String text;
 
-  const ProfileTestButtonWidget(
-      {Key? key,
-      required this.boldText,
-      required this.normalText,
-      required this.testPressed,
-      required this.btnColor})
-      : super(key: key);
+  const InfoIconBtnWidget({
+    Key? key,
+    required this.iconImg,
+    required this.text,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-        // padding 20
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
+    return Column(
+      children: [
+        // icon button
+        IconButton(
+          onPressed: () {
+            Get.toNamed("/login");
+          },
+          icon: SvgPicture.asset(
+            iconImg,
+            width: 50,
+            height: 50,
           ),
-          backgroundColor: btnColor,
-          // border none
         ),
-        onPressed: () {
-          testPressed;
-        },
-        // rich text 일반만 bold체
-        child: RichText(
-          text: TextSpan(children: [
-            TextSpan(
-                text: boldText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                )),
-            TextSpan(
-                text: normalText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                )),
-          ]),
-        ));
+        Text(text,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff151515),
+            ))
+      ],
+    );
   }
 }
