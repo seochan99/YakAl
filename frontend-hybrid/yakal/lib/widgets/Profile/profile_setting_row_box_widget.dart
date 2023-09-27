@@ -16,9 +16,11 @@ class ProfileSettingRowBoxWidget extends StatelessWidget {
     return Material(
       color: Colors.white, // Set the background color to white
       child: InkWell(
-        onTap: () {
-          Get.toNamed(routerLinkText ?? "");
-        },
+        onTap: routerLinkText != null
+            ? () {
+                Get.toNamed(routerLinkText ?? "/profile");
+              }
+            : null,
         child: Padding(
           padding: const EdgeInsets.symmetric(
             horizontal: 20,
