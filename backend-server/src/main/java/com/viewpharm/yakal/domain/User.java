@@ -117,12 +117,6 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Expert expert;
 
-    @OneToOne(mappedBy = "patient", fetch = FetchType.LAZY)
-    private Guardian protectedPerson;
-
-    @OneToOne(mappedBy = "guardian", fetch = FetchType.LAZY)
-    private Guardian myGuardian;
-
 
     /**
      * ONE-TO-MANY RELATION
@@ -153,6 +147,12 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Diagnosis> diagnoses = new ArrayList<>();
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    private List<Guardian> protectedPerson;
+
+    @OneToMany(mappedBy = "guardian", fetch = FetchType.LAZY)
+    private List<Guardian> myGuardian;
 
     public User(final String socialId,
                 final ELoginProvider loginProvider,
