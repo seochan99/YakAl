@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_bokyak_screen.dart';
 
 class SurveySeniorScreen extends StatelessWidget {
   const SurveySeniorScreen({Key? key}) : super(key: key);
@@ -27,7 +29,7 @@ class SurveySeniorScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  '테스트를 완료할수록 \n나에게 더 알맞는 맞춤형 진료를 받으실 수 있습니다\n',
+                  '테스트를 완료할수록 \n나에게 더 알맞는 맞춤형 진료를 받으실 수 있습니다.\n',
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 16),
@@ -191,56 +193,53 @@ class TestList extends StatelessWidget {
 
     return Column(
       children: [
-        // '완료 갯수: $completedCount/14',
-        // Container(
-        //   child: Text(
-        //     '완료 갯수: $completedCount/14',
-        //     style: const TextStyle(
-        //       fontSize: 16,
-        //       color: Color(0xff151515),
-        //     ),
-        //   ),
-        // ),
         for (int index = 0; index < tests.length; index++)
-          Container(
-            padding: const EdgeInsets.all(16),
-            margin: const EdgeInsets.only(bottom: 12),
-            decoration: BoxDecoration(
-              color: tests[index].isCompleted
-                  ? const Color(0xFFF5F5F9)
-                  : const Color(0xFFFFFFFF),
-              borderRadius: BorderRadius.circular(8),
-              border: Border.all(
+          InkWell(
+            onTap: () {
+              if (!tests[index].isCompleted) {
+                Get.to(() => const SurveyDetailBokyakScreen());
+              }
+            },
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              margin: const EdgeInsets.only(bottom: 12),
+              decoration: BoxDecoration(
                 color: tests[index].isCompleted
-                    ? const Color(0xFF5588FD)
-                    : const Color(0xFFE9E9EE),
-                width: 1.0,
+                    ? const Color(0xFFF5F5F9)
+                    : const Color(0xFFFFFFFF),
+                borderRadius: BorderRadius.circular(8),
+                border: Border.all(
+                  color: tests[index].isCompleted
+                      ? const Color(0xFFF5F5F9)
+                      : const Color(0xFFE9E9EE),
+                  width: 1.0,
+                ),
               ),
-            ),
-            child: Row(
-              children: [
-                tests[index].iconWidget,
-                const SizedBox(width: 12),
-                Text(
-                  tests[index].testName,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: tests[index].isCompleted
-                        ? const Color(0xffC6C6CF)
-                        : const Color(0xff151515),
+              child: Row(
+                children: [
+                  tests[index].iconWidget,
+                  const SizedBox(width: 12),
+                  Text(
+                    tests[index].testName,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: tests[index].isCompleted
+                          ? const Color(0xffC6C6CF)
+                          : const Color(0xff151515),
+                    ),
                   ),
-                ),
-                const Spacer(),
-                Text(
-                  tests[index].isCompleted ? '완료' : '미완료',
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: tests[index].isCompleted
-                        ? const Color(0xffC6C6CF)
-                        : const Color(0xff5588FD),
+                  const Spacer(),
+                  Text(
+                    tests[index].isCompleted ? '완료' : '미완료',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: tests[index].isCompleted
+                          ? const Color(0xffC6C6CF)
+                          : const Color(0xff5588FD),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         const SizedBox(height: 16),
