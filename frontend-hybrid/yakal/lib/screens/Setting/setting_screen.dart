@@ -78,7 +78,7 @@ class SettingScreen extends StatelessWidget {
                 title: const Text('회원탈퇴',
                     style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
-                  // Implement account deletion functionality
+                  Get.toNamed('/signout');
                 },
               ),
             ],
