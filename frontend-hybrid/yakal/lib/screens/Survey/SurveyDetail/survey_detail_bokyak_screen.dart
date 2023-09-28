@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:yakal/widgets/Survey/survey_header_widget.dart';
 
@@ -40,6 +41,19 @@ class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
     return totalScore;
   }
 
+  bool _isCompletionEnabled() {
+    // Check if all questions are answered
+    return !selectedOptions.contains(null);
+  }
+
+  void _handleButtonPress() {
+    int totalScore = calculateTotalScore();
+    print('Total Score: $totalScore');
+
+    // Navigate to result screen and pass the total score
+    Get.toNamed('/survey/result', arguments: totalScore);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,13 +90,25 @@ class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
                     onOptionSelected(i, optionIndex!);
                   },
                 ),
-              ElevatedButton(
-                onPressed: () {
-                  int totalScore = calculateTotalScore();
-                  print('Total Score: $totalScore');
-                },
-                child: const Text('Calculate Total Score'),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    foregroundColor: Colors.white,
+                    backgroundColor: _isCompletionEnabled()
+                        ? const Color(0xff2666f6)
+                        : const Color(
+                            0xffE9E9EE), // Adjust the color based on completion status
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onPressed: _isCompletionEnabled() ? _handleButtonPress : null,
+                  child: const Text("완료", style: TextStyle(fontSize: 20.0)),
+                ),
               ),
+              const SizedBox(height: 50),
             ],
           ),
         ),
@@ -93,17 +119,17 @@ class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
 
 const List<String> questions = [
   "얼마나 자주 약 복용하는 것을 잊어버리십니까?",
-  "얼마나 자주 약을 복용하지 않겠다고 결정하십니까?",
+  "얼마나 자주 약을 복용하지 않겠다고\n결정하십니까?",
   "얼마나 자주 약 받는 것을 잊어버리십니까?",
   "얼마나 자주 약이 다 떨어집니까?",
   "의사에게 가기 전에 얼마나 자주 약 복용하는 것을 건너 뛰십니까?",
   "몸이 나아졌다고 느낄 때 얼마나 자주 약 복용하는 것을 빠뜨리십니까?",
   "몸이 아프다고 느낄 때 얼마나 자주 약 복용을 빠뜨리십니까?",
   "얼마나 자주 본인의 부주의로 약 복용하는 것을 빠뜨리십니까?",
-  "얼마나 자주 본인의 필요에 따라 약 용량을 바꾸십니까? (원래 복용하셔야 하는 것보다 더 많게 혹은 더 적게 복용하시는 것)",
-  "하루 한번이상 약을 복용해야 할 때 얼마나 자주 약 복용 하는 것을 잊어버리십니까?",
+  "얼마나 자주 본인의 필요에 따라 약 용량을 바꾸십니까?\n(원래 복용하셔야 하는 것보다 더 많게 혹은 더 적게 복용하시는 것)",
+  "하루 한번이상 약을 복용해야 할 때 얼마나 자주\n약 복용 하는 것을 잊어버리십니까?",
   "얼마나 자주 약값이 비싸서 다시 약 처방 받는 것을 미루십니까?",
-  "약이 떨어지기 전에 얼마나 자주 미리 계획하여 약 처방을 다시 받습니까?"
+  "약이 떨어지기 전에 얼마나 자주 미리 계획하여\n약 처방을 다시 받습니까?"
 ];
 
 const List<String> options = ['전혀없음', '가끔', '대부분', '항상'];
@@ -137,6 +163,8 @@ class _QuestionWidgetState extends State<QuestionWidget> {
           Center(
             child: Text(
               widget.question,
+              textAlign: TextAlign.center, // Center-align the text
+
               style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w700,
