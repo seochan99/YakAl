@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
@@ -63,14 +64,19 @@ class SettingScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   )),
+              const SizedBox(height: 16),
               ListTile(
-                title: const Text('로그아웃'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('로그아웃',
+                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
-                  // Implement logout functionality
+                  showCustomDialog(context);
                 },
               ),
               ListTile(
-                title: const Text('회원탈퇴'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('회원탈퇴',
+                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
                   // Implement account deletion functionality
                 },
@@ -79,6 +85,76 @@ class SettingScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  // 로그아웃 다이얼로그
+  void showCustomDialog(BuildContext context) {
+    Get.defaultDialog(
+      // padding
+
+      title: '로그아웃',
+      titleStyle: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
+      // 배경
+      // subtitle none
+      content: const Text(
+        '로그아웃 하시겠습니까?',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Color(0xff464655),
+        ),
+      ),
+
+      confirm: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xff2666F6),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Text(
+              '로그아웃',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xffffffff),
+              ),
+            ),
+          ),
+        ),
+      ),
+      cancel: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xffffffff),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Text(
+              '아니요',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff464655),
+              ),
+            ),
+          ),
+        ),
+      ),
+      confirmTextColor: Colors.black,
+      onCancel: () {},
     );
   }
 }
