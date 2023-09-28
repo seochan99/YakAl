@@ -51,7 +51,7 @@ class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
     print('Total Score: $totalScore');
 
     // Navigate to result screen and pass the total score
-    Get.toNamed('/survey/result', arguments: totalScore);
+    Get.toNamed('/survey/result', arguments: {'totalScore': totalScore});
   }
 
   @override
