@@ -75,7 +75,7 @@ class SettingSignoutScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 32),
               Row(
                 children: [
                   Expanded(
