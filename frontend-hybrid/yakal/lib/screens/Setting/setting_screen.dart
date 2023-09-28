@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
+import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -52,42 +54,7 @@ class SettingScreen extends StatelessWidget {
                     fontWeight: FontWeight.w500),
               ),
               const SizedBox(height: 40),
-              const TimeSelectionWidget(),
-              Row(
-                children: [
-                  // "./assets"
-                  SvgPicture.asset(
-                    "assets/icons/icon-morning.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-
-                  const SizedBox(width: 8),
-                  const Text("아침",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      )),
-                  const SizedBox(width: 24),
-                  const Text("7:00 - 11:00",
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xff90909F),
-                      ))
-                ],
-              ),
-              const ListTile(
-                leading: Icon(Icons.access_alarm),
-                title: Text('점심'),
-                subtitle: Text('시간 >'),
-              ),
-              const ListTile(
-                leading: Icon(Icons.access_alarm),
-                title: Text('저녁'),
-                subtitle: Text('시간 >'),
-              ),
-
+              const SettingTimeSelectionWidget(),
               /* -------------- 계정 설정  -------------- */
               const SizedBox(
                 height: 64,
@@ -97,16 +64,21 @@ class SettingScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w700,
                   )),
+              const SizedBox(height: 16),
               ListTile(
-                title: const Text('로그아웃'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('로그아웃',
+                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
-                  // Implement logout functionality
+                  showCustomDialog(context);
                 },
               ),
               ListTile(
-                title: const Text('회원탈퇴'),
+                contentPadding: EdgeInsets.zero,
+                title: const Text('회원탈퇴',
+                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
-                  // Implement account deletion functionality
+                  Get.toNamed('/signout');
                 },
               ),
             ],
@@ -115,135 +87,74 @@ class SettingScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class TimeSelectionWidget extends StatefulWidget {
-  const TimeSelectionWidget({Key? key}) : super(key: key);
+  // 로그아웃 다이얼로그
+  void showCustomDialog(BuildContext context) {
+    Get.defaultDialog(
+      // padding
 
-  @override
-  _TimeSelectionWidgetState createState() => _TimeSelectionWidgetState();
-}
-
-class _TimeSelectionWidgetState extends State<TimeSelectionWidget> {
-  // Default time ranges
-  Map<String, String> timeRanges = {
-    '아침': '7:00 - 11:00',
-    '점심': '11:00 - 17:00',
-    '저녁': '17:00 - 23:00'
-  };
-
-  // Map to store selected start and end times
-  Map<String, String> selectedTimes = {
-    '아침': '7:00 - 11:00',
-    '점심': '11:00 - 17:00',
-    '저녁': '17:00 - 23:00'
-  };
-
-  void _selectTime(String period) async {
-    // Display a dialog to select start and end time
-    TimeRange? selectedTime = await _showTimePicker(
-      context,
-      selectedTimes[period],
-    );
-
-    if (selectedTime != null) {
-      setState(() {
-        selectedTimes[period] =
-            '${selectedTime.startTime} - ${selectedTime.endTime}';
-      });
-    }
-  }
-
-  Future<TimeRange?> _showTimePicker(
-      BuildContext context, String? defaultTime) async {
-    // Split the defaultTime into hours and minutes
-    List<String> timeComponents = (defaultTime ?? '00:00').split(' - ');
-
-    // Extract numeric components for hours and minutes
-    List<String> startTimeComponents = timeComponents[0].split(':');
-    List<String> endTimeComponents = timeComponents[1].split(':');
-
-    int startHours = int.parse(startTimeComponents[0]);
-    int startMinutes = int.parse(startTimeComponents[1]);
-
-    int endHours = int.parse(endTimeComponents[0]);
-    int endMinutes = int.parse(endTimeComponents[1]);
-
-    TimeOfDay initialStartTime =
-        TimeOfDay(hour: startHours, minute: startMinutes);
-    TimeOfDay initialEndTime = TimeOfDay(hour: endHours, minute: endMinutes);
-
-    TimeOfDay? startTime = await showTimePicker(
-      context: context,
-      initialTime: initialStartTime,
-    );
-
-    if (startTime == null) return null;
-
-    TimeOfDay? endTime = await showTimePicker(
-      context: context,
-      initialTime: initialEndTime,
-    );
-
-    if (endTime == null) return null;
-
-    return TimeRange(
-      startTime: '${startTime.hour}:${startTime.minute}',
-      endTime: '${endTime.hour}:${endTime.minute}',
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildTimeRow(
-            '아침', 'assets/icons/icon-morning.svg', selectedTimes['아침']),
-        _buildTimeRow(
-            '점심', 'assets/icons/icon-afternoon.svg', selectedTimes['점심']),
-        _buildTimeRow(
-            '저녁', 'assets/icons/icon-evening.svg', selectedTimes['저녁']),
-      ],
-    );
-  }
-
-  Widget _buildTimeRow(String period, String iconPath, String? time) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          iconPath,
-          width: 24,
-          height: 24,
+      title: '로그아웃',
+      titleStyle: const TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w700,
+      ),
+      // 배경
+      // subtitle none
+      content: const Text(
+        '로그아웃 하시겠습니까?',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+          color: Color(0xff464655),
         ),
-        const SizedBox(width: 8),
-        Text(
-          period,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
+      ),
+
+      confirm: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xff2666F6),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Text(
+              '로그아웃',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xffffffff),
+              ),
+            ),
           ),
         ),
-        const SizedBox(width: 24),
-        Text(
-          time ?? '',
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Color(0xff90909F),
+      ),
+      cancel: TextButton(
+        onPressed: () {
+          Get.back();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: const Color(0xffffffff),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+            child: Text(
+              '아니요',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff464655),
+              ),
+            ),
           ),
         ),
-        IconButton(
-          icon: const Icon(Icons.edit),
-          onPressed: () => _selectTime(period),
-        ),
-      ],
+      ),
+      confirmTextColor: Colors.black,
+      onCancel: () {},
     );
   }
-}
-
-class TimeRange {
-  final String startTime;
-  final String endTime;
-
-  TimeRange({required this.startTime, required this.endTime});
 }
