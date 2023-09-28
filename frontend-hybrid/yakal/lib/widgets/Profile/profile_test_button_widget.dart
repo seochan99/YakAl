@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ProfileTestButtonWidget extends StatelessWidget {
   final String boldText;
   final String normalText;
-  final Function testPressed;
   final Color btnColor;
 
   const ProfileTestButtonWidget(
       {Key? key,
       required this.boldText,
       required this.normalText,
-      required this.testPressed,
       required this.btnColor})
       : super(key: key);
 
@@ -27,7 +26,12 @@ class ProfileTestButtonWidget extends StatelessWidget {
           // border none
         ),
         onPressed: () {
-          testPressed;
+          // senior normal
+          if (boldText == "시니어") {
+            Get.toNamed("/seniorSurvey");
+          } else {
+            Get.toNamed("/normalSurvey");
+          }
         },
         // rich text 일반만 bold체
         child: RichText(

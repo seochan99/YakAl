@@ -17,15 +17,6 @@ class ProfileScreen extends StatelessWidget {
 
   ProfileScreen({super.key});
 
-  // test normal preesed function go test1 page
-  void testNormalPressed() {
-    Get.toNamed("/noamalTest");
-  }
-
-  void testSeniorPressed() {
-    Get.toNamed("/seniorTest");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 18),
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
@@ -74,17 +65,15 @@ class ProfileScreen extends StatelessWidget {
                             // function
                             boldText: "일반",
                             normalText: " (65세 미만)",
-                            testPressed: testNormalPressed,
-                            btnColor: const Color(0xff5588FD)),
+                            btnColor: Color(0xff5588FD)),
                       ),
-                      const SizedBox(width: 8),
+                      SizedBox(width: 8),
                       Expanded(
                         child: ProfileTestButtonWidget(
                             // function
                             boldText: "시니어",
                             normalText: " (65세 이상)",
-                            testPressed: testNormalPressed,
-                            btnColor: const Color(0xff2666F6)),
+                            btnColor: Color(0xff2666F6)),
                       ),
                     ],
                   ),
