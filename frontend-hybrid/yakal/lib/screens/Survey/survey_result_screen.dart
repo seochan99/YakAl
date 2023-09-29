@@ -15,6 +15,12 @@ class SurveyResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SurveyModel survey = (Get.arguments as Map<String, dynamic>)['survey'];
 
+    // comment 설정
+    survey.setComment(survey.totalScore);
+
+    // description 설정
+    survey.setDescription();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(survey.title),
@@ -22,8 +28,8 @@ class SurveyResultScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            Text(survey.totalScore.toString()),
             Text(survey.resultComment),
+            Text(survey.resultDescription),
           ],
         ),
       ),

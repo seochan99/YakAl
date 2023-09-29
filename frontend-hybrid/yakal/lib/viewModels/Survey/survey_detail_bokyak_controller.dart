@@ -68,11 +68,11 @@ class SurveyDetailBokyakController extends GetxController {
   void handleButtonPress() {
     int totalScore = calculateTotalScore();
     String resultComment = calculateResultComment(totalScore);
+    // 서버로 arms 리스트 보내기
     List arms = allScoreList();
 
     surveyModel.resultComment = resultComment;
     surveyModel.totalScore = totalScore;
-    print(arms);
 
     Get.toNamed('/survey/result', arguments: {'survey': surveyModel});
   }
