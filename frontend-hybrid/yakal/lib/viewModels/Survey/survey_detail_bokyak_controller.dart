@@ -1,62 +1,63 @@
 import 'package:get/get.dart';
-import 'package:yakal/models/Survey/question_model.dart';
-import 'package:yakal/models/Survey/survey_result_model.dart';
+import 'package:yakal/models/Survey/survey_model.dart';
 
 class SurveyDetailBokyakController extends GetxController {
-  // 12개의 질문에 대한 선택된 옵션을 저장하는 리스트
-  List<String?> selectedOptions = List.filled(12, null);
+  final SurveyModel surveyModel;
 
-  RxList<QuestionModel> questions = <QuestionModel>[
-    QuestionModel(
-      question: "얼마나 자주 약 복용하는 것을 잊어버리십니까?",
-      options: ['전혀없음', '가끔', '대부분', '항상'],
-      scores: [1, 2, 3, 4],
-    ),
-    // Add other questions similarly
-  ].obs;
+  SurveyDetailBokyakController({required this.surveyModel}) {
+    selectedOptions = List.filled(surveyModel.questions.length, null);
+  }
+
+  late List<String?> selectedOptions;
 
   void onOptionSelected(int questionIndex, int optionIndex) {
     selectedOptions[questionIndex] =
-        questions[questionIndex].options[optionIndex];
-    isCompletionEnabled();
+        surveyModel.questions[questionIndex].options[optionIndex];
     update();
   }
 
   int calculateTotalScore() {
     int totalScore = 0;
+    if (selectedOptions.length != surveyModel.questions.length) {
+      throw ArgumentError(
+          'selectedOptions and questions must have the same length');
+    }
+
     for (int i = 0; i < selectedOptions.length; i++) {
-      int optionIndex = questions[i].options.indexOf(selectedOptions[i]!);
-      if (optionIndex >= 0) {
-        totalScore += questions[i].scores[optionIndex];
+      String? selectedOption = selectedOptions[i];
+
+      // Check if the selected option is not null and is a valid index
+      if (selectedOption != null &&
+          surveyModel.questions[i].options.contains(selectedOption)) {
+        int optionIndex =
+            surveyModel.questions[i].options.indexOf(selectedOption);
+        totalScore += surveyModel.questions[i].scores[optionIndex];
       }
     }
+    print(totalScore);
     return totalScore;
   }
 
-  // 완료 버튼 활성화 여부
   bool isCompletionEnabled() {
-    for (var question in questions) {
-      if (selectedOptions[questions.indexOf(question)] == null) {
+    for (var question in surveyModel.questions) {
+      if (selectedOptions[surveyModel.questions.indexOf(question)] == null) {
         return false;
       }
     }
     return true;
   }
 
-  // 결과 페이지에서 보여줄 코멘트
   String calculateResultComment(int totalScore) {
     return "Your result comment based on the total score: $totalScore";
   }
 
-  // 결과 페이지로 이동
   void handleButtonPress() {
     int totalScore = calculateTotalScore();
     String resultComment = calculateResultComment(totalScore);
-    SurveyResultModel surveyResult = SurveyResultModel(
-      totalScore: totalScore,
-      comment: resultComment,
-    );
 
-    Get.toNamed('/survey/result', arguments: {'surveyResult': surveyResult});
+    surveyModel.resultComment = resultComment;
+    surveyModel.totalScore = totalScore;
+
+    Get.toNamed('/survey/result', arguments: {'survey': surveyModel});
   }
 }

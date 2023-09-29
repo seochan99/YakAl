@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Survey/survey_model.dart';
 
 class SurveyResultController extends GetxController {
   final int totalScore;
@@ -14,12 +15,19 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SurveyModel survey = (Get.arguments as Map<String, dynamic>)['survey'];
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Result'),
+        title: Text(survey.title),
       ),
       body: Center(
-        child: Text('총 점수는 ${Get.arguments['totalScore']} '),
+        child: Column(
+          children: [
+            Text(survey.totalScore.toString()),
+            Text(survey.resultComment),
+          ],
+        ),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_bokyak_screen.dart';
 
 class SurveySeniorScreen extends StatelessWidget {
@@ -33,7 +34,7 @@ class SurveySeniorScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 16),
-                TestList(),
+                SurveyList(),
               ],
             ),
           ),
@@ -43,152 +44,11 @@ class SurveySeniorScreen extends StatelessWidget {
   }
 }
 
-class Test {
-  final Widget iconWidget;
-  final String testName;
-  final bool isCompleted;
-
-  Test({
-    required this.iconWidget,
-    required this.testName,
-    required this.isCompleted,
-  });
-}
-
-class TestList extends StatelessWidget {
-  const TestList({super.key});
+class SurveyList extends StatelessWidget {
+  const SurveyList({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final List<Test> tests = [
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_1.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '복약 순응도 테스트',
-        isCompleted: true,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '우울 척도 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '노쇠 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '간이 영양 상태 조사',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '일상생활 동작 지수',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_3.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '음주력 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_4.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '흡연력 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '시청각 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '치매 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '섬망 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_5.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '불면증 심각도 테스트',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '폐쇄성 수면 무호흡증',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_6.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '복용 중인 건강기능 식품',
-        isCompleted: false,
-      ),
-      Test(
-        iconWidget: SvgPicture.asset(
-          'assets/icons/circle_2.svg',
-          width: 40,
-          height: 40,
-        ),
-        testName: '1년간 처방 받은 병의 진단명',
-        isCompleted: false,
-      ),
-    ];
-
     int completedCount = tests.where((test) => test.isCompleted).length;
 
     return Column(
@@ -197,7 +57,9 @@ class TestList extends StatelessWidget {
           InkWell(
             onTap: () {
               if (!tests[index].isCompleted) {
-                Get.to(() => SurveyDetailBokyakScreen());
+                Get.to(() => SurveyDetailBokyakScreen(
+                      survey: tests[index],
+                    ));
               }
             },
             child: Container(
@@ -217,10 +79,14 @@ class TestList extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  tests[index].iconWidget,
+                  SvgPicture.asset(
+                    tests[index].iconPath,
+                    width: 40,
+                    height: 40,
+                  ),
                   const SizedBox(width: 12),
                   Text(
-                    tests[index].testName,
+                    tests[index].title,
                     style: TextStyle(
                       fontSize: 16,
                       color: tests[index].isCompleted
