@@ -9,7 +9,7 @@ import 'package:yakal/widgets/Auth/terms_back_dialog.dart';
 
 import '../../global/style/color_styles.dart';
 
-class AuthLoginTermsScreen extends StatelessWidget {
+class LoginTermsScreen extends StatelessWidget {
   static const List<Map<String, Object>> terms = [
     {
       "isRequired": true,
@@ -85,7 +85,7 @@ class AuthLoginTermsScreen extends StatelessWidget {
     },
   ];
 
-  const AuthLoginTermsScreen({super.key});
+  const LoginTermsScreen({super.key});
 
   void _showTermsDialog(BuildContext context, Widget termsScreen) {
     showGeneralDialog(
@@ -303,7 +303,11 @@ class AuthLoginTermsScreen extends StatelessWidget {
                       child: Obx(
                         () {
                           return TextButton(
-                            onPressed: () {},
+                            onPressed: controller.isCheckedAll()
+                                ? () {
+                                    Get.toNamed("/login/identify/entry");
+                                  }
+                                : null,
                             style: TextButton.styleFrom(
                               backgroundColor: controller.isCheckedAll()
                                   ? ColorStyles.main

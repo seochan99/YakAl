@@ -3,8 +3,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:yakal/screens/Auth/auth_login_screen.dart';
-import 'package:yakal/screens/Auth/auth_login_terms_screen.dart';
+import 'package:yakal/screens/Auth/identification_entry_screen.dart';
+import 'package:yakal/screens/Auth/identification_result_screen.dart';
+import 'package:yakal/screens/Auth/identification_screen.dart';
+import 'package:yakal/screens/Auth/login_entry_screen.dart';
+import 'package:yakal/screens/Auth/login_terms_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
@@ -42,7 +45,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
@@ -50,11 +53,23 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: '/login',
-          page: () => const AuthLoginScreen(),
+          page: () => const LoginEntryScreen(),
           children: [
             GetPage(
               name: '/terms',
-              page: () => const AuthLoginTermsScreen(),
+              page: () => const LoginTermsScreen(),
+            ),
+            GetPage(
+              name: '/identify/entry',
+              page: () => const IdentificationEntryScreen(),
+            ),
+            GetPage(
+              name: '/identify/process',
+              page: () => const IdentificationScreen(),
+            ),
+            GetPage(
+              name: '/identify/result',
+              page: () => const IdentificationResultScreen(),
             ),
           ],
         ),

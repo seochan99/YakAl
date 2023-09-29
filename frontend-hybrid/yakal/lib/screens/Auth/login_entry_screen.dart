@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:yakal/global/style/color_styles.dart';
 import 'package:yakal/widgets/Auth/social_login_button.dart';
 
-class AuthLoginScreen extends StatelessWidget {
+class LoginEntryScreen extends StatelessWidget {
   bool get isiOS =>
       foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
 
-  const AuthLoginScreen({super.key});
+  const LoginEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
