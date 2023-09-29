@@ -32,7 +32,7 @@ class SurveyHeaderWidget extends StatelessWidget {
               content,
               style: const TextStyle(fontSize: 16),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
             Container(
               decoration: BoxDecoration(
                 color: const Color(0xff626272),

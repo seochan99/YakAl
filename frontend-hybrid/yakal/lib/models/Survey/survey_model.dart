@@ -6,10 +6,10 @@ class SurveyModel {
   final String time;
   final String iconPath;
   final List<QuestionModel> questions;
-  final bool isCompleted;
+  bool isCompleted;
   int totalScore;
   String resultComment;
-  String resultDescription;
+  final String resultDescription;
 
   SurveyModel({
     required this.title,
@@ -23,10 +23,8 @@ class SurveyModel {
     required this.resultDescription,
   });
 
-  // Getter for totalScore
   int get getTotalScore => totalScore;
 
-  // Setter for totalScore
   set setTotalScore(int score) {
     totalScore = score;
   }
@@ -54,23 +52,6 @@ class SurveyModel {
     }
   }
 
-  void setDescription() {
-    switch (title) {
-      case '복약 순응도 테스트':
-        resultDescription =
-            "약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.";
-        break;
-      case '우울증 선별검사':
-        resultComment =
-            '"총점이 10점 이상으로 주요우울장애가 의심되거나\n 9번 문항을 1점 이상으로 응답한 경우(즉, 자살/자해 생각이 있는 경우) 가\n까운 병∙ 의원에서 진료를 받거나, \n정신건강복지센터(또는 정신건강 위기상담전화)에서 상담을 받을 필요가 있습니다.\n가벼운 우울상태인 이용자들은 규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다."';
-
-        break;
-      default:
-        resultComment = 'Default comment for unknown survey type';
-    }
-  }
-
-  // Getter for resultComment
   String get getResultComment => resultComment;
 }
 
@@ -96,6 +77,7 @@ final List<SurveyModel> tests = [
     iconPath: 'assets/icons/circle_1.svg',
     time: '3',
     isCompleted: false,
+    // 12개의 질문만들기
     questions: List<QuestionModel>.generate(
       12,
       (index) => QuestionModel(
@@ -106,10 +88,7 @@ final List<SurveyModel> tests = [
     ),
     totalScore: 0,
     resultComment: '',
-    resultDescription: "",
+    resultDescription:
+        "복약 순응도 점수가 낮은 상황에서는 의사의 처방 및\n약사의 복약지도가 환자의 건강상태를 개선시키는 데 어려움이 있습니다.\n\n해당되는 이용자에게는 적절한 복약 알림과 \n복약 현황 파악을 통해 복약 순응도를 높일 수 있습니다.",
   ),
 ];
-
-
-// "n점 / 48 점 입니다"
-// "복약 순응도 점수가 낮은 상황에서는 의사의 처방 및 약사의 복약지도가 \n환자의 건강상태를 개선시키는 데 어려움이 있습니다. \n해당되는 이용자에게는 적절한 복약 알림과 복약 현황 파악을 통해 복약 순응도를 높일 수 있습니다."

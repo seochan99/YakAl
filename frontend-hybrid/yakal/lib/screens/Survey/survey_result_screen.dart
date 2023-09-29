@@ -16,11 +16,9 @@ class SurveyResultScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     SurveyModel survey = (Get.arguments as Map<String, dynamic>)['survey'];
     UserViewModel userViewModel = Get.put(UserViewModel());
+
     // comment 설정
     survey.setComment(survey.totalScore);
-
-    // description 설정
-    survey.setDescription();
 
     return Scaffold(
       appBar: AppBar(
@@ -38,6 +36,8 @@ class SurveyResultScreen extends StatelessWidget {
             children: [
               SurveyResultHeader(userViewModel: userViewModel, survey: survey),
               Padding(
+                // leading
+
                 padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
                 child: Text(survey.resultDescription,
                     style: const TextStyle(

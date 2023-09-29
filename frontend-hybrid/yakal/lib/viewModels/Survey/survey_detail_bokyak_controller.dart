@@ -45,10 +45,6 @@ class SurveyDetailBokyakController extends GetxController {
     return true;
   }
 
-  String calculateResultComment(int totalScore) {
-    return "Your result comment based on the total score: $totalScore";
-  }
-
 // 선택 항목의 점수를 리스트로 반환
   List allScoreList() {
     List arms = [];
@@ -67,12 +63,10 @@ class SurveyDetailBokyakController extends GetxController {
 
   void handleButtonPress() {
     int totalScore = calculateTotalScore();
-    String resultComment = calculateResultComment(totalScore);
     // 서버로 arms 리스트 보내기
     List arms = allScoreList();
-
-    surveyModel.resultComment = resultComment;
     surveyModel.totalScore = totalScore;
+    surveyModel.isCompleted = true;
 
     Get.toNamed('/survey/result', arguments: {'survey': surveyModel});
   }
