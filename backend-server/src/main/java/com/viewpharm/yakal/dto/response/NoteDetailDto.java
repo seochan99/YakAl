@@ -6,6 +6,8 @@ import lombok.Getter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+//기능 삭제 예정
+@Deprecated
 @Getter
 public class NoteDetailDto {
     private Long id;

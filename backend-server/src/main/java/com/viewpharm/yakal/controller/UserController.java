@@ -32,15 +32,18 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
-
     @GetMapping("")
     @Operation(summary = "사용자 정보 가져오기")
     public ResponseDto<UserInfoDto> getUserInfo(@UserId Long id) {
         final User user = userService.getUserInfo(id);
         final UserInfoDto userInfoDto = UserInfoDto.builder()
-                .name(user.getName())
-                .birthday(user.getBirthday())
-                .tel(user.getTel())
+                .Nickname(user.getName())
+                .isDetail(user.getIsDetail())
+                .notiIsAllowed(user.getNotiIsAllowed())
+                .breakfastTime(user.getBreakfastTime().toString())
+                .lunchTime(user.getLunchTime().toString())
+                .dinnerTime(user.getDinnerTime().toString())
+                .AnswerCount(userService.countAnswer(user))
                 .build();
 
         return ResponseDto.ok(userInfoDto);
@@ -50,7 +53,7 @@ public class UserController {
     @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
     public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
         userService.updateUserInfo(
-                id, updateUserInfoDto.getName(), updateUserInfoDto.getIsDetail(), updateUserInfoDto.getBirthday(), updateUserInfoDto.getSex()
+                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
         );
         return ResponseDto.ok(null);
     }

@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
+//기저 질환 및 알러지로 변경예정
+@Deprecated
 @Entity
 @Getter
 @Setter

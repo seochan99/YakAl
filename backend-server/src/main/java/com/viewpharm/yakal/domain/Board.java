@@ -3,10 +3,7 @@ package com.viewpharm.yakal.domain;
 import com.viewpharm.yakal.type.EDisease;
 import com.viewpharm.yakal.type.ERegion;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Formula;
 
@@ -15,7 +12,7 @@ import java.util.List;
 
 @Getter
 @DynamicUpdate
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "boards")
 public class Board extends BaseCreateEntity {

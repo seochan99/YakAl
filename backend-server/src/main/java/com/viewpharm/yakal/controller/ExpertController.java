@@ -46,6 +46,8 @@ public class ExpertController {
         return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
     }
 
+    //비타민으로 변경 예정
+    @Deprecated
     @GetMapping("/patient/{patientId}/healthfood")
     @Operation(summary = "건강 기능 식품 리스트", description = "전문가가 특정 환자 건강 기능 식품 리스트 들고오기")
     public ResponseDto<List<HealthFoodListDto>> getAllHealthFoodListForExpert(@UserId Long id, @PathVariable Long patientId) {
@@ -64,30 +66,40 @@ public class ExpertController {
         return ResponseDto.ok(counselService.getPatientListByName(id, name, sort, order, page, num));
     }
 
+    //기능 삭제 예정
+    @Deprecated
     @PostMapping("/patient/{patientId}/note")
     @Operation(summary = "특이사항 추가", description = "특이사항 추가")
     public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long patientId, @Valid @RequestBody NoteRequestDto requestDto) {
         return ResponseDto.ok(counselService.createNote(id, patientId, requestDto));
     }
 
+    //기능 삭제 예정
+    @Deprecated
     @PutMapping("/note/{noteId}")
     @Operation(summary = "특이사항 수정", description = "특이사항 수정하기")
     public ResponseDto<NoteDetailDto> updateNote(@UserId Long id, @PathVariable Long noteId, @Valid @RequestBody NoteRequestDto requestDto) {
         return ResponseDto.ok(counselService.updateNote(id, noteId, requestDto));
     }
 
+    //기능 삭제 예정
+    @Deprecated
     @DeleteMapping("/note/{noteId}")
     @Operation(summary = "특이사항 삭제", description = "특이사항 삭제하기")
     public ResponseDto<Boolean> deleteNote(@UserId Long id, @PathVariable Long noteId) {
         return ResponseDto.ok(counselService.deleteNote(id, noteId));
     }
 
+    //기능 삭제 예정
+    @Deprecated
     @GetMapping("/patient/{patientId}/note")
     @Operation(summary = "특이사항 가져오기", description = "특정 상담 특이사항 가져오기")
     public ResponseDto<NoteAllDto> readNote(@UserId Long id, @PathVariable Long patientId, @RequestParam("page") Long page, @RequestParam(value = "num", defaultValue = "5") Long num) {
         return ResponseDto.ok(counselService.getAllNoteList(id, patientId, page, num));
     }
 
+    //기저 질환 및 알러지로 변경예정
+    @Deprecated
     @GetMapping("/patient/{patientId}/diagnosis")
     @Operation(summary = "병명 리스트", description = "전문가가 특정 환자 과거 병명 리스트 들고오기")
     public ResponseDto<List<DiagnosisListDto>> getAllDiagnosisListForExpert(@UserId Long id, @PathVariable Long patientId) {

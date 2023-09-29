@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-
+//비타민으로 변경예정
+@Deprecated
 @Entity
 @Getter
 @Setter
