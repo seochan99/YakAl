@@ -56,6 +56,7 @@ class SurveyList extends StatelessWidget {
         for (int index = 0; index < tests.length; index++)
           InkWell(
             onTap: () {
+              // test type별로 별도 view구성 처리하기
               if (!tests[index].isCompleted) {
                 Get.to(() => SurveyDetailBokyakScreen(
                       survey: tests[index],
