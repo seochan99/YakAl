@@ -6,8 +6,6 @@ class SurveyResultController extends GetxController {
   final int totalScore;
 
   SurveyResultController(this.totalScore);
-
-  // Your logic for the result screen using totalScore...
 }
 
 class SurveyResultScreen extends StatelessWidget {

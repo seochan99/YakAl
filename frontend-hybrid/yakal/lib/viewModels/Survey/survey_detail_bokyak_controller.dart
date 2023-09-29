@@ -26,7 +26,6 @@ class SurveyDetailBokyakController extends GetxController {
     for (int i = 0; i < selectedOptions.length; i++) {
       String? selectedOption = selectedOptions[i];
 
-      // Check if the selected option is not null and is a valid index
       if (selectedOption != null &&
           surveyModel.questions[i].options.contains(selectedOption)) {
         int optionIndex =
