@@ -175,7 +175,7 @@ class TestList extends StatelessWidget {
           width: 40,
           height: 40,
         ),
-        testName: '현재 복용 중인 건강기능 식품',
+        testName: '복용 중인 건강기능 식품',
         isCompleted: false,
       ),
       Test(

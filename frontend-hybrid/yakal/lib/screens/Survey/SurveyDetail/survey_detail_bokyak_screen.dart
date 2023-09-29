@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:yakal/widgets/Survey/survey_header_widget.dart';
-
-import 'package:flutter/material.dart';
 
 class SurveyDetailBokyakScreen extends StatefulWidget {
   const SurveyDetailBokyakScreen({Key? key}) : super(key: key);
 
   @override
-  _SurveyDetailBokyakScreenState createState() =>
+  State<SurveyDetailBokyakScreen> createState() =>
       _SurveyDetailBokyakScreenState();
 }
 
@@ -171,7 +168,7 @@ class _QuestionWidgetState extends State<QuestionWidget> {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 22),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: widget.options.asMap().entries.map((entry) {
