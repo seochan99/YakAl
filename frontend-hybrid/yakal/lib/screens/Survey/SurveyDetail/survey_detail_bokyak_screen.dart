@@ -1,55 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/viewModels/Survey/survey_detail_bokyak_controller.dart';
 import 'package:yakal/widgets/Survey/survey_header_widget.dart';
 
-class SurveyDetailBokyakScreen extends StatefulWidget {
-  const SurveyDetailBokyakScreen({Key? key}) : super(key: key);
+class SurveyDetailBokyakScreen extends StatelessWidget {
+  final SurveyDetailBokyakController controller =
+      Get.put(SurveyDetailBokyakController());
 
-  @override
-  State<SurveyDetailBokyakScreen> createState() =>
-      _SurveyDetailBokyakScreenState();
-}
-
-class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
-  List<String?> selectedOptions = List.filled(12, null);
-
-  void onOptionSelected(int questionIndex, int optionIndex) {
-    setState(() {
-      selectedOptions[questionIndex] = options[optionIndex];
-    });
-  }
-
-  int calculateTotalScore() {
-    int totalScore = 0;
-
-    for (String? option in selectedOptions) {
-      if (option == options[0]) {
-        totalScore += 1;
-      } else if (option == options[1]) {
-        totalScore += 2;
-      } else if (option == options[2]) {
-        totalScore += 3;
-      } else if (option == options[3]) {
-        totalScore += 4;
-      }
-    }
-
-    return totalScore;
-  }
-
-  bool _isCompletionEnabled() {
-    // Check if all questions are answered
-    return !selectedOptions.contains(null);
-  }
-
-  void _handleButtonPress() {
-    int totalScore = calculateTotalScore();
-    print('Total Score: $totalScore');
-
-    // Navigate to result screen and pass the total score
-    Get.toNamed('/survey/result', arguments: {'totalScore': totalScore});
-  }
+  SurveyDetailBokyakScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -79,30 +38,35 @@ class _SurveyDetailBokyakScreenState extends State<SurveyDetailBokyakScreen> {
                 ],
               ),
               const SizedBox(height: 50),
-              for (int i = 0; i < questions.length; i++)
+              for (int i = 0; i < controller.questions.length; i++)
                 QuestionWidget(
-                  question: questions[i],
-                  options: options,
+                  question: controller.questions[i].question,
+                  options: controller.questions[i].options,
                   onOptionSelected: (int? optionIndex) {
-                    onOptionSelected(i, optionIndex!);
+                    controller.onOptionSelected(i, optionIndex!);
                   },
                 ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    foregroundColor: Colors.white,
-                    backgroundColor: _isCompletionEnabled()
-                        ? const Color(0xff2666f6)
-                        : const Color(
-                            0xffE9E9EE), // Adjust the color based on completion status
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: _isCompletionEnabled() ? _handleButtonPress : null,
-                  child: const Text("완료", style: TextStyle(fontSize: 20.0)),
+                child: GetBuilder<SurveyDetailBokyakController>(
+                  builder: (controller) {
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        foregroundColor: Colors.white,
+                        backgroundColor: controller.isCompletionEnabled()
+                            ? const Color(0xff2666f6)
+                            : const Color(0xffE9E9EE),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onPressed: controller.isCompletionEnabled()
+                          ? controller.handleButtonPress
+                          : null,
+                      child: const Text("완료", style: TextStyle(fontSize: 20.0)),
+                    );
+                  },
                 ),
               ),
               const SizedBox(height: 50),

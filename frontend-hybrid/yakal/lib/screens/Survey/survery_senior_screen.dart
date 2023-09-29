@@ -197,7 +197,7 @@ class TestList extends StatelessWidget {
           InkWell(
             onTap: () {
               if (!tests[index].isCompleted) {
-                Get.to(() => const SurveyDetailBokyakScreen());
+                Get.to(() => SurveyDetailBokyakScreen());
               }
             },
             child: Container(
