@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Auth/auth_login_screen.dart';
+import 'package:yakal/screens/Auth/auth_login_terms_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
@@ -36,7 +37,16 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: '/login', page: () => const AuthLoginScreen()),
+        GetPage(
+          name: '/login',
+          page: () => const AuthLoginScreen(),
+          children: [
+            GetPage(
+              name: '/terms',
+              page: () => const AuthLoginTermsScreen(),
+            ),
+          ],
+        ),
       ],
     );
   }

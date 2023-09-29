@@ -19,9 +19,10 @@ class SocialLoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return TextButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
+        splashFactory: NoSplash.splashFactory,
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8.0),
