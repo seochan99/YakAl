@@ -56,7 +56,10 @@ class SurveyResultScreen extends StatelessWidget {
                     backgroundColor: const Color(0xff2666F6),
                     foregroundColor: const Color(0xffffffff),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    // 뒤로가고 스택 비우기
+                    Get.offAllNamed('/seniorSurvey');
+                  },
                   child: const Text(
                     "다른 테스트 하기",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
