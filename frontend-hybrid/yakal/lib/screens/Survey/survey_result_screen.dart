@@ -36,35 +36,7 @@ class SurveyResultScreen extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                color: const Color(0xffF1F5FE),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${userViewModel.user.value.nickName}님의\n${survey.title} 결과는',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff464655),
-                          ),
-                        ),
-                        const SizedBox(height: 24),
-                        Text(
-                          survey.resultComment,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            color: Color(0xff151515),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                      ]),
-                ),
-              ),
+              SurveyResultHeader(userViewModel: userViewModel, survey: survey),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
                 child: Text(survey.resultDescription,
@@ -73,9 +45,69 @@ class SurveyResultScreen extends StatelessWidget {
                       color: Color(0xff151515),
                     )),
               ),
+              const Spacer(),
+              TextButton(
+                  style: TextButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 15, horizontal: 28),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    backgroundColor: const Color(0xff2666F6),
+                    foregroundColor: const Color(0xffffffff),
+                  ),
+                  onPressed: () {},
+                  child: const Text(
+                    "다른 테스트 하기",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  )),
+              const SizedBox(
+                height: 100,
+              )
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class SurveyResultHeader extends StatelessWidget {
+  const SurveyResultHeader({
+    super.key,
+    required this.userViewModel,
+    required this.survey,
+  });
+
+  final UserViewModel userViewModel;
+  final SurveyModel survey;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      color: const Color(0xffF1F5FE),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
+            '${userViewModel.user.value.nickName}님의\n${survey.title} 결과는',
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Color(0xff464655),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Text(
+            survey.resultComment,
+            style: const TextStyle(
+              fontSize: 20,
+              color: Color(0xff151515),
+            ),
+          ),
+          const SizedBox(height: 20),
+        ]),
       ),
     );
   }
