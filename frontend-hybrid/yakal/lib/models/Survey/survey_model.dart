@@ -34,7 +34,7 @@ class SurveyModel {
   void setComment(int score) {
     switch (title) {
       case '복약 순응도 테스트':
-        resultComment = '$score 점 / 48 점 입니다';
+        resultComment = '$score/48점 입니다.';
         break;
       case '우울증 선별검사':
         if (score >= 0 && score <= 4) {
