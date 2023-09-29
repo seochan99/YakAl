@@ -31,40 +31,50 @@ class SurveyResultScreen extends StatelessWidget {
               color: Color(0xff151515),
             )),
       ),
-      body: Center(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              color: const Color(0xffF1F5FE),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${userViewModel.user.value.nickName}님의\n${survey.title} 결과는',
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          color: Color(0xff464655),
+      body: Container(
+        color: Colors.white,
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: const Color(0xffF1F5FE),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 32),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '${userViewModel.user.value.nickName}님의\n${survey.title} 결과는',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                            color: Color(0xff464655),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 24),
-                      Text(
-                        survey.resultComment,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xff151515),
+                        const SizedBox(height: 24),
+                        Text(
+                          survey.resultComment,
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: Color(0xff151515),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 20),
-                    ]),
+                        const SizedBox(height: 20),
+                      ]),
+                ),
               ),
-            ),
-            Text(survey.resultDescription),
-          ],
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 32, 20, 0),
+                child: Text(survey.resultDescription,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Color(0xff151515),
+                    )),
+              ),
+            ],
+          ),
         ),
       ),
     );
