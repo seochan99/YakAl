@@ -72,6 +72,8 @@ public enum ErrorCode {
     /**
      * 401 Unauthorized: Authentication and Authorization Error
      */
+    EXPIRED_TOKEN_ERROR("4010", HttpStatus.UNAUTHORIZED, "Expired Token Error"),
+
     INVALID_TOKEN_ERROR("4011", HttpStatus.UNAUTHORIZED, "Invalid Token Error"),
 
     TOKEN_MALFORMED_ERROR("4012", HttpStatus.UNAUTHORIZED, "Malformed Token Error"),
@@ -84,13 +86,7 @@ public enum ErrorCode {
 
     TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "Unknown Error"),
 
-    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "Insufficient Privileges Error"),
-
-    /**
-     * 403 Forbidden
-     */
-    EXPIRED_TOKEN_ERROR("4030", HttpStatus.FORBIDDEN, "Expired Token Error");
-
+    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "Insufficient Privileges Error");
 
     private final String code;
     private final HttpStatus httpStatus;

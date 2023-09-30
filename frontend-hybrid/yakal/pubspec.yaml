@@ -1,59 +1,85 @@
 name: yakal
 description: A new Flutter project.
 
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 version: 1.0.0+1
 
 environment:
-    sdk: ">=3.1.0 <4.0.0"
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
-    flutter:
-        sdk: flutter
+  flutter:
+    sdk: flutter
 
-    cupertino_icons: ^1.0.2
-    flutter_native_splash: ^2.3.2
-    flutter_dotenv: ^5.1.0
-    flutter_launcher_icons: ^0.13.1
-    get: ^4.6.6
-    flutter_svg: ^2.0.7
-    kakao_flutter_sdk_user: ^1.6.0
-    google_sign_in: ^6.1.5
-    shared_preferences: ^2.2.1
+  cupertino_icons: ^1.0.2
+  flutter_native_splash: ^2.3.2
+  flutter_dotenv: ^5.1.0
+  flutter_launcher_icons: ^0.13.1
+  get: ^4.6.6
+  flutter_svg: ^2.0.7
+  kakao_flutter_sdk_user: ^1.6.0
+  google_sign_in: ^6.1.5
+  shared_preferences: ^2.2.1
+  iamport_flutter: ^0.10.12
+  dio: ^5.3.3
+  flutter_secure_storage: ^9.0.0
+  flutter_inappwebview:
+    git:
+      url: https://github.com/Estrelio/flutter_inappwebview.git
+      ref: fix-xcode-17
 
 dev_dependencies:
-    flutter_test:
-        sdk: flutter
+  flutter_test:
+    sdk: flutter
 
-    flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.0
 
-# The following section is specific to Flutter packages.
 flutter:
-    uses-material-design: true
+  uses-material-design: true
 
-    assets:
-        - assets/icons/
-        - assets/config/.env
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/config/.env
 
-    fonts:
-        - family: Pretendard
-          fonts:
-              - asset: assets/fonts/Pretendard-Thin.otf
-                weight: 100
-              - asset: assets/fonts/Pretendard-ExtraLight.otf
-                weight: 200
-              - asset: assets/fonts/Pretendard-Light.otf
-                weight: 300
-              - asset: assets/fonts/Pretendard-Regular.otf
-                weight: 400
-              - asset: assets/fonts/Pretendard-Medium.otf
-                weight: 500
-              - asset: assets/fonts/Pretendard-SemiBold.otf
-                weight: 600
-              - asset: assets/fonts/Pretendard-Bold.otf
-                weight: 700
-              - asset: assets/fonts/Pretendard-ExtraBold.otf
-                weight: 800
-        #
-        # For details regarding fonts from package dependencies,
-        # see https://flutter.dev/custom-fonts/#from-packages
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fonts/Pretendard-Thin.otf
+          weight: 100
+        - asset: assets/fonts/Pretendard-ExtraLight.otf
+          weight: 200
+        - asset: assets/fonts/Pretendard-Light.otf
+          weight: 300
+        - asset: assets/fonts/Pretendard-Regular.otf
+          weight: 400
+        - asset: assets/fonts/Pretendard-Medium.otf
+          weight: 500
+        - asset: assets/fonts/Pretendard-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/Pretendard-Bold.otf
+          weight: 700
+        - asset: assets/fonts/Pretendard-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/Pretendard-Black.otf
+          weight: 900
+    - family: SUIT
+      fonts:
+        - asset: assets/fonts/SUIT-Thin.otf
+          weight: 100
+        - asset: assets/fonts/SUIT-ExtraLight.otf
+          weight: 200
+        - asset: assets/fonts/SUIT-Light.otf
+          weight: 300
+        - asset: assets/fonts/SUIT-Regular.otf
+          weight: 400
+        - asset: assets/fonts/SUIT-Medium.otf
+          weight: 500
+        - asset: assets/fonts/SUIT-SemiBold.otf
+          weight: 600
+        - asset: assets/fonts/SUIT-Bold.otf
+          weight: 700
+        - asset: assets/fonts/SUIT-ExtraBold.otf
+          weight: 800
+        - asset: assets/fonts/SUIT-Heavy.otf
+          weight: 900

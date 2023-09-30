@@ -3,7 +3,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:yakal/screens/Auth/auth_login_screen.dart';
+import 'package:yakal/screens/Auth/auth_finish_screen.dart';
+import 'package:yakal/screens/Auth/enter_nickname_screen.dart';
+import 'package:yakal/screens/Auth/identification_entry_screen.dart';
+import 'package:yakal/screens/Auth/identification_result_screen.dart';
+import 'package:yakal/screens/Auth/identification_screen.dart';
+import 'package:yakal/screens/Auth/login_entry_screen.dart';
+import 'package:yakal/screens/Auth/login_terms_screen.dart';
+import 'package:yakal/screens/Auth/select_mode_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
@@ -17,8 +24,8 @@ void main() async {
 
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
-  // Setup splash
 
+  // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
@@ -41,13 +48,46 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: '/login', page: () => const AuthLoginScreen()),
+        GetPage(
+          name: '/login',
+          page: () => const LoginEntryScreen(),
+          children: [
+            GetPage(
+              name: '/terms',
+              page: () => const LoginTermsScreen(),
+            ),
+            GetPage(
+              name: '/identify/entry',
+              page: () => const IdentificationEntryScreen(),
+            ),
+            GetPage(
+              name: '/identify/process',
+              page: () => const IdentificationScreen(),
+            ),
+            GetPage(
+              name: '/identify/result',
+              page: () => const IdentificationResultScreen(),
+            ),
+            GetPage(
+              name: '/nickname',
+              page: () => const EnterNicknameScreen(),
+            ),
+            GetPage(
+              name: '/mode',
+              page: () => const SelectModeScreen(),
+            ),
+            GetPage(
+              name: '/finish',
+              page: () => const AuthFinishScreen(),
+            ),
+          ],
+        ),
         GetPage(name: '/appSetting', page: () => const SettingScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
