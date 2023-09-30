@@ -61,6 +61,17 @@ class SurveyModel {
           resultComment = '정상입니다';
         }
         break;
+      case '우울 척도 테스트':
+        if (score >= 0 && score <= 5) {
+          resultComment = '정상 입니다';
+        } else if (score >= 6 && score <= 10) {
+          resultComment = '중간정도의 우울상태 입니다';
+        } else if (score >= 11 && score <= 15) {
+          resultComment = '중증도의 우울증이 의심됩니다';
+        } else {
+          resultComment = '우울증상이 없습니다';
+        }
+        break;
 
       default:
         resultComment = '테스트가 정상적으로 진행되지 않았습니다.';
@@ -90,6 +101,27 @@ final List<SurveyModel> tests = [
     resultComment: '',
     resultDescription:
         "복약 순응도 점수가 낮은 상황에서는 의사의 처방 및 약사의 복약지도가 환자의 건강상태를 개선시키는 데 어려움이 있습니다. 해당되는 이용자에게는 적절한 복약 알림과  복약 현황 파악을 통해 복약 순응도를 높일 수 있습니다.",
+  ),
+  SurveyModel(
+    title: '우울 척도 테스트',
+    comment:
+        '이용자의 우울 여부는 일상생활의 동기부여나 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
+    iconPath: 'assets/icons/circle_4.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      9,
+      (index) => QuestionModel(
+        question: questionsDepressionScreening[index],
+        options: ["예", "아니오"],
+        scores: [0, 1],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "우울증이 너무 심하면 약을 잘 먹지 않는 것과 같이 치료에 영향을 줄 수 있습니다. 심한 우울에 해당하는 이용자는 전문기관의 치료적 개입과 평가가 필요한 상황입니다. 중간정도의 우울에 해당하는 이용자는 가까운 지역센터나 전문기관의 방문을 통해 상담이 권유됩니다. 가벼운 우울상태인 이용자들은 규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다.",
   ),
   SurveyModel(
     title: '우울증 선별 테스트',

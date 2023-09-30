@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
-import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_type1_screen.dart';
+import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_screen.dart';
 
 class SurveySeniorScreen extends StatelessWidget {
   const SurveySeniorScreen({Key? key}) : super(key: key);
@@ -65,7 +65,7 @@ class SurveyList extends StatelessWidget {
             onTap: () {
               // test type별로 별도 view구성 처리하기
               if (!tests[index].isCompleted) {
-                Get.to(() => SurveyDetailBokyakScreen(
+                Get.to(() => SurveyDetailType1Screen(
                       survey: tests[index],
                     ));
               }
