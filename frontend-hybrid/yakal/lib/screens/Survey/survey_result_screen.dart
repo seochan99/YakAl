@@ -66,7 +66,7 @@ class SurveyResultScreen extends StatelessWidget {
                   },
                   child: const Text(
                     "다른 테스트 하기",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
                   )),
               const SizedBox(
                 height: 100,

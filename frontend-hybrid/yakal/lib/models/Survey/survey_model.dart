@@ -1,4 +1,5 @@
 import 'question_model.dart';
+import './question_data.dart';
 
 class SurveyModel {
   final String title;
@@ -47,6 +48,20 @@ class SurveyModel {
           resultComment = '우울증상이 없습니다';
         }
         break;
+      case '불면증 심각도 테스트':
+        if (score >= 0 && score <= 7) {
+          resultComment = '정상입니다';
+        } else if (score >= 8 && score <= 14) {
+          resultComment = '약간의 불면증이 있습니다';
+        } else if (score >= 15 && score <= 21) {
+          resultComment = '중등도의 불면증이 있습니다';
+        } else if (score >= 22) {
+          resultComment = '심한 불면증이 있습니다';
+        } else {
+          resultComment = '정상입니다';
+        }
+        break;
+
       default:
         resultComment = '테스트가 정상적으로 진행되지 않았습니다.';
     }
@@ -97,33 +112,24 @@ final List<SurveyModel> tests = [
     resultDescription:
         "총점이 10점 이상으로 주요우울장애가 의심되거나9번 문항을 1점 이상으로 응답한 경우  (즉, 자살/자해 생각이 있는 경우) 가까운 병∙ 의원에서 진료를 받거나, 정신건강복지센터(또는 정신건강 위기상담전화)에서 상담을 받을 필요가 있습니다. 가벼운 우울상태인 이용자들은  규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다.",
   ),
-];
-
-// questionsBokyak
-const List<String> questionsBokyak = [
-  "얼마나 자주 약 복용하는 것을 잊어버리십니까?",
-  "얼마나 자주 약을 복용하지 않겠다고\n결정하십니까?",
-  "얼마나 자주 약 받는 것을 잊어버리십니까?",
-  "얼마나 자주 약이 다 떨어집니까?",
-  "의사에게 가기 전에 얼마나 자주 약 복용하는 것을 건너 뛰십니까?",
-  "몸이 나아졌다고 느낄 때 얼마나 자주 약 복용하는 것을 빠뜨리십니까?",
-  "몸이 아프다고 느낄 때 얼마나 자주 약 복용을 빠뜨리십니까?",
-  "얼마나 자주 본인의 부주의로 약 복용하는 것을 빠뜨리십니까?",
-  "얼마나 자주 본인의 필요에 따라 약 용량을 바꾸십니까?\n(원래 복용하셔야 하는 것보다 더 많게 혹은 더 적게 복용하시는 것)",
-  "하루 한번이상 약을 복용해야 할 때 얼마나 자주\n약 복용 하는 것을 잊어버리십니까?",
-  "얼마나 자주 약값이 비싸서 다시 약 처방 받는 것을 미루십니까?",
-  "약이 떨어지기 전에 얼마나 자주 미리 계획하여\n약 처방을 다시 받습니까?",
-];
-
-// question 우울증 선별검사
-const List<String> questionsDepressionScreening = [
-  "일을 하는 것에 대한 흥미나 재미가 거의 없음",
-  "가라앉는 느낌, 우울감 또는 절망감",
-  "잠들기 어렵거나 자꾸 깨어남, 혹은 너무 많이 잠",
-  "피곤함, 기력이 저하됨",
-  "식욕 저하 혹은 과식",
-  "내 자신이 나쁜 사람이라는 느낌 혹은 나 때문에 내 주변이 불행하게 되었다는 느낌",
-  "신문을 읽거나 TV를 볼 때 집중하기 어려움",
-  "남들이 알아챌 정도로 거동이나 말이 느림 또는 안절부절못해서 평소보다 많이 돌아다님",
-  "차라리 죽는 것이 낫겠다는 생각 혹은 어떤 식으로든 스스로를 자해하는 생각들"
+  SurveyModel(
+    title: '불면증 심각도 테스트',
+    comment: '이용자의 불면증에 해당하는지 여부를 파악하여 수면 건강 및 전체적인 건강에 도움을 드리기 위한 설문입니다.',
+    iconPath: 'assets/icons/circle_3.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      9,
+      (index) => QuestionModel(
+        question: questionsDepressionScreening[index],
+        options: ["매우", "그렇다", "보통", "아니다", "전혀 아니다"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 이 설문에서 높은 점수를 받을수록 불면증이 심한 상태이기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
+  ),
 ];
