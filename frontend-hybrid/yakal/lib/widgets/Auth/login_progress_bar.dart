@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../global/enum/login_process.dart';
-import '../../global/style/color_styles.dart';
+import '../../utilities/enum/login_process.dart';
+import '../../utilities/style/color_styles.dart';
 
 class LoginProgressBar extends StatelessWidget {
   final ELoginProcess progress;

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:iamport_flutter/iamport_certification.dart';
 import 'package:iamport_flutter/model/certification_data.dart';
 
-import '../../global/style/color_styles.dart';
+import '../../utilities/style/color_styles.dart';
 
 class IdentificationScreen extends StatelessWidget {
   const IdentificationScreen({super.key});
@@ -16,19 +16,8 @@ class IdentificationScreen extends StatelessWidget {
       child: SafeArea(
         child: Scaffold(
           body: IamportCertification(
-            initialChild: const Stack(
-              children: <Widget>[
-                Opacity(
-                  opacity: 0.5,
-                  child: ModalBarrier(
-                    dismissible: false,
-                    color: Colors.black,
-                  ),
-                ),
-                Center(
-                  child: CircularProgressIndicator(),
-                ),
-              ],
+            initialChild: const Center(
+              child: CircularProgressIndicator(),
             ),
             userCode: '${dotenv.env['IDENTIFICATION_MID']}',
             data: CertificationData(

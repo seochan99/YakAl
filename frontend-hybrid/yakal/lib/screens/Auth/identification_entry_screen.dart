@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-import '../../global/enum/login_process.dart';
-import '../../global/style/color_styles.dart';
+import '../../utilities/enum/login_process.dart';
+import '../../utilities/style/color_styles.dart';
 import '../../widgets/Auth/login_progress_bar.dart';
 
 class IdentificationEntryScreen extends StatelessWidget {

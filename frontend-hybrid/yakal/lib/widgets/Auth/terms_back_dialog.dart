@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../global/style/color_styles.dart';
+import '../../utilities/style/color_styles.dart';
 
 class TermsBackDialog extends StatelessWidget {
   const TermsBackDialog({super.key});

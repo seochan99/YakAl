@@ -21,10 +21,9 @@ dependencies:
   google_sign_in: ^6.1.5
   shared_preferences: ^2.2.1
   iamport_flutter: ^0.10.12
-  flutter_inappwebview:
-    git:
-      url: https://github.com/Estrelio/flutter_inappwebview.git
-      ref: fix-xcode-17
+  flutter_inappwebview: ^5.7.2+3
+  dio: ^5.3.3
+  flutter_secure_storage: ^9.0.0
 
 dev_dependencies:
   flutter_test:

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/global/enum/login_process.dart';
 import 'package:yakal/screens/Auth/terms_detail_screen.dart';
+import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/widgets/Auth/auth_check_button.dart';
 import 'package:yakal/widgets/Auth/login_progress_bar.dart';
 import 'package:yakal/widgets/Auth/terms_back_dialog.dart';
 
-import '../../global/style/color_styles.dart';
+import '../../utilities/style/color_styles.dart';
 
 class LoginTermsScreen extends StatelessWidget {
   static const List<Map<String, Object>> terms = [

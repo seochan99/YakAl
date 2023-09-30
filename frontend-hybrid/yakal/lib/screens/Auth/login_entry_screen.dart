@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/global/style/color_styles.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Auth/social_login_button.dart';
 
 class LoginEntryScreen extends StatelessWidget {
