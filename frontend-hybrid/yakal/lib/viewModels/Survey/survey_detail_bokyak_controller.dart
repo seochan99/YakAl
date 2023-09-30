@@ -33,7 +33,6 @@ class SurveyDetailBokyakController extends GetxController {
         totalScore += surveyModel.questions[i].scores[optionIndex];
       }
     }
-    print(totalScore);
     return totalScore;
   }
 
@@ -46,17 +45,30 @@ class SurveyDetailBokyakController extends GetxController {
     return true;
   }
 
-  String calculateResultComment(int totalScore) {
-    return "Your result comment based on the total score: $totalScore";
+// 선택 항목의 점수를 리스트로 반환
+  List allScoreList() {
+    List arms = [];
+    for (int i = 0; i < selectedOptions.length; i++) {
+      String? selectedOption = selectedOptions[i];
+
+      if (selectedOption != null &&
+          surveyModel.questions[i].options.contains(selectedOption)) {
+        int optionIndex =
+            surveyModel.questions[i].options.indexOf(selectedOption);
+        arms.add(surveyModel.questions[i].scores[optionIndex]);
+      }
+    }
+    return arms;
   }
 
   void handleButtonPress() {
     int totalScore = calculateTotalScore();
-    String resultComment = calculateResultComment(totalScore);
-
-    surveyModel.resultComment = resultComment;
+    // 서버로 arms 리스트 보내기
+    List arms = allScoreList();
     surveyModel.totalScore = totalScore;
+    surveyModel.isCompleted = true;
 
-    Get.toNamed('/survey/result', arguments: {'survey': surveyModel});
+    Get.toNamed('/survey/result',
+        arguments: {'survey': surveyModel, 'arms': arms});
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
-import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_bokyak_screen.dart';
+import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_screen.dart';
 
 class SurveySeniorScreen extends StatelessWidget {
   const SurveySeniorScreen({Key? key}) : super(key: key);
@@ -15,6 +15,13 @@ class SurveySeniorScreen extends StatelessWidget {
           '자가 진단 테스트 (65세 이상)',
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.chevron_left,
+        //       size: 32, color: Color(0xff151515)),
+        //   onPressed: () {
+        //     Get.toNamed('/profile');
+        //   },
+        // )
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -56,8 +63,9 @@ class SurveyList extends StatelessWidget {
         for (int index = 0; index < tests.length; index++)
           InkWell(
             onTap: () {
+              // test type별로 별도 view구성 처리하기
               if (!tests[index].isCompleted) {
-                Get.to(() => SurveyDetailBokyakScreen(
+                Get.to(() => SurveyDetailType1Screen(
                       survey: tests[index],
                     ));
               }
