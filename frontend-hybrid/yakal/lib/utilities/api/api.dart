@@ -45,7 +45,7 @@ Future<Dio> authDio(BuildContext context) async {
         /* Error Logging */
         if (kDebugMode) {
           print(
-              "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR ${error.message}");
+              "🚨 [${error.requestOptions.method}] ${error.requestOptions.path} | ERROR : ${error.message}");
         }
 
         /* Automatic Token Refreshing Logic */

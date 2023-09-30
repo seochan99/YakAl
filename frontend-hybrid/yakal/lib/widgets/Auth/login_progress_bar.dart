@@ -22,7 +22,7 @@ class LoginProgressBar extends StatelessWidget {
       progressElements.add(
         Container(
           height: height,
-          width: width / 5,
+          width: width / 6,
           clipBehavior: Clip.hardEdge,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(height),

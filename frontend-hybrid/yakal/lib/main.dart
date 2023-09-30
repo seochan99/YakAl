@@ -3,11 +3,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/screens/Auth/auth_finish_screen.dart';
+import 'package:yakal/screens/Auth/enter_username_screen.dart';
 import 'package:yakal/screens/Auth/identification_entry_screen.dart';
 import 'package:yakal/screens/Auth/identification_result_screen.dart';
 import 'package:yakal/screens/Auth/identification_screen.dart';
 import 'package:yakal/screens/Auth/login_entry_screen.dart';
 import 'package:yakal/screens/Auth/login_terms_screen.dart';
+import 'package:yakal/screens/Auth/select_mode_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
@@ -70,6 +73,18 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/identify/result',
               page: () => const IdentificationResultScreen(),
+            ),
+            GetPage(
+              name: '/username',
+              page: () => const EnterUsernameScreen(),
+            ),
+            GetPage(
+              name: '/mode',
+              page: () => const SelectModeScreen(),
+            ),
+            GetPage(
+              name: '/finish',
+              page: () => const AuthFinishScreen(),
             ),
           ],
         ),

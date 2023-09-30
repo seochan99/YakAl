@@ -4,8 +4,8 @@ import 'package:get/get.dart';
 import 'package:yakal/screens/Auth/terms_detail_screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/widgets/Auth/auth_check_button.dart';
+import 'package:yakal/widgets/Auth/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Auth/login_progress_bar.dart';
-import 'package:yakal/widgets/Auth/terms_back_dialog.dart';
 
 import '../../utilities/style/color_styles.dart';
 
@@ -126,7 +126,7 @@ class LoginTermsScreen extends StatelessWidget {
           appBar: AppBar(
             title: LoginProgressBar(
               progress: ELoginProcess.TERMS,
-              width: MediaQuery.of(context).size.width / 3,
+              width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
             ),
             backgroundColor: ColorStyles.white,
@@ -157,7 +157,9 @@ class LoginTermsScreen extends StatelessWidget {
                   barrierDismissible: true,
                   barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
                   builder: (BuildContext context) {
-                    return const TermsBackDialog();
+                    return const BackConfirmDialog(
+                      question: "다시 로그인하시겠습니까?",
+                    );
                   },
                 );
               },
@@ -350,7 +352,7 @@ class LoginTermsScreen extends StatelessWidget {
 class TermsCheckedController extends GetxController {
   final RxList<bool> isChecked = <bool>[false, false, false, false].obs;
 
-  void _setALl(bool checked) {
+  void setAll(bool checked) {
     isChecked([
       checked,
       checked,
@@ -361,9 +363,9 @@ class TermsCheckedController extends GetxController {
 
   void toggleAll() {
     if (isCheckedAll()) {
-      _setALl(false);
+      setAll(false);
     } else {
-      _setALl(true);
+      setAll(true);
     }
   }
 

@@ -25,7 +25,7 @@ class IdentificationScreen extends StatelessWidget {
               merchantUid: 'mid_${DateTime.now().millisecondsSinceEpoch}',
               mRedirectUrl: "https://yakal/mobile/identify/cancel",
             ),
-            callback: (Map<String, String> result) {
+            callback: (Map<String, String> result) async {
               if (result['success'] == 'true') {
                 Get.toNamed(
                   '/login/identify/result',

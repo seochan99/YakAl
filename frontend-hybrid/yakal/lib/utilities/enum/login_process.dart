@@ -1,6 +1,7 @@
 enum ELoginProcess {
   TERMS,
   IDENTIFY,
-  NICKNAME,
+  USERNAME,
   SELECT_MODE,
+  FINISHED,
 }

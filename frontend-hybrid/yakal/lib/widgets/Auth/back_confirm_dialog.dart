@@ -3,8 +3,15 @@ import 'package:get/get.dart';
 
 import '../../utilities/style/color_styles.dart';
 
-class TermsBackDialog extends StatelessWidget {
-  const TermsBackDialog({super.key});
+class BackConfirmDialog extends StatelessWidget {
+  final String question;
+  final int backTo;
+
+  const BackConfirmDialog({
+    super.key,
+    required this.question,
+    this.backTo = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +31,9 @@ class TermsBackDialog extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                "다시 로그인 하시겠습니까?",
-                style: TextStyle(
+              Text(
+                question,
+                style: const TextStyle(
                   fontFamily: "Pretendard",
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
@@ -73,8 +80,11 @@ class TermsBackDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
-                          Get.back();
-                          Get.back();
+                          Get.back(); // Close Dialog
+
+                          for (var i = 0; i < backTo; ++i) {
+                            Get.back();
+                          }
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.main,
