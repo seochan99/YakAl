@@ -4,7 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:yakal/screens/Auth/auth_finish_screen.dart';
-import 'package:yakal/screens/Auth/enter_username_screen.dart';
+import 'package:yakal/screens/Auth/enter_nickname_screen.dart';
 import 'package:yakal/screens/Auth/identification_entry_screen.dart';
 import 'package:yakal/screens/Auth/identification_result_screen.dart';
 import 'package:yakal/screens/Auth/identification_screen.dart';
@@ -75,8 +75,8 @@ class MyApp extends StatelessWidget {
               page: () => const IdentificationResultScreen(),
             ),
             GetPage(
-              name: '/username',
-              page: () => const EnterUsernameScreen(),
+              name: '/nickname',
+              page: () => const EnterNicknameScreen(),
             ),
             GetPage(
               name: '/mode',

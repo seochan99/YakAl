@@ -61,7 +61,7 @@ class IdentificationResultScreen extends StatelessWidget {
                   builder: (BuildContext context) {
                     return const BackConfirmDialog(
                       question: "본인인증을 다시 하시겠습니까?",
-                      backTo: 2,
+                      backTo: "/login/identify/entry",
                     );
                   },
                 );
@@ -165,7 +165,7 @@ Widget _resultScreen(BuildContext context, bool isSuccess) {
               child: TextButton(
                 onPressed: isSuccess
                     ? () {
-                        Get.toNamed("/login/username");
+                        Get.toNamed("/login/nickname");
                       }
                     : () {
                         Get.back();

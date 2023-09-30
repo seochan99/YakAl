@@ -159,6 +159,7 @@ class LoginTermsScreen extends StatelessWidget {
                   builder: (BuildContext context) {
                     return const BackConfirmDialog(
                       question: "다시 로그인하시겠습니까?",
+                      backTo: "/login",
                     );
                   },
                 );

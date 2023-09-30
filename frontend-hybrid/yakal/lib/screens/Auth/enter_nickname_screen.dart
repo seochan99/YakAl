@@ -8,16 +8,16 @@ import '../../utilities/style/color_styles.dart';
 import '../../widgets/Auth/back_confirm_dialog.dart';
 import '../../widgets/Auth/login_progress_bar.dart';
 
-class EnterUsernameScreen extends StatefulWidget {
+class EnterNicknameScreen extends StatefulWidget {
   static const int _usernameLimits = 5;
 
-  const EnterUsernameScreen({super.key});
+  const EnterNicknameScreen({super.key});
 
   @override
-  State<EnterUsernameScreen> createState() => _EnterUsernameScreenState();
+  State<EnterNicknameScreen> createState() => _EnterNicknameScreenState();
 }
 
-class _EnterUsernameScreenState extends State<EnterUsernameScreen> {
+class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
   bool _isLoading = false;
   bool _isError = false;
   String _username = "";
@@ -105,7 +105,7 @@ class _EnterUsernameScreenState extends State<EnterUsernameScreen> {
                     builder: (BuildContext context) {
                       return const BackConfirmDialog(
                         question: "본인인증을 다시 하시겠습니까?",
-                        backTo: 2,
+                        backTo: "/login/identify/entry",
                       );
                     },
                   );
@@ -174,7 +174,7 @@ class _EnterUsernameScreenState extends State<EnterUsernameScreen> {
                               height: 8.0,
                             ),
                             TextField(
-                              maxLength: EnterUsernameScreen._usernameLimits,
+                              maxLength: EnterNicknameScreen._usernameLimits,
                               autofocus: true,
                               focusNode: textFocus,
                               decoration: const InputDecoration(
@@ -199,7 +199,7 @@ class _EnterUsernameScreenState extends State<EnterUsernameScreen> {
                                   ),
                                 ),
                                 hintText:
-                                    '${EnterUsernameScreen._usernameLimits}자 이내로 입력',
+                                    '${EnterNicknameScreen._usernameLimits}자 이내로 입력',
                                 hintStyle: TextStyle(
                                   color: ColorStyles.gray3,
                                   fontFamily: "SUIT",

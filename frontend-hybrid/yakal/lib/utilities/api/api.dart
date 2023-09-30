@@ -5,12 +5,25 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' as get_x;
 
+import '../../widgets/Auth/back_to_login_dialog.dart';
+
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio(BaseOptions(
     baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
     connectTimeout: const Duration(milliseconds: 5000),
     receiveTimeout: const Duration(milliseconds: 3000),
   ));
+
+  showBackToLoginDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+      builder: (BuildContext context) {
+        return const BackToLoginDialog();
+      },
+    );
+  }
 
   const storage = FlutterSecureStorage();
 
@@ -22,6 +35,11 @@ Future<Dio> authDio(BuildContext context) async {
           (RequestOptions options, RequestInterceptorHandler handler) async {
         /* Set Access Token to Bearer Auth Header */
         final accessToken = await storage.read(key: 'ACCESS_TOKEN');
+
+        if (accessToken == null) {
+          get_x.Get.offAllNamed("/login");
+        }
+
         options.headers['Authorization'] = 'Bearer $accessToken';
 
         /* Request Logging */
@@ -71,6 +89,7 @@ Future<Dio> authDio(BuildContext context) async {
 
                 if (error.response?.statusCode == 401) {
                   await storage.deleteAll();
+                  showBackToLoginDialog();
                   get_x.Get.offAllNamed("/login");
                 }
                 return handler.next(error);

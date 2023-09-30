@@ -117,7 +117,7 @@ class IdentificationEntryScreen extends StatelessWidget {
                       width: MediaQuery.of(context).size.width / 3.5,
                       child: TextButton(
                         onPressed: () {
-                          Get.toNamed("/login/username");
+                          Get.toNamed("/login/nickname");
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.gray2,
