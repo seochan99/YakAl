@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/viewModels/Survey/survey_detail_bokyak_controller.dart';
+import 'package:yakal/widgets/Survey/OptionBtn/survey_option_1_btn_widget.dart';
+import 'package:yakal/widgets/Survey/OptionBtn/survey_option_3_btn_widget.dart';
 import 'package:yakal/widgets/Survey/survey_header_widget.dart';
 // Replace with the correct path
 
@@ -104,7 +106,9 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
   int? selectedOptionIndex;
 
   Widget buildOptionWidget() {
-    if (widget.title == '간이 영양 상태 조사' || widget.title == '음주력 테스트') {
+    if (widget.title == '간이 영양 상태 조사' ||
+        widget.title == '음주력 테스트' ||
+        widget.title == "흡연력 테스트") {
       // Return a Row for 우울증
       return Column(
         // column, text Btn
@@ -153,7 +157,11 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
           );
         }).toList(),
       );
-    } else if (widget.title == '우울 척도 테스트' || widget.title == '불면증 심각도 테스트') {
+    } else if (widget.title == '우울 척도 테스트' ||
+        widget.title == '불면증 심각도 테스트' ||
+        widget.title == "노쇠 테스트" ||
+        widget.title == "시청각 테스트" ||
+        widget.title == "일상생활 동작 지수") {
       return Row(
         // Row, Text Button
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -215,42 +223,6 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
   }
 }
 
-class SurveyDetailOption1BtnWidget extends StatelessWidget {
-  final bool isSelected;
-  final String option;
-
-  const SurveyDetailOption1BtnWidget({
-    super.key,
-    required this.isSelected,
-    required this.option,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          isSelected
-              ? 'assets/icons/Check_active.svg'
-              : 'assets/icons/Check_disable.svg',
-          width: 48,
-          height: 48,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          option,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color:
-                isSelected ? const Color(0xFF2666F6) : const Color(0xFF90909F),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
 class SurveyDetailOption2BtnWidget extends StatelessWidget {
   final bool isSelected;
   final String option;
@@ -283,48 +255,6 @@ class SurveyDetailOption2BtnWidget extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class SurveyDetailOption3BtnWidget extends StatelessWidget {
-  final bool isSelected;
-  final String option;
-
-  const SurveyDetailOption3BtnWidget({
-    super.key,
-    required this.isSelected,
-    required this.option,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final double containerWidth = MediaQuery.of(context).size.width / 2.5;
-
-    final backgroundColor =
-        isSelected ? const Color(0xFFF1F5FE) : const Color(0xFFFFFFFF);
-    final borderColor =
-        isSelected ? const Color(0xFF5588FD) : const Color(0xFFE9E9EE);
-    return Container(
-      width: containerWidth,
-      padding: const EdgeInsets.symmetric(vertical: 20),
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        border: Border.all(
-          color: borderColor,
-          width: 2,
-        ),
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Text(
-        option,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.w700,
-          color: isSelected ? const Color(0xFF2666F6) : const Color(0xFF626272),
-        ),
-      ),
     );
   }
 }

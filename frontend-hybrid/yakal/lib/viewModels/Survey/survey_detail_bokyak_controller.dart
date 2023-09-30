@@ -68,6 +68,7 @@ class SurveyDetailBokyakController extends GetxController {
     surveyModel.totalScore = totalScore;
     surveyModel.isCompleted = true;
 
-    Get.toNamed('/survey/result', arguments: {'survey': surveyModel});
+    Get.toNamed('/survey/result',
+        arguments: {'survey': surveyModel, 'arms': arms});
   }
 }
