@@ -28,9 +28,12 @@ class SurveyHeaderWidget extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              content,
-              style: const TextStyle(fontSize: 16),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.7,
+              child: Text(
+                content,
+                style: const TextStyle(fontSize: 16),
+              ),
             ),
             const SizedBox(height: 20),
             Container(

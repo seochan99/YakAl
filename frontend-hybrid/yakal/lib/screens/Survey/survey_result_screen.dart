@@ -58,7 +58,11 @@ class SurveyResultScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     // 뒤로가고 스택 비우기
-                    Get.offAllNamed('/seniorSurvey');
+                    // Get.offAllNamed('/seniorSurvey');
+                    // issue : bottomNavigation이 사라짐.. 고민 중...
+                    Get.back();
+                    Get.back();
+                    // 이러면 새로고침해야지 완료로 바뀜..고민중..
                   },
                   child: const Text(
                     "다른 테스트 하기",
@@ -105,9 +109,9 @@ class SurveyResultHeader extends StatelessWidget {
           Text(
             survey.resultComment,
             style: const TextStyle(
-              fontSize: 20,
-              color: Color(0xff151515),
-            ),
+                fontSize: 20,
+                color: Color(0xff151515),
+                fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 20),
         ]),

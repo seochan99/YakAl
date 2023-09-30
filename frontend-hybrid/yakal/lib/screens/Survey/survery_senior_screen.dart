@@ -11,17 +11,18 @@ class SurveySeniorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: const Text(
-            '자가 진단 테스트 (65세 이상)',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left,
-                size: 32, color: Color(0xff151515)),
-            onPressed: () {
-              Get.toNamed('/profile');
-            },
-          )),
+        title: const Text(
+          '자가 진단 테스트 (65세 이상)',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        // leading: IconButton(
+        //   icon: const Icon(Icons.chevron_left,
+        //       size: 32, color: Color(0xff151515)),
+        //   onPressed: () {
+        //     Get.toNamed('/profile');
+        //   },
+        // )
+      ),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.white,
