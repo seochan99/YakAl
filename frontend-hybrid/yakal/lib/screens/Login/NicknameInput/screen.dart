@@ -8,7 +8,7 @@ import 'package:yakal/widgets/Login/login_page_move_button.dart';
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
 import '../../../widgets/Login/back_confirm_dialog.dart';
-import '../../../widgets/Login/login_progress_bar.dart';
+import '../../../widgets/Login/login_app_bar.dart';
 
 class NicknameInputScreen extends StatefulWidget {
   static const int _usernameLimits = 5;
@@ -87,7 +87,7 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
               },
             );
           },
-        ) as AppBar,
+        ),
         child: Padding(
           padding: const EdgeInsets.all(30.0),
           child: Column(

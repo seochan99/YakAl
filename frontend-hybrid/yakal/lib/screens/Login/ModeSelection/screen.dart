@@ -8,7 +8,7 @@ import 'package:yakal/widgets/Login/mode_selection_box.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Login/login_progress_bar.dart';
+import '../../../widgets/Login/login_app_bar.dart';
 
 class ModeSelectionScreen extends StatefulWidget {
   const ModeSelectionScreen({super.key});
@@ -30,7 +30,7 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
         onPressed: () {
           Get.back();
         },
-      ) as AppBar,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(

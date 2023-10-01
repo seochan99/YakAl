@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../utilities/enum/login_process.dart';
 import '../../utilities/style/color_styles.dart';
 
-class LoginAppBar extends StatelessWidget {
+class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
   final void Function() onPressed;
   final ELoginProcess progress;
 
@@ -79,4 +79,7 @@ class LoginAppBar extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size(double.infinity, 56.0);
 }

@@ -6,7 +6,7 @@ import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Login/login_progress_bar.dart';
+import '../../../widgets/Login/login_app_bar.dart';
 
 class LoginFinishedScreen extends StatelessWidget {
   const LoginFinishedScreen({super.key});
@@ -21,7 +21,7 @@ class LoginFinishedScreen extends StatelessWidget {
         onPressed: () {
           Get.back();
         },
-      ) as AppBar,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(

@@ -6,7 +6,7 @@ import 'package:yakal/screens/Login/TermsDetail/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 import 'package:yakal/widgets/Login/back_confirm_dialog.dart';
-import 'package:yakal/widgets/Login/login_progress_bar.dart';
+import 'package:yakal/widgets/Login/login_app_bar.dart';
 
 import '../../../utilities/style/color_styles.dart';
 import '../../../widgets/Login/login_frame.dart';
@@ -111,7 +111,7 @@ class LoginTermsScreen extends StatelessWidget {
             },
           );
         },
-      ) as AppBar,
+      ),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(

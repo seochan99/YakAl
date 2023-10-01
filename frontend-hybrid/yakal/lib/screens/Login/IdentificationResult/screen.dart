@@ -7,7 +7,7 @@ import 'package:yakal/widgets/Login/login_page_move_button.dart';
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
 import '../../../widgets/Login/back_confirm_dialog.dart';
-import '../../../widgets/Login/login_progress_bar.dart';
+import '../../../widgets/Login/login_app_bar.dart';
 
 class IdentificationResultScreen extends StatelessWidget {
   const IdentificationResultScreen({super.key});
@@ -40,11 +40,11 @@ class IdentificationResultScreen extends StatelessWidget {
           );
         },
         progress: ELoginProcess.IDENTIFY,
-      ) as AppBar,
+      ),
       child: FutureBuilder<bool>(
         future: _identify(
           context,
-          Get.arguments["impUid"],
+          Get.arguments["imp_uid"],
         ),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData) {
