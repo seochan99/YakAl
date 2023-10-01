@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:iamport_flutter/iamport_certification.dart';
 import 'package:iamport_flutter/model/certification_data.dart';
 
-import '../../utilities/style/color_styles.dart';
+import '../../../utilities/style/color_styles.dart';
 
 class IdentificationScreen extends StatelessWidget {
   const IdentificationScreen({super.key});
