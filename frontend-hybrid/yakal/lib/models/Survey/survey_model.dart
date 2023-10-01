@@ -115,7 +115,28 @@ class SurveyModel {
         } else {
           resultComment = "아직 위험 수준에는 이르지 않았습니다.";
         }
-
+      case "치매 테스트":
+        if (score <= 1) {
+          resultComment = "정상입니다.";
+        } else {
+          resultComment = " 기능의 변화가 의심되는 상태입니다.";
+        }
+      case "섬망 테스트":
+        if (score >= 1) {
+          resultComment = "섬망이 의심되는 상황입니다.";
+        } else {
+          resultComment = "정상입니다";
+        }
+      case "폐쇄성 수면 무호흡증":
+        if (score <= 2) {
+          resultComment = "폐쇄성 수면 무호흡증 저위험 군입니다";
+        } else if (score >= 3 && score <= 4) {
+          resultComment = "폐쇄성 수면 무호흡증 위험이 약간 있습니다";
+        } else if (score >= 5) {
+          resultComment = "폐쇄성 수면 무호흡증이 의심됩니다";
+        } else {
+          resultComment = "폐쇄성 수면 무호흡증 저위험 군입니다";
+        }
       default:
         resultComment = '테스트가 정상적으로 진행되지 않았습니다.';
     }
@@ -334,5 +355,66 @@ final List<SurveyModel> tests = [
     resultComment: '',
     resultDescription:
         "일상 생활 동작 지수 설문에서 낮은 점수일수록 일상생활의 동작에 어려움이 있음을 의미합니다. 적절한 물리적 치료요법으로 개선할 수 있습니다.",
+  ),
+  SurveyModel(
+    title: '치매 테스트',
+    comment: '이용자의 인지기능(사고력과 기억력)이 어떻게 변화되어 왔는지 파악하기 위한 설문입니다.',
+    iconPath: 'assets/icons/circle_4.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      8,
+      (index) => QuestionModel(
+        question: questionDementiaTest[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "인지기능의 저하는 이용자의 신체 및 정신 건강상태에 큰 영향을 줄 수 있습니다. 인지기능의 저하가 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
+  ),
+  SurveyModel(
+    title: '섬망 테스트',
+    comment:
+        '이용자의 뇌 기능과 연관된 섬망 증상을 파악하기 위한 설문입니다. 과거 병원에 입원 하셨을 때의 경험을 토대로 답변해주시기 바랍니다.',
+    iconPath: 'assets/icons/circle_3.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      4,
+      (index) => QuestionModel(
+        question: questionNeglectTest[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "섬망 증세는 자칫 잘못하면 낙상으로 이어질 수 있는 큰 원인 중 하나입니다. 섬망이 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
+  ),
+  SurveyModel(
+    title: '폐쇄성 수면 무호흡증',
+    comment: '이용자의 수면 중 무호흡증 여부를 파악하여 수면 건강에 도움을 드리기 위한 설문입니다.',
+    iconPath: 'assets/icons/circle_3.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      8,
+      (index) => QuestionModel(
+        question: questionSleepApnea[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 수면 중 무호흡증은 수면의 질을 크게 떨어뜨릴 수 있기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
   ),
 ];

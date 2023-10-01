@@ -161,7 +161,10 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
         widget.title == '불면증 심각도 테스트' ||
         widget.title == "노쇠 테스트" ||
         widget.title == "시청각 테스트" ||
-        widget.title == "일상생활 동작 지수") {
+        widget.title == "일상생활 동작 지수" ||
+        widget.title == "섬망 테스트" ||
+        widget.title == "치매 테스트" ||
+        widget.title == "폐쇄성 수면 무호흡증") {
       return Row(
         // Row, Text Button
         mainAxisAlignment: MainAxisAlignment.spaceAround,
