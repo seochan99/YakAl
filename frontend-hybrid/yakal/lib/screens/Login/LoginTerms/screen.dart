@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginTerms/style.dart';
-import 'package:yakal/screens/Login/terms_detail_screen.dart';
+import 'package:yakal/screens/Login/TermsDetail/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 import 'package:yakal/widgets/Login/back_confirm_dialog.dart';
@@ -94,8 +94,8 @@ class LoginTermsScreen extends StatelessWidget {
     final controller = Get.put(_TermsCheckedController());
 
     return LoginFrame(
-      inner: ColorStyles.white,
-      outer: ColorStyles.white,
+      safeAreaColor: ColorStyles.white,
+      outOfSafeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
         progress: ELoginProcess.TERMS,
         onPressed: () {

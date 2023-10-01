@@ -16,8 +16,8 @@ class LoginEntryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LoginFrame(
-      inner: ColorStyles.gray1,
-      outer: ColorStyles.gray1,
+      safeAreaColor: ColorStyles.gray1,
+      outOfSafeAreaColor: ColorStyles.gray1,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

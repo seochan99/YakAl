@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class LoginFrame extends StatelessWidget {
-  final Color outer;
-  final Color inner;
+  final Color outOfSafeAreaColor;
+  final Color safeAreaColor;
   final Widget child;
   final PreferredSizeWidget? appBar;
 
   const LoginFrame({
     required this.child,
-    required this.outer,
-    required this.inner,
+    required this.outOfSafeAreaColor,
+    required this.safeAreaColor,
     this.appBar,
     super.key,
   });
@@ -17,10 +17,10 @@ class LoginFrame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: outer,
+      color: outOfSafeAreaColor,
       child: SafeArea(
         child: Scaffold(
-          backgroundColor: inner,
+          backgroundColor: safeAreaColor,
           appBar: appBar,
           body: child,
         ),
