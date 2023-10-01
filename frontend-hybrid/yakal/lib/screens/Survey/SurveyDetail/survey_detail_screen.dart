@@ -110,7 +110,7 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
         widget.title == '음주력 테스트' ||
         widget.title == "흡연력 테스트") {
       // Return a Row for 우울증
-      return Column(
+      return Row(
         // column, text Btn
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: widget.options.asMap().entries.map((entry) {
@@ -125,7 +125,7 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
                 widget.onOptionSelected(index);
               });
             },
-            child: SurveyDetailOption2BtnWidget(
+            child: SurveyDetailOption1BtnWidget(
               isSelected: isSelected,
               option: option,
             ),

@@ -30,6 +30,11 @@ class SurveyModel {
     totalScore = score;
   }
 
+  void dispose() {
+    // Dispose of any resources or subscriptions here
+    // This method will be called when you want to clean up the SurveyModel
+  }
+
   void setComment(int score) {
     switch (title) {
       case '복약 순응도 테스트':
@@ -98,6 +103,19 @@ class SurveyModel {
         } else if (score >= 5) {
           resultComment = "정상 입니다";
         }
+      case "음주력 테스트":
+        if (score <= 9) {
+          resultComment = "아직 위험 수준에는 이르지 않았습니다.";
+        } else if (score >= 10 && score <= 15) {
+          resultComment = "습관적 과음을 하며 주의가 필요합니다.";
+        } else if (score >= 16 && score <= 19) {
+          resultComment = "당신의 음주는 현재 해로운 수준(남용)에 있습니다.";
+        } else if (score >= 20) {
+          resultComment = "당신의 음주는 현재 매우 위험한 수준에 있습니다.";
+        } else {
+          resultComment = "아직 위험 수준에는 이르지 않았습니다.";
+        }
+
       default:
         resultComment = '테스트가 정상적으로 진행되지 않았습니다.';
     }
@@ -189,6 +207,72 @@ final List<SurveyModel> tests = [
     resultComment: '',
     resultDescription:
         "총점이 10점 이상으로 주요우울장애가 의심되거나9번 문항을 1점 이상으로 응답한 경우  (즉, 자살/자해 생각이 있는 경우) 가까운 병∙ 의원에서 진료를 받거나, 정신건강복지센터(또는 정신건강 위기상담전화)에서 상담을 받을 필요가 있습니다. 가벼운 우울상태인 이용자들은  규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다.",
+  ),
+  SurveyModel(
+    title: '음주력 테스트',
+    comment: '이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.',
+    iconPath: 'assets/icons/circle_3.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: [
+      QuestionModel(
+        question: questionAlcoholConsumption[0],
+        options: ["전혀 안 마심", "월 1회 미만", "월 2~4회", "주 2~3회", "주 4회 이상"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[1],
+        options: ["1~2잔", "3~4잔", "5~6잔", "7~9잔", "10잔 이상"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      // for문으로 QuestionModel 생성
+      QuestionModel(
+        question: questionAlcoholConsumption[2],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[3],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[4],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[5],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[6],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[7],
+        options: ["없음", "월 1회 미만", "월 1회", "주 1회", "거의 매일"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[8],
+        options: ["없음", "지난 1년간 없음", "지난 1년간 있음"],
+        scores: [0, 2, 4],
+      ),
+      QuestionModel(
+        question: questionAlcoholConsumption[9],
+        options: ["없음", "지난 1년간 없음", "지난 1년간 있음"],
+        scores: [0, 2, 4],
+      ),
+    ],
+
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "이 설문에서 높은 점수일수록 이용자의 음주 습관이 위험함을 의미합니다. 음주 습관은 건강상태에 큰 영향을 끼칠 수 있습니다. 의존적인 음주습관을 가질 경우 가까운 센터를 방문하여 지속적인 상담 및 약물 치료가 필요합니다.",
   ),
   SurveyModel(
     title: '불면증 심각도 테스트',
