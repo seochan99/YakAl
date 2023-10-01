@@ -5,7 +5,7 @@ import 'package:yakal/utilities/enum/mode.dart';
 
 import '../../utilities/enum/login_process.dart';
 import '../../utilities/style/color_styles.dart';
-import '../../widgets/Auth/login_progress_bar.dart';
+import '../../widgets/Login/login_progress_bar.dart';
 
 class SelectModeScreen extends StatefulWidget {
   const SelectModeScreen({super.key});

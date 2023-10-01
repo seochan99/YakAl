@@ -4,10 +4,10 @@ import 'package:get/get.dart';
 
 import '../../utilities/enum/login_process.dart';
 import '../../utilities/style/color_styles.dart';
-import '../../widgets/Auth/login_progress_bar.dart';
+import '../../widgets/Login/login_progress_bar.dart';
 
-class AuthFinishScreen extends StatelessWidget {
-  const AuthFinishScreen({super.key});
+class IdentificationEntryScreen extends StatelessWidget {
+  const IdentificationEntryScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class AuthFinishScreen extends StatelessWidget {
           backgroundColor: ColorStyles.white,
           appBar: AppBar(
             title: LoginProgressBar(
-              progress: ELoginProcess.FINISHED,
+              progress: ELoginProcess.IDENTIFY,
               width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
             ),
@@ -54,48 +54,51 @@ class AuthFinishScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Row(
+                Column(
                   children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "홍길동",
-                                style: TextStyle(
-                                  color: ColorStyles.black,
-                                  fontFamily: "SUIT",
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w700,
-                                  height: 1.4,
-                                ),
-                              ),
-                              Text(
-                                "님,",
-                                style: TextStyle(
-                                  color: ColorStyles.black,
-                                  fontFamily: "SUIT",
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  height: 1.4,
-                                ),
-                              ),
-                            ],
+                    const Row(
+                      children: [
+                        Text(
+                          "본인인증",
+                          style: TextStyle(
+                            color: ColorStyles.black,
+                            fontFamily: "SUIT",
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            height: 1.4,
                           ),
-                          Text(
-                            "회원가입이 완료되었습니다!",
+                        ),
+                        Text(
+                          "을 해주세요",
+                          style: TextStyle(
+                            color: ColorStyles.black,
+                            fontFamily: "SUIT",
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                            height: 1.4,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.7,
+                          child: const Text(
+                            """보호자가 아닌 반드시 본인명의로 인증해야\n안전한 약알을 이용하실 수 있어요 :)""",
                             style: TextStyle(
-                              color: ColorStyles.black,
+                              color: ColorStyles.gray5,
                               fontFamily: "SUIT",
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              height: 1.4,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              height: 1.6,
                             ),
                           ),
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -110,10 +113,41 @@ class AuthFinishScreen extends StatelessWidget {
                 ),
                 Row(
                   children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 3.5,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.toNamed("/login/nickname");
+                        },
+                        style: TextButton.styleFrom(
+                          backgroundColor: ColorStyles.gray2,
+                          splashFactory: NoSplash.splashFactory,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: const Text(
+                          "건너뛰기",
+                          style: TextStyle(
+                            color: ColorStyles.gray5,
+                            fontFamily: "SUIT",
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
                     Expanded(
                       child: TextButton(
                         onPressed: () {
-                          Get.toNamed("/");
+                          Get.toNamed("/login/identify/process");
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.main,
@@ -126,7 +160,7 @@ class AuthFinishScreen extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "메인으로",
+                          "인증하기",
                           style: TextStyle(
                             color: ColorStyles.white,
                             fontFamily: "SUIT",
