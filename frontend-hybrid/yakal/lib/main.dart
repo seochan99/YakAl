@@ -9,8 +9,8 @@ import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
 import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginTerms/screen.dart';
+import 'package:yakal/screens/Login/Nickname/screen.dart';
 import 'package:yakal/screens/Login/auth_finish_screen.dart';
-import 'package:yakal/screens/Login/enter_nickname_screen.dart';
 import 'package:yakal/screens/Login/select_mode_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/nickname',
-              page: () => const EnterNicknameScreen(),
+              page: () => const NicknameInputScreen(),
             ),
             GetPage(
               name: '/mode',
