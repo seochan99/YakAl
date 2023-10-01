@@ -23,6 +23,7 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
     super.dispose();
   }
 
+  //  닉네임 변경
   _handleButtonPress() {
     // no nickname
     if (_nickNameController.text.isEmpty) {
@@ -40,7 +41,6 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
       children: [
         // 프로필 사진
         Obx(
-          // Wrap the TextSpan with Obx to automatically update when nickName changes
           () => RichText(
             text: TextSpan(
               children: [

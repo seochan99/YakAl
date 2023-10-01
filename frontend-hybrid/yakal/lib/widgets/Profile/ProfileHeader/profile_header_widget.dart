@@ -15,8 +15,6 @@ class ProfileHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      // height 240px
-      // height: 260,
 
       child: Padding(
         padding: const EdgeInsets.fromLTRB(20, 88, 20, 24),
