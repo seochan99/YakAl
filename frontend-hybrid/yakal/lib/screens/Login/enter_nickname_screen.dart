@@ -70,7 +70,7 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
           child: Scaffold(
             backgroundColor: ColorStyles.white,
             appBar: AppBar(
-              title: LoginProgressBar(
+              title: LoginAppBar(
                 progress: ELoginProcess.USERNAME,
                 width: MediaQuery.of(context).size.width / 2.5,
                 height: 8,
@@ -91,7 +91,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                   "뒤로",
                   style: TextStyle(
                     color: ColorStyles.gray5,
-                    fontFamily: "SUIT",
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
                     height: 1.4,
@@ -127,7 +126,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                               "약알에서 사용할",
                               style: TextStyle(
                                 color: ColorStyles.black,
-                                fontFamily: "SUIT",
                                 fontSize: 24,
                                 fontWeight: FontWeight.w500,
                                 height: 1.4,
@@ -139,7 +137,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                                   "사용자 이름",
                                   style: TextStyle(
                                     color: ColorStyles.black,
-                                    fontFamily: "SUIT",
                                     fontSize: 24,
                                     fontWeight: FontWeight.w700,
                                     height: 1.4,
@@ -149,7 +146,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                                   "을 입력해주세요.",
                                   style: TextStyle(
                                     color: ColorStyles.black,
-                                    fontFamily: "SUIT",
                                     fontSize: 24,
                                     fontWeight: FontWeight.w500,
                                     height: 1.4,
@@ -164,7 +160,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                               "사용자 이름",
                               style: TextStyle(
                                 color: ColorStyles.gray4,
-                                fontFamily: "SUIT",
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
                                 height: 1.6,
@@ -202,7 +197,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                                     '${EnterNicknameScreen._usernameLimits}자 이내로 입력',
                                 hintStyle: TextStyle(
                                   color: ColorStyles.gray3,
-                                  fontFamily: "SUIT",
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   height: 1.6,
@@ -211,7 +205,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                               ),
                               style: const TextStyle(
                                 color: ColorStyles.black,
-                                fontFamily: "SUIT",
                                 fontSize: 20,
                                 fontWeight: FontWeight.w600,
                                 height: 1.2,
@@ -230,7 +223,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                                     "사용자 이름 설정에 실패했습니다.\n다시 시도해주세요.",
                                     style: TextStyle(
                                       color: ColorStyles.red,
-                                      fontFamily: "SUIT",
                                       fontSize: 16,
                                       fontWeight: FontWeight.w700,
                                       height: 1.6,
@@ -291,7 +283,6 @@ class _EnterNicknameScreenState extends State<EnterNicknameScreen> {
                                     color: _username.isEmpty
                                         ? ColorStyles.gray3
                                         : ColorStyles.white,
-                                    fontFamily: "SUIT",
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w600,
                                     height: 1,

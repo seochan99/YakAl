@@ -63,7 +63,6 @@ class BackConfirmDialog extends StatelessWidget {
                           "아니요",
                           style: TextStyle(
                             color: ColorStyles.gray6,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,
@@ -96,7 +95,6 @@ class BackConfirmDialog extends StatelessWidget {
                           "다시하기",
                           style: TextStyle(
                             color: ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,

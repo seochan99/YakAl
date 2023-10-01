@@ -25,7 +25,7 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
         child: Scaffold(
           backgroundColor: ColorStyles.white,
           appBar: AppBar(
-            title: LoginProgressBar(
+            title: LoginAppBar(
               progress: ELoginProcess.SELECT_MODE,
               width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
@@ -46,7 +46,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                 "뒤로",
                 style: TextStyle(
                   color: ColorStyles.gray5,
-                  fontFamily: "SUIT",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   height: 1.4,
@@ -74,7 +73,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                 "모드",
                                 style: TextStyle(
                                   color: ColorStyles.black,
-                                  fontFamily: "SUIT",
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
                                   height: 1.4,
@@ -84,7 +82,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                 "를 선택해주세요",
                                 style: TextStyle(
                                   color: ColorStyles.black,
-                                  fontFamily: "SUIT",
                                   fontSize: 24,
                                   fontWeight: FontWeight.w500,
                                   height: 1.4,
@@ -131,7 +128,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                           "일반모드",
                                           style: TextStyle(
                                             color: ColorStyles.gray6,
-                                            fontFamily: "SUIT",
                                             fontSize: 24,
                                             fontWeight: FontWeight.w500,
                                             height: 1,
@@ -144,7 +140,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                           "약알의 일반적인 모드입니다.",
                                           style: TextStyle(
                                             color: ColorStyles.gray6,
-                                            fontFamily: "SUIT",
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             height: 1,
@@ -196,7 +191,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                           "라이트 모드",
                                           style: TextStyle(
                                             color: ColorStyles.gray6,
-                                            fontFamily: "SUIT",
                                             fontSize: 24,
                                             fontWeight: FontWeight.w500,
                                             height: 1,
@@ -211,7 +205,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                               "시니어를 위한 쉬운 모드",
                                               style: TextStyle(
                                                 color: ColorStyles.gray6,
-                                                fontFamily: "SUIT",
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w700,
                                                 height: 1.6,
@@ -221,7 +214,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                               "입니다.",
                                               style: TextStyle(
                                                 color: ColorStyles.gray6,
-                                                fontFamily: "SUIT",
                                                 fontSize: 15,
                                                 fontWeight: FontWeight.w500,
                                                 height: 1.6,
@@ -233,7 +225,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                                           "다제약물 정보가 포함되어 있습니다.",
                                           style: TextStyle(
                                             color: ColorStyles.gray6,
-                                            fontFamily: "SUIT",
                                             fontSize: 15,
                                             fontWeight: FontWeight.w500,
                                             height: 1.6,
@@ -276,7 +267,6 @@ class _SelectModeScreenState extends State<SelectModeScreen> {
                             color: _mode == EMode.NONE
                                 ? ColorStyles.gray3
                                 : ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,

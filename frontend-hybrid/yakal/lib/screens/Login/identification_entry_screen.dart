@@ -17,7 +17,7 @@ class IdentificationEntryScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: ColorStyles.white,
           appBar: AppBar(
-            title: LoginProgressBar(
+            title: LoginAppBar(
               progress: ELoginProcess.IDENTIFY,
               width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
@@ -38,7 +38,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                 "뒤로",
                 style: TextStyle(
                   color: ColorStyles.gray5,
-                  fontFamily: "SUIT",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   height: 1.4,
@@ -62,7 +61,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                           "본인인증",
                           style: TextStyle(
                             color: ColorStyles.black,
-                            fontFamily: "SUIT",
                             fontSize: 24,
                             fontWeight: FontWeight.w700,
                             height: 1.4,
@@ -72,7 +70,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                           "을 해주세요",
                           style: TextStyle(
                             color: ColorStyles.black,
-                            fontFamily: "SUIT",
                             fontSize: 24,
                             fontWeight: FontWeight.w500,
                             height: 1.4,
@@ -91,7 +88,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                             """보호자가 아닌 반드시 본인명의로 인증해야\n안전한 약알을 이용하실 수 있어요 :)""",
                             style: TextStyle(
                               color: ColorStyles.gray5,
-                              fontFamily: "SUIT",
                               fontSize: 16,
                               fontWeight: FontWeight.w500,
                               height: 1.6,
@@ -133,7 +129,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                           "건너뛰기",
                           style: TextStyle(
                             color: ColorStyles.gray5,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,
@@ -163,7 +158,6 @@ class IdentificationEntryScreen extends StatelessWidget {
                           "인증하기",
                           style: TextStyle(
                             color: ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,

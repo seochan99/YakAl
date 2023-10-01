@@ -56,7 +56,6 @@ class BackToLoginDialog extends StatelessWidget {
                           "확인",
                           style: TextStyle(
                             color: ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,

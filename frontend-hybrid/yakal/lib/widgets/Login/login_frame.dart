@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class LoginFrame extends StatelessWidget {
   final Color outer;
   final Color inner;
-  final PreferredSizeWidget? appBar;
   final Widget child;
+  final PreferredSizeWidget? appBar;
 
   const LoginFrame({
     required this.child,

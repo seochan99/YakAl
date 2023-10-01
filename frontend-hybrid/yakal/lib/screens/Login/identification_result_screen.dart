@@ -26,7 +26,7 @@ class IdentificationResultScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: ColorStyles.white,
           appBar: AppBar(
-            title: LoginProgressBar(
+            title: LoginAppBar(
               progress: ELoginProcess.IDENTIFY,
               width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
@@ -47,7 +47,6 @@ class IdentificationResultScreen extends StatelessWidget {
                 "뒤로",
                 style: TextStyle(
                   color: ColorStyles.gray5,
-                  fontFamily: "SUIT",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   height: 1.4,
@@ -105,7 +104,6 @@ Widget _resultScreen(BuildContext context, bool isSuccess) {
                   "본인인증",
                   style: TextStyle(
                     color: ColorStyles.black,
-                    fontFamily: "SUIT",
                     fontSize: 24,
                     fontWeight: FontWeight.w700,
                     height: 1.4,
@@ -115,7 +113,6 @@ Widget _resultScreen(BuildContext context, bool isSuccess) {
                   isSuccess ? "에 성공했습니다!" : "에 실패했습니다...",
                   style: const TextStyle(
                     color: ColorStyles.black,
-                    fontFamily: "SUIT",
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
                     height: 1.4,
@@ -136,7 +133,6 @@ Widget _resultScreen(BuildContext context, bool isSuccess) {
                         : "본인인증 과정에서 문제가 발생하였습니다.\n다시 시도해주시기 바랍니다.",
                     style: const TextStyle(
                       color: ColorStyles.gray5,
-                      fontFamily: "SUIT",
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                       height: 1.6,
@@ -185,7 +181,6 @@ Widget _resultScreen(BuildContext context, bool isSuccess) {
                   isSuccess ? "다음" : "다시하기",
                   style: const TextStyle(
                     color: ColorStyles.white,
-                    fontFamily: "SUIT",
                     fontSize: 20.0,
                     fontWeight: FontWeight.w600,
                     height: 1,

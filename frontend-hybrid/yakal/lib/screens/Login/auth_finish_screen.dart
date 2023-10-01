@@ -17,7 +17,7 @@ class AuthFinishScreen extends StatelessWidget {
         child: Scaffold(
           backgroundColor: ColorStyles.white,
           appBar: AppBar(
-            title: LoginProgressBar(
+            title: LoginAppBar(
               progress: ELoginProcess.FINISHED,
               width: MediaQuery.of(context).size.width / 2.5,
               height: 8,
@@ -38,7 +38,6 @@ class AuthFinishScreen extends StatelessWidget {
                 "뒤로",
                 style: TextStyle(
                   color: ColorStyles.gray5,
-                  fontFamily: "SUIT",
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   height: 1.4,
@@ -66,7 +65,6 @@ class AuthFinishScreen extends StatelessWidget {
                                 "홍길동",
                                 style: TextStyle(
                                   color: ColorStyles.black,
-                                  fontFamily: "SUIT",
                                   fontSize: 24,
                                   fontWeight: FontWeight.w700,
                                   height: 1.4,
@@ -76,7 +74,6 @@ class AuthFinishScreen extends StatelessWidget {
                                 "님,",
                                 style: TextStyle(
                                   color: ColorStyles.black,
-                                  fontFamily: "SUIT",
                                   fontSize: 24,
                                   fontWeight: FontWeight.w600,
                                   height: 1.4,
@@ -88,7 +85,6 @@ class AuthFinishScreen extends StatelessWidget {
                             "회원가입이 완료되었습니다!",
                             style: TextStyle(
                               color: ColorStyles.black,
-                              fontFamily: "SUIT",
                               fontSize: 24,
                               fontWeight: FontWeight.w600,
                               height: 1.4,
@@ -129,7 +125,6 @@ class AuthFinishScreen extends StatelessWidget {
                           "메인으로",
                           style: TextStyle(
                             color: ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,
