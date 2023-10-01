@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class LoginPageMoveButton extends StatelessWidget {
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final Color backgroundColor;
   final Color color;
   final String text;

@@ -9,9 +9,9 @@ import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
 import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginTerms/screen.dart';
-import 'package:yakal/screens/Login/Nickname/screen.dart';
+import 'package:yakal/screens/Login/ModeSelection/screen.dart';
+import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/auth_finish_screen.dart';
-import 'package:yakal/screens/Login/select_mode_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
@@ -80,7 +80,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/mode',
-              page: () => const SelectModeScreen(),
+              page: () => const ModeSelectionScreen(),
             ),
             GetPage(
               name: '/finish',
