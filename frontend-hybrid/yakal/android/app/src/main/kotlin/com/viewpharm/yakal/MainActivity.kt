@@ -1,4 +1,4 @@
-package com.example.yakal
+package com.viewpharm.yakal
 
 import io.flutter.embedding.android.FlutterActivity
 
