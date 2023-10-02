@@ -41,7 +41,7 @@ class SurveySeniorScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 16),
                 ),
                 SizedBox(height: 16),
-                SurveyList(),
+                SurveSenioryList(),
               ],
             ),
           ),
@@ -51,8 +51,8 @@ class SurveySeniorScreen extends StatelessWidget {
   }
 }
 
-class SurveyList extends StatelessWidget {
-  const SurveyList({super.key});
+class SurveSenioryList extends StatelessWidget {
+  const SurveSenioryList({super.key});
 
   @override
   Widget build(BuildContext context) {

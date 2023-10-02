@@ -16,6 +16,7 @@ import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
+import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
@@ -91,7 +92,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/appSetting', page: () => const SettingScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
-        GetPage(name: "/normalSurvey", page: () => const SurveySeniorScreen()),
+        GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
       ],
     );
