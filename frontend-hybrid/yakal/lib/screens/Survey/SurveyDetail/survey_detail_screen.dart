@@ -110,27 +110,30 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
         widget.title == '음주력 테스트' ||
         widget.title == "흡연력 테스트") {
       // Return a Row for 우울증
-      return Row(
-        // column, text Btn
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: widget.options.asMap().entries.map((entry) {
-          int index = entry.key;
-          String option = entry.value;
-          bool isSelected = selectedOptionIndex == index;
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          // column, text Btn
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: widget.options.asMap().entries.map((entry) {
+            int index = entry.key;
+            String option = entry.value;
+            bool isSelected = selectedOptionIndex == index;
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedOptionIndex = index;
-                widget.onOptionSelected(index);
-              });
-            },
-            child: SurveyDetailOption1BtnWidget(
-              isSelected: isSelected,
-              option: option,
-            ),
-          );
-        }).toList(),
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedOptionIndex = index;
+                  widget.onOptionSelected(index);
+                });
+              },
+              child: SurveyDetailOption2BtnWidget(
+                isSelected: isSelected,
+                option: option,
+              ),
+            );
+          }).toList(),
+        ),
       );
     } else if (widget.title == '복약 순응도 테스트' ||
         widget.title == '우울증 선별 테스트' ||
@@ -238,25 +241,38 @@ class SurveyDetailOption2BtnWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor =
+        isSelected ? const Color(0xFFF1F5FE) : const Color(0xFFFFFFFF);
+    final borderColor =
+        isSelected ? const Color(0xFF5588FD) : const Color(0xFFE9E9EE);
+
     return Column(
       children: [
-        SvgPicture.asset(
-          isSelected
-              ? 'assets/icons/Check_active.svg'
-              : 'assets/icons/Check_disable.svg',
-          width: 48,
-          height: 48,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          option,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color:
-                isSelected ? const Color(0xFF2666F6) : const Color(0xFF90909F),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 16),
+          // expand
+          width: double.infinity,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            border: Border.all(
+              color: borderColor,
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Text(
+            option,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.w700,
+              color: isSelected
+                  ? const Color(0xFF2666F6)
+                  : const Color(0xFF626272),
+            ),
           ),
         ),
+        const SizedBox(height: 16)
       ],
     );
   }

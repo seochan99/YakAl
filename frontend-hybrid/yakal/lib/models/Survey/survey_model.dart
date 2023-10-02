@@ -87,6 +87,7 @@ class SurveyModel {
         } else {
           resultComment = '건강한 상태입니다';
         }
+        break;
       case "시청각 테스트":
         if (score == 0) {
           resultComment = '건강한 상태입니다';
@@ -97,12 +98,14 @@ class SurveyModel {
         } else {
           resultComment = '건강한 상태입니다';
         }
+        break;
       case "일상생활 동작 지수":
         if (score <= 4) {
           resultComment = "전문가 상담을 통해 치매 검사를 받아 보시기를 추천 드립니다";
         } else if (score >= 5) {
           resultComment = "정상 입니다";
         }
+        break;
       case "음주력 테스트":
         if (score <= 9) {
           resultComment = "아직 위험 수준에는 이르지 않았습니다.";
@@ -115,6 +118,7 @@ class SurveyModel {
         } else {
           resultComment = "아직 위험 수준에는 이르지 않았습니다.";
         }
+        break;
       case "치매 테스트":
         if (score <= 1) {
           resultComment = "정상입니다.";
@@ -127,6 +131,7 @@ class SurveyModel {
         } else {
           resultComment = "정상입니다";
         }
+        break;
       case "폐쇄성 수면 무호흡증":
         if (score <= 2) {
           resultComment = "폐쇄성 수면 무호흡증 저위험 군입니다";
@@ -137,6 +142,21 @@ class SurveyModel {
         } else {
           resultComment = "폐쇄성 수면 무호흡증 저위험 군입니다";
         }
+        break;
+      case "흡연력 테스트":
+        resultComment = '$score/10점 입니다.';
+      case "간이 영양 상태 조사":
+        if (0 <= score && score <= 7) {
+          resultComment = "영양 불량 상태입니다";
+        } else if (8 <= score && score <= 11) {
+          resultComment = "영양불량 위험 상태입니다";
+        } else if (12 <= score && score <= 14) {
+          resultComment = "정상입니다";
+        } else {
+          resultComment = "정상입니다";
+        }
+        break;
+
       default:
         resultComment = '테스트가 정상적으로 진행되지 않았습니다.';
     }
@@ -416,5 +436,79 @@ final List<SurveyModel> tests = [
     resultComment: '',
     resultDescription:
         "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 수면 중 무호흡증은 수면의 질을 크게 떨어뜨릴 수 있기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
+  ),
+  SurveyModel(
+    title: '흡연력 테스트',
+    comment: '이용자의 흡연 여부와 흡연 습관을 파악하기 위한 설문입니다.',
+    iconPath: 'assets/icons/circle_3.svg',
+    time: '1',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: [
+      QuestionModel(
+        question: questionSmoking[0],
+        options: ["피우지 않는다.", "과거에 피웠으나 지금은 끊었다.", "현재 피운다."],
+        scores: [1, 2000, 4000],
+      ),
+      QuestionModel(
+        question: questionSmoking[1],
+        options: ["피우지 않는다.", "1년 미만", "3년 미만", "10년 미만", "10년 이상"],
+        scores: [1, 100, 200, 300, 400],
+      ),
+      QuestionModel(
+        question: questionSmoking[2],
+        options: ["피우지 않는다.", "1/2갑 미만", "1/2갑 ~ 2갑", "1 ~ 2갑", "2갑 이상"],
+        scores: [1, 10, 20, 30, 40],
+      ),
+    ],
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "이용자의 흡연은 호흡기에 영향을 미칠 수 있고 강력한 발암물질로써 이용자의 건강상태에 부정적인 영향을 줄 수 있습니다. 의존적인 흡연습관을 가진 경우 가까운 센터를 방문하거나 상담 및 약물치료를 통해 개선할 수 있습니다. ",
+  ),
+  SurveyModel(
+    title: '간이 영양 상태 조사',
+    comment:
+        '노인분들을 대상으로 하는 일회성 설문조사입니다. 이용자의 영양상태를 파악하여 맞춤형 식단 및 생활습관을 안내드릴 수 있습니다.',
+    iconPath: 'assets/icons/circle_1.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: [
+      QuestionModel(
+        question: questionNutritionalAssessment[0],
+        options: ["그렇다.", "보통", "아니다"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[1],
+        options: ["3kg 이상 감소", "1~2kg 감소", "변화 없다", "모르겠다"],
+        scores: [0, 2, 3, 1],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[2],
+        options: ["침대나 의자에서만 생활이 가능", "집에서만 활동이 가능", "외출 가능, 활동에 제약이 없음"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[3],
+        options: ["예", "아니오"],
+        scores: [0, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[4],
+        options: ["중증 치매 또는 우울증", "경증 치매", "없음"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[5],
+        options: ["31cm보다 미만", "31cm 보다 이상"],
+        scores: [0, 3],
+      ),
+    ],
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "이 설문에서 낮은 점수를 받은 경우 영양상태가 불량함을 의미합니다. 노인분들의 영양 균형을 위해서는 높은 품질의 단백질이 포함된 식단을 섭취하면 도움이 됩니다.",
   ),
 ];
