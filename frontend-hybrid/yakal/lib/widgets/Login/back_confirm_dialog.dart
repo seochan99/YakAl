@@ -3,8 +3,15 @@ import 'package:get/get.dart';
 
 import '../../utilities/style/color_styles.dart';
 
-class BackToLoginDialog extends StatelessWidget {
-  const BackToLoginDialog({super.key});
+class BackConfirmDialog extends StatelessWidget {
+  final String question;
+  final String backTo;
+
+  const BackConfirmDialog({
+    super.key,
+    required this.question,
+    required this.backTo,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +31,9 @@ class BackToLoginDialog extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                "로그아웃되었습니다.",
-                style: TextStyle(
+              Text(
+                question,
+                style: const TextStyle(
                   fontFamily: "Pretendard",
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
@@ -46,6 +53,38 @@ class BackToLoginDialog extends StatelessWidget {
                           Get.back();
                         },
                         style: TextButton.styleFrom(
+                          backgroundColor: ColorStyles.gray2,
+                          splashFactory: NoSplash.splashFactory,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                        ),
+                        child: const Text(
+                          "아니요",
+                          style: TextStyle(
+                            color: ColorStyles.gray6,
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w600,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  Expanded(
+                    child: SizedBox(
+                      height: 56,
+                      child: TextButton(
+                        onPressed: () {
+                          Get.back(); // Close Dialog
+
+                          Get.until(
+                              (Route route) => Get.currentRoute == backTo);
+                        },
+                        style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.main,
                           splashFactory: NoSplash.splashFactory,
                           shape: RoundedRectangleBorder(
@@ -53,10 +92,9 @@ class BackToLoginDialog extends StatelessWidget {
                           ),
                         ),
                         child: const Text(
-                          "확인",
+                          "다시하기",
                           style: TextStyle(
                             color: ColorStyles.white,
-                            fontFamily: "SUIT",
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
                             height: 1,

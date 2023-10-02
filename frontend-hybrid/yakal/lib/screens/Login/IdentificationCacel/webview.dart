@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:get/get.dart';
 
-import '../../utilities/style/color_styles.dart';
+import '../../../utilities/style/color_styles.dart';
 
 class IdentificationCancelWebView extends StatefulWidget {
   const IdentificationCancelWebView({super.key});
@@ -33,9 +33,7 @@ class _IdentificationCancelWebViewState
           body: InAppWebView(
             key: webViewKey,
             onLoadStart: (InAppWebViewController controller, Uri? uri) {
-              print("webview is executed?");
               if (uri?.path == "https://yakal/mobile/identify/cancel") {
-                print("webview is executed!");
                 webViewController.goBack();
                 Get.back();
               }
