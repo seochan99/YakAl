@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/e',
+      initialRoute: '/login',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
