@@ -12,6 +12,9 @@ import 'package:yakal/screens/Auth/login_entry_screen.dart';
 import 'package:yakal/screens/Auth/login_terms_screen.dart';
 import 'package:yakal/screens/Auth/select_mode_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_star_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
@@ -55,6 +58,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
+        GetPage(name: "/profile/boho", page: () => const InfoBohoScreen()),
+        GetPage(
+            name: "/profile/hospital", page: () => const InfoHospitalScreen()),
+        GetPage(name: "/profile/star", page: () => const InfoStaroScreen()),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
