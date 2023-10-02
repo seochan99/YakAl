@@ -18,49 +18,49 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // Add underlying condition to special notes
+  // 특이사항 기저질환 추가
   void addUnderlyingCondition(String condition) {
     user.update((val) {
       val?.specialNote?.underlyingConditions.add(condition);
     });
   }
 
-  // Remove underlying condition from special notes
+  // 특이사항 기저질환 삭제
   void removeUnderlyingCondition(String condition) {
     user.update((val) {
       val?.specialNote?.underlyingConditions.remove(condition);
     });
   }
 
-  // Add allergy to special notes
+  // 특이사항 알러지 추가
   void addAllergy(String allergy) {
     user.update((val) {
       val?.specialNote?.allergies.add(allergy);
     });
   }
 
-  // Remove allergy from special notes
+  // 특이사항 알러지 삭제
   void removeAllergy(String allergy) {
     user.update((val) {
       val?.specialNote?.allergies.remove(allergy);
     });
   }
 
-  // Add fall to special notes
+  // 특이사항 낙상 추가
   void addFall(String fall) {
     user.update((val) {
       val?.specialNote?.falls.add(fall);
     });
   }
 
-  // Remove fall from special notes
+  // 특이사항 낙상 삭제
   void removeFall(String fall) {
     user.update((val) {
       val?.specialNote?.falls.remove(fall);
     });
   }
 
-  // Add hospital record
+  // 입원기록 추가
   void addHospitalRecord(DateTime admissionDate, String location) {
     user.update((val) {
       val?.hospitalRecordList?.admissionRecords.add(
@@ -69,14 +69,14 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // Remove hospital record
+  // 입원기록 삭제
   void removeHospitalRecord(int index) {
     user.update((val) {
       val?.hospitalRecordList?.admissionRecords.removeAt(index);
     });
   }
 
-  // Add emergency room visit
+  // 응급실 기록 추가
   void addEmergencyRoomVisit(DateTime admissionDate, String location) {
     user.update((val) {
       val?.hospitalRecordList?.emergencyRoomVisits.add(
@@ -85,7 +85,7 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // Remove emergency room visit
+  // 응급실 기록 삭제
   void removeEmergencyRoomVisit(int index) {
     user.update((val) {
       val?.hospitalRecordList?.emergencyRoomVisits.removeAt(index);

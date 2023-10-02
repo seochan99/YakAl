@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: "/profile/boho", page: () => const InfoBohoScreen()),
+        GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(
             name: "/profile/hospital", page: () => const InfoHospitalScreen()),
         GetPage(name: "/profile/star", page: () => const InfoStaroScreen()),
