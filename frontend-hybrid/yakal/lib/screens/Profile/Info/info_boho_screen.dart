@@ -114,7 +114,7 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                         ),
                       ),
                       // 등록된 보호자
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                       const Text(
                         '등록된 보호자',
                         style: TextStyle(
@@ -134,7 +134,12 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(20.0),
+              padding: const EdgeInsets.fromLTRB(
+                20.0,
+                0.0,
+                20.0,
+                30,
+              ),
               child: ValueListenableBuilder<TextEditingValue>(
                 valueListenable: _bohoNameController,
                 builder: (context, value, child) {
