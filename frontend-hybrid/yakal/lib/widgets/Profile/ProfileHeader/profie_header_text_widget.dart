@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import '../../../utilities/style/color_styles.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
 class ProfileHeaderText extends StatefulWidget {
+  static const int _usernameLimits = 5;
   const ProfileHeaderText({
     super.key,
     required this.userViewModel,
@@ -16,6 +18,8 @@ class ProfileHeaderText extends StatefulWidget {
 }
 
 class _ProfileHeaderTextState extends State<ProfileHeaderText> {
+  final FocusNode textFocus = FocusNode();
+  final String _username = "";
   final TextEditingController _nickNameController = TextEditingController();
   @override
   void dispose() {

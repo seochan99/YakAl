@@ -61,61 +61,62 @@ class SurveSenioryList extends StatelessWidget {
     return Column(
       children: [
         for (int index = 0; index < tests.length; index++)
-          InkWell(
-            onTap: () {
-              // test type별로 별도 view구성 처리하기
-              if (!tests[index].isCompleted) {
-                Get.to(() => SurveyDetailType1Screen(
-                      survey: tests[index],
-                    ));
-              }
-            },
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              margin: const EdgeInsets.only(bottom: 12),
-              decoration: BoxDecoration(
-                color: tests[index].isCompleted
-                    ? const Color(0xFFF5F5F9)
-                    : const Color(0xFFFFFFFF),
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
+          if (tests[index].isSenior == 0 || tests[index].isSenior == 2)
+            InkWell(
+              onTap: () {
+                // test type별로 별도 view구성 처리하기
+                if (!tests[index].isCompleted) {
+                  Get.to(() => SurveyDetailType1Screen(
+                        survey: tests[index],
+                      ));
+                }
+              },
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                margin: const EdgeInsets.only(bottom: 12),
+                decoration: BoxDecoration(
                   color: tests[index].isCompleted
                       ? const Color(0xFFF5F5F9)
-                      : const Color(0xFFE9E9EE),
-                  width: 1.0,
+                      : const Color(0xFFFFFFFF),
+                  borderRadius: BorderRadius.circular(8),
+                  border: Border.all(
+                    color: tests[index].isCompleted
+                        ? const Color(0xFFF5F5F9)
+                        : const Color(0xFFE9E9EE),
+                    width: 1.0,
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      tests[index].iconPath,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      tests[index].title,
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: tests[index].isCompleted
+                            ? const Color(0xffC6C6CF)
+                            : const Color(0xff151515),
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      tests[index].isCompleted ? '완료' : '미완료',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: tests[index].isCompleted
+                            ? const Color(0xffC6C6CF)
+                            : const Color(0xff5588FD),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              child: Row(
-                children: [
-                  SvgPicture.asset(
-                    tests[index].iconPath,
-                    width: 40,
-                    height: 40,
-                  ),
-                  const SizedBox(width: 12),
-                  Text(
-                    tests[index].title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: tests[index].isCompleted
-                          ? const Color(0xffC6C6CF)
-                          : const Color(0xff151515),
-                    ),
-                  ),
-                  const Spacer(),
-                  Text(
-                    tests[index].isCompleted ? '완료' : '미완료',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: tests[index].isCompleted
-                          ? const Color(0xffC6C6CF)
-                          : const Color(0xff5588FD),
-                    ),
-                  ),
-                ],
-              ),
             ),
-          ),
         const SizedBox(height: 16),
       ],
     );

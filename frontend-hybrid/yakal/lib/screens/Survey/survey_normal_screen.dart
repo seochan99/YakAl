@@ -12,7 +12,7 @@ class SurveyNormalScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
           title: const Text(
-            '자가 진단 테스트 (65세 이상)',
+            '자가 진단 테스트 (65세 미만)',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
           leading: IconButton(

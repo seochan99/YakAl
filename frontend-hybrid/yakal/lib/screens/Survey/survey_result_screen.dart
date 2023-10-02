@@ -22,6 +22,7 @@ class SurveyResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(survey.title,
             style: const TextStyle(
               fontSize: 16,
