@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Profile/user.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -186,10 +187,32 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
 
       if (hospitalRecordList != null) {
         return Column(
-          children: hospitalRecordList.admissionRecords.map((record) {
+          children:
+              hospitalRecordList.admissionRecords.asMap().entries.map((entry) {
+            final int index = entry.key;
+            final HospitalRecord record = entry.value;
+
             return ListTile(
+              contentPadding:
+                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+              trailing: InkWell(
+                onTap: () {
+                  widget.userViewModel.removeHospitalRecord(index);
+                },
+                child: SvgPicture.asset(
+                  'assets/icons/icon-bin.svg',
+                  width: 24,
+                  height: 24,
+                ),
+              ),
               title: Text(
-                  '${DateFormat('yyyy-MM-dd').format(record.admissionDate)} / ${record.location}'),
+                '${DateFormat('yyyy-MM-dd').format(record.admissionDate)} / ${record.location}',
+                style: const TextStyle(
+                  color: ColorStyles.black,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
             );
           }).toList(),
         );
