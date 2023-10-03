@@ -202,9 +202,11 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
                           )
                         : LoginPageMoveButton(
                             "다음",
-                            onPressed: () {
-                              Get.toNamed("/login/mode");
-                            },
+                            onPressed: _username.isEmpty
+                                ? null
+                                : () {
+                                    Get.toNamed("/login/mode");
+                                  },
                             // onPressed: _username.isEmpty
                             //     ? null
                             //     : _onClickNext(context),
