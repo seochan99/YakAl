@@ -27,6 +27,7 @@ dependencies:
     git:
       url: https://github.com/Estrelio/flutter_inappwebview.git
       ref: fix-xcode-17
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

@@ -63,6 +63,13 @@ class UserViewModel extends GetxController {
   // 입원기록 추가
   void addHospitalRecord(DateTime admissionDate, String location) {
     user.update((val) {
+      // Ensure hospitalRecordList is not null
+      val?.hospitalRecordList ??= HospitalRecordList(
+        admissionRecords: [],
+        emergencyRoomVisits: [],
+      );
+
+      // Add the new hospital record
       val?.hospitalRecordList?.admissionRecords.add(
         HospitalRecord(admissionDate: admissionDate, location: location),
       );

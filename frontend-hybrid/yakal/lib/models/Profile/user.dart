@@ -7,9 +7,13 @@ class User {
   User({
     required this.nickName,
     this.guardian,
-    this.hospitalRecordList,
+    HospitalRecordList? hospitalRecordList,
     this.specialNote,
-  });
+  }) : hospitalRecordList = hospitalRecordList ??
+            HospitalRecordList(
+              admissionRecords: [],
+              emergencyRoomVisits: [],
+            );
 }
 
 // 보호자

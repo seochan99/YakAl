@@ -105,35 +105,22 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '닉네임 수정',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  '약알이 어떻게 불러드릴까요?',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
+                            Text(
+                              '닉네임 수정',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            const Spacer(),
-                            // X버튼 아이콘 누르면 sheet 닫힘
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close),
+                            Text(
+                              '약알이 어떻게 불러드릴까요?',
+                              style: TextStyle(fontSize: 16.0),
                             ),
                           ],
                         ),
-
                         // text input box
                         const SizedBox(height: 20),
                         InputHorizontalTextFieldWidget(
