@@ -94,21 +94,21 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/boho",
                       iconImg: 'assets/icons/icon-mypage-protector.svg',
                       text: '보호자',
                     ),
                   ),
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/hospital",
                       iconImg: 'assets/icons/icon-mypage-hospital.svg',
                       text: '병원 기록',
                     ),
                   ),
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/star",
                       iconImg: 'assets/icons/icon-mypage-special.svg',
                       text: '특이사항',
                     ),
