@@ -63,15 +63,13 @@ class UserViewModel extends GetxController {
   // 입원기록 추가
   void addHospitalRecord(DateTime admissionDate, String location) {
     user.update((val) {
-      // Ensure hospitalRecordList is not null
       val?.hospitalRecordList ??= HospitalRecordList(
         admissionRecords: [],
         emergencyRoomVisits: [],
       );
 
-      // Add the new hospital record
       val?.hospitalRecordList?.admissionRecords.add(
-        HospitalRecord(admissionDate: admissionDate, location: location),
+        HospitalRecord(date: admissionDate, location: location),
       );
     });
   }
@@ -86,8 +84,13 @@ class UserViewModel extends GetxController {
   // 응급실 기록 추가
   void addEmergencyRoomVisit(DateTime admissionDate, String location) {
     user.update((val) {
+      val?.hospitalRecordList ??= HospitalRecordList(
+        admissionRecords: [],
+        emergencyRoomVisits: [],
+      );
+
       val?.hospitalRecordList?.emergencyRoomVisits.add(
-        HospitalRecord(admissionDate: admissionDate, location: location),
+        HospitalRecord(date: admissionDate, location: location),
       );
     });
   }

@@ -20,16 +20,24 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
   final TextEditingController _locationController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    void _handleAdmissionButtonPress(DateTime selectedDate, String location) {
-      widget.userViewModel.addHospitalRecord(selectedDate, location);
+    void handleAdmissionButtonPress(DateTime selectedDate, String location,
+        {required String title}) {
+      title == 'admissionRecords'
+          ? widget.userViewModel.addHospitalRecord(selectedDate, location)
+          : widget.userViewModel.addEmergencyRoomVisit(selectedDate, location);
+
       _locationController.clear();
 
       Navigator.pop(context);
     }
 
-    void _showAdmissionBottomSheet() {
+    void showBottomSheet(
+      String title,
+    ) {
       DateTime? selectedDate;
       String location = '';
+
+      // required title
 
       showModalBottomSheet<void>(
         isScrollControlled: true,
@@ -59,25 +67,30 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        const Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '입원 기록 추가',
-                              style: TextStyle(
+                              title == "admissionRecords"
+                                  ? '입원 기록 추가'
+                                  : "응급실 방문 기록 추가",
+                              style: const TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
                             Text(
-                              '입원 날짜와 장소를 입력하세요.',
-                              style: TextStyle(fontSize: 16.0),
+                              title == "admissionRecords"
+                                  ? '입원 날짜와 장소를 입력하세요.'
+                                  : "응급실 방문 날짜와 장소를 입력하세요.",
+                              style: const TextStyle(fontSize: 16.0),
                             ),
                           ],
                         ),
                         const SizedBox(height: 20),
-                        const Text("입원 날짜",
-                            style: TextStyle(
+                        Text(
+                            title == "admissionRecords" ? "입원 날짜" : "응급실 방문 날짜",
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                             )),
@@ -123,8 +136,9 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        const Text("입원 장소",
-                            style: TextStyle(
+                        Text(
+                            title == "admissionRecords" ? "입원 장소" : "응급실 방문 장소",
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                             )),
@@ -135,13 +149,15 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                           },
                           controller: _locationController,
                           decoration: InputDecoration(
-                            labelText: '입원 장소',
+                            labelText: title == "admissionRecords"
+                                ? "입원 장소"
+                                : "응급실 방문 장소",
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                         ),
-                        const SizedBox(height: 20),
+                        const SizedBox(height: 32),
                         ValueListenableBuilder(
                             valueListenable: _locationController,
                             builder: (context, value, child) {
@@ -160,8 +176,10 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                 onPressed:
                                     selectedDate != null && location.isNotEmpty
                                         ? () {
-                                            _handleAdmissionButtonPress(
-                                                selectedDate!, location);
+                                            handleAdmissionButtonPress(
+                                                title: title,
+                                                selectedDate!,
+                                                location);
                                           }
                                         : null,
                                 child: const Text(
@@ -181,36 +199,58 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
       );
     }
 
-    Widget _buildHospitalRecords() {
+    void showAdmissionBottomSheet() {
+      // Show the admission bottom sheet
+      showBottomSheet("admissionRecords");
+    }
+
+    void showEmergencyRoomBottomSheet() {
+      // Show the emergency room bottom sheet
+      showBottomSheet("emergencyRoomVisits");
+    }
+
+    Widget buildHospitalRecords({required String title}) {
       var hospitalRecordList =
           widget.userViewModel.user.value.hospitalRecordList;
 
       if (hospitalRecordList != null) {
+        List<HospitalRecord> filteredRecords = title == 'admissionRecords'
+            ? hospitalRecordList.admissionRecords
+            : hospitalRecordList.emergencyRoomVisits;
+
         return Column(
-          children:
-              hospitalRecordList.admissionRecords.asMap().entries.map((entry) {
+          children: filteredRecords.asMap().entries.map((entry) {
+            // hospitalRecordList.$title.asMap().entries.map((entry) {
             final int index = entry.key;
             final HospitalRecord record = entry.value;
 
-            return ListTile(
-              contentPadding:
-                  const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-              trailing: InkWell(
-                onTap: () {
-                  widget.userViewModel.removeHospitalRecord(index);
-                },
-                child: SvgPicture.asset(
-                  'assets/icons/icon-bin.svg',
-                  width: 24,
-                  height: 24,
-                ),
+            return Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: ColorStyles.gray2),
+                borderRadius: BorderRadius.circular(10),
               ),
-              title: Text(
-                '${DateFormat('yyyy-MM-dd').format(record.admissionDate)} / ${record.location}',
-                style: const TextStyle(
-                  color: ColorStyles.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
+              child: ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+                trailing: InkWell(
+                  onTap: () {
+                    title == 'admissionRecords'
+                        ? widget.userViewModel.removeHospitalRecord(index)
+                        : widget.userViewModel.removeEmergencyRoomVisit(index);
+                  },
+                  child: SvgPicture.asset(
+                    'assets/icons/icon-bin.svg',
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+                title: Text(
+                  '${DateFormat('yyyy-MM-dd').format(record.date)} / ${record.location}',
+                  style: const TextStyle(
+                    color: ColorStyles.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             );
@@ -260,7 +300,9 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                       .hospitalRecordList!
                                       .admissionRecords
                                       .isNotEmpty
-                              ? _buildHospitalRecords()
+                              ? buildHospitalRecords(
+                                  // emergency
+                                  title: "admissionRecords")
                               : const SizedBox.shrink(),
                         ),
 
@@ -274,7 +316,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                             ),
-                            onPressed: _showAdmissionBottomSheet,
+                            onPressed: showAdmissionBottomSheet,
                             child: Row(
                               children: [
                                 SvgPicture.asset(
@@ -292,7 +334,57 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                 ),
                               ],
                             )),
+                        const SizedBox(height: 48),
+                        const Text(
+                          '응급실 방문 기록',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w700),
+                        ),
+
                         const SizedBox(height: 16),
+                        Obx(
+                          () => widget.userViewModel.user.value
+                                          .hospitalRecordList !=
+                                      null &&
+                                  widget
+                                      .userViewModel
+                                      .user
+                                      .value
+                                      .hospitalRecordList!
+                                      .emergencyRoomVisits
+                                      .isNotEmpty
+                              ? buildHospitalRecords(
+                                  title: "emergencyRoomVisits")
+                              : const SizedBox.shrink(),
+                        ),
+                        const SizedBox(height: 16),
+                        TextButton(
+                            style: TextButton.styleFrom(
+                              backgroundColor: ColorStyles.gray1,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 14),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            onPressed: showEmergencyRoomBottomSheet,
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  'assets/icons/plus-circle.svg',
+                                  width: 24,
+                                  height: 24,
+                                ),
+                                const SizedBox(width: 14),
+                                const Text(
+                                  "날짜/장소 추가",
+                                  style: TextStyle(
+                                      color: ColorStyles.gray5,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            )),
                         // InfoBohoList(),
                       ],
                     ),

@@ -29,11 +29,11 @@ class Guardian {
 
 // 병원 기록
 class HospitalRecord {
-  DateTime admissionDate;
+  DateTime date;
   String location;
 
   HospitalRecord({
-    required this.admissionDate,
+    required this.date,
     required this.location,
   });
 }
