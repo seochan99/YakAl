@@ -226,17 +226,21 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                         ),
 
                         const SizedBox(height: 16),
-                        widget.userViewModel.user.value.hospitalRecordList !=
-                                    null &&
-                                widget
-                                    .userViewModel
-                                    .user
-                                    .value
-                                    .hospitalRecordList!
-                                    .admissionRecords
-                                    .isNotEmpty
-                            ? Obx(() => _buildHospitalRecords())
-                            : const SizedBox.shrink(),
+                        Obx(
+                          () => widget.userViewModel.user.value
+                                          .hospitalRecordList !=
+                                      null &&
+                                  widget
+                                      .userViewModel
+                                      .user
+                                      .value
+                                      .hospitalRecordList!
+                                      .admissionRecords
+                                      .isNotEmpty
+                              ? _buildHospitalRecords()
+                              : const SizedBox.shrink(),
+                        ),
+
                         const SizedBox(height: 16),
                         TextButton(
                             style: TextButton.styleFrom(
