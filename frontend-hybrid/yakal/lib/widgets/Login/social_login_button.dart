@@ -49,7 +49,6 @@ class SocialLoginButton extends StatelessWidget {
               text,
               style: TextStyle(
                 color: color,
-                fontFamily: "SUIT",
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 height: 1.685,

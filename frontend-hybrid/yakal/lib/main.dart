@@ -3,18 +3,18 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:yakal/screens/Auth/auth_finish_screen.dart';
-import 'package:yakal/screens/Auth/enter_nickname_screen.dart';
-import 'package:yakal/screens/Auth/identification_entry_screen.dart';
-import 'package:yakal/screens/Auth/identification_result_screen.dart';
-import 'package:yakal/screens/Auth/identification_screen.dart';
-import 'package:yakal/screens/Auth/login_entry_screen.dart';
-import 'package:yakal/screens/Auth/login_terms_screen.dart';
-import 'package:yakal/screens/Auth/select_mode_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_star_screen.dart';
+import 'package:yakal/screens/Login/Identification/screen.dart';
+import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
+import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
+import 'package:yakal/screens/Login/LoginEntry/screen.dart';
+import 'package:yakal/screens/Login/LoginFinished/screen.dart';
+import 'package:yakal/screens/Login/LoginTerms/screen.dart';
+import 'package:yakal/screens/Login/ModeSelection/screen.dart';
+import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
@@ -83,15 +83,15 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/nickname',
-              page: () => const EnterNicknameScreen(),
+              page: () => const NicknameInputScreen(),
             ),
             GetPage(
               name: '/mode',
-              page: () => const SelectModeScreen(),
+              page: () => const ModeSelectionScreen(),
             ),
             GetPage(
               name: '/finish',
-              page: () => const AuthFinishScreen(),
+              page: () => const LoginFinishedScreen(),
             ),
           ],
         ),
