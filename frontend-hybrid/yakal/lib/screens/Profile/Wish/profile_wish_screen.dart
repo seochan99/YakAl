@@ -40,84 +40,102 @@ class _ProfileWishScreenState extends State<ProfileWishScreen> {
         ),
         body: Container(
           color: ColorStyles.white,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: '더 나은 약알을 위해\n',
-                        style: TextStyle(
-                          color: Color(0xFF151515),
-                          fontSize: 24,
-                          fontFamily: 'SUIT',
-                          fontWeight: FontWeight.w500,
-                        ),
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: '더 나은 약알을 위해\n',
+                                  style: TextStyle(
+                                    color: Color(0xFF151515),
+                                    fontSize: 24,
+                                    fontFamily: 'SUIT',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '소중한 의견',
+                                  style: TextStyle(
+                                    color: Color(0xFF151515),
+                                    fontSize: 24,
+                                    fontFamily: 'SUIT',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: '을 남겨주세요!',
+                                  style: TextStyle(
+                                    color: Color(0xFF151515),
+                                    fontSize: 24,
+                                    fontFamily: 'SUIT',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 40),
+                          // textfield
+                          TextField(
+                            // height
+                            maxLines: 8,
+                            controller: _opinionController,
+                            decoration: InputDecoration(
+                              hintText: '특정 주제의 도배글, 내용없는 글쓰기는 자제해주세요.',
+                              hintStyle: const TextStyle(
+                                color: ColorStyles.gray3,
+                                fontSize: 16,
+                                fontFamily: 'SUIT',
+                                fontWeight: FontWeight.w500,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: ColorStyles.gray2,
+                                  width: 2,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: ColorStyles.gray2,
+                                  width: 2,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                                borderSide: const BorderSide(
+                                  color: ColorStyles.main,
+                                  width: 2,
+                                ),
+                              ),
+                            ),
+                          ), // 의견 남기기 버튼
+                        ],
                       ),
-                      TextSpan(
-                        text: '소중한 의견',
-                        style: TextStyle(
-                          color: Color(0xFF151515),
-                          fontSize: 24,
-                          fontFamily: 'SUIT',
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '을 남겨주세요!',
-                        style: TextStyle(
-                          color: Color(0xFF151515),
-                          fontSize: 24,
-                          fontFamily: 'SUIT',
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 40),
-                // textfield
-                TextField(
-                  // height
-                  maxLines: 8,
-                  controller: _opinionController,
-                  decoration: InputDecoration(
-                    hintText: '특정 주제의 도배글, 내용없는 글쓰기는 자제해주세요.',
-                    hintStyle: const TextStyle(
-                      color: ColorStyles.gray3,
-                      fontSize: 16,
-                      fontFamily: 'SUIT',
-                      fontWeight: FontWeight.w500,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: ColorStyles.gray2,
-                        width: 2,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: ColorStyles.gray2,
-                        width: 2,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(8),
-                      borderSide: const BorderSide(
-                        color: ColorStyles.main,
-                        width: 2,
-                      ),
-                    ),
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(
+                  20.0,
+                  0.0,
+                  20.0,
+                  30,
                 ),
-                const SizedBox(height: 40),
-                ValueListenableBuilder<TextEditingValue>(
+                child: ValueListenableBuilder<TextEditingValue>(
                   valueListenable: _opinionController,
                   builder: (context, value, child) {
                     final isButtonEnabled = value.text.isNotEmpty;
@@ -139,10 +157,8 @@ class _ProfileWishScreenState extends State<ProfileWishScreen> {
                     );
                   },
                 ),
-
-                // 의견 남기기 버튼
-              ],
-            ),
+              ),
+            ],
           ),
         ));
   }
