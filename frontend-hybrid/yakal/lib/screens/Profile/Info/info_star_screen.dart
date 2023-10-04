@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/models/Profile/user.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -23,8 +22,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
   Widget build(BuildContext context) {
     // 완료버튼 누르면 작동하는 함수
     void handleAdmissionButtonPress(dynamic item, {required String title}) {
-      print(title);
-      print(item);
       widget.userViewModel.addSpecialNoteItem(title, item!);
       itemController.clear();
       Navigator.pop(context);
