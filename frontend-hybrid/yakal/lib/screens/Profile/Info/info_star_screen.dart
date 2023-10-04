@@ -17,17 +17,16 @@ class InfoStarScreen extends StatefulWidget {
 }
 
 class _InfoStarScreenState extends State<InfoStarScreen> {
-  final TextEditingController _locationController = TextEditingController();
+  final TextEditingController itemController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // 완료버튼 누르면 작동하는 함수
     void handleAdmissionButtonPress(DateTime selectedDate, String location,
         {required String title}) {
       title == 'admissionRecords'
           ? widget.userViewModel.addHospitalRecord(selectedDate, location)
           : widget.userViewModel.addEmergencyRoomVisit(selectedDate, location);
-
-      _locationController.clear();
-
+      itemController.clear();
       Navigator.pop(context);
     }
 
@@ -36,9 +35,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     ) {
       DateTime? selectedDate;
       String location = '';
-
-      // required title
-
       showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
@@ -48,7 +44,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
               return WillPopScope(
                 onWillPop: () async {
                   // Clear the text in the text field when the back button is pressed
-                  _locationController.clear();
+                  itemController.clear();
                   return true;
                 },
                 child: Container(
@@ -147,7 +143,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           onChanged: (value) {
                             location = value;
                           },
-                          controller: _locationController,
+                          controller: itemController,
                           decoration: InputDecoration(
                             labelText: title == "admissionRecords"
                                 ? "입원 장소"
@@ -159,7 +155,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 32),
                         ValueListenableBuilder(
-                            valueListenable: _locationController,
+                            valueListenable: itemController,
                             builder: (context, value, child) {
                               return ElevatedButton(
                                 style: ElevatedButton.styleFrom(
@@ -199,30 +195,37 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
       );
     }
 
-    void showAdmissionBottomSheet() {
-      // Show the admission bottom sheet
-      showBottomSheet("admissionRecords");
-    }
+    // 병명 추가 버튼 누르면 작동하는 함수
+    Widget buildInfoStarRecords({required String title}) {
+      var specialNote = widget.userViewModel.user.value.specialNote;
 
-    void showEmergencyRoomBottomSheet() {
-      // Show the emergency room bottom sheet
-      showBottomSheet("emergencyRoomVisits");
-    }
+      List<dynamic> filteredRecords = [];
 
-    Widget buildHospitalRecords({required String title}) {
-      var hospitalRecordList =
-          widget.userViewModel.user.value.hospitalRecordList;
-
-      if (hospitalRecordList != null) {
-        List<HospitalRecord> filteredRecords = title == 'admissionRecords'
-            ? hospitalRecordList.admissionRecords
-            : hospitalRecordList.emergencyRoomVisits;
+      if (specialNote != null) {
+        switch (title) {
+          case 'admissionRecords':
+            filteredRecords = specialNote.underlyingConditions;
+            break;
+          case 'allergies':
+            filteredRecords = specialNote.allergies;
+            break;
+          case 'falls':
+            filteredRecords = specialNote.falls;
+            break;
+          case 'oneYearDisease':
+            filteredRecords = specialNote.oneYearDisease;
+            break;
+          case 'healthMedications':
+            filteredRecords = specialNote.healthMedications;
+            break;
+          default:
+            filteredRecords = [];
+        }
 
         return Column(
           children: filteredRecords.asMap().entries.map((entry) {
-            // hospitalRecordList.$title.asMap().entries.map((entry) {
             final int index = entry.key;
-            final HospitalRecord record = entry.value;
+            final dynamic record = entry.value;
 
             return Container(
               decoration: BoxDecoration(
@@ -234,9 +237,25 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    title == 'admissionRecords'
-                        ? widget.userViewModel.removeHospitalRecord(index)
-                        : widget.userViewModel.removeEmergencyRoomVisit(index);
+                    switch (title) {
+                      case 'underlyingConditions':
+                        widget.userViewModel.removeUnderlyingCondition(index);
+                        break;
+                      case 'allergies':
+                        widget.userViewModel.removeAllergy(index);
+                        break;
+                      case 'falls':
+                        widget.userViewModel.removeFall(index);
+                        break;
+                      case 'oneYearDisease':
+                        widget.userViewModel.removeOneYearDisease(index);
+                        break;
+                      case 'healthMedications':
+                        widget.userViewModel.removeHealthMedications(index);
+                        break;
+                      default:
+                        break;
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -299,14 +318,9 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value
                                           .hospitalRecordList !=
                                       null &&
-                                  widget
-                                      .userViewModel
-                                      .user
-                                      .value
-                                      .hospitalRecordList!
-                                      .admissionRecords
-                                      .isNotEmpty
-                              ? buildHospitalRecords(
+                                  widget.userViewModel.user.value.specialNote!
+                                      .underlyingConditions.isNotEmpty
+                              ? buildInfoStarRecords(
                                   // emergency
                                   title: "admissionRecords")
                               : const SizedBox.shrink(),
@@ -314,7 +328,8 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "병명 추가",
-                          actionSheet: showEmergencyRoomBottomSheet,
+                          actionSheet: () =>
+                              {showBottomSheet("emergencyRoomVisits")},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 알러지 ---------------- */
@@ -329,21 +344,17 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value
                                           .hospitalRecordList !=
                                       null &&
-                                  widget
-                                      .userViewModel
-                                      .user
-                                      .value
-                                      .hospitalRecordList!
-                                      .emergencyRoomVisits
-                                      .isNotEmpty
-                              ? buildHospitalRecords(
+                                  widget.userViewModel.user.value.specialNote!
+                                      .allergies.isNotEmpty
+                              ? buildInfoStarRecords(
                                   title: "emergencyRoomVisits")
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "항목 추가",
-                          actionSheet: showEmergencyRoomBottomSheet,
+                          actionSheet: () =>
+                              {showBottomSheet("emergencyRoomVisits")},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 낙상 사고 ---------------- */
@@ -364,14 +375,9 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value
                                           .hospitalRecordList !=
                                       null &&
-                                  widget
-                                      .userViewModel
-                                      .user
-                                      .value
-                                      .hospitalRecordList!
-                                      .admissionRecords
-                                      .isNotEmpty
-                              ? buildHospitalRecords(
+                                  widget.userViewModel.user.value.specialNote!
+                                      .falls.isNotEmpty
+                              ? buildInfoStarRecords(
                                   // emergency
                                   title: "admissionRecords")
                               : const SizedBox.shrink(),
@@ -379,10 +385,11 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "날짜 추가",
-                          actionSheet: showEmergencyRoomBottomSheet,
+                          actionSheet: () =>
+                              {showBottomSheet("emergencyRoomVisits")},
                         ),
                         const SizedBox(height: 48),
-                        /* ---------------- 진단 병 목록 ---------------- */
+                        /* ---------------- 복약중인 건강식품 ---------------- */
                         const Text(
                           '복용 중인 건강기능식품',
                           style: TextStyle(
@@ -393,24 +400,20 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value
                                           .hospitalRecordList !=
                                       null &&
-                                  widget
-                                      .userViewModel
-                                      .user
-                                      .value
-                                      .hospitalRecordList!
-                                      .emergencyRoomVisits
-                                      .isNotEmpty
-                              ? buildHospitalRecords(
+                                  widget.userViewModel.user.value.specialNote!
+                                      .healthMedications.isNotEmpty
+                              ? buildInfoStarRecords(
                                   title: "emergencyRoomVisits")
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "항목 추가",
-                          actionSheet: showEmergencyRoomBottomSheet,
+                          actionSheet: () =>
+                              {showBottomSheet("emergencyRoomVisits")},
                         ),
                         const SizedBox(height: 48),
-                        /* ---------------- 복약중인 건강식품 ---------------- */
+                        /* ---------------- 진단 병 목록 ---------------- */
                         const Text(
                           '1년간 처단 받은 (진단)병',
                           style: TextStyle(
@@ -418,24 +421,18 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value
-                                          .hospitalRecordList !=
+                          () => widget.userViewModel.user.value.specialNote !=
                                       null &&
-                                  widget
-                                      .userViewModel
-                                      .user
-                                      .value
-                                      .hospitalRecordList!
-                                      .emergencyRoomVisits
-                                      .isNotEmpty
-                              ? buildHospitalRecords(
-                                  title: "emergencyRoomVisits")
+                                  widget.userViewModel.user.value.specialNote!
+                                      .oneYearDisease.isNotEmpty
+                              ? buildInfoStarRecords(title: "oneYearDisease")
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "병명 추가",
-                          actionSheet: showEmergencyRoomBottomSheet,
+                          actionSheet: () =>
+                              {showBottomSheet("oneYearDisease")},
                         ),
                         const SizedBox(height: 48),
                       ],

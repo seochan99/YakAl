@@ -8,11 +8,19 @@ class User {
     required this.nickName,
     this.guardian,
     HospitalRecordList? hospitalRecordList,
-    this.specialNote,
-  }) : hospitalRecordList = hospitalRecordList ??
+    SpecialNote? specialNote,
+  })  : hospitalRecordList = hospitalRecordList ??
             HospitalRecordList(
               admissionRecords: [],
               emergencyRoomVisits: [],
+            ),
+        specialNote = specialNote ??
+            SpecialNote(
+              underlyingConditions: [],
+              allergies: [],
+              falls: [],
+              oneYearDisease: [],
+              healthMedications: [],
             );
 }
 
@@ -55,7 +63,7 @@ class HospitalRecordList {
 class SpecialNote {
   List<String> underlyingConditions;
   List<String> allergies;
-  List<String> falls;
+  List<DateTime> falls;
   List<String> oneYearDisease;
   List<String> healthMedications;
 

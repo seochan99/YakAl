@@ -26,9 +26,9 @@ class UserViewModel extends GetxController {
   }
 
   // 특이사항 기저질환 삭제
-  void removeUnderlyingCondition(String condition) {
+  void removeUnderlyingCondition(int index) {
     user.update((val) {
-      val?.specialNote?.underlyingConditions.remove(condition);
+      val?.specialNote?.underlyingConditions.removeAt(index);
     });
   }
 
@@ -40,51 +40,51 @@ class UserViewModel extends GetxController {
   }
 
   // 특이사항 알러지 삭제
-  void removeAllergy(String allergy) {
+  void removeAllergy(int index) {
     user.update((val) {
-      val?.specialNote?.allergies.remove(allergy);
+      val?.specialNote?.allergies.removeAt(index);
     });
   }
 
   // 특이사항 1년간 진단병 추가
-  void addOneYearDisease(String allergy) {
+  void addOneYearDisease(String oneYearDisease) {
     user.update((val) {
-      val?.specialNote?.oneYearDisease.add(allergy);
+      val?.specialNote?.oneYearDisease.add(oneYearDisease);
     });
   }
 
   // 특이사항 1년간 진단병 삭제
-  void removeOneYearDisease(String allergy) {
+  void removeOneYearDisease(int index) {
     user.update((val) {
-      val?.specialNote?.oneYearDisease.remove(allergy);
+      val?.specialNote?.oneYearDisease.removeAt(index);
     });
   }
 
   // 특이사항 1년간 진단병 추가
-  void addHealthMedications(String allergy) {
+  void addHealthMedications(String healthMedications) {
     user.update((val) {
-      val?.specialNote?.healthMedications.add(allergy);
+      val?.specialNote?.healthMedications.add(healthMedications);
     });
   }
 
   // 특이사항 1년간 진단병 삭제
-  void removeHealthMedications(String allergy) {
+  void removeHealthMedications(int index) {
     user.update((val) {
-      val?.specialNote?.healthMedications.remove(allergy);
+      val?.specialNote?.healthMedications.removeAt(index);
     });
   }
 
   // 특이사항 낙상 추가
-  void addFall(String fall) {
+  void addFall(DateTime fall) {
     user.update((val) {
       val?.specialNote?.falls.add(fall);
     });
   }
 
   // 특이사항 낙상 삭제
-  void removeFall(String fall) {
+  void removeFall(int index) {
     user.update((val) {
-      val?.specialNote?.falls.remove(fall);
+      val?.specialNote?.falls.removeAt(index);
     });
   }
 
