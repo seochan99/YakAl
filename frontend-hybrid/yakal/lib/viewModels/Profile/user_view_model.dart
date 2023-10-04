@@ -46,6 +46,34 @@ class UserViewModel extends GetxController {
     });
   }
 
+  // 특이사항 1년간 진단병 추가
+  void addOneYearDisease(String allergy) {
+    user.update((val) {
+      val?.specialNote?.oneYearDisease.add(allergy);
+    });
+  }
+
+  // 특이사항 1년간 진단병 삭제
+  void removeOneYearDisease(String allergy) {
+    user.update((val) {
+      val?.specialNote?.oneYearDisease.remove(allergy);
+    });
+  }
+
+  // 특이사항 1년간 진단병 추가
+  void addHealthMedications(String allergy) {
+    user.update((val) {
+      val?.specialNote?.healthMedications.add(allergy);
+    });
+  }
+
+  // 특이사항 1년간 진단병 삭제
+  void removeHealthMedications(String allergy) {
+    user.update((val) {
+      val?.specialNote?.healthMedications.remove(allergy);
+    });
+  }
+
   // 특이사항 낙상 추가
   void addFall(String fall) {
     user.update((val) {

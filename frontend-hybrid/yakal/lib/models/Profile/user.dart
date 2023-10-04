@@ -56,10 +56,14 @@ class SpecialNote {
   List<String> underlyingConditions;
   List<String> allergies;
   List<String> falls;
+  List<String> oneYearDisease;
+  List<String> healthMedications;
 
   SpecialNote({
     required this.underlyingConditions,
     required this.allergies,
     required this.falls,
+    required this.oneYearDisease,
+    required this.healthMedications,
   });
 }
