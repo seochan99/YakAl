@@ -21,18 +21,16 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
   @override
   Widget build(BuildContext context) {
     // 완료버튼 누르면 작동하는 함수
-    void handleAdmissionButtonPress(DateTime selectedDate, String location,
-        {required String title}) {
-      title == 'admissionRecords'
-          ? widget.userViewModel.addHospitalRecord(selectedDate, location)
-          : widget.userViewModel.addEmergencyRoomVisit(selectedDate, location);
+    void handleAdmissionButtonPress(dynamic item, {required String title}) {
+      print(title);
+      print(item);
+      widget.userViewModel.addSpecialNoteItem(title, item!);
       itemController.clear();
       Navigator.pop(context);
     }
 
     String getTitleFromRecordType(String recordType) {
       String title = '';
-
       switch (recordType) {
         case 'underlyingConditions':
           title = '기저 질환';
@@ -50,7 +48,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           title = '복약중인 건강식품';
           break;
         default:
-          title = 'Unknown';
+          title = '알수없음';
           break;
       }
 
@@ -60,8 +58,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     void showBottomSheet(
       String title,
     ) {
-      DateTime? selectedDate;
-      String location = '';
+      dynamic item;
       showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
@@ -75,7 +72,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                   return true;
                 },
                 child: Container(
-                  height: MediaQuery.of(context).viewInsets.bottom + 500,
+                  height: MediaQuery.of(context).viewInsets.bottom + 400,
                   width: double.infinity,
                   decoration: const BoxDecoration(
                     color: Colors.white,
@@ -94,7 +91,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              getTitleFromRecordType(title),
+                              "${getTitleFromRecordType(title)} 추가",
                               style: const TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w700,
@@ -103,75 +100,65 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                            title == "admissionRecords" ? "입원 날짜" : "응급실 방문 날짜",
+                        Text(getTitleFromRecordType(title),
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
                             )),
                         const SizedBox(height: 12),
-                        InkWell(
-                          onTap: () async {
-                            DateTime? picked = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(1900),
-                              lastDate: DateTime.now(),
-                            );
-                            if (picked != null) {
-                              setState(() {
-                                selectedDate = picked;
-                              });
-                            }
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 20.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey),
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                            child: Row(
-                              children: [
-                                const Icon(Icons.calendar_today),
-                                const SizedBox(width: 8.0),
-                                Text(
-                                  selectedDate != null
-                                      ? "${selectedDate!.year}-${selectedDate!.month}-${selectedDate!.day}"
-                                      : "날짜 선택",
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: selectedDate != null
-                                        ? Colors.black
-                                        : Colors.grey,
+                        title == "falls"
+                            ? InkWell(
+                                onTap: () async {
+                                  DateTime? picked = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(1900),
+                                    lastDate: DateTime.now(),
+                                  );
+                                  if (picked != null) {
+                                    setState(() {
+                                      item = picked;
+                                    });
+                                  }
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0, vertical: 20.0),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.grey),
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const Icon(Icons.calendar_today),
+                                      const SizedBox(width: 8.0),
+                                      Text(
+                                        item != null
+                                            ? "${item!.year}-${item!.month}-${item!.day}"
+                                            : "날짜 선택",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: item != null
+                                              ? Colors.black
+                                              : Colors.grey,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(height: 20),
-                        Text(
-                            title == "admissionRecords" ? "입원 장소" : "응급실 방문 장소",
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            )),
-                        const SizedBox(height: 12),
-                        TextField(
-                          onChanged: (value) {
-                            location = value;
-                          },
-                          controller: itemController,
-                          decoration: InputDecoration(
-                            labelText: title == "admissionRecords"
-                                ? "입원 장소"
-                                : "응급실 방문 장소",
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                        ),
+                              )
+                            : TextField(
+                                onChanged: (value) {
+                                  item = value;
+                                },
+                                controller: itemController,
+                                decoration: InputDecoration(
+                                  labelText: "항목 입력",
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                ),
+                              ),
                         const SizedBox(height: 32),
                         ValueListenableBuilder(
                             valueListenable: itemController,
@@ -180,23 +167,19 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                 style: ElevatedButton.styleFrom(
                                   minimumSize: const Size(double.infinity, 50),
                                   foregroundColor: Colors.white,
-                                  backgroundColor: selectedDate != null &&
-                                          location.isNotEmpty
+                                  backgroundColor: item != null
                                       ? const Color(0xff2666f6)
                                       : Colors.grey,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),
                                 ),
-                                onPressed:
-                                    selectedDate != null && location.isNotEmpty
-                                        ? () {
-                                            handleAdmissionButtonPress(
-                                                title: title,
-                                                selectedDate!,
-                                                location);
-                                          }
-                                        : null,
+                                onPressed: item != null
+                                    ? () {
+                                        handleAdmissionButtonPress(
+                                            title: title, item);
+                                      }
+                                    : null,
                                 child: const Text(
                                   "완료",
                                   style: TextStyle(fontSize: 20.0),
@@ -214,7 +197,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
       );
     }
 
-    // 병명 추가 버튼 누르면 작동하는 함수
+    // 병명 버튼 누르면 작동하는 함수
     Widget buildInfoStarRecords({required String title}) {
       var specialNote = widget.userViewModel.user.value.specialNote;
 
@@ -222,7 +205,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
       if (specialNote != null) {
         switch (title) {
-          case 'admissionRecords':
+          case 'underlyingConditions':
             filteredRecords = specialNote.underlyingConditions;
             break;
           case 'allergies':
@@ -245,8 +228,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           children: filteredRecords.asMap().entries.map((entry) {
             final int index = entry.key;
             final dynamic record = entry.value;
+            print(record);
 
             return Container(
+              margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
                 border: Border.all(color: ColorStyles.gray2),
                 borderRadius: BorderRadius.circular(10),
@@ -283,7 +268,9 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                   ),
                 ),
                 title: Text(
-                  '${DateFormat('yyyy-MM-dd').format(record.date)} / ${record.location}',
+                  title == 'falls'
+                      ? DateFormat('yyyy-MM-dd').format(record)
+                      : record,
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,
@@ -334,8 +321,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                             )),
                         const SizedBox(height: 8),
                         Obx(
-                          () => widget.userViewModel.user.value
-                                          .hospitalRecordList !=
+                          () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
                                       .underlyingConditions.isNotEmpty
@@ -360,8 +346,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value
-                                          .hospitalRecordList !=
+                          () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
                                       .allergies.isNotEmpty
@@ -389,8 +374,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                             )),
                         const SizedBox(height: 8),
                         Obx(
-                          () => widget.userViewModel.user.value
-                                          .hospitalRecordList !=
+                          () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
                                       .falls.isNotEmpty
@@ -413,8 +397,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value
-                                          .hospitalRecordList !=
+                          () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
                                       .healthMedications.isNotEmpty

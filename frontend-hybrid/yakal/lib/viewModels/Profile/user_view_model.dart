@@ -18,13 +18,6 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 기저질환 추가
-  void addUnderlyingCondition(String condition) {
-    user.update((val) {
-      val?.specialNote?.underlyingConditions.add(condition);
-    });
-  }
-
   // 특이사항 기저질환 삭제
   void removeUnderlyingCondition(int index) {
     user.update((val) {
@@ -46,13 +39,6 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 1년간 진단병 추가
-  void addOneYearDisease(String oneYearDisease) {
-    user.update((val) {
-      val?.specialNote?.oneYearDisease.add(oneYearDisease);
-    });
-  }
-
   // 특이사항 1년간 진단병 삭제
   void removeOneYearDisease(int index) {
     user.update((val) {
@@ -60,10 +46,30 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 1년간 진단병 추가
-  void addHealthMedications(String healthMedications) {
+  void addSpecialNoteItem(String title, dynamic item) {
     user.update((val) {
-      val?.specialNote?.healthMedications.add(healthMedications);
+      if (val?.specialNote != null) {
+        switch (title) {
+          case 'underlyingConditions':
+            val?.specialNote!.underlyingConditions.add(item as String);
+            break;
+          // allergies
+          case 'allergies':
+            val?.specialNote!.allergies.add(item as String);
+            break;
+          case 'oneYearDisease':
+            val?.specialNote!.oneYearDisease.add(item as String);
+            break;
+          case 'healthMedications':
+            val?.specialNote!.healthMedications.add(item as String);
+            break;
+          case 'falls':
+            val?.specialNote!.falls.add(item as DateTime);
+            break;
+          default:
+            break;
+        }
+      }
     });
   }
 
@@ -71,13 +77,6 @@ class UserViewModel extends GetxController {
   void removeHealthMedications(int index) {
     user.update((val) {
       val?.specialNote?.healthMedications.removeAt(index);
-    });
-  }
-
-  // 특이사항 낙상 추가
-  void addFall(DateTime fall) {
-    user.update((val) {
-      val?.specialNote?.falls.add(fall);
     });
   }
 
