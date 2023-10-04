@@ -89,7 +89,8 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                       InkWell(
                         onTap: () => _selectBirthDate(context),
                         child: Container(
-                          padding: const EdgeInsets.all(12.0),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 20),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(8.0),

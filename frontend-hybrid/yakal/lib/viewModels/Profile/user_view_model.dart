@@ -18,45 +18,91 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 기저질환 추가
-  void addUnderlyingCondition(String condition) {
-    user.update((val) {
-      val?.specialNote?.underlyingConditions.add(condition);
-    });
-  }
-
   // 특이사항 기저질환 삭제
-  void removeUnderlyingCondition(String condition) {
+  void removeUnderlyingCondition(int index) {
     user.update((val) {
-      val?.specialNote?.underlyingConditions.remove(condition);
-    });
-  }
-
-  // 특이사항 알러지 추가
-  void addAllergy(String allergy) {
-    user.update((val) {
-      val?.specialNote?.allergies.add(allergy);
+      val?.specialNote?.underlyingConditions.removeAt(index);
     });
   }
 
   // 특이사항 알러지 삭제
-  void removeAllergy(String allergy) {
+  void removeAllergy(int index) {
     user.update((val) {
-      val?.specialNote?.allergies.remove(allergy);
+      val?.specialNote?.allergies.removeAt(index);
     });
   }
 
-  // 특이사항 낙상 추가
-  void addFall(String fall) {
+  // 특이사항 1년간 진단병 삭제
+  void removeOneYearDisease(int index) {
     user.update((val) {
-      val?.specialNote?.falls.add(fall);
+      val?.specialNote?.oneYearDisease.removeAt(index);
+    });
+  }
+
+  // 특이사항 1년간 진단병 삭제
+  void removeHealthMedications(int index) {
+    user.update((val) {
+      val?.specialNote?.healthMedications.removeAt(index);
     });
   }
 
   // 특이사항 낙상 삭제
-  void removeFall(String fall) {
+  void removeFall(int index) {
     user.update((val) {
-      val?.specialNote?.falls.remove(fall);
+      val?.specialNote?.falls.removeAt(index);
+    });
+  }
+
+  void removeSpecialNoteItem(String title, int index) {
+    user.update((val) {
+      if (val?.specialNote != null) {
+        switch (title) {
+          case 'underlyingConditions':
+            val?.specialNote!.underlyingConditions.removeAt(index);
+            break;
+          case 'allergies':
+            val?.specialNote!.allergies.removeAt(index);
+            break;
+          case 'oneYearDisease':
+            val?.specialNote!.oneYearDisease.removeAt(index);
+            break;
+          case 'healthMedications':
+            val?.specialNote!.healthMedications.removeAt(index);
+            break;
+          case 'falls':
+            val?.specialNote!.falls.removeAt(index);
+            break;
+          default:
+            break;
+        }
+      }
+    });
+  }
+
+  void addSpecialNoteItem(String title, dynamic item) {
+    user.update((val) {
+      if (val?.specialNote != null) {
+        switch (title) {
+          case 'underlyingConditions':
+            val?.specialNote!.underlyingConditions.add(item as String);
+            break;
+          // allergies
+          case 'allergies':
+            val?.specialNote!.allergies.add(item as String);
+            break;
+          case 'oneYearDisease':
+            val?.specialNote!.oneYearDisease.add(item as String);
+            break;
+          case 'healthMedications':
+            val?.specialNote!.healthMedications.add(item as String);
+            break;
+          case 'falls':
+            val?.specialNote!.falls.add(item as DateTime);
+            break;
+          default:
+            break;
+        }
+      }
     });
   }
 

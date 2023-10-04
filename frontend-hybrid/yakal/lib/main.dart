@@ -15,7 +15,9 @@ import 'package:yakal/screens/Login/LoginFinished/screen.dart';
 import 'package:yakal/screens/Login/LoginTerms/screen.dart';
 import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
+import 'package:yakal/screens/Profile/Wish/profile_wish_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
+import 'package:yakal/screens/Setting/alert_setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
@@ -60,7 +62,8 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
-        GetPage(name: "/profile/star", page: () => const InfoStaroScreen()),
+        GetPage(name: "/profile/star", page: () => InfoStarScreen()),
+        GetPage(name: "/profile/wish", page: () => const ProfileWishScreen()),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
@@ -95,7 +98,8 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        GetPage(name: '/appSetting', page: () => const SettingScreen()),
+        GetPage(name: '/setting/app', page: () => const SettingScreen()),
+        GetPage(name: '/setting/alert', page: () => const AlertScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
