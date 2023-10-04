@@ -4,6 +4,7 @@ import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
 class ProfileHeaderText extends StatefulWidget {
+  static const int _usernameLimits = 5;
   const ProfileHeaderText({
     super.key,
     required this.userViewModel,
@@ -16,6 +17,7 @@ class ProfileHeaderText extends StatefulWidget {
 }
 
 class _ProfileHeaderTextState extends State<ProfileHeaderText> {
+  final FocusNode textFocus = FocusNode();
   final TextEditingController _nickNameController = TextEditingController();
   @override
   void dispose() {
@@ -103,39 +105,29 @@ class _ProfileHeaderTextState extends State<ProfileHeaderText> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Row(
+                        const Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '닉네임 수정',
-                                  style: TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                Text(
-                                  '약알이 어떻게 불러드릴까요?',
-                                  style: TextStyle(fontSize: 16.0),
-                                ),
-                              ],
+                            Text(
+                              '닉네임 수정',
+                              style: TextStyle(
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
-                            const Spacer(),
-                            // X버튼 아이콘 누르면 sheet 닫힘
-                            IconButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              icon: const Icon(Icons.close),
+                            Text(
+                              '약알이 어떻게 불러드릴까요?',
+                              style: TextStyle(fontSize: 16.0),
                             ),
                           ],
                         ),
-
                         // text input box
                         const SizedBox(height: 20),
                         InputHorizontalTextFieldWidget(
-                            nickNameController: _nickNameController),
+                          nickNameController: _nickNameController,
+                          title: '닉네임',
+                        ),
+
                         const SizedBox(height: 20),
 
                         ValueListenableBuilder<TextEditingValue>(

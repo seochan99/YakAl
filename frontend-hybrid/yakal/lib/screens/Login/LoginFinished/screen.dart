@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginFinished/style.dart';
-import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/login_frame.dart';
 import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
@@ -14,7 +13,7 @@ class LoginFinishedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel userViewModel = Get.put(UserViewModel());
+    // Get.put(UserViewModel());
 
     return LoginFrame(
       outOfSafeAreaColor: ColorStyles.white,
@@ -30,28 +29,29 @@ class LoginFinishedScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
+            const Row(
               children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Obx(() {
-                            return
-                              Text(
-                                userViewModel.user.value.nickName,
-                                style: LoginFinishedStyle.name,
-                              );
-                          }),
-                          const Text(
-                            "님,",
-                            style: LoginFinishedStyle.title,
-                          ),
-                        ],
-                      ),
-                      const Text(
+                      // Row(
+                      //   children: [
+                      //     Obx(
+                      //       () {
+                      //         return Text(
+                      //           Get.find<UserViewModel>().user.value.nickName,
+                      //           style: LoginFinishedStyle.name,
+                      //         );
+                      //       },
+                      //     ),
+                      //     const Text(
+                      //       "님,",
+                      //       style: LoginFinishedStyle.title,
+                      //     ),
+                      //   ],
+                      // ),
+                      Text(
                         "회원가입이 완료되었습니다!",
                         style: LoginFinishedStyle.title,
                       ),
@@ -65,10 +65,7 @@ class LoginFinishedScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/icons/logo.png",
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width * 0.55,
+                  width: MediaQuery.of(context).size.width * 0.55,
                 ),
               ],
             ),

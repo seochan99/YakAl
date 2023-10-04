@@ -14,7 +14,7 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    SurveyModel survey = (Get.arguments as Map<String, dynamic>)['survey'];
+    SurveyModel survey = (Get.arguments as Map<dynamic, dynamic>)['survey'];
     UserViewModel userViewModel = Get.put(UserViewModel());
 
     // comment 설정
@@ -22,6 +22,7 @@ class SurveyResultScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(survey.title,
             style: const TextStyle(
               fontSize: 16,
@@ -57,11 +58,12 @@ class SurveyResultScreen extends StatelessWidget {
                     foregroundColor: const Color(0xffffffff),
                   ),
                   onPressed: () {
-                    // 뒤로가고 스택 비우기
-                    // Get.offAllNamed('/seniorSurvey');
+                    Get.offAllNamed('/seniorSurvey');
                     // issue : bottomNavigation이 사라짐.. 고민 중...
-                    Get.back();
-                    Get.back();
+                    // Get.back();
+                    // Get.back();
+                    // Popuntill
+
                     // 이러면 새로고침해야지 완료로 바뀜..고민중..
                   },
                   child: const Text(
