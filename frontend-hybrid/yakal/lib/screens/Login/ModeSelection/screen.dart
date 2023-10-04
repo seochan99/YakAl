@@ -193,7 +193,7 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
                           "다음",
                           onPressed: () {
                             Get.toNamed("/login/mode/process",
-                                arguments: _mode);
+                                arguments: _mode.index);
                           },
                           backgroundColor: ColorStyles.main,
                           color: ColorStyles.white,

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 
 import '../../../utilities/api/api.dart';
+import '../../../viewModels/Profile/user_view_model.dart';
 
 class SetNicknameScreen extends StatefulWidget {
   const SetNicknameScreen({super.key});
@@ -19,6 +20,9 @@ class _SetNicknameScreenState extends State<SetNicknameScreen> {
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
+      UserViewModel userViewModel = Get.put(UserViewModel());
+      userViewModel.updateNickName(Get.arguments);
+
       Get.offNamed("/login/mode");
       return;
     } else {

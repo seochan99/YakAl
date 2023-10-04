@@ -4,6 +4,7 @@ import 'package:yakal/utilities/enum/mode.dart';
 
 import '../../../utilities/api/api.dart';
 import '../../../utilities/style/color_styles.dart';
+import '../../../viewModels/Profile/user_view_model.dart';
 
 class SetModeScreen extends StatefulWidget {
   const SetModeScreen({super.key});
@@ -16,11 +17,14 @@ class _SetModeScreenState extends State<SetModeScreen> {
   Future<void> _setMode() async {
     var dio = await authDio(context);
 
-    var response = await dio
-        .patch("/user/detail", data: {"isDetail": Get.arguments == EMode.LITE});
+    var response = await dio.patch("/user/detail",
+        data: {"isDetail": EMode.values[Get.arguments] == EMode.LITE});
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
+      UserViewModel userViewModel = Get.put(UserViewModel());
+      userViewModel.updateMode(EMode.values[Get.arguments]);
+
       Get.offNamed("/login/finish");
       return;
     } else {
