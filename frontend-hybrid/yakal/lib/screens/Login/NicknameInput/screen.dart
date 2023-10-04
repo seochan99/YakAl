@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/NicknameInput/style.dart';
-import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Login/login_frame.dart';
 import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
@@ -20,55 +19,15 @@ class NicknameInputScreen extends StatefulWidget {
 }
 
 class _NicknameInputScreenState extends State<NicknameInputScreen> {
-  bool _isLoading = false;
-  bool _isError = false;
   String _username = "";
   final FocusNode _textFocus = FocusNode();
-
-  Future<bool> _setName(BuildContext context, String name) async {
-    var dio = await authDio(context);
-    var response = await dio.patch("/user/name", data: {"nickname": name});
-    return response.statusCode == 200;
-  }
-
-  // API call version
-  Future<void> Function() _onClickNext(BuildContext context) {
-    return () async {
-      setState(() {
-        _isLoading = true;
-      });
-
-      var isSuccess = await _setName(context, _username);
-
-      setState(() {
-        _isLoading = false;
-      });
-
-      if (isSuccess) {
-        Get.toNamed("/login/mode");
-      } else {
-        setState(() {
-          _isError = true;
-          _username = "";
-        });
-      }
-    };
-  }
-
-  void _focusOff() {
-    _textFocus.unfocus();
-
-    if (_isError) {
-      setState(() {
-        _isError = false;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _focusOff,
+      onTap: () {
+        _textFocus.unfocus();
+      },
       child: LoginFrame(
         outOfSafeAreaColor: ColorStyles.white,
         safeAreaColor: ColorStyles.white,
@@ -162,15 +121,6 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
                             });
                           },
                         ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        _isError
-                            ? const Text(
-                                "사용자 이름 설정에 실패했습니다.\n다시 시도해주세요.",
-                                style: NicknameInputStyle.error,
-                              )
-                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -179,44 +129,23 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
               Row(
                 children: [
                   Expanded(
-                    child: _isLoading
-                        ? TextButton(
-                            onPressed: null,
-                            style: TextButton.styleFrom(
-                              backgroundColor: ColorStyles.gray2,
-                              splashFactory: NoSplash.splashFactory,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 18.0,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                            ),
-                            child: const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: ColorStyles.black,
-                              ),
-                            ),
-                          )
-                        : LoginPageMoveButton(
-                            "다음",
-                            onPressed: _username.isEmpty
-                                ? null
-                                : () {
-                                    Get.toNamed("/login/mode");
-                                  },
-                            // onPressed: _username.isEmpty
-                            //     ? null
-                            //     : _onClickNext(context),
-                            backgroundColor: _username.isEmpty
-                                ? ColorStyles.gray2
-                                : ColorStyles.main,
-                            color: _username.isEmpty
-                                ? ColorStyles.gray3
-                                : ColorStyles.white,
-                          ),
+                    child: LoginPageMoveButton(
+                      "다음",
+                      onPressed: _username.isEmpty
+                          ? null
+                          : () {
+                              Get.toNamed(
+                                "/login/nickname/process",
+                                arguments: _username,
+                              );
+                            },
+                      backgroundColor: _username.isEmpty
+                          ? ColorStyles.gray2
+                          : ColorStyles.main,
+                      color: _username.isEmpty
+                          ? ColorStyles.gray3
+                          : ColorStyles.white,
+                    ),
                   ),
                 ],
               ),

@@ -13,6 +13,7 @@ import 'package:yakal/screens/Login/LoginFinished/screen.dart';
 import 'package:yakal/screens/Login/LoginTerms/screen.dart';
 import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
+import 'package:yakal/screens/Login/SetNickname/screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
@@ -82,6 +83,10 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/nickname',
               page: () => const NicknameInputScreen(),
+            ),
+            GetPage(
+              name: '/nickname/process',
+              page: () => const SetNicknameScreen(),
             ),
             GetPage(
               name: '/mode',
