@@ -6,6 +6,7 @@ import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
+import '../../../viewModels/Profile/user_view_model.dart';
 import '../../../widgets/Login/login_app_bar.dart';
 
 class LoginFinishedScreen extends StatelessWidget {
@@ -13,7 +14,7 @@ class LoginFinishedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get.put(UserViewModel());
+    UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
 
     return LoginFrame(
       outOfSafeAreaColor: ColorStyles.white,
@@ -29,29 +30,29 @@ class LoginFinishedScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Row(
-                      //   children: [
-                      //     Obx(
-                      //       () {
-                      //         return Text(
-                      //           Get.find<UserViewModel>().user.value.nickName,
-                      //           style: LoginFinishedStyle.name,
-                      //         );
-                      //       },
-                      //     ),
-                      //     const Text(
-                      //       "님,",
-                      //       style: LoginFinishedStyle.title,
-                      //     ),
-                      //   ],
-                      // ),
-                      Text(
+                      Row(
+                        children: [
+                          Obx(
+                            () {
+                              return Text(
+                                userViewModel.user.value.nickName,
+                                style: LoginFinishedStyle.name,
+                              );
+                            },
+                          ),
+                          const Text(
+                            "님,",
+                            style: LoginFinishedStyle.title,
+                          ),
+                        ],
+                      ),
+                      const Text(
                         "회원가입이 완료되었습니다!",
                         style: LoginFinishedStyle.title,
                       ),

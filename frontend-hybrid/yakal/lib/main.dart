@@ -97,7 +97,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/nickname/process',
-              page: () => const SetNicknameScreen(),
+              page: () => SetNicknameScreen(),
             ),
             GetPage(
               name: '/mode',
@@ -105,7 +105,7 @@ class MyApp extends StatelessWidget {
             ),
             GetPage(
               name: '/mode/process',
-              page: () => const SetModeScreen(),
+              page: () => SetModeScreen(),
             ),
             GetPage(
               name: '/finish',

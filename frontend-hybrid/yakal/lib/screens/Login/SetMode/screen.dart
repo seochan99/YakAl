@@ -7,7 +7,9 @@ import '../../../utilities/style/color_styles.dart';
 import '../../../viewModels/Profile/user_view_model.dart';
 
 class SetModeScreen extends StatefulWidget {
-  const SetModeScreen({super.key});
+  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+
+  SetModeScreen({super.key});
 
   @override
   State<SetModeScreen> createState() => _SetModeScreenState();
@@ -22,8 +24,7 @@ class _SetModeScreenState extends State<SetModeScreen> {
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
-      UserViewModel userViewModel = Get.put(UserViewModel());
-      userViewModel.updateMode(EMode.values[Get.arguments]);
+      widget.userViewModel.updateMode(EMode.values[Get.arguments]);
 
       Get.offNamed("/login/finish");
       return;

@@ -6,7 +6,9 @@ import '../../../utilities/api/api.dart';
 import '../../../viewModels/Profile/user_view_model.dart';
 
 class SetNicknameScreen extends StatefulWidget {
-  const SetNicknameScreen({super.key});
+  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+
+  SetNicknameScreen({super.key});
 
   @override
   State<SetNicknameScreen> createState() => _SetNicknameScreenState();
@@ -20,8 +22,7 @@ class _SetNicknameScreenState extends State<SetNicknameScreen> {
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
-      UserViewModel userViewModel = Get.put(UserViewModel());
-      userViewModel.updateNickName(Get.arguments);
+      widget.userViewModel.updateNickName(Get.arguments);
 
       Get.offNamed("/login/mode");
       return;

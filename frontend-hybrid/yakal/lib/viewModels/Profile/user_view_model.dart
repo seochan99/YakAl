@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+
 import '../../models/Profile/user.dart';
 import '../../utilities/enum/mode.dart';
 
@@ -12,6 +13,7 @@ class UserViewModel extends GetxController {
     });
   }
 
+  // 일반 모드, 라이트 모드
   void updateMode(EMode newMode) {
     user.update((val) {
       val?.setMode(newMode);
