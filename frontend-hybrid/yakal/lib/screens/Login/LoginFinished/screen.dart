@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginFinished/style.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/login_frame.dart';
 import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
@@ -13,6 +14,8 @@ class LoginFinishedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserViewModel userViewModel = Get.put(UserViewModel());
+
     return LoginFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
@@ -27,7 +30,7 @@ class LoginFinishedScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Column(
@@ -35,17 +38,20 @@ class LoginFinishedScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            "홍길동",
-                            style: LoginFinishedStyle.name,
-                          ),
-                          Text(
+                          Obx(() {
+                            return
+                              Text(
+                                userViewModel.user.value.nickName,
+                                style: LoginFinishedStyle.name,
+                              );
+                          }),
+                          const Text(
                             "님,",
                             style: LoginFinishedStyle.title,
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         "회원가입이 완료되었습니다!",
                         style: LoginFinishedStyle.title,
                       ),
@@ -59,7 +65,10 @@ class LoginFinishedScreen extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/icons/logo.png",
-                  width: MediaQuery.of(context).size.width * 0.55,
+                  width: MediaQuery
+                      .of(context)
+                      .size
+                      .width * 0.55,
                 ),
               ],
             ),

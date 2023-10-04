@@ -39,9 +39,10 @@
                 <!-- 카카오 로그인 Redirect URI -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao8a8f852ab345e575c11f8b2bc655c989" />
+                    android:scheme="kakao${native_app_key}" />
             </intent-filter>
         </activity>
+
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data
