@@ -6,6 +6,7 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:intl/intl.dart';
+import 'package:yakal/widgets/Profile/ProfileInfo/profle_info_add_btn_widget.dart';
 
 class InfoStarScreen extends StatefulWidget {
   final UserViewModel userViewModel = Get.put(UserViewModel());
@@ -228,7 +229,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           children: filteredRecords.asMap().entries.map((entry) {
             final int index = entry.key;
             final dynamic record = entry.value;
-            print(record);
 
             return Container(
               margin: const EdgeInsets.only(bottom: 8),
@@ -241,25 +241,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    switch (title) {
-                      case 'underlyingConditions':
-                        widget.userViewModel.removeUnderlyingCondition(index);
-                        break;
-                      case 'allergies':
-                        widget.userViewModel.removeAllergy(index);
-                        break;
-                      case 'falls':
-                        widget.userViewModel.removeFall(index);
-                        break;
-                      case 'oneYearDisease':
-                        widget.userViewModel.removeOneYearDisease(index);
-                        break;
-                      case 'healthMedications':
-                        widget.userViewModel.removeHealthMedications(index);
-                        break;
-                      default:
-                        break;
-                    }
+                    widget.userViewModel.removeSpecialNoteItem(title, index);
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -443,43 +425,5 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
         ),
       ),
     );
-  }
-}
-
-class InfoAddBtnWidget extends StatelessWidget {
-  final String content;
-  final VoidCallback actionSheet;
-
-  const InfoAddBtnWidget(
-      {super.key, required this.actionSheet, required this.content});
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-        style: TextButton.styleFrom(
-          backgroundColor: ColorStyles.gray1,
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        onPressed: actionSheet,
-        child: Row(
-          children: [
-            SvgPicture.asset(
-              'assets/icons/plus-circle.svg',
-              width: 24,
-              height: 24,
-            ),
-            const SizedBox(width: 14),
-            Text(
-              content,
-              style: const TextStyle(
-                  color: ColorStyles.gray5,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700),
-            ),
-          ],
-        ));
   }
 }

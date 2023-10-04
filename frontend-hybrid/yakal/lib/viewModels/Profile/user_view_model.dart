@@ -25,13 +25,6 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 알러지 추가
-  void addAllergy(String allergy) {
-    user.update((val) {
-      val?.specialNote?.allergies.add(allergy);
-    });
-  }
-
   // 특이사항 알러지 삭제
   void removeAllergy(int index) {
     user.update((val) {
@@ -43,6 +36,46 @@ class UserViewModel extends GetxController {
   void removeOneYearDisease(int index) {
     user.update((val) {
       val?.specialNote?.oneYearDisease.removeAt(index);
+    });
+  }
+
+  // 특이사항 1년간 진단병 삭제
+  void removeHealthMedications(int index) {
+    user.update((val) {
+      val?.specialNote?.healthMedications.removeAt(index);
+    });
+  }
+
+  // 특이사항 낙상 삭제
+  void removeFall(int index) {
+    user.update((val) {
+      val?.specialNote?.falls.removeAt(index);
+    });
+  }
+
+  void removeSpecialNoteItem(String title, int index) {
+    user.update((val) {
+      if (val?.specialNote != null) {
+        switch (title) {
+          case 'underlyingConditions':
+            val?.specialNote!.underlyingConditions.removeAt(index);
+            break;
+          case 'allergies':
+            val?.specialNote!.allergies.removeAt(index);
+            break;
+          case 'oneYearDisease':
+            val?.specialNote!.oneYearDisease.removeAt(index);
+            break;
+          case 'healthMedications':
+            val?.specialNote!.healthMedications.removeAt(index);
+            break;
+          case 'falls':
+            val?.specialNote!.falls.removeAt(index);
+            break;
+          default:
+            break;
+        }
+      }
     });
   }
 
@@ -70,20 +103,6 @@ class UserViewModel extends GetxController {
             break;
         }
       }
-    });
-  }
-
-  // 특이사항 1년간 진단병 삭제
-  void removeHealthMedications(int index) {
-    user.update((val) {
-      val?.specialNote?.healthMedications.removeAt(index);
-    });
-  }
-
-  // 특이사항 낙상 삭제
-  void removeFall(int index) {
-    user.update((val) {
-      val?.specialNote?.falls.removeAt(index);
     });
   }
 
