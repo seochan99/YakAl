@@ -4,6 +4,9 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
+import 'package:yakal/screens/Profile/Info/info_star_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
 import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
@@ -15,10 +18,13 @@ import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Profile/Wish/profile_wish_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
+import 'package:yakal/screens/Setting/alert_setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_screen.dart';
 import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
+import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
@@ -57,6 +63,10 @@ class MyApp extends StatelessWidget {
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
         GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
+        GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
+        GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
+        GetPage(name: "/profile/star", page: () => InfoStarScreen()),
+        GetPage(name: "/profile/wish", page: () => const ProfileWishScreen()),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
@@ -103,10 +113,11 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        GetPage(name: '/appSetting', page: () => const SettingScreen()),
+        GetPage(name: '/setting/app', page: () => const SettingScreen()),
+        GetPage(name: '/setting/alert', page: () => const AlertScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
-        GetPage(name: "/normalSurvey", page: () => const SurveySeniorScreen()),
+        GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
       ],
     );
