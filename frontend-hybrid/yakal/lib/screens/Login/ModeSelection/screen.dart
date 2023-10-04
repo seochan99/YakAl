@@ -192,7 +192,8 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
                       : LoginPageMoveButton(
                           "다음",
                           onPressed: () {
-                            Get.toNamed("/login/finish");
+                            Get.toNamed("/login/mode/process",
+                                arguments: _mode);
                           },
                           backgroundColor: ColorStyles.main,
                           color: ColorStyles.white,
