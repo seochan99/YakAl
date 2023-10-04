@@ -122,11 +122,11 @@ class ProfileScreen extends StatelessWidget {
             const ProfileSettingRowBtnWidget(
                 iconImg: 'assets/icons/icon-setting.svg',
                 text: '앱 설정',
-                routeLinkText: "/appSetting"),
+                routeLinkText: "/setting/app"),
             const ProfileSettingRowBtnWidget(
                 iconImg: 'assets/icons/icon-line-bell.svg',
                 text: '알림 설정',
-                routeLinkText: "/alertSetting"),
+                routeLinkText: "/setting/alert"),
             /* ----------------- 위치 나중에 -----------------  */
             // const ProfileSettingRowBtnWidget(
             //   iconImg: 'assets/icons/icon-location.svg',
@@ -134,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
             // )
             const SizedBox(height: 8),
             const ProfileSettingRowBoxWidget(
-                text: '약알에게 바라는 점', routerLinkText: "/wishList"),
+                text: '약알에게 바라는 점', routerLinkText: "/profile/wish"),
             const ProfileSettingRowBoxWidget(
                 text: '버전 정보', routerLinkText: null),
             const SizedBox(height: 8),
