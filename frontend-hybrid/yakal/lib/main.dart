@@ -7,6 +7,7 @@ import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
 import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
+import 'package:yakal/screens/Login/KakoLogin/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginFinished/screen.dart';
 import 'package:yakal/screens/Login/LoginTerms/screen.dart';
@@ -58,6 +59,10 @@ class MyApp extends StatelessWidget {
           name: '/login',
           page: () => const LoginEntryScreen(),
           children: [
+            GetPage(
+              name: '/kakao',
+              page: () => const KakaoLoginScreen(),
+            ),
             GetPage(
               name: '/terms',
               page: () => const LoginTermsScreen(),

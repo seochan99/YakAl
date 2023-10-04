@@ -5,25 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' as get_x;
 
-import '../../widgets/Login/back_to_login_dialog.dart';
-
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio(BaseOptions(
     baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
     connectTimeout: const Duration(milliseconds: 5000),
     receiveTimeout: const Duration(milliseconds: 3000),
   ));
-
-  showBackToLoginDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
-      builder: (BuildContext context) {
-        return const BackToLoginDialog();
-      },
-    );
-  }
 
   const storage = FlutterSecureStorage();
 
@@ -38,6 +25,7 @@ Future<Dio> authDio(BuildContext context) async {
 
         if (accessToken == null) {
           get_x.Get.offAllNamed("/login");
+          return;
         }
 
         options.headers['Authorization'] = 'Bearer $accessToken';
@@ -89,9 +77,21 @@ Future<Dio> authDio(BuildContext context) async {
 
                 if (error.response?.statusCode == 401) {
                   await storage.deleteAll();
-                  showBackToLoginDialog();
                   get_x.Get.offAllNamed("/login");
+
+                  if (!context.mounted) {
+                    return;
+                  }
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      behavior: SnackBarBehavior.floating,
+                      content: Text('로그아웃되었습니다.'),
+                      duration: Duration(seconds: 3),
+                    ),
+                  );
                 }
+
                 return handler.next(error);
               },
             ),
@@ -116,13 +116,15 @@ Future<Dio> authDio(BuildContext context) async {
           error.requestOptions.headers['Authorization'] =
               'Bearer $newAccessToken';
 
-          final clonedRequest = await dio.request(error.requestOptions.path,
-              options: Options(
-                method: error.requestOptions.method,
-                headers: error.requestOptions.headers,
-              ),
-              data: error.requestOptions.data,
-              queryParameters: error.requestOptions.queryParameters);
+          final clonedRequest = await dio.request(
+            error.requestOptions.path,
+            options: Options(
+              method: error.requestOptions.method,
+              headers: error.requestOptions.headers,
+            ),
+            data: error.requestOptions.data,
+            queryParameters: error.requestOptions.queryParameters,
+          );
 
           return handler.resolve(clonedRequest);
         }
