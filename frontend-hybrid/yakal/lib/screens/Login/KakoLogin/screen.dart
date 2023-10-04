@@ -17,20 +17,20 @@ class KakaoLoginScreen extends StatefulWidget {
 }
 
 class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-
   Future<bool> _kakaoLoginByAccessToken(String accessToken) async {
     var dio = Dio();
 
-    dio.options.headers["authorization"] = accessToken;
+    dio.options.headers["authorization"] = "Bearer $accessToken";
 
     try {
       var tokenResponse = await dio.post(
         "${dotenv.get("YAKAL_SERVER_HOST", fallback: "http://localhost:8080/api/v1")}/auth/kakao",
       );
 
-      final newAccessToken = tokenResponse.data.data.accessToken as String;
-      final newRefreshToken = tokenResponse.data.data.refreshToken as String;
+      final newAccessToken =
+          tokenResponse.data["data"]["accessToken"] as String;
+      final newRefreshToken =
+          tokenResponse.data["data"]["refreshToken"] as String;
 
       const storage = FlutterSecureStorage();
 
@@ -44,7 +44,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
       return true;
     } catch (error) {
       if (kDebugMode) {
-        print("🚨 [Kakao login failed] kakao access token to yakal token");
+        print("🚨 [Kakao login failed] $error");
       }
 
       return false;
@@ -59,7 +59,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
         return await _kakaoLoginByAccessToken(token.accessToken);
       } catch (error) {
         if (kDebugMode) {
-          print("🚨 [Kakao login failed] get kakao access token");
+          print("🚨 [Kakao login failed] $error");
         }
 
         // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
@@ -75,7 +75,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
           return await _kakaoLoginByAccessToken(token.accessToken);
         } catch (error) {
           if (kDebugMode) {
-            print("🚨 [Kakao login failed] get kakao access token");
+            print("🚨 [Kakao login failed] $error");
           }
 
           return false;
@@ -88,7 +88,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
         return await _kakaoLoginByAccessToken(token.accessToken);
       } catch (error) {
         if (kDebugMode) {
-          print("🚨 [Kakao login failed] get kakao access token");
+          print("🚨 [Kakao login failed] $error");
         }
 
         return false;
@@ -96,36 +96,43 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
     }
   }
 
+  Future<void> _login() async {
+    var isSuccess = await _kakaoLogin();
+
+    if (isSuccess) {
+      Get.offNamed("/login/identify/entry");
+    } else {
+      Get.back();
+
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text('키키오 로그인에 실패했습니다.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _login();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: _kakaoLogin(),
-      builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data!) {
-            Get.offNamed("/login/identify/entry");
-          } else {
-            Get.back();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(
-                behavior: SnackBarBehavior.floating,
-                content: Text('키키오 로그인에 실패했습니다.'),
-                duration: Duration(seconds: 3),
-              ),
-            );
-          }
-        }
-
-        return Scaffold(
-          key: scaffoldKey,
-          backgroundColor: ColorStyles.white,
-          body: const Center(
-            child: CircularProgressIndicator(
-              color: ColorStyles.main,
-            ),
-          ),
-        );
-      },
+    return const Scaffold(
+      backgroundColor: ColorStyles.white,
+      body: Center(
+        child: CircularProgressIndicator(
+          color: ColorStyles.main,
+        ),
+      ),
     );
   }
 }
