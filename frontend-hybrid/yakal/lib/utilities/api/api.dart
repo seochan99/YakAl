@@ -5,7 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' as get_x;
 
-import '../../widgets/Auth/back_to_login_dialog.dart';
+import '../../widgets/Login/back_to_login_dialog.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio(BaseOptions(

@@ -27,6 +27,7 @@ dependencies:
     git:
       url: https://github.com/Estrelio/flutter_inappwebview.git
       ref: fix-xcode-17
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:
@@ -62,24 +63,4 @@ flutter:
         - asset: assets/fonts/Pretendard-ExtraBold.otf
           weight: 800
         - asset: assets/fonts/Pretendard-Black.otf
-          weight: 900
-    - family: SUIT
-      fonts:
-        - asset: assets/fonts/SUIT-Thin.otf
-          weight: 100
-        - asset: assets/fonts/SUIT-ExtraLight.otf
-          weight: 200
-        - asset: assets/fonts/SUIT-Light.otf
-          weight: 300
-        - asset: assets/fonts/SUIT-Regular.otf
-          weight: 400
-        - asset: assets/fonts/SUIT-Medium.otf
-          weight: 500
-        - asset: assets/fonts/SUIT-SemiBold.otf
-          weight: 600
-        - asset: assets/fonts/SUIT-Bold.otf
-          weight: 700
-        - asset: assets/fonts/SUIT-ExtraBold.otf
-          weight: 800
-        - asset: assets/fonts/SUIT-Heavy.otf
           weight: 900

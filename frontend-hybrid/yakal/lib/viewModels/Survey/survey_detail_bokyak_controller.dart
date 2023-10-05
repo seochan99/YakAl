@@ -67,6 +67,7 @@ class SurveyDetailBokyakController extends GetxController {
     List arms = allScoreList();
     surveyModel.totalScore = totalScore;
     surveyModel.isCompleted = true;
+    print("선택항목들은 :  $arms");
 
     Get.toNamed('/survey/result',
         arguments: {'survey': surveyModel, 'arms': arms});

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/viewModels/Survey/survey_detail_bokyak_controller.dart';
 import 'package:yakal/widgets/Survey/OptionBtn/survey_option_1_btn_widget.dart';
+import 'package:yakal/widgets/Survey/OptionBtn/survey_option_2_btn_widget.dart';
 import 'package:yakal/widgets/Survey/OptionBtn/survey_option_3_btn_widget.dart';
 import 'package:yakal/widgets/Survey/survey_header_widget.dart';
 // Replace with the correct path
@@ -110,27 +111,30 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
         widget.title == '음주력 테스트' ||
         widget.title == "흡연력 테스트") {
       // Return a Row for 우울증
-      return Column(
-        // column, text Btn
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: widget.options.asMap().entries.map((entry) {
-          int index = entry.key;
-          String option = entry.value;
-          bool isSelected = selectedOptionIndex == index;
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Column(
+          // column, text Btn
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: widget.options.asMap().entries.map((entry) {
+            int index = entry.key;
+            String option = entry.value;
+            bool isSelected = selectedOptionIndex == index;
 
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                selectedOptionIndex = index;
-                widget.onOptionSelected(index);
-              });
-            },
-            child: SurveyDetailOption2BtnWidget(
-              isSelected: isSelected,
-              option: option,
-            ),
-          );
-        }).toList(),
+            return GestureDetector(
+              onTap: () {
+                setState(() {
+                  selectedOptionIndex = index;
+                  widget.onOptionSelected(index);
+                });
+              },
+              child: SurveyDetailOption2BtnWidget(
+                isSelected: isSelected,
+                option: option,
+              ),
+            );
+          }).toList(),
+        ),
       );
     } else if (widget.title == '복약 순응도 테스트' ||
         widget.title == '우울증 선별 테스트' ||
@@ -161,7 +165,10 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
         widget.title == '불면증 심각도 테스트' ||
         widget.title == "노쇠 테스트" ||
         widget.title == "시청각 테스트" ||
-        widget.title == "일상생활 동작 지수") {
+        widget.title == "일상생활 동작 지수" ||
+        widget.title == "섬망 테스트" ||
+        widget.title == "치매 테스트" ||
+        widget.title == "폐쇄성 수면 무호흡증") {
       return Row(
         // Row, Text Button
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -219,42 +226,6 @@ class _QuestionType1WidgetState extends State<QuestionType1Widget> {
           )
         ],
       ),
-    );
-  }
-}
-
-class SurveyDetailOption2BtnWidget extends StatelessWidget {
-  final bool isSelected;
-  final String option;
-
-  const SurveyDetailOption2BtnWidget({
-    super.key,
-    required this.isSelected,
-    required this.option,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          isSelected
-              ? 'assets/icons/Check_active.svg'
-              : 'assets/icons/Check_disable.svg',
-          width: 48,
-          height: 48,
-        ),
-        const SizedBox(height: 8),
-        Text(
-          option,
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-            color:
-                isSelected ? const Color(0xFF2666F6) : const Color(0xFF90909F),
-          ),
-        ),
-      ],
     );
   }
 }

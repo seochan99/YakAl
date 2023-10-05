@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 
 class InputHorizontalTextFieldWidget extends StatelessWidget {
-  const InputHorizontalTextFieldWidget({
+  static const int _usernameLimits = 5;
+  final FocusNode textFocus = FocusNode();
+  final String title;
+
+  InputHorizontalTextFieldWidget({
     super.key,
     required TextEditingController nickNameController,
+    required this.title,
   }) : _nickNameController = nickNameController;
 
   final TextEditingController _nickNameController;
@@ -11,16 +16,19 @@ class InputHorizontalTextFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: InputHorizontalTextFieldWidget._usernameLimits,
       controller: _nickNameController,
-      decoration: const InputDecoration(
-        border: OutlineInputBorder(
+      autofocus: true,
+      focusNode: textFocus,
+      decoration: InputDecoration(
+        border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(
-            color: Color.fromRGBO(84, 135, 252,
-                1), // UIColor(red: 0.33, green: 0.53, blue: 0.99, alpha: 1)
+            color: Color.fromRGBO(84, 135, 252, 1),
+            width: 2.0,
           ),
         ),
-        labelText: '닉네임',
+        labelText: title,
       ),
     );
   }
