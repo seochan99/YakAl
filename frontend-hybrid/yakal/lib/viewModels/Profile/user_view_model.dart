@@ -1,13 +1,22 @@
 import 'package:get/get.dart';
+
 import '../../models/Profile/user.dart';
+import '../../utilities/enum/mode.dart';
 
 class UserViewModel extends GetxController {
-  var user = User(nickName: '약 알').obs;
+  var user = User().obs;
 
   // Update nickname
   void updateNickName(String newNickName) {
     user.update((val) {
-      val?.nickName = newNickName;
+      val?.setNickname(newNickName);
+    });
+  }
+
+  // 일반 모드, 라이트 모드
+  void updateMode(EMode newMode) {
+    user.update((val) {
+      val?.setMode(newMode);
     });
   }
 

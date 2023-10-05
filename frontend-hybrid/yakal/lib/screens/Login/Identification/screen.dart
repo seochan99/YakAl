@@ -27,7 +27,7 @@ class IdentificationScreen extends StatelessWidget {
             ),
             callback: (Map<String, String> result) async {
               if (result['success'] == 'true') {
-                Get.toNamed(
+                Get.offNamed(
                   '/login/identify/result',
                   arguments: result,
                 );

@@ -4,7 +4,12 @@ import 'package:get/get.dart';
 import '../../utilities/style/color_styles.dart';
 
 class BackToLoginDialog extends StatelessWidget {
-  const BackToLoginDialog({super.key});
+  final String text;
+
+  const BackToLoginDialog(
+    this.text, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +29,9 @@ class BackToLoginDialog extends StatelessWidget {
               const SizedBox(
                 height: 16,
               ),
-              const Text(
-                "로그아웃되었습니다.",
-                style: TextStyle(
+              Text(
+                text,
+                style: const TextStyle(
                   fontFamily: "Pretendard",
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,

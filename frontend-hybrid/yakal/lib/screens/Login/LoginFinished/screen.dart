@@ -6,6 +6,7 @@ import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
+import '../../../viewModels/Profile/user_view_model.dart';
 import '../../../widgets/Login/login_app_bar.dart';
 
 class LoginFinishedScreen extends StatelessWidget {
@@ -13,6 +14,8 @@ class LoginFinishedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+
     return LoginFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
@@ -27,7 +30,7 @@ class LoginFinishedScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Row(
+            Row(
               children: [
                 Expanded(
                   child: Column(
@@ -35,17 +38,21 @@ class LoginFinishedScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            "홍길동",
-                            style: LoginFinishedStyle.name,
+                          Obx(
+                            () {
+                              return Text(
+                                userViewModel.user.value.nickName,
+                                style: LoginFinishedStyle.name,
+                              );
+                            },
                           ),
-                          Text(
+                          const Text(
                             "님,",
                             style: LoginFinishedStyle.title,
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         "회원가입이 완료되었습니다!",
                         style: LoginFinishedStyle.title,
                       ),

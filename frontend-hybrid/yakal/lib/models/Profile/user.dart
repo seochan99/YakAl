@@ -1,27 +1,59 @@
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../utilities/enum/mode.dart';
+
 class User {
   String nickName;
+  EMode mode;
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
 
+  Future<void> _init() async {
+    final prefs = await SharedPreferences.getInstance();
+    nickName = prefs.getString("NICKNAME") ?? "";
+
+    if (prefs.getInt("MODE") != null) {
+      mode = EMode.values[prefs.getInt("MODE")!];
+    } else {
+      mode = EMode.NONE;
+    }
+  }
+
+  Future<void> setNickname(String nickname) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("NICKNAME", nickname);
+    nickName = nickname;
+  }
+
+  Future<void> setMode(EMode mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setInt("MODE", mode.index);
+    this.mode = mode;
+  }
+
   User({
-    required this.nickName,
+    this.nickName = "",
+    this.mode = EMode.NONE,
     this.guardian,
     HospitalRecordList? hospitalRecordList,
     SpecialNote? specialNote,
-  })  : hospitalRecordList = hospitalRecordList ??
-            HospitalRecordList(
-              admissionRecords: [],
-              emergencyRoomVisits: [],
-            ),
-        specialNote = specialNote ??
-            SpecialNote(
-              underlyingConditions: [],
-              allergies: [],
-              falls: [],
-              oneYearDisease: [],
-              healthMedications: [],
-            );
+  }) {
+    hospitalRecordList = hospitalRecordList ??
+        HospitalRecordList(
+          admissionRecords: [],
+          emergencyRoomVisits: [],
+        );
+    specialNote = specialNote ??
+        SpecialNote(
+          underlyingConditions: [],
+          allergies: [],
+          falls: [],
+          oneYearDisease: [],
+          healthMedications: [],
+        );
+    _init();
+  }
 }
 
 // 보호자
@@ -50,6 +82,7 @@ class HospitalRecord {
 class HospitalRecordList {
   // 입원
   List<HospitalRecord> admissionRecords;
+
   // 응급실
   List<HospitalRecord> emergencyRoomVisits;
 

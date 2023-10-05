@@ -71,7 +71,7 @@ class LoginEntryScreen extends StatelessWidget {
                   backgroundColor: const Color(0xFFFEE500),
                   iconPath: "assets/icons/kakao.svg",
                   onPressed: () {
-                    Get.toNamed("/login/terms");
+                    Get.toNamed("/login/kakao");
                   },
                 ),
                 const SizedBox(

@@ -4,6 +4,7 @@ import 'package:yakal/screens/Login/IdentificationResult/style.dart';
 import 'package:yakal/widgets/Login/login_frame.dart';
 import 'package:yakal/widgets/Login/login_page_move_button.dart';
 
+import '../../../utilities/api/api.dart';
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
 import '../../../widgets/Login/back_confirm_dialog.dart';
@@ -13,11 +14,10 @@ class IdentificationResultScreen extends StatelessWidget {
   const IdentificationResultScreen({super.key});
 
   Future<bool> _identify(BuildContext context, String impUid) async {
-    // var dio = await authDio(context);
-    // var response = await dio.patch("/user/identify", data: {"impUid": impUid});
-    //
-    // return response.statusCode == 200;
-    return true;
+    var dio = await authDio(context);
+    var response = await dio.patch("/user/identify", data: {"impUid": impUid});
+
+    return response.statusCode == 200;
   }
 
   @override
@@ -48,6 +48,8 @@ class IdentificationResultScreen extends StatelessWidget {
         ),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData) {
+            final isSuccess = snapshot.data!;
+
             return Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -62,7 +64,7 @@ class IdentificationResultScreen extends StatelessWidget {
                             style: IdentificationResultStyle.boldTitle,
                           ),
                           Text(
-                            snapshot.data! ? "에 성공했습니다!" : "에 실패했습니다...",
+                            isSuccess ? "에 성공했습니다!" : "에 실패했습니다...",
                             style: IdentificationResultStyle.title,
                           ),
                         ],
@@ -75,7 +77,7 @@ class IdentificationResultScreen extends StatelessWidget {
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.7,
                             child: Text(
-                              snapshot.data!
+                              isSuccess
                                   ? "본인인증 과정이 완료되었습니다!\n가입까지 얼마 안 남았어요!"
                                   : "본인인증 과정에서 문제가 발생하였습니다.\n다시 시도해주시기 바랍니다.",
                               style: IdentificationResultStyle.description,
@@ -89,7 +91,7 @@ class IdentificationResultScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        snapshot.data!
+                        isSuccess
                             ? "assets/icons/id-card.png"
                             : "assets/icons/failure.png",
                         width: MediaQuery.of(context).size.width * 0.5,
@@ -102,13 +104,14 @@ class IdentificationResultScreen extends StatelessWidget {
                       Expanded(
                         child: LoginPageMoveButton(
                           snapshot.data! ? "다음" : "다시하기",
-                          onPressed: snapshot.data!
+                          onPressed: isSuccess
                               ? () {
-                                  Get.toNamed("/login/nickname");
+                                  Get.offNamed("/login/nickname");
                                 }
                               : () {
-                                  Get.back();
-                                  Get.back();
+                                  Get.until((Route route) =>
+                                      Get.currentRoute ==
+                                      "/login/identify/entry");
                                 },
                           backgroundColor: ColorStyles.main,
                           color: ColorStyles.white,
