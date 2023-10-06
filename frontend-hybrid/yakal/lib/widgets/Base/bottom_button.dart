@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LoginPageMoveButton extends StatelessWidget {
+class BottomButton extends StatelessWidget {
   final void Function()? onPressed;
   final Color backgroundColor;
   final Color color;
   final String text;
 
-  const LoginPageMoveButton(
+  const BottomButton(
     this.text, {
     required this.onPressed,
     required this.backgroundColor,

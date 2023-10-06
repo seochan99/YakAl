@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/TermsDetail/style.dart';
-import 'package:yakal/widgets/Login/login_frame.dart';
+import 'package:yakal/widgets/Login/outer_frame.dart';
 
 import '../../../utilities/style/color_styles.dart';
 
@@ -18,7 +18,7 @@ class TermsDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoginFrame(
+    return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: PreferredSize(

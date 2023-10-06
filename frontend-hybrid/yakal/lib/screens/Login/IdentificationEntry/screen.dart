@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/style.dart';
-import 'package:yakal/widgets/Login/login_frame.dart';
-import 'package:yakal/widgets/Login/login_page_move_button.dart';
+import 'package:yakal/widgets/Base/bottom_button.dart';
+import 'package:yakal/widgets/Login/outer_frame.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
@@ -14,7 +14,7 @@ class IdentificationEntryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoginFrame(
+    return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
@@ -81,7 +81,7 @@ class IdentificationEntryScreen extends StatelessWidget {
               children: [
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 3.5,
-                  child: LoginPageMoveButton(
+                  child: BottomButton(
                     "건너뛰기",
                     onPressed: () {
                       Get.toNamed("/login/nickname");
@@ -94,7 +94,7 @@ class IdentificationEntryScreen extends StatelessWidget {
                   width: 20,
                 ),
                 Expanded(
-                  child: LoginPageMoveButton(
+                  child: BottomButton(
                     "인증하기",
                     onPressed: () {
                       Get.toNamed("/login/identify/process");

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class LoginFrame extends StatelessWidget {
+class OuterFrame extends StatelessWidget {
   final Color outOfSafeAreaColor;
   final Color safeAreaColor;
   final Widget child;
   final PreferredSizeWidget? appBar;
 
-  const LoginFrame({
+  const OuterFrame({
     required this.child,
     required this.outOfSafeAreaColor,
     required this.safeAreaColor,
