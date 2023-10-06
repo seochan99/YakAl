@@ -27,7 +27,7 @@ class MyBottomNavigationBarContent extends StatelessWidget {
       return IndexedStack(
         index: controller.currentIndex.value,
         children: [
-          const HomeScreen(),
+          HomeScreen(),
           ProfileScreen(),
         ],
       );

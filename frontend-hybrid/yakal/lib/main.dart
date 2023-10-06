@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/screens/Auth/auth_login_screen.dart';
+import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
@@ -33,12 +36,13 @@ void main() async {
 
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
-
+  
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const MyApp());
+  // locator init
+  initializeDateFormatting().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -61,7 +65,7 @@ class MyApp extends StatelessWidget {
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
-        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
@@ -119,6 +123,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
+        GetPage(name: "/calendar", page: () => CalenderScreen()),
       ],
     );
   }
