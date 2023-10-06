@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:yakal/viewModels/Calendar/canlendar_viewmodel.dart';
+import 'package:yakal/viewModels/Calendar/calendar_viewmodel.dart';
 
 class CalendarInfoLayout extends StatefulWidget {
   final CalendarViewModel viewModel;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:yakal/viewModels/Calendar/canlendar_viewmodel.dart';
+import 'package:yakal/viewModels/Calendar/calendar_viewmodel.dart';
 
 import 'pill_calender_day_item.dart';
 

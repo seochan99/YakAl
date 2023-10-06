@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
-import '../../viewModels/Calendar/canlendar_viewmodel.dart';
+import '../../viewModels/Calendar/calendar_viewmodel.dart';
 import '../../widgets/Calender/calendar_info_layout.dart';
 import '../../widgets/Calender/pill_calender.dart';
 import '../../widgets/Home/pill_todo_parent_item.dart';
