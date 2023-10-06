@@ -13,6 +13,7 @@ class SettingScreen extends StatelessWidget {
       backgroundColor: Colors.white, // Set the background color to white
 
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
         backgroundColor: Colors.white,
         title: const Text('앱 설정'),
         leading: IconButton(

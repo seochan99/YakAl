@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+// import 'package:yakal/screens/Auth/auth_login_screen.dart';
+import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
@@ -15,6 +18,9 @@ import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/Medication_ocr_Envelop_screen.dart';
+import 'package:yakal/screens/Medication/ocrGeneral/medication_ocr_General_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_star_screen.dart';
@@ -38,7 +44,8 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
-  runApp(const MyApp());
+  // locator init
+  initializeDateFormatting().then((value) => runApp(const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -57,11 +64,11 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/login',
+      initialRoute: '/',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
-        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
@@ -119,6 +126,16 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
+        GetPage(name: "/calendar", page: () => CalenderScreen()),
+        // /home/pill/add/$type
+        GetPage(
+            name: "/pill/add/direct", page: () => const MedicationAddScreen()),
+        GetPage(
+            name: "/pill/add/ocrGeneral",
+            page: () => const MedicationOcrGeneralScreen()),
+        GetPage(
+            name: "/pill/add/ocrEnvelop",
+            page: () => const MedicationOcrEnvelopScreen())
       ],
     );
   }

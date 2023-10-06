@@ -11,6 +11,9 @@ class SurveyNormalScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          centerTitle: true,
+          surfaceTintColor: Colors.white,
+          backgroundColor: Colors.white,
           title: const Text(
             '자가 진단 테스트 (65세 미만)',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
@@ -20,7 +23,7 @@ class SurveyNormalScreen extends StatelessWidget {
                 size: 32, color: Color(0xff151515)),
             onPressed: () {
               // Get.back();
-              Get.toNamed('/');
+              Get.offAndToNamed('/');
             },
           )),
       body: SingleChildScrollView(
