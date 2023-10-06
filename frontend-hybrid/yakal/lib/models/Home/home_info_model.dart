@@ -1,9 +1,9 @@
-class HomeTopModel {
+class HomeInfoModel {
   final DateTime date;
   final int totalCount;
   int takenCount;
 
-  HomeTopModel({
+  HomeInfoModel({
     required this.date,
     required this.totalCount,
     required this.takenCount,

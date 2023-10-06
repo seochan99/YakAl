@@ -1,22 +1,22 @@
 import 'package:get/get.dart';
 import 'package:yakal/models/Calendar/calendar_model.dart';
-import 'package:yakal/models/Home/PillTodoParent.dart';
+import 'package:yakal/models/Home/pill_todo_parent.dart';
 
-import '../../models/Home/ETakingTime.dart';
-import '../models/Calendar/count_model.dart';
+import '../../../models/Home/e_taking_time.dart';
+import '../../models/Calendar/count_model.dart';
 
 class CalendarViewModel extends GetxController {
-  late final Rx<CalendarModel> _calendarModel;
+  late final Rx<CalendarInfoModel> _calendarInfoModel;
   late final Rx<CountModel> _countModel;
   late final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
-  CalendarModel get calendarModel => _calendarModel.value;
+  CalendarInfoModel get calendarInfoModel => _calendarInfoModel.value;
   CountModel get countModel => _countModel.value;
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
   CalendarViewModel() {
-    _calendarModel = CalendarModel.selectedDate(
+    _calendarInfoModel = CalendarInfoModel.selectedDate(
       selectedDate: DateTime.now(),
     ).obs;
 
@@ -108,7 +108,8 @@ class CalendarViewModel extends GetxController {
   // calendarItem을 클릭했을 때
   void onClickCalendarItem(DateTime date) {
     // _calendarModel의 selectedDate를 date로 변경
-    _calendarModel.value = _calendarModel.value.copyWith(selectedDate: date);
+    _calendarInfoModel.value =
+        _calendarInfoModel.value.copyWith(selectedDate: date);
 
     // _pillTodoParents all replace
     _pillTodoParents.value =
@@ -128,6 +129,7 @@ class CalendarViewModel extends GetxController {
 
   // calendarItem을 스와이프했을 때
   void changeFocusedDate(DateTime date) {
-    _calendarModel.value = _calendarModel.value.copyWith(focusedDate: date);
+    _calendarInfoModel.value =
+        _calendarInfoModel.value.copyWith(focusedDate: date);
   }
 }

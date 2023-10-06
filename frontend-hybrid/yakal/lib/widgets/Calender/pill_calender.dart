@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:yakal/viewModels/canlendar_viewmodel.dart';
+import 'package:yakal/viewModels/Calendar/canlendar_viewmodel.dart';
 
-import 'calender_day_widget.dart';
+import 'pill_calender_day_item.dart';
 
 class PillCalender extends StatefulWidget {
   final CalendarViewModel viewModel;
@@ -27,7 +27,7 @@ class _PillCalenderState extends State<PillCalender> {
             lastDay: DateTime.now().add(const Duration(days: 365 * 10 + 2)),
             daysOfWeekHeight: 30,
             rowHeight: 75,
-            focusedDay: widget.viewModel.calendarModel.focusedDate,
+            focusedDay: widget.viewModel.calendarInfoModel.focusedDate,
             pageAnimationCurve: Curves.easeInOut,
             calendarFormat: _calendarFormat,
             availableCalendarFormats: const {
@@ -40,11 +40,11 @@ class _PillCalenderState extends State<PillCalender> {
             ),
             selectedDayPredicate: (day) {
               return isSameDay(
-                  widget.viewModel.calendarModel.selectedDate, day);
+                  widget.viewModel.calendarInfoModel.selectedDate, day);
             },
             onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(
-                  widget.viewModel.calendarModel.selectedDate, selectedDay)) {
+              if (!isSameDay(widget.viewModel.calendarInfoModel.selectedDate,
+                  selectedDay)) {
                 // Call `setState()` when updating the selected day
                 setState(() {
                   widget.viewModel.onClickCalendarItem(selectedDay);
@@ -65,18 +65,18 @@ class _PillCalenderState extends State<PillCalender> {
             },
             calendarBuilders: CalendarBuilders(
               todayBuilder: (context, day, focusedDay) {
-                return CalenderDayWidget(date: day, isSelected: false);
+                return PillCalenderDayItem(date: day, isSelected: false);
               },
               selectedBuilder: (context, day, focusedDay) {
-                return CalenderDayWidget(date: day, isSelected: true);
+                return PillCalenderDayItem(date: day, isSelected: true);
               },
               defaultBuilder: (context, day, focusedDay) {
-                return CalenderDayWidget(date: day, isSelected: false);
+                return PillCalenderDayItem(date: day, isSelected: false);
               },
               outsideBuilder: (context, day, focusedDay) {
                 return Opacity(
                     opacity: 0.5,
-                    child: CalenderDayWidget(date: day, isSelected: false));
+                    child: PillCalenderDayItem(date: day, isSelected: false));
               },
             ),
           ),

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
-import '../../viewModels/canlendar_viewmodel.dart';
-import '../../widgets/Calender/calendar_middle_layout.dart';
+import '../../viewModels/Calendar/canlendar_viewmodel.dart';
+import '../../widgets/Calender/calendar_info_layout.dart';
 import '../../widgets/Calender/pill_calender.dart';
-import '../../widgets/Home/PillTodoParentItem.dart';
+import '../../widgets/Home/pill_todo_parent_item.dart';
 
 class CalenderScreen extends StatelessWidget {
   final CalendarViewModel viewModel = Get.put(CalendarViewModel());
@@ -43,7 +43,7 @@ class CalenderScreen extends StatelessWidget {
               scrollDirection: Axis.vertical,
               child: Column(
                 children: [
-                  CalendarMiddleLayout(viewModel),
+                  CalendarInfoLayout(viewModel),
                   Obx(() => ListView.builder(
                       primary: false,
                       shrinkWrap: true,

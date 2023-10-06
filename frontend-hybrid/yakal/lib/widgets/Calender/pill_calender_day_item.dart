@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class CalenderDayWidget extends StatefulWidget {
+class PillCalenderDayItem extends StatefulWidget {
   final DateTime date;
   final bool isSelected;
-  const CalenderDayWidget(
+  const PillCalenderDayItem(
       {Key? key, required this.date, required this.isSelected})
       : super(key: key);
 
   @override
-  State<CalenderDayWidget> createState() => _CalenderDayWidgetState();
+  State<PillCalenderDayItem> createState() => _PillCalenderDayItemState();
 }
 
-class _CalenderDayWidgetState extends State<CalenderDayWidget> {
+class _PillCalenderDayItemState extends State<PillCalenderDayItem> {
   int _progress = 0;
   final bool isOverlap = false;
   @override

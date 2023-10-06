@@ -5,9 +5,9 @@ import 'package:percent_indicator/circular_percent_indicator.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
-class HomeTopLayout extends StatelessWidget {
+class HomeInfoLayout extends StatelessWidget {
   final HomeViewModel viewModel;
-  const HomeTopLayout(this.viewModel, {super.key});
+  const HomeInfoLayout(this.viewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HomeTopLayout extends StatelessWidget {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 12),
                             child: Text(
-                              viewModel.homeTopModel.getDate(),
+                              viewModel.homeInfoModel.getDate(),
                               style: const TextStyle(
                                 fontSize: 14,
                                 color: Color(0xFF626272),
@@ -57,7 +57,7 @@ class HomeTopLayout extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '총 ${viewModel.homeTopModel.totalCount}개',
+                                '총 ${viewModel.homeInfoModel.totalCount}개',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   color: Color(0xFF2666F6),
@@ -87,7 +87,8 @@ class HomeTopLayout extends StatelessWidget {
                           padding: const EdgeInsetsDirectional.fromSTEB(
                               0, 20, 20, 0),
                           child: CircularPercentIndicator(
-                            percent: viewModel.homeTopModel.getProgress() / 100,
+                            percent:
+                                viewModel.homeInfoModel.getProgress() / 100,
                             radius: 44,
                             lineWidth: 4,
                             animation: true,
@@ -95,8 +96,8 @@ class HomeTopLayout extends StatelessWidget {
                             progressColor: const Color(0xFF2666F6),
                             backgroundColor: const Color(0xFFC1D2FF),
                             center: Text(
-                              '${viewModel.homeTopModel.getProgress()}%',
-                              style: viewModel.homeTopModel.getProgress() == 0
+                              '${viewModel.homeInfoModel.getProgress()}%',
+                              style: viewModel.homeInfoModel.getProgress() == 0
                                   ? const TextStyle(
                                       fontSize: 20,
                                       color: Color(0xFFC1D2FF),

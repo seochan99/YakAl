@@ -1,7 +1,7 @@
-import 'package:yakal/models/Home/PillTodoChildren.dart';
+import 'package:yakal/models/Home/pill_todo_children.dart';
 
-import 'AtcCode.dart';
-import 'ETakingTime.dart';
+import 'atc_code.dart';
+import 'e_taking_time.dart';
 
 class PillTodoParent {
   final ETakingTime eTakingTime;

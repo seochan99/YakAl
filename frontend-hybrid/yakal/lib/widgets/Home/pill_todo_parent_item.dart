@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:yakal/models/Home/ETakingTime.dart';
-import 'package:yakal/models/Home/PillTodoParent.dart';
-import 'package:yakal/widgets/Home/PillTodoChildrenItem.dart';
+import 'package:yakal/models/Home/e_taking_time.dart';
+import 'package:yakal/models/Home/pill_todo_parent.dart';
+import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
   final PillTodoParent pillTodoParent;

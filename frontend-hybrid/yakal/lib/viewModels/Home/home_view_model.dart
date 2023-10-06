@@ -1,16 +1,16 @@
 import 'package:get/get.dart';
-import 'package:yakal/models/Home/PillTodoParent.dart';
+import 'package:yakal/models/Home/pill_todo_parent.dart';
 
-import '../../models/Home/ETakingTime.dart';
-import '../../models/Home/HomeTopModel.dart';
+import '../../models/Home/e_taking_time.dart';
+import '../../models/Home/home_info_model.dart';
 
 class HomeViewModel extends GetxController {
   late final RxBool _isExpanded = false.obs;
-  late final Rx<HomeTopModel> _homeTopModel;
+  late final Rx<HomeInfoModel> _homeInfoModel;
   late final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   bool get isExpanded => _isExpanded.value;
-  HomeTopModel get homeTopModel => _homeTopModel.value;
+  HomeInfoModel get homeInfoModel => _homeInfoModel.value;
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
@@ -20,7 +20,7 @@ class HomeViewModel extends GetxController {
     _pillTodoParents
         .addAll(PillTodoParent.getDummies().map((e) => e.obs).toList());
 
-    _homeTopModel = HomeTopModel(
+    _homeInfoModel = HomeInfoModel(
         date: DateTime.now(),
         // pilltodoParent의 pillCount를 다 더해야함
         totalCount: _pillTodoParents
@@ -48,7 +48,7 @@ class HomeViewModel extends GetxController {
     }).toList();
 
     // homeTopModel의 takenCount를 업데이트
-    _homeTopModel.update((val) {
+    _homeInfoModel.update((val) {
       val!.takenCount = _pillTodoParents
           .map((e) =>
               e.value.todos.where((element) => element.isTaken == true).length)
@@ -84,7 +84,7 @@ class HomeViewModel extends GetxController {
     }).toList();
 
     // homeTopModel의 takenCount를 업데이트
-    _homeTopModel.update((val) {
+    _homeInfoModel.update((val) {
       val!.takenCount = _pillTodoParents
           .map((e) =>
               e.value.todos.where((element) => element.isTaken == true).length)

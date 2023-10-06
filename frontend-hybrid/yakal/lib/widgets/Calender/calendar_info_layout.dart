@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
-import 'package:yakal/viewModels/canlendar_viewmodel.dart';
+import 'package:yakal/viewModels/Calendar/canlendar_viewmodel.dart';
 
-class CalendarMiddleLayout extends StatefulWidget {
+class CalendarInfoLayout extends StatefulWidget {
   final CalendarViewModel viewModel;
-  const CalendarMiddleLayout(this.viewModel, {Key? key}) : super(key: key);
+  const CalendarInfoLayout(this.viewModel, {Key? key}) : super(key: key);
 
   @override
-  State<CalendarMiddleLayout> createState() => _CalendarMiddleLayoutState();
+  State<CalendarInfoLayout> createState() => _CalendarInfoLayoutState();
 }
 
-class _CalendarMiddleLayoutState extends State<CalendarMiddleLayout> {
+class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
@@ -32,7 +32,8 @@ class _CalendarMiddleLayoutState extends State<CalendarMiddleLayout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.viewModel.calendarModel.getSelectedDateStr(),
+                          widget.viewModel.calendarInfoModel
+                              .getSelectedDateStr(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Color(0xFF626272),

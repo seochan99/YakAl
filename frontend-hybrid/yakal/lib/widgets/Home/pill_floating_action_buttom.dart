@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/widgets/Base/AnimatedWidthCollapse.dart';
+import 'package:yakal/widgets/Base/animated_width_collapse.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
-class FloatingPillButton extends StatelessWidget {
+class PillFloatingActionButton extends StatelessWidget {
   static const duration = Duration(milliseconds: 300);
   final HomeViewModel viewModel;
-  const FloatingPillButton(this.viewModel, {super.key});
+  const PillFloatingActionButton(this.viewModel, {super.key});
 
   @override
   Widget build(BuildContext context) {

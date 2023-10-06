@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Home/home_view_model.dart';
-import 'package:yakal/widgets/Home/FloatingPillButton.dart';
-import 'package:yakal/widgets/Home/HomeTopLayout.dart';
-import 'package:yakal/widgets/Home/PillTodoParentItem.dart';
+import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
+import 'package:yakal/widgets/Home/home_info_layout.dart';
+import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeViewModel viewModel = Get.put(HomeViewModel());
@@ -39,7 +39,7 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
-                HomeTopLayout(viewModel),
+                HomeInfoLayout(viewModel),
                 Container(
                     // width 꽉 차게
                     width: double.infinity,
@@ -70,7 +70,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
         ),
-        FloatingPillButton(viewModel)
+        PillFloatingActionButton(viewModel)
       ]),
     );
   }
