@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
+import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
 import 'package:yakal/widgets/Profile/profile_info_icon_btn_widget.dart';
 import 'package:yakal/widgets/Profile/profile_setting_row_box_widget.dart';
@@ -20,6 +21,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // MyBottomNavigationBar
+      // bottomNavigationBar: const MyBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -91,21 +94,21 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/boho",
                       iconImg: 'assets/icons/icon-mypage-protector.svg',
                       text: '보호자',
                     ),
                   ),
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/hospital",
                       iconImg: 'assets/icons/icon-mypage-hospital.svg',
                       text: '병원 기록',
                     ),
                   ),
                   Expanded(
                     child: ProfileInfoIconBtnWidget(
-                      goPage: "/login",
+                      goPage: "/profile/star",
                       iconImg: 'assets/icons/icon-mypage-special.svg',
                       text: '특이사항',
                     ),
@@ -119,11 +122,11 @@ class ProfileScreen extends StatelessWidget {
             const ProfileSettingRowBtnWidget(
                 iconImg: 'assets/icons/icon-setting.svg',
                 text: '앱 설정',
-                routeLinkText: "/appSetting"),
+                routeLinkText: "/setting/app"),
             const ProfileSettingRowBtnWidget(
                 iconImg: 'assets/icons/icon-line-bell.svg',
                 text: '알림 설정',
-                routeLinkText: "/alertSetting"),
+                routeLinkText: "/setting/alert"),
             /* ----------------- 위치 나중에 -----------------  */
             // const ProfileSettingRowBtnWidget(
             //   iconImg: 'assets/icons/icon-location.svg',
@@ -131,7 +134,7 @@ class ProfileScreen extends StatelessWidget {
             // )
             const SizedBox(height: 8),
             const ProfileSettingRowBoxWidget(
-                text: '약알에게 바라는 점', routerLinkText: "/wishList"),
+                text: '약알에게 바라는 점', routerLinkText: "/profile/wish"),
             const ProfileSettingRowBoxWidget(
                 text: '버전 정보', routerLinkText: null),
             const SizedBox(height: 8),
