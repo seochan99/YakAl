@@ -21,6 +21,7 @@ class HomeScreen extends StatelessWidget {
             backgroundColor: Colors.white,
             centerTitle: false,
             elevation: 0,
+            automaticallyImplyLeading: false,
             actions: [
               Padding(
                 padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),

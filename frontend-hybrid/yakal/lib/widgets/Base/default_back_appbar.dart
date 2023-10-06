@@ -14,6 +14,8 @@ class DefaultBackAppbar extends StatelessWidget {
         title,
         style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
+      centerTitle: true,
+      surfaceTintColor: ColorStyles.white,
       backgroundColor: ColorStyles.white,
       automaticallyImplyLeading: true,
       leadingWidth: 90,
