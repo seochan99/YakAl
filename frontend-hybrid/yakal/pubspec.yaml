@@ -10,6 +10,8 @@ environment:
 dependencies:
     flutter:
         sdk: flutter
+    flutter_localizations:
+        sdk: flutter
 
     cupertino_icons: ^1.0.2
     flutter_native_splash: ^2.3.2
@@ -21,12 +23,15 @@ dependencies:
     google_sign_in: ^6.1.5
     shared_preferences: ^2.2.1
     percent_indicator: ^4.0.1
+    table_calendar: ^3.0.9
+    intl: ^0.18.1
 
 dev_dependencies:
     flutter_test:
         sdk: flutter
 
     flutter_lints: ^2.0.0
+    intl_translation: ^0.18.1
 
 # The following section is specific to Flutter packages.
 flutter:
