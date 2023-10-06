@@ -119,7 +119,7 @@ class PillFloatingActionButton extends StatelessWidget {
 _floatItem(String type, String title, String imagePath) {
   return InkWell(
     onTap: () {
-      Get.toNamed('/home/pill/$type');
+      Get.toNamed('/pill/add/$type');
     },
     child: Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),

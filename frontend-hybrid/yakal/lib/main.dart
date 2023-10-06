@@ -18,6 +18,9 @@ import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/Medication_ocr_Envelop_screen.dart';
+import 'package:yakal/screens/Medication/ocrGeneral/medication_ocr_General_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_star_screen.dart';
@@ -124,6 +127,15 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
         GetPage(name: "/calendar", page: () => CalenderScreen()),
+        // /home/pill/add/$type
+        GetPage(
+            name: "/pill/add/direct", page: () => const MedicationAddScreen()),
+        GetPage(
+            name: "/pill/add/ocrGeneral",
+            page: () => const MedicationOcrGeneralScreen()),
+        GetPage(
+            name: "/pill/add/ocrEnvelop",
+            page: () => const MedicationOcrEnvelopScreen())
       ],
     );
   }
