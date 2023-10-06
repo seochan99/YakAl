@@ -149,7 +149,7 @@ class EnvelopOcrEntryScreen extends StatelessWidget {
                       child: BottomButton(
                         "촬영하기",
                         onPressed: () {
-                          Get.offNamed("/");
+                          Get.toNamed("/pill/add/ocrEnvelop/shot");
                         },
                         backgroundColor: ColorStyles.main,
                         color: ColorStyles.white,

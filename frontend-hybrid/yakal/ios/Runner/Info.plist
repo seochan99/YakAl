@@ -57,6 +57,10 @@
 		<string>kakaolink</string>
 		<string>kakaoplus</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera permission is reqired.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Microphone permission is reqired.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

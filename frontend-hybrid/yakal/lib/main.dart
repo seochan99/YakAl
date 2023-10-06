@@ -20,6 +20,7 @@ import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrEntry/screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/screen.dart';
 import 'package:yakal/screens/Medication/ocrGeneral/medication_ocr_General_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
@@ -134,8 +135,15 @@ class MyApp extends StatelessWidget {
             name: "/pill/add/ocrGeneral",
             page: () => const MedicationOcrGeneralScreen()),
         GetPage(
-            name: "/pill/add/ocrEnvelop",
-            page: () => const EnvelopOcrEntryScreen())
+          name: "/pill/add/ocrEnvelop",
+          page: () => const EnvelopOcrEntryScreen(),
+          children: [
+            GetPage(
+              name: "/shot",
+              page: () => const EnvelopShotScreen(),
+            ),
+          ],
+        )
       ],
     );
   }
