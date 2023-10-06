@@ -25,6 +25,25 @@ class _PillCalenderState extends State<PillCalender> {
             firstDay:
                 DateTime.now().subtract(const Duration(days: 365 * 10 + 2)),
             lastDay: DateTime.now().add(const Duration(days: 365 * 10 + 2)),
+            headerStyle: const HeaderStyle(
+              formatButtonVisible: true,
+              titleTextStyle: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+              leftChevronIcon: Icon(
+                Icons.chevron_left,
+                color: Colors.black,
+              ),
+              rightChevronIcon: Icon(
+                Icons.chevron_right,
+                color: Colors.black,
+              ),
+              formatButtonTextStyle: TextStyle(
+                fontSize: 15,
+                color: Colors.black,
+              ),
+            ),
             daysOfWeekHeight: 30,
             rowHeight: 75,
             focusedDay: widget.viewModel.calendarInfoModel.focusedDate,

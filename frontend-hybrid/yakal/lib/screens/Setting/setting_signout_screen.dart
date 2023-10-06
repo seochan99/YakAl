@@ -11,6 +11,9 @@ class SettingSignoutScreen extends StatelessWidget {
       // color
 
       appBar: AppBar(
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        centerTitle: true,
         title: const Text('회원 탈퇴'),
       ),
       body: Container(

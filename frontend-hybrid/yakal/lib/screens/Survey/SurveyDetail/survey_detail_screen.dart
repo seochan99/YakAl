@@ -21,6 +21,9 @@ class SurveyDetailType1Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
         title: Text(
           survey.title,
           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
