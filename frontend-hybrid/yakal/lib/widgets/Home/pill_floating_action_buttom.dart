@@ -47,22 +47,22 @@ class PillFloatingActionButton extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _floatItem(
-                                '약 봉투', 'assets/icons/icon-envelope.svg'),
+                            _floatItem('ocrEnvelop', '약 봉투',
+                                'assets/icons/icon-envelope.svg'),
                             Container(
                               width: double.infinity,
                               height: 1,
                               color: const Color(0xFFE9E9EE),
                             ),
-                            _floatItem(
-                                '일반 의약품', 'assets/icons/icon-plus-bottle.svg'),
+                            _floatItem('ocrGeneral', '일반 의약품',
+                                'assets/icons/icon-plus-bottle.svg'),
                             Container(
                               width: double.infinity,
                               height: 1,
                               color: const Color(0xFFE9E9EE),
                             ),
-                            _floatItem(
-                                '직접 입력', 'assets/icons/icon-pencil-box.svg'),
+                            _floatItem("direct", '직접 입력',
+                                'assets/icons/icon-pencil-box.svg'),
                           ],
                         ),
                       ),
@@ -116,10 +116,10 @@ class PillFloatingActionButton extends StatelessWidget {
   }
 }
 
-_floatItem(String title, String imagePath) {
+_floatItem(String type, String title, String imagePath) {
   return InkWell(
     onTap: () {
-      print(title);
+      Get.toNamed('/pill/add/$type');
     },
     child: Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
