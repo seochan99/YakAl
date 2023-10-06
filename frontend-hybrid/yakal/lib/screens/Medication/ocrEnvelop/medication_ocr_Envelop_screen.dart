@@ -9,7 +9,7 @@ class MedicationOcrEnvelopScreen extends StatelessWidget {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: DefaultBackAppbar(title: "약봉퉁 촬영"),
+        child: DefaultBackAppbar(title: "약 봉투 추가"),
       ),
       body: Container(
         color: Colors.white,
