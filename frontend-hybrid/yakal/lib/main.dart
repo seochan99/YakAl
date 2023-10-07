@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ import 'package:yakal/screens/Login/SetNickname/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrEntry/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotPreview/screen.dart';
 import 'package:yakal/screens/Medication/ocrGeneral/medication_ocr_General_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_boho_screen.dart';
 import 'package:yakal/screens/Profile/Info/info_hospital_screen.dart';
@@ -44,6 +46,12 @@ void main() async {
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  // Fix to portrait mode
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
 
   // locator init
   initializeDateFormatting().then((value) => runApp(const MyApp()));
@@ -141,6 +149,10 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: "/shot",
               page: () => const EnvelopShotScreen(),
+            ),
+            GetPage(
+              name: "/preview",
+              page: () => const EnvelopShotPreviewScreen(),
             ),
           ],
         )

@@ -33,6 +33,7 @@ dependencies:
   table_calendar: ^3.0.9
   intl: ^0.18.1
   camera: ^0.10.5+5
+  image_cropper: ^5.0.0
 
 dev_dependencies:
   flutter_test:

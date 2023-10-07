@@ -6,11 +6,13 @@ import '../../utilities/style/color_styles.dart';
 class BackConfirmDialog extends StatelessWidget {
   final String question;
   final String backTo;
+  final void Function()? backAction;
 
   const BackConfirmDialog({
     super.key,
     required this.question,
     required this.backTo,
+    this.backAction,
   });
 
   @override
@@ -79,6 +81,8 @@ class BackConfirmDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
+                          backAction!();
+
                           Get.back(); // Close Dialog
 
                           Get.until(

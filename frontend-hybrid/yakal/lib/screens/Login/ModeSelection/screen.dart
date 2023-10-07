@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:yakal/screens/Login/ModeSelection/style.dart';
 import 'package:yakal/utilities/enum/mode.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
+import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Login/mode_selection_box.dart';
-import 'package:yakal/widgets/Login/outer_frame.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';

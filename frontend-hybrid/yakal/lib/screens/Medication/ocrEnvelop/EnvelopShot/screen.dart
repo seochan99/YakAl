@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotPreview/style.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
 import '../../../../utilities/style/color_styles.dart';
@@ -13,6 +15,8 @@ class EnvelopShotScreen extends StatefulWidget {
 }
 
 class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
+  static const double shotButtonSize = 40.0;
+
   CameraController? _cameraController;
   bool _isCameraReady = false;
 
@@ -38,18 +42,22 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
     );
   }
 
-  void _onTakePicture(BuildContext context) {
+  void _onTakePicture(
+    BuildContext context,
+    double shotBoxWidth,
+    double shotBoxHeight,
+  ) {
     _cameraController!.takePicture().then((image) {
-      // Get.toNamed();
+      Get.toNamed("/pill/add/ocrEnvelop/preview", arguments: {
+        "path": image.path,
+      });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final shotBoxWidth = MediaQuery.of(context).size.width - 100.0;
+    final shotBoxWidth = MediaQuery.of(context).size.width - 60.0;
     final shotBoxHeight = (shotBoxWidth * 7) / 5;
-
-    const shotButtonSize = 40.0;
 
     final cameraPreviewRatio = MediaQuery.of(context).size.width /
         (MediaQuery.of(context).size.height -
@@ -93,12 +101,24 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                                   bottom: shotButtonSize * 3,
                                 ),
                                 child: Center(
-                                  child: Container(
-                                    height: shotBoxHeight,
-                                    width: shotBoxWidth,
-                                    decoration: const BoxDecoration(
-                                      color: Colors.red,
-                                    ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Text(
+                                        "약봉투를 사각형안에 위치시켜주세요.",
+                                        style: EnvelopShotStyle.description,
+                                      ),
+                                      const SizedBox(
+                                        height: 26.0,
+                                      ),
+                                      Container(
+                                        height: shotBoxHeight,
+                                        width: shotBoxWidth,
+                                        decoration: const BoxDecoration(
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -110,46 +130,58 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                             bottom: shotButtonSize * 3,
                           ),
                           child: Center(
-                            child: SizedBox(
-                              height: (shotBoxWidth * 7) / 5,
-                              width: shotBoxWidth,
-                              child: Stack(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/icons/top-left-frame.svg",
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                  "약봉투를 사각형안에 위치시켜주세요.",
+                                  style: EnvelopShotStyle.description,
+                                ),
+                                const SizedBox(
+                                  height: 26,
+                                ),
+                                SizedBox(
+                                  height: (shotBoxWidth * 7) / 5,
+                                  width: shotBoxWidth,
+                                  child: Stack(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/icons/top-left-frame.svg",
+                                      ),
+                                      Transform.translate(
+                                        offset: Offset(shotBoxWidth - 56, 0),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/top-right-frame.svg",
+                                        ),
+                                      ),
+                                      Transform.translate(
+                                        offset: Offset(0, shotBoxHeight - 56),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/bottom-left-frame.svg",
+                                        ),
+                                      ),
+                                      Transform.translate(
+                                        offset: Offset(
+                                          shotBoxWidth - 56,
+                                          shotBoxHeight - 56,
+                                        ),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/bottom-right-frame.svg",
+                                        ),
+                                      ),
+                                      Transform.translate(
+                                        offset: Offset(
+                                          shotBoxWidth / 2 - 22,
+                                          shotBoxHeight / 2 - 22,
+                                        ),
+                                        child: SvgPicture.asset(
+                                          "assets/icons/center-bead.svg",
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  Transform.translate(
-                                    offset: Offset(shotBoxWidth - 56, 0),
-                                    child: SvgPicture.asset(
-                                      "assets/icons/top-right-frame.svg",
-                                    ),
-                                  ),
-                                  Transform.translate(
-                                    offset: Offset(0, shotBoxHeight - 56),
-                                    child: SvgPicture.asset(
-                                      "assets/icons/bottom-left-frame.svg",
-                                    ),
-                                  ),
-                                  Transform.translate(
-                                    offset: Offset(
-                                      shotBoxWidth - 56,
-                                      shotBoxHeight - 56,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      "assets/icons/bottom-right-frame.svg",
-                                    ),
-                                  ),
-                                  Transform.translate(
-                                    offset: Offset(
-                                      shotBoxWidth / 2 - 22,
-                                      shotBoxHeight / 2 - 22,
-                                    ),
-                                    child: SvgPicture.asset(
-                                      "assets/icons/center-bead.svg",
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -175,7 +207,13 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                                 size: shotButtonSize * 0.9,
                               ),
                               color: ColorStyles.main,
-                              onPressed: () {},
+                              onPressed: () {
+                                _onTakePicture(
+                                  context,
+                                  shotBoxWidth,
+                                  shotBoxHeight,
+                                );
+                              },
                             ),
                           ),
                         ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/TermsDetail/style.dart';
-import 'package:yakal/widgets/Login/outer_frame.dart';
+import 'package:yakal/widgets/Base/outer_frame.dart';
 
 import '../../../utilities/style/color_styles.dart';
 

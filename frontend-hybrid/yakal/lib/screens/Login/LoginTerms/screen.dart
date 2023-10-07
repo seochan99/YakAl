@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginTerms/style.dart';
 import 'package:yakal/screens/Login/TermsDetail/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
+import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
-import 'package:yakal/widgets/Login/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Login/login_app_bar.dart';
 
 import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Login/outer_frame.dart';
+import '../../../widgets/Base/outer_frame.dart';
 
 class LoginTermsScreen extends StatelessWidget {
   static const List<Map<String, Object>> terms = [

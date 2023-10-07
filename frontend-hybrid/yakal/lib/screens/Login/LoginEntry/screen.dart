@@ -5,7 +5,7 @@ import 'package:yakal/screens/Login/LoginEntry/style.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Login/social_login_button.dart';
 
-import '../../../widgets/Login/outer_frame.dart';
+import '../../../widgets/Base/outer_frame.dart';
 
 class LoginEntryScreen extends StatelessWidget {
   bool get isiOS =>
