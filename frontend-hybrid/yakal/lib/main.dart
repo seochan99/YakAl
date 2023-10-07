@@ -20,6 +20,8 @@ import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrEntry/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotReview/screen.dart';
@@ -153,6 +155,14 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: "/preview",
               page: () => const EnvelopShotReviewScreen(),
+            ),
+            GetPage(
+              name: "/process",
+              page: () => const EnvelopAnalysisScreen(),
+            ),
+            GetPage(
+              name: "/result",
+              page: () => const EnvelopOcrAnalysisResult(),
             ),
           ],
         )

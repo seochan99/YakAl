@@ -255,7 +255,16 @@ class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
                   Expanded(
                     child: BottomButton(
                       "전송",
-                      onPressed: () {},
+                      onPressed: () {
+                        // 임시!!!!!!!!!
+                        File(imagePath).delete();
+
+                        if (_croppedFile != null) {
+                          File(_croppedFile!.path).delete();
+                        }
+
+                        Get.toNamed("/pill/add/ocrEnvelop/process");
+                      },
                       backgroundColor: ColorStyles.main,
                       color: ColorStyles.white,
                     ),
