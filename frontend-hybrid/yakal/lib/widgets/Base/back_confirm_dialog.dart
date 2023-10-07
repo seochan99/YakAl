@@ -81,7 +81,9 @@ class BackConfirmDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
-                          backAction!();
+                          if (backAction != null) {
+                            backAction!();
+                          }
 
                           Get.back(); // Close Dialog
 

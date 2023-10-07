@@ -48,7 +48,7 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
     double shotBoxHeight,
   ) {
     _cameraController!.takePicture().then((image) {
-      Get.toNamed("/pill/add/ocrEnvelop/preview", arguments: {
+      Get.toNamed("/pill/add/ocrEnvelop/review", arguments: {
         "path": image.path,
       });
     });

@@ -153,7 +153,7 @@ class MyApp extends StatelessWidget {
               page: () => const EnvelopShotScreen(),
             ),
             GetPage(
-              name: "/preview",
+              name: "/review",
               page: () => const EnvelopShotReviewScreen(),
             ),
             GetPage(
