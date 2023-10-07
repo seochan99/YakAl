@@ -3,21 +3,22 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotReview/style.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 
-class EnvelopShotPreviewScreen extends StatefulWidget {
-  const EnvelopShotPreviewScreen({super.key});
+class EnvelopShotReviewScreen extends StatefulWidget {
+  const EnvelopShotReviewScreen({super.key});
 
   @override
-  State<EnvelopShotPreviewScreen> createState() =>
-      _EnvelopShotPreviewScreenState();
+  State<EnvelopShotReviewScreen> createState() =>
+      _EnvelopShotReviewScreenState();
 }
 
-class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
+class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
   late final String imagePath;
 
   CroppedFile? _croppedFile;
@@ -60,35 +61,84 @@ class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
     }
   }
 
+  void _onTapBackButton() {
+    showDialog(
+      context: context,
+      barrierDismissible: true,
+      barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+      builder: (BuildContext context) {
+        return BackConfirmDialog(
+          question: "다시 촬영하시겠습니까?",
+          backTo: "/pill/add/ocrEnvelop/shot",
+          backAction: () {
+            File(imagePath).delete();
+
+            if (_croppedFile != null) {
+              File(_croppedFile!.path).delete();
+            }
+          },
+        );
+      },
+    );
+  }
+
+  void _showExampleBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            width: MediaQuery
+                .of(context)
+                .size
+                .width,
+            padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 50.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16.0),
+              color: ColorStyles.gray1,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "올바른 예시",
+                      style: EnvelopShotReviewStyle.rightExampleTitle,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Image.asset(
+                  "assets/images/well-taken-envelop.png",
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     const padding = 30.0;
-    final width = MediaQuery.of(context).size.width - padding * 2;
+    final width = MediaQuery
+        .of(context)
+        .size
+        .width - padding * 2;
 
     return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: CustomizedBackAppBar(
-        onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
-            builder: (BuildContext context) {
-              return BackConfirmDialog(
-                question: "다시 촬영하시겠습니까?",
-                backTo: "/pill/add/ocrEnvelop/shot",
-                backAction: () {
-                  File(imagePath).delete();
-
-                  if (_croppedFile != null) {
-                    File(_croppedFile!.path).delete();
-                  }
-                },
-              );
-            },
-          );
-        },
+        onPressed: _onTapBackButton,
         title: "촬영된 약 봉투 검토",
       ),
       child: Padding(
@@ -116,30 +166,15 @@ class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
                     children: [
                       Text(
                         "약 봉투가 ",
-                        style: TextStyle(
-                          color: ColorStyles.gray6,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.description,
                       ),
                       Text(
                         "올바른 방향",
-                        style: TextStyle(
-                          color: ColorStyles.main,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.emphasis,
                       ),
                       Text(
                         "으로 보이고",
-                        style: TextStyle(
-                          color: ColorStyles.gray6,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.description,
                       ),
                     ],
                   ),
@@ -148,30 +183,15 @@ class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
                     children: [
                       Text(
                         "사진에 ",
-                        style: TextStyle(
-                          color: ColorStyles.gray6,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.description,
                       ),
                       Text(
                         "꽉 차도록",
-                        style: TextStyle(
-                          color: ColorStyles.main,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.emphasis,
                       ),
                       Text(
                         " 수정해주세요!",
-                        style: TextStyle(
-                          color: ColorStyles.gray6,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600,
-                          height: 1.6,
-                        ),
+                        style: EnvelopShotReviewStyle.description,
                       ),
                     ],
                   ),
@@ -193,60 +213,11 @@ class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
                         borderRadius: BorderRadius.circular(40.0),
                       ),
                     ),
+                    onPressed: _showExampleBottomSheet,
                     child: const Text(
                       "예시 보기",
-                      style: TextStyle(
-                        color: ColorStyles.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        height: 1.5,
-                      ),
+                      style: EnvelopShotReviewStyle.exampleButton,
                     ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return GestureDetector(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.fromLTRB(
-                                  50.0, 30.0, 50.0, 50.0),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0),
-                                color: ColorStyles.gray1,
-                              ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "올바른 예시",
-                                        style: TextStyle(
-                                          color: ColorStyles.gray6,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Image.asset(
-                                    "assets/images/well-taken-envelop.png",
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
                   ),
                   const SizedBox(
                     width: 16,
@@ -271,12 +242,7 @@ class _EnvelopShotPreviewScreenState extends State<EnvelopShotPreviewScreen> {
                     ),
                     label: const Text(
                       "자르기 및 회전",
-                      style: TextStyle(
-                        color: ColorStyles.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        height: 1,
-                      ),
+                      style: EnvelopShotReviewStyle.cropAndRotateButton,
                     ),
                     onPressed: () {
                       _cropImage();

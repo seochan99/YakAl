@@ -2,7 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotPreview/style.dart';
+import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/style.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
 import '../../../../utilities/style/color_styles.dart';
