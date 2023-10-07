@@ -50,139 +50,145 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               BorderSide(color: Colors.white)),
                           color: Colors.white,
                         ),
-                  child: ExpansionTile(
-                    onExpansionChanged: (newState) {
-                      widget.onClickParentItemView(
-                          widget.pillTodoParent.eTakingTime);
-                    },
-                    trailing: const SizedBox(),
-                    childrenPadding:
-                        const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
-                    title: Padding(
-                      padding:
-                          const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              color:
-                                  false ? Color(0xffe9f0ff) : Color(0xffE9E9EE),
-                            ),
-                            padding: const EdgeInsetsDirectional.fromSTEB(
-                                3, 3, 3, 3),
-                            width: 30,
-                            height: 30,
-                            child: widget.pillTodoParent.isExpanded
-                                ? SvgPicture.asset(
-                                    'assets/icons/icon-pill-on.svg')
-                                : SvgPicture.asset(
-                                    'assets/icons/icon-pill-off.svg'),
-                          ),
-                          SizedBox.fromSize(size: const Size(8, 8)),
-                          Text(
-                            widget.pillTodoParent.eTakingTime.time,
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontFamily:
-                                    'assets/fonts/Pretendard-SemiBold.otf'),
-                          ),
-                          SizedBox.fromSize(size: const Size(8, 8)),
-                          Text(
-                            widget.pillTodoParent.getTotalCnt(),
-                            style: const TextStyle(
-                                fontSize: 14,
-                                color: Color(0xFF90909F),
-                                fontFamily:
-                                    'assets/fonts/Pretendard-SemiBold.otf'),
-                          ),
-                          //오른쪽 정렬된 Text
-                          const Spacer(),
-                          Text(
-                            '복용완료',
-                            style: widget.pillTodoParent.isCompleted
-                                ? const TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF2666F6),
-                                    fontFamily:
-                                        'assets/fonts/Pretendard-SemiBold.otf')
-                                : const TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFF90909F),
-                                    fontFamily:
-                                        'assets/fonts/Pretendard-SemiBold.otf'),
-                          ),
-                          // CheckBox
-                          SizedBox.fromSize(size: const Size(8, 8)),
-                          InkWell(
-                            onTap: () {
-                              widget.onClickParentCheckBox(
-                                  widget.pillTodoParent.eTakingTime);
-                            },
-                            // InkWell Repple Effect 없애기
-                            splashColor: Colors.transparent,
-                            child: Container(
-                              width: 48,
-                              height: 48,
-                              child: widget.pillTodoParent.isCompleted
+                  child: Theme(
+                    data: Theme.of(context)
+                        .copyWith(dividerColor: Colors.transparent),
+                    child: ExpansionTile(
+                      onExpansionChanged: (newState) {
+                        widget.onClickParentItemView(
+                            widget.pillTodoParent.eTakingTime);
+                      },
+                      trailing: const SizedBox(),
+                      childrenPadding:
+                          const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
+                      title: Padding(
+                        padding:
+                            const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: const BoxDecoration(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                                color: false
+                                    ? Color(0xffe9f0ff)
+                                    : Color(0xffE9E9EE),
+                              ),
+                              padding: const EdgeInsetsDirectional.fromSTEB(
+                                  3, 3, 3, 3),
+                              width: 30,
+                              height: 30,
+                              child: widget.pillTodoParent.isExpanded
                                   ? SvgPicture.asset(
-                                      'assets/icons/icon-check-on-36.svg')
+                                      'assets/icons/icon-pill-on.svg')
                                   : SvgPicture.asset(
-                                      'assets/icons/icon-check-off-36.svg'),
+                                      'assets/icons/icon-pill-off.svg'),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    children: [
-                      Container(
-                          // width 꽉 차게
-                          width: MediaQuery.of(context).size.width - 20,
-                          height: 2,
-                          decoration:
-                              const BoxDecoration(color: Color(0xffe9e9ee))),
-                      Container(
-                          width: MediaQuery.of(context).size.width - 20,
-                          height: 40,
-                          margin: const EdgeInsetsDirectional.fromSTEB(
-                              0, 10, 0, 10),
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Color(0x1AFF8282),
-                          ),
-                          child: const Center(
-                            child: Text(
-                              '약물 중 성분이 같은 중복 약물이 있습니다!',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Color(0xFFE01029),
+                            SizedBox.fromSize(size: const Size(8, 8)),
+                            Text(
+                              widget.pillTodoParent.eTakingTime.time,
+                              style: const TextStyle(
+                                  fontSize: 20,
                                   fontFamily:
                                       'assets/fonts/Pretendard-SemiBold.otf'),
                             ),
-                          )),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: widget.pillTodoParent.todos.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return PillTodoChildrenItem(
-                            eTakingTime: widget.pillTodoParent.eTakingTime,
-                            pillTodoChildren:
-                                widget.pillTodoParent.todos[index],
-                            onClickChildrenCheckBox: (eTakingTime, todoId) {
-                              widget.onClickChildrenCheckBox(
-                                  eTakingTime, todoId);
-                            },
-                            onClickChildrenItemView: (eTakingTime, todoId) {
-                              widget.onClickChildrenItemView(
-                                  eTakingTime, todoId);
-                            },
-                          );
-                        },
-                      )
-                    ],
+                            SizedBox.fromSize(size: const Size(8, 8)),
+                            Text(
+                              widget.pillTodoParent.getTotalCnt(),
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  color: Color(0xFF90909F),
+                                  fontFamily:
+                                      'assets/fonts/Pretendard-SemiBold.otf'),
+                            ),
+                            //오른쪽 정렬된 Text
+                            const Spacer(),
+                            Text(
+                              '복용완료',
+                              style: widget.pillTodoParent.isCompleted
+                                  ? const TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF2666F6),
+                                      fontFamily:
+                                          'assets/fonts/Pretendard-SemiBold.otf')
+                                  : const TextStyle(
+                                      fontSize: 16,
+                                      color: Color(0xFF90909F),
+                                      fontFamily:
+                                          'assets/fonts/Pretendard-SemiBold.otf'),
+                            ),
+                            // CheckBox
+                            SizedBox.fromSize(size: const Size(8, 8)),
+                            InkWell(
+                              onTap: () {
+                                widget.onClickParentCheckBox(
+                                    widget.pillTodoParent.eTakingTime);
+                              },
+                              // InkWell Repple Effect 없애기
+                              splashColor: Colors.transparent,
+                              child: Container(
+                                width: 48,
+                                height: 48,
+                                child: widget.pillTodoParent.isCompleted
+                                    ? SvgPicture.asset(
+                                        'assets/icons/icon-check-on-36.svg')
+                                    : SvgPicture.asset(
+                                        'assets/icons/icon-check-off-36.svg'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      children: [
+                        Container(
+                            // width 꽉 차게
+                            width: MediaQuery.of(context).size.width - 20,
+                            height: 2,
+                            decoration:
+                                const BoxDecoration(color: Color(0xffe9e9ee))),
+                        Container(
+                            width: MediaQuery.of(context).size.width - 20,
+                            height: 40,
+                            margin: const EdgeInsetsDirectional.fromSTEB(
+                                0, 10, 0, 10),
+                            decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: Color(0x1AFF8282),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                '약물 중 성분이 같은 중복 약물이 있습니다!',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: Color(0xFFE01029),
+                                    fontFamily:
+                                        'assets/fonts/Pretendard-SemiBold.otf'),
+                              ),
+                            )),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: widget.pillTodoParent.todos.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return PillTodoChildrenItem(
+                              eTakingTime: widget.pillTodoParent.eTakingTime,
+                              pillTodoChildren:
+                                  widget.pillTodoParent.todos[index],
+                              onClickChildrenCheckBox: (eTakingTime, todoId) {
+                                widget.onClickChildrenCheckBox(
+                                    eTakingTime, todoId);
+                              },
+                              onClickChildrenItemView: (eTakingTime, todoId) {
+                                widget.onClickChildrenItemView(
+                                    eTakingTime, todoId);
+                              },
+                            );
+                          },
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ],

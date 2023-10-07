@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../models/Home/e_taking_time.dart';
 import '../../models/Home/pill_todo_children.dart';
@@ -29,8 +30,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onClickChildrenCheckBox(
-            widget.eTakingTime, widget.pillTodoChildren.id);
+        Get.toNamed('/pill/detail', arguments: widget.pillTodoChildren.kdCode);
       },
       child: Container(
         color: Colors.white,
