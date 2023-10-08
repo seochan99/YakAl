@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/IdentificationResult/style.dart';
-import 'package:yakal/widgets/Login/login_frame.dart';
-import 'package:yakal/widgets/Login/login_page_move_button.dart';
+import 'package:yakal/widgets/Base/bottom_button.dart';
+import 'package:yakal/widgets/Base/outer_frame.dart';
 
 import '../../../utilities/api/api.dart';
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Login/back_confirm_dialog.dart';
+import '../../../widgets/Base/back_confirm_dialog.dart';
 import '../../../widgets/Login/login_app_bar.dart';
 
 class IdentificationResultScreen extends StatelessWidget {
@@ -22,7 +22,7 @@ class IdentificationResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LoginFrame(
+    return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
@@ -102,7 +102,7 @@ class IdentificationResultScreen extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: LoginPageMoveButton(
+                        child: BottomButton(
                           snapshot.data! ? "다음" : "다시하기",
                           onPressed: isSuccess
                               ? () {
