@@ -83,4 +83,4 @@ jobs:
           docker stop yakal-was
           docker rm yakal-was
           docker image rm ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
-          docker run -d -v /root/yakal/resources:/app/resources --net yakal --ip 172.40.0.5 -p 8080:8080 --name yakal-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
+          docker run -d -v /root/resources:/app/resources -p 8080:8080 --name yakal-was ${{ secrets.DOCKERHUB_USERNAME }}/${{ secrets.DOCKERHUB_REPONAME }}
