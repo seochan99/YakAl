@@ -91,10 +91,7 @@ class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
             Get.back();
           },
           child: Container(
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
+            width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.fromLTRB(50.0, 30.0, 50.0, 50.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16.0),
@@ -129,10 +126,7 @@ class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
   @override
   Widget build(BuildContext context) {
     const padding = 30.0;
-    final width = MediaQuery
-        .of(context)
-        .size
-        .width - padding * 2;
+    final width = MediaQuery.of(context).size.width - padding * 2;
 
     return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,

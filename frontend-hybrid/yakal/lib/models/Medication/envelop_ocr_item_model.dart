@@ -6,4 +6,12 @@ class EnvelopOcrItemModel {
     required this.name,
     required this.base64Image,
   });
+
+  factory EnvelopOcrItemModel.copyWith(
+      EnvelopOcrItemModel envelopOcrItemModel) {
+    return EnvelopOcrItemModel(
+      name: envelopOcrItemModel.name,
+      base64Image: envelopOcrItemModel.base64Image,
+    );
+  }
 }
