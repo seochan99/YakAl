@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/ModeSelection/style.dart';
 import 'package:yakal/utilities/enum/mode.dart';
-import 'package:yakal/widgets/Login/login_frame.dart';
-import 'package:yakal/widgets/Login/login_page_move_button.dart';
+import 'package:yakal/widgets/Base/bottom_button.dart';
+import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Login/mode_selection_box.dart';
 
 import '../../../utilities/enum/login_process.dart';
@@ -22,7 +22,7 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return LoginFrame(
+    return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
@@ -183,13 +183,13 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
               children: [
                 Expanded(
                   child: _mode == EMode.NONE
-                      ? const LoginPageMoveButton(
+                      ? const BottomButton(
                           "다음",
                           onPressed: null,
                           backgroundColor: ColorStyles.gray2,
                           color: ColorStyles.gray3,
                         )
-                      : LoginPageMoveButton(
+                      : BottomButton(
                           "다음",
                           onPressed: () {
                             Get.toNamed("/login/mode/process",

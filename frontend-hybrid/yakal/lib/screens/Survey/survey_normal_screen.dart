@@ -26,28 +26,38 @@ class SurveyNormalScreen extends StatelessWidget {
               Get.offAndToNamed('/');
             },
           )),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          child: const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  '하나씩 완료해보세요!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+      body: Container(
+        color: Colors.white,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Container(
+                  color: Colors.white,
+                  child: const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          '하나씩 완료해보세요!',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w700),
+                        ),
+                        SizedBox(height: 16),
+                        Text(
+                          '테스트를 완료할수록 \n나에게 더 알맞는 맞춤형 진료를 받으실 수 있습니다.\n',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(height: 16),
+                        SurveyNormalList(),
+                      ],
+                    ),
+                  ),
                 ),
-                SizedBox(height: 16),
-                Text(
-                  '테스트를 완료할수록 \n나에게 더 알맞는 맞춤형 진료를 받으실 수 있습니다.\n',
-                  style: TextStyle(fontSize: 16),
-                ),
-                SizedBox(height: 16),
-                SurveyNormalList(),
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

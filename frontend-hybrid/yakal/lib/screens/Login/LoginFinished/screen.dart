@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginFinished/style.dart';
-import 'package:yakal/widgets/Login/login_frame.dart';
-import 'package:yakal/widgets/Login/login_page_move_button.dart';
+import 'package:yakal/widgets/Base/bottom_button.dart';
+import 'package:yakal/widgets/Base/outer_frame.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
@@ -16,7 +16,7 @@ class LoginFinishedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
 
-    return LoginFrame(
+    return OuterFrame(
       outOfSafeAreaColor: ColorStyles.white,
       safeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
@@ -73,7 +73,7 @@ class LoginFinishedScreen extends StatelessWidget {
             Row(
               children: [
                 Expanded(
-                  child: LoginPageMoveButton(
+                  child: BottomButton(
                     "메인으로",
                     onPressed: () {
                       Get.toNamed("/");
