@@ -19,6 +19,7 @@ import 'package:yakal/screens/Login/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
@@ -75,7 +76,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/',
+      initialRoute: '/login',
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
@@ -140,7 +141,14 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/calendar", page: () => CalenderScreen()),
         // /home/pill/add/$type
         GetPage(
-            name: "/pill/add/direct", page: () => const MedicationAddScreen()),
+            name: "/pill/add/direct",
+            page: () => const MedicationAddScreen(),
+            children: [
+              GetPage(
+                name: "/result",
+                page: () => MedicationDirectResult(),
+              ),
+            ]),
         GetPage(
             name: "/pill/add/ocrGeneral",
             page: () => const MedicationOcrGeneralScreen()),
