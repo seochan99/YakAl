@@ -48,60 +48,68 @@ class EnvelopOcrEntryScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Stack(
-                            children: [
-                              Transform.scale(
-                                scale: previewScale,
-                                child: SvgPicture.asset(
-                                  "assets/images/phone-outline.svg",
-                                ),
-                              ),
-                              Transform.translate(
-                                offset:
-                                    Offset(300 * (1 + previewScale) / 2, 78.07),
-                                child: Transform.scale(
+                          Container(
+                            width: MediaQuery.of(context).size.width -
+                                padding * 2.0,
+                            padding: EdgeInsets.zero,
+                            child: Stack(
+                              alignment: Alignment.topCenter,
+                              children: [
+                                Transform.scale(
                                   scale: previewScale,
                                   child: SvgPicture.asset(
-                                    "assets/images/bottom-button.svg",
+                                    "assets/images/phone-outline.svg",
                                   ),
                                 ),
-                              ),
-                              Transform.translate(
-                                offset: Offset(
-                                    17.7 * previewScale +
-                                        340 * (1 - previewScale) / 2,
-                                    75.74),
-                                child: Transform.scale(
-                                  scale: previewScale,
-                                  child: SvgPicture.asset(
-                                    "assets/images/speaker.svg",
+                                Transform.translate(
+                                  offset: Offset(
+                                    290 * previewScale / 2,
+                                    78.5 * previewScale,
                                   ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: const Offset(41.09, 10.13),
-                                child: Transform.scale(
-                                  scale: previewScale,
-                                  child: SvgPicture.asset(
-                                    "assets/images/screen.svg",
-                                  ),
-                                ),
-                              ),
-                              Transform.translate(
-                                offset: const Offset(53.64, 12.8),
-                                child: Transform.scale(
-                                  scale: previewScale,
-                                  child: SvgPicture.asset(
-                                    "assets/images/medicine-envelop.svg",
-                                    colorFilter: const ColorFilter.mode(
-                                      ColorStyles.white,
-                                      BlendMode.dstOver,
+                                  child: Transform.scale(
+                                    scale: previewScale,
+                                    child: SvgPicture.asset(
+                                      "assets/images/bottom-button.svg",
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
+                                Transform.translate(
+                                  offset: Offset(
+                                    -290 * previewScale / 2,
+                                    77.0 * previewScale,
+                                  ),
+                                  child: Transform.scale(
+                                    scale: previewScale,
+                                    child: SvgPicture.asset(
+                                      "assets/images/speaker.svg",
+                                    ),
+                                  ),
+                                ),
+                                Transform.translate(
+                                  offset: Offset(0.0, 10.0 * previewScale),
+                                  child: Transform.scale(
+                                    scale: previewScale,
+                                    child: SvgPicture.asset(
+                                      "assets/images/screen.svg",
+                                    ),
+                                  ),
+                                ),
+                                Transform.translate(
+                                  offset: Offset(0.0, 13.0 * previewScale),
+                                  child: Transform.scale(
+                                    scale: previewScale,
+                                    child: SvgPicture.asset(
+                                      "assets/images/medicine-envelop.svg",
+                                      colorFilter: const ColorFilter.mode(
+                                        ColorStyles.white,
+                                        BlendMode.dstOver,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                       const SizedBox(
