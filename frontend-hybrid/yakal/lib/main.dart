@@ -7,6 +7,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 // import 'package:yakal/screens/Auth/auth_login_screen.dart';
 import 'package:yakal/screens/Calender/calender_screen.dart';
+import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
@@ -153,25 +154,26 @@ class MyApp extends StatelessWidget {
             name: "/pill/add/ocrGeneral",
             page: () => const MedicationOcrGeneralScreen()),
         GetPage(
-          name: "/pill/add/ocrEnvelop",
-          page: () => const EnvelopOcrEntryScreen(),
-          children: [
-            GetPage(
-              name: "/shot",
-              page: () => const EnvelopShotScreen(),
-            ),
-            GetPage(
-              name: "/review",
-              page: () => const EnvelopShotReviewScreen(),
-            ),
-            GetPage(
-              name: "/process",
-              page: () => const EnvelopAnalysisScreen(),
-            ),
-            GetPage(
-              name: "/result",
-              page: () => const EnvelopOcrAnalysisResult(),
-            ),
+            name: "/pill/add/ocrEnvelop",
+            page: () => const EnvelopOcrEntryScreen(),
+            children: [
+              GetPage(
+                name: "/shot",
+                page: () => const EnvelopShotScreen(),
+              ),
+              GetPage(
+                name: "/review",
+                page: () => const EnvelopShotReviewScreen(),
+              ),
+              GetPage(
+                name: "/process",
+                page: () => const EnvelopAnalysisScreen(),
+              ),
+              GetPage(
+                name: "/result",
+                page: () => const EnvelopOcrAnalysisResult(),
+              ),
+        GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
           ],
         )
       ],

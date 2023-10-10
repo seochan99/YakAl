@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 
 import '../../models/Home/e_taking_time.dart';
 import '../../models/Home/pill_todo_children.dart';
@@ -29,8 +30,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        widget.onClickChildrenCheckBox(
-            widget.eTakingTime, widget.pillTodoChildren.id);
+        Get.toNamed('/pill/detail', arguments: widget.pillTodoChildren.kdCode);
       },
       child: Container(
         color: Colors.white,
@@ -38,7 +38,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox.fromSize(size: const Size(15, 20)),
+            SizedBox.fromSize(size: const Size(5, 20)),
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: widget.pillTodoChildren.base64Image.isEmpty
@@ -93,7 +93,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                         'assets/icons/icon-check-oval-off-24.svg'),
               ),
             ),
-            SizedBox.fromSize(size: const Size(15, 20)),
+            SizedBox.fromSize(size: const Size(5, 20)),
           ],
         ),
       ),
