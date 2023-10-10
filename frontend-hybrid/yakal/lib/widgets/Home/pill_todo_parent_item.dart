@@ -44,7 +44,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                         ? const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
                             border: Border.fromBorderSide(
-                                BorderSide(color: Colors.blue)),
+                                BorderSide(color: Color(0xFF2666F6))),
                             color: Colors.white)
                         : const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),

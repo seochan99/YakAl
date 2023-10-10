@@ -19,6 +19,7 @@ class _PillCalenderState extends State<PillCalender> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
+          padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
           decoration: const BoxDecoration(color: Colors.white),
           child: TableCalendar(
             locale: 'ko_KR',
