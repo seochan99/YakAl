@@ -32,48 +32,47 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
             width: 60,
             height: 80,
           )
-        : Card(
-            elevation: 2,
-            child: Column(
-              children: [
-                Container(
-                  padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                  decoration: widget.pillTodoParent.isExpanded
-                      ? const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.fromBorderSide(
-                              BorderSide(color: Colors.blue)),
-                          color: Colors.white)
-                      : const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          border: Border.fromBorderSide(
-                              BorderSide(color: Colors.white)),
-                          color: Colors.white,
-                        ),
-                  child: Theme(
-                    data: Theme.of(context)
-                        .copyWith(dividerColor: Colors.transparent),
-                    child: ExpansionTile(
-                      onExpansionChanged: (newState) {
-                        widget.onClickParentItemView(
-                            widget.pillTodoParent.eTakingTime);
-                      },
-                      trailing: const SizedBox(),
-                      childrenPadding:
-                          const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
-                      title: Padding(
-                        padding:
-                            const EdgeInsetsDirectional.fromSTEB(5, 10, 5, 10),
-                        child: Row(
+        : Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+            child: Card(
+              elevation: 2,
+              child: Column(
+                children: [
+                  Container(
+                    padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
+                    decoration: widget.pillTodoParent.isExpanded
+                        ? const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.fromBorderSide(
+                                BorderSide(color: Colors.blue)),
+                            color: Colors.white)
+                        : const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            border: Border.fromBorderSide(
+                                BorderSide(color: Colors.white)),
+                            color: Colors.white,
+                          ),
+                    child: Theme(
+                      data: Theme.of(context)
+                          .copyWith(dividerColor: Colors.transparent),
+                      child: ExpansionTile(
+                        onExpansionChanged: (newState) {
+                          widget.onClickParentItemView(
+                              widget.pillTodoParent.eTakingTime);
+                        },
+                        trailing: const SizedBox(),
+                        tilePadding: const EdgeInsetsDirectional.fromSTEB(
+                            10, 10, 10, 10),
+                        childrenPadding:
+                            const EdgeInsetsDirectional.fromSTEB(5, 0, 5, 5),
+                        title: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Container(
                               decoration: const BoxDecoration(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10)),
-                                color: false
-                                    ? Color(0xffe9f0ff)
-                                    : Color(0xffE9E9EE),
+                                color: Color(0xffE9E9EE),
                               ),
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   3, 3, 3, 3),
@@ -139,59 +138,60 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                             ),
                           ],
                         ),
+                        children: [
+                          Container(
+                              // width 꽉 차게
+                              width: MediaQuery.of(context).size.width - 20,
+                              height: 2,
+                              decoration: const BoxDecoration(
+                                  color: Color(0xffe9e9ee))),
+                          if (widget.pillTodoParent.isOverLap)
+                            Container(
+                                width: MediaQuery.of(context).size.width - 20,
+                                height: 40,
+                                margin: const EdgeInsetsDirectional.fromSTEB(
+                                    0, 10, 0, 10),
+                                decoration: const BoxDecoration(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                  color: Color(0x1AFF8282),
+                                ),
+                                child: const Center(
+                                  child: Text(
+                                    '약물 중 성분이 같은 중복 약물이 있습니다!',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Color(0xFFE01029),
+                                        fontFamily:
+                                            'assets/fonts/Pretendard-SemiBold.otf'),
+                                  ),
+                                )),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: widget.pillTodoParent.todos.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return PillTodoChildrenItem(
+                                eTakingTime: widget.pillTodoParent.eTakingTime,
+                                pillTodoChildren:
+                                    widget.pillTodoParent.todos[index],
+                                onClickChildrenCheckBox: (eTakingTime, todoId) {
+                                  widget.onClickChildrenCheckBox(
+                                      eTakingTime, todoId);
+                                },
+                                onClickChildrenItemView: (eTakingTime, todoId) {
+                                  widget.onClickChildrenItemView(
+                                      eTakingTime, todoId);
+                                },
+                              );
+                            },
+                          )
+                        ],
                       ),
-                      children: [
-                        Container(
-                            // width 꽉 차게
-                            width: MediaQuery.of(context).size.width - 20,
-                            height: 2,
-                            decoration:
-                                const BoxDecoration(color: Color(0xffe9e9ee))),
-                        Container(
-                            width: MediaQuery.of(context).size.width - 20,
-                            height: 40,
-                            margin: const EdgeInsetsDirectional.fromSTEB(
-                                0, 10, 0, 10),
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)),
-                              color: Color(0x1AFF8282),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '약물 중 성분이 같은 중복 약물이 있습니다!',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: Color(0xFFE01029),
-                                    fontFamily:
-                                        'assets/fonts/Pretendard-SemiBold.otf'),
-                              ),
-                            )),
-                        ListView.builder(
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: widget.pillTodoParent.todos.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return PillTodoChildrenItem(
-                              eTakingTime: widget.pillTodoParent.eTakingTime,
-                              pillTodoChildren:
-                                  widget.pillTodoParent.todos[index],
-                              onClickChildrenCheckBox: (eTakingTime, todoId) {
-                                widget.onClickChildrenCheckBox(
-                                    eTakingTime, todoId);
-                              },
-                              onClickChildrenItemView: (eTakingTime, todoId) {
-                                widget.onClickChildrenItemView(
-                                    eTakingTime, todoId);
-                              },
-                            );
-                          },
-                        )
-                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           );
   }

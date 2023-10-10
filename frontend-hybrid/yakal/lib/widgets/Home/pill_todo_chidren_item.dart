@@ -38,7 +38,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox.fromSize(size: const Size(15, 20)),
+            SizedBox.fromSize(size: const Size(5, 20)),
             ClipRRect(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               child: widget.pillTodoChildren.base64Image.isEmpty
@@ -93,7 +93,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                         'assets/icons/icon-check-oval-off-24.svg'),
               ),
             ),
-            SizedBox.fromSize(size: const Size(15, 20)),
+            SizedBox.fromSize(size: const Size(5, 20)),
           ],
         ),
       ),
