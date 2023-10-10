@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'dart:convert';
@@ -17,26 +19,33 @@ class SearchMedicineModel {
 }
 
 Future<List<SearchMedicineModel>> searchMedicine(String keyword) async {
-  final Uri url = Uri.parse("https://api2.kims.co.kr/api/search/list")
+  final Dio dio = Dio();
+
+  final Uri url = Uri.parse("${dotenv.env['KIMS_SERVER_HOST']}/search/list")
       .replace(queryParameters: {
     "keyword": keyword,
     "mode": "1",
     "pageNo": "1",
   });
 
-  const String username = "DIVWPM";
-  const String password = "DIVWPM";
+  String username = dotenv.env['KIMS_SERVER_USERNAME'] ?? "";
+  String password = dotenv.env['KIMS_SERVER_PASSWORD'] ?? "";
+
   final String basicAuth =
       'Basic ${base64Encode(utf8.encode('$username:$password'))}';
 
-  final response = await http.get(url, headers: {
-    'Content-Type': 'application/json',
-    'Authorization': basicAuth,
-  });
+  final response = await dio.get(
+    url.toString(),
+    options: Options(
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': basicAuth,
+      },
+    ),
+  );
 
-  print(response.body);
   if (response.statusCode == 200) {
-    Map<String, dynamic> jsonResponse = json.decode(response.body);
+    Map<String, dynamic> jsonResponse = response.data;
     if (jsonResponse.containsKey("List")) {
       List<dynamic> list = jsonResponse["List"];
       return list
@@ -113,7 +122,6 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
   void _handleButtonPress() {
     medicinController.clear();
-    // /pill/add/direct/result 로 medicinController.text 넘기기
     Get.toNamed("/pill/add/direct/result", arguments: {
       "medicin": selectedMedicineName,
       "code": selectedMedicineCode
