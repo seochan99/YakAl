@@ -100,7 +100,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
     var isSuccess = await _kakaoLogin();
 
     if (isSuccess) {
-      Get.offNamed("/login/identify/entry");
+      Get.offNamed("/login/terms");
     } else {
       Get.back();
 

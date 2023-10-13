@@ -28,6 +28,7 @@ class TermsDetailScreen extends StatelessWidget {
             title,
             style: TermsDetailStyle.title,
           ),
+          centerTitle: true,
           backgroundColor: ColorStyles.white,
           automaticallyImplyLeading: true,
           leadingWidth: 72,

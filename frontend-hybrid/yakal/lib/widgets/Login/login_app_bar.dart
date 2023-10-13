@@ -54,6 +54,7 @@ class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
+      centerTitle: true,
       backgroundColor: ColorStyles.white,
       automaticallyImplyLeading: true,
       leadingWidth: 90,
