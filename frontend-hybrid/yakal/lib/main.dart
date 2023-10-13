@@ -37,6 +37,7 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
+import 'package:yakal/utilities/middleware/user_info.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
@@ -78,13 +79,29 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       // 라우팅 설정
       getPages: [
-        GetPage(name: '/', page: () => const MyBottomNavigationBar()),
+        GetPage(
+          name: '/',
+          page: () => const MyBottomNavigationBar(),
+          middlewares: [UserInfoMiddleware()],
+        ),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
-        GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
-        GetPage(name: "/profile/star", page: () => InfoStarScreen()),
-        GetPage(name: "/profile/wish", page: () => const ProfileWishScreen()),
+        GetPage(
+            name: "/profile/boho",
+            page: () => InfoBohoScreen(),
+            middlewares: [UserInfoMiddleware()]),
+        GetPage(
+            name: "/profile/hospital",
+            page: () => InfoHospitalScreen(),
+            middlewares: [UserInfoMiddleware()]),
+        GetPage(
+            name: "/profile/star",
+            page: () => InfoStarScreen(),
+            middlewares: [UserInfoMiddleware()]),
+        GetPage(
+            name: "/profile/wish",
+            page: () => const ProfileWishScreen(),
+            middlewares: [UserInfoMiddleware()]),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
@@ -131,22 +148,56 @@ class MyApp extends StatelessWidget {
             ),
           ],
         ),
-        GetPage(name: '/setting/app', page: () => const SettingScreen()),
-        GetPage(name: '/setting/alert', page: () => const AlertScreen()),
-        GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
-        GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
-        GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
-        GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
-        GetPage(name: "/calendar", page: () => CalenderScreen()),
+        GetPage(
+          name: '/setting/app',
+          page: () => const SettingScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: '/setting/alert',
+          page: () => const AlertScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: '/signout',
+          page: () => const SettingSignoutScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: "/seniorSurvey",
+          page: () => const SurveySeniorScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: "/normalSurvey",
+          page: () => const SurveyNormalScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: "/survey/result",
+          page: () => const SurveyResultScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
+        GetPage(
+          name: "/calendar",
+          page: () => CalenderScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
         // /home/pill/add/$type
         GetPage(
-            name: "/pill/add/direct", page: () => const MedicationAddScreen()),
+          name: "/pill/add/direct",
+          page: () => const MedicationAddScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
         GetPage(
-            name: "/pill/add/ocrGeneral",
-            page: () => const MedicationOcrGeneralScreen()),
+          name: "/pill/add/ocrGeneral",
+          page: () => const MedicationOcrGeneralScreen(),
+          middlewares: [UserInfoMiddleware()],
+        ),
         GetPage(
           name: "/pill/add/ocrEnvelop",
           page: () => const EnvelopOcrEntryScreen(),
+          middlewares: [UserInfoMiddleware()],
           children: [
             GetPage(
               name: "/shot",
