@@ -5,6 +5,7 @@ import '../../utilities/enum/mode.dart';
 class User {
   String nickName;
   EMode mode;
+  bool? isAgreedMarketing;
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
@@ -18,6 +19,10 @@ class User {
     } else {
       mode = EMode.NONE;
     }
+
+    if (prefs.getBool("IS_AGREED_MARKETING") != null) {
+      isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING")!;
+    }
   }
 
   Future<void> setNickname(String nickname) async {
@@ -30,6 +35,12 @@ class User {
     final prefs = await SharedPreferences.getInstance();
     prefs.setInt("MODE", mode.index);
     this.mode = mode;
+  }
+
+  Future<void> setIsiAgreedMarketing(bool isAgreed) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_AGREED_MARKETING", isAgreed);
+    isAgreedMarketing = isAgreed;
   }
 
   User({

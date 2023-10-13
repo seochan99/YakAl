@@ -6,7 +6,6 @@ import 'package:yakal/widgets/Base/outer_frame.dart';
 
 import '../../../utilities/enum/login_process.dart';
 import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Base/back_confirm_dialog.dart';
 import '../../../widgets/Login/login_app_bar.dart';
 
 class IdentificationEntryScreen extends StatelessWidget {
@@ -19,17 +18,7 @@ class IdentificationEntryScreen extends StatelessWidget {
       safeAreaColor: ColorStyles.white,
       appBar: LoginAppBar(
         onPressed: () {
-          showDialog(
-            context: context,
-            barrierDismissible: true,
-            barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
-            builder: (BuildContext context) {
-              return const BackConfirmDialog(
-                question: "로그인을 다시 시도하시겠습니까?",
-                backTo: "/login",
-              );
-            },
-          );
+          Get.back();
         },
         progress: ELoginProcess.IDENTIFY,
       ),
