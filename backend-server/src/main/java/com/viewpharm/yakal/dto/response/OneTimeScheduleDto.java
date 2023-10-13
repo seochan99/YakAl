@@ -10,6 +10,7 @@ public class OneTimeScheduleDto {
 
     final Long id;
     final String KDCode;
+    final String dosename;
     final Risk ATCCode;
     final Boolean isTaken;
     final Boolean isOverlap;
