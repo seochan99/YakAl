@@ -20,6 +20,13 @@ class UserViewModel extends GetxController {
     });
   }
 
+  // 마케팅 정보 동의 여부
+  void updateMarketingAgreement(bool isAgreed) {
+    user.update((val) {
+      val?.setIsiAgreedMarketing(isAgreed);
+    });
+  }
+
   // 보호자 정보 추가
   void addOrUpdateGuardian(String name, DateTime? birthDate) {
     user.update((val) {
@@ -95,7 +102,7 @@ class UserViewModel extends GetxController {
           case 'underlyingConditions':
             val?.specialNote!.underlyingConditions.add(item as String);
             break;
-          // allergies
+        // allergies
           case 'allergies':
             val?.specialNote!.allergies.add(item as String);
             break;

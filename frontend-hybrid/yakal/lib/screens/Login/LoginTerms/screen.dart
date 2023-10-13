@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginTerms/style.dart';
 import 'package:yakal/screens/Login/TermsDetail/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 import 'package:yakal/widgets/Login/login_app_bar.dart';
@@ -92,6 +93,8 @@ class LoginTermsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = Get.put(_TermsCheckedController());
+    final UserViewModel userViewModel =
+    Get.put(UserViewModel(), permanent: true);
 
     return OuterFrame(
       safeAreaColor: ColorStyles.white,
@@ -138,7 +141,7 @@ class LoginTermsScreen extends StatelessWidget {
                 Row(
                   children: [
                     Obx(
-                      () {
+                          () {
                         return AuthCheckButton(
                           isChecked: controller.isCheckedAll(),
                           onPressed: controller.toggleAll,
@@ -159,81 +162,85 @@ class LoginTermsScreen extends StatelessWidget {
                 ),
                 ...List.generate(
                   terms.length,
-                  (index) => Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      (index) =>
+                      Column(
                         children: [
                           Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Obx(
-                                () {
-                                  return AuthCheckButton(
-                                    isChecked: controller.isChecked[index],
-                                    onPressed: controller.toggle(index),
+                              Row(
+                                children: [
+                                  Obx(
+                                        () {
+                                      return AuthCheckButton(
+                                        isChecked: controller.isChecked[index],
+                                        onPressed: controller.toggle(index),
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(
+                                    width: 16,
+                                  ),
+                                  Text(
+                                    "(${terms[index]["isRequired"] as bool
+                                        ? "필수"
+                                        : "선택"})",
+                                    style: (terms[index]["isRequired"] as bool
+                                        ? LoginTermsStyle.checkedRequired
+                                        : LoginTermsStyle.checkedOptional),
+                                  ),
+                                  Text(
+                                    " ${terms[index]["title"] as String}",
+                                    style: LoginTermsStyle.checkedRequired,
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  showGeneralDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    transitionDuration: const Duration(
+                                      milliseconds: 250,
+                                    ),
+                                    transitionBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      return SlideTransition(
+                                        position: Tween<Offset>(
+                                          begin: const Offset(0.0, 1.0),
+                                          end: const Offset(0.0, 0.0),
+                                        ).animate(
+                                          CurvedAnimation(
+                                            parent: animation,
+                                            curve: Curves.easeInOut,
+                                          ),
+                                        ),
+                                        child: child,
+                                      );
+                                    },
+                                    pageBuilder:
+                                        (context, animation,
+                                        secondaryAnimation) {
+                                      return TermsDetailScreen(
+                                        title: terms[index]["title"] as String,
+                                        content: terms[index]["content"] as String,
+                                      );
+                                    },
                                   );
                                 },
-                              ),
-                              const SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                "(${terms[index]["isRequired"] as bool ? "필수" : "선택"})",
-                                style: (terms[index]["isRequired"] as bool
-                                    ? LoginTermsStyle.checkedRequired
-                                    : LoginTermsStyle.checkedOptional),
-                              ),
-                              Text(
-                                " ${terms[index]["title"] as String}",
-                                style: LoginTermsStyle.checkedRequired,
+                                child: SvgPicture.asset(
+                                  "assets/icons/next.svg",
+                                  width: 8,
+                                  height: 16,
+                                ),
                               ),
                             ],
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              showGeneralDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                transitionDuration: const Duration(
-                                  milliseconds: 250,
-                                ),
-                                transitionBuilder: (context, animation,
-                                    secondaryAnimation, child) {
-                                  return SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(0.0, 1.0),
-                                      end: const Offset(0.0, 0.0),
-                                    ).animate(
-                                      CurvedAnimation(
-                                        parent: animation,
-                                        curve: Curves.easeInOut,
-                                      ),
-                                    ),
-                                    child: child,
-                                  );
-                                },
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) {
-                                  return TermsDetailScreen(
-                                    title: terms[index]["title"] as String,
-                                    content: terms[index]["content"] as String,
-                                  );
-                                },
-                              );
-                            },
-                            child: SvgPicture.asset(
-                              "assets/icons/next.svg",
-                              width: 8,
-                              height: 16,
-                            ),
+                          const SizedBox(
+                            height: 32,
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 32,
-                      ),
-                    ],
-                  ),
                 ),
               ],
             ),
@@ -241,14 +248,19 @@ class LoginTermsScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Obx(
-                    () {
+                        () {
                       final canMoveNext = controller.isCheckedRequiredAll();
 
                       return TextButton(
                         onPressed: canMoveNext
                             ? () {
-                                Get.toNamed("/login/identify/entry");
-                              }
+                          var isAgreedMarketing = controller.isChecked[3];
+                          userViewModel.updateMarketingAgreement(
+                              isAgreedMarketing);
+
+                          Get.toNamed(
+                              "/login/identify/entry");
+                        }
                             : null,
                         style: TextButton.styleFrom(
                           backgroundColor: canMoveNext
