@@ -6,6 +6,11 @@ import '../../utilities/enum/mode.dart';
 class UserViewModel extends GetxController {
   var user = User().obs;
 
+  // 로그아웃이나 유효하지 않은 토큰
+  void reset() {
+    user.value.reset();
+  }
+
   // Update nickname
   void updateNickName(String newNickName) {
     user.update((val) {
@@ -102,7 +107,7 @@ class UserViewModel extends GetxController {
           case 'underlyingConditions':
             val?.specialNote!.underlyingConditions.add(item as String);
             break;
-        // allergies
+          // allergies
           case 'allergies':
             val?.specialNote!.allergies.add(item as String);
             break;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' as get_x;
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio(BaseOptions(
@@ -77,6 +78,13 @@ Future<Dio> authDio(BuildContext context) async {
 
                 if (error.response?.statusCode == 401) {
                   await storage.deleteAll();
+
+                  final controller = get_x.Get.put(
+                    UserViewModel(),
+                    permanent: true,
+                  );
+                  controller.reset();
+
                   get_x.Get.offAllNamed("/login");
 
                   if (!context.mounted) {

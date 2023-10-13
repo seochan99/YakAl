@@ -25,6 +25,17 @@ class User {
     }
   }
 
+  Future<void> reset() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("NICKNAME");
+    prefs.remove("MODE");
+    prefs.remove("IS_AGREED_MARKETING");
+
+    nickName = "";
+    mode = EMode.NONE;
+    isAgreedMarketing = null;
+  }
+
   Future<void> setNickname(String nickname) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("NICKNAME", nickname);
