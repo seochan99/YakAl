@@ -13,7 +13,6 @@ class UserInfoMiddleware extends GetMiddleware {
     final accessToken = await storage.read(key: 'ACCESS_TOKEN');
 
     if (accessToken == null) {
-      userViewModel.reset();
       return Get.rootDelegate.toNamed("/login");
     }
 

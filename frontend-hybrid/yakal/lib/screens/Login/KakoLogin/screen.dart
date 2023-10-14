@@ -6,6 +6,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/utilities/enum/mode.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 import '../../../utilities/style/color_styles.dart';
 
@@ -17,6 +19,8 @@ class KakaoLoginScreen extends StatefulWidget {
 }
 
 class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
+  final userViewModel = Get.put(UserViewModel(), permanent: true);
+
   Future<bool> _kakaoLoginByAccessToken(String accessToken) async {
     var dio = Dio();
 
@@ -24,7 +28,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
 
     try {
       var tokenResponse = await dio.post(
-        "${dotenv.get("YAKAL_SERVER_HOST", fallback: "http://localhost:8080/api/v1")}/auth/kakao",
+        "${dotenv.get("YAKAL_SERVER_HOST")}/auth/kakao",
       );
 
       final newAccessToken =
@@ -100,7 +104,29 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
     var isSuccess = await _kakaoLogin();
 
     if (isSuccess) {
-      Get.offNamed("/login/terms");
+      if (!context.mounted) {
+        return;
+      }
+
+      await userViewModel.fetchNameAndMode(context);
+
+      if (userViewModel.user.value.isAgreedMarketing == null) {
+        Get.offNamed("/login/terms");
+        return;
+      }
+
+      final regex = RegExp(r'user#\d{6}');
+      if (regex.hasMatch(userViewModel.user.value.nickName)) {
+        Get.offNamed("/login/nickname");
+        return;
+      }
+
+      if (userViewModel.user.value.mode == EMode.NONE) {
+        Get.offNamed("/login/mode");
+        return;
+      }
+
+      Get.offNamed("/");
     } else {
       Get.back();
 

@@ -40,9 +40,9 @@ public class UserController {
                 .Nickname(user.getName())
                 .isDetail(user.getIsDetail())
                 .notiIsAllowed(user.getNotiIsAllowed())
-                .breakfastTime(user.getBreakfastTime().toString())
-                .lunchTime(user.getLunchTime().toString())
-                .dinnerTime(user.getDinnerTime().toString())
+                .breakfastTime(user.getBreakfastTime() == null ? null : user.getBreakfastTime().toString())
+                .lunchTime(user.getLunchTime() == null ? null : user.getLunchTime().toString())
+                .dinnerTime(user.getDinnerTime() == null ? null : user.getDinnerTime().toString())
                 .AnswerCount(userService.countAnswer(user))
                 .build();
 

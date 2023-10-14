@@ -34,6 +34,7 @@ Future<Dio> authDio(BuildContext context) async {
         /* Request Logging */
         if (kDebugMode) {
           print('🛫 [${options.method}] ${options.path} | START');
+          print('🔑 [JWT Bearer Token] $accessToken');
         }
 
         return handler.next(options);

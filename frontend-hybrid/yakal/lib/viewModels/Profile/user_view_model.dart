@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 import '../../models/Profile/user.dart';
@@ -8,7 +9,14 @@ class UserViewModel extends GetxController {
 
   // 로그아웃이나 유효하지 않은 토큰
   void reset() {
-    user.value.reset();
+    user.update((val) {
+      val?.reset();
+    });
+  }
+
+  Future<void> fetchNameAndMode(BuildContext context) async {
+    await user.value.fetch(context);
+    user.refresh();
   }
 
   // Update nickname

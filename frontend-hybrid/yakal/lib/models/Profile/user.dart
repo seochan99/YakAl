@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yakal/utilities/api/api.dart';
 
 import '../../utilities/enum/mode.dart';
 
@@ -10,6 +12,7 @@ class User {
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
 
+  // 스토리지에서 유저 정보 가져오기
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
@@ -25,6 +28,7 @@ class User {
     }
   }
 
+  // 유저 정보 초기화, 토큰은 그대로 남아있음
   Future<void> reset() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.remove("NICKNAME");
@@ -34,6 +38,23 @@ class User {
     nickName = "";
     mode = EMode.NONE;
     isAgreedMarketing = null;
+  }
+
+  // 유저 이름과 모드를 서버에서 가져옴
+  Future<void> fetch(BuildContext context) async {
+    final dio = await authDio(context);
+
+    final response = await dio.get("/user");
+
+    if (response.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
+
+      nickName = response.data["data"]["nickname"];
+      prefs.setString("NICKNAME", nickName);
+
+      mode = response.data["data"]["isDetail"] ? EMode.LITE : EMode.NORMAL;
+      prefs.setInt("MODE", mode.index);
+    }
   }
 
   Future<void> setNickname(String nickname) async {
@@ -52,6 +73,12 @@ class User {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("IS_AGREED_MARKETING", isAgreed);
     isAgreedMarketing = isAgreed;
+  }
+
+  Future<void> setIsIdentified(bool isIdentified) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_IDENTIFIED", isIdentified);
+    isIdentified = isIdentified;
   }
 
   User({
