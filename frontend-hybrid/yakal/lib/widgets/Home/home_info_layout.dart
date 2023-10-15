@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
@@ -125,9 +126,9 @@ class HomeInfoLayout extends StatelessWidget {
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: ColorStyles.gray1,
                       side: const BorderSide(
-                        color: Colors.grey,
+                        color: ColorStyles.gray2,
                         width: 1,
                       ),
                       shape: RoundedRectangleBorder(
@@ -141,10 +142,10 @@ class HomeInfoLayout extends StatelessWidget {
                       'assets/icons/icon-home-calendar.svg',
                     ),
                     label: const Text(
-                      '다른 날짜 복용 현황',
+                      '다른 날짜 복약정보',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF626272),
+                        color: ColorStyles.gray5,
                         fontFamily: 'assets/fonts/Pretendard-Medium.otf',
                       ),
                     ),
