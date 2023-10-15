@@ -37,19 +37,19 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
         : Padding(
             padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 0),
             child: Card(
-              elevation: 2,
+              elevation: 0,
               child: Column(
                 children: [
                   Container(
                     padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
                     decoration: widget.pillTodoParent.isExpanded
                         ? const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             border: Border.fromBorderSide(
                                 BorderSide(color: Color(0xFF2666F6))),
                             color: Colors.white)
                         : const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(16)),
                             border: Border.fromBorderSide(
                                 BorderSide(color: Colors.white)),
                             color: Colors.white,
@@ -62,12 +62,6 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                           widget.onClickParentItemView(
                               widget.pillTodoParent.eTakingTime);
                         },
-                        collapsedShape: const RoundedRectangleBorder(
-                          side: BorderSide.none,
-                        ),
-                        shape: const RoundedRectangleBorder(
-                          side: BorderSide.none,
-                        ),
                         expandedCrossAxisAlignment: CrossAxisAlignment.start,
                         tilePadding: const EdgeInsetsDirectional.fromSTEB(
                             10, 10, 10, 10),
