@@ -22,7 +22,7 @@ Future<Dio> authDio(BuildContext context) async {
           (RequestOptions options, RequestInterceptorHandler handler) async {
         /* Set Access Token to Bearer Auth Header */
         final accessToken = await storage.read(key: 'ACCESS_TOKEN');
-
+        print("ACCESS_TOKEN $accessToken");
         if (accessToken == null) {
           get_x.Get.offAllNamed("/login");
           return;

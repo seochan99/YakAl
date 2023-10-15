@@ -75,7 +75,7 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           "동화디트로판정",
                           style: TextStyle(
                             fontSize: 16,
@@ -83,7 +83,7 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                           ),
                         ),
                         SizedBox.fromSize(size: const Size(8, 8)),
-                        Text(
+                        const Text(
                           "방광 & 전립선질환 치료제.혹시나 두줄일 경우 행간 22px",
                           style: TextStyle(
                             fontSize: 12,
@@ -118,7 +118,7 @@ class _PillDetailScreenState extends State<PillDetailScreen>
             Expanded(
               child: TabBarView(
                 controller: tabController,
-                children: [
+                children: const [
                   DetailFragment(),
                   DetailFragment(),
                   DetailFragment(),
