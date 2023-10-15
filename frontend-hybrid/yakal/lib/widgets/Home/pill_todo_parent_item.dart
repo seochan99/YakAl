@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/widgets/Base/custom_expansion_tile.dart';
 import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
@@ -33,7 +35,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
             height: 80,
           )
         : Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+            padding: const EdgeInsetsDirectional.fromSTEB(15, 10, 15, 0),
             child: Card(
               elevation: 2,
               child: Column(
@@ -55,12 +57,18 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                     child: Theme(
                       data: Theme.of(context)
                           .copyWith(dividerColor: Colors.transparent),
-                      child: ExpansionTile(
+                      child: MyExpansionTile(
                         onExpansionChanged: (newState) {
                           widget.onClickParentItemView(
                               widget.pillTodoParent.eTakingTime);
                         },
-                        trailing: const SizedBox(),
+                        collapsedShape: const RoundedRectangleBorder(
+                          side: BorderSide.none,
+                        ),
+                        shape: const RoundedRectangleBorder(
+                          side: BorderSide.none,
+                        ),
+                        expandedCrossAxisAlignment: CrossAxisAlignment.start,
                         tilePadding: const EdgeInsetsDirectional.fromSTEB(
                             10, 10, 10, 10),
                         childrenPadding:
@@ -85,38 +93,35 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                       'assets/icons/icon-pill-off.svg'),
                             ),
                             SizedBox.fromSize(size: const Size(8, 8)),
-                            Text(
-                              widget.pillTodoParent.eTakingTime.time,
-                              style: const TextStyle(
+                            Text(widget.pillTodoParent.eTakingTime.time,
+                                style: const TextStyle(
                                   fontSize: 20,
-                                  fontFamily:
-                                      'assets/fonts/Pretendard-SemiBold.otf'),
-                            ),
+                                  color: ColorStyles.black,
+                                  fontWeight: FontWeight.w600,
+                                )),
                             SizedBox.fromSize(size: const Size(8, 8)),
                             Text(
                               widget.pillTodoParent.getTotalCnt(),
                               style: const TextStyle(
-                                  fontSize: 14,
-                                  color: Color(0xFF90909F),
-                                  fontFamily:
-                                      'assets/fonts/Pretendard-SemiBold.otf'),
+                                fontSize: 14,
+                                color: ColorStyles.gray4,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                             //오른쪽 정렬된 Text
                             const Spacer(),
-                            Text(
-                              '복용완료',
-                              style: widget.pillTodoParent.isCompleted
-                                  ? const TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xFF2666F6),
-                                      fontFamily:
-                                          'assets/fonts/Pretendard-SemiBold.otf')
-                                  : const TextStyle(
-                                      fontSize: 16,
-                                      color: Color(0xFF90909F),
-                                      fontFamily:
-                                          'assets/fonts/Pretendard-SemiBold.otf'),
-                            ),
+                            Text('모두 완료',
+                                style: widget.pillTodoParent.isCompleted
+                                    ? const TextStyle(
+                                        fontSize: 16,
+                                        color: ColorStyles.main,
+                                        fontWeight: FontWeight.w700,
+                                      )
+                                    : const TextStyle(
+                                        fontSize: 16,
+                                        color: ColorStyles.gray3,
+                                        fontWeight: FontWeight.w700,
+                                      )),
                             // CheckBox
                             SizedBox.fromSize(size: const Size(8, 8)),
                             InkWell(
@@ -126,7 +131,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               },
                               // InkWell Repple Effect 없애기
                               splashColor: Colors.transparent,
-                              child: Container(
+                              child: SizedBox(
                                 width: 48,
                                 height: 48,
                                 child: widget.pillTodoParent.isCompleted
