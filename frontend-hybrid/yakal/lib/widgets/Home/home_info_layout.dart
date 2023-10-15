@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
@@ -35,10 +36,10 @@ class HomeInfoLayout extends StatelessWidget {
                             child: Text(
                               viewModel.homeInfoModel.getDate(),
                               style: const TextStyle(
+                                // 글자 간격 조절
+                                letterSpacing: 0,
                                 fontSize: 14,
-                                color: Color(0xFF626272),
-                                fontFamily:
-                                    'assets/fonts/Pretendard-Medium.otf',
+                                color: ColorStyles.gray5,
                               ),
                             ),
                           ),
@@ -48,9 +49,8 @@ class HomeInfoLayout extends StatelessWidget {
                               '오늘 복용해야하는 약은',
                               style: TextStyle(
                                 fontSize: 20,
-                                color: Colors.black,
-                                fontFamily:
-                                    'assets/fonts/Pretendard-Medium.otf',
+                                color: ColorStyles.black,
+                                fontWeight: FontWeight.w400,
                               ),
                             ),
                           ),
@@ -60,19 +60,15 @@ class HomeInfoLayout extends StatelessWidget {
                                 '총 ${viewModel.homeInfoModel.totalCount}개',
                                 style: const TextStyle(
                                   fontSize: 20,
-                                  color: Color(0xFF2666F6),
-                                  fontWeight: FontWeight.bold,
-                                  fontFamily:
-                                      'assets/fonts/Pretendard-Medium.otf',
+                                  color: ColorStyles.main,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                               const Text(
                                 ' 입니다',
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Colors.black,
-                                  fontFamily:
-                                      'assets/fonts/Pretendard-Medium.otf',
+                                  color: ColorStyles.black,
                                 ),
                               ),
                             ],
@@ -118,16 +114,17 @@ class HomeInfoLayout extends StatelessWidget {
                     ),
                   ],
                 ),
+                /*----------------- 다른 날짜 복약정보 버튼 ----------------- */
                 Container(
                   height: 35,
-                  margin: const EdgeInsetsDirectional.fromSTEB(20, 10, 0, 0),
+                  margin: const EdgeInsetsDirectional.fromSTEB(20, 26, 0, 14),
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
                       elevation: 0,
-                      backgroundColor: Colors.grey[200],
+                      backgroundColor: ColorStyles.gray1,
                       side: const BorderSide(
-                        color: Colors.grey,
+                        color: ColorStyles.gray2,
                         width: 1,
                       ),
                       shape: RoundedRectangleBorder(
@@ -141,11 +138,11 @@ class HomeInfoLayout extends StatelessWidget {
                       'assets/icons/icon-home-calendar.svg',
                     ),
                     label: const Text(
-                      '다른 날짜 복용 현황',
+                      '다른 날짜 복약정보',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Color(0xFF626272),
-                        fontFamily: 'assets/fonts/Pretendard-Medium.otf',
+                        color: ColorStyles.gray5,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
