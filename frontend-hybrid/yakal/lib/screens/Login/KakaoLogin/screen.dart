@@ -6,6 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/screens/Login/LoginBeforeIdentify/screen.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 import '../../../utilities/style/color_styles.dart';
@@ -19,6 +20,7 @@ class KakaoLoginScreen extends StatefulWidget {
 
 class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
   final userViewModel = Get.put(UserViewModel(), permanent: true);
+  final routeController = Get.put(LoginBeforeIdentifyController());
 
   Future<bool> _kakaoLoginByAccessToken(String accessToken) async {
     var dio = Dio();
@@ -110,7 +112,8 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
       await userViewModel.fetchNameAndMode(context);
 
       if (userViewModel.user.value.isAgreedMarketing == null) {
-        Get.offNamed("/login/terms");
+        routeController.goToTerms();
+        Get.offNamed("/login/test");
         return;
       }
 

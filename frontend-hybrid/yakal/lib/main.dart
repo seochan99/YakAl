@@ -5,18 +5,12 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-// import 'package:yakal/screens/Auth/auth_login_screen.dart';
 import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
-import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
-import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
-import 'package:yakal/screens/Login/KakoLogin/screen.dart';
+import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
+import 'package:yakal/screens/Login/LoginBeforeIdentify/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
-import 'package:yakal/screens/Login/LoginFinished/screen.dart';
-import 'package:yakal/screens/Login/LoginTerms/screen.dart';
-import 'package:yakal/screens/Login/ModeSelection/screen.dart';
-import 'package:yakal/screens/Login/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/SetMode/screen.dart';
 import 'package:yakal/screens/Login/SetNickname/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
@@ -37,7 +31,6 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
-import 'package:yakal/utilities/middleware/user_info.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
@@ -82,122 +75,92 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/',
           page: () => const MyBottomNavigationBar(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
-            name: "/profile/boho",
-            page: () => InfoBohoScreen(),
-            middlewares: [UserInfoMiddleware()]),
+          name: "/profile/boho",
+          page: () => InfoBohoScreen(),
+        ),
         GetPage(
-            name: "/profile/hospital",
-            page: () => InfoHospitalScreen(),
-            middlewares: [UserInfoMiddleware()]),
+          name: "/profile/hospital",
+          page: () => InfoHospitalScreen(),
+        ),
         GetPage(
-            name: "/profile/star",
-            page: () => InfoStarScreen(),
-            middlewares: [UserInfoMiddleware()]),
+          name: "/profile/star",
+          page: () => InfoStarScreen(),
+        ),
         GetPage(
-            name: "/profile/wish",
-            page: () => const ProfileWishScreen(),
-            middlewares: [UserInfoMiddleware()]),
+          name: "/profile/wish",
+          page: () => const ProfileWishScreen(),
+        ),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
           children: [
             GetPage(
+              name: '/process',
+              page: () => LoginBeforeIdentifyScreen(),
+              transition: Transition.noTransition,
+            ),
+            GetPage(
               name: '/kakao',
               page: () => const KakaoLoginScreen(),
-            ),
-            GetPage(
-              name: '/terms',
-              page: () => const LoginTermsScreen(),
-            ),
-            GetPage(
-              name: '/identify/entry',
-              page: () => const IdentificationEntryScreen(),
             ),
             GetPage(
               name: '/identify/process',
               page: () => const IdentificationScreen(),
             ),
             GetPage(
-              name: '/identify/result',
-              page: () => const IdentificationResultScreen(),
-            ),
-            GetPage(
-              name: '/nickname',
-              page: () => const NicknameInputScreen(),
-            ),
-            GetPage(
               name: '/nickname/process',
               page: () => SetNicknameScreen(),
             ),
             GetPage(
-              name: '/mode',
-              page: () => const ModeSelectionScreen(),
-            ),
-            GetPage(
               name: '/mode/process',
               page: () => SetModeScreen(),
-            ),
-            GetPage(
-              name: '/finish',
-              page: () => const LoginFinishedScreen(),
             ),
           ],
         ),
         GetPage(
           name: '/setting/app',
           page: () => const SettingScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: '/setting/alert',
           page: () => const AlertScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: '/signout',
           page: () => const SettingSignoutScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/seniorSurvey",
           page: () => const SurveySeniorScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/normalSurvey",
           page: () => const SurveyNormalScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/survey/result",
           page: () => const SurveyResultScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/calendar",
           page: () => CalenderScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         // /home/pill/add/$type
         GetPage(
           name: "/pill/add/direct",
           page: () => const MedicationAddScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/pill/add/ocrGeneral",
           page: () => const MedicationOcrGeneralScreen(),
-          middlewares: [UserInfoMiddleware()],
         ),
         GetPage(
           name: "/pill/add/ocrEnvelop",
           page: () => const EnvelopOcrEntryScreen(),
-          middlewares: [UserInfoMiddleware()],
           children: [
             GetPage(
               name: "/shot",
