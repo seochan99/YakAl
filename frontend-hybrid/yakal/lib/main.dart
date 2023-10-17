@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:yakal/screens/Calender/calender_screen.dart';
+import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
@@ -41,6 +44,9 @@ void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
+  const storage = FlutterSecureStorage();
+  final accessToken = await storage.read(key: 'ACCESS_TOKEN');
+
   // Fix to portrait mode
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -48,11 +54,14 @@ void main() async {
   ]);
 
   // locator init
-  initializeDateFormatting().then((value) => runApp(const MyApp()));
+  initializeDateFormatting().then((value) =>
+      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final String initialRoute;
+
+  const MyApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +76,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: '/',
+      initialRoute: initialRoute,
+
       // 라우팅 설정
       getPages: [
         GetPage(
@@ -141,9 +151,14 @@ class MyApp extends StatelessWidget {
         ),
         // /home/pill/add/$type
         GetPage(
-          name: "/pill/add/direct",
-          page: () => const MedicationAddScreen(),
-        ),
+            name: "/pill/add/direct",
+            page: () => const MedicationAddScreen(),
+            children: [
+              GetPage(
+                name: "/result",
+                page: () => MedicationDirectResult(),
+              ),
+            ]),
         GetPage(
           name: "/pill/add/ocrGeneral",
           page: () => const MedicationOcrGeneralScreen(),
@@ -168,6 +183,7 @@ class MyApp extends StatelessWidget {
               name: "/result",
               page: () => const EnvelopOcrAnalysisResult(),
             ),
+            GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
           ],
         )
       ],

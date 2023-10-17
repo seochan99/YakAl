@@ -3,6 +3,7 @@ package com.viewpharm.yakal.controller;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.dto.request.CreatePrescriptionDto;
+import com.viewpharm.yakal.dto.response.PrescriptionDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.service.PrescriptionService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class PrescriptionController {
     private final PrescriptionService prescriptionService;
 
     @GetMapping("")
-    public ResponseDto<List<Prescription>> getPrescriptions(
+    public ResponseDto<List<PrescriptionDto>> getPrescriptions(
             @UserId Long id) {
         return ResponseDto.ok(prescriptionService.getPrescriptions(id));
     }

@@ -34,7 +34,7 @@ class PillTodoParent {
         eTakingTime: ETakingTime.MORNING,
         isCompleted: false,
         isExpanded: false,
-        isOverLap: true,
+        isOverLap: false,
         todos: [
           PillTodoChildren(
               id: 1,
@@ -198,18 +198,7 @@ class PillTodoParent {
         isCompleted: true,
         isExpanded: false,
         isOverLap: false,
-        todos: [
-          PillTodoChildren(
-              id: 11,
-              base64Image: "",
-              name: "레모나",
-              effect: "비타민C",
-              kdCode: "",
-              atcCode: AtcCode(code: "", score: 0),
-              count: 1,
-              isOverLap: false,
-              isTaken: true)
-        ],
+        todos: [],
       ),
     ];
   }

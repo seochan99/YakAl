@@ -67,6 +67,7 @@ public class DoseService {
             final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
                     .id(result.getId())
                     .KDCode(result.getKDCode().getKdCode())
+                    .dosename(result.getKDCode().getDoseName())
                     .ATCCode(result.getATCCode())
                     .isTaken(result.getIsTaken())
                     .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))

@@ -27,7 +27,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
     var dio = Dio();
 
     dio.options.headers["authorization"] = "Bearer $accessToken";
-
+    print(accessToken);
     try {
       var tokenResponse = await dio.post(
         "${dotenv.get("YAKAL_SERVER_HOST")}/auth/kakao",
