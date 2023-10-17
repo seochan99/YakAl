@@ -34,9 +34,9 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
       );
 
       final newAccessToken =
-          tokenResponse.data["data"]["accessToken"] as String;
+      tokenResponse.data["data"]["accessToken"] as String;
       final newRefreshToken =
-          tokenResponse.data["data"]["refreshToken"] as String;
+      tokenResponse.data["data"]["refreshToken"] as String;
 
       const storage = FlutterSecureStorage();
 
@@ -112,20 +112,23 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
 
       await userViewModel.fetchNameAndMode(context);
 
-      if (userViewModel.user.value.isAgreedMarketing == null) {
-        routeController.goto(LoginRoute.terms);
-        Get.offNamed("/login/process");
-        return;
-      }
+      routeController.goto(LoginRoute.terms);
+      Get.offNamed("/login/process");
 
-      final regex = RegExp(r'user#\d{6}');
-      if (regex.hasMatch(userViewModel.user.value.nickName)) {
-        routeController.goto(LoginRoute.nicknameInput);
-        Get.offNamed("/login/process");
-        return;
-      }
-
-      Get.offNamed("/");
+      // if (userViewModel.user.value.isAgreedMarketing == null) {
+      //   routeController.goto(LoginRoute.terms);
+      //   Get.offNamed("/login/process");
+      //   return;
+      // }
+      //
+      // final regex = RegExp(r'user#\d{6}');
+      // if (regex.hasMatch(userViewModel.user.value.nickName)) {
+      //   routeController.goto(LoginRoute.nicknameInput);
+      //   Get.offNamed("/login/process");
+      //   return;
+      // }
+      //
+      // Get.offNamed("/");
     } else {
       Get.back();
 

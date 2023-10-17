@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/screens/Login/LoginProcess/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -9,15 +10,17 @@ import 'package:yakal/widgets/Login/login_app_bar.dart';
 class LoginProcess extends StatelessWidget {
   final routeController = Get.put(LoginRouteController());
   final nicknameLoadingController = Get.put(NicknameInputLoadingController());
+  final modeLoadingController = Get.put(ModeSelectionLoadingController());
 
   LoginProcess({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () {
+          () {
         var routeIndex = routeController.routeIndex.value;
         var nicknameIsLoading = nicknameLoadingController.isLoading.value;
+        var modeIsLoading = modeLoadingController.isLoading.value;
 
         return Container(
           color: ColorStyles.white,
@@ -26,19 +29,19 @@ class LoginProcess extends StatelessWidget {
               backgroundColor: ColorStyles.white,
               resizeToAvoidBottomInset: false,
               appBar: LoginAppBar(
-                onPressed: nicknameIsLoading
-                    ? null
+                onPressed: nicknameIsLoading || modeIsLoading
+                    ? () {}
                     : LoginRoute.back(
-                        routeIndex,
-                        context,
-                      ),
+                  routeIndex,
+                  context,
+                ),
                 progress: LoginRoute.values[routeIndex].loginProcess,
               ),
               body: AnimatedIndexedStack(
                 index: routeIndex,
                 children: List.generate(
                   LoginRoute.values.length,
-                  (index) {
+                      (index) {
                     return routeIndex == index
                         ? LoginRoute.values[index].screen
                         : Container();
