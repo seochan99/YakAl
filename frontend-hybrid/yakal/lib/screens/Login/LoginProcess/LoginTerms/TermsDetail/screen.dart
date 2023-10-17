@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Login/LoginBeforeIdentify/LoginTerms/TermsDetail/style.dart';
+import 'package:yakal/screens/Login/LoginProcess/LoginTerms/TermsDetail/style.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 

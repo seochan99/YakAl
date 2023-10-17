@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Login/LoginBeforeIdentify/IdentificationEntry/style.dart';
-import 'package:yakal/screens/Login/LoginBeforeIdentify/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/IdentificationEntry/style.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 
 class IdentificationEntryScreen extends StatelessWidget {
-  static const routeName = "/identify/entry";
-
   final routeController = Get.put(LoginBeforeIdentifyController());
 
   IdentificationEntryScreen({super.key});
@@ -65,7 +63,7 @@ class IdentificationEntryScreen extends StatelessWidget {
                 child: BottomButton(
                   "건너뛰기",
                   onPressed: () {
-                    routeController.goToInputNickName();
+                    routeController.goToInputNickname();
                   },
                   backgroundColor: ColorStyles.gray2,
                   color: ColorStyles.gray5,

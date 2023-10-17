@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Login/NicknameInput/style.dart';
+import 'package:yakal/utilities/enum/login_process.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
+import 'package:yakal/widgets/Login/login_app_bar.dart';
 
-import '../../../utilities/enum/login_process.dart';
-import '../../../utilities/style/color_styles.dart';
-import '../../../widgets/Base/back_confirm_dialog.dart';
-import '../../../widgets/Login/login_app_bar.dart';
+import 'style.dart';
 
 class NicknameInputScreen extends StatefulWidget {
   static const int _usernameLimits = 5;

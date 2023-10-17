@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../utilities/style/color_styles.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 class LoginFinishedStyle {
   static const name = TextStyle(

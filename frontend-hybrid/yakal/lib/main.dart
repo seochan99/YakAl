@@ -9,10 +9,10 @@ import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
-import 'package:yakal/screens/Login/LoginBeforeIdentify/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
-import 'package:yakal/screens/Login/SetMode/screen.dart';
-import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/SetMode/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/SetNickname/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
           children: [
             GetPage(
               name: '/process',
-              page: () => LoginBeforeIdentifyScreen(),
+              page: () => LoginProcess(),
               transition: Transition.noTransition,
             ),
             GetPage(

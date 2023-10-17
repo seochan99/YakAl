@@ -1,30 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/utilities/enum/mode.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
-import '../../../utilities/api/api.dart';
-import '../../../viewModels/Profile/user_view_model.dart';
-
-class SetNicknameScreen extends StatefulWidget {
+class SetModeScreen extends StatefulWidget {
   final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
 
-  SetNicknameScreen({super.key});
+  SetModeScreen({super.key});
 
   @override
-  State<SetNicknameScreen> createState() => _SetNicknameScreenState();
+  State<SetModeScreen> createState() => _SetModeScreenState();
 }
 
-class _SetNicknameScreenState extends State<SetNicknameScreen> {
-  Future<void> _setNickname(BuildContext context) async {
+class _SetModeScreenState extends State<SetModeScreen> {
+  Future<void> _setMode() async {
     var dio = await authDio(context);
-    var response =
-        await dio.patch("/user/name", data: {"nickname": Get.arguments});
+
+    var response = await dio.patch("/user/detail",
+        data: {"isDetail": EMode.values[Get.arguments] == EMode.LITE});
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
-      widget.userViewModel.updateNickName(Get.arguments);
+      widget.userViewModel.updateMode(EMode.values[Get.arguments]);
 
-      Get.offNamed("/login/mode");
+      Get.offNamed("/login/finish");
       return;
     } else {
       Get.back();
@@ -36,7 +37,7 @@ class _SetNicknameScreenState extends State<SetNicknameScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text('닉네임 설정에 실패했습니다.'),
+          content: Text('모드 설정에 실패했습니다.'),
           duration: Duration(seconds: 3),
         ),
       );
@@ -46,7 +47,7 @@ class _SetNicknameScreenState extends State<SetNicknameScreen> {
   @override
   void initState() {
     super.initState();
-    _setNickname(context);
+    _setMode();
   }
 
   @override
