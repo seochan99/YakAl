@@ -49,11 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 HomeInfoLayout(viewModel),
-                // Container(
-                //     // width 꽉 차게
-                //     width: double.infinity,
-                //     height: 2,
-                //     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
+                const Text("약 디테일"),
+                Container(
+                    // width 꽉 차게
+                    width: double.infinity,
+                    height: 2,
+                    decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
                 Expanded(
                     child: Obx(() => ListView.builder(
                         itemCount: viewModel.pillTodoParents.length,
