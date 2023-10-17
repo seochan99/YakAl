@@ -26,7 +26,6 @@ class NicknameInputScreen extends StatefulWidget {
 
 class _NicknameInputScreenState extends State<NicknameInputScreen> {
   late String _username;
-  final FocusNode _textFocus = FocusNode();
 
   Future<void> _setNickname(BuildContext context) async {
     var dio = await authDio(context);
@@ -55,146 +54,136 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
     }
   }
 
+  void _onTapNext() {
+    _setNickname(context).then((value) {
+      widget.routeController.goto(LoginRoute.modeSelection);
+    });
+  }
+
   @override
   void initState() {
     super.initState();
 
     _username = "";
-    widget.loadingController.setIsLoading(false);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        _textFocus.unfocus();
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        "약알에서 사용할",
-                        style: NicknameInputStyle.title,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            "닉네임",
-                            style: NicknameInputStyle.boldTitle,
-                          ),
-                          Text(
-                            "을 입력해주세요.",
-                            style: NicknameInputStyle.title,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 40.0,
-                      ),
-                      const Text(
-                        "닉네임",
-                        style: NicknameInputStyle.label,
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      TextField(
-                        maxLength: NicknameInputScreen._usernameLimits,
-                        autofocus: true,
-                        focusNode: _textFocus,
-                        decoration: const InputDecoration(
-                          isDense: true,
-                          contentPadding: EdgeInsets.all(20.0),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: ColorStyles.gray2,
-                              width: 2.0,
-                            ),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.0),
-                            ),
-                            borderSide: BorderSide(
-                              color: ColorStyles.sub1,
-                              width: 2.0,
-                            ),
-                          ),
-                          hintText:
-                              '${NicknameInputScreen._usernameLimits}자 이내로 입력',
-                          hintStyle: NicknameInputStyle.inputHint,
-                          counterText: "",
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "약알에서 사용할",
+                      style: NicknameInputStyle.title,
+                    ),
+                    const Row(
+                      children: [
+                        Text(
+                          "닉네임",
+                          style: NicknameInputStyle.boldTitle,
                         ),
-                        style: NicknameInputStyle.input,
-                        onChanged: (value) {
-                          setState(() {
-                            _username = value;
-                          });
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Obx(
-                  () => Expanded(
-                    child: widget.loadingController.isLoading.value
-                        ? ElevatedButton(
-                            onPressed: null,
-                            style: TextButton.styleFrom(
-                              backgroundColor: ColorStyles.gray2,
-                              splashFactory: NoSplash.splashFactory,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 18.0,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              elevation: 0,
-                            ),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                color: ColorStyles.gray3,
-                              ),
-                            ),
-                          )
-                        : BottomButton(
-                            "다음",
-                            onPressed: _username.isEmpty
-                                ? null
-                                : () {
-                                    _setNickname(context).then((value) {
-                                      widget.routeController
-                                          .goto(LoginRoute.modeSelection);
-                                    });
-                                  },
-                            backgroundColor: _username.isEmpty
-                                ? ColorStyles.gray2
-                                : ColorStyles.main,
-                            color: _username.isEmpty
-                                ? ColorStyles.gray3
-                                : ColorStyles.white,
+                        Text(
+                          "을 입력해주세요.",
+                          style: NicknameInputStyle.title,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 40.0,
+                    ),
+                    const Text(
+                      "닉네임",
+                      style: NicknameInputStyle.label,
+                    ),
+                    const SizedBox(
+                      height: 8.0,
+                    ),
+                    TextField(
+                      maxLength: NicknameInputScreen._usernameLimits,
+                      autofocus: true,
+                      decoration: const InputDecoration(
+                        isDense: true,
+                        contentPadding: EdgeInsets.all(20.0),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8.0),
                           ),
-                  ),
+                          borderSide: BorderSide(
+                            color: ColorStyles.gray2,
+                            width: 2.0,
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8.0),
+                          ),
+                          borderSide: BorderSide(
+                            color: ColorStyles.sub1,
+                            width: 2.0,
+                          ),
+                        ),
+                        hintText:
+                            '${NicknameInputScreen._usernameLimits}자 이내로 입력',
+                        hintStyle: NicknameInputStyle.inputHint,
+                        counterText: "",
+                      ),
+                      style: NicknameInputStyle.input,
+                      onChanged: (value) {
+                        setState(() {
+                          _username = value;
+                        });
+                      },
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: widget.loadingController.isLoading.value
+                    ? ElevatedButton(
+                        onPressed: null,
+                        style: TextButton.styleFrom(
+                          backgroundColor: ColorStyles.gray2,
+                          splashFactory: NoSplash.splashFactory,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 18.0,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          elevation: 0,
+                        ),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorStyles.gray3,
+                          ),
+                        ),
+                      )
+                    : BottomButton(
+                        "다음",
+                        onPressed: _username.isEmpty ? null : _onTapNext,
+                        backgroundColor: _username.isEmpty
+                            ? ColorStyles.gray2
+                            : ColorStyles.main,
+                        color: _username.isEmpty
+                            ? ColorStyles.gray3
+                            : ColorStyles.white,
+                      ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

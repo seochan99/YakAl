@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/screens/Login/LoginProcess/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Login/animated_indexed_stack.dart';
@@ -7,6 +8,7 @@ import 'package:yakal/widgets/Login/login_app_bar.dart';
 
 class LoginProcess extends StatelessWidget {
   final routeController = Get.put(LoginRouteController());
+  final nicknameLoadingController = Get.put(NicknameInputLoadingController());
 
   LoginProcess({super.key});
 
@@ -15,14 +17,21 @@ class LoginProcess extends StatelessWidget {
     return Obx(
       () {
         var routeIndex = routeController.routeIndex.value;
+        var nicknameIsLoading = nicknameLoadingController.isLoading.value;
 
         return Container(
           color: ColorStyles.white,
           child: SafeArea(
             child: Scaffold(
               backgroundColor: ColorStyles.white,
+              resizeToAvoidBottomInset: false,
               appBar: LoginAppBar(
-                onPressed: LoginRoute.back(routeIndex, context),
+                onPressed: nicknameIsLoading
+                    ? null
+                    : LoginRoute.back(
+                        routeIndex,
+                        context,
+                      ),
                 progress: LoginRoute.values[routeIndex].loginProcess,
               ),
               body: AnimatedIndexedStack(

@@ -6,13 +6,10 @@ import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/api/api.dart';
-import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/utilities/enum/mode.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
-import 'package:yakal/widgets/Base/outer_frame.dart';
-import 'package:yakal/widgets/Login/login_app_bar.dart';
 import 'package:yakal/widgets/Login/mode_selection_box.dart';
 
 import 'style.dart';
@@ -62,210 +59,200 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return OuterFrame(
-      outOfSafeAreaColor: ColorStyles.white,
-      safeAreaColor: ColorStyles.white,
-      appBar: LoginAppBar(
-        progress: ELoginProcess.SELECT_MODE,
-        onPressed: () {
-          Get.back();
-        },
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Row(
-                        children: [
-                          Text(
-                            "모드",
-                            style: TextStyle(
-                              color: ColorStyles.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w700,
-                              height: 1.4,
-                            ),
+    return Padding(
+      padding: const EdgeInsets.all(30.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Row(
+                      children: [
+                        Text(
+                          "모드",
+                          style: TextStyle(
+                            color: ColorStyles.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                            height: 1.4,
                           ),
-                          Text(
-                            "를 선택해주세요",
-                            style: TextStyle(
-                              color: ColorStyles.black,
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                              height: 1.4,
-                            ),
+                        ),
+                        Text(
+                          "를 선택해주세요",
+                          style: TextStyle(
+                            color: ColorStyles.black,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w500,
+                            height: 1.4,
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 42.0,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _mode = EMode.NORMAL;
-                                });
-                              },
-                              child: ModeSelectionBox(
-                                backgroundColor: _mode == EMode.NORMAL
-                                    ? ColorStyles.sub3
-                                    : ColorStyles.white,
-                                borderColor: _mode == EMode.NORMAL
-                                    ? ColorStyles.sub1
-                                    : ColorStyles.gray2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "일반모드",
-                                      style: _mode == EMode.NORMAL
-                                          ? ModeSelectionStyle.selectedModeTitle
-                                          : ModeSelectionStyle.modeTitle,
-                                    ),
-                                    const SizedBox(
-                                      height: 16.0,
-                                    ),
-                                    Text(
-                                      "약알의 일반적인 모드입니다.",
-                                      style: _mode == EMode.NORMAL
-                                          ? ModeSelectionStyle
-                                              .selectedModeDescription
-                                          : ModeSelectionStyle.modeDescription,
-                                    ),
-                                  ],
-                                ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 42.0,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _mode = EMode.NORMAL;
+                              });
+                            },
+                            child: ModeSelectionBox(
+                              backgroundColor: _mode == EMode.NORMAL
+                                  ? ColorStyles.sub3
+                                  : ColorStyles.white,
+                              borderColor: _mode == EMode.NORMAL
+                                  ? ColorStyles.sub1
+                                  : ColorStyles.gray2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "일반모드",
+                                    style: _mode == EMode.NORMAL
+                                        ? ModeSelectionStyle.selectedModeTitle
+                                        : ModeSelectionStyle.modeTitle,
+                                  ),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  Text(
+                                    "약알의 일반적인 모드입니다.",
+                                    style: _mode == EMode.NORMAL
+                                        ? ModeSelectionStyle
+                                            .selectedModeDescription
+                                        : ModeSelectionStyle.modeDescription,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 16.0,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  _mode = EMode.LITE;
-                                });
-                              },
-                              child: ModeSelectionBox(
-                                backgroundColor: _mode == EMode.LITE
-                                    ? ColorStyles.sub3
-                                    : ColorStyles.white,
-                                borderColor: _mode == EMode.LITE
-                                    ? ColorStyles.sub1
-                                    : ColorStyles.gray2,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "라이트 모드",
-                                      style: _mode == EMode.LITE
-                                          ? ModeSelectionStyle.selectedModeTitle
-                                          : ModeSelectionStyle.modeTitle,
-                                    ),
-                                    const SizedBox(
-                                      height: 16.0,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "시니어를 위한 쉬운 모드",
-                                          style: _mode == EMode.LITE
-                                              ? ModeSelectionStyle
-                                                  .selectedBoldModeDescription
-                                              : ModeSelectionStyle
-                                                  .boldModeDescription,
-                                        ),
-                                        Text(
-                                          "입니다.",
-                                          style: _mode == EMode.LITE
-                                              ? ModeSelectionStyle
-                                                  .selectedModeDescription
-                                              : ModeSelectionStyle
-                                                  .modeDescription,
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      "다제약물 정보가 포함되어 있습니다.",
-                                      style: _mode == EMode.LITE
-                                          ? ModeSelectionStyle
-                                              .selectedModeDescription
-                                          : ModeSelectionStyle.modeDescription,
-                                    ),
-                                  ],
-                                ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 16.0,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _mode = EMode.LITE;
+                              });
+                            },
+                            child: ModeSelectionBox(
+                              backgroundColor: _mode == EMode.LITE
+                                  ? ColorStyles.sub3
+                                  : ColorStyles.white,
+                              borderColor: _mode == EMode.LITE
+                                  ? ColorStyles.sub1
+                                  : ColorStyles.gray2,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "라이트 모드",
+                                    style: _mode == EMode.LITE
+                                        ? ModeSelectionStyle.selectedModeTitle
+                                        : ModeSelectionStyle.modeTitle,
+                                  ),
+                                  const SizedBox(
+                                    height: 16.0,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "시니어를 위한 쉬운 모드",
+                                        style: _mode == EMode.LITE
+                                            ? ModeSelectionStyle
+                                                .selectedBoldModeDescription
+                                            : ModeSelectionStyle
+                                                .boldModeDescription,
+                                      ),
+                                      Text(
+                                        "입니다.",
+                                        style: _mode == EMode.LITE
+                                            ? ModeSelectionStyle
+                                                .selectedModeDescription
+                                            : ModeSelectionStyle
+                                                .modeDescription,
+                                      ),
+                                    ],
+                                  ),
+                                  Text(
+                                    "다제약물 정보가 포함되어 있습니다.",
+                                    style: _mode == EMode.LITE
+                                        ? ModeSelectionStyle
+                                            .selectedModeDescription
+                                        : ModeSelectionStyle.modeDescription,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ],
-            ),
-            Row(
-              children: [
-                Obx(
-                  () => Expanded(
-                    child: widget.loadingController.isLoading.value
-                        ? ElevatedButton(
-                            onPressed: null,
-                            style: TextButton.styleFrom(
-                              backgroundColor: ColorStyles.gray2,
-                              splashFactory: NoSplash.splashFactory,
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 18.0,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              elevation: 0,
+              ),
+            ],
+          ),
+          Row(
+            children: [
+              Obx(
+                () => Expanded(
+                  child: widget.loadingController.isLoading.value
+                      ? ElevatedButton(
+                          onPressed: null,
+                          style: TextButton.styleFrom(
+                            backgroundColor: ColorStyles.gray2,
+                            splashFactory: NoSplash.splashFactory,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 18.0,
                             ),
-                            child: const Center(
-                              child: CircularProgressIndicator(
-                                color: ColorStyles.gray3,
-                              ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          )
-                        : BottomButton(
-                            "다음",
-                            onPressed: _mode == EMode.NONE
-                                ? null
-                                : () {
-                                    _setMode().then((value) {
-                                      widget.routeController
-                                          .goto(LoginRoute.finish);
-                                    });
-                                  },
-                            backgroundColor: _mode == EMode.NONE
-                                ? ColorStyles.gray2
-                                : ColorStyles.main,
-                            color: _mode == EMode.NONE
-                                ? ColorStyles.gray3
-                                : ColorStyles.white,
+                            elevation: 0,
                           ),
-                  ),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorStyles.gray3,
+                            ),
+                          ),
+                        )
+                      : BottomButton(
+                          "다음",
+                          onPressed: _mode == EMode.NONE
+                              ? null
+                              : () {
+                                  _setMode().then((value) {
+                                    widget.routeController
+                                        .goto(LoginRoute.finish);
+                                  });
+                                },
+                          backgroundColor: _mode == EMode.NONE
+                              ? ColorStyles.gray2
+                              : ColorStyles.main,
+                          color: _mode == EMode.NONE
+                              ? ColorStyles.gray3
+                              : ColorStyles.white,
+                        ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

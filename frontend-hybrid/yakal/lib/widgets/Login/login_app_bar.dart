@@ -56,9 +56,9 @@ class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: true,
       backgroundColor: ColorStyles.white,
-      automaticallyImplyLeading: true,
+      automaticallyImplyLeading: false,
       leadingWidth: 90,
-      leading: onPressed == null
+      leading: onPressed != null
           ? TextButton.icon(
               style: TextButton.styleFrom(
                 splashFactory: NoSplash.splashFactory,

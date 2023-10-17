@@ -22,8 +22,6 @@ enum LoginRoute {
   static void Function()? back(int routeIndex, BuildContext context) {
     var routeItem = LoginRoute.values[routeIndex];
 
-    final nicknameLoadingController = Get.put(NicknameInputLoadingController());
-
     switch (routeItem) {
       case LoginRoute.terms:
         return () {
@@ -62,26 +60,27 @@ enum LoginRoute {
           );
         };
       case LoginRoute.nicknameInput:
-        return nicknameLoadingController.isLoading.value
-            ? null
-            : () {
-                showDialog(
-                  context: context,
-                  barrierDismissible: true,
-                  barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
-                  builder: (BuildContext context) {
-                    return NotRouteBackConfirmDialog(
-                      question: "본인인증을 다시 하시겠습니까?",
-                      backAction: () {
-                        final routeController = Get.put(LoginRouteController());
-                        routeController.goto(LoginRoute.identifyEntry);
-                      },
-                    );
-                  },
-                );
-              };
+        return () {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+            builder: (BuildContext context) {
+              return NotRouteBackConfirmDialog(
+                question: "본인인증을 다시 하시겠습니까?",
+                backAction: () {
+                  final routeController = Get.put(LoginRouteController());
+                  routeController.goto(LoginRoute.identifyEntry);
+                },
+              );
+            },
+          );
+        };
       case LoginRoute.modeSelection:
-        return () {};
+        return () {
+          final routeController = Get.put(LoginRouteController());
+          routeController.goto(LoginRoute.nicknameInput);
+        };
       case LoginRoute.finish:
         return null;
       default:

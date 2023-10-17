@@ -78,7 +78,10 @@ class NotRouteBackConfirmDialog extends StatelessWidget {
                     child: SizedBox(
                       height: 56,
                       child: TextButton(
-                        onPressed: backAction,
+                        onPressed: () {
+                          Get.back();
+                          backAction();
+                        },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.main,
                           splashFactory: NoSplash.splashFactory,

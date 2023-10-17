@@ -3,6 +3,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:iamport_flutter/iamport_certification.dart';
 import 'package:iamport_flutter/model/certification_data.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 
 import '../../../utilities/style/color_styles.dart';
 
@@ -27,8 +29,11 @@ class IdentificationScreen extends StatelessWidget {
             ),
             callback: (Map<String, String> result) async {
               if (result['success'] == 'true') {
+                final LoginRouteController routeController =
+                    Get.put(LoginRouteController());
+                routeController.goto(LoginRoute.identifyResult);
                 Get.offNamed(
-                  '/login/identify/result',
+                  '/login/process',
                   arguments: result,
                 );
               } else {
