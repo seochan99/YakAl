@@ -1,26 +1,67 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/utilities/enum/login_process.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
-import 'package:yakal/widgets/Base/outer_frame.dart';
-import 'package:yakal/widgets/Login/login_app_bar.dart';
 
 import 'style.dart';
 
 class NicknameInputScreen extends StatefulWidget {
+  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+  final LoginRouteController routeController = Get.put(LoginRouteController());
+  final NicknameInputLoadingController loadingController =
+      Get.put(NicknameInputLoadingController());
+
   static const int _usernameLimits = 5;
 
-  const NicknameInputScreen({super.key});
+  NicknameInputScreen({super.key});
 
   @override
   State<NicknameInputScreen> createState() => _NicknameInputScreenState();
 }
 
 class _NicknameInputScreenState extends State<NicknameInputScreen> {
-  String _username = "";
+  late String _username;
   final FocusNode _textFocus = FocusNode();
+
+  Future<void> _setNickname(BuildContext context) async {
+    var dio = await authDio(context);
+
+    widget.loadingController.setIsLoading(true);
+
+    try {
+      var response =
+          await dio.patch("/user/name", data: {"nickname": _username});
+
+      widget.userViewModel.updateNickName(_username);
+    } on DioException catch (error) {
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text('닉네임 설정에 실패했습니다.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      widget.loadingController.setIsLoading(false);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    _username = "";
+    widget.loadingController.setIsLoading(false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,131 +69,141 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
       onTap: () {
         _textFocus.unfocus();
       },
-      child: OuterFrame(
-        outOfSafeAreaColor: ColorStyles.white,
-        safeAreaColor: ColorStyles.white,
-        appBar: LoginAppBar(
-          progress: ELoginProcess.NICKNAME,
-          onPressed: () {
-            showDialog(
-              context: context,
-              barrierDismissible: true,
-              barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
-              builder: (BuildContext context) {
-                return const BackConfirmDialog(
-                  question: "본인인증을 다시 하시겠습니까?",
-                  backTo: "/login/identify/entry",
-                );
-              },
-            );
-          },
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "약알에서 사용할",
-                          style: NicknameInputStyle.title,
-                        ),
-                        const Row(
-                          children: [
-                            Text(
-                              "닉네임",
-                              style: NicknameInputStyle.boldTitle,
-                            ),
-                            Text(
-                              "을 입력해주세요.",
-                              style: NicknameInputStyle.title,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 40.0,
-                        ),
-                        const Text(
-                          "닉네임",
-                          style: NicknameInputStyle.label,
-                        ),
-                        const SizedBox(
-                          height: 8.0,
-                        ),
-                        TextField(
-                          maxLength: NicknameInputScreen._usernameLimits,
-                          autofocus: true,
-                          focusNode: _textFocus,
-                          decoration: const InputDecoration(
-                            isDense: true,
-                            contentPadding: EdgeInsets.all(20.0),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: ColorStyles.gray2,
-                                width: 2.0,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              borderSide: BorderSide(
-                                color: ColorStyles.sub1,
-                                width: 2.0,
-                              ),
-                            ),
-                            hintText:
-                                '${NicknameInputScreen._usernameLimits}자 이내로 입력',
-                            hintStyle: NicknameInputStyle.inputHint,
-                            counterText: "",
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "약알에서 사용할",
+                        style: NicknameInputStyle.title,
+                      ),
+                      const Row(
+                        children: [
+                          Text(
+                            "닉네임",
+                            style: NicknameInputStyle.boldTitle,
                           ),
-                          style: NicknameInputStyle.input,
-                          onChanged: (value) {
-                            setState(() {
-                              _username = value;
-                            });
-                          },
+                          Text(
+                            "을 입력해주세요.",
+                            style: NicknameInputStyle.title,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 40.0,
+                      ),
+                      const Text(
+                        "닉네임",
+                        style: NicknameInputStyle.label,
+                      ),
+                      const SizedBox(
+                        height: 8.0,
+                      ),
+                      TextField(
+                        maxLength: NicknameInputScreen._usernameLimits,
+                        autofocus: true,
+                        focusNode: _textFocus,
+                        decoration: const InputDecoration(
+                          isDense: true,
+                          contentPadding: EdgeInsets.all(20.0),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                            borderSide: BorderSide(
+                              color: ColorStyles.gray2,
+                              width: 2.0,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.0),
+                            ),
+                            borderSide: BorderSide(
+                              color: ColorStyles.sub1,
+                              width: 2.0,
+                            ),
+                          ),
+                          hintText:
+                              '${NicknameInputScreen._usernameLimits}자 이내로 입력',
+                          hintStyle: NicknameInputStyle.inputHint,
+                          counterText: "",
                         ),
-                      ],
-                    ),
+                        style: NicknameInputStyle.input,
+                        onChanged: (value) {
+                          setState(() {
+                            _username = value;
+                          });
+                        },
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: BottomButton(
-                      "다음",
-                      onPressed: _username.isEmpty
-                          ? null
-                          : () {
-                              Get.toNamed(
-                                "/login/nickname/process",
-                                arguments: _username,
-                              );
-                            },
-                      backgroundColor: _username.isEmpty
-                          ? ColorStyles.gray2
-                          : ColorStyles.main,
-                      color: _username.isEmpty
-                          ? ColorStyles.gray3
-                          : ColorStyles.white,
-                    ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Obx(
+                  () => Expanded(
+                    child: widget.loadingController.isLoading.value
+                        ? ElevatedButton(
+                            onPressed: null,
+                            style: TextButton.styleFrom(
+                              backgroundColor: ColorStyles.gray2,
+                              splashFactory: NoSplash.splashFactory,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 18.0,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorStyles.gray3,
+                              ),
+                            ),
+                          )
+                        : BottomButton(
+                            "다음",
+                            onPressed: _username.isEmpty
+                                ? null
+                                : () {
+                                    _setNickname(context).then((value) {
+                                      widget.routeController
+                                          .goto(LoginRoute.modeSelection);
+                                    });
+                                  },
+                            backgroundColor: _username.isEmpty
+                                ? ColorStyles.gray2
+                                : ColorStyles.main,
+                            color: _username.isEmpty
+                                ? ColorStyles.gray3
+                                : ColorStyles.white,
+                          ),
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );
+  }
+}
+
+class NicknameInputLoadingController extends GetxController {
+  RxBool isLoading = false.obs;
+
+  void setIsLoading(bool isLoading) {
+    this.isLoading.value = isLoading;
   }
 }

@@ -10,8 +10,6 @@ import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
-import 'package:yakal/screens/Login/LoginProcess/SetMode/screen.dart';
-import 'package:yakal/screens/Login/LoginProcess/SetNickname/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
@@ -110,14 +108,6 @@ class MyApp extends StatelessWidget {
             GetPage(
               name: '/identify/process',
               page: () => const IdentificationScreen(),
-            ),
-            GetPage(
-              name: '/nickname/process',
-              page: () => SetNicknameScreen(),
-            ),
-            GetPage(
-              name: '/mode/process',
-              page: () => SetModeScreen(),
             ),
           ],
         ),

@@ -1,8 +1,15 @@
+import 'dart:async';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/utilities/enum/mode.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Login/login_app_bar.dart';
@@ -11,7 +18,12 @@ import 'package:yakal/widgets/Login/mode_selection_box.dart';
 import 'style.dart';
 
 class ModeSelectionScreen extends StatefulWidget {
-  const ModeSelectionScreen({super.key});
+  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+  final LoginRouteController routeController = Get.put(LoginRouteController());
+  final ModeSelectionLoadingController loadingController =
+      Get.put(ModeSelectionLoadingController());
+
+  ModeSelectionScreen({super.key});
 
   @override
   State<ModeSelectionScreen> createState() => _ModeSelectionScreenState();
@@ -19,6 +31,34 @@ class ModeSelectionScreen extends StatefulWidget {
 
 class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
   EMode _mode = EMode.NONE;
+
+  Future<void> _setMode() async {
+    var dio = await authDio(context);
+
+    widget.loadingController.setIsLoading(true);
+
+    try {
+      var response = await dio
+          .patch("/user/detail", data: {"isDetail": _mode == EMode.LITE});
+
+      widget.userViewModel.updateMode(_mode);
+      return;
+    } on DioException catch (error) {
+      if (!context.mounted) {
+        return;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text('모드 설정에 실패했습니다.'),
+          duration: Duration(seconds: 3),
+        ),
+      );
+    } finally {
+      widget.loadingController.setIsLoading(false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -181,23 +221,46 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
             ),
             Row(
               children: [
-                Expanded(
-                  child: _mode == EMode.NONE
-                      ? const BottomButton(
-                          "다음",
-                          onPressed: null,
-                          backgroundColor: ColorStyles.gray2,
-                          color: ColorStyles.gray3,
-                        )
-                      : BottomButton(
-                          "다음",
-                          onPressed: () {
-                            Get.toNamed("/login/mode/process",
-                                arguments: _mode.index);
-                          },
-                          backgroundColor: ColorStyles.main,
-                          color: ColorStyles.white,
-                        ),
+                Obx(
+                  () => Expanded(
+                    child: widget.loadingController.isLoading.value
+                        ? ElevatedButton(
+                            onPressed: null,
+                            style: TextButton.styleFrom(
+                              backgroundColor: ColorStyles.gray2,
+                              splashFactory: NoSplash.splashFactory,
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 18.0,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorStyles.gray3,
+                              ),
+                            ),
+                          )
+                        : BottomButton(
+                            "다음",
+                            onPressed: _mode == EMode.NONE
+                                ? null
+                                : () {
+                                    _setMode().then((value) {
+                                      widget.routeController
+                                          .goto(LoginRoute.finish);
+                                    });
+                                  },
+                            backgroundColor: _mode == EMode.NONE
+                                ? ColorStyles.gray2
+                                : ColorStyles.main,
+                            color: _mode == EMode.NONE
+                                ? ColorStyles.gray3
+                                : ColorStyles.white,
+                          ),
+                  ),
                 ),
               ],
             ),
@@ -205,5 +268,13 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
         ),
       ),
     );
+  }
+}
+
+class ModeSelectionLoadingController extends GetxController {
+  RxBool isLoading = false.obs;
+
+  void setIsLoading(bool isLoading) {
+    this.isLoading.value = isLoading;
   }
 }

@@ -152,7 +152,7 @@ class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Color.fromRGBO(98, 98, 114, 0.4),
+      backgroundColor: ColorStyles.white,
       body: Center(
         child: CircularProgressIndicator(
           color: ColorStyles.main,

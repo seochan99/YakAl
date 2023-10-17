@@ -6,24 +6,23 @@ import 'package:yakal/screens/Login/LoginProcess/LoginFinished/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/LoginTerms/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/NicknameInput/screen.dart';
-import 'package:yakal/screens/Login/LoginProcess/SetMode/screen.dart';
-import 'package:yakal/screens/Login/LoginProcess/SetNickname/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
 import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
+import 'package:yakal/widgets/Base/not_route_back_dialog.dart';
 
 enum LoginRoute {
   terms,
   identifyEntry,
   identifyResult,
   nicknameInput,
-  setNickname,
   modeSelection,
-  setMode,
   finish;
 
-  static void Function() back(int routeIndex, BuildContext context) {
+  static void Function()? back(int routeIndex, BuildContext context) {
     var routeItem = LoginRoute.values[routeIndex];
+
+    final nicknameLoadingController = Get.put(NicknameInputLoadingController());
 
     switch (routeItem) {
       case LoginRoute.terms:
@@ -46,17 +45,45 @@ enum LoginRoute {
           routeController.goto(LoginRoute.terms);
         };
       case LoginRoute.identifyResult:
-        return () {};
+        return () {
+          showDialog(
+            context: context,
+            barrierDismissible: true,
+            barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+            builder: (BuildContext context) {
+              return NotRouteBackConfirmDialog(
+                question: "본인인증을 다시 하시겠습니까?",
+                backAction: () {
+                  final routeController = Get.put(LoginRouteController());
+                  routeController.goto(LoginRoute.identifyEntry);
+                },
+              );
+            },
+          );
+        };
       case LoginRoute.nicknameInput:
-        return () {};
-      case LoginRoute.setNickname:
-        return () {};
+        return nicknameLoadingController.isLoading.value
+            ? null
+            : () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: true,
+                  barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+                  builder: (BuildContext context) {
+                    return NotRouteBackConfirmDialog(
+                      question: "본인인증을 다시 하시겠습니까?",
+                      backAction: () {
+                        final routeController = Get.put(LoginRouteController());
+                        routeController.goto(LoginRoute.identifyEntry);
+                      },
+                    );
+                  },
+                );
+              };
       case LoginRoute.modeSelection:
         return () {};
-      case LoginRoute.setMode:
-        return () {};
       case LoginRoute.finish:
-        return () {};
+        return null;
       default:
         assert(false, "🚨 [Assertion Error] Invalid Login Route Enum Value.");
     }
@@ -72,13 +99,9 @@ enum LoginRoute {
       case LoginRoute.identifyResult:
         return const IdentificationResultScreen();
       case LoginRoute.nicknameInput:
-        return const NicknameInputScreen();
-      case LoginRoute.setNickname:
-        return SetNicknameScreen();
+        return NicknameInputScreen();
       case LoginRoute.modeSelection:
-        return const ModeSelectionScreen();
-      case LoginRoute.setMode:
-        return SetModeScreen();
+        return ModeSelectionScreen();
       case LoginRoute.finish:
         return const LoginFinishedScreen();
       default:
@@ -97,11 +120,7 @@ enum LoginRoute {
         return ELoginProcess.IDENTIFY;
       case LoginRoute.nicknameInput:
         return ELoginProcess.NICKNAME;
-      case LoginRoute.setNickname:
-        return ELoginProcess.NICKNAME;
       case LoginRoute.modeSelection:
-        return ELoginProcess.SELECT_MODE;
-      case LoginRoute.setMode:
         return ELoginProcess.SELECT_MODE;
       case LoginRoute.finish:
         return ELoginProcess.FINISHED;
