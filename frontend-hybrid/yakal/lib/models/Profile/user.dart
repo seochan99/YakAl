@@ -52,6 +52,7 @@ class User {
           oneYearDisease: [],
           healthMedications: [],
         );
+
     _init();
   }
 }

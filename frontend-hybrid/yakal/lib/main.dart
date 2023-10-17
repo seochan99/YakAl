@@ -62,8 +62,8 @@ void main() async {
   ]);
 
   // locator init
-  initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
+  initializeDateFormatting().then((value) => runApp(
+      MyApp(initialRoute: accessToken != null ? '/pill/detail' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
@@ -148,6 +148,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
         GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
         GetPage(name: "/calendar", page: () => CalenderScreen()),
+        GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
         // /home/pill/add/$type
         GetPage(
             name: "/pill/add/direct",
@@ -181,7 +182,6 @@ class MyApp extends StatelessWidget {
               name: "/result",
               page: () => const EnvelopOcrAnalysisResult(),
             ),
-            GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
           ],
         )
       ],
