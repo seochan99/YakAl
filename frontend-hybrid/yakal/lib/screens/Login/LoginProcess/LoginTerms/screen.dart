@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginProcess/LoginTerms/TermsDetail/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/LoginTerms/style.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
@@ -93,7 +94,7 @@ class LoginTermsScreen extends StatelessWidget {
     final controller = Get.put(_TermsCheckedController());
     final UserViewModel userViewModel =
         Get.put(UserViewModel(), permanent: true);
-    final routeController = Get.put(LoginBeforeIdentifyController());
+    final routeController = Get.put(LoginRouteController());
 
     return Padding(
       padding: const EdgeInsets.all(30.0),
@@ -233,7 +234,7 @@ class LoginTermsScreen extends StatelessWidget {
                               var isAgreedMarketing = controller.isChecked[3];
                               userViewModel
                                   .updateMarketingAgreement(isAgreedMarketing);
-                              routeController.goToIdentifyEntry();
+                              routeController.goto(LoginRoute.identifyEntry);
                             }
                           : null,
                       style: TextButton.styleFrom(

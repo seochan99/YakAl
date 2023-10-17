@@ -32,7 +32,7 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
         outOfSafeAreaColor: ColorStyles.white,
         safeAreaColor: ColorStyles.white,
         appBar: LoginAppBar(
-          progress: ELoginProcess.USERNAME,
+          progress: ELoginProcess.NICKNAME,
           onPressed: () {
             showDialog(
               context: context,

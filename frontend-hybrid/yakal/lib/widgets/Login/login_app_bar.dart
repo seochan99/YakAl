@@ -5,7 +5,7 @@ import '../../utilities/enum/login_process.dart';
 import '../../utilities/style/color_styles.dart';
 
 class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final void Function() onPressed;
+  final void Function()? onPressed;
   final ELoginProcess progress;
 
   const LoginAppBar({
@@ -58,26 +58,28 @@ class LoginAppBar extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: ColorStyles.white,
       automaticallyImplyLeading: true,
       leadingWidth: 90,
-      leading: TextButton.icon(
-        style: TextButton.styleFrom(
-          splashFactory: NoSplash.splashFactory,
-          foregroundColor: ColorStyles.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-        ),
-        icon: SvgPicture.asset("assets/icons/back.svg"),
-        label: const Text(
-          "뒤로",
-          style: TextStyle(
-            color: ColorStyles.gray5,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
-            height: 1.4,
-          ),
-        ),
-        onPressed: onPressed,
-      ),
+      leading: onPressed == null
+          ? TextButton.icon(
+              style: TextButton.styleFrom(
+                splashFactory: NoSplash.splashFactory,
+                foregroundColor: ColorStyles.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16.0),
+                ),
+              ),
+              icon: SvgPicture.asset("assets/icons/back.svg"),
+              label: const Text(
+                "뒤로",
+                style: TextStyle(
+                  color: ColorStyles.gray5,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w600,
+                  height: 1.4,
+                ),
+              ),
+              onPressed: onPressed,
+            )
+          : null,
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -8,7 +9,7 @@ import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 class SetNicknameScreen extends StatefulWidget {
   final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
-  final routeController = Get.put(LoginBeforeIdentifyController());
+  final routeController = Get.put(LoginRouteController());
 
   SetNicknameScreen({super.key});
 
@@ -25,7 +26,7 @@ class _SetNicknameScreenState extends State<SetNicknameScreen> {
           await dio.patch("/user/name", data: {"nickname": Get.arguments});
 
       widget.userViewModel.updateNickName(Get.arguments);
-      widget.routeController.goToModeSelection();
+      widget.routeController.goto(LoginRoute.modeSelection);
 
       Get.offNamed("/login/process");
       return;
