@@ -28,7 +28,7 @@ Future<String?> getMedicin(String code) async {
     "drugcode": code,
     "drugType": "K",
   });
-  print(code);
+
   String username = dotenv.env['KIMS_SERVER_USERNAME'] ?? "";
   String password = dotenv.env['KIMS_SERVER_PASSWORD'] ?? "";
 

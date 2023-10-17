@@ -23,6 +23,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     // 완료버튼 누르면 작동하는 함수
     void handleAdmissionButtonPress(dynamic item, {required String title}) {
       widget.userViewModel.addSpecialNoteItem(title, item!);
+
       itemController.clear();
       Navigator.pop(context);
     }
@@ -65,7 +66,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
             builder: (BuildContext context, StateSetter setState) {
               return WillPopScope(
                 onWillPop: () async {
-                  // Clear the text in the text field when the back button is pressed
                   itemController.clear();
                   return true;
                 },
@@ -306,6 +306,8 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                               fontWeight: FontWeight.w500,
                             )),
                         const SizedBox(height: 8),
+                        // widget.userViewModel.user.value.specialNote!.underlyingConditions
+                        //  log widget.userViewModel.user.value.specialNote!.underlyingConditions
                         Obx(
                           () => widget.userViewModel.user.value.specialNote !=
                                       null &&
