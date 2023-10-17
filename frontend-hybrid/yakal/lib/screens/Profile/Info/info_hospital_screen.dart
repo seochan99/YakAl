@@ -152,6 +152,13 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                             labelText: title == "admissionRecords"
                                 ? "입원 장소"
                                 : "응급실 방문 장소",
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              borderSide: const BorderSide(
+                                color: Color(0xff2666f6),
+                                width: 2.0,
+                              ),
+                            ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),

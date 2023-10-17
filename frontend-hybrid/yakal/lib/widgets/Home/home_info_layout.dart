@@ -43,6 +43,7 @@ class HomeInfoLayout extends StatelessWidget {
                               ),
                             ),
                           ),
+                          SizedBox.fromSize(size: const Size(0, 10)),
                           const Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 3),
                             child: Text(
@@ -81,11 +82,11 @@ class HomeInfoLayout extends StatelessWidget {
                         alignment: const AlignmentDirectional(1.00, 0.00),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 20, 20, 0),
+                              0, 20, 30, 0),
                           child: CircularPercentIndicator(
                             percent:
                                 viewModel.homeInfoModel.getProgress() / 100,
-                            radius: 44,
+                            radius: 55,
                             lineWidth: 4,
                             animation: true,
                             animateFromLastPercent: true,
@@ -115,6 +116,7 @@ class HomeInfoLayout extends StatelessWidget {
                   ],
                 ),
                 /*----------------- 다른 날짜 복약정보 버튼 ----------------- */
+                SizedBox.fromSize(size: const Size(0, 10)),
                 Container(
                   height: 35,
                   margin: const EdgeInsetsDirectional.fromSTEB(20, 26, 0, 14),

@@ -152,6 +152,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                 controller: itemController,
                                 decoration: InputDecoration(
                                   labelText: "항목 입력",
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    borderSide: const BorderSide(
+                                      color: Color(0xff2666f6),
+                                      width: 2.0,
+                                    ),
+                                  ),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                   ),

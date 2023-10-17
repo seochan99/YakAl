@@ -46,6 +46,9 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 2,
                     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
+                SizedBox.fromSize(
+                  size: const Size.fromHeight(10),
+                ),
                 Expanded(
                     child: Obx(() => ListView.builder(
                         itemCount: viewModel.pillTodoParents.length,
