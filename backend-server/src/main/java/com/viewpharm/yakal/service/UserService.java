@@ -104,7 +104,7 @@ public class UserService {
 
         return user.getIsIdentified();
     }
-  
+
     public UserExpertDto getUserExpertInfo(final Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
@@ -132,8 +132,11 @@ public class UserService {
 
         return (user.getBirthday() != null
                 && user.getName() != null
-                && user.getSex() != null
-                && user.getIsDetail() != null);
+                //&& user.getSex() != null
+                && user.getIsDetail() != null
+                && user.getBreakfastTime() != null
+                && user.getLunchTime() != null
+                && user.getDinnerTime() != null);
     }
 
     public void updateName(final Long userId, final String name) {
@@ -160,15 +163,15 @@ public class UserService {
         }
     }
 
-    public void updateIsCertified(final Long userId, final UpdateAdminRequestDto updateAdminRequestDto){
-        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(),updateAdminRequestDto.getJob());
+    public void updateIsCertified(final Long userId, final UpdateAdminRequestDto updateAdminRequestDto) {
+        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(), updateAdminRequestDto.getJob());
 
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
     }
 
-    public Long countAnswer(final User user){
+    public Long countAnswer(final User user) {
         return answerRepository.countAnswerByUser(user);
     }
 
