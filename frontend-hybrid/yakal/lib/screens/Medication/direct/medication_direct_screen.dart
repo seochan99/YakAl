@@ -99,7 +99,6 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
         isLoading = false;
       });
     } catch (e) {
-      print(e.toString());
       setState(() {
         isLoading = false;
       });
@@ -121,11 +120,13 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   }
 
   void _handleButtonPress() {
-    medicinController.clear();
     Get.toNamed("/pill/add/direct/result", arguments: {
-      "medicin": selectedMedicineName,
+      "medicin": medicinController.text,
       "code": selectedMedicineCode
     });
+    // 약 추가 후 초기화
+    medicinController.clear();
+    selectedMedicineCode = "";
   }
 
   @override
