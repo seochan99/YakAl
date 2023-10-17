@@ -144,6 +144,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               height: 2,
                               decoration: const BoxDecoration(
                                   color: Color(0xffe9e9ee))),
+                          SizedBox.fromSize(size: const Size(0, 10)),
                           if (widget.pillTodoParent.isOverLap)
                             Container(
                                 width: MediaQuery.of(context).size.width - 20,

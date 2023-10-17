@@ -10,9 +10,10 @@ class HomeViewModel extends GetxController {
   final PillTodoRepository _pillTodoRepository =
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
-  late final RxBool _isExpanded = false.obs;
-  late final Rx<HomeInfoModel> _homeInfoModel;
-  late final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
+  final RxBool _isExpanded = false.obs;
+  final Rx<HomeInfoModel> _homeInfoModel =
+      HomeInfoModel(date: DateTime.now(), totalCount: 0, takenCount: 0).obs;
+  final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   bool get isExpanded => _isExpanded.value;
   HomeInfoModel get homeInfoModel => _homeInfoModel.value;
@@ -22,7 +23,7 @@ class HomeViewModel extends GetxController {
   HomeViewModel() {
     updateData().then((value) => {
           _isExpanded.value = false,
-          _homeInfoModel = HomeInfoModel(
+          _homeInfoModel.value = HomeInfoModel(
               date: DateTime.now(),
               // pilltodoParent의 pillCount를 다 더해야함
               totalCount: _pillTodoParents
@@ -33,7 +34,7 @@ class HomeViewModel extends GetxController {
                   .map((e) => e.value.todos
                       .where((element) => element.isTaken == true)
                       .length)
-                  .reduce((value, element) => value + element)).obs
+                  .reduce((value, element) => value + element))
         });
   }
 
