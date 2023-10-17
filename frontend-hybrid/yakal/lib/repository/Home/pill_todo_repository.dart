@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
 
@@ -19,62 +17,33 @@ class PillTodoRepository {
 
     List<PillTodoParent> pillTodoParents = [];
 
-    List<dynamic> data = response['schedule']['MORNING'];
-    List<PillTodoChildren> pillTodoChildrenList =
-        data.map((json) => PillTodoChildren.fromJson(json)).toList();
-    pillTodoParents.add(
-      PillTodoParent(
-        eTakingTime: ETakingTime.MORNING,
-        isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
-        isExpanded: false,
-        isOverLap: false,
-        todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
-      ),
-    );
+    List<dynamic> data = [];
+    List<PillTodoChildren> pillTodoChildrenList = [];
 
-    data = response['schedule']['AFTERNOON'];
-    pillTodoChildrenList =
-        data.map((json) => PillTodoChildren.fromJson(json)).toList();
-    pillTodoParents.add(
-      PillTodoParent(
-        eTakingTime: ETakingTime.AFTERNOON,
-        isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
-        isExpanded: false,
-        isOverLap: false,
-        todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
-      ),
-    );
+    for (var eTakingTime in ETakingTime.values) {
+      if (eTakingTime == ETakingTime.INVISIBLE) {
+        pillTodoParents.add(PillTodoParent.getInvisibleSchedule());
+        continue;
+      }
 
-    data = response['schedule']['EVENING'];
-    pillTodoChildrenList =
-        data.map((json) => PillTodoChildren.fromJson(json)).toList();
+      data = response['schedule'][eTakingTime.toString().split(".").last];
+      pillTodoChildrenList =
+          data.map((json) => PillTodoChildren.fromJson(json)).toList();
 
-    pillTodoParents.add(
-      PillTodoParent(
-        eTakingTime: ETakingTime.EVENING,
-        isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
-        isExpanded: false,
-        isOverLap: false,
-        todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
-      ),
-    );
+      if (pillTodoChildrenList.isEmpty) {
+        continue;
+      }
 
-    data = response['schedule']['DEFAULT'];
-    pillTodoChildrenList =
-        data.map((json) => PillTodoChildren.fromJson(json)).toList();
-    pillTodoParents.add(
-      PillTodoParent(
-        eTakingTime: ETakingTime.DEFAULT,
-        isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
-        isExpanded: false,
-        isOverLap: false,
-        todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
-      ),
-    );
-
-    // 위 코드 반복문으로 바꾸기
-
-    pillTodoParents.add(PillTodoParent.getInvisibleSchedule());
+      pillTodoParents.add(
+        PillTodoParent(
+          eTakingTime: eTakingTime,
+          isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
+          isExpanded: false,
+          isOverLap: false,
+          todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
+        ),
+      );
+    }
 
     return pillTodoParents;
   }
