@@ -219,23 +219,23 @@ CREATE TABLE `counsels`
     FOREIGN KEY (`patient_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- CREATE TABLE `diagnosis`
--- (
---     `id`      bigint       NOT NULL AUTO_INCREMENT,
---     `name`    varchar(255) NOT NULL,
---     `user_id` bigint       NOT NULL,
---     PRIMARY KEY (`id`),
---     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `diagnosis`
+(
+    `id`      bigint       NOT NULL AUTO_INCREMENT,
+    `name`    varchar(255) NOT NULL,
+    `user_id` bigint       NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- CREATE TABLE `healthfoods`
--- (
---     `id`      bigint       NOT NULL AUTO_INCREMENT,
---     `name`    varchar(255) NOT NULL,
---     `user_id` bigint       NOT NULL,
---     PRIMARY KEY (`id`),
---     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `healthfoods`
+(
+    `id`      bigint       NOT NULL AUTO_INCREMENT,
+    `name`    varchar(255) NOT NULL,
+    `user_id` bigint       NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `login_logs`
 (
@@ -244,19 +244,19 @@ CREATE TABLE `login_logs`
     PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- CREATE TABLE `notes`
--- (
---     `id`                 bigint NOT NULL AUTO_INCREMENT,
---     `create_date`        date   NOT NULL,
---     `last_modified_date` date         DEFAULT NULL,
---     `description`        varchar(255) DEFAULT NULL,
---     `is_deleted`         tinyint(1) NOT NULL,
---     `is_edit`            tinyint(1) NOT NULL,
---     `title`              varchar(255) DEFAULT NULL,
---     `counsel_id`         bigint NOT NULL,
---     PRIMARY KEY (`id`),
---     FOREIGN KEY (`counsel_id`) REFERENCES `counsels` (`id`)
--- ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `notes`
+(
+    `id`                 bigint NOT NULL AUTO_INCREMENT,
+    `create_date`        date   NOT NULL,
+    `last_modified_date` date         DEFAULT NULL,
+    `description`        varchar(255) DEFAULT NULL,
+    `is_deleted`         tinyint(1) NOT NULL,
+    `is_edit`            tinyint(1) NOT NULL,
+    `title`              varchar(255) DEFAULT NULL,
+    `counsel_id`         bigint NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`counsel_id`) REFERENCES `counsels` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `answers`
 (
