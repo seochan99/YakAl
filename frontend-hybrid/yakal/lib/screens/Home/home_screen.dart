@@ -6,9 +6,17 @@ import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
 import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
-class HomeScreen extends StatelessWidget {
-  final HomeViewModel viewModel = Get.put(HomeViewModel());
+import '../../models/Home/pill_todo_parent.dart';
+
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeViewModel viewModel = Get.put(HomeViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -41,14 +49,11 @@ class HomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 HomeInfoLayout(viewModel),
-                Container(
-                    // width 꽉 차게
-                    width: double.infinity,
-                    height: 2,
-                    decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-                SizedBox.fromSize(
-                  size: const Size.fromHeight(10),
-                ),
+                // Container(
+                //     // width 꽉 차게
+                //     width: double.infinity,
+                //     height: 2,
+                //     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
                 Expanded(
                     child: Obx(() => ListView.builder(
                         itemCount: viewModel.pillTodoParents.length,

@@ -6,9 +6,20 @@ import 'package:yakal/utilities/style/color_styles.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
-class HomeInfoLayout extends StatelessWidget {
+class HomeInfoLayout extends StatefulWidget {
   final HomeViewModel viewModel;
   const HomeInfoLayout(this.viewModel, {super.key});
+
+  @override
+  State<HomeInfoLayout> createState() => _HomeInfoLayoutState();
+}
+
+class _HomeInfoLayoutState extends State<HomeInfoLayout> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +45,7 @@ class HomeInfoLayout extends StatelessWidget {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 12),
                             child: Text(
-                              viewModel.homeInfoModel.getDate(),
+                              widget.viewModel.homeInfoModel.getDate(),
                               style: const TextStyle(
                                 // 글자 간격 조절
                                 letterSpacing: 0,
@@ -58,7 +69,7 @@ class HomeInfoLayout extends StatelessWidget {
                           Row(
                             children: [
                               Text(
-                                '총 ${viewModel.homeInfoModel.totalCount}개',
+                                '총 ${widget.viewModel.homeInfoModel.totalCount}개',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   color: ColorStyles.main,
@@ -85,7 +96,8 @@ class HomeInfoLayout extends StatelessWidget {
                               0, 20, 30, 0),
                           child: CircularPercentIndicator(
                             percent:
-                                viewModel.homeInfoModel.getProgress() / 100,
+                                widget.viewModel.homeInfoModel.getProgress() /
+                                    100,
                             radius: 55,
                             lineWidth: 4,
                             animation: true,
@@ -93,8 +105,10 @@ class HomeInfoLayout extends StatelessWidget {
                             progressColor: const Color(0xFF2666F6),
                             backgroundColor: const Color(0xFFC1D2FF),
                             center: Text(
-                              '${viewModel.homeInfoModel.getProgress()}%',
-                              style: viewModel.homeInfoModel.getProgress() == 0
+                              '${widget.viewModel.homeInfoModel.getProgress()}%',
+                              style: widget.viewModel.homeInfoModel
+                                          .getProgress() ==
+                                      0
                                   ? const TextStyle(
                                       fontSize: 20,
                                       color: Color(0xFFC1D2FF),

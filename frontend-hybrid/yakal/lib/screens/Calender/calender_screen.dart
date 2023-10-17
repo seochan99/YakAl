@@ -42,32 +42,32 @@ class CalenderScreen extends StatelessWidget {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
-                children: [
-                  CalendarInfoLayout(viewModel),
-                  Obx(() => ListView.builder(
-                      primary: false,
-                      shrinkWrap: true,
-                      itemCount: viewModel.pillTodoParents.length,
-                      itemBuilder: (context, index) {
-                        return PillTodoParentItem(
-                          pillTodoParent: viewModel.pillTodoParents[index],
-                          onClickParentCheckBox: (eTakingTime) {
-                            viewModel.onClickParentCheckBox(eTakingTime);
-                          },
-                          onClickParentItemView: (eTakingTime) {
-                            viewModel.onClickParentItemView(eTakingTime);
-                          },
-                          onClickChildrenCheckBox: (eTakingTime, todoId) {
-                            viewModel.onClickChildrenCheckBox(
-                                eTakingTime, todoId);
-                          },
-                          onClickChildrenItemView: (eTakingTime, todoId) {
-                            print("페이지 이동");
-                          },
-                        );
-                      })),
-                ],
-              ),
+                  // children: [
+                  //   CalendarInfoLayout(viewModel),
+                  //   Obx(() => ListView.builder(
+                  //       primary: false,
+                  //       shrinkWrap: true,
+                  //       itemCount: viewModel.pillTodoParents.length,
+                  //       itemBuilder: (context, index) {
+                  //         return PillTodoParentItem(
+                  //           pillTodoParent: viewModel.pillTodoParents[index],
+                  //           onClickParentCheckBox: (eTakingTime) {
+                  //             viewModel.onClickParentCheckBox(eTakingTime);
+                  //           },
+                  //           onClickParentItemView: (eTakingTime) {
+                  //             viewModel.onClickParentItemView(eTakingTime);
+                  //           },
+                  //           onClickChildrenCheckBox: (eTakingTime, todoId) {
+                  //             viewModel.onClickChildrenCheckBox(
+                  //                 eTakingTime, todoId);
+                  //           },
+                  //           onClickChildrenItemView: (eTakingTime, todoId) {
+                  //             print("페이지 이동");
+                  //           },
+                  //         );
+                  //       })),
+                  // ],
+                  ),
             ),
           ),
         ],
