@@ -41,6 +41,7 @@ class HomeScreen extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 HomeInfoLayout(viewModel),
+                const Text("약 디테일"),
                 Container(
                     // width 꽉 차게
                     width: double.infinity,
