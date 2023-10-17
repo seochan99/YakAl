@@ -7,6 +7,7 @@ import 'package:yakal/widgets/Home/home_info_layout.dart';
 import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
 import '../../models/Home/pill_todo_parent.dart';
+import '../../widgets/Home/pill_todo_layout.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -49,33 +50,12 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 HomeInfoLayout(viewModel),
-                const Text("약 디테일"),
                 Container(
                     // width 꽉 차게
                     width: double.infinity,
                     height: 2,
                     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-                Expanded(
-                    child: Obx(() => ListView.builder(
-                        itemCount: viewModel.pillTodoParents.length,
-                        itemBuilder: (context, index) {
-                          return PillTodoParentItem(
-                            pillTodoParent: viewModel.pillTodoParents[index],
-                            onClickParentCheckBox: (eTakingTime) {
-                              viewModel.onClickParentCheckBox(eTakingTime);
-                            },
-                            onClickParentItemView: (eTakingTime) {
-                              viewModel.onClickParentItemView(eTakingTime);
-                            },
-                            onClickChildrenCheckBox: (eTakingTime, todoId) {
-                              viewModel.onClickChildrenCheckBox(
-                                  eTakingTime, todoId);
-                            },
-                            onClickChildrenItemView: (eTakingTime, todoId) {
-                              print("페이지 이동");
-                            },
-                          );
-                        }))),
+                Expanded(child: PillTodoLayout(viewModel)),
               ],
             ),
           ),

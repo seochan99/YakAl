@@ -11,31 +11,35 @@ class HomeViewModel extends GetxController {
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
   final RxBool _isExpanded = false.obs;
+  final RxBool _isLoaded = true.obs;
   final Rx<HomeInfoModel> _homeInfoModel =
       HomeInfoModel(date: DateTime.now(), totalCount: 0, takenCount: 0).obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   bool get isExpanded => _isExpanded.value;
+  bool get isLoaded => _isLoaded.value;
   HomeInfoModel get homeInfoModel => _homeInfoModel.value;
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
   HomeViewModel() {
-    updateData().then((value) => {
-          _isExpanded.value = false,
-          _homeInfoModel.value = HomeInfoModel(
-              date: DateTime.now(),
-              // pilltodoParent의 pillCount를 다 더해야함
-              totalCount: _pillTodoParents
-                  .map((e) => e.value.todos.length)
-                  .reduce((value, element) => value + element),
-              // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
-              takenCount: _pillTodoParents
-                  .map((e) => e.value.todos
-                      .where((element) => element.isTaken == true)
-                      .length)
-                  .reduce((value, element) => value + element))
-        });
+    updateData()
+        .then((value) => {
+              _isExpanded.value = false,
+              _homeInfoModel.value = HomeInfoModel(
+                  date: DateTime.now(),
+                  // pilltodoParent의 pillCount를 다 더해야함
+                  totalCount: _pillTodoParents
+                      .map((e) => e.value.todos.length)
+                      .reduce((value, element) => value + element),
+                  // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
+                  takenCount: _pillTodoParents
+                      .map((e) => e.value.todos
+                          .where((element) => element.isTaken == true)
+                          .length)
+                      .reduce((value, element) => value + element))
+            })
+        .then((value) => _isLoaded.value = false);
   }
 
   Future<void> updateData() async {
@@ -43,6 +47,10 @@ class HomeViewModel extends GetxController {
     _pillTodoParents.addAll((await _pillTodoRepository.getPillTodoParents(date))
         .map((e) => e.obs)
         .toList());
+  }
+
+  void changeLoadingState() {
+    _isLoaded.value = !_isLoaded.value;
   }
 
   void onClickParentCheckBox(ETakingTime eTakingTime) {

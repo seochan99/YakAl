@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
 
@@ -12,13 +13,28 @@ class PillTodoRepository {
       : _pillTodoProvider = pillTodoProvider;
 
   Future<List<PillTodoParent>> getPillTodoParents(DateTime dateTime) async {
+    // API Server 통신
     Map<String, dynamic> response =
         await _pillTodoProvider.getPillTodoParents(dateTime);
 
-    List<PillTodoParent> pillTodoParents = [];
+    // 이미지를 들고 올 KdCode 중복 삭제
+    Set<String> kdCodeSet = {};
+    for (var eTakingTime in ETakingTime.values) {
+      if (eTakingTime == ETakingTime.INVISIBLE) {
+        continue;
+      }
 
-    List<dynamic> data = [];
-    List<PillTodoChildren> pillTodoChildrenList = [];
+      List<dynamic> tempData =
+          response['schedule'][eTakingTime.toString().split(".").last];
+
+      kdCodeSet.addAll(tempData.map((e) => e['kdcode']));
+    }
+
+    // Kims 통신
+    Map<String, String> base64ImageMap =
+        await _pillTodoProvider.getKimsBase64Image(kdCodeSet);
+
+    List<PillTodoParent> pillTodoParents = [];
 
     for (var eTakingTime in ETakingTime.values) {
       if (eTakingTime == ETakingTime.INVISIBLE) {
@@ -26,9 +42,14 @@ class PillTodoRepository {
         continue;
       }
 
-      data = response['schedule'][eTakingTime.toString().split(".").last];
-      pillTodoChildrenList =
-          data.map((json) => PillTodoChildren.fromJson(json)).toList();
+      List<dynamic> scheduleJson =
+          response['schedule'][eTakingTime.toString().split(".").last];
+      List<PillTodoChildren> pillTodoChildrenList = scheduleJson
+          .map((json) => PillTodoChildren.fromJson(
+                json,
+                base64ImageMap,
+              ))
+          .toList();
 
       if (pillTodoChildrenList.isEmpty) {
         continue;
@@ -40,7 +61,7 @@ class PillTodoRepository {
           isCompleted: pillTodoChildrenList.every((element) => element.isTaken),
           isExpanded: false,
           isOverLap: false,
-          todos: data.map((json) => PillTodoChildren.fromJson(json)).toList(),
+          todos: pillTodoChildrenList,
         ),
       );
     }
