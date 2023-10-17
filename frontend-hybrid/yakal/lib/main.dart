@@ -62,8 +62,8 @@ void main() async {
   ]);
 
   // locator init
-  initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
+  initializeDateFormatting().then((value) => runApp(
+      MyApp(initialRoute: accessToken != null ? '/pill/detail' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
