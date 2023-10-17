@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -40,30 +39,41 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
           children: [
             SizedBox.fromSize(size: const Size(5, 20)),
             ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: widget.pillTodoChildren.base64Image.isEmpty
-                  ? SvgPicture.asset(
-                      'assets/icons/icon-check-on-36.svg',
-                      width: 80,
-                      height: 40,
-                      color: Colors.blue,
-                    )
-                  : Image.memory(
-                      base64Decode(widget.pillTodoChildren.base64Image),
-                      width: 80,
-                      height: 40,
-                    ),
-            ),
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: widget.pillTodoChildren.base64Image.isEmpty
+                    ? SvgPicture.asset(
+                        'assets/icons/icon-check-on-36.svg',
+                        width: 80,
+                        height: 40,
+                        color: Colors.blue,
+                      )
+                    : Container(
+                        width: 80,
+                        height: 40,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: CachedMemoryImage(
+                          uniqueKey:
+                              'app://image/dose/${widget.pillTodoChildren.kdCode}',
+                          base64: widget.pillTodoChildren.base64Image,
+                        ),
+                      )),
             SizedBox.fromSize(size: const Size(10, 10)),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.pillTodoChildren.name,
+                  widget.pillTodoChildren.name.length > 16
+                      ? '${widget.pillTodoChildren.name.substring(0, 11)}...'
+                      : widget.pillTodoChildren.name,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    // 글자 수 제한(16글자)
                   ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
                 ),
                 Text(
                   widget.pillTodoChildren.effect,

@@ -21,6 +21,13 @@ class InputHorizontalTextFieldWidget extends StatelessWidget {
       autofocus: true,
       focusNode: textFocus,
       decoration: InputDecoration(
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8.0)),
+          borderSide: BorderSide(
+            color: Color.fromRGBO(84, 135, 252, 1),
+            width: 2.0,
+          ),
+        ),
         border: const OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
           borderSide: BorderSide(

@@ -181,9 +181,9 @@ class MyApp extends StatelessWidget {
               name: "/result",
               page: () => const EnvelopOcrAnalysisResult(),
             ),
-            GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
           ],
-        )
+        ),
+        GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],
     );
   }

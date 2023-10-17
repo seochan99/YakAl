@@ -6,9 +6,17 @@ import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
 import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
-class HomeScreen extends StatelessWidget {
-  final HomeViewModel viewModel = Get.put(HomeViewModel());
+import '../../models/Home/pill_todo_parent.dart';
+
+class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final HomeViewModel viewModel = Get.put(HomeViewModel());
 
   @override
   Widget build(BuildContext context) {

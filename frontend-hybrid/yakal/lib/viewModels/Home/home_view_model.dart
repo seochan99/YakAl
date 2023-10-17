@@ -1,10 +1,15 @@
 import 'package:get/get.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
+import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
 import '../../models/Home/home_info_model.dart';
+import '../../provider/Home/pill_todo_provider.dart';
 
 class HomeViewModel extends GetxController {
+  final PillTodoRepository _pillTodoRepository =
+      PillTodoRepository(pillTodoProvider: PillTodoProvider());
+
   late final RxBool _isExpanded = false.obs;
   late final Rx<HomeInfoModel> _homeInfoModel;
   late final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
@@ -15,23 +20,28 @@ class HomeViewModel extends GetxController {
       _pillTodoParents.map((e) => e.value).toList();
 
   HomeViewModel() {
-    _isExpanded.value = false;
+    updateData().then((value) => {
+          _isExpanded.value = false,
+          _homeInfoModel = HomeInfoModel(
+              date: DateTime.now(),
+              // pilltodoParent의 pillCount를 다 더해야함
+              totalCount: _pillTodoParents
+                  .map((e) => e.value.todos.length)
+                  .reduce((value, element) => value + element),
+              // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
+              takenCount: _pillTodoParents
+                  .map((e) => e.value.todos
+                      .where((element) => element.isTaken == true)
+                      .length)
+                  .reduce((value, element) => value + element)).obs
+        });
+  }
 
-    _pillTodoParents
-        .addAll(PillTodoParent.getDummies().map((e) => e.obs).toList());
-
-    _homeInfoModel = HomeInfoModel(
-        date: DateTime.now(),
-        // pilltodoParent의 pillCount를 다 더해야함
-        totalCount: _pillTodoParents
-            .map((e) => e.value.todos.length)
-            .reduce((value, element) => value + element),
-        // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
-        takenCount: _pillTodoParents
-            .map((e) => e.value.todos
-                .where((element) => element.isTaken == true)
-                .length)
-            .reduce((value, element) => value + element)).obs;
+  Future<void> updateData() async {
+    var date = DateTime.now();
+    _pillTodoParents.addAll((await _pillTodoRepository.getPillTodoParents(date))
+        .map((e) => e.obs)
+        .toList());
   }
 
   void onClickParentCheckBox(ETakingTime eTakingTime) {
