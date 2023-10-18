@@ -4,13 +4,11 @@ import 'package:get/get.dart';
 import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
-import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
-import '../../models/Home/pill_todo_parent.dart';
 import '../../widgets/Home/pill_todo_layout.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({super.key});
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();

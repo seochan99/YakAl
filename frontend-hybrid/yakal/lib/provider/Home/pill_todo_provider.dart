@@ -1,9 +1,7 @@
-import 'package:cached_memory_image/cached_image_base64_manager.dart';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/utilities/api/api.dart';
-
-import '../../models/Home/pill_todo_children.dart';
 
 /*
   * PillTodoProvider
@@ -13,7 +11,6 @@ class PillTodoProvider {
   Future<Map<String, dynamic>> getPillTodoParents(DateTime dateTime) async {
     var dio = await authDioWithContext();
 
-    // yyyy - MM - dd 만 입력
     var response =
         await dio.get("/dose/day/${DateFormat('yyyy-MM-dd').format(dateTime)}");
 
@@ -52,5 +49,36 @@ class PillTodoProvider {
     }
 
     return base64ImageMap;
+  }
+
+  Future<bool> updatePillTodoParent(
+      DateTime dateTime, ETakingTime takingTime, bool isTaken) async {
+    var dio = await authDioWithContext();
+    String date = DateFormat('yyyy-MM-dd').format(dateTime);
+    String takingTimeStr = takingTime.toString().split('.').last;
+
+    var response = await dio.patch("/dose/taken/$date/$takingTimeStr", data: {
+      "isTaken": isTaken,
+    });
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
+    var dio = await authDioWithContext();
+
+    var response = await dio.patch("/dose/taken/$doseId", data: {
+      "isTaken": isTaken,
+    });
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

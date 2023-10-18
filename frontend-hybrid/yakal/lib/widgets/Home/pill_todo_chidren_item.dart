@@ -57,6 +57,9 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                           uniqueKey:
                               'app://image/dose/${widget.pillTodoChildren.kdCode}',
                           base64: widget.pillTodoChildren.base64Image,
+                          placeholder: const Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                       )),
             SizedBox.fromSize(size: const Size(10, 10)),

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
 
@@ -12,18 +11,15 @@ class PillTodoRepository {
   PillTodoRepository({required pillTodoProvider})
       : _pillTodoProvider = pillTodoProvider;
 
-  Future<List<PillTodoParent>> getPillTodoParents(DateTime dateTime) async {
+  Future<List<PillTodoParent>> readPillTodoParents(DateTime dateTime) async {
     // API Server 통신
     Map<String, dynamic> response =
         await _pillTodoProvider.getPillTodoParents(dateTime);
 
     // 이미지를 들고 올 KdCode 중복 삭제
     Set<String> kdCodeSet = {};
-    for (var eTakingTime in ETakingTime.values) {
-      if (eTakingTime == ETakingTime.INVISIBLE) {
-        continue;
-      }
-
+    for (var eTakingTime in ETakingTime.values
+        .where((element) => element != ETakingTime.INVISIBLE)) {
       List<dynamic> tempData =
           response['schedule'][eTakingTime.toString().split(".").last];
 
@@ -36,12 +32,9 @@ class PillTodoRepository {
 
     List<PillTodoParent> pillTodoParents = [];
 
-    for (var eTakingTime in ETakingTime.values) {
-      if (eTakingTime == ETakingTime.INVISIBLE) {
-        pillTodoParents.add(PillTodoParent.getInvisibleSchedule());
-        continue;
-      }
-
+    // 이후 데이터 가공
+    for (var eTakingTime in ETakingTime.values
+        .where((element) => element != ETakingTime.INVISIBLE)) {
       List<dynamic> scheduleJson =
           response['schedule'][eTakingTime.toString().split(".").last];
       List<PillTodoChildren> pillTodoChildrenList = scheduleJson
@@ -67,6 +60,16 @@ class PillTodoRepository {
     }
 
     return pillTodoParents;
+  }
+
+  Future<bool> updatePillTodoParent(
+      DateTime dateTime, ETakingTime takingTime, bool isTaken) async {
+    return await _pillTodoProvider.updatePillTodoParent(
+        dateTime, takingTime, isTaken);
+  }
+
+  Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
+    return await _pillTodoProvider.updatePillTodoChildren(doseId, isTaken);
   }
 
   List<PillTodoParent> getDummies() {
