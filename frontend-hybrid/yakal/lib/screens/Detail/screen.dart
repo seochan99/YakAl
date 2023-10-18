@@ -62,7 +62,9 @@ class _PillDetailScreenState extends State<PillDetailScreen>
           ),
         ),
         body: drugInfo == null
-            ? const CircularProgressIndicator()
+            ? const CircularProgressIndicator(
+                color: ColorStyles.gray4,
+              )
             : Column(
                 children: [
                   Padding(
@@ -123,6 +125,19 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                   ),
                   TabBar(
                     controller: tabController,
+                    indicatorColor: ColorStyles.black,
+                    labelColor: ColorStyles.black,
+                    unselectedLabelColor: ColorStyles.gray4,
+                    labelStyle: const TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    // 밑줄 길이
+
+                    // 버튼 클릭시 색상
+
+                    // tap color
+
                     tabs: const [
                       Tab(
                         text: "복약 정보",
