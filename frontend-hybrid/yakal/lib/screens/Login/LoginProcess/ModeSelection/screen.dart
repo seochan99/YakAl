@@ -38,7 +38,7 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
       var response = await dio
           .patch("/user/detail", data: {"isDetail": _mode == EMode.LITE});
 
-      widget.userViewModel.updateMode(_mode);
+      widget.userViewModel.updateMode(_mode == EMode.LITE);
       return;
     } on DioException catch (error) {
       if (!context.mounted) {

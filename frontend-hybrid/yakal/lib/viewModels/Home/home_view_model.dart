@@ -22,25 +22,25 @@ class HomeViewModel extends GetxController {
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
-  HomeViewModel() {
-    updateData()
-        .then((value) => {
-              _isExpanded.value = false,
-              _homeInfoModel.value = HomeInfoModel(
-                  date: DateTime.now(),
-                  // pilltodoParent의 pillCount를 다 더해야함
-                  totalCount: _pillTodoParents
-                      .map((e) => e.value.todos.length)
-                      .reduce((value, element) => value + element),
-                  // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
-                  takenCount: _pillTodoParents
-                      .map((e) => e.value.todos
-                          .where((element) => element.isTaken == true)
-                          .length)
-                      .reduce((value, element) => value + element))
-            })
-        .then((value) => _isLoaded.value = false);
-  }
+  // HomeViewModel() {
+  //   updateData()
+  //       .then((value) => {
+  //             _isExpanded.value = false,
+  //             _homeInfoModel.value = HomeInfoModel(
+  //                 date: DateTime.now(),
+  //                 // pilltodoParent의 pillCount를 다 더해야함
+  //                 totalCount: _pillTodoParents
+  //                     .map((e) => e.value.todos.length)
+  //                     .reduce((value, element) => value + element),
+  //                 // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
+  //                 takenCount: _pillTodoParents
+  //                     .map((e) => e.value.todos
+  //                         .where((element) => element.isTaken == true)
+  //                         .length)
+  //                     .reduce((value, element) => value + element))
+  //           })
+  //       .then((value) => _isLoaded.value = false);
+  // }
 
   Future<void> updateData() async {
     var date = DateTime.now();
