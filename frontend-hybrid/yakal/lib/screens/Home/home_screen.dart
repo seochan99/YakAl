@@ -7,14 +7,9 @@ import 'package:yakal/widgets/Home/home_info_layout.dart';
 
 import '../../widgets/Home/pill_todo_layout.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final HomeViewModel viewModel = Get.put(HomeViewModel());
 
   @override

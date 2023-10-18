@@ -15,6 +15,7 @@ class PillTodoProvider {
         await dio.get("/dose/day/${DateFormat('yyyy-MM-dd').format(dateTime)}");
 
     if (response.statusCode == 200) {
+      print(response.data['data']);
       return response.data['data'];
     } else {
       print("Failed to load PillTodoParents");

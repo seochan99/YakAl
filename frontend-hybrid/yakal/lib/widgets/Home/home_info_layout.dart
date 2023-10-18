@@ -17,7 +17,6 @@ class HomeInfoLayout extends StatefulWidget {
 class _HomeInfoLayoutState extends State<HomeInfoLayout> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -93,7 +92,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                         alignment: const AlignmentDirectional(1.00, 0.00),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 20, 30, 0),
+                              0, 20, 20, 0),
                           child: CircularPercentIndicator(
                             percent:
                                 widget.viewModel.homeInfoModel.getProgress() /
@@ -133,7 +132,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                 SizedBox.fromSize(size: const Size(0, 10)),
                 Container(
                   height: 35,
-                  margin: const EdgeInsetsDirectional.fromSTEB(20, 26, 0, 14),
+                  margin: const EdgeInsetsDirectional.fromSTEB(20, 5, 0, 10),
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(

@@ -11,7 +11,7 @@ class HomeViewModel extends GetxController {
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
   final RxBool _isExpanded = false.obs;
-  final RxBool _isLoaded = true.obs;
+  final RxBool _isLoaded = false.obs;
   final Rx<HomeInfoModel> _homeInfoModel =
       HomeInfoModel(date: DateTime.now(), totalCount: 0, takenCount: 0).obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
@@ -23,35 +23,44 @@ class HomeViewModel extends GetxController {
       _pillTodoParents.map((e) => e.value).toList();
 
   HomeViewModel() {
-    updateData()
+    _isExpanded.value = false;
+    updatePillTodoAndDate();
+  }
+
+  void updatePillTodoAndDate() {
+    // Start Data Loading
+    _isLoaded.value = true;
+
+    // PillTodoParents Update
+    DateTime date = DateTime.now();
+
+    // Read PillTodoParents In Remote DB
+    _pillTodoRepository
+        .readPillTodoParents(date)
+        // Finish Reading PillTodoParents In Remote DB
         .then((value) => {
-              _isExpanded.value = false,
-              _homeInfoModel.value = HomeInfoModel(
-                  date: DateTime.now(),
-                  // pilltodoParent의 pillCount를 다 더해야함
-                  totalCount: _pillTodoParents
-                      .map((e) => e.value.todos.length)
-                      .reduce((value, element) => value + element),
-                  // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
-                  takenCount: _pillTodoParents
-                      .map((e) => e.value.todos
-                          .where((element) => element.isTaken == true)
-                          .length)
-                      .reduce((value, element) => value + element))
+              _pillTodoParents.value = value.map((e) => e.obs).toList(),
             })
+        // Update HomeInfoModel
+        .then((value) => {
+              if (_pillTodoParents.isNotEmpty)
+                {
+                  _homeInfoModel.value = HomeInfoModel(
+                      date: date,
+                      // pilltodoParent의 pillCount를 다 더해야함
+                      totalCount: _pillTodoParents
+                          .map((e) => e.value.todos.length)
+                          .reduce((value, element) => value + element),
+                      // todos의 isTaken이 true인 것의 개수 / 총 todos의 개수
+                      takenCount: _pillTodoParents
+                          .map((e) => e.value.todos
+                              .where((element) => element.isTaken == true)
+                              .length)
+                          .reduce((value, element) => value + element))
+                }
+            })
+        // Finish Data Loading
         .then((value) => _isLoaded.value = false);
-  }
-
-  Future<void> updateData() async {
-    var date = DateTime.now();
-    _pillTodoParents.addAll(
-        (await _pillTodoRepository.readPillTodoParents(date))
-            .map((e) => e.obs)
-            .toList());
-  }
-
-  void changeLoadingState() {
-    _isLoaded.value = !_isLoaded.value;
   }
 
   void onClickParentCheckBox(ETakingTime eTakingTime) {
