@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      //initialRoute: initialRoute,
+      // initialRoute: initialRoute,
       initialRoute: "/pill/add/ocrEnvelop/process",
       // 라우팅 설정
       getPages: [

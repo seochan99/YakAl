@@ -17,6 +17,9 @@ class DoseItemModel {
     return DoseItemModel(
       name: doseItemModel.name,
       kimsCode: doseItemModel.kimsCode,
+      kdCode: doseItemModel.kdCode,
+      atcCode: doseItemModel.atcCode,
+      base64Image: doseItemModel.base64Image,
     );
   }
 }

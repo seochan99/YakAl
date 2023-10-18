@@ -31,7 +31,7 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
           "code": "ECJDSTB01V4",
         },
         {
-          "name": "레보프라이드",
+          "name": "레보프라이드정",
           "code": "ESKPSTB003H",
         },
         {
@@ -50,9 +50,6 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
 
       Get.offNamed(
         "/pill/add/final",
-        arguments: {
-          "isOcr": true,
-        },
         preventDuplicates: false,
       );
     });

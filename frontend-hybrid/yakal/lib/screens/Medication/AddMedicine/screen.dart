@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:loader_overlay/loader_overlay.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
+import 'package:yakal/utilities/enum/add_schedule_result.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
@@ -24,6 +26,7 @@ class AddMedicineScreen extends StatefulWidget {
 
 class _AddMedicineScreenState extends State<AddMedicineScreen> {
   bool _isModificationMode = false;
+  bool _isLoading = true;
 
   void _switchMode() {
     setState(() {
@@ -31,10 +34,136 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
     });
   }
 
+  void Function() _onTapSend(DateTime start, DateTime end) {
+    return () {
+      setState(() {
+        _isLoading = true;
+      });
+
+      context.loaderOverlay.show();
+
+      widget.doseListViewModel.addSchedule(start, end).then((value) {
+        setState(() {
+          _isLoading = false;
+        });
+
+        context.loaderOverlay.hide();
+
+        late String message;
+
+        switch (value) {
+          case EAddScheduleResult.FAIL:
+            message = "약 추가에 실패했습니다.";
+            break;
+          case EAddScheduleResult.SUCCESS:
+            message = "복용 스케줄을 추가했습니다.";
+            break;
+          case EAddScheduleResult.PARTIALLY_SUCCESS:
+            message = "약 추가에 성공했지만 추가되지 않은 약이 존재합니다.";
+            break;
+          default:
+            assert(
+                false, "[Assertion Failed] Invaild EAddScheduleResult Value.");
+            break;
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text(message),
+            duration: const Duration(milliseconds: 3000),
+          ),
+        );
+
+        widget.doseListViewModel.clear();
+        Get.offAllNamed("/");
+      });
+    };
+  }
+
   Widget _getListView() {
     return ListView.separated(
-      itemCount: widget.doseListViewModel.getGroupCount(),
+      itemCount: widget.doseListViewModel.getGroupCount() + 1,
       itemBuilder: (context, groupIndex) {
+        if (groupIndex == widget.doseListViewModel.getGroupCount()) {
+          return widget.doseListViewModel.getNotAddableCount() == 0
+              ? Container()
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "추가 불가 약물",
+                      style: TextStyle(
+                        color: ColorStyles.red,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: widget.doseListViewModel.getNotAddableCount(),
+                      itemBuilder: (context, index) {
+                        var notAddableItem =
+                            widget.doseListViewModel.getNotAddableItem(index);
+
+                        return Column(
+                          children: [
+                            Row(
+                              children: [
+                                Container(
+                                  width: 64,
+                                  height: 32,
+                                  clipBehavior: Clip.hardEdge,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    color: ColorStyles.gray2,
+                                  ),
+                                  child: notAddableItem.base64Image != null
+                                      ? Image.memory(
+                                          base64Decode(
+                                            notAddableItem.base64Image!,
+                                          ),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : const Center(
+                                          child: Icon(
+                                            Icons.question_mark_outlined,
+                                            size: 18,
+                                            color: ColorStyles.gray3,
+                                          ),
+                                        ),
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  notAddableItem.name,
+                                  style: const TextStyle(
+                                    color: ColorStyles.black,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        );
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(
+                        height: 16,
+                      ),
+                    ),
+                  ],
+                );
+        }
+
         final String groupTime =
             widget.doseListViewModel.getGroupTimeString(groupIndex);
 
@@ -60,9 +189,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               itemBuilder: (context, itemIndex) {
                 var oneMedicine = widget.doseListViewModel
                     .getOneMedicine(groupIndex, itemIndex);
-                var hasCode =
-                    widget.doseListViewModel.getHasCode(groupIndex, itemIndex);
-
                 return Column(
                   children: [
                     Row(
@@ -106,20 +232,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                     const SizedBox(
                       height: 8,
                     ),
-                    hasCode
-                        ? Container()
-                        : const Row(
-                            children: [
-                              Text(
-                                "※ 추가가 불가능한 약물이므로 제외됩니다.",
-                                style: TextStyle(
-                                  color: ColorStyles.red,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
                   ],
                 );
               },
@@ -222,101 +334,125 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
   void initState() {
     super.initState();
 
-    widget.doseListViewModel.getImages();
-    widget.doseListViewModel.getCode();
+    List<Future<void>> futures = [
+      widget.doseListViewModel.getImages(),
+      widget.doseListViewModel.getCode(),
+    ];
+
+    Future.wait(futures).then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return OuterFrame(
-      outOfSafeAreaColor: ColorStyles.white,
-      safeAreaColor: ColorStyles.white,
-      appBar: const CustomizedBackAppBar(
-        onPressed: null,
-        title: "약 추가하기",
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(30.0),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  Get.arguments["isOcr"]
-                      ? "AI가 분석한 정보가 올바른지\n확인해주세요."
-                      : "복약 기간과 시간을\n설정해주세요.",
-                  style: const TextStyle(
-                    color: ColorStyles.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
-                    height: 1.4,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 36,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                if (_isModificationMode)
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 10.0,
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                      foregroundColor: ColorStyles.gray4,
-                      backgroundColor: ColorStyles.gray1,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
+    return LoaderOverlay(
+      child: OuterFrame(
+        outOfSafeAreaColor: ColorStyles.white,
+        safeAreaColor: ColorStyles.white,
+        appBar: const CustomizedBackAppBar(
+          onPressed: null,
+          title: "약 추가하기",
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Column(
+            children: [
+              const Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    "복약 기간과 시간을\n설정해주세요.",
+                    style: TextStyle(
+                      color: ColorStyles.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      height: 1.4,
                     ),
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        barrierColor: const Color.fromRGBO(98, 98, 114, 0.20),
-                        builder: (context) {
-                          return Container(
-                            width: MediaQuery.of(context).size.width,
-                            padding: const EdgeInsets.all(30.0),
-                            decoration: const BoxDecoration(
-                              color: ColorStyles.white,
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(20.0),
-                                topRight: Radius.circular(20.0),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 36,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  if (_isModificationMode)
+                    TextButton(
+                      style: TextButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 8.0,
+                          horizontal: 10.0,
+                        ),
+                        splashFactory: NoSplash.splashFactory,
+                        foregroundColor: ColorStyles.gray4,
+                        backgroundColor: ColorStyles.gray1,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onPressed: () {
+                        showModalBottomSheet(
+                          context: context,
+                          barrierColor: const Color.fromRGBO(98, 98, 114, 0.20),
+                          builder: (context) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width,
+                              padding: const EdgeInsets.all(30.0),
+                              decoration: const BoxDecoration(
+                                color: ColorStyles.white,
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(20.0),
+                                  topRight: Radius.circular(20.0),
+                                ),
                               ),
-                            ),
-                            child: Column(
-                              children: [
-                                const DoseAddCalendar(),
-                                const SizedBox(
-                                  height: 24,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: BottomButton(
-                                        "완료",
-                                        onPressed: () {
-                                          Get.back();
-                                        },
-                                        backgroundColor: ColorStyles.main,
-                                        color: ColorStyles.white,
+                              child: Column(
+                                children: [
+                                  const DoseAddCalendar(),
+                                  const SizedBox(
+                                    height: 24,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                        child: BottomButton(
+                                          "완료",
+                                          onPressed: () {
+                                            Get.back();
+                                          },
+                                          backgroundColor: ColorStyles.main,
+                                          color: ColorStyles.white,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: Obx(
+                        () {
+                          var duration =
+                              widget.doseAddCalendarController.getDuration();
+                          return Text(
+                            duration == 0 ? "기간을 정해야 합니다." : "$duration일 복약",
+                            style: const TextStyle(
+                              color: ColorStyles.gray5,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                              height: 1,
                             ),
                           );
                         },
-                      );
-                    },
-                    child: Obx(
+                      ),
+                    )
+                  else
+                    Obx(
                       () {
                         var duration =
                             widget.doseAddCalendarController.getDuration();
@@ -331,112 +467,110 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         );
                       },
                     ),
-                  )
-                else
-                  Obx(
-                    () {
-                      var duration =
-                          widget.doseAddCalendarController.getDuration();
-                      return Text(
-                        duration == 0 ? "기간을 정해야 합니다." : "$duration일 복약",
-                        style: const TextStyle(
-                          color: ColorStyles.gray5,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                          height: 1,
+                  TextButton(
+                    style: TextButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8.0,
+                        horizontal: 10.0,
+                      ),
+                      splashFactory: NoSplash.splashFactory,
+                      foregroundColor: ColorStyles.sub1,
+                      backgroundColor: ColorStyles.sub3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                    onPressed: _switchMode,
+                    child: Text(
+                      _isModificationMode ? "수정 완료" : "기간/시간 수정",
+                      style: const TextStyle(
+                        color: ColorStyles.main,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Expanded(
+                child: Obx(() {
+                  return (_isModificationMode
+                      ? _getModificationView()
+                      : _getListView());
+                }),
+              ),
+              const SizedBox(
+                height: 24,
+              ),
+              Obx(
+                () {
+                  var start = widget.doseAddCalendarController.rangeStart.value;
+                  var end = widget.doseAddCalendarController.rangeEnd.value;
+
+                  var disabled =
+                      widget.doseAddCalendarController.getDuration() == 0 ||
+                          start == null ||
+                          end == null ||
+                          !widget.doseListViewModel.canSend() ||
+                          _isModificationMode;
+
+                  return Row(
+                    children: [
+                      Flexible(
+                        flex: 1,
+                        fit: FlexFit.tight,
+                        child: BottomButton(
+                          "취소",
+                          onPressed: _isLoading
+                              ? null
+                              : () {
+                                  showDialog(
+                                    context: context,
+                                    barrierDismissible: true,
+                                    barrierColor:
+                                        const Color.fromRGBO(98, 98, 114, 0.4),
+                                    builder: (BuildContext context) {
+                                      return const MedicineAddCancelDialog(
+                                        question: "약 추가를 취소하시겠습니까?",
+                                      );
+                                    },
+                                  );
+                                },
+                          backgroundColor:
+                              _isLoading ? ColorStyles.gray2 : ColorStyles.red,
+                          color: _isLoading
+                              ? ColorStyles.gray5
+                              : ColorStyles.white,
                         ),
-                      );
-                    },
-                  ),
-                TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 8.0,
-                      horizontal: 10.0,
-                    ),
-                    splashFactory: NoSplash.splashFactory,
-                    foregroundColor: ColorStyles.sub1,
-                    backgroundColor: ColorStyles.sub3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: _switchMode,
-                  child: Text(
-                    _isModificationMode ? "수정 완료" : "기간/시간 수정",
-                    style: const TextStyle(
-                      color: ColorStyles.main,
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Expanded(
-              child: Obx(() {
-                return (_isModificationMode
-                    ? _getModificationView()
-                    : _getListView());
-              }),
-            ),
-            const SizedBox(
-              height: 24,
-            ),
-            Obx(
-              () {
-                var disabled =
-                    widget.doseAddCalendarController.getDuration() == 0;
-                return Row(
-                  children: [
-                    Flexible(
-                      flex: 1,
-                      fit: FlexFit.tight,
-                      child: BottomButton(
-                        "취소",
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            barrierColor:
-                                const Color.fromRGBO(98, 98, 114, 0.4),
-                            builder: (BuildContext context) {
-                              return const MedicineAddCancelDialog(
-                                question: "약 추가를 취소하시겠습니까?",
-                              );
-                            },
-                          );
-                        },
-                        backgroundColor: ColorStyles.red,
-                        color: ColorStyles.white,
                       ),
-                    ),
-                    const SizedBox(
-                      width: 16,
-                    ),
-                    Flexible(
-                      flex: 2,
-                      fit: FlexFit.tight,
-                      child: BottomButton(
-                        "완료",
-                        onPressed: disabled
-                            ? null
-                            : () {
-                                Get.offAllNamed("/");
-                              },
-                        backgroundColor:
-                            disabled ? ColorStyles.gray2 : ColorStyles.main,
-                        color: disabled ? ColorStyles.gray5 : ColorStyles.white,
+                      const SizedBox(
+                        width: 16,
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ],
+                      Flexible(
+                        flex: 2,
+                        fit: FlexFit.tight,
+                        child: BottomButton(
+                          "완료",
+                          onPressed: disabled || _isLoading
+                              ? null
+                              : _onTapSend(start, end),
+                          backgroundColor: disabled || _isLoading
+                              ? ColorStyles.gray2
+                              : ColorStyles.main,
+                          color: disabled || _isLoading
+                              ? ColorStyles.gray5
+                              : ColorStyles.white,
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

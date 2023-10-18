@@ -1,15 +1,18 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
 import 'package:yakal/models/Medication/dose_name_code_model.dart';
 import 'package:yakal/provider/Medicine/add_modicine_provider.dart';
+import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
 class DoseListViewModel extends GetxController {
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
+  final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
 
   void setGroupList(List<Map<String, String>> doseNameCodeList) {
     var doseList = <DoseItemModel>[];
@@ -39,8 +42,29 @@ class DoseListViewModel extends GetxController {
     _groupList.refresh();
   }
 
+  void clear() {
+    _groupList.clear();
+    _notAddableList.clear();
+  }
+
   List<DoseGroupModel> getGroupList() {
     return _groupList;
+  }
+
+  DoseItemModel getNotAddableItem(int index) {
+    return _notAddableList[index];
+  }
+
+  bool canSend() {
+    for (var group in _groupList) {
+      for (var i = 0; i < 4; ++i) {
+        if (group.takingTime[i] && group.doseList.isNotEmpty) {
+          return true;
+        }
+      }
+    }
+
+    return false;
   }
 
   int getItemCountOnGroup(int index) {
@@ -53,6 +77,10 @@ class DoseListViewModel extends GetxController {
 
   int getGroupCount() {
     return _groupList.length;
+  }
+
+  int getNotAddableCount() {
+    return _notAddableList.length;
   }
 
   void toggle(
@@ -105,14 +133,13 @@ class DoseListViewModel extends GetxController {
 
     for (var groupItem in groupList) {
       for (var doseItem in groupItem.doseList) {
-        if (doseItem.kdCode != null && doseItem.atcCode != null) {
-          modificationList.add({
-            "item": doseItem,
-            "groupIndex": groupIndex,
-            "itemIndex": itemIndex,
-            "takingTime": groupItem.takingTime.toList(),
-          });
-        }
+        modificationList.add({
+          "item": doseItem,
+          "groupIndex": groupIndex,
+          "itemIndex": itemIndex,
+          "takingTime": groupItem.takingTime.toList(),
+        });
+
         ++itemIndex;
       }
       ++groupIndex;
@@ -136,6 +163,11 @@ class DoseListViewModel extends GetxController {
         groupTime = "$groupTime, ${takingTime.time}";
       }
     }
+
+    if (groupTime == "") {
+      return "복용하는 시간대가 없습니다.";
+    }
+
     groupTime = groupTime.substring(", ".length);
 
     return groupTime;
@@ -193,6 +225,57 @@ class DoseListViewModel extends GetxController {
       }
     }
 
+    _notAddableList.clear();
+
+    var newGroupList = <DoseGroupModel>[];
+    for (var group in _groupList) {
+      var newGroup = DoseGroupModel(
+        doseList: [],
+        takingTime: group.takingTime.toList(),
+      );
+
+      newGroupList.add(newGroup);
+
+      var doseList = <DoseItemModel>[];
+      for (var dose in group.doseList) {
+        if (dose.atcCode == "" || dose.kdCode == "") {
+          _notAddableList.add(dose);
+        } else {
+          doseList.add(dose);
+        }
+      }
+
+      if (doseList.isEmpty) {
+        newGroupList.remove(newGroup);
+      } else {
+        newGroup.doseList = doseList;
+      }
+    }
+
+    _groupList.clear();
+    _groupList.addAll(newGroupList);
+
     _groupList.refresh();
+    _notAddableList.refresh();
+  }
+
+  Future<EAddScheduleResult> addSchedule(DateTime start, DateTime end) async {
+    var prescriptionId = await _addMedicineProvider.getDefaultPrescriptionId();
+
+    if (kDebugMode) {
+      print("[Read Prescription Id] $prescriptionId");
+    }
+
+    if (prescriptionId == -1) {
+      return EAddScheduleResult.FAIL;
+    }
+
+    var result = _addMedicineProvider.addSchedule(_groupList, 4, start, end);
+
+    if (kDebugMode) {
+      print("[Result Of Adding Schedule] $result");
+    }
+
+    return result;
   }
 }

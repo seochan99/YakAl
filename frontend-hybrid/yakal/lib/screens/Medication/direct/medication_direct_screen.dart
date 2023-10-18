@@ -132,9 +132,6 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
     Get.toNamed(
       "/pill/add/final",
-      arguments: {
-        "isOcr": false,
-      },
       preventDuplicates: false,
     );
 
