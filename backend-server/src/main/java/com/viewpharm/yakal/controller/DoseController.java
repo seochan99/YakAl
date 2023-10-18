@@ -4,11 +4,7 @@ import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.annotation.Enum;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
-import com.viewpharm.yakal.dto.response.OneDaySummaryDto;
-import com.viewpharm.yakal.dto.response.OneDayScheduleDto;
-import com.viewpharm.yakal.dto.response.OneDayProgressDto;
-import com.viewpharm.yakal.dto.response.OneDaySummaryWithoutDateDto;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.dto.request.UpdateIsTakenDto;
 import com.viewpharm.yakal.service.DoseService;
 import com.viewpharm.yakal.type.EDosingTime;
@@ -23,14 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -87,6 +76,23 @@ public class DoseController {
     ) {
         final List<OneDaySummaryDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
         return ResponseDto.ok(oneMonthSummary);
+    }
+
+    @GetMapping("/between")
+    @Operation(summary = "날짜 사이의 복용 달성도 가져오기", description = "두개의 날짜 사이의 약 복용 달성도를 하루 단위로 가져온다.")
+    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
+            @UserId Long id,
+            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
+    ) {
+        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
+        return ResponseDto.ok(oneMonthSummary);
+    }
+
+    @GetMapping("/name")
+    @Operation(summary = "약 이름으로 kdCode와 atcCode 가져오기")
+    public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename){
+        return ResponseDto.ok(doseService.getKDCodeAndATCCode(dosename));
     }
 
     @PatchMapping("/count")

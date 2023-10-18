@@ -13,6 +13,16 @@ class LoginEntryScreen extends StatelessWidget {
 
   const LoginEntryScreen({super.key});
 
+  void _showComingSoonSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        content: Text('기능 준비중입니다.'),
+        duration: Duration(milliseconds: 3000),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return OuterFrame(
@@ -84,7 +94,7 @@ class LoginEntryScreen extends StatelessWidget {
                         backgroundColor: ColorStyles.black,
                         iconPath: "assets/icons/apple.svg",
                         onPressed: () {
-                          Get.toNamed("/login/terms");
+                          _showComingSoonSnackBar(context);
                         },
                       )
                     : SocialLoginButton(
@@ -93,7 +103,7 @@ class LoginEntryScreen extends StatelessWidget {
                         backgroundColor: ColorStyles.white,
                         iconPath: "assets/icons/google.svg",
                         onPressed: () {
-                          Get.toNamed("/login/terms");
+                          _showComingSoonSnackBar(context);
                         },
                       ),
               ],

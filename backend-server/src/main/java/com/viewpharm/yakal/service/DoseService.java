@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -190,6 +191,47 @@ public class DoseService {
         return oneMonthSummary;
     }
 
+    public List<OneDaySummaryDto> getBetweenDaySummary(final Long userId, final LocalDate startDate, final LocalDate endDate) {
+
+        final List<DoseRepository.oneDaySummary> totalAndPortionList
+                = doseRepository.countTotalAndTakenByUserIdInPeriod(userId, startDate, endDate);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId,startDate,endDate);
+
+        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
+
+        for (int i = 0; i <= ChronoUnit.DAYS.between(startDate,endDate); ++i) {
+            Long progress = 0L; // 초기값을 0으로 설정
+            LocalDate currentDate = startDate.plusDays(i); // 현재 날짜 계산
+            Boolean isOverlapped = false;
+
+            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+            for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate)){
+                        isOverlapped = true;
+                        break;
+                    }
+                }
+
+                if (summary.getDate().equals(startDate.plusDays(i))) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    progress = (total == null || total == 0) ? 0L : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
+
+            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(),progress, isOverlapped);
+            oneMonthSummary.add(oneDaySummary);
+
+        }
+
+        return oneMonthSummary;
+    }
+
     public Map<String, Boolean> updateDoseCount(final Map<Long, Double> updateDoseCountDto) {
         final Map<String, Boolean> isUpdatedMap = new HashMap<>(updateDoseCountDto.size());
 
@@ -290,6 +332,15 @@ public class DoseService {
                 .collect(Collectors.toList());
 
         return new PrescribedDto(prescribedDtoList, prescribeds.size());
+    }
+
+    public DoseCodesDto getKDCodeAndATCCode(String dosename){
+        DoseName dose = doesNameRepository.findByDoseName(dosename).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+        DoseCodesDto result = DoseCodesDto.builder()
+                .atcCode(dose.getAtcCode())
+                .kdCode(dose.getKdCode())
+                .build();
+        return result;
     }
 
     public void deleteSchedule(final List<Long> ids) {

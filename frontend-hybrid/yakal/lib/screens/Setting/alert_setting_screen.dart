@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,7 +14,7 @@ class AlertScreen extends StatefulWidget {
 
 class _AlertScreenState extends State<AlertScreen> {
   bool alertToggleValue = false;
-
+  UserViewModel userViewModel = Get.put(UserViewModel());
   @override
   void initState() {
     super.initState();
@@ -24,13 +25,8 @@ class _AlertScreenState extends State<AlertScreen> {
   Future<void> _loadAlertToggleValue() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      alertToggleValue = prefs.getBool('alertToggleValue') ?? false;
+      alertToggleValue = prefs.getBool('NOTI_IS_ALLOWED') ?? false;
     });
-  }
-
-  Future<void> _saveAlertToggleValue(bool value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('alertToggleValue', value);
   }
 
   @override
@@ -80,8 +76,7 @@ class _AlertScreenState extends State<AlertScreen> {
                     onChanged: (value) {
                       setState(() {
                         alertToggleValue = value;
-                        // Save the updated toggle value to shared preferences
-                        _saveAlertToggleValue(value);
+                        userViewModel.updateNotification(alertToggleValue);
                       });
                     },
                     inactiveTrackColor: ColorStyles.gray3,

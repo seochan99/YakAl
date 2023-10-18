@@ -20,6 +20,9 @@ public class DoseName {
     @Column(name = "id")
     private String kdCode;
 
+    @Column(name ="atc_code",nullable = false)
+    private String atcCode;
+
     @Column(name = "dose_name", nullable = false)
     private String doseName;
 }

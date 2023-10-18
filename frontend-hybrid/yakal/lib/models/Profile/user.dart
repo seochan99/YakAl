@@ -1,41 +1,120 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import '../../utilities/enum/mode.dart';
+import 'package:yakal/models/Profile/special_note_model.dart';
+import 'package:yakal/utilities/api/api.dart';
 
 class User {
   String nickName;
-  EMode mode;
+  bool mode;
+  bool? isAgreedMarketing;
+  bool notiIsAllowed;
+  String breakfastTime;
+  String lunchTime;
+  String dinnerTime;
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
 
+  // 스토리지에서 유저 정보 가져오기
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
+    mode = prefs.getBool("MODE") ?? true;
+    notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
+    breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
+    lunchTime = prefs.getString("LUNCH_TIME") ?? "";
+    dinnerTime = prefs.getString("DINNER_TIME") ?? "";
 
-    if (prefs.getInt("MODE") != null) {
-      mode = EMode.values[prefs.getInt("MODE")!];
-    } else {
-      mode = EMode.NONE;
+    if (prefs.getBool("IS_AGREED_MARKETING") != null) {
+      isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING")!;
     }
   }
 
+  // 유저 정보 초기화, 토큰은 그대로 남아있음
+  Future<void> reset() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("NICKNAME");
+    prefs.remove("MODE");
+    prefs.remove("IS_AGREED_MARKETING");
+
+    nickName = "";
+    mode = true;
+    isAgreedMarketing = null;
+  }
+
+  // 유저 이름과 모드를 서버에서 가져옴
+  Future<void> fetch(BuildContext context) async {
+    final dio = await authDio(context);
+
+    final response = await dio.get("/user");
+
+    if (response.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
+
+      nickName = response.data["data"]["nickname"];
+      prefs.setString("NICKNAME", nickName);
+
+      mode = response.data["data"]["isDetail"] as bool;
+      prefs.setBool("MODE", mode);
+    }
+  }
+
+  // 닉네임 설정
   Future<void> setNickname(String nickname) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("NICKNAME", nickname);
     nickName = nickname;
   }
 
-  Future<void> setMode(EMode mode) async {
+  // 모드 설정
+  Future<void> setMode(bool mode) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt("MODE", mode.index);
-    this.mode = mode;
+    prefs.setBool("MODE", mode);
+  }
+
+  // 알림 설정
+  Future<void> setNoti(bool mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("NOTI_IS_ALLOWED", mode);
+  }
+
+  // api통신 후 유저 정보 업데이
+  Future<void> updateFromApiResponse(Map<String, dynamic> data) async {
+    final prefs = await SharedPreferences.getInstance();
+    nickName = data['nickname'] ?? "";
+    mode = data['isDetail'] ?? true;
+    notiIsAllowed = data['notiIsAllowed'] ?? true;
+    breakfastTime = data['breakfastTime'] ?? "8:00";
+    lunchTime = data['lunchTime'] ?? "12:00";
+    dinnerTime = data['dinnerTime'] ?? "19:00";
+    prefs.setString("NICKNAME", nickName);
+    prefs.setBool("MODE", mode);
+    prefs.setBool("NOTI_IS_ALLOWED", notiIsAllowed);
+    prefs.setString("BREAKFAST_TIME", breakfastTime);
+    prefs.setString("LUNCH_TIME", lunchTime);
+    prefs.setString("DINNER_TIME", dinnerTime);
+  }
+
+  Future<void> setIsiAgreedMarketing(bool isAgreed) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_AGREED_MARKETING", isAgreed);
+    isAgreedMarketing = isAgreed;
+  }
+
+  Future<void> setIsIdentified(bool isIdentified) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_IDENTIFIED", isIdentified);
+    isIdentified = isIdentified;
   }
 
   User({
-    this.nickName = "",
-    this.mode = EMode.NONE,
+    this.nickName = "약알",
+    this.mode = true,
     this.guardian,
+    this.notiIsAllowed = true,
+    this.breakfastTime = "8:00",
+    this.lunchTime = "12:00",
+    this.dinnerTime = "19:00",
     HospitalRecordList? hospitalRecordList,
     SpecialNote? specialNote,
   }) {
@@ -49,8 +128,8 @@ class User {
           underlyingConditions: [],
           allergies: [],
           falls: [],
-          oneYearDisease: [],
-          healthMedications: [],
+          diagnosis: [],
+          healthfood: [],
         );
 
     _init();
@@ -90,22 +169,5 @@ class HospitalRecordList {
   HospitalRecordList({
     required this.admissionRecords,
     required this.emergencyRoomVisits,
-  });
-}
-
-// 특이사항
-class SpecialNote {
-  List<String> underlyingConditions;
-  List<String> allergies;
-  List<DateTime> falls;
-  List<String> oneYearDisease;
-  List<String> healthMedications;
-
-  SpecialNote({
-    required this.underlyingConditions,
-    required this.allergies,
-    required this.falls,
-    required this.oneYearDisease,
-    required this.healthMedications,
   });
 }

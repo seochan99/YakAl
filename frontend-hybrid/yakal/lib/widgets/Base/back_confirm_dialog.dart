@@ -23,12 +23,12 @@ class BackConfirmDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: SizedBox(
-        height: 176,
         width: MediaQuery.of(context).size.width - 40.0,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
             children: [
               const SizedBox(
                 height: 16,

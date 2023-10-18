@@ -24,7 +24,8 @@ class _SetModeScreenState extends State<SetModeScreen> {
     var isSuccess = response.statusCode == 200;
 
     if (isSuccess) {
-      widget.userViewModel.updateMode(EMode.values[Get.arguments]);
+      widget.userViewModel
+          .updateMode(EMode.values[Get.arguments] == EMode.LITE);
 
       Get.offNamed("/login/finish");
       return;
