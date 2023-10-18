@@ -397,6 +397,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                       onPressed: () {
                         showModalBottomSheet(
                           context: context,
+                          isScrollControlled: true,
                           barrierColor: const Color.fromRGBO(98, 98, 114, 0.20),
                           builder: (context) {
                             return Container(
@@ -410,6 +411,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                                 ),
                               ),
                               child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
                                   const DoseAddCalendar(),
                                   const SizedBox(
