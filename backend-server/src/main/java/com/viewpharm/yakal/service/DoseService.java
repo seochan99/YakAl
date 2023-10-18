@@ -201,7 +201,7 @@ public class DoseService {
         List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
 
         for (int i = 0; i <= ChronoUnit.DAYS.between(startDate,endDate); ++i) {
-            Long progressOrNull = null; // 초기값을 null로 설정
+            Long progress = 0L; // 초기값을 0으로 설정
             LocalDate currentDate = startDate.plusDays(i); // 현재 날짜 계산
             Boolean isOverlapped = false;
 
@@ -219,13 +219,12 @@ public class DoseService {
                 if (summary.getDate().equals(startDate.plusDays(i))) {
                     Long total = summary.getTotal();
                     Long portion = summary.getTake();
-                    // progressOrNull 계산 (null인 경우 예외 처리)
-                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
+                    progress = (total == null || total == 0) ? 0L : Math.round(portion / (double) total * 100.0);
                     break;
                 }
             }
 
-            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(),progressOrNull, isOverlapped);
+            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(),progress, isOverlapped);
             oneMonthSummary.add(oneDaySummary);
 
         }
