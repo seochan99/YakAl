@@ -9,6 +9,7 @@ import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
+import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
 class AddMedicineScreen extends StatefulWidget {
@@ -371,7 +372,34 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                     widget.doseAddCalendarController.getDuration() == 0;
                 return Row(
                   children: [
-                    Expanded(
+                    Flexible(
+                      flex: 1,
+                      fit: FlexFit.tight,
+                      child: BottomButton(
+                        "취소",
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            barrierDismissible: true,
+                            barrierColor:
+                                const Color.fromRGBO(98, 98, 114, 0.4),
+                            builder: (BuildContext context) {
+                              return const MedicineAddCancelDialog(
+                                question: "약 추가를 취소하시겠습니까?",
+                              );
+                            },
+                          );
+                        },
+                        backgroundColor: ColorStyles.red,
+                        color: ColorStyles.white,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 16,
+                    ),
+                    Flexible(
+                      flex: 2,
+                      fit: FlexFit.tight,
                       child: BottomButton(
                         "완료",
                         onPressed: disabled

@@ -157,7 +157,7 @@ class DoseListViewModel extends GetxController {
     List<String?> base64images = await Future.wait(futures);
 
     for (var i = 0; i < base64images.length; ++i) {
-      doseList[i].base64Image = base64images[i];
+      doseList[i].base64Image = base64images[i] == "" ? null : base64images[i];
     }
 
     _groupList.refresh();
