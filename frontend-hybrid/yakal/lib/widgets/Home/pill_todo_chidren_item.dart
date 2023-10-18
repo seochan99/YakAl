@@ -29,7 +29,10 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed('/pill/detail', arguments: widget.pillTodoChildren.kdCode);
+        Get.toNamed('/pill/detail', arguments: {
+          'name': widget.pillTodoChildren.name,
+          'kdCode': widget.pillTodoChildren.kdCode
+        });
       },
       child: Container(
         color: Colors.white,
