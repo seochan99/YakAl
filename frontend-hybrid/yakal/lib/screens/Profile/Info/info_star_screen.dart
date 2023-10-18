@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Profile/user_view_model.dart';
+import 'package:yakal/viewModels/Profile/special_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/widgets/Profile/ProfileInfo/profle_info_add_btn_widget.dart';
 
 class InfoStarScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.put(UserViewModel());
+  final SpecialListViewModel userViewModel = Get.put(SpecialListViewModel());
 
   InfoStarScreen({super.key});
 
@@ -18,6 +19,14 @@ class InfoStarScreen extends StatefulWidget {
 
 class _InfoStarScreenState extends State<InfoStarScreen> {
   final TextEditingController itemController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.userViewModel.loadSpeicalNote('diagnosis');
+    widget.userViewModel.loadSpeicalNote('healthfood');
+  }
+
   @override
   Widget build(BuildContext context) {
     // 완료버튼 누르면 작동하는 함수
@@ -40,10 +49,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
         case 'falls':
           title = '낙상 사고';
           break;
-        case 'oneYearDisease':
+        case 'diagnosis':
           title = '1년 내 질병';
           break;
-        case 'healthMedications':
+        case 'healthfood':
           title = '복약중인 건강식품';
           break;
         default:
@@ -219,11 +228,11 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           case 'falls':
             filteredRecords = specialNote.falls;
             break;
-          case 'oneYearDisease':
-            filteredRecords = specialNote.oneYearDisease;
+          case 'diagnosis':
+            filteredRecords = specialNote.diagnosis;
             break;
-          case 'healthMedications':
-            filteredRecords = specialNote.healthMedications;
+          case 'healthfood':
+            filteredRecords = specialNote.healthfood;
             break;
           default:
             filteredRecords = [];
@@ -245,7 +254,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    widget.userViewModel.removeSpecialNoteItem(title, index);
+                    if (title == 'healthfood' || title == 'diagnosis') {
+                      widget.userViewModel
+                          .removeSpecialNoteItem(title, record.id);
+                      return;
+                    } else {
+                      widget.userViewModel.removeSpecialNoteItem(title, index);
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -255,8 +270,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                 ),
                 title: Text(
                   title == 'falls'
-                      ? DateFormat('yyyy-MM-dd').format(record)
-                      : record,
+                      ? DateFormat('yyyy-MM-dd').format(record as DateTime)
+                      : title == 'healthfood' || title == 'diagnosis'
+                          ? (record as ItemWithNameAndId).name
+                          : record.toString(),
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,
@@ -385,18 +402,18 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value.specialNote !=
-                                      null &&
-                                  widget.userViewModel.user.value.specialNote!
-                                      .healthMedications.isNotEmpty
-                              ? buildInfoStarRecords(title: "healthMedications")
-                              : const SizedBox.shrink(),
+                          () {
+                            if (widget.userViewModel.user.value.specialNote ==
+                                null) {
+                              return const SizedBox.shrink();
+                            }
+                            return buildInfoStarRecords(title: "healthfood");
+                          },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "항목 추가",
-                          actionSheet: () =>
-                              {showBottomSheet("healthMedications")},
+                          actionSheet: () => {showBottomSheet("healthfood")},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 진단 병 목록 ---------------- */
@@ -407,18 +424,18 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value.specialNote !=
-                                      null &&
-                                  widget.userViewModel.user.value.specialNote!
-                                      .oneYearDisease.isNotEmpty
-                              ? buildInfoStarRecords(title: "oneYearDisease")
-                              : const SizedBox.shrink(),
+                          () {
+                            if (widget.userViewModel.user.value.specialNote ==
+                                null) {
+                              return const SizedBox.shrink();
+                            }
+                            return buildInfoStarRecords(title: "diagnosis");
+                          },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "병명 추가",
-                          actionSheet: () =>
-                              {showBottomSheet("oneYearDisease")},
+                          actionSheet: () => {showBottomSheet("diagnosis")},
                         ),
                         const SizedBox(height: 48),
                       ],
