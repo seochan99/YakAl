@@ -21,8 +21,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // MyBottomNavigationBar
-      // bottomNavigationBar: const MyBottomNavigationBar(),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,

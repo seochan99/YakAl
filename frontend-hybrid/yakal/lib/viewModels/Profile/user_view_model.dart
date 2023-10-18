@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:yakal/utilities/api/api.dart';
 
 import '../../models/Profile/user.dart';
 import '../../utilities/enum/mode.dart';
@@ -6,11 +7,24 @@ import '../../utilities/enum/mode.dart';
 class UserViewModel extends GetxController {
   var user = User().obs;
 
-  // Update nickname
-  void updateNickName(String newNickName) {
-    user.update((val) {
-      val?.setNickname(newNickName);
-    });
+  // 유저 이름 업데이트하기
+  Future<void> updateNickName(String newNickName) async {
+    try {
+      var dio = await authDioWithContext();
+      var response =
+          await dio.patch("/user/name", data: {"nickname": newNickName});
+
+      if (response.statusCode == 200) {
+        // Update local user object if server update was successful
+        user.update((val) {
+          val?.setNickname(newNickName);
+        });
+      } else {
+        print("Error updating nickname: ${response.statusMessage}");
+      }
+    } catch (e) {
+      print("Exception while updating nickname: $e");
+    }
   }
 
   // 일반 모드, 라이트 모드

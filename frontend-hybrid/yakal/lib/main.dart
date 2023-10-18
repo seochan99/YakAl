@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
-        GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
