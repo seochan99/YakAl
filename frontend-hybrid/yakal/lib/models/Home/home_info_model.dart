@@ -1,6 +1,6 @@
 class HomeInfoModel {
   final DateTime date;
-  final int totalCount;
+  int totalCount;
   int takenCount;
 
   HomeInfoModel({
@@ -10,7 +10,7 @@ class HomeInfoModel {
   });
 
   int getProgress() {
-    return (takenCount * 100 ~/ totalCount);
+    return totalCount == 0 ? 0 : (takenCount * 100 ~/ totalCount);
   }
 
   String getDate() {

@@ -25,10 +25,11 @@ class PillTodoChildren {
     required this.isTaken,
   });
 
-  factory PillTodoChildren.fromJson(Map<String, dynamic> data) {
+  factory PillTodoChildren.fromJson(
+      Map<String, dynamic> data, Map<String, String> base64ImageMap) {
     return PillTodoChildren(
       id: data['id'],
-      base64Image: data['base64Image'] ?? "",
+      base64Image: base64ImageMap[data['kdcode']] ?? "",
       name: data['dosename'],
       effect: data['effect'] ?? "",
       kdCode: data['kdcode'],
