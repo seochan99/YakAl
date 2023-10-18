@@ -1,12 +1,12 @@
 // DrugInfo
 class DrugInfo {
-  final String identaImage;
+  final String? identaImage;
   final List<Pictogram>? pictogram;
-  final String briefMonoContraIndication;
-  final String briefMonoSpecialPrecaution;
-  final String briefMono;
-  final String briefIndication;
-  final String interaction;
+  final String? briefMonoContraIndication;
+  final String? briefMonoSpecialPrecaution;
+  final String? briefMono;
+  final String? briefIndication;
+  final String? interaction;
 
   DrugInfo({
     required this.identaImage,

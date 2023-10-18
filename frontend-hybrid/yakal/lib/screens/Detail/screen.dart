@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get/get.dart';
 import 'package:yakal/models/Medication/medication_detail_model.dart';
 import 'package:yakal/screens/Detail/detail_fragment.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/medication_info_viewmodel.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
@@ -17,8 +17,9 @@ class PillDetailScreen extends StatefulWidget {
 class _PillDetailScreenState extends State<PillDetailScreen>
     with SingleTickerProviderStateMixin {
   // 약 이름
-  // String name=Get.arguments['medicin'];
-  String name = "피마펜정" ?? "";
+
+  // name이랑 code는 porps로 받아야함
+  String name = "피마펜정";
   // 약 정보 뷰모델
   final medicationInfoViewModel = MedicationInfoViewModel();
   // 약 정보
@@ -81,7 +82,7 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                                     height: 40,
                                   )
                                 : Image.memory(
-                                    base64Decode(drugInfo!.identaImage),
+                                    base64Decode(drugInfo!.identaImage!),
                                     width: 96,
                                     height: 48,
                                   ),
@@ -98,16 +99,19 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                                 name,
                                 style: const TextStyle(
                                   fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.w700,
+                                  color: ColorStyles.black,
                                 ),
                               ),
                               SizedBox.fromSize(size: const Size(8, 8)),
-                              const Text(
-                                "방광 & 전립선질환 치료제.혹시나 두줄일 경우 행간 22px",
-                                style: TextStyle(
+                              Text(
+                                drugInfo!.briefIndication!.length > 48
+                                    ? "${drugInfo!.briefIndication!.substring(0, 48)}..."
+                                    : drugInfo!.briefIndication ?? "",
+                                style: const TextStyle(
                                   fontSize: 12,
                                   height: 1.5,
-                                  color: Color(0xff8d8d8d),
+                                  color: ColorStyles.gray4,
                                 ),
                                 overflow: TextOverflow.visible,
                               ),
@@ -140,10 +144,20 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                       children: [
                         DetailFragment(
                           drugInfo: drugInfo,
+                          tabIndex: 0,
                         ),
-                        const DetailFragment(),
-                        const DetailFragment(),
-                        const DetailFragment(),
+                        DetailFragment(
+                          drugInfo: drugInfo,
+                          tabIndex: 1,
+                        ),
+                        DetailFragment(
+                          drugInfo: drugInfo,
+                          tabIndex: 2,
+                        ),
+                        DetailFragment(
+                          drugInfo: drugInfo,
+                          tabIndex: 3,
+                        ),
                       ],
                     ),
                   )
