@@ -167,11 +167,9 @@ class SpecialListViewModel extends GetxController {
                 break;
             }
           });
-        } else {
-          print("Error adding health medication: ${response.statusMessage}");
         }
       } catch (e) {
-        print("Exception while adding health medication: $e");
+        throw Exception("Exception while adding health medication: $e");
       }
       return;
     }

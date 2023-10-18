@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:yakal/models/Profile/%08special_note_model.dart';
+import 'package:yakal/models/Profile/special_note_model.dart';
 
 import '../../utilities/enum/mode.dart';
 
