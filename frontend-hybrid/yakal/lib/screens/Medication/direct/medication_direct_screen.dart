@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:rxdart/rxdart.dart';
 
 class SearchMedicineModel {
   final String name;

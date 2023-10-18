@@ -1,11 +1,16 @@
 import 'package:get/get.dart';
 import 'package:yakal/models/Calendar/calendar_model.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
+import 'package:yakal/provider/Home/pill_todo_provider.dart';
+import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../../models/Home/e_taking_time.dart';
 import '../../models/Calendar/count_model.dart';
 
 class CalendarViewModel extends GetxController {
+  final PillTodoRepository _pillTodoRepository =
+      PillTodoRepository(pillTodoProvider: PillTodoProvider());
+
   late final Rx<CalendarInfoModel> _calendarInfoModel;
   late final Rx<CountModel> _countModel;
   late final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
@@ -21,7 +26,7 @@ class CalendarViewModel extends GetxController {
     ).obs;
 
     _pillTodoParents
-        .addAll(PillTodoParent.getDummies().map((e) => e.obs).toList());
+        .addAll(_pillTodoRepository.getDummies().map((e) => e.obs).toList());
 
     _countModel = CountModel(
         // pilltodoParent의 pillCount를 다 더해야함
@@ -113,7 +118,7 @@ class CalendarViewModel extends GetxController {
 
     // _pillTodoParents all replace
     _pillTodoParents.value =
-        PillTodoParent.getDummies().map((e) => e.obs).toList();
+        _pillTodoRepository.getDummies().map((e) => e.obs).toList();
 
     // calendarModel의 totalCount, takenCount 업데이트
     _countModel.update((val) {

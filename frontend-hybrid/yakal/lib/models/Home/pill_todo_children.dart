@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 import 'atc_code.dart';
 
 class PillTodoChildren {
@@ -7,7 +9,7 @@ class PillTodoChildren {
   final String effect;
   final String kdCode;
   final AtcCode atcCode;
-  final int count;
+  final String count;
   final bool isOverLap;
   bool isTaken;
 
@@ -22,4 +24,24 @@ class PillTodoChildren {
     required this.isOverLap,
     required this.isTaken,
   });
+
+  factory PillTodoChildren.fromJson(
+      Map<String, dynamic> data, Map<String, String> base64ImageMap) {
+    return PillTodoChildren(
+      id: data['id'],
+      base64Image: base64ImageMap[data['kdcode']] ?? "",
+      name: data['dosename'],
+      effect: data['effect'] ?? "",
+      kdCode: data['kdcode'],
+      atcCode: AtcCode.fromJson(data['atccode']),
+      count: data['count'].toString(),
+      isOverLap: data['isOverlap'],
+      isTaken: data['isTaken'],
+    );
+  }
+
+  @override
+  String toString() {
+    return "id: $id, base64Image: $base64Image, name: $name, effect: $effect, kdCode: $kdCode, atcCode: $atcCode, count: $count, isOverLap: $isOverLap, isTaken: $isTaken\n";
+  }
 }

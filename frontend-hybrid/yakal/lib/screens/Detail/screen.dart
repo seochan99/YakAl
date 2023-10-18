@@ -18,13 +18,11 @@ class _PillDetailScreenState extends State<PillDetailScreen>
 
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
-
     tabController = TabController(length: 4, vsync: this);
     tabController.addListener(() {
       setState(() {});
     });
+    super.initState();
   }
 
   @override
