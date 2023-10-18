@@ -1,5 +1,5 @@
 class HomeInfoModel {
-  final DateTime date;
+  late final DateTime date;
   int totalCount;
   int takenCount;
 

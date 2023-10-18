@@ -1,22 +1,22 @@
-class CalendarInfoModel {
+class CalendarDate {
   DateTime selectedDate;
   DateTime focusedDate;
 
-  CalendarInfoModel.selectedDate({
+  CalendarDate.selectedDate({
     required this.selectedDate,
   }) : focusedDate = selectedDate;
 
-  CalendarInfoModel({
+  CalendarDate({
     required this.selectedDate,
     required this.focusedDate,
   });
 
   // copyWith 메서드 추가
-  CalendarInfoModel copyWith({
+  CalendarDate copyWith({
     DateTime? selectedDate,
     DateTime? focusedDate,
   }) {
-    return CalendarInfoModel(
+    return CalendarDate(
       selectedDate: selectedDate ?? this.selectedDate,
       focusedDate: focusedDate ?? this.focusedDate,
     );

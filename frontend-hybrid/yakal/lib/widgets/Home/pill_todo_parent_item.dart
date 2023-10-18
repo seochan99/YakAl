@@ -11,14 +11,14 @@ class PillTodoParentItem extends StatefulWidget {
   final Function(ETakingTime) onClickParentCheckBox;
   final Function(ETakingTime) onClickParentItemView;
   final Function(ETakingTime, int) onClickChildrenCheckBox;
-  final Function(ETakingTime, int) onClickChildrenItemView;
+  final Function(String, String)? onClickChildrenItemView;
 
   const PillTodoParentItem(
       {required this.pillTodoParent,
       required this.onClickParentCheckBox,
       required this.onClickParentItemView,
       required this.onClickChildrenCheckBox,
-      required this.onClickChildrenItemView,
+      this.onClickChildrenItemView,
       Key? key})
       : super(key: key);
 
@@ -193,10 +193,9 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                     widget.onClickChildrenCheckBox(
                                         eTakingTime, todoId);
                                   },
-                                  onClickChildrenItemView:
-                                      (eTakingTime, todoId) {
-                                    widget.onClickChildrenItemView(
-                                        eTakingTime, todoId);
+                                  onClickChildrenItemView: (name, kdCode) {
+                                    widget.onClickChildrenItemView
+                                        ?.call(name, kdCode);
                                   },
                                 );
                               },

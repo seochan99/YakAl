@@ -17,7 +17,6 @@ class HomeInfoLayout extends StatefulWidget {
 class _HomeInfoLayoutState extends State<HomeInfoLayout> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -45,7 +44,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                             padding: const EdgeInsetsDirectional.fromSTEB(
                                 0, 0, 0, 12),
                             child: Text(
-                              widget.viewModel.homeInfoModel.getDate(),
+                              '${widget.viewModel.todayDate.year}년 ${widget.viewModel.todayDate.month}월 ${widget.viewModel.todayDate.day}일',
                               style: const TextStyle(
                                 // 글자 간격 조절
                                 letterSpacing: 0,
@@ -69,7 +68,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                           Row(
                             children: [
                               Text(
-                                '총 ${widget.viewModel.homeInfoModel.totalCount}개',
+                                '총 ${widget.viewModel.countModel.totalCount}개',
                                 style: const TextStyle(
                                   fontSize: 20,
                                   color: ColorStyles.main,
@@ -93,11 +92,10 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                         alignment: const AlignmentDirectional(1.00, 0.00),
                         child: Padding(
                           padding: const EdgeInsetsDirectional.fromSTEB(
-                              0, 20, 30, 0),
+                              0, 20, 20, 0),
                           child: CircularPercentIndicator(
                             percent:
-                                widget.viewModel.homeInfoModel.getProgress() /
-                                    100,
+                                widget.viewModel.countModel.getProgress() / 100,
                             radius: 55,
                             lineWidth: 4,
                             animation: true,
@@ -105,22 +103,21 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                             progressColor: const Color(0xFF2666F6),
                             backgroundColor: const Color(0xFFC1D2FF),
                             center: Text(
-                              '${widget.viewModel.homeInfoModel.getProgress()}%',
-                              style: widget.viewModel.homeInfoModel
-                                          .getProgress() ==
-                                      0
-                                  ? const TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFFC1D2FF),
-                                      fontFamily:
-                                          'assets/fonts/Pretendard-Medium.otf',
-                                    )
-                                  : const TextStyle(
-                                      fontSize: 20,
-                                      color: Color(0xFF2666F6),
-                                      fontFamily:
-                                          'assets/fonts/Pretendard-Medium.otf',
-                                    ),
+                              '${widget.viewModel.countModel.getProgress()}%',
+                              style:
+                                  widget.viewModel.countModel.getProgress() == 0
+                                      ? const TextStyle(
+                                          fontSize: 20,
+                                          color: Color(0xFFC1D2FF),
+                                          fontFamily:
+                                              'assets/fonts/Pretendard-Medium.otf',
+                                        )
+                                      : const TextStyle(
+                                          fontSize: 20,
+                                          color: Color(0xFF2666F6),
+                                          fontFamily:
+                                              'assets/fonts/Pretendard-Medium.otf',
+                                        ),
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -133,7 +130,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                 SizedBox.fromSize(size: const Size(0, 10)),
                 Container(
                   height: 35,
-                  margin: const EdgeInsetsDirectional.fromSTEB(20, 26, 0, 14),
+                  margin: const EdgeInsetsDirectional.fromSTEB(20, 5, 0, 10),
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
