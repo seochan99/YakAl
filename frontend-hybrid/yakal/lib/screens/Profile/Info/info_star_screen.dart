@@ -40,10 +40,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
         case 'falls':
           title = '낙상 사고';
           break;
-        case 'oneYearDisease':
+        case 'diagnosis':
           title = '1년 내 질병';
           break;
-        case 'healthMedications':
+        case 'healthfood':
           title = '복약중인 건강식품';
           break;
         default:
@@ -219,11 +219,11 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           case 'falls':
             filteredRecords = specialNote.falls;
             break;
-          case 'oneYearDisease':
-            filteredRecords = specialNote.oneYearDisease;
+          case 'diagnosis':
+            filteredRecords = specialNote.diagnosis;
             break;
-          case 'healthMedications':
-            filteredRecords = specialNote.healthMedications;
+          case 'healthfood':
+            filteredRecords = specialNote.healthfood;
             break;
           default:
             filteredRecords = [];
@@ -388,15 +388,14 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
-                                      .healthMedications.isNotEmpty
-                              ? buildInfoStarRecords(title: "healthMedications")
+                                      .healthfood.isNotEmpty
+                              ? buildInfoStarRecords(title: "healthfood")
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "항목 추가",
-                          actionSheet: () =>
-                              {showBottomSheet("healthMedications")},
+                          actionSheet: () => {showBottomSheet("healthfood")},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 진단 병 목록 ---------------- */
@@ -410,15 +409,14 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           () => widget.userViewModel.user.value.specialNote !=
                                       null &&
                                   widget.userViewModel.user.value.specialNote!
-                                      .oneYearDisease.isNotEmpty
-                              ? buildInfoStarRecords(title: "oneYearDisease")
+                                      .diagnosis.isNotEmpty
+                              ? buildInfoStarRecords(title: "diagnosis")
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "병명 추가",
-                          actionSheet: () =>
-                              {showBottomSheet("oneYearDisease")},
+                          actionSheet: () => {showBottomSheet("diagnosis")},
                         ),
                         const SizedBox(height: 48),
                       ],

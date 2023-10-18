@@ -89,41 +89,6 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 특이사항 기저질환 삭제
-  void removeUnderlyingCondition(int index) {
-    user.update((val) {
-      val?.specialNote?.underlyingConditions.removeAt(index);
-    });
-  }
-
-  // 특이사항 알러지 삭제
-  void removeAllergy(int index) {
-    user.update((val) {
-      val?.specialNote?.allergies.removeAt(index);
-    });
-  }
-
-  // 특이사항 1년간 진단병 삭제
-  void removeOneYearDisease(int index) {
-    user.update((val) {
-      val?.specialNote?.oneYearDisease.removeAt(index);
-    });
-  }
-
-  // 특이사항 1년간 진단병 삭제
-  void removeHealthMedications(int index) {
-    user.update((val) {
-      val?.specialNote?.healthMedications.removeAt(index);
-    });
-  }
-
-  // 특이사항 낙상 삭제
-  void removeFall(int index) {
-    user.update((val) {
-      val?.specialNote?.falls.removeAt(index);
-    });
-  }
-
   void removeSpecialNoteItem(String title, int index) {
     user.update((val) {
       if (val?.specialNote != null) {
@@ -134,11 +99,11 @@ class UserViewModel extends GetxController {
           case 'allergies':
             val?.specialNote!.allergies.removeAt(index);
             break;
-          case 'oneYearDisease':
-            val?.specialNote!.oneYearDisease.removeAt(index);
+          case 'diagnosis':
+            val?.specialNote!.diagnosis.removeAt(index);
             break;
-          case 'healthMedications':
-            val?.specialNote!.healthMedications.removeAt(index);
+          case 'healthfood':
+            val?.specialNote!.healthfood.removeAt(index);
             break;
           case 'falls':
             val?.specialNote!.falls.removeAt(index);
@@ -150,30 +115,55 @@ class UserViewModel extends GetxController {
     });
   }
 
-  void addSpecialNoteItem(String title, dynamic item) {
+  Future<void> addSpecialNoteItem(String title, dynamic item) async {
+    if (title == 'healthfood' || title == 'diagnosis') {
+      // Making an HTTP POST request
+      try {
+        var dio = await authDioWithContext();
+        var response =
+            await dio.post("/$title", data: {"name": item as String});
+
+        if (response.statusCode == 200 && response.data['success']) {
+          user.update((val) {
+            switch (title) {
+              case 'healthfood':
+                val?.specialNote?.healthfood.add(item);
+                break;
+              case 'diagnosis':
+                val?.specialNote?.diagnosis.add(item);
+                break;
+              default:
+                break;
+            }
+          });
+        } else {
+          print("Error adding health medication: ${response.statusMessage}");
+        }
+      } catch (e) {
+        print("Exception while adding health medication: $e");
+      }
+      return;
+    }
+
     user.update((val) {
       // 특이사항이 없으면 생성
       val?.specialNote ??= SpecialNote(
         underlyingConditions: [],
         allergies: [],
         falls: [],
-        oneYearDisease: [],
-        healthMedications: [],
+        diagnosis: [],
+        healthfood: [],
       );
       if (val?.specialNote != null) {
         switch (title) {
           case 'underlyingConditions':
             val?.specialNote!.underlyingConditions.add(item as String);
             break;
-          // allergies
           case 'allergies':
             val?.specialNote!.allergies.add(item as String);
             break;
-          case 'oneYearDisease':
-            val?.specialNote!.oneYearDisease.add(item as String);
-            break;
-          case 'healthMedications':
-            val?.specialNote!.healthMedications.add(item as String);
+          case 'diagnosis':
+            val?.specialNote!.diagnosis.add(item as String);
             break;
           case 'falls':
             val?.specialNote!.falls.add(item as DateTime);
