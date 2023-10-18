@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
+import 'package:yakal/models/Medication/dose_name_code_model.dart';
 import 'package:yakal/provider/Medicine/add_modicine_provider.dart';
 
 class DoseListViewModel extends GetxController {
@@ -17,8 +18,7 @@ class DoseListViewModel extends GetxController {
       doseList.add(
         DoseItemModel(
           name: nameCode["name"] as String,
-          code: nameCode["code"] as String,
-          base64Image: null,
+          kimsCode: nameCode["code"] as String,
         ),
       );
     }
@@ -105,12 +105,14 @@ class DoseListViewModel extends GetxController {
 
     for (var groupItem in groupList) {
       for (var doseItem in groupItem.doseList) {
-        modificationList.add({
-          "item": doseItem,
-          "groupIndex": groupIndex,
-          "itemIndex": itemIndex,
-          "takingTime": groupItem.takingTime.toList(),
-        });
+        if (doseItem.kdCode != null && doseItem.atcCode != null) {
+          modificationList.add({
+            "item": doseItem,
+            "groupIndex": groupIndex,
+            "itemIndex": itemIndex,
+            "takingTime": groupItem.takingTime.toList(),
+          });
+        }
         ++itemIndex;
       }
       ++groupIndex;
@@ -143,6 +145,11 @@ class DoseListViewModel extends GetxController {
     return _groupList[groupIndex].doseList[itemIndex];
   }
 
+  bool getHasCode(int groupIndex, int itemIndex) {
+    var item = _groupList[groupIndex].doseList[itemIndex];
+    return item.kdCode != "" && item.atcCode != "";
+  }
+
   Future<void> getImages() async {
     List<Future<String?>> futures = [];
     List<DoseItemModel> doseList = [];
@@ -150,7 +157,7 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
-        futures.add(_addMedicineProvider.getMedicineBase64Image(dose.code));
+        futures.add(_addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
       }
     }
 
@@ -158,6 +165,32 @@ class DoseListViewModel extends GetxController {
 
     for (var i = 0; i < base64images.length; ++i) {
       doseList[i].base64Image = base64images[i] == "" ? null : base64images[i];
+    }
+
+    _groupList.refresh();
+  }
+
+  Future<void> getCode() async {
+    List<Future<DoseNameCodeModel?>> futures = [];
+    List<DoseItemModel> doseList = [];
+
+    for (var group in _groupList) {
+      for (var dose in group.doseList) {
+        doseList.add(dose);
+        futures.add(_addMedicineProvider.getKDCodeAndATCCode(dose.name));
+      }
+    }
+
+    List<DoseNameCodeModel?> codeList = await Future.wait(futures);
+
+    for (var i = 0; i < codeList.length; ++i) {
+      if (codeList[i] != null) {
+        doseList[i].atcCode = codeList[i]!.atcCode;
+        doseList[i].kdCode = codeList[i]!.kdCode;
+      } else {
+        doseList[i].atcCode = "";
+        doseList[i].kdCode = "";
+      }
     }
 
     _groupList.refresh();

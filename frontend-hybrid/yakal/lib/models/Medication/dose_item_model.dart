@@ -1,19 +1,22 @@
 class DoseItemModel {
   final String name;
-  final String code;
+  final String kimsCode;
+  late String? kdCode;
+  late String? atcCode;
   late String? base64Image;
 
   DoseItemModel({
     required this.name,
-    required this.code,
-    required this.base64Image,
+    required this.kimsCode,
+    this.kdCode,
+    this.atcCode,
+    this.base64Image,
   });
 
-  factory DoseItemModel.copyWith(DoseItemModel envelopOcrItemModel) {
+  factory DoseItemModel.copyWith(DoseItemModel doseItemModel) {
     return DoseItemModel(
-      name: envelopOcrItemModel.name,
-      code: envelopOcrItemModel.code,
-      base64Image: envelopOcrItemModel.base64Image,
+      name: doseItemModel.name,
+      kimsCode: doseItemModel.kimsCode,
     );
   }
 }

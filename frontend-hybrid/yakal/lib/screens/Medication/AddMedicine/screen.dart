@@ -60,6 +60,8 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               itemBuilder: (context, itemIndex) {
                 var oneMedicine = widget.doseListViewModel
                     .getOneMedicine(groupIndex, itemIndex);
+                var hasCode =
+                    widget.doseListViewModel.getHasCode(groupIndex, itemIndex);
 
                 return Column(
                   children: [
@@ -101,6 +103,23 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         ),
                       ],
                     ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    hasCode
+                        ? Container()
+                        : const Row(
+                            children: [
+                              Text(
+                                "※ 추가가 불가능한 약물이므로 제외됩니다.",
+                                style: TextStyle(
+                                  color: ColorStyles.red,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                   ],
                 );
               },
@@ -204,6 +223,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
     super.initState();
 
     widget.doseListViewModel.getImages();
+    widget.doseListViewModel.getCode();
   }
 
   @override
