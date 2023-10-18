@@ -3,27 +3,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:yakal/screens/Base/pill_todo_viewmodel.dart';
 import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
 import '../../viewModels/Home/home_view_model.dart';
 
 class PillTodoLayout extends StatefulWidget {
-  final HomeViewModel viewModel;
+  final PillTodoViewModel viewModel;
 
-  const PillTodoLayout(this.viewModel, {Key? key}) : super(key: key);
+  const PillTodoLayout({Key? key, required this.viewModel}) : super(key: key);
 
   @override
   State<PillTodoLayout> createState() => _PillTodoLayoutState(viewModel);
 }
 
 class _PillTodoLayoutState extends State<PillTodoLayout> {
-  final HomeViewModel viewModel;
+  final PillTodoViewModel viewModel;
 
   _PillTodoLayoutState(this.viewModel);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => viewModel.isLoaded == true
+    return Obx(() => viewModel.isLoaded
         ? const Center(
             child: CircularProgressIndicator(
               color: Color(0xFF2666F6),

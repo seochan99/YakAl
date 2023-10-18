@@ -1,24 +1,29 @@
 import 'package:get/get.dart';
+import 'package:yakal/models/Calendar/count_model.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
-import '../../models/Home/home_info_model.dart';
 import '../../provider/Home/pill_todo_provider.dart';
+import '../../screens/Base/pill_todo_viewmodel.dart';
 
-class HomeViewModel extends GetxController {
+class HomeViewModel extends GetxController implements PillTodoViewModel {
   final PillTodoRepository _pillTodoRepository =
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
   final RxBool _isExpanded = false.obs;
+  final Rx<DateTime> _todayDate = DateTime.now().obs;
+  final Rx<CountModel> _countModel =
+      CountModel(totalCount: 0, takenCount: 0).obs;
   final RxBool _isLoaded = false.obs;
-  final Rx<HomeInfoModel> _homeInfoModel =
-      HomeInfoModel(date: DateTime.now(), totalCount: 0, takenCount: 0).obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   bool get isExpanded => _isExpanded.value;
+  DateTime get todayDate => _todayDate.value;
+  CountModel get countModel => _countModel.value;
+  @override
   bool get isLoaded => _isLoaded.value;
-  HomeInfoModel get homeInfoModel => _homeInfoModel.value;
+  @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
@@ -27,6 +32,7 @@ class HomeViewModel extends GetxController {
     updatePillTodoAndDate();
   }
 
+  @override
   void updatePillTodoAndDate() {
     // Start Data Loading
     _isLoaded.value = true;
@@ -45,8 +51,7 @@ class HomeViewModel extends GetxController {
         .then((value) => {
               if (_pillTodoParents.isNotEmpty)
                 {
-                  _homeInfoModel.value = HomeInfoModel(
-                      date: date,
+                  _countModel.value = CountModel(
                       // pilltodoParent의 pillCount를 다 더해야함
                       totalCount: _pillTodoParents
                           .map((e) => e.value.todos.length)
@@ -58,11 +63,14 @@ class HomeViewModel extends GetxController {
                               .length)
                           .reduce((value, element) => value + element))
                 }
+              else
+                {_countModel.value = CountModel(totalCount: 0, takenCount: 0)}
             })
         // Finish Data Loading
         .then((value) => _isLoaded.value = false);
   }
 
+  @override
   void onClickParentCheckBox(ETakingTime eTakingTime) {
     bool isCompleted = _pillTodoParents
         .firstWhere((element) => element.value.eTakingTime == eTakingTime)
@@ -70,8 +78,7 @@ class HomeViewModel extends GetxController {
         .isCompleted;
 
     _pillTodoRepository
-        .updatePillTodoParent(
-            _homeInfoModel.value.date, eTakingTime, !isCompleted)
+        .updatePillTodoParent(_todayDate.value, eTakingTime, !isCompleted)
         .then((value) => {
               if (value)
                 _pillTodoParents.value = _pillTodoParents.map((parent) {
@@ -88,7 +95,7 @@ class HomeViewModel extends GetxController {
             })
         .then((value) => {
               // homeTopModel의 takenCount를 업데이트
-              _homeInfoModel.update((val) {
+              _countModel.update((val) {
                 val!.takenCount = _pillTodoParents
                     .map((e) => e.value.todos
                         .where((element) => element.isTaken == true)
@@ -99,6 +106,7 @@ class HomeViewModel extends GetxController {
   }
 
   // 상태 변화
+  @override
   void onClickParentItemView(ETakingTime eTakingTime) {
     // _pillTodoParents에서 eTakingTime에 해당하는 PillTodoParent를 찾고
     // 그 안의 isExpanded를 변경
@@ -110,6 +118,7 @@ class HomeViewModel extends GetxController {
     }).toList();
   }
 
+  @override
   void onClickChildrenCheckBox(ETakingTime eTakingTime, int todoId) {
     // _pillTodoParents에서 eTakingTime에 해당하는 PillTodoParent를 찾고
     // 그 안의 todos에서 todoId에 해당하는 PillTodo를 찾고
@@ -151,7 +160,7 @@ class HomeViewModel extends GetxController {
             })
         .then((value) =>
             // homeTopModel의 takenCount를 업데이트
-            _homeInfoModel.update((val) {
+            _countModel.update((val) {
               val!.takenCount = _pillTodoParents
                   .map((e) => e.value.todos
                       .where((element) => element.isTaken == true)

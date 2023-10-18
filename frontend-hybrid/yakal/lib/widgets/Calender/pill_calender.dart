@@ -47,7 +47,7 @@ class _PillCalenderState extends State<PillCalender> {
             ),
             daysOfWeekHeight: 30,
             rowHeight: 75,
-            focusedDay: widget.viewModel.calendarInfoModel.focusedDate,
+            focusedDay: widget.viewModel.calendarDate.focusedDate,
             pageAnimationCurve: Curves.easeInOut,
             calendarFormat: _calendarFormat,
             availableCalendarFormats: const {
@@ -59,12 +59,11 @@ class _PillCalenderState extends State<PillCalender> {
               outsideDaysVisible: false,
             ),
             selectedDayPredicate: (day) {
-              return isSameDay(
-                  widget.viewModel.calendarInfoModel.selectedDate, day);
+              return isSameDay(widget.viewModel.calendarDate.selectedDate, day);
             },
             onDaySelected: (selectedDay, focusedDay) {
-              if (!isSameDay(widget.viewModel.calendarInfoModel.selectedDate,
-                  selectedDay)) {
+              if (!isSameDay(
+                  widget.viewModel.calendarDate.selectedDate, selectedDay)) {
                 // Call `setState()` when updating the selected day
                 setState(() {
                   widget.viewModel.onClickCalendarItem(selectedDay);

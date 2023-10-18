@@ -8,6 +8,6 @@ class CountModel {
   });
 
   int getProgress() {
-    return (takenCount * 100 ~/ totalCount);
+    return totalCount == 0 ? 0 : (takenCount * 100 ~/ totalCount);
   }
 }
