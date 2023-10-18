@@ -167,6 +167,9 @@ public class User {
         this.notiIsAllowed = true;
         this.image = image;
         this.isIdentified = false;
+        this.breakfastTime = LocalTime.of(9,0,0);
+        this.lunchTime = LocalTime.of(13,0,0);
+        this.dinnerTime = LocalTime.of(18,0,0);
     }
 
     public void logout() {

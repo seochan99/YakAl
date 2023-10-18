@@ -90,10 +90,19 @@ class UserViewModel extends GetxController {
 
   void addSpecialNoteItem(String title, dynamic item) {
     user.update((val) {
+      // 특이사항이 없으면 생성
+      val?.specialNote ??= SpecialNote(
+        underlyingConditions: [],
+        allergies: [],
+        falls: [],
+        oneYearDisease: [],
+        healthMedications: [],
+      );
       if (val?.specialNote != null) {
         switch (title) {
           case 'underlyingConditions':
             val?.specialNote!.underlyingConditions.add(item as String);
+            print(val?.specialNote!.underlyingConditions);
             break;
           // allergies
           case 'allergies':

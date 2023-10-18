@@ -28,10 +28,12 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
     final DateTime? guardianBirthDate = _selectedBirthDate;
 
     widget.userViewModel.addOrUpdateGuardian(guardianName, guardianBirthDate);
+
     _bohoNameController.clear();
     setState(() {
       _selectedBirthDate = null;
     });
+
     Navigator.pop(context);
   }
 

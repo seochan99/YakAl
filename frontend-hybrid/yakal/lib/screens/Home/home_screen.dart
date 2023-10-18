@@ -4,11 +4,18 @@ import 'package:get/get.dart';
 import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
-import 'package:yakal/widgets/Home/pill_todo_parent_item.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../../widgets/Home/pill_todo_layout.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final HomeViewModel viewModel = Get.put(HomeViewModel());
-  HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,27 +53,7 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 2,
                     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-                Expanded(
-                    child: Obx(() => ListView.builder(
-                        itemCount: viewModel.pillTodoParents.length,
-                        itemBuilder: (context, index) {
-                          return PillTodoParentItem(
-                            pillTodoParent: viewModel.pillTodoParents[index],
-                            onClickParentCheckBox: (eTakingTime) {
-                              viewModel.onClickParentCheckBox(eTakingTime);
-                            },
-                            onClickParentItemView: (eTakingTime) {
-                              viewModel.onClickParentItemView(eTakingTime);
-                            },
-                            onClickChildrenCheckBox: (eTakingTime, todoId) {
-                              viewModel.onClickChildrenCheckBox(
-                                  eTakingTime, todoId);
-                            },
-                            onClickChildrenItemView: (eTakingTime, todoId) {
-                              print("페이지 이동");
-                            },
-                          );
-                        }))),
+                Expanded(child: PillTodoLayout(viewModel)),
               ],
             ),
           ),

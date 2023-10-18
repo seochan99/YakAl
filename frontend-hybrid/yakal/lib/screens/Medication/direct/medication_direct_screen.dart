@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:rxdart/rxdart.dart';
 
 class SearchMedicineModel {
   final String name;
@@ -99,7 +99,6 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
         isLoading = false;
       });
     } catch (e) {
-      print(e.toString());
       setState(() {
         isLoading = false;
       });
@@ -121,11 +120,13 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   }
 
   void _handleButtonPress() {
-    medicinController.clear();
     Get.toNamed("/pill/add/direct/result", arguments: {
-      "medicin": selectedMedicineName,
+      "medicin": medicinController.text,
       "code": selectedMedicineCode
     });
+    // 약 추가 후 초기화
+    medicinController.clear();
+    selectedMedicineCode = "";
   }
 
   @override
