@@ -63,7 +63,7 @@ void main() async {
 
   // locator init
   initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
+      runApp(MyApp(initialRoute: accessToken != null ? '/login' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
       // 라우팅 설정
       getPages: [
         GetPage(name: '/', page: () => const MyBottomNavigationBar()),
-        GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
         GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
           ],
         ),
         GetPage(name: '/setting/app', page: () => const SettingScreen()),
-        GetPage(name: '/setting/alert', page: () => const AlertScreen()),
+        GetPage(name: '/setting/alert', page: () => AlertScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),

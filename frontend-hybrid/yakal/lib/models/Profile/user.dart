@@ -1,10 +1,15 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yakal/models/Profile/special_note_model.dart';
 
 import '../../utilities/enum/mode.dart';
 
 class User {
   String nickName;
-  EMode mode;
+  bool mode;
+  bool notiIsAllowed;
+  String breakfastTime;
+  String lunchTime;
+  String dinnerTime;
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
@@ -12,30 +17,57 @@ class User {
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
-
-    if (prefs.getInt("MODE") != null) {
-      mode = EMode.values[prefs.getInt("MODE")!];
-    } else {
-      mode = EMode.NONE;
-    }
+    mode = true;
+    notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
+    breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
+    lunchTime = prefs.getString("LUNCH_TIME") ?? "";
+    dinnerTime = prefs.getString("DINNER_TIME") ?? "";
   }
 
+  // 닉네임 설정
   Future<void> setNickname(String nickname) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("NICKNAME", nickname);
     nickName = nickname;
   }
 
-  Future<void> setMode(EMode mode) async {
+  // 모드 설정
+  Future<void> setMode(bool mode) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt("MODE", mode.index);
-    this.mode = mode;
+    prefs.setBool("MODE", mode);
+  }
+
+  // 알림 설정
+  Future<void> setNoti(bool mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("NOTI_IS_ALLOWED", mode);
+  }
+
+  // api통신 후 유저 정보 업데이
+  Future<void> updateFromApiResponse(Map<String, dynamic> data) async {
+    final prefs = await SharedPreferences.getInstance();
+    nickName = data['nickname'] ?? "";
+    mode = data['isDetail'] ?? true;
+    notiIsAllowed = data['notiIsAllowed'] ?? true;
+    breakfastTime = data['breakfastTime'] ?? "8:00";
+    lunchTime = data['lunchTime'] ?? "12:00";
+    dinnerTime = data['dinnerTime'] ?? "19:00";
+    prefs.setString("NICKNAME", nickName);
+    prefs.setBool("MODE", mode);
+    prefs.setBool("NOTI_IS_ALLOWED", notiIsAllowed);
+    prefs.setString("BREAKFAST_TIME", breakfastTime);
+    prefs.setString("LUNCH_TIME", lunchTime);
+    prefs.setString("DINNER_TIME", dinnerTime);
   }
 
   User({
-    this.nickName = "",
-    this.mode = EMode.NONE,
+    this.nickName = "약알",
+    this.mode = true,
     this.guardian,
+    this.notiIsAllowed = true,
+    this.breakfastTime = "8:00",
+    this.lunchTime = "12:00",
+    this.dinnerTime = "19:00",
     HospitalRecordList? hospitalRecordList,
     SpecialNote? specialNote,
   }) {
@@ -49,8 +81,8 @@ class User {
           underlyingConditions: [],
           allergies: [],
           falls: [],
-          oneYearDisease: [],
-          healthMedications: [],
+          diagnosis: [],
+          healthfood: [],
         );
 
     _init();
@@ -90,22 +122,5 @@ class HospitalRecordList {
   HospitalRecordList({
     required this.admissionRecords,
     required this.emergencyRoomVisits,
-  });
-}
-
-// 특이사항
-class SpecialNote {
-  List<String> underlyingConditions;
-  List<String> allergies;
-  List<DateTime> falls;
-  List<String> oneYearDisease;
-  List<String> healthMedications;
-
-  SpecialNote({
-    required this.underlyingConditions,
-    required this.allergies,
-    required this.falls,
-    required this.oneYearDisease,
-    required this.healthMedications,
   });
 }

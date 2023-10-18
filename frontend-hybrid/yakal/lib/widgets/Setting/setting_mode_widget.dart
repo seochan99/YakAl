@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 class SettingModeWidget extends StatefulWidget {
   const SettingModeWidget({super.key});
@@ -9,17 +10,19 @@ class SettingModeWidget extends StatefulWidget {
 }
 
 class _SettingModeWidgetState extends State<SettingModeWidget> {
-  String selectedMode = 'normal';
-
-  Future<void> _saveSelectedMode(String mode) async {
+  bool isLightMode = false;
+  UserViewModel userViewModel = UserViewModel();
+// 저장된 모드 저장하기
+  Future<void> _saveSelectedMode(bool mode) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString('selected_mode', mode);
+    await prefs.setBool('MODE', mode);
   }
 
+  // 저장된 모드 불러오기
   Future<void> _loadSelectedMode() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      selectedMode = prefs.getString('selected_mode') ?? 'normal';
+      isLightMode = prefs.getBool('MODE') ?? false;
     });
   }
 
@@ -29,16 +32,18 @@ class _SettingModeWidgetState extends State<SettingModeWidget> {
     _loadSelectedMode();
   }
 
-  void _handleModeTap(String mode) {
+// 모드 탭
+  void _handleModeTap(bool mode) {
+    userViewModel.updateMode(mode);
     setState(() {
-      selectedMode = mode;
+      isLightMode = mode;
       _saveSelectedMode(mode);
     });
   }
 
   // 일반 모드, 라이트 모드 타일
-  Widget buildModeTile(String mode, String title, String subtitle) {
-    final isSelected = mode == selectedMode;
+  Widget buildModeTile(bool mode, String title, String subtitle) {
+    final isSelected = mode == isLightMode;
     final tileColor =
         isSelected ? const Color(0xFFF1F5FE) : const Color(0xFFFFFFFF);
     final borderColor =
@@ -76,10 +81,9 @@ class _SettingModeWidgetState extends State<SettingModeWidget> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        buildModeTile('normal', '일반 모드', '약알의 일반적인 모드입니다.'),
+        buildModeTile(false, '일반 모드', '약알의 일반적인 모드입니다.'),
         const SizedBox(height: 16),
-        buildModeTile(
-            'light', '라이트 모드', '시니어를 위한 쉬운 모드입니다.\n다제약물 정보가 포함되어 있습니다.'),
+        buildModeTile(true, '라이트 모드', '시니어를 위한 쉬운 모드입니다.\n다제약물 정보가 포함되어 있습니다.'),
       ],
     );
   }
