@@ -78,6 +78,17 @@ public class DoseController {
         return ResponseDto.ok(oneMonthSummary);
     }
 
+    @GetMapping("/between")
+    @Operation(summary = "날짜 사이의 복용 달성도 가져오기", description = "두개의 날짜 사이의 약 복용 달성도를 하루 단위로 가져온다.")
+    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
+            @UserId Long id,
+            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
+    ) {
+        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
+        return ResponseDto.ok(oneMonthSummary);
+    }
+
     @GetMapping("/name")
     @Operation(summary = "약 이름으로 kdCode와 atcCode 가져오기")
     public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename){
