@@ -4,7 +4,11 @@ import '../../utilities/enum/mode.dart';
 
 class User {
   String nickName;
-  EMode mode;
+  bool mode;
+  bool notiIsAllowed;
+  String breakfastTime;
+  String lunchTime;
+  String dinnerTime;
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
@@ -12,12 +16,11 @@ class User {
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
-
-    if (prefs.getInt("MODE") != null) {
-      mode = EMode.values[prefs.getInt("MODE")!];
-    } else {
-      mode = EMode.NONE;
-    }
+    mode = true;
+    notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
+    breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
+    lunchTime = prefs.getString("LUNCH_TIME") ?? "";
+    dinnerTime = prefs.getString("DINNER_TIME") ?? "";
   }
 
   Future<void> setNickname(String nickname) async {
@@ -26,16 +29,36 @@ class User {
     nickName = nickname;
   }
 
-  Future<void> setMode(EMode mode) async {
+  Future<void> setMode(bool mode) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt("MODE", mode.index);
-    this.mode = mode;
+    prefs.setBool("MODE", mode);
+  }
+
+  // api통신 후 유저 정보 업데이
+  Future<void> updateFromApiResponse(Map<String, dynamic> data) async {
+    final prefs = await SharedPreferences.getInstance();
+    nickName = data['nickname'] ?? "";
+    mode = data['isDetail'] ?? true;
+    notiIsAllowed = data['notiIsAllowed'] ?? true;
+    breakfastTime = data['breakfastTime'] ?? "8:00";
+    lunchTime = data['lunchTime'] ?? "12:00";
+    dinnerTime = data['dinnerTime'] ?? "19:00";
+    prefs.setString("NICKNAME", nickName);
+    prefs.setBool("MODE", mode);
+    prefs.setBool("NOTI_IS_ALLOWED", notiIsAllowed);
+    prefs.setString("BREAKFAST_TIME", breakfastTime);
+    prefs.setString("LUNCH_TIME", lunchTime);
+    prefs.setString("DINNER_TIME", dinnerTime);
   }
 
   User({
-    this.nickName = "",
-    this.mode = EMode.NONE,
+    this.nickName = "약알",
+    this.mode = true,
     this.guardian,
+    this.notiIsAllowed = true,
+    this.breakfastTime = "8:00",
+    this.lunchTime = "12:00",
+    this.dinnerTime = "19:00",
     HospitalRecordList? hospitalRecordList,
     SpecialNote? specialNote,
   }) {

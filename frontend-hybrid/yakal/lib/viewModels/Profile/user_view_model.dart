@@ -27,11 +27,40 @@ class UserViewModel extends GetxController {
     }
   }
 
+  // 유저 정보 가져오기
+  Future<void> fetchUserData() async {
+    try {
+      var dio = await authDioWithContext();
+
+      var response = await dio.get("/user");
+      if (response.statusCode == 200 && response.data['success']) {
+        user.update((val) {
+          val?.updateFromApiResponse(response.data['data']);
+        });
+      } else {
+        print("Error fetching user data: ${response.statusMessage}");
+      }
+    } catch (e) {
+      print("Exception while fetching user data: $e");
+    }
+  }
+
   // 일반 모드, 라이트 모드
-  void updateMode(EMode newMode) {
-    user.update((val) {
-      val?.setMode(newMode);
-    });
+  Future<void> updateMode(bool newMode) async {
+    try {
+      var dio = await authDioWithContext();
+
+      var response =
+          await dio.patch("/user/detail", data: {"isDetail": newMode});
+
+      if (response.statusCode == 200 && response.data['success']) {
+        user.update((val) {
+          val?.setMode(response.data['data']['isDetail']);
+        });
+      } else {}
+    } catch (e) {
+      // print("Exception while updating mode: $e");
+    }
   }
 
   // 보호자 정보 추가
@@ -116,7 +145,6 @@ class UserViewModel extends GetxController {
         switch (title) {
           case 'underlyingConditions':
             val?.specialNote!.underlyingConditions.add(item as String);
-            print(val?.specialNote!.underlyingConditions);
             break;
           // allergies
           case 'allergies':
