@@ -292,6 +292,15 @@ public class DoseService {
         return new PrescribedDto(prescribedDtoList, prescribeds.size());
     }
 
+    public DoseCodesDto getKDCodeAndATCCode(String dosename){
+        DoseName dose = doesNameRepository.findByDoseName(dosename).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+        DoseCodesDto result = DoseCodesDto.builder()
+                .atcCode(dose.getAtcCode())
+                .kdCode(dose.getKdCode())
+                .build();
+        return result;
+    }
+
     public void deleteSchedule(final List<Long> ids) {
         doseRepository.deleteAllByIdInBatch(ids);
     }
