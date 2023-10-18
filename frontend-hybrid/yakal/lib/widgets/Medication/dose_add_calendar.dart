@@ -73,19 +73,13 @@ class _DoseAddCalendarState extends State<DoseAddCalendar> {
             width: 24.0,
             height: 24.0,
           ),
-          leftChevronPadding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width / 6,
-          ),
-          rightChevronPadding: EdgeInsets.only(
-            right: MediaQuery.of(context).size.width / 6,
-          ),
         ),
         calendarStyle: CalendarStyle(
           cellPadding: const EdgeInsets.all(8.0),
           cellAlignment: Alignment.center,
           todayTextStyle: const TextStyle(
             color: ColorStyles.main,
-            fontSize: 16.0,
+            fontSize: 14.0,
             fontWeight: FontWeight.w600,
           ),
           todayDecoration: BoxDecoration(
@@ -99,12 +93,12 @@ class _DoseAddCalendarState extends State<DoseAddCalendar> {
           rangeHighlightColor: ColorStyles.sub2,
           rangeStartTextStyle: const TextStyle(
             color: ColorStyles.white,
-            fontSize: 16.0,
+            fontSize: 14.0,
             fontWeight: FontWeight.w600,
           ),
           rangeEndTextStyle: const TextStyle(
             color: ColorStyles.white,
-            fontSize: 16.0,
+            fontSize: 14.0,
             fontWeight: FontWeight.w600,
           ),
           rangeStartDecoration: const BoxDecoration(

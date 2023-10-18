@@ -402,7 +402,10 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                           builder: (context) {
                             return Container(
                               width: MediaQuery.of(context).size.width,
-                              padding: const EdgeInsets.all(30.0),
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 30.0,
+                                horizontal: 20.0,
+                              ),
                               decoration: const BoxDecoration(
                                 color: ColorStyles.white,
                                 borderRadius: BorderRadius.only(
