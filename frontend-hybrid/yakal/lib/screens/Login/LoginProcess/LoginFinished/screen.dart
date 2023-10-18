@@ -7,12 +7,12 @@ import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'style.dart';
 
 class LoginFinishedScreen extends StatelessWidget {
-  const LoginFinishedScreen({super.key});
+  final UserViewModel userViewModel = Get.find<UserViewModel>();
+
+  LoginFinishedScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
-
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Column(
@@ -27,7 +27,7 @@ class LoginFinishedScreen extends StatelessWidget {
                     Row(
                       children: [
                         Obx(
-                          () {
+                              () {
                             return Text(
                               userViewModel.user.value.nickName,
                               style: LoginFinishedStyle.name,
@@ -54,7 +54,10 @@ class LoginFinishedScreen extends StatelessWidget {
             children: [
               Image.asset(
                 "assets/icons/logo.png",
-                width: MediaQuery.of(context).size.width * 0.55,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width * 0.55,
               ),
             ],
           ),

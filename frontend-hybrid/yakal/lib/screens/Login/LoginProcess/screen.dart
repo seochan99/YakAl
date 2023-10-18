@@ -17,7 +17,7 @@ class LoginProcess extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () {
+      () {
         var routeIndex = routeController.routeIndex.value;
         var nicknameIsLoading = nicknameLoadingController.isLoading.value;
         var modeIsLoading = modeLoadingController.isLoading.value;
@@ -32,16 +32,16 @@ class LoginProcess extends StatelessWidget {
                 onPressed: nicknameIsLoading || modeIsLoading
                     ? () {}
                     : LoginRoute.back(
-                  routeIndex,
-                  context,
-                ),
+                        routeIndex,
+                        context,
+                      ),
                 progress: LoginRoute.values[routeIndex].loginProcess,
               ),
               body: AnimatedIndexedStack(
                 index: routeIndex,
                 children: List.generate(
                   LoginRoute.values.length,
-                      (index) {
+                  (index) {
                     return routeIndex == index
                         ? LoginRoute.values[index].screen
                         : Container();

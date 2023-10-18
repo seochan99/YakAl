@@ -13,10 +13,10 @@ import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
-import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrEntry/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotReview/screen.dart';
@@ -76,15 +76,15 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: initialRoute,
-
+      //initialRoute: initialRoute,
+      initialRoute: "/",
       // 라우팅 설정
       getPages: [
         GetPage(
           name: '/',
           page: () => const MyBottomNavigationBar(),
         ),
-        GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",
@@ -179,11 +179,11 @@ class MyApp extends StatelessWidget {
               name: "/process",
               page: () => const EnvelopAnalysisScreen(),
             ),
-            GetPage(
-              name: "/result",
-              page: () => const EnvelopOcrAnalysisResult(),
-            ),
           ],
+        ),
+        GetPage(
+          name: "/pill/add/final",
+          page: () => AddMedicineScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],

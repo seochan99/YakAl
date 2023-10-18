@@ -10,7 +10,9 @@ import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 
 class LoginTermsScreen extends StatelessWidget {
-  static const routeName = "/terms";
+  final userViewModel = Get.find<UserViewModel>();
+  final routeController = Get.find<LoginRouteController>();
+  final termsCheckedController = Get.put(_TermsCheckedController());
 
   static const List<Map<String, Object>> terms = [
     {
@@ -87,15 +89,10 @@ class LoginTermsScreen extends StatelessWidget {
     },
   ];
 
-  const LoginTermsScreen({super.key});
+  LoginTermsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(_TermsCheckedController());
-    final UserViewModel userViewModel =
-        Get.put(UserViewModel(), permanent: true);
-    final routeController = Get.put(LoginRouteController());
-
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: Column(
@@ -124,8 +121,8 @@ class LoginTermsScreen extends StatelessWidget {
                   Obx(
                     () {
                       return AuthCheckButton(
-                        isChecked: controller.isCheckedAll(),
-                        onPressed: controller.toggleAll,
+                        isChecked: termsCheckedController.isCheckedAll(),
+                        onPressed: termsCheckedController.toggleAll,
                       );
                     },
                   ),
@@ -153,8 +150,10 @@ class LoginTermsScreen extends StatelessWidget {
                             Obx(
                               () {
                                 return AuthCheckButton(
-                                  isChecked: controller.isChecked[index],
-                                  onPressed: controller.toggle(index),
+                                  isChecked:
+                                      termsCheckedController.isChecked[index],
+                                  onPressed:
+                                      termsCheckedController.toggle(index),
                                 );
                               },
                             ),
@@ -226,12 +225,14 @@ class LoginTermsScreen extends StatelessWidget {
               Expanded(
                 child: Obx(
                   () {
-                    final canMoveNext = controller.isCheckedRequiredAll();
+                    final canMoveNext =
+                        termsCheckedController.isCheckedRequiredAll();
 
                     return TextButton(
                       onPressed: canMoveNext
                           ? () {
-                              var isAgreedMarketing = controller.isChecked[3];
+                              var isAgreedMarketing =
+                                  termsCheckedController.isChecked[3];
                               userViewModel
                                   .updateMarketingAgreement(isAgreedMarketing);
                               routeController.goto(LoginRoute.identifyEntry);

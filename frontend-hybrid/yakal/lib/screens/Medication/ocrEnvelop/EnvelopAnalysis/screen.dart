@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 
 class EnvelopAnalysisScreen extends StatefulWidget {
   const EnvelopAnalysisScreen({super.key});
@@ -12,13 +13,48 @@ class EnvelopAnalysisScreen extends StatefulWidget {
 }
 
 class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
+  final doseListViewModel = Get.put(DoseListViewModel());
+
   @override
   void initState() {
     super.initState();
 
     // 임시!!!!!!!!!
     Timer(const Duration(seconds: 3), () {
-      Get.offNamed("/pill/add/ocrEnvelop/result");
+      doseListViewModel.setGroupList([
+        {
+          "name": "올메텍플러스정20/12.5mg",
+          "code": "ESNKSTB0KA1",
+        },
+        {
+          "name": "바난정",
+          "code": "ECJDSTB01V4",
+        },
+        {
+          "name": "레보프라이드",
+          "code": "ESKPSTB003H",
+        },
+        {
+          "name": "싸이메트정",
+          "code": "EBKWSTB001O",
+        },
+        {
+          "name": "비졸본정",
+          "code": "OSAKSTBCJRI",
+        },
+        {
+          "name": "한미아스피린장용정100mg",
+          "code": "OHMISTE0AA9",
+        },
+      ]);
+
+      Get.offNamed(
+        "/pill/add/final",
+        arguments: {
+          "isOcr": true,
+        },
+        preventDuplicates: false,
+      );
     });
   }
 

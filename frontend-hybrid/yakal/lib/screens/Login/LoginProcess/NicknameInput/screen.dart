@@ -11,10 +11,10 @@ import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'style.dart';
 
 class NicknameInputScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+  final UserViewModel userViewModel = Get.find<UserViewModel>();
   final LoginRouteController routeController = Get.put(LoginRouteController());
   final NicknameInputLoadingController loadingController =
-      Get.put(NicknameInputLoadingController());
+      Get.find<NicknameInputLoadingController>();
 
   static const int _usernameLimits = 5;
 

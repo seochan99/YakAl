@@ -7,7 +7,7 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 
 class IdentificationEntryScreen extends StatelessWidget {
-  final routeController = Get.put(LoginRouteController());
+  final routeController = Get.find<LoginRouteController>();
 
   IdentificationEntryScreen({super.key});
 

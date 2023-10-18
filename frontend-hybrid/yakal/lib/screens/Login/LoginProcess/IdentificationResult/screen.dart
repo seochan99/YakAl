@@ -1,33 +1,21 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/provider/Login/identification_result_provider.dart';
 import 'package:yakal/screens/Login/LoginProcess/IdentificationResult/style.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
-import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 
 class IdentificationResultScreen extends StatelessWidget {
-  const IdentificationResultScreen({super.key});
+  final identificationResultProvider = IdentificationResultProvider();
 
-  Future<bool> _identify(BuildContext context, String impUid) async {
-    var dio = await authDio(context);
-
-    try {
-      var response =
-          await dio.patch("/user/identify", data: {"impUid": impUid});
-      return response.statusCode == 200;
-    } on DioException catch (error) {
-      return false;
-    }
-  }
+  IdentificationResultScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
-      future: _identify(
-        context,
+      future: identificationResultProvider.identify(
         Get.arguments["imp_uid"],
       ),
       builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {

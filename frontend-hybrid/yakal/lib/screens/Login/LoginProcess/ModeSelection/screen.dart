@@ -15,10 +15,10 @@ import 'package:yakal/widgets/Login/mode_selection_box.dart';
 import 'style.dart';
 
 class ModeSelectionScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
-  final LoginRouteController routeController = Get.put(LoginRouteController());
+  final UserViewModel userViewModel = Get.find<UserViewModel>();
+  final LoginRouteController routeController = Get.find<LoginRouteController>();
   final ModeSelectionLoadingController loadingController =
-      Get.put(ModeSelectionLoadingController());
+      Get.find<ModeSelectionLoadingController>();
 
   ModeSelectionScreen({super.key});
 

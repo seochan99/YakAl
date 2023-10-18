@@ -92,17 +92,17 @@ enum LoginRoute {
   Widget get screen {
     switch (this) {
       case LoginRoute.terms:
-        return const LoginTermsScreen();
+        return LoginTermsScreen();
       case LoginRoute.identifyEntry:
         return IdentificationEntryScreen();
       case LoginRoute.identifyResult:
-        return const IdentificationResultScreen();
+        return IdentificationResultScreen();
       case LoginRoute.nicknameInput:
         return NicknameInputScreen();
       case LoginRoute.modeSelection:
         return ModeSelectionScreen();
       case LoginRoute.finish:
-        return const LoginFinishedScreen();
+        return LoginFinishedScreen();
       default:
         assert(false, "🚨 [Assertion Error] Invalid Login Route Enum Value.");
     }
