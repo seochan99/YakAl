@@ -1,4 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:yakal/models/Profile/%08special_note_model.dart';
 
 import '../../utilities/enum/mode.dart';
 
@@ -121,22 +122,5 @@ class HospitalRecordList {
   HospitalRecordList({
     required this.admissionRecords,
     required this.emergencyRoomVisits,
-  });
-}
-
-// 특이사항
-class SpecialNote {
-  List<String> underlyingConditions;
-  List<String> allergies;
-  List<DateTime> falls;
-  List<String> diagnosis;
-  List<String> healthfood;
-
-  SpecialNote({
-    required this.underlyingConditions,
-    required this.allergies,
-    required this.falls,
-    required this.diagnosis,
-    required this.healthfood,
   });
 }

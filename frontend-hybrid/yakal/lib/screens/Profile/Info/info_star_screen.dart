@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Profile/%08special_note_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -18,6 +19,14 @@ class InfoStarScreen extends StatefulWidget {
 
 class _InfoStarScreenState extends State<InfoStarScreen> {
   final TextEditingController itemController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.userViewModel.loadSpeicalNote('diagnosis');
+    widget.userViewModel.loadSpeicalNote('healthfood');
+  }
+
   @override
   Widget build(BuildContext context) {
     // 완료버튼 누르면 작동하는 함수
@@ -245,7 +254,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    widget.userViewModel.removeSpecialNoteItem(title, index);
+                    if (title == 'healthfood' || title == 'diagnosis') {
+                      widget.userViewModel
+                          .removeSpecialNoteItem(title, record.id);
+                      return;
+                    } else {
+                      widget.userViewModel.removeSpecialNoteItem(title, index);
+                    }
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -255,8 +270,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                 ),
                 title: Text(
                   title == 'falls'
-                      ? DateFormat('yyyy-MM-dd').format(record)
-                      : record,
+                      ? DateFormat('yyyy-MM-dd').format(record as DateTime)
+                      : title == 'healthfood' || title == 'diagnosis'
+                          ? (record as ItemWithNameAndId).name
+                          : record.toString(),
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,
@@ -385,12 +402,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value.specialNote !=
-                                      null &&
-                                  widget.userViewModel.user.value.specialNote!
-                                      .healthfood.isNotEmpty
-                              ? buildInfoStarRecords(title: "healthfood")
-                              : const SizedBox.shrink(),
+                          () {
+                            if (widget.userViewModel.user.value.specialNote ==
+                                null) {
+                              return const SizedBox.shrink();
+                            }
+                            return buildInfoStarRecords(title: "healthfood");
+                          },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
@@ -406,12 +424,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value.specialNote !=
-                                      null &&
-                                  widget.userViewModel.user.value.specialNote!
-                                      .diagnosis.isNotEmpty
-                              ? buildInfoStarRecords(title: "diagnosis")
-                              : const SizedBox.shrink(),
+                          () {
+                            if (widget.userViewModel.user.value.specialNote ==
+                                null) {
+                              return const SizedBox.shrink();
+                            }
+                            return buildInfoStarRecords(title: "diagnosis");
+                          },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
