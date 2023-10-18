@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -174,6 +175,48 @@ public class DoseService {
                 }
 
                 if (summary.getDate().equals(startOfMonth.plusDays(i))) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    // progressOrNull 계산 (null인 경우 예외 처리)
+                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
+
+            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(),progressOrNull, isOverlapped);
+            oneMonthSummary.add(oneDaySummary);
+
+        }
+
+        return oneMonthSummary;
+    }
+
+    public List<OneDaySummaryDto> getBetweenDaySummary(final Long userId, final LocalDate startDate, final LocalDate endDate) {
+
+        final List<DoseRepository.oneDaySummary> totalAndPortionList
+                = doseRepository.countTotalAndTakenByUserIdInPeriod(userId, startDate, endDate);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId,startDate,endDate);
+
+        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
+
+        for (int i = 0; i <= ChronoUnit.DAYS.between(startDate,endDate); ++i) {
+            Long progressOrNull = null; // 초기값을 null로 설정
+            LocalDate currentDate = startDate.plusDays(i); // 현재 날짜 계산
+            Boolean isOverlapped = false;
+
+            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+            for (DoseRepository.oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate)){
+                        isOverlapped = true;
+                        break;
+                    }
+                }
+
+                if (summary.getDate().equals(startDate.plusDays(i))) {
                     Long total = summary.getTotal();
                     Long portion = summary.getTake();
                     // progressOrNull 계산 (null인 경우 예외 처리)
