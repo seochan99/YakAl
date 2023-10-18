@@ -63,6 +63,25 @@ class UserViewModel extends GetxController {
     }
   }
 
+  // 복약 알림 설정
+// 일반 모드, 라이트 모드
+  Future<void> updateNotification(bool mode) async {
+    try {
+      var dio = await authDioWithContext();
+
+      var response = await dio
+          .patch("/user/notification", data: {"isAllowedNotification": mode});
+
+      if (response.statusCode == 200 && response.data['success']) {
+        user.update((val) {
+          val?.setNoti(mode);
+        });
+      } else {}
+    } catch (e) {
+      // print("Exception while updating mode: $e");
+    }
+  }
+
   // 보호자 정보 추가
   void addOrUpdateGuardian(String name, DateTime? birthDate) {
     user.update((val) {

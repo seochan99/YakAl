@@ -23,15 +23,23 @@ class User {
     dinnerTime = prefs.getString("DINNER_TIME") ?? "";
   }
 
+  // 닉네임 설정
   Future<void> setNickname(String nickname) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString("NICKNAME", nickname);
     nickName = nickname;
   }
 
+  // 모드 설정
   Future<void> setMode(bool mode) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("MODE", mode);
+  }
+
+  // 알림 설정
+  Future<void> setNoti(bool mode) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("NOTI_IS_ALLOWED", mode);
   }
 
   // api통신 후 유저 정보 업데이

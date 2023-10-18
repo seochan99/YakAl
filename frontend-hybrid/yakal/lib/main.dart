@@ -142,7 +142,7 @@ class MyApp extends StatelessWidget {
           ],
         ),
         GetPage(name: '/setting/app', page: () => const SettingScreen()),
-        GetPage(name: '/setting/alert', page: () => const AlertScreen()),
+        GetPage(name: '/setting/alert', page: () => AlertScreen()),
         GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
         GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
         GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
