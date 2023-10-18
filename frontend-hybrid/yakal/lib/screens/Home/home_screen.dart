@@ -48,7 +48,9 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 2,
                     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-                Expanded(child: PillTodoLayout(viewModel: viewModel)),
+                Expanded(
+                    child: PillTodoLayout(
+                        viewModel: viewModel, isCalendarView: false)),
               ],
             ),
           ),

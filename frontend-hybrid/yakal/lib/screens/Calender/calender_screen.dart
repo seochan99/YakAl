@@ -39,7 +39,7 @@ class CalenderScreen extends StatelessWidget {
           ),
           CalendarInfoLayout(viewModel),
           Expanded(
-            child: PillTodoLayout(viewModel: viewModel),
+            child: PillTodoLayout(viewModel: viewModel, isCalendarView: true),
           ),
         ],
       ),

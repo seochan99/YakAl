@@ -10,13 +10,13 @@ class PillTodoChildrenItem extends StatefulWidget {
   final ETakingTime eTakingTime;
   final PillTodoChildren pillTodoChildren;
   final Function(ETakingTime, int) onClickChildrenCheckBox;
-  final Function(ETakingTime, int) onClickChildrenItemView;
+  final Function(String, String)? onClickChildrenItemView;
 
   const PillTodoChildrenItem(
       {required this.eTakingTime,
       required this.pillTodoChildren,
       required this.onClickChildrenCheckBox,
-      required this.onClickChildrenItemView,
+      this.onClickChildrenItemView,
       Key? key})
       : super(key: key);
 
@@ -29,10 +29,8 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed('/pill/detail', arguments: {
-          'name': widget.pillTodoChildren.name,
-          'kdCode': widget.pillTodoChildren.kdCode
-        });
+        widget.onClickChildrenItemView?.call(
+            widget.pillTodoChildren.name, widget.pillTodoChildren.kdCode);
       },
       child: Container(
         color: Colors.white,
@@ -48,7 +46,6 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                         'assets/icons/icon-check-on-36.svg',
                         width: 80,
                         height: 40,
-                        color: Colors.blue,
                       )
                     : Container(
                         width: 80,

@@ -8,7 +8,7 @@ import 'package:yakal/repository/Home/pill_todo_repository.dart';
 import '../../../models/Home/e_taking_time.dart';
 import '../../models/Calendar/count_model.dart';
 import '../../provider/Calendar/calendar_provider.dart';
-import '../../screens/Base/pill_todo_viewmodel.dart';
+import '../Base/pill_todo_viewmodel.dart';
 
 class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // Repository
@@ -26,9 +26,12 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   // public getter
-  bool get isLoaded => _isLoaded.value;
   CalendarDate get calendarDate => _calendarDate.value;
   CountModel get countModel => _countModel.value;
+
+  @override
+  bool get isLoaded => _isLoaded.value;
+  @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
@@ -40,6 +43,10 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   void updatePillTodoAndDate() {
     // Start Data Loading
     _isLoaded.value = true;
+    _countModel.update((val) {
+      val!.totalCount = 0;
+      val.takenCount = 0;
+    });
 
     // Read PillTodoParents In Remote DB
     _pillTodoRepository
@@ -171,13 +178,14 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // calendarItem을 클릭했을 때
   void onClickCalendarItem(DateTime date) {
     // _calendarModel의 selectedDate를 date로 변경
-    _calendarDate.value = _calendarDate.value.copyWith(selectedDate: date);
+    _calendarDate.value =
+        _calendarDate.value.copyWith(selectedDate: date, focusedDate: date);
 
     updatePillTodoAndDate();
   }
 
   // calendarItem을 스와이프했을 때
   void changeFocusedDate(DateTime date) async {
-    _calendarDate.value = await _calendarDate.value.copyWith(focusedDate: date);
+    _calendarDate.value = _calendarDate.value.copyWith(focusedDate: date);
   }
 }

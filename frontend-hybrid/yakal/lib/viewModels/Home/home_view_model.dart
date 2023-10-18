@@ -5,7 +5,7 @@ import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
 import '../../provider/Home/pill_todo_provider.dart';
-import '../../screens/Base/pill_todo_viewmodel.dart';
+import '../Base/pill_todo_viewmodel.dart';
 
 class HomeViewModel extends GetxController implements PillTodoViewModel {
   final PillTodoRepository _pillTodoRepository =
@@ -36,6 +36,7 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
   void updatePillTodoAndDate() {
     // Start Data Loading
     _isLoaded.value = true;
+    _countModel.value = CountModel(totalCount: 0, takenCount: 0);
 
     // PillTodoParents Update
     DateTime date = DateTime.now();
