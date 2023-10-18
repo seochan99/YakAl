@@ -3,16 +3,14 @@ import 'package:get/get.dart';
 
 import '../../utilities/style/color_styles.dart';
 
-class BackConfirmDialog extends StatelessWidget {
+class NotRouteBackConfirmDialog extends StatelessWidget {
   final String question;
-  final String backTo;
-  final void Function()? backAction;
+  final void Function() backAction;
 
-  const BackConfirmDialog({
+  const NotRouteBackConfirmDialog({
     super.key,
     required this.question,
-    required this.backTo,
-    this.backAction,
+    required this.backAction,
   });
 
   @override
@@ -81,14 +79,8 @@ class BackConfirmDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
-                          if (backAction != null) {
-                            backAction!();
-                          }
-
-                          Get.back(); // Close Dialog
-
-                          Get.until(
-                              (Route route) => Get.currentRoute == backTo);
+                          Get.back();
+                          backAction();
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.main,

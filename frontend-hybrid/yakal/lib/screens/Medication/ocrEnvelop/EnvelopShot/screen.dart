@@ -102,14 +102,12 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                                 ),
                                 child: Center(
                                   child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
                                     children: [
                                       const Text(
                                         "약봉투를 사각형안에 위치시켜주세요.",
                                         style: EnvelopShotStyle.description,
-                                      ),
-                                      const SizedBox(
-                                        height: 26.0,
                                       ),
                                       Container(
                                         height: shotBoxHeight,
@@ -131,14 +129,11 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                           ),
                           child: Center(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 const Text(
                                   "약봉투를 사각형안에 위치시켜주세요.",
                                   style: EnvelopShotStyle.description,
-                                ),
-                                const SizedBox(
-                                  height: 26,
                                 ),
                                 SizedBox(
                                   height: (shotBoxWidth * 7) / 5,

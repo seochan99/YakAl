@@ -3,16 +3,12 @@ import 'package:get/get.dart';
 
 import '../../utilities/style/color_styles.dart';
 
-class BackConfirmDialog extends StatelessWidget {
+class MedicineAddCancelDialog extends StatelessWidget {
   final String question;
-  final String backTo;
-  final void Function()? backAction;
 
-  const BackConfirmDialog({
+  const MedicineAddCancelDialog({
     super.key,
     required this.question,
-    required this.backTo,
-    this.backAction,
   });
 
   @override
@@ -81,24 +77,18 @@ class BackConfirmDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
-                          if (backAction != null) {
-                            backAction!();
-                          }
-
-                          Get.back(); // Close Dialog
-
-                          Get.until(
-                              (Route route) => Get.currentRoute == backTo);
+                          Get.back();
+                          Get.offAllNamed("/");
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: ColorStyles.main,
+                          backgroundColor: ColorStyles.red,
                           splashFactory: NoSplash.splashFactory,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         child: const Text(
-                          "다시하기",
+                          "취소하기",
                           style: TextStyle(
                             color: ColorStyles.white,
                             fontSize: 20.0,

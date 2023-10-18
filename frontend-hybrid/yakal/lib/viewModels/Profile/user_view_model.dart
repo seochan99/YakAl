@@ -1,11 +1,23 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 
 import '../../models/Profile/user.dart';
 
 class UserViewModel extends GetxController {
   var user = User().obs;
+
+  // 로그아웃이나 유효하지 않은 토큰
+  void reset() {
+    user.update((val) {
+      val?.reset();
+    });
+  }
+
+  Future<void> fetchNameAndMode(BuildContext context) async {
+    await user.value.fetch(context);
+    user.refresh();
+  }
 
   // 유저 이름 업데이트하기
   Future<void> updateNickName(String newNickName) async {
@@ -75,6 +87,13 @@ class UserViewModel extends GetxController {
     } catch (e) {
       // print("Exception while updating mode: $e");
     }
+  }
+
+  // 마케팅 정보 동의 여부
+  void updateMarketingAgreement(bool isAgreed) {
+    user.update((val) {
+      val?.setIsiAgreedMarketing(isAgreed);
+    });
   }
 
   // 보호자 정보 추가
