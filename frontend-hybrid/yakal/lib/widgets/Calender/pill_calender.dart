@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:yakal/models/Calendar/calendar_day.dart';
 import 'package:yakal/viewModels/Calendar/calendar_viewmodel.dart';
 
 import 'pill_calender_day_item.dart';
@@ -15,7 +17,8 @@ class PillCalender extends StatefulWidget {
 
 class _PillCalenderState extends State<PillCalender> {
   // List<String> days = ['_', '일', '월', '화', '수', '목', '금', '토'];
-  CalendarFormat _calendarFormat = CalendarFormat.week;
+  static CalendarFormat _calendarFormat = CalendarFormat.week;
+
   @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
@@ -56,7 +59,7 @@ class _PillCalenderState extends State<PillCalender> {
             },
             calendarStyle: const CalendarStyle(
               // Use `CalendarStyle` to customize the UI
-              outsideDaysVisible: false,
+              outsideDaysVisible: true,
             ),
             selectedDayPredicate: (day) {
               return isSameDay(widget.viewModel.calendarDate.selectedDate, day);
@@ -66,7 +69,9 @@ class _PillCalenderState extends State<PillCalender> {
                   widget.viewModel.calendarDate.selectedDate, selectedDay)) {
                 // Call `setState()` when updating the selected day
                 setState(() {
-                  widget.viewModel.onClickCalendarItem(selectedDay);
+                  widget.viewModel
+                      .onClickCalendarItem(selectedDay)
+                      .then((value) => null);
                 });
               }
             },
@@ -80,25 +85,55 @@ class _PillCalenderState extends State<PillCalender> {
             },
             onPageChanged: (focusedDay) {
               // No need to call `setState()` here
-              widget.viewModel.changeFocusedDate(focusedDay);
+              setState(() {
+                widget.viewModel
+                    .changeFocusedDate(focusedDay)
+                    .then((value) => null);
+              });
             },
             calendarBuilders: CalendarBuilders(
               todayBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(date: day, isSelected: false);
+                return PillCalenderDayItem(
+                    date: day,
+                    isSelected: false,
+                    calendarDay: widget.viewModel.calendarDays[
+                            DateFormat('yyyy-MM-dd').format(day)] ??
+                        CalendarDay(progress: 0, isOverlap: false));
               },
               selectedBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(date: day, isSelected: true);
+                return PillCalenderDayItem(
+                    date: day,
+                    isSelected: true,
+                    calendarDay: widget.viewModel.calendarDays[
+                            DateFormat('yyyy-MM-dd').format(day)] ??
+                        CalendarDay(progress: 0, isOverlap: false));
               },
               defaultBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(date: day, isSelected: false);
+                return PillCalenderDayItem(
+                    date: day,
+                    isSelected: false,
+                    calendarDay: widget.viewModel.calendarDays[
+                            DateFormat('yyyy-MM-dd').format(day)] ??
+                        CalendarDay(progress: 0, isOverlap: false));
               },
               outsideBuilder: (context, day, focusedDay) {
                 return Opacity(
                     opacity: 0.5,
-                    child: PillCalenderDayItem(date: day, isSelected: false));
+                    child: PillCalenderDayItem(
+                        date: day,
+                        isSelected: false,
+                        calendarDay: widget.viewModel.calendarDays[
+                                DateFormat('yyyy-MM-dd').format(day)] ??
+                            CalendarDay(progress: 0, isOverlap: false)));
               },
             ),
           ),
         ));
+  }
+
+  CalendarDay getCalendarDay(DateTime date) {
+    return widget
+            .viewModel.calendarDays[DateFormat('yyyy-MM-dd').format(date)] ??
+        CalendarDay(progress: 0, isOverlap: false);
   }
 }

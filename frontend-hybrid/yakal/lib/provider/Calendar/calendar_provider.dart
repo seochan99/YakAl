@@ -7,15 +7,18 @@ import 'package:intl/intl.dart';
 import '../../utilities/api/api.dart';
 
 class CalendarProvider {
-  Future<Map<String, dynamic>> getCalendar(DateTime dateTime) async {
+  Future<List<dynamic>> getCalendarInfoBetweenDate(
+      DateTime startDateTime, DateTime endDateTime) async {
     var dio = await authDioWithContext();
 
-    var response =
-        await dio.get("/dose/day/${DateFormat('yyyy-MM-dd').format(dateTime)}");
+    var responseJson =
+        await dio.get("/dose/between", queryParameters: <String, dynamic>{
+      "startDate": DateFormat('yyyy-MM-dd').format(startDateTime),
+      "endDate": DateFormat('yyyy-MM-dd').format(endDateTime),
+    });
 
-    if (response.statusCode == 200) {
-      print(response.data['data']);
-      return response.data['data'];
+    if (responseJson.statusCode == 200) {
+      return responseJson.data['data'];
     } else {
       print("Failed to load Calendar");
       throw Exception('Failed to load Calendar');

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:yakal/models/Calendar/calendar_model.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
@@ -6,6 +7,7 @@ import 'package:yakal/repository/Calendar/calendar_repository.dart';
 import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../../models/Home/e_taking_time.dart';
+import '../../models/Calendar/calendar_day.dart';
 import '../../models/Calendar/count_model.dart';
 import '../../provider/Calendar/calendar_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
@@ -18,16 +20,19 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
       CalendarRepository(calendarProvider: CalendarProvider());
 
   // Model
-  final _isLoaded = false.obs;
   final Rx<CalendarDate> _calendarDate =
       Rx<CalendarDate>(CalendarDate.selectedDate(selectedDate: DateTime.now()));
   final Rx<CountModel> _countModel =
       Rx<CountModel>(CountModel(totalCount: 0, takenCount: 0));
+  final RxMap<String, CalendarDay> _calendarDays = RxMap({});
+
+  final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
   CountModel get countModel => _countModel.value;
+  Map<String, CalendarDay> get calendarDays => _calendarDays;
 
   @override
   bool get isLoaded => _isLoaded.value;
@@ -37,6 +42,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   CalendarViewModel() {
     updatePillTodoAndDate();
+    _calendarRepository.readCalendarInformation(DateTime.now()).then((value) {
+      _calendarDays.value = value;
+    });
   }
 
   @override
@@ -78,6 +86,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
         .then((value) => _isLoaded.value = false);
   }
 
+  @override
   void onClickParentCheckBox(ETakingTime eTakingTime) {
     bool isCompleted = _pillTodoParents
         .firstWhere((element) => element.value.eTakingTime == eTakingTime)
@@ -110,7 +119,16 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
                         .length)
                     .reduce((value, element) => value + element);
               })
-            });
+            })
+        .then((value) =>
+            // selectedDate에 해당하는 Map에서 찾아 업데이트
+            _calendarDays.forEach((key, value) {
+              if (key ==
+                  DateFormat("yyyy-MM-dd").format(calendarDate.selectedDate)) {
+                print("update calendarDay $key");
+                value.progress = _countModel.value.getProgress();
+              }
+            }));
   }
 
   // 상태 변화
@@ -172,20 +190,42 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
                       .where((element) => element.isTaken == true)
                       .length)
                   .reduce((value, element) => value + element);
+            }))
+        .then((value) =>
+            // selectedDate에 해당하는 Map에서 찾아 업데이트
+            _calendarDays.forEach((key, value) {
+              if (key ==
+                  DateFormat("yyyy-MM-dd").format(calendarDate.selectedDate)) {
+                print("update calendarDay $key");
+                value.progress = _countModel.value.getProgress();
+              }
             }));
   }
 
   // calendarItem을 클릭했을 때
-  void onClickCalendarItem(DateTime date) {
+  Future<void> onClickCalendarItem(DateTime date) async {
+    int beforeMonth = _calendarDate.value.focusedDate.month;
+
     // _calendarModel의 selectedDate를 date로 변경
     _calendarDate.value =
         _calendarDate.value.copyWith(selectedDate: date, focusedDate: date);
+
+    if (beforeMonth != _calendarDate.value.focusedDate.month) {
+      _calendarDays.value =
+          await _calendarRepository.readCalendarInformation(date);
+    }
 
     updatePillTodoAndDate();
   }
 
   // calendarItem을 스와이프했을 때
-  void changeFocusedDate(DateTime date) async {
+  Future<void> changeFocusedDate(DateTime date) async {
+    int beforeMonth = _calendarDate.value.focusedDate.month;
     _calendarDate.value = _calendarDate.value.copyWith(focusedDate: date);
+
+    if (beforeMonth != _calendarDate.value.focusedDate.month) {
+      _calendarDays.value =
+          await _calendarRepository.readCalendarInformation(date);
+    }
   }
 }
