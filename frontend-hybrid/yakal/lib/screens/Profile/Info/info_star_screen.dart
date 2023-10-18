@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/models/Profile/%08special_note_model.dart';
+import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Profile/user_view_model.dart';
+import 'package:yakal/viewModels/Profile/special_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/widgets/Profile/ProfileInfo/profle_info_add_btn_widget.dart';
 
 class InfoStarScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.put(UserViewModel());
+  final SpecialListViewModel userViewModel = Get.put(SpecialListViewModel());
 
   InfoStarScreen({super.key});
 
