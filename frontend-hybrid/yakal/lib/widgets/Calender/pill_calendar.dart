@@ -22,12 +22,6 @@ class _PillCalendarState extends State<PillCalendar> {
   _PillCalendarState({required this.viewModel});
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Obx(() => Container(
           padding: const EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),

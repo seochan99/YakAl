@@ -46,8 +46,8 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
+
     updateCalendarDays();
     updatePillTodoAndDate();
   }

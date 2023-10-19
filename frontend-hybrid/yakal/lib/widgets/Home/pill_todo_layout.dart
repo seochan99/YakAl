@@ -1,5 +1,3 @@
-// ignore_for_file: no_logic_in_create_state
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,12 +25,6 @@ class _PillTodoLayoutState extends State<PillTodoLayout> {
   final bool isCalendarView;
 
   _PillTodoLayoutState(this.viewModel, this.isCalendarView);
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
