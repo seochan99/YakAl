@@ -1,4 +1,4 @@
-import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,39 +19,27 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
   void initState() {
     super.initState();
 
-    // 임시!!!!!!!!!
-    Timer(const Duration(seconds: 3), () {
-      doseListViewModel.setGroupList([
-        {
-          "name": "올메텍플러스정20/12.5mg",
-          "code": "ESNKSTB0KA1",
-        },
-        {
-          "name": "바난정",
-          "code": "ECJDSTB01V4",
-        },
-        {
-          "name": "레보프라이드정",
-          "code": "ESKPSTB003H",
-        },
-        {
-          "name": "싸이메트정",
-          "code": "EBKWSTB001O",
-        },
-        {
-          "name": "비졸본정",
-          "code": "OSAKSTBCJRI",
-        },
-        {
-          "name": "한미아스피린장용정100mg",
-          "code": "OHMISTE0AA9",
-        },
-      ]);
+    var imagePath = Get.arguments["imagePath"];
 
-      Get.offNamed(
-        "/pill/add/final",
-        preventDuplicates: false,
-      );
+    doseListViewModel.getMedicineInfoFromImagePath(imagePath).then((isSuccess) {
+      File(imagePath).delete();
+
+      if (isSuccess) {
+        Get.offNamed(
+          "/pill/add/final",
+          preventDuplicates: false,
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text('약 정보를 불러오는데 실패했습니다.'),
+            duration: Duration(seconds: 3),
+          ),
+        );
+
+        Get.offAllNamed("/");
+      }
     });
   }
 

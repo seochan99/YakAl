@@ -250,14 +250,17 @@ class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
                     child: BottomButton(
                       "전송",
                       onPressed: () {
-                        // 임시!!!!!!!!!
-                        File(imagePath).delete();
+                        var imagePathToSend = imagePath;
 
                         if (_croppedFile != null) {
-                          File(_croppedFile!.path).delete();
+                          imagePathToSend = _croppedFile!.path;
+                          File(imagePath).delete();
                         }
 
-                        Get.toNamed("/pill/add/ocrEnvelop/process");
+                        Get.toNamed("/pill/add/ocrEnvelop/processs",
+                            arguments: {
+                              "imagePath": imagePathToSend,
+                            });
                       },
                       backgroundColor: ColorStyles.main,
                       color: ColorStyles.white,

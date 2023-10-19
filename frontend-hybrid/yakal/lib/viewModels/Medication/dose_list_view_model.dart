@@ -5,14 +5,58 @@ import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
 import 'package:yakal/models/Medication/dose_name_code_model.dart';
+import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/provider/Medicine/add_modicine_provider.dart';
+import 'package:yakal/provider/Medicine/envelop_analysis_provider.dart';
+import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
 class DoseListViewModel extends GetxController {
+  final MedicationDirectProvider _medicationDirectProvider =
+  MedicationDirectProvider();
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
+  final EnvelopAnalysisProvider _envelopAnalysisProvider =
+  EnvelopAnalysisProvider();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
+
+  Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
+    var textList = await _envelopAnalysisProvider.getTextFromImage(imagePath);
+
+    if (textList.isEmpty) {
+      return false;
+    }
+
+    List<Future<List<SearchMedicineModel>>> futures = [];
+
+    for (var text in textList) {
+      var nonSpaceText = text.replaceAll(" ", "");
+      futures.add(_medicationDirectProvider.searchMedicine(nonSpaceText));
+    }
+
+    List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
+    var doseNameCodeList = <Map<String, String>>[];
+
+    for (var search in searchList) {
+      if (search.isEmpty) {
+        continue;
+      }
+
+      doseNameCodeList.add({
+        "name": search[0].name,
+        "code": search[0].code,
+      });
+    }
+
+    if (doseNameCodeList.isEmpty) {
+      return false;
+    }
+
+    setGroupList(doseNameCodeList);
+
+    return true;
+  }
 
   void setGroupList(List<Map<String, String>> doseNameCodeList) {
     var doseList = <DoseItemModel>[];
@@ -83,8 +127,8 @@ class DoseListViewModel extends GetxController {
     return _notAddableList.length;
   }
 
-  void toggle(
-      int groupIndex, int itemIndex, ETakingTime takingTime, bool toBeTake) {
+  void toggle(int groupIndex, int itemIndex, ETakingTime takingTime,
+      bool toBeTake) {
     var isTaking = _groupList[groupIndex].takingTime[takingTime.index];
 
     if (isTaking == toBeTake) {
@@ -97,7 +141,7 @@ class DoseListViewModel extends GetxController {
     Function deepEq = const DeepCollectionEquality().equals;
 
     var item =
-        DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
+    DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
 
     _groupList[groupIndex].doseList.removeAt(itemIndex);
 
