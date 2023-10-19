@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/widgets/Calender/pill_custom_calendar.dart';
 import 'package:yakal/widgets/Home/pill_todo_layout.dart';
 
 import '../../viewModels/Calendar/calendar_viewmodel.dart';
@@ -33,7 +32,6 @@ class CalenderScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          // CustomPillCalendar(viewModel: viewModel),
           PillCalendar(viewModel: viewModel),
           Container(
             width: double.infinity,
