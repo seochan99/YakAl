@@ -4,11 +4,12 @@ import 'package:yakal/widgets/Home/pill_todo_layout.dart';
 
 import '../../viewModels/Calendar/calendar_viewmodel.dart';
 import '../../widgets/Calender/calendar_info_layout.dart';
-import '../../widgets/Calender/pill_calender.dart';
+import '../../widgets/Calender/pill_calendar.dart';
 
 class CalenderScreen extends StatelessWidget {
-  final CalendarViewModel viewModel = Get.put(CalendarViewModel());
   CalenderScreen({Key? key}) : super(key: key);
+
+  final CalendarViewModel viewModel = Get.put(CalendarViewModel());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class CalenderScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          PillCalender(viewModel),
+          PillCalendar(viewModel: viewModel),
           Container(
             width: double.infinity,
             height: 2,

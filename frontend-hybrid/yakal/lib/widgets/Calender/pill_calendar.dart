@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:yakal/models/Calendar/calendar_day.dart';
 import 'package:yakal/viewModels/Calendar/calendar_viewmodel.dart';
 
-import 'pill_calender_day_item.dart';
+import 'pill_calendar_day_item.dart';
 
-class PillCalender extends StatefulWidget {
+class PillCalendar extends StatefulWidget {
   final CalendarViewModel viewModel;
-  const PillCalender(this.viewModel, {Key? key}) : super(key: key);
+  const PillCalendar({required this.viewModel, Key? key}) : super(key: key);
 
   @override
-  State<PillCalender> createState() => _PillCalenderState();
+  State<PillCalendar> createState() => _PillCalendarState(viewModel: viewModel);
 }
 
-class _PillCalenderState extends State<PillCalender> {
+class _PillCalendarState extends State<PillCalendar> {
   // List<String> days = ['_', '일', '월', '화', '수', '목', '금', '토'];
-  static CalendarFormat _calendarFormat = CalendarFormat.week;
+  CalendarFormat _calendarFormat = CalendarFormat.week;
+  final CalendarViewModel viewModel;
+
+  _PillCalendarState({required this.viewModel});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +52,7 @@ class _PillCalenderState extends State<PillCalender> {
             ),
             daysOfWeekHeight: 30,
             rowHeight: 75,
-            focusedDay: widget.viewModel.calendarDate.focusedDate,
+            focusedDay: viewModel.calendarDate.focusedDate,
             pageAnimationCurve: Curves.easeInOut,
             calendarFormat: _calendarFormat,
             availableCalendarFormats: const {
@@ -62,16 +64,16 @@ class _PillCalenderState extends State<PillCalender> {
               outsideDaysVisible: true,
             ),
             selectedDayPredicate: (day) {
-              return isSameDay(widget.viewModel.calendarDate.selectedDate, day);
+              return isSameDay(viewModel.calendarDate.selectedDate, day);
             },
             onDaySelected: (selectedDay, focusedDay) {
               if (!isSameDay(
-                  widget.viewModel.calendarDate.selectedDate, selectedDay)) {
+                  viewModel.calendarDate.selectedDate, selectedDay)) {
                 // Call `setState()` when updating the selected day
                 setState(() {
-                  widget.viewModel
+                  viewModel
                       .onClickCalendarItem(selectedDay)
-                      .then((value) => null);
+                      .then((value) => print(focusedDay));
                 });
               }
             },
@@ -86,54 +88,71 @@ class _PillCalenderState extends State<PillCalender> {
             onPageChanged: (focusedDay) {
               // No need to call `setState()` here
               setState(() {
-                widget.viewModel
-                    .changeFocusedDate(focusedDay)
-                    .then((value) => null);
+                viewModel.changeFocusedDate(focusedDay).then((value) => null);
               });
             },
             calendarBuilders: CalendarBuilders(
               todayBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(
-                    date: day,
-                    isSelected: false,
-                    calendarDay: widget.viewModel.calendarDays[
-                            DateFormat('yyyy-MM-dd').format(day)] ??
-                        CalendarDay(progress: 0, isOverlap: false));
-              },
-              selectedBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(
-                    date: day,
-                    isSelected: true,
-                    calendarDay: widget.viewModel.calendarDays[
-                            DateFormat('yyyy-MM-dd').format(day)] ??
-                        CalendarDay(progress: 0, isOverlap: false));
-              },
-              defaultBuilder: (context, day, focusedDay) {
-                return PillCalenderDayItem(
-                    date: day,
-                    isSelected: false,
-                    calendarDay: widget.viewModel.calendarDays[
-                            DateFormat('yyyy-MM-dd').format(day)] ??
-                        CalendarDay(progress: 0, isOverlap: false));
-              },
-              outsideBuilder: (context, day, focusedDay) {
-                return Opacity(
-                    opacity: 0.5,
-                    child: PillCalenderDayItem(
+                return Obx(() => viewModel.isLoadedCalendar
+                    ? Container(
+                        color: Colors.white,
+                        height: 75,
+                        width: 30,
+                      )
+                    : PillCalendarDayItem(
                         date: day,
                         isSelected: false,
-                        calendarDay: widget.viewModel.calendarDays[
-                                DateFormat('yyyy-MM-dd').format(day)] ??
-                            CalendarDay(progress: 0, isOverlap: false)));
+                        calendarDay: viewModel
+                            .calendarDays[DateFormat('yyyy-MM-dd').format(day)]
+                            ?.value));
+              },
+              selectedBuilder: (context, day, focusedDay) {
+                return Obx(() => viewModel.isLoadedCalendar
+                    ? Container(
+                        color: Colors.white,
+                        height: 75,
+                        width: 30,
+                      )
+                    : PillCalendarDayItem(
+                        date: day,
+                        isSelected: true,
+                        calendarDay: viewModel
+                            .calendarDays[DateFormat('yyyy-MM-dd').format(day)]
+                            ?.value));
+              },
+              defaultBuilder: (context, day, focusedDay) {
+                return Obx(() => viewModel.isLoadedCalendar
+                    ? Container(
+                        color: Colors.white,
+                        height: 75,
+                        width: 30,
+                      )
+                    : PillCalendarDayItem(
+                        date: day,
+                        isSelected: false,
+                        calendarDay: viewModel
+                            .calendarDays[DateFormat('yyyy-MM-dd').format(day)]
+                            ?.value));
+              },
+              outsideBuilder: (context, day, focusedDay) {
+                return Obx(() => viewModel.isLoadedCalendar
+                    ? Container(
+                        color: Colors.white,
+                        height: 75,
+                        width: 30,
+                      )
+                    : Opacity(
+                        opacity: 0.5,
+                        child: PillCalendarDayItem(
+                            date: day,
+                            isSelected: false,
+                            calendarDay: viewModel
+                                .calendarDays[
+                                    DateFormat('yyyy-MM-dd').format(day)]
+                                ?.value)));
               },
             ),
           ),
         ));
-  }
-
-  CalendarDay getCalendarDay(DateTime date) {
-    return widget
-            .viewModel.calendarDays[DateFormat('yyyy-MM-dd').format(date)] ??
-        CalendarDay(progress: 0, isOverlap: false);
   }
 }
