@@ -14,7 +14,7 @@ class EnvelopAnalysisProvider {
 
     var requestBody = <String, dynamic>{
       "version": "V1",
-      "requestId": const Uuid().v4,
+      "requestId": const Uuid().v4(),
       "timestamp": 0,
       "lang": "ko",
       "images": [
@@ -51,7 +51,9 @@ class EnvelopAnalysisProvider {
       var inferList = response.data["images"][0]["fields"];
       var textList = <String>[];
       for (var infer in inferList) {
-        textList.add(infer["inferText"]);
+        if (infer["inferConfidence"] > 0.9) {
+          textList.add(infer["inferText"]);
+        }
       }
 
       return textList;

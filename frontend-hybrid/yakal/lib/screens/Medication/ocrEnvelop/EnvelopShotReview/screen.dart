@@ -257,10 +257,12 @@ class _EnvelopShotReviewScreenState extends State<EnvelopShotReviewScreen> {
                           File(imagePath).delete();
                         }
 
-                        Get.toNamed("/pill/add/ocrEnvelop/processs",
-                            arguments: {
-                              "imagePath": imagePathToSend,
-                            });
+                        Get.toNamed(
+                          "/pill/add/ocrEnvelop/process",
+                          arguments: {
+                            "imagePath": imagePathToSend,
+                          },
+                        );
                       },
                       backgroundColor: ColorStyles.main,
                       color: ColorStyles.white,

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -20,6 +21,10 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
     super.initState();
 
     var imagePath = Get.arguments["imagePath"];
+
+    if (kDebugMode) {
+      print("🎑 [Received Image Path] $imagePath");
+    }
 
     doseListViewModel.getMedicineInfoFromImagePath(imagePath).then((isSuccess) {
       File(imagePath).delete();
