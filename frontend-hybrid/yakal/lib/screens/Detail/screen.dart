@@ -1,6 +1,7 @@
-import 'dart:convert';
+import 'package:cached_memory_image/cached_memory_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:yakal/models/Medication/medication_detail_model.dart';
 import 'package:yakal/screens/Detail/detail_fragment.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -19,7 +20,8 @@ class _PillDetailScreenState extends State<PillDetailScreen>
   // 약 이름
 
   // name이랑 code는 porps로 받아야함
-  String name = "피마펜정";
+  String name = Get.arguments['name'];
+  String kdCode = Get.arguments['kdCode'];
   // 약 정보 뷰모델
   final medicationInfoViewModel = MedicationInfoViewModel();
   // 약 정보
@@ -39,7 +41,7 @@ class _PillDetailScreenState extends State<PillDetailScreen>
 
   // 약 정보 불러오기, 현재 임시 코드 사용
   void loadMedicineInfo() async {
-    DrugInfo? info = await medicationInfoViewModel.getMedicine("658700670");
+    DrugInfo? info = await medicationInfoViewModel.getMedicine(kdCode);
     setState(() {
       // 약 정보 셋팅
       drugInfo = info;
@@ -62,8 +64,10 @@ class _PillDetailScreenState extends State<PillDetailScreen>
           ),
         ),
         body: drugInfo == null
-            ? const CircularProgressIndicator(
-                color: ColorStyles.gray4,
+            ? const Center(
+                child: CircularProgressIndicator(
+                  color: ColorStyles.gray4,
+                ),
               )
             : Column(
                 children: [
@@ -73,23 +77,24 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Expanded(
-                          flex: 1,
-                          child: ClipRRect(
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                            child: drugInfo!.identaImage == null
-                                ? SvgPicture.asset(
-                                    'assets/icons/icon-check-on-36.svg',
-                                    width: 80,
-                                    height: 40,
-                                  )
-                                : Image.memory(
-                                    base64Decode(drugInfo!.identaImage!),
-                                    width: 96,
-                                    height: 48,
-                                  ),
-                          ),
-                        ),
+                            flex: 1,
+                            child: ClipRRect(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              child: drugInfo!.identaImage == null
+                                  ? SvgPicture.asset(
+                                      'assets/icons/icon-check-on-36.svg',
+                                      width: 80,
+                                      height: 40,
+                                    )
+                                  : CachedMemoryImage(
+                                      uniqueKey: 'app://image/dose/$kdCode',
+                                      base64: drugInfo!.identaImage!,
+                                      placeholder: const Center(
+                                        child: CircularProgressIndicator(),
+                                      ),
+                                    ),
+                            )),
                         SizedBox.fromSize(size: const Size(16, 16)),
                         Expanded(
                           flex: 2,
@@ -98,7 +103,9 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                name,
+                                name.length > 16
+                                    ? "${name.substring(0, 16)}..."
+                                    : name,
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
@@ -128,6 +135,8 @@ class _PillDetailScreenState extends State<PillDetailScreen>
                     indicatorColor: ColorStyles.black,
                     labelColor: ColorStyles.black,
                     unselectedLabelColor: ColorStyles.gray4,
+                    // 색깔 파란색으로
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                     labelStyle: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,

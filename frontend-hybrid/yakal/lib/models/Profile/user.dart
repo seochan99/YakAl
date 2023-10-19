@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
-
-import '../../utilities/enum/mode.dart';
+import 'package:yakal/utilities/api/api.dart';
 
 class User {
   String nickName;
   bool mode;
+  bool? isAgreedMarketing;
   bool notiIsAllowed;
   String breakfastTime;
   String lunchTime;
@@ -14,14 +15,48 @@ class User {
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
 
+  // 스토리지에서 유저 정보 가져오기
   Future<void> _init() async {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
-    mode = true;
+    mode = prefs.getBool("MODE") ?? true;
     notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
     breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
     lunchTime = prefs.getString("LUNCH_TIME") ?? "";
     dinnerTime = prefs.getString("DINNER_TIME") ?? "";
+
+    if (prefs.getBool("IS_AGREED_MARKETING") != null) {
+      isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING")!;
+    }
+  }
+
+  // 유저 정보 초기화, 토큰은 그대로 남아있음
+  Future<void> reset() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("NICKNAME");
+    prefs.remove("MODE");
+    prefs.remove("IS_AGREED_MARKETING");
+
+    nickName = "";
+    mode = true;
+    isAgreedMarketing = null;
+  }
+
+  // 유저 이름과 모드를 서버에서 가져옴
+  Future<void> fetch(BuildContext context) async {
+    final dio = await authDio(context);
+
+    final response = await dio.get("/user");
+
+    if (response.statusCode == 200) {
+      final prefs = await SharedPreferences.getInstance();
+
+      nickName = response.data["data"]["nickname"];
+      prefs.setString("NICKNAME", nickName);
+
+      mode = response.data["data"]["isDetail"] as bool;
+      prefs.setBool("MODE", mode);
+    }
   }
 
   // 닉네임 설정
@@ -58,6 +93,18 @@ class User {
     prefs.setString("BREAKFAST_TIME", breakfastTime);
     prefs.setString("LUNCH_TIME", lunchTime);
     prefs.setString("DINNER_TIME", dinnerTime);
+  }
+
+  Future<void> setIsiAgreedMarketing(bool isAgreed) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_AGREED_MARKETING", isAgreed);
+    isAgreedMarketing = isAgreed;
+  }
+
+  Future<void> setIsIdentified(bool isIdentified) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool("IS_IDENTIFIED", isIdentified);
+    isIdentified = isIdentified;
   }
 
   User({

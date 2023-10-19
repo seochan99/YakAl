@@ -1,11 +1,12 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class SearchMedicineModel {
   final String name;
@@ -75,6 +76,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   final TextEditingController medicinController = TextEditingController();
   List<SearchMedicineModel> medicines = [];
   final BehaviorSubject<String> _searchSubject = BehaviorSubject<String>();
+  final doseListViewModel = Get.put(DoseListViewModel());
 
   _MedicationAddScreenState() {
     _searchSubject
@@ -120,10 +122,19 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   }
 
   void _handleButtonPress() {
-    Get.toNamed("/pill/add/direct/result", arguments: {
-      "medicin": medicinController.text,
-      "code": selectedMedicineCode
-    });
+    // 약 정보는 ViewModel을 통해 넘김
+    doseListViewModel.setGroupList([
+      {
+        "name": medicinController.text,
+        "code": selectedMedicineCode,
+      },
+    ]);
+
+    Get.toNamed(
+      "/pill/add/final",
+      preventDuplicates: false,
+    );
+
     // 약 추가 후 초기화
     medicinController.clear();
     selectedMedicineCode = "";

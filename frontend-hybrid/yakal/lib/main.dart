@@ -6,25 +6,17 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-// import 'package:yakal/screens/Auth/auth_login_screen.dart';
 import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
-import 'package:yakal/screens/Login/IdentificationEntry/screen.dart';
-import 'package:yakal/screens/Login/IdentificationResult/screen.dart';
-import 'package:yakal/screens/Login/KakoLogin/screen.dart';
+import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
 import 'package:yakal/screens/Login/LoginEntry/screen.dart';
-import 'package:yakal/screens/Login/LoginFinished/screen.dart';
-import 'package:yakal/screens/Login/LoginTerms/screen.dart';
-import 'package:yakal/screens/Login/ModeSelection/screen.dart';
-import 'package:yakal/screens/Login/NicknameInput/screen.dart';
-import 'package:yakal/screens/Login/SetMode/screen.dart';
-import 'package:yakal/screens/Login/SetNickname/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
-import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrAnalysisResult/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopOcrEntry/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShotReview/screen.dart';
@@ -63,7 +55,7 @@ void main() async {
 
   // locator init
   initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/login' : '/login')));
+      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
@@ -85,69 +77,77 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       initialRoute: initialRoute,
-
       // 라우팅 설정
       getPages: [
-        GetPage(name: '/', page: () => const MyBottomNavigationBar()),
-        GetPage(name: '/home', page: () => const HomeScreen()),
+        GetPage(
+          name: '/',
+          page: () => const MyBottomNavigationBar(),
+        ),
+        GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
-        GetPage(name: "/profile/boho", page: () => InfoBohoScreen()),
-        GetPage(name: "/profile/hospital", page: () => InfoHospitalScreen()),
-        GetPage(name: "/profile/star", page: () => InfoStarScreen()),
-        GetPage(name: "/profile/wish", page: () => const ProfileWishScreen()),
+        GetPage(
+          name: "/profile/boho",
+          page: () => InfoBohoScreen(),
+        ),
+        GetPage(
+          name: "/profile/hospital",
+          page: () => InfoHospitalScreen(),
+        ),
+        GetPage(
+          name: "/profile/star",
+          page: () => InfoStarScreen(),
+        ),
+        GetPage(
+          name: "/profile/wish",
+          page: () => const ProfileWishScreen(),
+        ),
         GetPage(
           name: '/login',
           page: () => const LoginEntryScreen(),
           children: [
             GetPage(
+              name: '/process',
+              page: () => LoginProcess(),
+              transition: Transition.noTransition,
+            ),
+            GetPage(
               name: '/kakao',
               page: () => const KakaoLoginScreen(),
-            ),
-            GetPage(
-              name: '/terms',
-              page: () => const LoginTermsScreen(),
-            ),
-            GetPage(
-              name: '/identify/entry',
-              page: () => const IdentificationEntryScreen(),
             ),
             GetPage(
               name: '/identify/process',
               page: () => const IdentificationScreen(),
             ),
-            GetPage(
-              name: '/identify/result',
-              page: () => const IdentificationResultScreen(),
-            ),
-            GetPage(
-              name: '/nickname',
-              page: () => const NicknameInputScreen(),
-            ),
-            GetPage(
-              name: '/nickname/process',
-              page: () => SetNicknameScreen(),
-            ),
-            GetPage(
-              name: '/mode',
-              page: () => const ModeSelectionScreen(),
-            ),
-            GetPage(
-              name: '/mode/process',
-              page: () => SetModeScreen(),
-            ),
-            GetPage(
-              name: '/finish',
-              page: () => const LoginFinishedScreen(),
-            ),
           ],
         ),
-        GetPage(name: '/setting/app', page: () => const SettingScreen()),
-        GetPage(name: '/setting/alert', page: () => AlertScreen()),
-        GetPage(name: '/signout', page: () => const SettingSignoutScreen()),
-        GetPage(name: "/seniorSurvey", page: () => const SurveySeniorScreen()),
-        GetPage(name: "/normalSurvey", page: () => const SurveyNormalScreen()),
-        GetPage(name: "/survey/result", page: () => const SurveyResultScreen()),
-        GetPage(name: "/calendar", page: () => CalenderScreen()),
+        GetPage(
+          name: '/setting/app',
+          page: () => const SettingScreen(),
+        ),
+        GetPage(
+          name: '/setting/alert',
+          page: () => const AlertScreen(),
+        ),
+        GetPage(
+          name: '/signout',
+          page: () => const SettingSignoutScreen(),
+        ),
+        GetPage(
+          name: "/seniorSurvey",
+          page: () => const SurveySeniorScreen(),
+        ),
+        GetPage(
+          name: "/normalSurvey",
+          page: () => const SurveyNormalScreen(),
+        ),
+        GetPage(
+          name: "/survey/result",
+          page: () => const SurveyResultScreen(),
+        ),
+        GetPage(
+          name: "/calendar",
+          page: () => CalenderScreen(),
+        ),
         // /home/pill/add/$type
         GetPage(
             name: "/pill/add/direct",
@@ -159,8 +159,9 @@ class MyApp extends StatelessWidget {
               ),
             ]),
         GetPage(
-            name: "/pill/add/ocrGeneral",
-            page: () => const MedicationOcrGeneralScreen()),
+          name: "/pill/add/ocrGeneral",
+          page: () => const MedicationOcrGeneralScreen(),
+        ),
         GetPage(
           name: "/pill/add/ocrEnvelop",
           page: () => const EnvelopOcrEntryScreen(),
@@ -177,11 +178,11 @@ class MyApp extends StatelessWidget {
               name: "/process",
               page: () => const EnvelopAnalysisScreen(),
             ),
-            GetPage(
-              name: "/result",
-              page: () => const EnvelopOcrAnalysisResult(),
-            ),
           ],
+        ),
+        GetPage(
+          name: "/pill/add/final",
+          page: () => AddMedicineScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],

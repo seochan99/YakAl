@@ -32,8 +32,7 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.viewModel.calendarInfoModel
-                              .getSelectedDateStr(),
+                          widget.viewModel.calendarDate.getSelectedDateStr(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Color(0xFF626272),

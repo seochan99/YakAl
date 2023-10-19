@@ -54,13 +54,6 @@ class PillFloatingActionButton extends StatelessWidget {
                               height: 1,
                               color: const Color(0xFFE9E9EE),
                             ),
-                            _floatItem('ocrGeneral', '일반 의약품',
-                                'assets/icons/icon-plus-bottle.svg'),
-                            Container(
-                              width: double.infinity,
-                              height: 1,
-                              color: const Color(0xFFE9E9EE),
-                            ),
                             _floatItem("direct", '직접 입력',
                                 'assets/icons/icon-pencil-box.svg'),
                           ],
