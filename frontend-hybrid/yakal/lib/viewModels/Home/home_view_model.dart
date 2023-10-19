@@ -27,7 +27,6 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
-
   @override
   void updatePillTodoAndDate() {
     // Start Data Loading

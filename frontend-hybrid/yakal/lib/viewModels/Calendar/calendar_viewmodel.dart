@@ -24,7 +24,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
       Rx<CalendarDate>(CalendarDate.selectedDate(selectedDate: DateTime.now()));
   final Rx<CountModel> _countModel =
       Rx<CountModel>(CountModel(totalCount: 0, takenCount: 0));
-  final RxMap<String, CalendarDay> _calendarDays = RxMap({});
+
+  final RxBool _isLoadedCalendar = false.obs;
+  final RxMap<String, Rx<CalendarDay>> _calendarDays = RxMap({});
 
   final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
@@ -32,7 +34,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
   CountModel get countModel => _countModel.value;
-  Map<String, CalendarDay> get calendarDays => _calendarDays;
+
+  bool get isLoadedCalendar => _isLoadedCalendar.value;
+  Map<String, Rx<CalendarDay>> get calendarDays => _calendarDays;
 
   @override
   bool get isLoaded => _isLoaded.value;
@@ -40,11 +44,23 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
 
-  CalendarViewModel() {
+  @override
+  void onInit() {
+    // TODO: implement onInit
+    super.onInit();
+    updateCalendarDays();
     updatePillTodoAndDate();
-    _calendarRepository.readCalendarInformation(DateTime.now()).then((value) {
-      _calendarDays.value = value;
+  }
+
+  void updateCalendarDays() async {
+    _isLoadedCalendar.value = true;
+    DateTime date = _calendarDate.value.focusedDate;
+    _calendarDays.value =
+        (await _calendarRepository.readCalendarInformation(date))
+            .map((key, value) {
+      return MapEntry(key, value.obs);
     });
+    _isLoadedCalendar.value = false;
   }
 
   @override
@@ -126,7 +142,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
               if (key ==
                   DateFormat("yyyy-MM-dd").format(calendarDate.selectedDate)) {
                 print("update calendarDay $key");
-                value.progress = _countModel.value.getProgress();
+                value.update((val) {
+                  val!.progress = _countModel.value.getProgress();
+                });
               }
             }));
   }
@@ -197,7 +215,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
               if (key ==
                   DateFormat("yyyy-MM-dd").format(calendarDate.selectedDate)) {
                 print("update calendarDay $key");
-                value.progress = _countModel.value.getProgress();
+                value.update((val) {
+                  val!.progress = _countModel.value.getProgress();
+                });
               }
             }));
   }
@@ -211,8 +231,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
         _calendarDate.value.copyWith(selectedDate: date, focusedDate: date);
 
     if (beforeMonth != _calendarDate.value.focusedDate.month) {
-      _calendarDays.value =
-          await _calendarRepository.readCalendarInformation(date);
+      updateCalendarDays();
     }
 
     updatePillTodoAndDate();
@@ -224,8 +243,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
     _calendarDate.value = _calendarDate.value.copyWith(focusedDate: date);
 
     if (beforeMonth != _calendarDate.value.focusedDate.month) {
-      _calendarDays.value =
-          await _calendarRepository.readCalendarInformation(date);
+      updateCalendarDays();
     }
   }
 }

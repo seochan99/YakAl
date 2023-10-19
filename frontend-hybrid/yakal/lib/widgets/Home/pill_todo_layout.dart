@@ -29,6 +29,12 @@ class _PillTodoLayoutState extends State<PillTodoLayout> {
   _PillTodoLayoutState(this.viewModel, this.isCalendarView);
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() => viewModel.isLoaded
         ? const Center(
