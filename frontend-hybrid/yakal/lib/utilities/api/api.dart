@@ -116,9 +116,10 @@ Future<Dio> authDio(BuildContext context) async {
             print("🎉 Token Refresh Successes!");
           }
 
-          final newAccessToken = refreshResponse.data['accessToken']! as String;
+          final newAccessToken =
+              refreshResponse.data["data"]['accessToken']! as String;
           final newRefreshToken =
-              refreshResponse.headers['refreshToken']! as String;
+              refreshResponse.data["data"]['refreshToken']! as String;
 
           await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
           await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
@@ -235,9 +236,10 @@ Future<Dio> authDioWithContext() async {
             print("🎉 Token Refresh Successes!");
           }
 
-          final newAccessToken = refreshResponse.data['accessToken']! as String;
+          final newAccessToken =
+              refreshResponse.data["data"]['accessToken']! as String;
           final newRefreshToken =
-              refreshResponse.headers['refreshToken']! as String;
+              refreshResponse.data["data"]['refreshToken']! as String;
 
           await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
           await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
