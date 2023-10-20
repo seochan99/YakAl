@@ -127,10 +127,10 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                   ],
                 ),
                 /*----------------- 다른 날짜 복약정보 버튼 ----------------- */
-                SizedBox.fromSize(size: const Size(0, 10)),
+                SizedBox.fromSize(size: const Size(0, 7)),
                 Container(
                   height: 35,
-                  margin: const EdgeInsetsDirectional.fromSTEB(20, 5, 0, 10),
+                  margin: const EdgeInsetsDirectional.fromSTEB(20, 5, 0, 5),
                   alignment: Alignment.centerLeft,
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
