@@ -8,4 +8,9 @@ class DoseNameCodeModel {
     required this.atcCode,
     required this.kdCode,
   });
+
+  @override
+  String toString() {
+    return "{name: $name, atcCode: $atcCode, kdCode: $kdCode}";
+  }
 }

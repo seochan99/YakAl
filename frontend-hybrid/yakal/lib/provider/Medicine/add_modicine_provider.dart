@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
-import 'package:yakal/models/Medication/dose_name_code_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
@@ -31,57 +30,58 @@ class AddMedicineProvider {
     }
   }
 
-  Future<DoseNameCodeModel?> getKDCodeAndATCCode(String dosename) async {
-    final dio = await authDioWithContext();
-
-    final exceptSpace = RegExp(r"\s");
-    final processedName = dosename.replaceAll(exceptSpace, "");
-
-    final Uri url = Uri.parse("/dose/name").replace(queryParameters: {
-      "dosename": processedName,
-    });
-
-    try {
-      var response = await dio.get(url.toString());
-
-      if (response.statusCode == 200) {
-        return DoseNameCodeModel(
-          name: dosename,
-          atcCode: response.data["data"]["atcCode"],
-          kdCode: response.data["data"]["kdCode"],
-        );
-      } else {
-        assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-        return null;
-      }
-    } on DioException catch (error) {
-      final koreanRegex = RegExp(r"[가-힣]");
-      final lastKorIndex = processedName.lastIndexOf(koreanRegex);
-      final processedInFail = processedName.substring(0, lastKorIndex + 1);
-
-      final Uri urlInFail = Uri.parse("/dose/name").replace(queryParameters: {
-        "dosename": processedInFail,
-      });
-
-      try {
-        var responseInFail = await dio.get(urlInFail.toString());
-
-        if (responseInFail.statusCode == 200) {
-          return DoseNameCodeModel(
-            name: dosename,
-            atcCode: responseInFail.data["data"]["atcCode"],
-            kdCode: responseInFail.data["data"]["kdCode"],
-          );
-        } else {
-          assert(
-              false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-          return null;
-        }
-      } on DioException catch (error) {
-        return null;
-      }
-    }
-  }
+  // API 통신으로 약 코드 알아내기
+  // Future<DoseNameCodeModel?> getKDCodeAndATCCode(String dosename) async {
+  //   final dio = await authDioWithContext();
+  //
+  //   final exceptSpace = RegExp(r"\s");
+  //   final processedName = dosename.replaceAll(exceptSpace, "");
+  //
+  //   final Uri url = Uri.parse("/dose/name").replace(queryParameters: {
+  //     "dosename": processedName,
+  //   });
+  //
+  //   try {
+  //     var response = await dio.get(url.toString());
+  //
+  //     if (response.statusCode == 200) {
+  //       return DoseNameCodeModel(
+  //         name: dosename,
+  //         atcCode: response.data["data"]["atcCode"],
+  //         kdCode: response.data["data"]["kdCode"],
+  //       );
+  //     } else {
+  //       assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
+  //       return null;
+  //     }
+  //   } on DioException catch (error) {
+  //     final koreanRegex = RegExp(r"[가-힣]");
+  //     final lastKorIndex = processedName.lastIndexOf(koreanRegex);
+  //     final processedInFail = processedName.substring(0, lastKorIndex + 1);
+  //
+  //     final Uri urlInFail = Uri.parse("/dose/name").replace(queryParameters: {
+  //       "dosename": processedInFail,
+  //     });
+  //
+  //     try {
+  //       var responseInFail = await dio.get(urlInFail.toString());
+  //
+  //       if (responseInFail.statusCode == 200) {
+  //         return DoseNameCodeModel(
+  //           name: dosename,
+  //           atcCode: responseInFail.data["data"]["atcCode"],
+  //           kdCode: responseInFail.data["data"]["kdCode"],
+  //         );
+  //       } else {
+  //         assert(
+  //             false, "🚨 [Status Code Is Wrong] Check called API is correct.");
+  //         return null;
+  //       }
+  //     } on DioException catch (error) {
+  //       return null;
+  //     }
+  //   }
+  // }
 
   Future<int> getDefaultPrescriptionId() async {
     var dio = await authDioWithContext();

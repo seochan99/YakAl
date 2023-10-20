@@ -51,7 +51,7 @@ class EnvelopAnalysisProvider {
       var inferList = response.data["images"][0]["fields"];
       var textList = <String>[];
       for (var infer in inferList) {
-        if (infer["inferConfidence"] > 0.9) {
+        if (infer["inferConfidence"] > 0.8) {
           textList.add(infer["inferText"]);
         }
       }
