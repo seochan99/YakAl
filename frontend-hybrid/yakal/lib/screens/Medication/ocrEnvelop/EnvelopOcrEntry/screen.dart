@@ -12,10 +12,6 @@ class EnvelopOcrEntryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const padding = 30.0;
-    final previewScale =
-        (MediaQuery.of(context).size.width - padding * 2.0) / 340.0;
-
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
@@ -25,7 +21,7 @@ class EnvelopOcrEntryScreen extends StatelessWidget {
         child: Container(
           color: ColorStyles.gray1,
           child: Padding(
-            padding: const EdgeInsets.all(padding),
+            padding: const EdgeInsets.all(30.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -48,67 +44,9 @@ class EnvelopOcrEntryScreen extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width -
-                                padding * 2.0,
-                            padding: EdgeInsets.zero,
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                Transform.scale(
-                                  scale: previewScale,
-                                  child: SvgPicture.asset(
-                                    "assets/images/phone-outline.svg",
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(
-                                    290 * previewScale / 2,
-                                    78.5 * previewScale,
-                                  ),
-                                  child: Transform.scale(
-                                    scale: previewScale,
-                                    child: SvgPicture.asset(
-                                      "assets/images/bottom-button.svg",
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(
-                                    -290 * previewScale / 2,
-                                    77.0 * previewScale,
-                                  ),
-                                  child: Transform.scale(
-                                    scale: previewScale,
-                                    child: SvgPicture.asset(
-                                      "assets/images/speaker.svg",
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(0.0, 10.0 * previewScale),
-                                  child: Transform.scale(
-                                    scale: previewScale,
-                                    child: SvgPicture.asset(
-                                      "assets/images/screen.svg",
-                                    ),
-                                  ),
-                                ),
-                                Transform.translate(
-                                  offset: Offset(0.0, 13.0 * previewScale),
-                                  child: Transform.scale(
-                                    scale: previewScale,
-                                    child: SvgPicture.asset(
-                                      "assets/images/medicine-envelop.svg",
-                                      colorFilter: const ColorFilter.mode(
-                                        ColorStyles.white,
-                                        BlendMode.dstOver,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          Image.asset(
+                            "assets/images/ocr_preview.png",
+                            width: MediaQuery.of(context).size.width - 60.0,
                           ),
                         ],
                       ),

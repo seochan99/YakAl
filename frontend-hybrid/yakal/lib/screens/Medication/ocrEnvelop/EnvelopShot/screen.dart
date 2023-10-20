@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopShot/style.dart';
@@ -19,6 +22,7 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
 
   CameraController? _cameraController;
   bool _isCameraReady = false;
+  late Timer _timer;
 
   @override
   void initState() {
@@ -30,11 +34,26 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
           _cameraController = CameraController(
             cameras.first,
             ResolutionPreset.medium,
+            enableAudio: false,
           );
 
           _cameraController!.initialize().then((_) {
-            setState(() {
-              _isCameraReady = true;
+            _cameraController!
+                .lockCaptureOrientation(
+              DeviceOrientation.portraitUp,
+            )
+                .then((_) {
+              setState(() {
+                _isCameraReady = true;
+                _timer = Timer.periodic(
+                  const Duration(seconds: 2),
+                  (timer) {
+                    setState(() {
+                      _cameraController!.setFocusPoint(const Offset(0.5, 0.5));
+                    });
+                  },
+                );
+              });
             });
           });
         }
@@ -55,17 +74,19 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
   }
 
   @override
+  void dispose() {
+    _timer.cancel();
+    _cameraController!.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final shotBoxWidth = MediaQuery.of(context).size.width - 60.0;
     final shotBoxHeight = (shotBoxWidth * 7) / 5;
 
-    final cameraPreviewRatio = MediaQuery.of(context).size.width /
-        (MediaQuery.of(context).size.height -
-            MediaQuery.of(context).padding.bottom -
-            MediaQuery.of(context).padding.top -
-            kToolbarHeight);
-
     return Scaffold(
+      backgroundColor: ColorStyles.gray3,
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: DefaultBackAppbar(title: "약 봉투 촬영"),
@@ -77,13 +98,6 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
               child: _cameraController != null && _isCameraReady
                   ? Stack(
                       children: [
-                        Transform.scale(
-                          scale: 1 /
-                              (_cameraController!.value.aspectRatio *
-                                  cameraPreviewRatio),
-                          alignment: Alignment.topCenter,
-                          child: CameraPreview(_cameraController!),
-                        ),
                         ColorFiltered(
                           colorFilter: ColorFilter.mode(
                               Colors.black.withOpacity(0.5), BlendMode.srcOut),
@@ -140,6 +154,21 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
                                   width: shotBoxWidth,
                                   child: Stack(
                                     children: [
+                                      ClipRect(
+                                        clipper: _MediaSizeClipper(Size(
+                                          shotBoxWidth,
+                                          (shotBoxWidth * 7) / 5,
+                                        )),
+                                        child: Transform.scale(
+                                          scale: 7 /
+                                              (_cameraController!
+                                                      .value.aspectRatio *
+                                                  5),
+                                          alignment: Alignment.topCenter,
+                                          child:
+                                              CameraPreview(_cameraController!),
+                                        ),
+                                      ),
                                       SvgPicture.asset(
                                         "assets/icons/top-left-frame.svg",
                                       ),
@@ -232,5 +261,21 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
         ),
       ),
     );
+  }
+}
+
+class _MediaSizeClipper extends CustomClipper<Rect> {
+  final Size mediaSize;
+
+  const _MediaSizeClipper(this.mediaSize);
+
+  @override
+  Rect getClip(Size size) {
+    return Rect.fromLTWH(0, 0, mediaSize.width, mediaSize.height);
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Rect> oldClipper) {
+    return true;
   }
 }

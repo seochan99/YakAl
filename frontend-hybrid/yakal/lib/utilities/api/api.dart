@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart' as get_x;
-import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 Future<Dio> authDio(BuildContext context) async {
   var dio = Dio(BaseOptions(
@@ -78,15 +77,9 @@ Future<Dio> authDio(BuildContext context) async {
                   print("🚨️ Token Refresh Failed...");
                 }
 
-                if (error.response?.statusCode == 401) {
+                if (error.response?.statusCode == 401 ||
+                    error.response?.statusCode == 404) {
                   await storage.deleteAll();
-
-                  final controller = get_x.Get.put(
-                    UserViewModel(),
-                    permanent: true,
-                  );
-                  controller.reset();
-
                   get_x.Get.offAllNamed("/login");
 
                   if (!context.mounted) {
@@ -116,9 +109,10 @@ Future<Dio> authDio(BuildContext context) async {
             print("🎉 Token Refresh Successes!");
           }
 
-          final newAccessToken = refreshResponse.data['accessToken']! as String;
+          final newAccessToken =
+              refreshResponse.data["data"]['accessToken']! as String;
           final newRefreshToken =
-              refreshResponse.headers['refreshToken']! as String;
+              refreshResponse.data["data"]['refreshToken']! as String;
 
           await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
           await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
@@ -216,7 +210,8 @@ Future<Dio> authDioWithContext() async {
                   print("🚨️ Token Refresh Failed...");
                 }
 
-                if (error.response?.statusCode == 401) {
+                if (error.response?.statusCode == 401 ||
+                    error.response?.statusCode == 404) {
                   await storage.deleteAll();
                   get_x.Get.offAllNamed("/login");
                 }
@@ -235,9 +230,10 @@ Future<Dio> authDioWithContext() async {
             print("🎉 Token Refresh Successes!");
           }
 
-          final newAccessToken = refreshResponse.data['accessToken']! as String;
+          final newAccessToken =
+              refreshResponse.data["data"]['accessToken']! as String;
           final newRefreshToken =
-              refreshResponse.headers['refreshToken']! as String;
+              refreshResponse.data["data"]['refreshToken']! as String;
 
           await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
           await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);

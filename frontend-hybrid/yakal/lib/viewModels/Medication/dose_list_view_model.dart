@@ -1,18 +1,97 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:string_similarity/string_similarity.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
 import 'package:yakal/models/Medication/dose_name_code_model.dart';
+import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/provider/Medicine/add_modicine_provider.dart';
+import 'package:yakal/provider/Medicine/envelop_analysis_provider.dart';
+import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
+import 'package:yakal/repository/Medicine/medicne_code_repository.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
 class DoseListViewModel extends GetxController {
+  final MedicationDirectProvider _medicationDirectProvider =
+      MedicationDirectProvider();
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
+  final EnvelopAnalysisProvider _envelopAnalysisProvider =
+      EnvelopAnalysisProvider();
+  final MedicineCodeRepository _medicineCodeRepository =
+      MedicineCodeRepository();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
+
+  Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
+    var textList = await _envelopAnalysisProvider.getTextFromImage(imagePath);
+
+    if (kDebugMode) {
+      print("🎑 [OCR Log] textList: $textList");
+    }
+
+    if (textList.isEmpty) {
+      return false;
+    }
+
+    var medicinesName = await _medicineCodeRepository.getMedicinesName();
+
+    var futures = <Future<List<SearchMedicineModel>>>[];
+
+    for (var text in textList) {
+      var nonSpaceText = text.replaceAll(" ", "");
+      var bestMatch =
+          StringSimilarity.findBestMatch(nonSpaceText, medicinesName);
+
+      if (bestMatch.bestMatch.rating! > 0.7) {
+        futures.add(
+          _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
+        );
+      }
+    }
+
+    List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
+    var doseNameCodeList = <Map<String, String>>[];
+
+    for (var search in searchList) {
+      if (search.isEmpty) {
+        continue;
+      }
+
+      doseNameCodeList.add({
+        "name": search[0].name,
+        "code": search[0].code,
+      });
+    }
+
+    var doseNameCodeListWithoutOverlap = <Map<String, String>>[];
+
+    outerLoop:
+    for (var element in doseNameCodeList) {
+      for (var newElement in doseNameCodeListWithoutOverlap) {
+        if (newElement["name"] == element["name"] &&
+            newElement["code"] == element["code"]) {
+          continue outerLoop;
+        }
+      }
+      doseNameCodeListWithoutOverlap.add(element);
+    }
+
+    if (kDebugMode) {
+      print(
+          "🎑 [OCR Log] KIMS Medicine Search Result: $doseNameCodeListWithoutOverlap");
+    }
+
+    if (doseNameCodeListWithoutOverlap.isEmpty) {
+      return false;
+    }
+
+    setGroupList(doseNameCodeListWithoutOverlap);
+
+    return true;
+  }
 
   void setGroupList(List<Map<String, String>> doseNameCodeList) {
     var doseList = <DoseItemModel>[];
@@ -209,11 +288,15 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
-        futures.add(_addMedicineProvider.getKDCodeAndATCCode(dose.name));
+        futures.add(_medicineCodeRepository.getKDCodeAndATCCode(dose.name));
       }
     }
 
     List<DoseNameCodeModel?> codeList = await Future.wait(futures);
+
+    if (kDebugMode) {
+      print("📛 [Result Of Searching Medicine Code] $codeList");
+    }
 
     for (var i = 0; i < codeList.length; ++i) {
       if (codeList[i] != null) {
