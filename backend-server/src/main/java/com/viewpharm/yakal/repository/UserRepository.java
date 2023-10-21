@@ -84,6 +84,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByIdAndJob(Long userId, EJob patient);
 
+    List<User> findByNameAndBirthday(String name, LocalDate birthday);
+
     interface UserNotificationForm {
         Long getUserId();
 

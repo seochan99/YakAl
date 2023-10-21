@@ -3,6 +3,7 @@ package com.viewpharm.yakal.service;
 import com.viewpharm.yakal.domain.Guardian;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.response.PatientDto;
+import com.viewpharm.yakal.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.AnswerRepository;
@@ -12,6 +13,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -92,6 +97,19 @@ public class GuardianService {
         guardianRepository.delete(guard);
 
         return Boolean.TRUE;
+    }
+
+    public List<UserListDtoForGuardian> getUserForGuardian(Long userId, String name, LocalDate birthday) {
+        //유저 확인
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        List<User> users = userRepository.findByNameAndBirthday(name, birthday);
+
+        List<UserListDtoForGuardian> listDtos = users.stream()
+                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
+                .collect(Collectors.toList());
+
+        return listDtos;
     }
 
 }
