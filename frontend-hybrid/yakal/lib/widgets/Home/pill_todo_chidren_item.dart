@@ -110,14 +110,26 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
             const Spacer(),
             InkWell(
               onTap: () {
+                // 3일이 지난 경우 수정 불가능
                 if (DateTime.now().difference(todoDate).inDays > 3) {
-                  Get.snackbar('복약 완료', '3일이 지나면 수정이 불가능해요!',
+                  Get.snackbar('복약 기록', '3일이 지나면 수정이 불가능해요!',
                       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       duration: const Duration(seconds: 1, microseconds: 500),
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: ColorStyles.gray1,
                       colorText: Colors.black);
-                } else {
+                }
+                // 오늘 날짜보다 이후인 경우 수정 불가능
+                else if (DateTime.now().difference(todoDate).inDays < 0) {
+                  Get.snackbar('복약 기록', '미래의 복약 기록을 작성하는 것은 불가능해요.',
+                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      duration: const Duration(seconds: 1, microseconds: 500),
+                      snackPosition: SnackPosition.BOTTOM,
+                      backgroundColor: ColorStyles.gray1,
+                      colorText: Colors.black);
+                }
+                // 복약 기록 수정 가능
+                else {
                   onClickChildrenCheckBox(eTakingTime, pillTodoChildren.id);
                 }
               },

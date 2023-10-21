@@ -155,11 +155,12 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               SizedBox.fromSize(size: const Size(8, 8)),
                               InkWell(
                                 onTap: () {
+                                  // 3일이 지난 경우 수정 불가능
                                   if (DateTime.now()
                                           .difference(todoDate)
                                           .inDays >
                                       3) {
-                                    Get.snackbar('복약 완료', '3일이 지나면 수정이 불가능해요!',
+                                    Get.snackbar('복약 기록', '3일이 지나면 수정이 불가능해요!',
                                         margin: const EdgeInsets.fromLTRB(
                                             20, 0, 20, 20),
                                         duration: const Duration(
@@ -167,9 +168,21 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                         snackPosition: SnackPosition.BOTTOM,
                                         backgroundColor: ColorStyles.gray1,
                                         colorText: Colors.black);
-                                  } else {
-                                    onClickParentCheckBox(
-                                        pillTodoParent.eTakingTime);
+                                  }
+                                  // 오늘 날짜보다 이후인 경우 수정 불가능
+                                  else if (DateTime.now()
+                                          .difference(todoDate)
+                                          .inDays <
+                                      0) {
+                                    Get.snackbar(
+                                        '복약 기록', '미래의 복약 기록을 작성하는 것은 불가능해요.',
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 20),
+                                        duration: const Duration(
+                                            seconds: 1, microseconds: 500),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: ColorStyles.gray1,
+                                        colorText: Colors.black);
                                   }
                                 },
                                 // InkWell Repple Effect 없애기
