@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -7,6 +10,7 @@ import 'package:yakal/widgets/Base/custom_expansion_tile.dart';
 import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
+  final DateTime todoDate;
   final PillTodoParent pillTodoParent;
   final Function(ETakingTime) onClickParentCheckBox;
   final Function(ETakingTime) onClickParentItemView;
@@ -14,7 +18,8 @@ class PillTodoParentItem extends StatefulWidget {
   final Function(String, String)? onClickChildrenItemView;
 
   const PillTodoParentItem(
-      {required this.pillTodoParent,
+      {required this.todoDate,
+      required this.pillTodoParent,
       required this.onClickParentCheckBox,
       required this.onClickParentItemView,
       required this.onClickChildrenCheckBox,
@@ -27,9 +32,28 @@ class PillTodoParentItem extends StatefulWidget {
 }
 
 class _PillTodoParentItemState extends State<PillTodoParentItem> {
+  late final DateTime todoDate;
+  late final PillTodoParent pillTodoParent;
+  late final Function(ETakingTime) onClickParentCheckBox;
+  late final Function(ETakingTime) onClickParentItemView;
+  late final Function(ETakingTime, int) onClickChildrenCheckBox;
+  late final Function(String, String)? onClickChildrenItemView;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    todoDate = widget.todoDate;
+    pillTodoParent = widget.pillTodoParent;
+    onClickParentCheckBox = widget.onClickParentCheckBox;
+    onClickParentItemView = widget.onClickParentItemView;
+    onClickChildrenCheckBox = widget.onClickChildrenCheckBox;
+    onClickChildrenItemView = widget.onClickChildrenItemView;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return widget.pillTodoParent.eTakingTime == ETakingTime.INVISIBLE
+    return pillTodoParent.eTakingTime == ETakingTime.INVISIBLE
         ? const SizedBox(
             width: 60,
             height: 80,
@@ -52,7 +76,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                   children: [
                     Container(
                       padding: const EdgeInsetsDirectional.fromSTEB(5, 5, 5, 5),
-                      decoration: widget.pillTodoParent.isExpanded
+                      decoration: pillTodoParent.isExpanded
                           ? const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(16)),
@@ -71,8 +95,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                             .copyWith(dividerColor: Colors.transparent),
                         child: MyExpansionTile(
                           onExpansionChanged: (newState) {
-                            widget.onClickParentItemView(
-                                widget.pillTodoParent.eTakingTime);
+                            onClickParentItemView(pillTodoParent.eTakingTime);
                           },
                           expandedCrossAxisAlignment: CrossAxisAlignment.start,
                           tilePadding: const EdgeInsetsDirectional.fromSTEB(
@@ -92,14 +115,14 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                     3, 3, 3, 3),
                                 width: 30,
                                 height: 30,
-                                child: widget.pillTodoParent.isExpanded
+                                child: pillTodoParent.isExpanded
                                     ? SvgPicture.asset(
                                         'assets/icons/icon-pill-on.svg')
                                     : SvgPicture.asset(
                                         'assets/icons/icon-pill-off.svg'),
                               ),
                               SizedBox.fromSize(size: const Size(8, 8)),
-                              Text(widget.pillTodoParent.eTakingTime.time,
+                              Text(pillTodoParent.eTakingTime.time,
                                   style: const TextStyle(
                                     fontSize: 20,
                                     color: ColorStyles.black,
@@ -107,7 +130,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                   )),
                               SizedBox.fromSize(size: const Size(8, 8)),
                               Text(
-                                widget.pillTodoParent.getTotalCnt(),
+                                pillTodoParent.getTotalCnt(),
                                 style: const TextStyle(
                                   fontSize: 14,
                                   color: ColorStyles.gray4,
@@ -117,7 +140,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               //오른쪽 정렬된 Text
                               const Spacer(),
                               Text('모두 완료',
-                                  style: widget.pillTodoParent.isCompleted
+                                  style: pillTodoParent.isCompleted
                                       ? const TextStyle(
                                           fontSize: 16,
                                           color: ColorStyles.main,
@@ -132,15 +155,42 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               SizedBox.fromSize(size: const Size(8, 8)),
                               InkWell(
                                 onTap: () {
-                                  widget.onClickParentCheckBox(
-                                      widget.pillTodoParent.eTakingTime);
+                                  // 3일이 지난 경우 수정 불가능
+                                  if (DateTime.now()
+                                          .difference(todoDate)
+                                          .inDays >
+                                      3) {
+                                    Get.snackbar('복약 기록', '3일이 지나면 수정이 불가능해요!',
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 20),
+                                        duration: const Duration(
+                                            seconds: 1, microseconds: 500),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: ColorStyles.gray1,
+                                        colorText: Colors.black);
+                                  }
+                                  // 오늘 날짜보다 이후인 경우 수정 불가능
+                                  else if (DateTime.now()
+                                          .difference(todoDate)
+                                          .inDays <
+                                      0) {
+                                    Get.snackbar(
+                                        '복약 기록', '미래의 복약 기록을 작성하는 것은 불가능해요.',
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 20),
+                                        duration: const Duration(
+                                            seconds: 1, microseconds: 500),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: ColorStyles.gray1,
+                                        colorText: Colors.black);
+                                  }
                                 },
                                 // InkWell Repple Effect 없애기
                                 splashColor: Colors.transparent,
                                 child: SizedBox(
                                   width: 48,
                                   height: 48,
-                                  child: widget.pillTodoParent.isCompleted
+                                  child: pillTodoParent.isCompleted
                                       ? SvgPicture.asset(
                                           'assets/icons/icon-check-on-36.svg')
                                       : SvgPicture.asset(
@@ -157,7 +207,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                 decoration: const BoxDecoration(
                                     color: Color(0xffe9e9ee))),
                             SizedBox.fromSize(size: const Size(0, 10)),
-                            if (widget.pillTodoParent.isOverLap)
+                            if (pillTodoParent.isOverLap)
                               Container(
                                   width: MediaQuery.of(context).size.width - 20,
                                   height: 40,
@@ -181,21 +231,19 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemCount: widget.pillTodoParent.todos.length,
+                              itemCount: pillTodoParent.todos.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return PillTodoChildrenItem(
-                                  eTakingTime:
-                                      widget.pillTodoParent.eTakingTime,
-                                  pillTodoChildren:
-                                      widget.pillTodoParent.todos[index],
+                                  todoDate: todoDate,
+                                  eTakingTime: pillTodoParent.eTakingTime,
+                                  pillTodoChildren: pillTodoParent.todos[index],
                                   onClickChildrenCheckBox:
                                       (eTakingTime, todoId) {
-                                    widget.onClickChildrenCheckBox(
+                                    onClickChildrenCheckBox(
                                         eTakingTime, todoId);
                                   },
                                   onClickChildrenItemView: (name, kdCode) {
-                                    widget.onClickChildrenItemView
-                                        ?.call(name, kdCode);
+                                    onClickChildrenItemView?.call(name, kdCode);
                                   },
                                 );
                               },

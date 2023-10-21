@@ -12,14 +12,17 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
   final RxBool _isExpanded = false.obs;
-  final Rx<DateTime> _todayDate = DateTime.now().obs;
+  late final Rx<DateTime> _todoDate = DateTime.now().obs;
   final Rx<CountModel> _countModel =
       CountModel(totalCount: 0, takenCount: 0).obs;
   final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
 
   bool get isExpanded => _isExpanded.value;
-  DateTime get todayDate => _todayDate.value;
+
+  @override
+  DateTime get todoDate => _todoDate.value;
+  @override
   CountModel get countModel => _countModel.value;
   @override
   bool get isLoaded => _isLoaded.value;
@@ -41,11 +44,11 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
     _countModel.value = CountModel(totalCount: 0, takenCount: 0);
 
     // PillTodoParents Update
-    DateTime date = DateTime.now();
+    _todoDate.value = DateTime.now();
 
     // Read PillTodoParents In Remote DB
     _pillTodoRepository
-        .readPillTodoParents(date)
+        .readPillTodoParents(_todoDate.value)
         // Finish Reading PillTodoParents In Remote DB
         .then((value) => {
               _pillTodoParents.value = value.map((e) => e.obs).toList(),
@@ -81,7 +84,7 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
         .isCompleted;
 
     _pillTodoRepository
-        .updatePillTodoParent(_todayDate.value, eTakingTime, !isCompleted)
+        .updatePillTodoParent(_todoDate.value, eTakingTime, !isCompleted)
         .then((value) => {
               if (value)
                 _pillTodoParents.value = _pillTodoParents.map((parent) {
