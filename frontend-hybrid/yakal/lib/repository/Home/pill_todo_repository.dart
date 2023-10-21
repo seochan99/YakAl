@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:yakal/models/Home/overlap_info.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
 
@@ -60,6 +63,27 @@ class PillTodoRepository {
     }
 
     return pillTodoParents;
+  }
+
+  Future<Map<String, List<OverlapInfo>>> readOverLapDoseInfo(
+      DateTime dateTime) async {
+    Map<String, List<OverlapInfo>> result = {};
+
+    // API Server 통신
+    Map<String, dynamic> response =
+        await _pillTodoProvider.getPillTodoParents(dateTime);
+
+    Map<String, dynamic> overLapDoseInfo = response['overlap'];
+
+    for (var eTakingTime in ETakingTime.values
+        .where((element) => element != ETakingTime.INVISIBLE)) {
+      result[eTakingTime.toString().split(".").last] = OverlapInfo.fromJsonList(
+          overLapDoseInfo[eTakingTime.toString().split(".").last]);
+    }
+
+    print(result);
+
+    return result;
   }
 
   Future<bool> updatePillTodoParent(

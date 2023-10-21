@@ -61,6 +61,13 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
                   return PillTodoParentItem(
                     todoDate: viewModel.todoDate,
                     pillTodoParent: viewModel.pillTodoParents[index],
+                    isOverLap: viewModel
+                        .overlapInfoMap[viewModel
+                            .pillTodoParents[index].eTakingTime
+                            .toString()
+                            .split(".")
+                            .last]!
+                        .isNotEmpty,
                     onClickParentCheckBox: (eTakingTime) {
                       viewModel.onClickParentCheckBox(eTakingTime);
                     },

@@ -12,6 +12,7 @@ import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 class PillTodoParentItem extends StatefulWidget {
   final DateTime todoDate;
   final PillTodoParent pillTodoParent;
+  final bool isOverLap;
   final Function(ETakingTime) onClickParentCheckBox;
   final Function(ETakingTime) onClickParentItemView;
   final Function(ETakingTime, int) onClickChildrenCheckBox;
@@ -20,6 +21,7 @@ class PillTodoParentItem extends StatefulWidget {
   const PillTodoParentItem(
       {required this.todoDate,
       required this.pillTodoParent,
+      required this.isOverLap,
       required this.onClickParentCheckBox,
       required this.onClickParentItemView,
       required this.onClickChildrenCheckBox,
@@ -33,6 +35,7 @@ class PillTodoParentItem extends StatefulWidget {
 
 class _PillTodoParentItemState extends State<PillTodoParentItem> {
   late final DateTime todoDate;
+  late bool isOverLap;
   late final PillTodoParent pillTodoParent;
   late final Function(ETakingTime) onClickParentCheckBox;
   late final Function(ETakingTime) onClickParentItemView;
@@ -44,6 +47,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
     // TODO: implement initState
     super.initState();
     todoDate = widget.todoDate;
+    isOverLap = widget.isOverLap;
     pillTodoParent = widget.pillTodoParent;
     onClickParentCheckBox = widget.onClickParentCheckBox;
     onClickParentItemView = widget.onClickParentItemView;
@@ -207,7 +211,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                 decoration: const BoxDecoration(
                                     color: Color(0xffe9e9ee))),
                             SizedBox.fromSize(size: const Size(0, 10)),
-                            if (pillTodoParent.isOverLap)
+                            if (isOverLap)
                               Container(
                                   width: MediaQuery.of(context).size.width - 20,
                                   height: 40,

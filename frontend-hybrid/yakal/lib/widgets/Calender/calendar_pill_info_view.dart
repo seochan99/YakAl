@@ -62,6 +62,13 @@ class _CalendarPillInfoViewState extends State<CalendarPillInfoView> {
                       (context, index) => PillTodoParentItem(
                         todoDate: viewModel.todoDate,
                         pillTodoParent: viewModel.pillTodoParents[index],
+                        isOverLap: viewModel
+                            .overlapInfoMap[viewModel
+                                .pillTodoParents[index].eTakingTime
+                                .toString()
+                                .split(".")
+                                .last]!
+                            .isNotEmpty,
                         onClickParentCheckBox: (eTakingTime) {
                           viewModel.onClickParentCheckBox(eTakingTime);
                         },
