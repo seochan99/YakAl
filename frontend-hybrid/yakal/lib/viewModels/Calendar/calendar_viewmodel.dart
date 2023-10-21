@@ -23,7 +23,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // Model
   final Rx<CalendarDate> _calendarDate =
       Rx<CalendarDate>(CalendarDate.selectedDate(selectedDate: DateTime.now()));
-
+  late final Rx<DateTime> _todoDate;
   final Rx<CountModel> _countModel =
       Rx<CountModel>(CountModel(totalCount: 0, takenCount: 0));
 
@@ -35,6 +35,8 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
+  @override
+  DateTime get todoDate => _todoDate.value;
   @override
   CountModel get countModel => _countModel.value;
 
@@ -50,6 +52,8 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   @override
   void onInit() {
     super.onInit();
+
+    _todoDate = Rx<DateTime>(_calendarDate.value.selectedDate);
 
     updateCalendarDays();
     updatePillTodoAndDate();
@@ -82,9 +86,12 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
       val.takenCount = 0;
     });
 
+    // Update TodoDate
+    _todoDate.value = _calendarDate.value.selectedDate;
+
     // Read PillTodoParents In Remote DB
     _pillTodoRepository
-        .readPillTodoParents(_calendarDate.value.selectedDate)
+        .readPillTodoParents(_todoDate.value)
         // Finish Reading PillTodoParents In Remote DB
         .then((value) => {
               _pillTodoParents.value = value.map((e) => e.obs).toList(),

@@ -18,15 +18,20 @@ class PillTodoLayout extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<PillTodoLayout> createState() =>
-      _PillTodoLayoutState(viewModel, isCalendarView);
+  State<PillTodoLayout> createState() => _PillTodoLayoutState();
 }
 
 class _PillTodoLayoutState extends State<PillTodoLayout> {
-  final PillTodoViewModel viewModel;
-  final bool isCalendarView;
+  late final PillTodoViewModel viewModel;
+  late final bool isCalendarView;
 
-  _PillTodoLayoutState(this.viewModel, this.isCalendarView);
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel = widget.viewModel;
+    isCalendarView = widget.isCalendarView;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +45,9 @@ class _PillTodoLayoutState extends State<PillTodoLayout> {
             ? Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("아직 등록된 약이 없네요!",
+                  const Text("아직 등록된 약이 없네요!",
                       style: TextStyle(fontSize: 16, color: ColorStyles.gray4)),
-                  Text("약 등록을 해주세요!",
+                  const Text("약 등록을 해주세요!",
                       style: TextStyle(fontSize: 16, color: ColorStyles.gray4)),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -61,6 +66,7 @@ class _PillTodoLayoutState extends State<PillTodoLayout> {
                 itemBuilder: (context, index) {
                   return !isCalendarView
                       ? PillTodoParentItem(
+                          todoDate: viewModel.todoDate,
                           pillTodoParent: viewModel.pillTodoParents[index],
                           onClickParentCheckBox: (eTakingTime) {
                             viewModel.onClickParentCheckBox(eTakingTime);
@@ -81,6 +87,7 @@ class _PillTodoLayoutState extends State<PillTodoLayout> {
                           },
                         )
                       : PillTodoParentItem(
+                          todoDate: viewModel.todoDate,
                           pillTodoParent: viewModel.pillTodoParents[index],
                           onClickParentCheckBox: (eTakingTime) {
                             viewModel.onClickParentCheckBox(eTakingTime);

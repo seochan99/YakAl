@@ -24,17 +24,17 @@ class HomeScreen extends StatelessWidget {
             elevation: 0,
             automaticallyImplyLeading: false,
             actions: [
-              Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-                child: IconButton(
-                  splashColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onPressed: () {},
-                  icon: SvgPicture.asset(
-                    'assets/icons/icon-home-notification.svg',
-                  ),
-                ),
-              ),
+              // Padding(
+              //   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
+              //   child: IconButton(
+              //     splashColor: Colors.transparent,
+              //     highlightColor: Colors.transparent,
+              //     onPressed: () {},
+              //     icon: SvgPicture.asset(
+              //       'assets/icons/icon-home-notification.svg',
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           body: Center(

@@ -11,17 +11,16 @@ class HomeInfoLayout extends StatefulWidget {
   const HomeInfoLayout(this.viewModel, {super.key});
 
   @override
-  State<HomeInfoLayout> createState() => _HomeInfoLayoutState(viewModel);
+  State<HomeInfoLayout> createState() => _HomeInfoLayoutState();
 }
 
 class _HomeInfoLayoutState extends State<HomeInfoLayout> {
-  final HomeViewModel viewModel;
-
-  _HomeInfoLayoutState(this.viewModel);
+  late final HomeViewModel viewModel;
 
   @override
   void initState() {
     super.initState();
+    viewModel = widget.viewModel;
   }
 
   @override
@@ -54,7 +53,7 @@ class _HomeInfoLayoutState extends State<HomeInfoLayout> {
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0, 0, 0, 12),
                               child: Text(
-                                '${widget.viewModel.todayDate.year}년 ${widget.viewModel.todayDate.month}월 ${widget.viewModel.todayDate.day}일',
+                                '${viewModel.todoDate.year}년 ${viewModel.todoDate.month}월 ${viewModel.todoDate.day}일',
                                 style: const TextStyle(
                                   // 글자 간격 조절
                                   letterSpacing: 0,

@@ -12,8 +12,18 @@ class CalendarInfoLayout extends StatefulWidget {
 }
 
 class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
+  late final CalendarViewModel viewModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel = widget.viewModel;
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('CalendarInfoLayout build');
     return Obx(() => Container(
           color: const Color(0xFFF5F5F9),
           child: Padding(
@@ -32,7 +42,7 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.viewModel.calendarDate.getSelectedDateStr(),
+                          viewModel.calendarDate.getSelectedDateStr(),
                           style: const TextStyle(
                             fontSize: 14,
                             color: Color(0xFF626272),
@@ -46,7 +56,7 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              '${widget.viewModel.countModel.takenCount}개',
+                              '${viewModel.countModel.takenCount}개',
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Colors.black,
@@ -65,7 +75,7 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                               ),
                             ),
                             Text(
-                              ' (${widget.viewModel.countModel.totalCount}개)',
+                              ' (${viewModel.countModel.totalCount}개)',
                               style: const TextStyle(
                                 fontSize: 15,
                                 color: Colors.black,
@@ -81,8 +91,7 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                       child: Align(
                         alignment: const AlignmentDirectional(1.00, 0.00),
                         child: CircularPercentIndicator(
-                          percent:
-                              widget.viewModel.countModel.getProgress() / 100,
+                          percent: viewModel.countModel.getProgress() / 100,
                           radius: 40,
                           lineWidth: 3,
                           animation: true,
@@ -90,8 +99,8 @@ class _CalendarInfoLayoutState extends State<CalendarInfoLayout> {
                           progressColor: const Color(0xFF2666F6),
                           backgroundColor: const Color(0xFFC1D2FF),
                           center: Text(
-                            '${widget.viewModel.countModel.getProgress()}%',
-                            style: widget.viewModel.countModel.takenCount == 0
+                            '${viewModel.countModel.getProgress()}%',
+                            style: viewModel.countModel.takenCount == 0
                                 ? const TextStyle(
                                     fontSize: 20,
                                     color: Color(0xFFC1D2FF),
