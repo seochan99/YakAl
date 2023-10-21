@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:yakal/widgets/Home/pill_todo_layout.dart';
 
 import '../../viewModels/Calendar/calendar_viewmodel.dart';
+import '../../widgets/Base/default_back_appbar.dart';
 import '../../widgets/Calender/calendar_info_layout.dart';
 import '../../widgets/Calender/pill_calendar.dart';
 
@@ -14,20 +15,10 @@ class CalenderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        ///스크롤 내렸을 때 컬러
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        elevation: 0,
-        actions: const [],
-        title: const Text(
-          '다른 날짜 복약정보',
-          style: TextStyle(
-            color: Colors.black,
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: DefaultBackAppbar(
+          title: '다른 날짜 복약정보',
         ),
       ),
       body: Column(

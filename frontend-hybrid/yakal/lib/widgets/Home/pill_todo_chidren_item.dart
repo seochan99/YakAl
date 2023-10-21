@@ -25,6 +25,21 @@ class PillTodoChildrenItem extends StatefulWidget {
 }
 
 class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
+  late final ETakingTime eTakingTime;
+  late final PillTodoChildren pillTodoChildren;
+  late final Function(ETakingTime, int) onClickChildrenCheckBox;
+  late final Function(String, String)? onClickChildrenItemView;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    eTakingTime = widget.eTakingTime;
+    pillTodoChildren = widget.pillTodoChildren;
+    onClickChildrenCheckBox = widget.onClickChildrenCheckBox;
+    onClickChildrenItemView = widget.onClickChildrenItemView;
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(

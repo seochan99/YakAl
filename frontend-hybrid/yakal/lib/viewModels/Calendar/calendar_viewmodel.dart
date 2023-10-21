@@ -11,6 +11,7 @@ import '../../models/Calendar/calendar_day.dart';
 import '../../models/Calendar/count_model.dart';
 import '../../provider/Calendar/calendar_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
+import '../Home/home_view_model.dart';
 
 class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // Repository
@@ -22,6 +23,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   // Model
   final Rx<CalendarDate> _calendarDate =
       Rx<CalendarDate>(CalendarDate.selectedDate(selectedDate: DateTime.now()));
+
   final Rx<CountModel> _countModel =
       Rx<CountModel>(CountModel(totalCount: 0, takenCount: 0));
 
@@ -33,6 +35,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
+  @override
   CountModel get countModel => _countModel.value;
 
   bool get isLoadedCalendar => _isLoadedCalendar.value;
@@ -50,6 +53,13 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
     updateCalendarDays();
     updatePillTodoAndDate();
+  }
+
+  @override
+  void onClose() {
+    // TODO: implement onClose
+    Get.find<HomeViewModel>().updatePillTodoAndDate();
+    super.onClose();
   }
 
   void updateCalendarDays() async {

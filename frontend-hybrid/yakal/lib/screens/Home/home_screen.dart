@@ -18,7 +18,6 @@ class HomeScreen extends StatelessWidget {
       child: Stack(children: [
         Scaffold(
           appBar: AppBar(
-            //스크롤 내렸을 때 컬러
             surfaceTintColor: Colors.white,
             backgroundColor: Colors.white,
             centerTitle: false,
@@ -42,12 +41,15 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                /* ----------------- 홈 정보 뷰 -----------------  */
                 HomeInfoLayout(viewModel),
+                /* ----------------- 구분선 -----------------  */
                 Container(
                     // width 꽉 차게
                     width: double.infinity,
                     height: 2,
                     decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
+                /* ----------------- TodoList 뷰 -----------------  */
                 Expanded(
                     child: PillTodoLayout(
                         viewModel: viewModel, isCalendarView: false)),
