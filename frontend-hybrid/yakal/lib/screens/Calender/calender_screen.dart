@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:yakal/widgets/Home/pill_todo_layout.dart';
+import 'package:yakal/widgets/Calender/calendar_pill_info_view.dart';
 
 import '../../viewModels/Calendar/calendar_viewmodel.dart';
 import '../../widgets/Base/default_back_appbar.dart';
-import '../../widgets/Calender/calendar_info_layout.dart';
 import '../../widgets/Calender/pill_calendar.dart';
 
 class CalenderScreen extends StatelessWidget {
@@ -29,10 +28,7 @@ class CalenderScreen extends StatelessWidget {
             height: 2,
             decoration: const BoxDecoration(color: Color(0xFFE9E9EE)),
           ),
-          CalendarInfoLayout(viewModel),
-          Expanded(
-            child: PillTodoLayout(viewModel: viewModel, isCalendarView: true),
-          ),
+          CalendarPillInfoView(viewModel: viewModel),
         ],
       ),
     );
