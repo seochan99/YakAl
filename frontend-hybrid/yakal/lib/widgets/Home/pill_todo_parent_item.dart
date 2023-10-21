@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -152,8 +155,22 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               SizedBox.fromSize(size: const Size(8, 8)),
                               InkWell(
                                 onTap: () {
-                                  onClickParentCheckBox(
-                                      pillTodoParent.eTakingTime);
+                                  if (DateTime.now()
+                                          .difference(todoDate)
+                                          .inDays >
+                                      3) {
+                                    Get.snackbar('복약 완료', '3일이 지나면 수정이 불가능해요!',
+                                        margin: const EdgeInsets.fromLTRB(
+                                            20, 0, 20, 20),
+                                        duration: const Duration(
+                                            seconds: 1, microseconds: 500),
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        backgroundColor: ColorStyles.gray1,
+                                        colorText: Colors.black);
+                                  } else {
+                                    onClickParentCheckBox(
+                                        pillTodoParent.eTakingTime);
+                                  }
                                 },
                                 // InkWell Repple Effect 없애기
                                 splashColor: Colors.transparent,
