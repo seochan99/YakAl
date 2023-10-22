@@ -16,11 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 public class OneMedicineScheduleDto {
 
-    @NotBlank
+
     @JsonProperty("KDCode")
     private String KDCode;
 
-    @NotBlank
+
     @JsonProperty("ATCCode")
     private String ATCCode;
 

@@ -18,9 +18,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Nullable;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -132,9 +132,10 @@ public class DoseController {
     @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
-            @Valid @RequestBody CreateScheduleDto createScheduleDto
+            @Valid @RequestBody CreateScheduleDto createScheduleDto,
+            @RequestParam  @Nullable String inputName
     ) {
-        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
+        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto,inputName);
         return ResponseDto.created(isInserted);
     }
 
