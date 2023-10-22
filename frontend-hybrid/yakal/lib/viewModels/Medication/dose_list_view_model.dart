@@ -15,12 +15,12 @@ import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
 class DoseListViewModel extends GetxController {
   final MedicationDirectProvider _medicationDirectProvider =
-      MedicationDirectProvider();
+  MedicationDirectProvider();
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
   final EnvelopAnalysisProvider _envelopAnalysisProvider =
-      EnvelopAnalysisProvider();
+  EnvelopAnalysisProvider();
   final MedicineCodeRepository _medicineCodeRepository =
-      MedicineCodeRepository();
+  MedicineCodeRepository();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
@@ -38,16 +38,41 @@ class DoseListViewModel extends GetxController {
 
     var medicinesName = await _medicineCodeRepository.getMedicinesName();
 
+    if (kDebugMode) {
+      print(
+          "🎑 [OCR Log] medicinesName[0:10]: ${medicinesName.sublist(0, 10)}");
+    }
+
     var futures = <Future<List<SearchMedicineModel>>>[];
     var names = <String>[];
 
     for (var text in textList) {
-      var nonSpaceText = text.replaceAll(" ", "");
-      var bestMatch =
-          StringSimilarity.findBestMatch(nonSpaceText, medicinesName);
+      // 공백문자 제거
+      var nonSpaceText = text.replaceAll(RegExp(r"\s"), "");
 
+      // 한글, 숫자, 'm', 'g' 외의 모든 문자 제거
+      var korText = nonSpaceText.replaceAll(RegExp(r"[^가-힣0-9mg]"), "");
+
+      // 전처리 결과가 empty string이면 고려하지 않음
+      if (korText == "") {
+        continue;
+      }
+
+      // 전처리 결과와 가장 유사한 약 이름 검색
+      var bestMatch = StringSimilarity.findBestMatch(korText, medicinesName);
+
+      if (kDebugMode) {
+        print(
+            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch
+                .target!} / Similarity: ${bestMatch.bestMatch.rating!}");
+      }
+
+      // 유사도가 70% 이상인 경우만 고려
       if (bestMatch.bestMatch.rating! >= 0.7) {
+        // 있다면 해당 약을 추가
         names.add(bestMatch.bestMatch.target!);
+
+        // kims code 검색 대기열 추가
         futures.add(
           _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
         );
@@ -61,14 +86,22 @@ class DoseListViewModel extends GetxController {
       var searchItem = searchList[i];
 
       if (searchItem.isEmpty) {
+        if (kDebugMode) {
+          print("🎑 [OCR Log] ${names[i]} Has No Picture...");
+        }
+
         doseNameCodeList.add({
           "name": names[i],
           "code": "",
         });
       } else {
+        if (kDebugMode) {
+          print("🎑 [OCR Log] ${names[i]} Has Picture.");
+        }
+
         doseNameCodeList.add({
           "name": names[i],
-          "code": searchItem[0].name,
+          "code": searchItem[0].code,
         });
       }
     }
@@ -87,7 +120,7 @@ class DoseListViewModel extends GetxController {
 
     if (kDebugMode) {
       print(
-          "🎑 [OCR Log] KIMS Medicine Search Result: $doseNameCodeListWithoutOverlap");
+          "🎑 [OCR Log] Medicine Search Result: $doseNameCodeListWithoutOverlap");
     }
 
     if (doseNameCodeListWithoutOverlap.isEmpty) {
@@ -168,8 +201,8 @@ class DoseListViewModel extends GetxController {
     return _notAddableList.length;
   }
 
-  void toggle(
-      int groupIndex, int itemIndex, ETakingTime takingTime, bool toBeTake) {
+  void toggle(int groupIndex, int itemIndex, ETakingTime takingTime,
+      bool toBeTake) {
     var isTaking = _groupList[groupIndex].takingTime[takingTime.index];
 
     if (isTaking == toBeTake) {
@@ -182,7 +215,7 @@ class DoseListViewModel extends GetxController {
     Function deepEq = const DeepCollectionEquality().equals;
 
     var item =
-        DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
+    DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
 
     _groupList[groupIndex].doseList.removeAt(itemIndex);
 

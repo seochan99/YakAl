@@ -65,6 +65,10 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
     double shotBoxHeight,
   ) {
     _cameraController!.takePicture().then((image) {
+      if (kDebugMode) {
+        print("📸 [Camera Log] Picture Is Taken!");
+      }
+
       Get.toNamed("/pill/add/ocrEnvelop/review", arguments: {
         "path": image.path,
       });
@@ -73,6 +77,10 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
 
   @override
   void dispose() {
+    if (kDebugMode) {
+      print("📷 [Camera Log] Camera Controller Is Disposed.");
+    }
+
     _cameraController!.dispose();
     super.dispose();
   }
