@@ -22,7 +22,8 @@ class HomeScreen extends StatelessWidget {
             centerTitle: false,
             elevation: 0,
             automaticallyImplyLeading: false,
-            actions: [
+            actions: const [
+              //notify
               // Padding(
               //   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
               //   child: IconButton(
