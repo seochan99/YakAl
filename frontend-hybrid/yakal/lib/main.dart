@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -37,31 +39,62 @@ import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  // await Firebase.initializeApp();
-  print('Handling a background message ${message.messageId}');
-}
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   // await Firebase.initializeApp();
+//   print('Handling a background message ${message.messageId}');
+// }
 
-void initializeNotification() async {
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+// late AndroidNotificationChannel channel;
+// late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(const AndroidNotificationChannel(
-          'high_importance_channel', 'high_importance_notification',
-          importance: Importance.max));
+// void initializeNotification() async {
+//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-      android: AndroidInitializationSettings('@mipmap/ic_launcher')));
+//   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-    alert: true,
-    badge: true,
-    sound: true,
-  );
-}
+//   // IOS Initialization Settings
+//   final initializationSettingsIOS = DarwinInitializationSettings(
+//       requestAlertPermission: true,
+//       requestBadgePermission: true,
+//       requestSoundPermission: true,
+//       onDidReceiveLocalNotification:
+//           (int id, String? title, String? body, String? payload) async {
+//         // handle local notification tap
+//       });
+
+//   final initializationSettings = InitializationSettings(
+//     android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
+//     iOS: initializationSettingsIOS,
+//   );
+
+//   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+
+//   // Android-specific initialization
+//   await flutterLocalNotificationsPlugin
+//       .resolvePlatformSpecificImplementation<
+//           AndroidFlutterLocalNotificationsPlugin>()
+//       ?.createNotificationChannel(const AndroidNotificationChannel(
+//           'high_importance_channel', 'high_importance_notification',
+//           importance: Importance.max));
+
+//   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+//     alert: true,
+//     badge: true,
+//     sound: true,
+//   );
+
+//   // Request notification permissions for iOS
+//   if (Platform.isIOS) {
+//     NotificationSettings settings =
+//         await FirebaseMessaging.instance.requestPermission(
+//       alert: true,
+//       badge: true,
+//       sound: true,
+//     );
+
+//     print('User granted permission: ${settings.authorizationStatus}');
+//   }
+// }
 
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
@@ -82,6 +115,10 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  // initializeNotification();
+
+  // final token = await FirebaseMessaging.instance.getToken();
+  // print("FCM TOKEN : $token ");
   // locator init
   initializeDateFormatting().then((value) =>
       runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
