@@ -39,13 +39,15 @@ class DoseListViewModel extends GetxController {
     var medicinesName = await _medicineCodeRepository.getMedicinesName();
 
     var futures = <Future<List<SearchMedicineModel>>>[];
+    var names = <String>[];
 
     for (var text in textList) {
       var nonSpaceText = text.replaceAll(" ", "");
       var bestMatch =
           StringSimilarity.findBestMatch(nonSpaceText, medicinesName);
 
-      if (bestMatch.bestMatch.rating! > 0.7) {
+      if (bestMatch.bestMatch.rating! >= 0.7) {
+        names.add(bestMatch.bestMatch.target!);
         futures.add(
           _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
         );
@@ -55,15 +57,20 @@ class DoseListViewModel extends GetxController {
     List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
     var doseNameCodeList = <Map<String, String>>[];
 
-    for (var search in searchList) {
-      if (search.isEmpty) {
-        continue;
-      }
+    for (var i = 0; i < searchList.length; ++i) {
+      var searchItem = searchList[i];
 
-      doseNameCodeList.add({
-        "name": search[0].name,
-        "code": search[0].code,
-      });
+      if (searchItem.isEmpty) {
+        doseNameCodeList.add({
+          "name": names[i],
+          "code": "",
+        });
+      } else {
+        doseNameCodeList.add({
+          "name": names[i],
+          "code": searchItem[0].name,
+        });
+      }
     }
 
     var doseNameCodeListWithoutOverlap = <Map<String, String>>[];
@@ -71,8 +78,7 @@ class DoseListViewModel extends GetxController {
     outerLoop:
     for (var element in doseNameCodeList) {
       for (var newElement in doseNameCodeListWithoutOverlap) {
-        if (newElement["name"] == element["name"] &&
-            newElement["code"] == element["code"]) {
+        if (newElement["name"] == element["name"]) {
           continue outerLoop;
         }
       }
@@ -268,7 +274,9 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
-        futures.add(_addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
+        futures.add(dose.kimsCode == ""
+            ? Future<String?>.value("")
+            : _addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
       }
     }
 

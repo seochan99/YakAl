@@ -50,8 +50,10 @@ class EnvelopAnalysisProvider {
 
       var inferList = response.data["images"][0]["fields"];
       var textList = <String>[];
+
+      // 80% 이상의 신뢰도를 가진 string만 취함
       for (var infer in inferList) {
-        if (infer["inferConfidence"] > 0.8) {
+        if (infer["inferConfidence"] >= 0.8) {
           textList.add(infer["inferText"]);
         }
       }
