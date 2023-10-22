@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface DoesNameRepository extends JpaRepository<DoseName, String> {
+public interface DoseNameRepository extends JpaRepository<DoseName, String> {
     @Query(value = "SELECT * FROM dosenames WHERE dose_name = :dosename LIMIT 1", nativeQuery = true)
     Optional<DoseName> findByDoseName(String dosename);
+
+    @Query(value = "SELECT * FROM dosenames WHERE MATCH(dose_name) AGAINST(:dosename in boolean mode) LIMIT 1",nativeQuery = true)
+    Optional<DoseName> findByDoseNameSimilar(String dosename);
 }

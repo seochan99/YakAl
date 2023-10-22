@@ -33,7 +33,7 @@ public class DoseService {
     private final DoseRepository doseRepository;
     private final PrescriptionRepository prescriptionRepository;
     private final RiskRepository riskRepository;
-    private final DoesNameRepository doesNameRepository;
+    private final DoseNameRepository doseNameRepository;
 
     public <T> Map<EDosingTime, List<T>> createMap() {
         Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
@@ -258,7 +258,7 @@ public class DoseService {
         dose.updateIsTaken(isTaken);
     }
 
-    public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
+    public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto,String inputName) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
@@ -269,7 +269,10 @@ public class DoseService {
         for (final OneMedicineScheduleDto oneMedicineScheduleDto : createScheduleDto.getMedicines()) {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
-            DoseName doseName = doesNameRepository.findById(KDCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+
+            DoseName doseName = (KDCode != null && ATCCode != null) ? doseNameRepository.findById(KDCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME))
+                                                                    : doseNameRepository.findByDoseNameSimilar(inputName).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
                 final Boolean isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndTime(
@@ -279,7 +282,7 @@ public class DoseService {
                 isInserted.add(!isOverlapped);
 
                 if (!isOverlapped) {
-                    Risk risk = riskRepository.findById(ATCCode).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_RISK));
+                    Risk risk = riskRepository.findById(doseName.getAtcCode()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_RISK));
                     final Dose dose = Dose.builder()
                             .kdCode(doseName)
                             .ATCCode(risk)
@@ -335,7 +338,7 @@ public class DoseService {
     }
 
     public DoseCodesDto getKDCodeAndATCCode(String dosename){
-        DoseName dose = doesNameRepository.findByDoseName(dosename).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+        DoseName dose = doseNameRepository.findByDoseName(dosename).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
         DoseCodesDto result = DoseCodesDto.builder()
                 .atcCode(dose.getAtcCode())
                 .kdCode(dose.getKdCode())
