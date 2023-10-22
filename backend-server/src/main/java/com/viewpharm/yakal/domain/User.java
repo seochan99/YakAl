@@ -172,6 +172,11 @@ public class User {
         this.dinnerTime = LocalTime.of(18,0,0);
     }
 
+    public void updateDevice(String deviceToken, Boolean isIos) {
+        this.deviceToken = deviceToken;
+        this.isIos = isIos;
+    }
+
     public void logout() {
         setRefreshToken(null);
         this.deviceToken = null;

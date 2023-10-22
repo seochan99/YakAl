@@ -4,6 +4,7 @@ import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
+import com.viewpharm.yakal.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
@@ -176,4 +177,10 @@ public class UserService {
     }
 
 
+    public Boolean updateUserDevice(Long userId, UserDeviceRequestDto requestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        user.updateDevice(requestDto.getDevice_token(), requestDto.getIs_ios());
+        return Boolean.TRUE;
+    }
 }
