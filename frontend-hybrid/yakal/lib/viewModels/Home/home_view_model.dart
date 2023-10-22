@@ -4,6 +4,7 @@ import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
+import '../../models/Home/overlap_info.dart';
 import '../../provider/Home/pill_todo_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
 
@@ -17,6 +18,8 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
       CountModel(totalCount: 0, takenCount: 0).obs;
   final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
+  final RxMap<String, List<OverlapInfo>> _overlapInfoMap =
+      RxMap<String, List<OverlapInfo>>();
 
   bool get isExpanded => _isExpanded.value;
 
@@ -29,6 +32,8 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
   @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
+  @override
+  Map<String, List<OverlapInfo>> get overlapInfoMap => _overlapInfoMap;
 
   @override
   void onInit() {
