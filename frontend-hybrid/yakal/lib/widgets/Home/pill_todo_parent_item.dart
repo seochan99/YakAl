@@ -187,6 +187,9 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                         snackPosition: SnackPosition.BOTTOM,
                                         backgroundColor: ColorStyles.gray1,
                                         colorText: Colors.black);
+                                  } else {
+                                    onClickParentCheckBox(
+                                        pillTodoParent.eTakingTime);
                                   }
                                 },
                                 // InkWell Repple Effect 없애기
