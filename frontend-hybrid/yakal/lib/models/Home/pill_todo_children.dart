@@ -42,6 +42,6 @@ class PillTodoChildren {
 
   @override
   String toString() {
-    return "id: $id, base64Image: $base64Image, name: $name, effect: $effect, kdCode: $kdCode, atcCode: $atcCode, count: $count, isOverLap: $isOverLap, isTaken: $isTaken\n";
+    return "id: $id, name: $name, effect: $effect, kdCode: $kdCode, atcCode: $atcCode, count: $count, isOverLap: $isOverLap, isTaken: $isTaken\n";
   }
 }

@@ -2,6 +2,7 @@ import 'package:yakal/models/Home/pill_todo_children.dart';
 
 import 'atc_code.dart';
 import 'e_taking_time.dart';
+import 'overlap_info.dart';
 
 class PillTodoParent {
   final ETakingTime eTakingTime;
@@ -9,6 +10,7 @@ class PillTodoParent {
   bool isExpanded;
   bool isOverLap;
   List<PillTodoChildren> todos;
+  List<OverlapInfo> overlapInfo;
 
   PillTodoParent({
     required this.eTakingTime,
@@ -16,6 +18,7 @@ class PillTodoParent {
     required this.isExpanded,
     required this.isOverLap,
     required this.todos,
+    required this.overlapInfo,
   });
 
   factory PillTodoParent.getInvisibleSchedule() {
@@ -25,6 +28,7 @@ class PillTodoParent {
       isExpanded: false,
       isOverLap: false,
       todos: [],
+      overlapInfo: [],
     );
   }
 

@@ -33,8 +33,6 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
-  final RxMap<String, List<OverlapInfo>> _overlapInfoMap =
-      RxMap<String, List<OverlapInfo>>();
 
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
@@ -50,7 +48,6 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
   @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
-  Map<String, List<OverlapInfo>> get overlapInfoMap => _overlapInfoMap;
 
   @override
   void onInit() {
@@ -118,9 +115,6 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
               else
                 {_countModel.value = CountModel(totalCount: 0, takenCount: 0)}
             })
-        .then((value) => _pillTodoRepository
-            .readOverLapDoseInfo(_todoDate.value)
-            .then((value) => {_overlapInfoMap.value = value}))
         // Finish Data Loading
         .then((value) => _isLoaded.value = false);
   }

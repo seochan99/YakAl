@@ -4,9 +4,11 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
+import 'package:yakal/models/Home/pill_todo_children.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/custom_expansion_tile.dart';
+import 'package:yakal/widgets/Home/pill_overlap_modal_view.dart';
 import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
@@ -215,26 +217,47 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                     color: Color(0xffe9e9ee))),
                             SizedBox.fromSize(size: const Size(0, 10)),
                             if (isOverLap)
-                              Container(
-                                  width: MediaQuery.of(context).size.width - 20,
-                                  height: 40,
-                                  margin: const EdgeInsetsDirectional.fromSTEB(
-                                      0, 10, 0, 10),
-                                  decoration: const BoxDecoration(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                    color: Color(0x1AFF8282),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      '약물 중 성분이 같은 중복 약물이 있습니다!',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Color(0xFFE01029),
-                                          fontFamily:
-                                              'assets/fonts/Pretendard-SemiBold.otf'),
+                              InkWell(
+                                onTap: () {
+                                  Get.bottomSheet(
+                                    SizedBox(
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.4,
+                                      child: PillOverlapModalView(
+                                        overlapInfo: _getOverLapChildren(),
+                                      ),
                                     ),
-                                  )),
+                                    backgroundColor: Colors.white,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width - 20,
+                                    height: 40,
+                                    margin:
+                                        const EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                    decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(10)),
+                                      color: Color(0x1AFF8282),
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        '약물 중 성분이 같은 중복 약물이 있습니다!',
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            color: Color(0xFFE01029),
+                                            fontFamily:
+                                                'assets/fonts/Pretendard-SemiBold.otf'),
+                                      ),
+                                    )),
+                              ),
                             ListView.builder(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -252,6 +275,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                   onClickChildrenItemView: (name, kdCode) {
                                     onClickChildrenItemView?.call(name, kdCode);
                                   },
+                                  isModal: false,
                                 );
                               },
                             )
@@ -264,5 +288,24 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
               ),
             ),
           );
+  }
+
+  Map<String, List<PillTodoChildren>> _getOverLapChildren() {
+    // overlapinfo에서 kdCode가 같은 children을 찾아서 반환
+    Map<String, List<PillTodoChildren>> overlapChildren = {};
+
+    for (var overlap in pillTodoParent.overlapInfo) {
+      List<PillTodoChildren> overlapChildrenList = [];
+
+      for (var todo in pillTodoParent.todos) {
+        if (todo.atcCode.code == overlap.atcCode) {
+          overlapChildrenList.add(todo);
+        }
+      }
+
+      overlapChildren[overlap.atcCode] = overlapChildrenList;
+    }
+
+    return overlapChildren;
   }
 }

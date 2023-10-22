@@ -23,4 +23,10 @@ class OverlapInfo {
 
     return overlapInfoList;
   }
+
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "OverlapInfo: $atcCode, $kdCodeList";
+  }
 }

@@ -77,9 +77,6 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
               else
                 {_countModel.value = CountModel(totalCount: 0, takenCount: 0)}
             })
-        .then((value) => _pillTodoRepository
-            .readOverLapDoseInfo(_todoDate.value)
-            .then((value) => _overlapInfoMap.value = value))
         // Finish Data Loading
         .then((value) => _isLoaded.value = false);
   }
