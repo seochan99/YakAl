@@ -6,7 +6,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원!",
+    name: "분당 차병원1",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -14,7 +14,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원2",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -22,7 +22,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원!",
+    name: "분당 차병원3",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -30,7 +30,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원4",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -38,7 +38,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원!",
+    name: "분당 차병원5",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -46,7 +46,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원6",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -54,7 +54,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원!",
+    name: "분당 차병원7",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -62,7 +62,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원8",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -70,7 +70,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원!",
+    name: "분당 차병원9",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -78,7 +78,7 @@ export const facilityList = [
     type: EFacility.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원10",
     requested_at: new Date("2023-09-01"),
   },
   {
@@ -86,7 +86,7 @@ export const facilityList = [
     type: EFacility.PHARMACY,
     directorPhone: "01044444444",
     directorName: "홍길동",
-    name: "분당 차병원?",
+    name: "분당 차병원11",
     requested_at: new Date("2023-09-01"),
   },
 ];

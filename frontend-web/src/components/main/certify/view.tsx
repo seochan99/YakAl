@@ -170,7 +170,7 @@ function CertifyPage() {
                   <S.NameHeader>기관명</S.NameHeader>
                   <S.AddressHeader>기관 주소</S.AddressHeader>
                 </S.ListHeader>
-                {facilityList.slice(page * 5, (page + 1) * 5).map((facility) => (
+                {facilityList.slice((page - 1) * 5, page * 5).map((facility) => (
                   <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
                     <S.ItemName>
                       {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
