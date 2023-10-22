@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
@@ -111,8 +112,14 @@ class SettingScreen extends StatelessWidget {
       ),
 
       confirm: TextButton(
-        onPressed: () {
-          Get.back();
+        onPressed: () async {
+          try {
+            Get.offAllNamed('/login');
+            await UserApi.instance.logout();
+          } catch (e) {
+            //error
+          }
+          //
         },
         child: Container(
           decoration: BoxDecoration(

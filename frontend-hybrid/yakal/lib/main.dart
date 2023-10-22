@@ -37,70 +37,39 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   // await Firebase.initializeApp();
-//   print('Handling a background message ${message.messageId}');
-// }
+// device 토큰 저장
+Future<void> sendDeviceToken(String deviceToken, bool isIos) async {
+  try {
+    Map<String, dynamic> requestBody = {
+      'device_token': deviceToken,
+      'is_ios': false
+    };
 
-// late AndroidNotificationChannel channel;
-// late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+    var dio = await authDioWithContext();
+    var response = await dio.put("/user/device", data: requestBody);
 
-// void initializeNotification() async {
-//   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-//   final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-//   // IOS Initialization Settings
-//   final initializationSettingsIOS = DarwinInitializationSettings(
-//       requestAlertPermission: true,
-//       requestBadgePermission: true,
-//       requestSoundPermission: true,
-//       onDidReceiveLocalNotification:
-//           (int id, String? title, String? body, String? payload) async {
-//         // handle local notification tap
-//       });
-
-//   final initializationSettings = InitializationSettings(
-//     android: const AndroidInitializationSettings('@mipmap/ic_launcher'),
-//     iOS: initializationSettingsIOS,
-//   );
-
-//   await flutterLocalNotificationsPlugin.initialize(initializationSettings);
-
-//   // Android-specific initialization
-//   await flutterLocalNotificationsPlugin
-//       .resolvePlatformSpecificImplementation<
-//           AndroidFlutterLocalNotificationsPlugin>()
-//       ?.createNotificationChannel(const AndroidNotificationChannel(
-//           'high_importance_channel', 'high_importance_notification',
-//           importance: Importance.max));
-
-//   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-//     alert: true,
-//     badge: true,
-//     sound: true,
-//   );
-
-//   // Request notification permissions for iOS
-//   if (Platform.isIOS) {
-//     NotificationSettings settings =
-//         await FirebaseMessaging.instance.requestPermission(
-//       alert: true,
-//       badge: true,
-//       sound: true,
-//     );
-
-//     print('User granted permission: ${settings.authorizationStatus}');
-//   }
-// }
+    if (response.statusCode == 200) {
+      print('sendDeviceToken - Success');
+    } else {
+      print('sendDeviceToken - Failure: ${response.statusCode}');
+    }
+  } catch (error) {}
+}
 
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
 
+  await Firebase.initializeApp();
+
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
+
+  // String deviceToken = await getDeviceToken(); // fetch the device token
+  // bool isIos = Platform.isIOS; // check if the platform is iOS
+  // await sendDeviceToken(deviceToken, isIos); // send the device token
 
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -149,7 +118,7 @@ class MyApp extends StatelessWidget {
           name: '/',
           page: () => const MyBottomNavigationBar(),
         ),
-        GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",
