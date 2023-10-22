@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:camera/camera.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,7 +21,6 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
 
   CameraController? _cameraController;
   bool _isCameraReady = false;
-  late Timer _timer;
 
   @override
   void initState() {
@@ -38,21 +36,21 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
           );
 
           _cameraController!.initialize().then((_) {
+            if (kDebugMode) {
+              print("📷 [Camera Log] Camera Controller Is Initialized.");
+            }
+
             _cameraController!
                 .lockCaptureOrientation(
               DeviceOrientation.portraitUp,
             )
                 .then((_) {
+              if (kDebugMode) {
+                print("📷 [Camera Log] Camera Orientation Is Locked.");
+              }
+
               setState(() {
                 _isCameraReady = true;
-                _timer = Timer.periodic(
-                  const Duration(seconds: 2),
-                  (timer) {
-                    setState(() {
-                      _cameraController!.setFocusPoint(const Offset(0.5, 0.5));
-                    });
-                  },
-                );
               });
             });
           });
@@ -75,7 +73,6 @@ class _EnvelopShotScreenState extends State<EnvelopShotScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
     _cameraController!.dispose();
     super.dispose();
   }
