@@ -53,7 +53,7 @@ export const AgreementCheckInput = styled.input`
     cursor: pointer;
     padding-left: 3rem;
     background-repeat: no-repeat;
-    background-image: url("/src/expert/assets/icons/checker-off-icon.svg");
+    background-image: url("/assets/icons/checker-off-icon.svg");
     background-size: contain;
     color: #151515;
     font-family: Pretendard, serif;
@@ -64,7 +64,7 @@ export const AgreementCheckInput = styled.input`
   }
 
   &:checked + label {
-    background-image: url("/src/expert/assets/icons/checker-on-icon.svg");
+    background-image: url("/assets/icons/checker-on-icon.svg");
   }
 `;
 

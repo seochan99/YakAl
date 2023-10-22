@@ -1,7 +1,7 @@
 import * as S from "./style.ts";
 import React, { useRef, useState } from "react";
-import { EFacility } from "../../../../type/facility.ts";
-import { EInfoTake } from "../../../../type/info-take.ts";
+import { EFacility } from "../../../type/facility.ts";
+import { EInfoTake } from "../../../type/info-take.ts";
 
 export function RegisterPage() {
   const [selected, setSelected] = useState<EFacility | null>(null);

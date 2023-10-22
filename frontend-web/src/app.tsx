@@ -1,8 +1,8 @@
 import { RouterProvider } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
-import { router } from "./global/router.tsx";
-import { GlobalStyle } from "./global/style/style.ts";
+import { router } from "./router.tsx";
+import { GlobalStyle } from "./style/global_style.ts";
 
 function App() {
   /* Dynamic page title */

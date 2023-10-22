@@ -1,6 +1,6 @@
-import { EXPERT_LOGIN_ROUTE } from "../../../../../router.tsx";
+import { EXPERT_LOGIN_ROUTE } from "../../../router.tsx";
 import * as S from "./style.ts";
-import WarningPage from "../../../warning/view.tsx";
+import WarningPage from "../../../page/warning/view.tsx";
 
 function SocialLoginFailurePage() {
   return (

@@ -10,7 +10,7 @@ export const OuterFooter = styled.footer`
 
 export const IconImg = styled.img`
   & {
-    content: url("/src/expert/assets/logos/view-pharm-logo.png");
+    content: url("/assets/logos/view-pharm-logo.png");
     margin-left: 10vw;
     width: 5rem;
     height: 5rem;

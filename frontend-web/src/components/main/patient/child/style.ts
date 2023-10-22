@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import "/src/style/font.css";
 
 export const OuterDiv = styled.div`
   display: flex;

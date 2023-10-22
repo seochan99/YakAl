@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import "/src/style/font.css";
 
 export const Outer = styled.div`
   display: flex;
@@ -50,7 +51,7 @@ export const IconText = styled.div`
 `;
 
 export const YakAlIcon = styled.img`
-  content: url("/src/expert/assets/yakal-logo.png");
+  content: url("/assets/yakal-logo.png");
   width: 5rem;
 `;
 
@@ -75,7 +76,7 @@ export const EnrollButton = styled(Link)`
     border-radius: 0.5rem;
     background-color: #2666f6;
     color: #fff;
-    font-family: Pretendard;
+    font-family: Pretendard, serif;
     font-size: 1rem;
     font-weight: 700;
     line-height: 1rem;
@@ -107,7 +108,7 @@ export const EnrollButton = styled(Link)`
 `;
 
 export const DoctorIcon = styled.img`
-  content: url("/src/expert/assets/icons/doctor-icon.png");
+  content: url("/assets/icons/doctor-icon.png");
   width: 5rem;
 `;
 
@@ -161,7 +162,7 @@ export const Menu = styled.div`
 `;
 
 export const PatientIcon = styled.img`
-  content: url("/src/expert/assets/icons/patient-icon.png");
+  content: url("/assets/icons/patient-icon.png");
   width: 6rem;
   height: 6rem;
 `;

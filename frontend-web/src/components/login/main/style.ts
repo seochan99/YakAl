@@ -1,8 +1,9 @@
 import styled, { css } from "styled-components";
+import "/src/style/font.css";
 
-import { ReactComponent as KakaoIconSvg } from "@/expert/assets/logos/kakao-logo.svg";
-import { ReactComponent as GoogleIconSvg } from "@/expert/assets/logos/google-logo.svg";
-import { ReactComponent as LogoShadeSvg } from "@/expert/assets/logos/logo-shade.svg";
+import { ReactComponent as KakaoIconSvg } from "/public/assets/logos/kakao-logo.svg";
+import { ReactComponent as GoogleIconSvg } from "/public/assets/logos/google-logo.svg";
+import { ReactComponent as LogoShadeSvg } from "/public/assets/logos/logo-shade.svg";
 
 export const OuterDiv = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ export const LogoDiv = styled.div`
 `;
 
 export const LogoImg = styled.img`
-  content: url("/src/expert/assets/yakal-logo.png");
+  content: url("/assets/yakal-logo.png");
   z-index: 1;
   width: 12.78538rem;
   height: 7.53425rem;

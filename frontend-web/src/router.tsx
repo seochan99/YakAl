@@ -1,34 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MainPage as ExpertMain } from "../expert/page/main/view.tsx";
-import { Main as AdminMain } from "../admin/layout/main";
-import NotFoundPage from "../expert/page/not-found/view.tsx";
-import { Login as AdminLogin } from "../admin/page/login";
-import { LoginPage as ExpertLogin } from "../expert/page/login/view.tsx";
-import LoginMainPage from "../expert/page/login/children/main/view.tsx";
-import TermsPage from "../expert/page/login/children/terms/view.tsx";
+import { MainPage as ExpertMain } from "./page/main/view.tsx";
+import NotFoundPage from "./page/not-found/view.tsx";
+import { LoginPage as ExpertLogin } from "./page/login/view.tsx";
+import LoginMainPage from "./components/login/main/view.tsx";
+import TermsPage from "./components/login/terms/view.tsx";
 
-import PatientListPage from "../expert/page/main/children/patient-list/view.tsx";
-import { DashboardPage as ExpertDashboard } from "../expert/page/main/children/dashboard/view.tsx";
-import { Dashboard as AdminDashboard } from "../admin/page/main/dashboard";
-import PatientPage from "../expert/page/main/children/patient/view.tsx";
+import PatientListPage from "./components/main/patient-list/view.tsx";
+import { DashboardPage as ExpertDashboard } from "./components/main/dashboard/view.tsx";
+import PatientPage from "./components/main/patient/view.tsx";
 
-import SocialLoginFailurePage from "../expert/page/login/children/social-login-failure/view.tsx";
-import { loader as facilityRegistrationInfoLoader } from "../admin/page/main/facility-registration-info/loader.ts";
-import { FacilityRegistration as AdminFacilityRegistration } from "../admin/page/main/facility-registration-list";
-import { RegisterPage as ExpertFacilityRegistration } from "../expert/page/main/children/register/view.tsx";
-import MyPage from "../expert/page/main/children/my/view.tsx";
-import SocialLogin from "../expert/page/login/children/social-login/view.tsx";
-import LoadingPage from "../expert/page/loading/view.tsx";
-import IdentifyPage from "../expert/page/login/children/identify/view.tsx";
-import IdentifyFailurePage from "../expert/page/login/children/identify-failure/view.tsx";
-import CertifyPage from "../expert/page/main/children/certify/view.tsx";
-import IdentifySuccessPage from "../expert/page/login/children/identify-success/view.tsx";
-import FacilityRegistrationInfo from "../admin/page/main/facility-registration-info";
-import RegisterSuccessPage from "../expert/page/main/children/register-success/view.tsx";
-import RegisterFailurePage from "../expert/page/main/children/register-failure/view.tsx";
-import CertificationSuccess from "../expert/page/main/children/certify-success/view.tsx";
-import CertifyFailurePage from "../expert/page/main/children/certify-failure/view.tsx";
-import SocialLoginNotYetPage from "../expert/page/login/children/social-login-not-yet/view.tsx";
+import SocialLoginFailurePage from "./components/login/social-login-failure/view.tsx";
+import { RegisterPage as ExpertFacilityRegistration } from "./components/main/register/view.tsx";
+import MyPage from "./components/main/mypage/view.tsx";
+import SocialLogin from "./components/login/social-login/view.tsx";
+import LoadingPage from "./page/loading/view.tsx";
+import IdentifyPage from "./components/login/identify/view.tsx";
+import IdentifyFailurePage from "./components/login/identify-failure/view.tsx";
+import CertifyPage from "./components/main/certify/view.tsx";
+import IdentifySuccessPage from "./components/login/identify-success/view.tsx";
+import RegisterSuccessPage from "./components/main/register-success/view.tsx";
+import RegisterFailurePage from "./components/main/register-failure/view.tsx";
+import CertificationSuccess from "./components/main/certify-success/view.tsx";
+import CertifyFailurePage from "./components/main/certify-failure/view.tsx";
+import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -38,36 +32,6 @@ export const router = createBrowserRouter([
   {
     errorElement: <NotFoundPage />,
     children: [
-      {
-        path: "/admin",
-        errorElement: <NotFoundPage />,
-        children: [
-          {
-            path: "",
-            element: <AdminMain />,
-            errorElement: <NotFoundPage />,
-            children: [
-              {
-                index: true,
-                element: <AdminDashboard />,
-              },
-              {
-                path: "partner/register",
-                element: <AdminFacilityRegistration />,
-              },
-              {
-                path: "partner/register/:facilityId",
-                element: <FacilityRegistrationInfo />,
-                loader: facilityRegistrationInfoLoader,
-              },
-            ],
-          },
-          {
-            path: "login",
-            element: <AdminLogin />,
-          },
-        ],
-      },
       {
         path: "/expert",
         errorElement: <NotFoundPage />,

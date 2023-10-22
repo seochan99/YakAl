@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
+import "/src/style/font.css";
 
-import { ReactComponent as SearchIconSvg } from "@/expert/assets/icons/magnifying-glass-icon.svg";
+import { ReactComponent as SearchIconSvg } from "/public/assets/icons/magnifying-glass-icon.svg";
 
 export const OuterDiv = styled.div`
   display: flex;

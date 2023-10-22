@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { PatientListViewModel } from "./view.model.ts";
-import { EOrder } from "../../../../type/order.ts";
-import { EPatientField } from "../../../../type/patient-field.ts";
+import { EOrder } from "../../../type/order.ts";
+import { EPatientField } from "../../../type/patient-field.ts";
 
 export const usePatientListPageViewController = () => {
   PatientListViewModel.use();

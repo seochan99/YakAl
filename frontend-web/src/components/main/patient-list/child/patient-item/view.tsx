@@ -3,8 +3,8 @@ import * as S from "./style.ts";
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
 import { useMediaQuery } from "react-responsive";
-import { ESex } from "../../../../../../type/sex.ts";
-import getAge from "../../../../../../util/get-age.ts";
+import { ESex } from "../../../../../type/sex.ts";
+import getAge from "../../../../../util/get-age.ts";
 
 type PatientItemProps = {
   patientInfo: {
@@ -35,7 +35,7 @@ function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: Patie
   return (
     <S.OuterDiv>
       <S.StyledLink to={`/expert/patient/${id}`}>
-        <S.ProfileImg src={profileImg === "" ? "/src/expert/assets/icons/no-profile-icon.png" : profileImg} />
+        <S.ProfileImg src={profileImg === "" ? "/assets/icons/no-profile-icon.png" : profileImg} />
         <S.NameSpan>
           {name.length > 4 ? name.substring(0, 4) + "..." : name}
           {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}

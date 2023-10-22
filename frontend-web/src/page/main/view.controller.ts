@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
-import { MainPageModel } from "./model.ts";
+import { MainPageModel } from "../../store/main_model.ts";
 
 export const useMainPageViewController = () => {
   /* Mobile Nav List */

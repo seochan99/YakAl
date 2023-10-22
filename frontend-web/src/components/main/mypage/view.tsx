@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EJob } from "../../../../type/job.ts";
+import { EJob } from "../../../type/job.ts";
 
 function MyPage() {
   const name = "홍길동";

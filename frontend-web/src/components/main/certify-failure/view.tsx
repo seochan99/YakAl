@@ -1,4 +1,4 @@
-import WarningPage from "../../../warning/view.tsx";
+import WarningPage from "../../../page/warning/view.tsx";
 import * as S from "./style.ts";
 
 function CertifyFailurePage() {

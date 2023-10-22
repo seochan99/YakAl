@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import { usePatientListPageViewController } from "./view.controller.ts";
-import { EPatientField } from "../../../../type/patient-field.ts";
+import { EPatientField } from "../../../type/patient-field.ts";
 import Pagination from "react-js-pagination";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";

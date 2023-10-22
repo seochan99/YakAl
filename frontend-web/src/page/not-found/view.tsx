@@ -8,7 +8,7 @@ export default function NotFoundPage() {
     if (error.status === 404) {
       return (
         <WarningPage
-          iconPath="/src/expert/assets/icons/not-found-icon.png"
+          iconPath="/assets/icons/not-found-icon.png"
           title="404 Error"
           subtitle="죄송합니다. 페이지를 찾을 수 없습니다."
           description={
@@ -22,6 +22,6 @@ export default function NotFoundPage() {
       );
     }
   } else {
-    return <WarningPage iconPath="/src/expert/assets/icons/not-found-icon.png" title="Error Page" />;
+    return <WarningPage iconPath="/assets/icons/not-found-icon.png" title="Error Page" />;
   }
 }

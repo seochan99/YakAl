@@ -26,7 +26,7 @@ export const CoomingSoonTitle = styled.div`
 `;
 
 export const CoomingSoonIcon = styled.img`
-  content: url("/src/expert/assets/icons/cooming-soon-icon.png");
+  content: url("/assets/icons/cooming-soon-icon.png");
   width: 6rem;
   height: 6rem;
 `;

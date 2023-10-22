@@ -1,6 +1,6 @@
 import { PatientModel } from "./model.ts";
 import React, { useState } from "react";
-import { EPatientInfoTab } from "../../../../type/patient-info-tab.ts";
+import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
 
 export class PatientPageViewModel {
   private static updater = false;

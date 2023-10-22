@@ -8,7 +8,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useMediaQuery } from "react-responsive";
-import { EJob } from "../../../../type/job.ts";
+import { EJob } from "../../../type/job.ts";
 
 type TProfileProps = {
   job?: EJob;

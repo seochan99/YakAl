@@ -1,13 +1,15 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "@/expert/assets/icons/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "/public/assets/icons/back-icon.svg";
 
 export const Outer = styled.div`
   & {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
+    width: 54rem;
+    margin: 2rem;
   }
 
   @media only screen and (max-width: 768px) {
@@ -149,13 +151,13 @@ export const SelectButtonBox = styled.div`
 `;
 
 export const HospitalIcon = styled.img`
-  content: url("/src/expert/assets/icons/hospital-icon.png");
+  content: url("/assets/icons/hospital-icon.png");
   width: 3rem;
   height: 3rem;
 `;
 
 export const PharmacyIcon = styled.img`
-  content: url("/src/expert/assets/icons/pharmacy-icon.png");
+  content: url("/assets/icons/pharmacy-icon.png");
   width: 3rem;
   height: 3rem;
 `;

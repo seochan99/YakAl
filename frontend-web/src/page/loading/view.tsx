@@ -11,7 +11,7 @@ function LoadingPage() {
 
   return (
     <WarningPage
-      iconPath="/src/expert/assets/icons/loading-icon.png"
+      iconPath="/assets/icons/loading-icon.png"
       title={`Loading${dotString}`}
       subtitle="페이지를 불러오는 중입니다. 잠시 기다려 주세요."
     />

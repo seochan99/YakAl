@@ -65,7 +65,7 @@ npm run dev -- --host
 ## Styling Rule
 
 * 본 프로젝트는 Styled-Component를 이용해 컴포넌트에 독립적으로 스타일링을 한다.
-* `import * as S from "./style.ts"`의 형식으로 스타일 ts 파일을 import한다.
+* `import * as S from "./global_style.ts"`의 형식으로 스타일 ts 파일을 import한다.
 * 이로 인해 Styled Component와 Non-Styled Component가 구별된다.
 * 또한 스타일된 HTMl 태그는 이름 맨 뒤에 어떤 태그인지 표시해야 한다.
 * ex) `S.OuterFooter`는 스타일링된 `<footer>`, `WarningPage`는 일반 컴포넌트

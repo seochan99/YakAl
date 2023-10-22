@@ -1,11 +1,10 @@
-import { ListFooter } from "../../../../style.ts";
 import * as S from "./style.ts";
 import React, { useRef, useState } from "react";
 import Pagination from "react-js-pagination";
-import { EJob } from "../../../../type/job.ts";
+import { EJob } from "../../../type/job.ts";
 import { useNavigate } from "react-router-dom";
-import { facilityList } from "../../../../store/facility-list.ts";
-import { TFacility } from "../../../../../admin/page/main/facility-registration-list";
+import { ListFooter } from "../../../style/global_style.ts";
+import { facilityList } from "../../../store/facility-list.ts";
 
 const PAGING_SIZE = 5;
 
@@ -16,7 +15,7 @@ function CertifyPage() {
   const [belongImg, setBelongImg] = useState<File | null>(null);
   const [belongImgFileName, setBelongImgFileName] = useState<string>("첨부파일");
   const [page, setPage] = useState<number>(1);
-  const [selectedFacility, setSelectedFacility] = useState<TFacility | null>(null);
+  const [selectedFacility, setSelectedFacility] = useState<any>(null);
   const [facilityNameSearchQuery, setFacilityNameSearchQuery] = useState<string>("");
 
   const navigate = useNavigate();
@@ -171,7 +170,7 @@ function CertifyPage() {
                   <S.NameHeader>기관명</S.NameHeader>
                   <S.AddressHeader>기관 주소</S.AddressHeader>
                 </S.ListHeader>
-                {facilityList.map((facility) => (
+                {facilityList.slice(page * 5, (page + 1) * 5).map((facility) => (
                   <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
                     <S.ItemName>
                       {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}

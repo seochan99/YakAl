@@ -1,4 +1,5 @@
-import { createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import "./font.css";
 
 export const GlobalStyle = createGlobalStyle`
   * {
@@ -88,17 +89,68 @@ export const GlobalStyle = createGlobalStyle`
       font-size: 85%;
     }
   }
+`;
 
-  @font-face {
-    font-family: "SUIT";
-    src: url("/src/global/assets/fonts/SUIT-Variable.ttf") format("truetype");
+export const ListFooter = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-family: Pretendard, serif;
+    font-weight: 600;
   }
 
-  @font-face {
-    font-family: "Pretendard";
-    font-weight: 45 920;
-    font-style: normal;
-    font-display: swap;
-    src: url('/src/global/assets/fonts/PretendardVariable.woff2') format('woff2-variations');
+  & .pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 0.4rem;
+    margin: 0;
+  }
+
+  & ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  & ul.pagination li {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 0.0625rem solid var(--Gray3, #c6c6cf);
+  }
+
+  & ul.pagination li:hover {
+    background-color: var(--Gray2, #e9e9ee);
+    cursor: pointer;
+  }
+
+  & ul.pagination li:active {
+    background-color: var(--Sub1, #5588fd);
+  }
+
+  & ul.pagination li.active {
+    background-color: var(--Main, #2666f6);
+  }
+
+  & ul.pagination li a {
+    text-decoration: none;
+    color: var(--Black, #151515);
+  }
+
+  & ul.pagination li:hover a {
+    color: var(--Black, #151515);
+  }
+
+  & ul.pagination li:active a {
+    color: white;
+  }
+
+  & ul.pagination li.active a {
+    color: white;
   }
 `;

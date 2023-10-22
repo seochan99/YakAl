@@ -1,13 +1,14 @@
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
 
-import { ReactComponent as LinkIconSvg } from "/src/expert/assets/icons/back-icon.svg";
+import { ReactComponent as LinkIconSvg } from "/public/assets/icons/back-icon.svg";
 
 export const Outer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
   margin: 2rem;
+  width: 54rem;
 `;
 
 export const Header = styled.div`
@@ -74,13 +75,13 @@ export const MainHeader = styled.div`
 `;
 
 export const VerifiedIcon = styled.img`
-  content: url("/src/expert/assets/icons/verified-icon.png");
+  content: url("/assets/icons/verified-icon.png");
   height: 1.2rem;
   width: 1.2rem;
 `;
 
 export const UnverifiedIcon = styled.img`
-  content: url("/src/expert/assets/icons/unverified-icon.png");
+  content: url("/assets/icons/unverified-icon.png");
   height: 1.2rem;
   width: 1.2rem;
 `;

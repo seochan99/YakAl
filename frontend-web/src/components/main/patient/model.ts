@@ -1,5 +1,5 @@
-import { ESex } from "../../../../type/sex.ts";
-import { EPatientInfoTab } from "../../../../type/patient-info-tab.ts";
+import { ESex } from "../../../type/sex.ts";
+import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
 
 type TPatientInfo = {
   base: {
@@ -170,6 +170,8 @@ export class PatientModel {
     this.patientInfo.screeningDetail = null;
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchBase = async (patientId: number) => {
     this.patientInfo.base = {
       name: "홍길동",
@@ -180,6 +182,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchLastETC = async (patientId: number) => {
     this.patientInfo.medication.etc = {
       list: [
@@ -197,6 +201,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchETC = async (patientId: number) => {
     this.patientInfo.medication.etc = {
       ...this.patientInfo.medication.etc,
@@ -214,6 +220,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchBeersList = async (patientId: number) => {
     this.patientInfo.medication.beersCriteriaMedicines = {
       list: [
@@ -231,6 +239,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchAnticholinergic = async (patientId: number) => {
     this.patientInfo.medication.anticholinergicDrugs = {
       list: [
@@ -249,6 +259,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchARMS = async (patientId: number) => {
     this.patientInfo.medication.armsProgress = [
       { score: 40, createdAt: [2023, 1, 1] },
@@ -258,6 +270,8 @@ export class PatientModel {
     ];
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchGeriatricSyndrome = async (patientId: number) => {
     this.patientInfo.geriatricSyndrome = {
       mna: [0, 0, 1, 0, 1, 3],
@@ -274,6 +288,8 @@ export class PatientModel {
     };
   };
 
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
   public static fetchScreening = async (patientId: number) => {
     this.patientInfo.screeningDetail = {
       arms: [1, 2, 3, 4, 4, 3, 4, 1, 1, 2, 1, 4],

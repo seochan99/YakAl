@@ -21,7 +21,7 @@ export const LogoLink = styled(Link)`
 `;
 
 export const IconImg = styled.img`
-  content: url("/src/expert/assets/yakal-logo.png");
+  content: url("/assets/yakal-logo.png");
   width: 5rem;
 `;
 

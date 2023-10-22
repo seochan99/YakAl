@@ -1,6 +1,8 @@
 import { Badge } from "@mui/material";
 import styled from "styled-components";
 
+import "/src/style/font.css";
+
 export const Outer = styled.div`
   position: relative;
   display: flex;

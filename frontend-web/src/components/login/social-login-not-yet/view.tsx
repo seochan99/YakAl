@@ -1,10 +1,10 @@
-import WarningPage from "../../../warning/view.tsx";
+import WarningPage from "../../../page/warning/view.tsx";
 import * as S from "./style.ts";
 
 function SocialLoginNotYetPage() {
   return (
     <WarningPage
-      iconPath="/src/expert/assets/icons/no-entry-icon.png"
+      iconPath="/assets/icons/no-entry-icon.png"
       title="소셜 로그인 오류"
       description={
         <>
