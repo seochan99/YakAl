@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 
 import '../../utilities/style/color_styles.dart';
@@ -72,6 +74,12 @@ class _CalendarPillInfoViewState extends State<CalendarPillInfoView> {
                         onClickChildrenCheckBox: (eTakingTime, todoId) {
                           viewModel.onClickChildrenCheckBox(
                               eTakingTime, todoId);
+                        },
+                        onClickChildrenItemView: (name, kdCode) {
+                          Get.toNamed('/pill/detail', arguments: {
+                            'name': name,
+                            'kdCode': kdCode,
+                          });
                         },
                       ),
                       childCount: viewModel.pillTodoParents.length,
