@@ -109,6 +109,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
+        colorSchemeSeed: Colors.grey,
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       initialRoute: initialRoute,

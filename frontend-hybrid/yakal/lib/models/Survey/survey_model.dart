@@ -171,7 +171,7 @@ final List<SurveyModel> tests = [
   SurveyModel(
     title: '복약 순응도 테스트',
     comment: '약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_1.svg',
+    iconPath: 'assets/icons/icon-test-1.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
@@ -193,7 +193,7 @@ final List<SurveyModel> tests = [
     title: '우울 척도 테스트',
     comment:
         '이용자의 우울 여부는 일상생활의 동기부여나 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
-    iconPath: 'assets/icons/circle_4.svg',
+    iconPath: 'assets/icons/icon-test-2.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
@@ -215,7 +215,7 @@ final List<SurveyModel> tests = [
     title: '노쇠 테스트',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 노쇠 증상에 해당되는지 여부를 파악하여 도움을 드리기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_2.svg',
+    iconPath: 'assets/icons/icon-test-3.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
@@ -234,31 +234,77 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
-    title: '우울증 선별 테스트',
+    title: '간이 영양 상태 조사',
     comment:
-        '이용자의 우울 여부는 일상생활의 동기부여 나 의약품 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
-    iconPath: 'assets/icons/circle_2.svg',
+        '노인분들을 대상으로 하는 일회성 설문조사입니다. 이용자의 영양상태를 파악하여 맞춤형 식단 및 생활습관을 안내드릴 수 있습니다.',
+    iconPath: 'assets/icons/icon-test-4.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: [
+      QuestionModel(
+        question: questionNutritionalAssessment[0],
+        options: ["그렇다.", "보통", "아니다"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[1],
+        options: ["3kg 이상 감소", "1~2kg 감소", "변화 없다", "모르겠다"],
+        scores: [0, 2, 3, 1],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[2],
+        options: ["침대나 의자에서만 생활이 가능", "집에서만 활동이 가능", "외출 가능, 활동에 제약이 없음"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[3],
+        options: ["예", "아니오"],
+        scores: [0, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[4],
+        options: ["중증 치매 또는 우울증", "경증 치매", "없음"],
+        scores: [0, 1, 2],
+      ),
+      QuestionModel(
+        question: questionNutritionalAssessment[5],
+        options: ["31cm보다 미만", "31cm 보다 이상"],
+        scores: [0, 3],
+      ),
+    ],
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "이 설문에서 낮은 점수를 받은 경우 영양상태가 불량함을 의미합니다. 노인분들의 영양 균형을 위해서는 높은 품질의 단백질이 포함된 식단을 섭취하면 도움이 됩니다.",
+    isSenior: 0,
+  ),
+  SurveyModel(
+    title: '일상생활 동작 지수',
+    comment:
+        '노인분들을 대상으로 하는 일회성 설문조사입니다. 일상에서의 동작을 무리없이 수행할 수 있는지 여부를 파악하여 이용자에게 물리치료 요법을 추천드릴 수 있습니다.',
+    iconPath: 'assets/icons/icon-test-5.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
     questions: List<QuestionModel>.generate(
-      9,
+      6,
       (index) => QuestionModel(
-        question: questionsDepressionScreening[index],
-        options: ['전혀없음', '2~6일', '7일 이상', '거의 매일'],
-        scores: [0, 1, 2, 3],
+        question: questionActivitiesOfDailyLiving[index],
+        options: ["예", "아니오"],
+        scores: [0, 1],
       ),
     ),
     totalScore: 0,
     resultComment: '',
     resultDescription:
-        "총점이 10점 이상으로 주요우울장애가 의심되거나9번 문항을 1점 이상으로 응답한 경우  (즉, 자살/자해 생각이 있는 경우) 가까운 병∙ 의원에서 진료를 받거나, 정신건강복지센터(또는 정신건강 위기상담전화)에서 상담을 받을 필요가 있습니다. 가벼운 우울상태인 이용자들은  규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다.",
-    isSenior: 1,
+        "일상 생활 동작 지수 설문에서 낮은 점수일수록 일상생활의 동작에 어려움이 있음을 의미합니다. 적절한 물리적 치료요법으로 개선할 수 있습니다.",
+    isSenior: 0,
   ),
   SurveyModel(
     title: '음주력 테스트',
     comment: '이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_3.svg',
+    iconPath: 'assets/icons/icon-test-6.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
@@ -322,137 +368,9 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
-    title: '불면증 심각도 테스트',
-    comment: '이용자의 불면증에 해당하는지 여부를 파악하여 수면 건강 및 전체적인 건강에 도움을 드리기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_3.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      9,
-      (index) => QuestionModel(
-        question: questionsDepressionScreening[index],
-        options: ["매우", "그렇다", "보통", "아니다", "전혀 아니다"],
-        scores: [0, 1, 2, 3, 4],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 이 설문에서 높은 점수를 받을수록 불면증이 심한 상태이기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
-    isSenior: 2,
-  ),
-  SurveyModel(
-    title: '시청각 테스트',
-    comment: '이용자의 안경 및 보청기 사용유무를 파악하기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_1.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      2,
-      (index) => QuestionModel(
-        question: questionAuditoryTest[index],
-        options: ["예", "아니오"],
-        scores: [0, 1],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "시각 및 청각의 건강상태는 이용자의 삶의 질에 큰 영향을 줄 수 있고 적절한 보조 장치를 사용하거나 치료를 통해 개선될 수 있습니다.",
-    isSenior: 0,
-  ),
-  SurveyModel(
-    title: '일상생활 동작 지수',
-    comment:
-        '노인분들을 대상으로 하는 일회성 설문조사입니다. 일상에서의 동작을 무리없이 수행할 수 있는지 여부를 파악하여 이용자에게 물리치료 요법을 추천드릴 수 있습니다.',
-    iconPath: 'assets/icons/circle_2.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      6,
-      (index) => QuestionModel(
-        question: questionActivitiesOfDailyLiving[index],
-        options: ["예", "아니오"],
-        scores: [0, 1],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "일상 생활 동작 지수 설문에서 낮은 점수일수록 일상생활의 동작에 어려움이 있음을 의미합니다. 적절한 물리적 치료요법으로 개선할 수 있습니다.",
-    isSenior: 0,
-  ),
-  SurveyModel(
-    title: '치매 테스트',
-    comment: '이용자의 인지기능(사고력과 기억력)이 어떻게 변화되어 왔는지 파악하기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_4.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      8,
-      (index) => QuestionModel(
-        question: questionDementiaTest[index],
-        options: ["예", "아니오"],
-        scores: [1, 0],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "인지기능의 저하는 이용자의 신체 및 정신 건강상태에 큰 영향을 줄 수 있습니다. 인지기능의 저하가 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
-    isSenior: 0,
-  ),
-  SurveyModel(
-    title: '섬망 테스트',
-    comment:
-        '이용자의 뇌 기능과 연관된 섬망 증상을 파악하기 위한 설문입니다. 과거 병원에 입원 하셨을 때의 경험을 토대로 답변해주시기 바랍니다.',
-    iconPath: 'assets/icons/circle_3.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      4,
-      (index) => QuestionModel(
-        question: questionNeglectTest[index],
-        options: ["예", "아니오"],
-        scores: [1, 0],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "섬망 증세는 자칫 잘못하면 낙상으로 이어질 수 있는 큰 원인 중 하나입니다. 섬망이 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
-    isSenior: 0,
-  ),
-  SurveyModel(
-    title: '폐쇄성 수면 무호흡증',
-    comment: '이용자의 수면 중 무호흡증 여부를 파악하여 수면 건강에 도움을 드리기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_3.svg',
-    time: '3',
-    isCompleted: false,
-    // 12개의 질문만들기
-    questions: List<QuestionModel>.generate(
-      8,
-      (index) => QuestionModel(
-        question: questionSleepApnea[index],
-        options: ["예", "아니오"],
-        scores: [1, 0],
-      ),
-    ),
-    totalScore: 0,
-    resultComment: '',
-    resultDescription:
-        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 수면 중 무호흡증은 수면의 질을 크게 떨어뜨릴 수 있기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
-    isSenior: 0,
-  ),
-  SurveyModel(
     title: '흡연력 테스트',
     comment: '이용자의 흡연 여부와 흡연 습관을 파악하기 위한 설문입니다.',
-    iconPath: 'assets/icons/circle_3.svg',
+    iconPath: 'assets/icons/icon-test-7.svg',
     time: '1',
     isCompleted: false,
     // 12개의 질문만들기
@@ -480,49 +398,131 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
-    title: '간이 영양 상태 조사',
-    comment:
-        '노인분들을 대상으로 하는 일회성 설문조사입니다. 이용자의 영양상태를 파악하여 맞춤형 식단 및 생활습관을 안내드릴 수 있습니다.',
-    iconPath: 'assets/icons/circle_1.svg',
+    title: '시청각 테스트',
+    comment: '이용자의 안경 및 보청기 사용유무를 파악하기 위한 설문입니다.',
+    iconPath: 'assets/icons/icon-test-8.svg',
     time: '3',
     isCompleted: false,
     // 12개의 질문만들기
-    questions: [
-      QuestionModel(
-        question: questionNutritionalAssessment[0],
-        options: ["그렇다.", "보통", "아니다"],
-        scores: [0, 1, 2],
-      ),
-      QuestionModel(
-        question: questionNutritionalAssessment[1],
-        options: ["3kg 이상 감소", "1~2kg 감소", "변화 없다", "모르겠다"],
-        scores: [0, 2, 3, 1],
-      ),
-      QuestionModel(
-        question: questionNutritionalAssessment[2],
-        options: ["침대나 의자에서만 생활이 가능", "집에서만 활동이 가능", "외출 가능, 활동에 제약이 없음"],
-        scores: [0, 1, 2],
-      ),
-      QuestionModel(
-        question: questionNutritionalAssessment[3],
+    questions: List<QuestionModel>.generate(
+      2,
+      (index) => QuestionModel(
+        question: questionAuditoryTest[index],
         options: ["예", "아니오"],
-        scores: [0, 2],
+        scores: [0, 1],
       ),
-      QuestionModel(
-        question: questionNutritionalAssessment[4],
-        options: ["중증 치매 또는 우울증", "경증 치매", "없음"],
-        scores: [0, 1, 2],
-      ),
-      QuestionModel(
-        question: questionNutritionalAssessment[5],
-        options: ["31cm보다 미만", "31cm 보다 이상"],
-        scores: [0, 3],
-      ),
-    ],
+    ),
     totalScore: 0,
     resultComment: '',
     resultDescription:
-        "이 설문에서 낮은 점수를 받은 경우 영양상태가 불량함을 의미합니다. 노인분들의 영양 균형을 위해서는 높은 품질의 단백질이 포함된 식단을 섭취하면 도움이 됩니다.",
+        "시각 및 청각의 건강상태는 이용자의 삶의 질에 큰 영향을 줄 수 있고 적절한 보조 장치를 사용하거나 치료를 통해 개선될 수 있습니다.",
     isSenior: 0,
+  ),
+  SurveyModel(
+    title: '치매 테스트',
+    comment: '이용자의 인지기능(사고력과 기억력)이 어떻게 변화되어 왔는지 파악하기 위한 설문입니다.',
+    iconPath: 'assets/icons/icon-test-9.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      8,
+      (index) => QuestionModel(
+        question: questionDementiaTest[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "인지기능의 저하는 이용자의 신체 및 정신 건강상태에 큰 영향을 줄 수 있습니다. 인지기능의 저하가 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
+    isSenior: 0,
+  ),
+  SurveyModel(
+    title: '섬망 테스트',
+    comment:
+        '이용자의 뇌 기능과 연관된 섬망 증상을 파악하기 위한 설문입니다. 과거 병원에 입원 하셨을 때의 경험을 토대로 답변해주시기 바랍니다.',
+    iconPath: 'assets/icons/icon-test-10.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      4,
+      (index) => QuestionModel(
+        question: questionNeglectTest[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "섬망 증세는 자칫 잘못하면 낙상으로 이어질 수 있는 큰 원인 중 하나입니다. 섬망이 의심되는 경우 적절한 의료기관에 방문하여 약물 등을 통해 치료가 필요합니다.",
+    isSenior: 0,
+  ),
+  SurveyModel(
+    title: '불면증 심각도 테스트',
+    comment: '이용자의 불면증에 해당하는지 여부를 파악하여 수면 건강 및 전체적인 건강에 도움을 드리기 위한 설문입니다.',
+    iconPath: 'assets/icons/icon-test-11.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      9,
+      (index) => QuestionModel(
+        question: questionsDepressionScreening[index],
+        options: ["매우", "그렇다", "보통", "아니다", "전혀 아니다"],
+        scores: [0, 1, 2, 3, 4],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 이 설문에서 높은 점수를 받을수록 불면증이 심한 상태이기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
+    isSenior: 2,
+  ),
+  SurveyModel(
+    title: '폐쇄성 수면 무호흡증',
+    comment: '이용자의 수면 중 무호흡증 여부를 파악하여 수면 건강에 도움을 드리기 위한 설문입니다.',
+    iconPath: 'assets/icons/icon-test-12.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      8,
+      (index) => QuestionModel(
+        question: questionSleepApnea[index],
+        options: ["예", "아니오"],
+        scores: [1, 0],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "충분한 수면과 좋은 수면의 질은 이용자의 건강에 중요한 요소입니다. 수면 중 무호흡증은 수면의 질을 크게 떨어뜨릴 수 있기 때문에 수면 클리닉이나 의료기관을 방문하여 적절한 치료가 필요합니다.",
+    isSenior: 0,
+  ),
+  SurveyModel(
+    title: '우울증 선별 테스트',
+    comment:
+        '이용자의 우울 여부는 일상생활의 동기부여 나 의약품 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
+    iconPath: 'assets/icons/icon-test-2.svg',
+    time: '3',
+    isCompleted: false,
+    // 12개의 질문만들기
+    questions: List<QuestionModel>.generate(
+      9,
+      (index) => QuestionModel(
+        question: questionsDepressionScreening[index],
+        options: ['전혀없음', '2~6일', '7일 이상', '거의 매일'],
+        scores: [0, 1, 2, 3],
+      ),
+    ),
+    totalScore: 0,
+    resultComment: '',
+    resultDescription:
+        "총점이 10점 이상으로 주요우울장애가 의심되거나9번 문항을 1점 이상으로 응답한 경우  (즉, 자살/자해 생각이 있는 경우) 가까운 병∙ 의원에서 진료를 받거나, 정신건강복지센터(또는 정신건강 위기상담전화)에서 상담을 받을 필요가 있습니다. 가벼운 우울상태인 이용자들은  규칙적인 생활습관과 충분한 수면, 그리고 운동하는 습관을 통해 개선될 수 있습니다.",
+    isSenior: 1,
   ),
 ];
