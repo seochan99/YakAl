@@ -9,10 +9,10 @@ function App() {
   const pathname = window.location.pathname;
 
   useEffect(() => {
-    if (pathname.startsWith("/expert")) {
-      document.title = "약 알 - 전문가 WEB";
-    } else {
+    if (pathname.startsWith("/admin")) {
       document.title = "약 알 - 관리자 WEB";
+    } else {
+      document.title = "약 알 - 전문가 WEB";
     }
   }, [pathname]);
 
