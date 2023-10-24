@@ -217,7 +217,7 @@ class MyExpansionTile extends StatefulWidget {
   /// Creates a single-line [ListTile] with an expansion arrow icon that expands or collapses
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
-  const MyExpansionTile({
+  MyExpansionTile({
     super.key,
     this.leading,
     required this.title,
@@ -242,6 +242,7 @@ class MyExpansionTile extends StatefulWidget {
     this.clipBehavior,
     this.controlAffinity,
     this.controller,
+    this.isExpanded = false,
   }) : assert(
           expandedCrossAxisAlignment != CrossAxisAlignment.baseline,
           'CrossAxisAlignment.baseline is not supported since the expanded children '
@@ -484,6 +485,9 @@ class MyExpansionTile extends StatefulWidget {
   /// than supplying a controller.
   final ExpansionTileController? controller;
 
+  /// Specifies if the list tile is expanded (true) or collapsed (false, the default).
+  bool isExpanded;
+
   @override
   State<MyExpansionTile> createState() => _ExpansionTileState();
 }
@@ -510,7 +514,7 @@ class _ExpansionTileState extends State<MyExpansionTile>
   late Animation<Color?> _iconColor;
   late Animation<Color?> _backgroundColor;
 
-  bool _isExpanded = false;
+  late bool _isExpanded;
   late ExpansionTileController _tileController;
 
   @override
@@ -527,8 +531,7 @@ class _ExpansionTileState extends State<MyExpansionTile>
     _backgroundColor =
         _animationController.drive(_backgroundColorTween.chain(_easeOutTween));
 
-    _isExpanded = PageStorage.maybeOf(context)?.readState(context) as bool? ??
-        widget.initiallyExpanded;
+    _isExpanded = widget.isExpanded;
     if (_isExpanded) {
       _animationController.value = 1.0;
     }
