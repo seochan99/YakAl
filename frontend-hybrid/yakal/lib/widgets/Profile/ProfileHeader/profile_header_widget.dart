@@ -17,7 +17,7 @@ class ProfileHeader extends StatelessWidget {
       color: Colors.white,
 
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 88, 20, 24),
+        padding: const EdgeInsets.fromLTRB(20, 62, 20, 24),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

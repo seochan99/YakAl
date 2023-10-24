@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Home/pill_todo_children.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
@@ -100,6 +98,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                         data: Theme.of(context)
                             .copyWith(dividerColor: Colors.transparent),
                         child: MyExpansionTile(
+                          isExpanded: pillTodoParent.isExpanded,
                           onExpansionChanged: (newState) {
                             onClickParentItemView(pillTodoParent.eTakingTime);
                           },
@@ -161,35 +160,39 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               SizedBox.fromSize(size: const Size(8, 8)),
                               InkWell(
                                 onTap: () {
-                                  // 3일이 지난 경우 수정 불가능
-                                  if (DateTime.now()
-                                          .difference(todoDate)
-                                          .inDays >
-                                      3) {
-                                    Get.snackbar('복약 기록', '3일이 지나면 수정이 불가능해요!',
-                                        margin: const EdgeInsets.fromLTRB(
-                                            20, 0, 20, 20),
-                                        duration: const Duration(
-                                            seconds: 1, microseconds: 500),
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: ColorStyles.gray1,
-                                        colorText: Colors.black);
-                                  }
-                                  // 오늘 날짜보다 이후인 경우 수정 불가능
-                                  else if (DateTime.now()
-                                          .difference(todoDate)
-                                          .inDays <
-                                      0) {
+                                  // 3일 이상 지난 경우
+                                  if (DateTime.now().isAfter(
+                                      todoDate.add(Duration(days: 3)))) {
                                     Get.snackbar(
-                                        '복약 기록', '미래의 복약 기록을 작성하는 것은 불가능해요.',
-                                        margin: const EdgeInsets.fromLTRB(
-                                            20, 0, 20, 20),
-                                        duration: const Duration(
-                                            seconds: 1, microseconds: 500),
-                                        snackPosition: SnackPosition.BOTTOM,
-                                        backgroundColor: ColorStyles.gray1,
-                                        colorText: Colors.black);
-                                  } else {
+                                      '복약 기록',
+                                      '3일이 지나면 수정이 불가능해요!',
+                                      margin: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 20),
+                                      duration: const Duration(
+                                          seconds: 1, microseconds: 500),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: ColorStyles.gray1,
+                                      colorText: Colors.black,
+                                    );
+                                  }
+                                  // 미래의 날짜인 경우
+                                  else if (DateTime.now().isBefore(todoDate)) {
+                                    print("${DateTime.now()} ${todoDate}");
+                                    Get.snackbar(
+                                      '복약 기록',
+                                      '미래의 복약 기록을 작성하는 것은 불가능해요.',
+                                      margin: const EdgeInsets.fromLTRB(
+                                          20, 0, 20, 20),
+                                      duration: const Duration(
+                                          seconds: 1, microseconds: 500),
+                                      snackPosition: SnackPosition.BOTTOM,
+                                      backgroundColor: ColorStyles.gray1,
+                                      colorText: Colors.black,
+                                    );
+                                  }
+                                  // 조건을 만족하는 경우
+                                  else {
+                                    print("${DateTime.now()} ${todoDate}");
                                     onClickParentCheckBox(
                                         pillTodoParent.eTakingTime);
                                   }

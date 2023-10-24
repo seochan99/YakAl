@@ -53,43 +53,30 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Material(
       child: Stack(children: [
-        Scaffold(
-          appBar: AppBar(
-            surfaceTintColor: Colors.white,
-            backgroundColor: Colors.white,
-            centerTitle: false,
-            elevation: 0,
-            automaticallyImplyLeading: false,
-            actions: const [
-              //notify
-              // Padding(
-              //   padding: const EdgeInsetsDirectional.fromSTEB(0, 0, 15, 0),
-              //   child: IconButton(
-              //     splashColor: Colors.transparent,
-              //     highlightColor: Colors.transparent,
-              //     onPressed: () {},
-              //     icon: SvgPicture.asset(
-              //       'assets/icons/icon-home-notification.svg',
-              //     ),
-              //   ),
-              // ),
-            ],
-          ),
-          body: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                /* ----------------- 홈 정보 뷰 -----------------  */
-                HomeInfoLayout(viewModel),
-                /* ----------------- 구분선 -----------------  */
-                Container(
-                    // width 꽉 차게
+        SafeArea(
+          child: Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Container(
                     width: double.infinity,
-                    height: 2,
-                    decoration: const BoxDecoration(color: Color(0xffe9e9ee))),
-                /* ----------------- TodoList 뷰 -----------------  */
-                Expanded(child: HomePillTodoView(viewModel: viewModel)),
-              ],
+                    height: 30,
+                    color: Colors.white,
+                  ),
+                  /* ----------------- 홈 정보 뷰 -----------------  */
+                  HomeInfoLayout(viewModel),
+                  /* ----------------- 구분선 -----------------  */
+                  Container(
+                      // width 꽉 차게
+                      width: double.infinity,
+                      height: 2,
+                      decoration:
+                          const BoxDecoration(color: Color(0xffe9e9ee))),
+                  /* ----------------- TodoList 뷰 -----------------  */
+                  Expanded(child: HomePillTodoView(viewModel: viewModel)),
+                ],
+              ),
             ),
           ),
         ),

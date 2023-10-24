@@ -56,6 +56,7 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
                 ],
               )
             : ListView.builder(
+                addAutomaticKeepAlives: true,
                 itemCount: viewModel.pillTodoParents.length,
                 itemBuilder: (context, index) {
                   return PillTodoParentItem(

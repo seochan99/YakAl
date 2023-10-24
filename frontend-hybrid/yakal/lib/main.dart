@@ -62,7 +62,7 @@ Future<void> sendDeviceToken(String deviceToken, bool isIos) async {
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
 
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
 
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
@@ -109,7 +109,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
-        colorSchemeSeed: Colors.grey,
+        colorSchemeSeed: Colors.blue,
+        // colorScheme:
+        //   const ColorScheme(
+        //     brightness: Brightness.light,
+        //     // primary는 앱바, 플로팅버튼, 텍스트필드 등의 색상을 지정합니다.
+        //     primary: Colors.blue,
+        //     onPrimary: Colors.white,
+        //     // secondary는 앱바의 타이틀, 플로팅버튼의 아이콘 등의 색상을 지정합니다.
+        //     secondary: Colors.white,
+        //     onSecondary: Colors.white,
+        //     // error는 에러 메시지 등의 색상을 지정합니다.
+        //     error: Colors.red,
+        //     onError: Colors.white,
+        //     // background는 앱의 배경색을 지정합니다.
+        //     background: Colors.white,
+        //     onBackground: Colors.white,
+        //     // surface는 카드, 버튼 등의 색상을 지정합니다.
+        //     surface: Colors.white,
+        //     onSurface: Colors.black,
+        //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       initialRoute: initialRoute,
