@@ -26,18 +26,18 @@ import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
-export const ADMIN_LOGIN_ROUTE = "/admin/login";
+export const ADMIN_LOGIN_ROUTE = "/admin-login/login";
 
 export const router = createBrowserRouter([
   {
     errorElement: <NotFoundPage />,
     children: [
       {
-        path: "/expert",
+        path: "",
         errorElement: <NotFoundPage />,
         children: [
           {
-            path: "",
+            path: "/expert",
             element: <ExpertMain />,
             errorElement: <NotFoundPage />,
             children: [
@@ -89,7 +89,7 @@ export const router = createBrowserRouter([
             ],
           },
           {
-            path: "login",
+            path: "",
             element: <ExpertLogin />,
             errorElement: <NotFoundPage />,
             children: [

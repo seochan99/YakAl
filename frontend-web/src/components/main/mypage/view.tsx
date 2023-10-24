@@ -26,17 +26,10 @@ function MyPage() {
       <S.MainSection>
         <S.MainHeader>
           <S.Title>내 정보</S.Title>
-          {true ? (
-            <S.VerifiedText>
-              <S.VerifiedIcon />
-              전문가 인증이 완료된 사용자입니다.
-            </S.VerifiedText>
-          ) : (
-            <S.VerifiedText>
-              <S.UnverifiedIcon />
-              전문가 인증이 완료되지 않은 사용자입니다.
-            </S.VerifiedText>
-          )}
+          <S.VerifiedText>
+            <S.VerifiedIcon />
+            전문가 인증이 완료된 사용자입니다.
+          </S.VerifiedText>
         </S.MainHeader>
         <S.InnerBox>
           <S.InputBox>

@@ -54,12 +54,7 @@ npm run dev -- --host
 
 ## Design Pattern
 
-![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FI0Ia7%2FbtrEaN93m03%2FQvgBPWN6BlfR7dcRQ9g2a0%2Fimg.jpg)
-
 * 소수의 컴포넌트에 종속된 로컬 데이터는 MVVM 패턴을 적용하여 데이터와 뷰를 분리
-
-![](https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1OLd/image/JHTtx7AD-xlDJHdutxQBnUdnXQo.png)
-
 * 다수의 컴포넌트에 종속된 글로벌 데이터는 Redux를 활용한 MVI 패턴을 이용하여 데이터의 변화를 쉽게 반영할 수 있도록 함
 
 ## Styling Rule
