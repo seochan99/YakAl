@@ -27,7 +27,7 @@ class LoginFinishedScreen extends StatelessWidget {
                     Row(
                       children: [
                         Obx(
-                              () {
+                          () {
                             return Text(
                               userViewModel.user.value.nickName,
                               style: LoginFinishedStyle.name,
@@ -53,11 +53,8 @@ class LoginFinishedScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/icons/logo.png",
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width * 0.55,
+                "assets/icons/img-join-2.png",
+                width: MediaQuery.of(context).size.width * 0.55,
               ),
             ],
           ),
