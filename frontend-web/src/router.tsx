@@ -23,6 +23,7 @@ import RegisterFailurePage from "./components/main/register-failure/view.tsx";
 import CertificationSuccess from "./components/main/certify-success/view.tsx";
 import CertifyFailurePage from "./components/main/certify-failure/view.tsx";
 import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
+import AdminLogin from "./page/admin-login/view.tsx";
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -33,115 +34,120 @@ export const router = createBrowserRouter([
     errorElement: <NotFoundPage />,
     children: [
       {
-        path: "",
+        path: "/expert",
+        element: <ExpertMain />,
         errorElement: <NotFoundPage />,
         children: [
           {
-            path: "/expert",
-            element: <ExpertMain />,
             errorElement: <NotFoundPage />,
             children: [
               {
-                errorElement: <NotFoundPage />,
-                children: [
-                  {
-                    index: true,
-                    element: <ExpertDashboard />,
-                  },
-                  {
-                    path: "info",
-                    element: <MyPage />,
-                  },
-                  {
-                    path: "patient",
-                    element: <PatientListPage />,
-                  },
-                  {
-                    path: "registration",
-                    element: <ExpertFacilityRegistration />,
-                  },
-                  {
-                    path: "registration/success",
-                    element: <RegisterSuccessPage />,
-                  },
-                  {
-                    path: "registration/failure",
-                    element: <RegisterFailurePage />,
-                  },
-                  {
-                    path: "certification/success",
-                    element: <CertificationSuccess />,
-                  },
-                  {
-                    path: "certification/failure",
-                    element: <CertifyFailurePage />,
-                  },
-                  {
-                    path: "certification",
-                    element: <CertifyPage />,
-                  },
-                  {
-                    path: "patient/:patientId",
-                    element: <PatientPage />,
-                  },
-                ],
+                index: true,
+                element: <ExpertDashboard />,
               },
-            ],
-          },
-          {
-            path: "",
-            element: <ExpertLogin />,
-            errorElement: <NotFoundPage />,
-            children: [
               {
-                errorElement: <NotFoundPage />,
-                children: [
-                  {
-                    index: true,
-                    element: <LoginMainPage />,
-                  },
-                  {
-                    path: "terms",
-                    element: <TermsPage />,
-                  },
-                  {
-                    path: "social/failure",
-                    element: <SocialLoginFailurePage />,
-                  },
-                  {
-                    path: "social/not-yet",
-                    element: <SocialLoginNotYetPage />,
-                  },
-                  {
-                    path: "social/kakao",
-                    element: <SocialLogin />,
-                  },
-                  {
-                    path: "social/google",
-                    element: <SocialLogin />,
-                  },
-                  {
-                    path: "identify",
-                    element: <IdentifyPage />,
-                  },
-                  {
-                    path: "identify/failure",
-                    element: <IdentifyFailurePage />,
-                  },
-                  {
-                    path: "identify/success",
-                    element: <IdentifySuccessPage />,
-                  },
-                ],
+                path: "info",
+                element: <MyPage />,
+              },
+              {
+                path: "patient",
+                element: <PatientListPage />,
+              },
+              {
+                path: "registration",
+                element: <ExpertFacilityRegistration />,
+              },
+              {
+                path: "registration/success",
+                element: <RegisterSuccessPage />,
+              },
+              {
+                path: "registration/failure",
+                element: <RegisterFailurePage />,
+              },
+              {
+                path: "certification/success",
+                element: <CertificationSuccess />,
+              },
+              {
+                path: "certification/failure",
+                element: <CertifyFailurePage />,
+              },
+              {
+                path: "certification",
+                element: <CertifyPage />,
+              },
+              {
+                path: "patient/:patientId",
+                element: <PatientPage />,
               },
             ],
-          },
-          {
-            path: "loading",
-            element: <LoadingPage />,
-            errorElement: <NotFoundPage />,
           },
         ],
+      },
+      {
+        path: "/admin",
+        element: <AdminLogin />,
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            errorElement: <NotFoundPage />,
+            children: [],
+          },
+        ],
+      },
+      {
+        path: "",
+        element: <ExpertLogin />,
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            errorElement: <NotFoundPage />,
+            children: [
+              {
+                index: true,
+                element: <LoginMainPage />,
+              },
+              {
+                path: "terms",
+                element: <TermsPage />,
+              },
+              {
+                path: "social/failure",
+                element: <SocialLoginFailurePage />,
+              },
+              {
+                path: "social/not-yet",
+                element: <SocialLoginNotYetPage />,
+              },
+              {
+                path: "social/kakao",
+                element: <SocialLogin />,
+              },
+              {
+                path: "social/google",
+                element: <SocialLogin />,
+              },
+              {
+                path: "identify",
+                element: <IdentifyPage />,
+              },
+              {
+                path: "identify/failure",
+                element: <IdentifyFailurePage />,
+              },
+              {
+                path: "identify/success",
+                element: <IdentifySuccessPage />,
+              },
+            ],
+          },
+        ],
+      },
+      {
+        path: "loading",
+        element: <LoadingPage />,
+        errorElement: <NotFoundPage />,
       },
     ],
   },
