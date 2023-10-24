@@ -190,6 +190,7 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
+    // 2
     title: '우울 척도 테스트',
     comment:
         '이용자의 우울 여부는 일상생활의 동기부여나 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
@@ -212,6 +213,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    // id : 3
     title: '노쇠 테스트',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 노쇠 증상에 해당되는지 여부를 파악하여 도움을 드리기 위한 설문입니다.',
@@ -234,6 +236,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    // id : 4
     title: '간이 영양 상태 조사',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 이용자의 영양상태를 파악하여 맞춤형 식단 및 생활습관을 안내드릴 수 있습니다.',
