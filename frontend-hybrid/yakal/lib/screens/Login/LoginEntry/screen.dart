@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginEntry/style.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
@@ -31,82 +32,52 @@ class LoginEntryScreen extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      "AI를 이용한 ",
-                      style: LoginEntryStyle.blackSubtitle,
-                    ),
-                    Text(
-                      "복약 도움 플랫폼",
-                      style: LoginEntryStyle.blueBoldSubtitle,
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "약 알",
-                      style: LoginEntryStyle.title,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
           const SizedBox(
-            height: 50,
+            height: 200,
           ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Image.asset(
-              "assets/images/login_banner.png",
-              fit: BoxFit.fill,
-            ),
+          SvgPicture.asset(
+            'assets/icons/login_main.svg',
           ),
-          const SizedBox(
-            height: 60,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              children: [
-                SocialLoginButton(
-                  text: "카카오로 로그인",
-                  color: ColorStyles.black,
-                  backgroundColor: const Color(0xFFFEE500),
-                  iconPath: "assets/icons/kakao.svg",
-                  onPressed: () {
-                    Get.toNamed("/login/kakao");
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                isiOS
-                    ? SocialLoginButton(
-                        text: "Apple로 로그인",
-                        color: ColorStyles.white,
-                        backgroundColor: ColorStyles.black,
-                        iconPath: "assets/icons/apple.svg",
-                        onPressed: () {
-                          _showComingSoonSnackBar(context);
-                        },
-                      )
-                    : SocialLoginButton(
-                        text: "Google 계정으로 로그인",
-                        color: ColorStyles.black,
-                        backgroundColor: ColorStyles.white,
-                        iconPath: "assets/icons/google.svg",
-                        onPressed: () {
-                          _showComingSoonSnackBar(context);
-                        },
-                      ),
-              ],
+          const Spacer(),
+          Container(
+            color: ColorStyles.gray1,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 30, 20, 70),
+              child: Column(
+                children: [
+                  SocialLoginButton(
+                    text: "카카오로 로그인",
+                    color: ColorStyles.black,
+                    backgroundColor: const Color(0xFFFEE500),
+                    iconPath: "assets/icons/kakao.svg",
+                    onPressed: () {
+                      Get.toNamed("/login/kakao");
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  isiOS
+                      ? SocialLoginButton(
+                          text: "Apple로 로그인",
+                          color: ColorStyles.white,
+                          backgroundColor: ColorStyles.black,
+                          iconPath: "assets/icons/apple.svg",
+                          onPressed: () {
+                            _showComingSoonSnackBar(context);
+                          },
+                        )
+                      : SocialLoginButton(
+                          text: "Google 계정으로 로그인",
+                          color: ColorStyles.black,
+                          backgroundColor: ColorStyles.white,
+                          iconPath: "assets/icons/google.svg",
+                          onPressed: () {
+                            _showComingSoonSnackBar(context);
+                          },
+                        ),
+                ],
+              ),
             ),
           ),
         ],
