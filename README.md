@@ -4,7 +4,7 @@
 
 # 👋 팀원 소개
 
-## Front-End([Android]([App](./frontend-hybrid/readme.md), [Web](./frontend-web/README.md))
+## Front-End([App](./frontend-hybrid/readme.md), [Web](./frontend-web/README.md))
 
 | 이름                                      | 개발 파트                              |
 | ----------------------------------------- | -------------------------------------- |
@@ -88,5 +88,20 @@
 | 🗃      | :card_file_box             | 데이버베이스 관련 수정   |
 
 ## Lisence
-소스코드를 제외한 아이디어에 대해서 이용(수업 과제용, 상업용 등)을 허락하지 않습니다.<br>
-all right reserved.
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2023 ViewPharm Company
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
