@@ -19,7 +19,7 @@ function AdminLogin() {
 
   return (
     <S.OuterDiv>
-      <Header to={"/expert/login"} isAdmin={true} />
+      <Header to={"/admin"} isAdmin={true} />
       <S.CenteringMain>
         <S.UsernamePasswordDiv>
           <S.LoginTitleSpan>{"관리자 로그인"}</S.LoginTitleSpan>

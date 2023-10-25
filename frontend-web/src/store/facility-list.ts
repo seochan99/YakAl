@@ -1,9 +1,9 @@
-import { EFacility } from "../type/facility.ts";
+import { EFacilityType } from "@type/facility-type.ts";
 
 export const facilityList = [
   {
     id: 1,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원1",
@@ -11,7 +11,7 @@ export const facilityList = [
   },
   {
     id: 2,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원2",
@@ -19,7 +19,7 @@ export const facilityList = [
   },
   {
     id: 3,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원3",
@@ -27,7 +27,7 @@ export const facilityList = [
   },
   {
     id: 4,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원4",
@@ -35,7 +35,7 @@ export const facilityList = [
   },
   {
     id: 5,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원5",
@@ -43,7 +43,7 @@ export const facilityList = [
   },
   {
     id: 6,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원6",
@@ -51,7 +51,7 @@ export const facilityList = [
   },
   {
     id: 7,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원7",
@@ -59,7 +59,7 @@ export const facilityList = [
   },
   {
     id: 8,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원8",
@@ -67,7 +67,7 @@ export const facilityList = [
   },
   {
     id: 9,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원9",
@@ -75,7 +75,7 @@ export const facilityList = [
   },
   {
     id: 10,
-    type: EFacility.HOSPITAL,
+    type: EFacilityType.HOSPITAL,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원10",
@@ -83,7 +83,7 @@ export const facilityList = [
   },
   {
     id: 11,
-    type: EFacility.PHARMACY,
+    type: EFacilityType.PHARMACY,
     directorPhone: "01044444444",
     directorName: "홍길동",
     name: "분당 차병원11",

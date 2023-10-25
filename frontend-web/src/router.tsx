@@ -24,6 +24,7 @@ import CertificationSuccess from "./components/main/certify-success/view.tsx";
 import CertifyFailurePage from "./components/main/certify-failure/view.tsx";
 import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
 import AdminLogin from "./page/admin-login/view.tsx";
+import AdminMain from "@page/admin-main/view.tsx";
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -88,13 +89,10 @@ export const router = createBrowserRouter([
       {
         path: "/admin",
         element: <AdminLogin />,
-        errorElement: <NotFoundPage />,
-        children: [
-          {
-            errorElement: <NotFoundPage />,
-            children: [],
-          },
-        ],
+      },
+      {
+        path: "/admin/main",
+        element: <AdminMain />,
       },
       {
         path: "",

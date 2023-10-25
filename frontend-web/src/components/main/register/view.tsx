@@ -1,10 +1,10 @@
 import * as S from "./style.ts";
 import React, { useRef, useState } from "react";
-import { EFacility } from "../../../type/facility.ts";
+import { EFacilityType } from "@type/facility-type.ts";
 import { EInfoTake } from "../../../type/info-take.ts";
 
 export function RegisterPage() {
-  const [selected, setSelected] = useState<EFacility | null>(null);
+  const [selected, setSelected] = useState<EFacilityType | null>(null);
   const [facilityDirectorName, setFacilityDirectorName] = useState<string>("");
   const [directorPhoneNumber, setDirectorPhoneNumber] = useState<string>("");
   const [facilityName, setFacilityName] = useState<string>("");
@@ -128,15 +128,15 @@ export function RegisterPage() {
         </S.Subtitle>
         <S.SelectButtonWrapper>
           <S.SelectButtonBox
-            className={selected === EFacility.HOSPITAL ? "selected" : "unselected"}
-            onClick={() => setSelected(EFacility.HOSPITAL)}
+            className={selected === EFacilityType.HOSPITAL ? "selected" : "unselected"}
+            onClick={() => setSelected(EFacilityType.HOSPITAL)}
           >
             <S.HospitalIcon />
             병원
           </S.SelectButtonBox>
           <S.SelectButtonBox
-            className={selected === EFacility.PHARMACY ? "selected" : "unselected"}
-            onClick={() => setSelected(EFacility.PHARMACY)}
+            className={selected === EFacilityType.PHARMACY ? "selected" : "unselected"}
+            onClick={() => setSelected(EFacilityType.PHARMACY)}
           >
             <S.PharmacyIcon />
             약국
@@ -147,7 +147,7 @@ export function RegisterPage() {
             <S.Subtitle>2. 전문가 인증에 필요한 정보를 입력해주세요.</S.Subtitle>
             <S.InputBox>
               <S.CertInputBox>
-                <S.CertInputLabel>{selected === EFacility.HOSPITAL ? "병원장명*" : "약국장명*"}</S.CertInputLabel>
+                <S.CertInputLabel>{selected === EFacilityType.HOSPITAL ? "병원장명*" : "약국장명*"}</S.CertInputLabel>
                 <S.CertInput
                   type="text"
                   value={facilityDirectorName}
@@ -156,7 +156,7 @@ export function RegisterPage() {
               </S.CertInputBox>
               <S.CertInputBox>
                 <S.CertInputLabel>
-                  {selected === EFacility.HOSPITAL ? "병원장 연락처(휴대폰)*" : "약국장 연락처(휴대폰)*"}
+                  {selected === EFacilityType.HOSPITAL ? "병원장 연락처(휴대폰)*" : "약국장 연락처(휴대폰)*"}
                 </S.CertInputLabel>
                 <S.CertInput
                   type="tel"
@@ -166,7 +166,7 @@ export function RegisterPage() {
               </S.CertInputBox>
               <S.CertInputBox>
                 <S.CertInputLabel>
-                  {selected === EFacility.HOSPITAL ? "병원명(요양기관명)*" : "약국명(요양기관명)*"}
+                  {selected === EFacilityType.HOSPITAL ? "병원명(요양기관명)*" : "약국명(요양기관명)*"}
                 </S.CertInputLabel>
                 <S.CertInput
                   type="text"
@@ -195,7 +195,9 @@ export function RegisterPage() {
                   </S.PostcodeBox>
                 </S.CertInputBox>
                 <S.CertInputBox>
-                  <S.CertInputLabel>{selected === EFacility.HOSPITAL ? "병원 주소*" : "약국 주소*"}</S.CertInputLabel>
+                  <S.CertInputLabel>
+                    {selected === EFacilityType.HOSPITAL ? "병원 주소*" : "약국 주소*"}
+                  </S.CertInputLabel>
                   <S.CertInput
                     type="text"
                     value={facilityAddress}
@@ -247,7 +249,7 @@ export function RegisterPage() {
               </S.CertImgBox>
               <S.CertInputBox>
                 <S.CertInputLabel>
-                  {selected === EFacility.HOSPITAL ? "병원 연락처(선택)" : "약국 연락처(선택)"}
+                  {selected === EFacilityType.HOSPITAL ? "병원 연락처(선택)" : "약국 연락처(선택)"}
                 </S.CertInputLabel>
                 <S.CertInput
                   type="text"
@@ -300,7 +302,7 @@ export function RegisterPage() {
               </S.CertInputBoxHours>
               <S.CertInputBoxFeatures>
                 <S.CertInputLabel>
-                  {selected === EFacility.HOSPITAL ? "병원 특징(선택)" : "약국 특징(선택)"}
+                  {selected === EFacilityType.HOSPITAL ? "병원 특징(선택)" : "약국 특징(선택)"}
                 </S.CertInputLabel>
                 <S.CertTextarea value={facilityFeatures} onChange={(e) => setFacilityFeatures(e.currentTarget.value)} />
               </S.CertInputBoxFeatures>

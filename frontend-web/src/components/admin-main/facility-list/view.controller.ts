@@ -1,14 +1,13 @@
+import { AdminFacilityListViewModel } from "@components/admin-main/facility-list/view.model.ts";
 import React, { useEffect, useRef, useState } from "react";
-import { PatientListViewModel } from "./view.model.ts";
 import { EOrder } from "@type/order.ts";
-import { EPatientField } from "@type/patient-field.ts";
+import { EFacilityField } from "@type/facility-field.ts";
 
-export const usePatientListPageViewController = () => {
-  PatientListViewModel.use();
+export const useAdminFacilityListViewController = () => {
+  AdminFacilityListViewModel.use();
 
-  const { fetch, getStates, setPageNumber, setSortBy, setNameQuery, setIsOnlyManaged, setIsManaged } =
-    PatientListViewModel;
-  const { isLoading, patientList, paging, sorting, isOnlyManaged } = getStates();
+  const { fetch, getStates, setPageNumber, setSortBy, setNameQuery } = AdminFacilityListViewModel;
+  const { isLoading, facilityList, paging, sorting } = getStates();
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -38,7 +37,7 @@ export const usePatientListPageViewController = () => {
   }, [sortingOptionOpen, setSortingOptionOpen]);
 
   const onSelectSortingOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+    setSortBy(EOrder.DESC, e.currentTarget.value as EFacilityField);
     setSortingOptionOpen(false);
   };
 
@@ -52,38 +51,11 @@ export const usePatientListPageViewController = () => {
     }
   };
 
-  const onSelectMangedList = () => {
-    if (!isOnlyManaged) {
-      setIsOnlyManaged(true);
-    }
-  };
-
-  const onSelectEntireList = () => {
-    if (isOnlyManaged) {
-      setIsOnlyManaged(false);
-    }
-  };
-
-  const onClickToManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, true);
-  };
-
-  const onClickToNotManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, false);
-  };
-
   return {
     selectListRef,
     onChangePage,
-    managed: {
-      isOnlyManaged,
-      onSelectMangedList,
-      onSelectEntireList,
-      onClickToManageFactory,
-      onClickToNotManageFactory,
-    },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
-    data: { isLoading, patientList, paging, sorting },
+    data: { isLoading, facilityList, paging, sorting },
   };
 };

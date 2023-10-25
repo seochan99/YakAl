@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import React from "react";
-import { FooterModel } from "../../store/footer_model.ts";
+import { FooterModel } from "@store/footer.ts";
 
 function Footer() {
   const { introductionUrl, name, address, tel, email, businessRegistrationNumber } = FooterModel;
