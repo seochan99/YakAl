@@ -8,6 +8,7 @@ export const OuterHeader = styled.header`
   height: 6.875rem;
   line-height: 6.875rem;
   box-sizing: border-box;
+  background-color: var(--White, #fff);
 `;
 
 export const LogoLink = styled(Link)`
@@ -42,7 +43,7 @@ export const TitleSpan = styled.span`
   line-height: 3.2rem;
 `;
 
-export const DescriptionSpan = styled.span`
+export const DescriptionSpan = styled.span<{ $isAdmin?: boolean }>`
   color: var(--Gray4, #90909f);
   font-family: SUIT, serif;
   font-size: 1.25rem;
