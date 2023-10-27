@@ -2,13 +2,13 @@ import { EOrder } from "@type/order.ts";
 import { EFacilityType } from "@type/facility-type.ts";
 import { EFacilityField } from "@type/facility-field.ts";
 
-type TFacilityItem = {
+export type TFacilityItem = {
   id: number;
   name: string;
   representative: string;
   representativeTel: string;
   facilityType: EFacilityType;
-  requested_at: Date;
+  requestedAt: Date;
 };
 
 type TFacilityListSortType = {
@@ -22,8 +22,8 @@ const facilityList: TFacilityItem[] = [
     facilityType: EFacilityType.HOSPITAL,
     representativeTel: "01044444444",
     representative: "홍길동",
-    name: "분당 차병원1",
-    requested_at: new Date("2023-09-01"),
+    name: "분당 차병원",
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 2,
@@ -31,7 +31,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원2",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원3",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 4,
@@ -47,7 +47,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원4",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 5,
@@ -55,7 +55,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원5",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 6,
@@ -63,7 +63,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원6",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 7,
@@ -71,7 +71,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원7",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 8,
@@ -79,7 +79,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원8",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 9,
@@ -87,7 +87,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원9",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 10,
@@ -95,7 +95,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원10",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
   {
     id: 11,
@@ -103,7 +103,7 @@ const facilityList: TFacilityItem[] = [
     representativeTel: "01044444444",
     representative: "홍길동",
     name: "분당 차병원11",
-    requested_at: new Date("2023-09-01"),
+    requestedAt: new Date("2023-09-01"),
   },
 ];
 

@@ -6,7 +6,7 @@ import Header from "../../layout/header/view.tsx";
 import Profile from "../../components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { EJob } from "../../type/job.ts";
+import { EJob } from "@type/job.ts";
 import { useMainPageViewController } from "./view.controller.ts";
 import { EXPERT_HOME } from "../../router.tsx";
 

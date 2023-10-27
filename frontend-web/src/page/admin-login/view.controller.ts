@@ -7,7 +7,7 @@ function useAdminLoginViewController() {
   const [password, setPassword] = useState<string>("");
 
   /* Logic */
-  const loginButtonDisabled = username == "" || password == "";
+  const loginButtonDisabled = username === "" || password === "";
 
   /* Callback */
   const onChangeUsername = useCallback(

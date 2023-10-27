@@ -2,9 +2,9 @@ import * as S from "./style.ts";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useAdminFacilityListViewController } from "@components/admin-main/facility-list/view.controller.ts";
 import Pagination from "react-js-pagination";
-import { PatientListModel } from "@components/main/patient-list/model.ts";
 import FacilityItem from "@components/admin-main/facility-item/view.tsx";
 import { EFacilityField } from "@type/facility-field.ts";
+import { AdminFacilityListModel } from "@store/admin-facility-list.ts";
 
 function AdminFacilityList() {
   const {
@@ -60,7 +60,7 @@ function AdminFacilityList() {
         <S.TableHeaderDiv>
           <S.NameSpan>{`기관명`}</S.NameSpan>
           <S.FacilityTypeSpan>{`기관 종류`}</S.FacilityTypeSpan>
-          <S.RepresentativeSpan>{`기관장 이름`}</S.RepresentativeSpan>
+          <S.RepresentativeSpan>{`기관장명`}</S.RepresentativeSpan>
           <S.TelephoneSpan>{`기관장 전화번호`}</S.TelephoneSpan>
           <S.RequestDateSpan>{`신청일`}</S.RequestDateSpan>
         </S.TableHeaderDiv>
@@ -71,7 +71,7 @@ function AdminFacilityList() {
       <S.PaginationDiv>
         <Pagination
           activePage={paging.pageNumber}
-          itemsCountPerPage={PatientListModel.PATIENT_COUNT_PER_PAGE}
+          itemsCountPerPage={AdminFacilityListModel.FACILITY_COUNT_PER_PAGE}
           totalItemsCount={paging.totalCount as number}
           pageRangeDisplayed={5}
           prevPageText={"‹"}

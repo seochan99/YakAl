@@ -8,7 +8,6 @@ export const OuterDiv = styled.div`
   flex-direction: column;
   align-items: stretch;
   justify-content: start;
-  background-color: var(--Gray1, #f5f5f9);
   width: 100vw;
 `;
 
@@ -26,6 +25,7 @@ export const CenteringMain = styled.main`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: var(--Gray1, #f5f5f9);
   flex: 1;
 `;
 

@@ -34,7 +34,7 @@ export const NameSpan = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% / 4);
+  width: calc(100% / 8);
   color: var(--Black, #151515);
   font-family: SUIT, serif;
   font-size: 1.2rem;
@@ -56,7 +56,7 @@ const CommonFontStyle = css`
   line-height: 1.2rem;
 `;
 
-export const FacilityTypeSpan = styled.span`
+export const JobTypeSpan = styled.span`
   & {
     width: calc(100% / 8);
     ${CommonFontStyle}
@@ -67,11 +67,11 @@ export const FacilityTypeSpan = styled.span`
   }
 `;
 
-export const RepresentativeSpan = styled.span`
+export const FacilityNameSpan = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: calc(100% / 8);
+  width: calc(100% / 4);
   ${CommonFontStyle}
 `;
 

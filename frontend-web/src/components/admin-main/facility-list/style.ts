@@ -134,8 +134,9 @@ export const SelectItemButton = styled.button`
 export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: start;
   gap: 0.5rem;
-  height: 48.7rem;
+  height: 40.7rem;
 `;
 
 export const TableHeaderDiv = styled.div`
@@ -143,7 +144,7 @@ export const TableHeaderDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 3rem;
+  padding: 0.6rem 1rem;
   border: 0;
   color: var(--Gray4, #90909f);
   font-family: SUIT, serif;
@@ -159,19 +160,19 @@ export const NameSpan = styled.span`
 `;
 
 export const FacilityTypeSpan = styled.span`
-  width: calc(100% / 8 * 3);
+  width: calc(100% / 8);
 `;
 
 export const RepresentativeSpan = styled.span`
-  width: calc(100% / 8 * 3);
+  width: calc(100% / 8);
 `;
 
 export const TelephoneSpan = styled.span`
-  width: calc(100% / 8 * 3);
+  width: calc(100% / 4);
 `;
 
 export const RequestDateSpan = styled.span`
-  width: calc(100% / 2);
+  width: calc(100% / 4);
 `;
 
 export const PaginationDiv = styled.div`
