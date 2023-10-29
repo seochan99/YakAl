@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { PatientListModel } from "./model.ts";
+import { PatientListModel } from "@store/patient-list.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
 

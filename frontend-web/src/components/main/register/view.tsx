@@ -1,7 +1,6 @@
 import * as S from "./style.ts";
 import React, { useRef, useState } from "react";
 import { EFacilityType } from "@type/facility-type.ts";
-import { EInfoTake } from "../../../type/info-take.ts";
 
 export function RegisterPage() {
   const [selected, setSelected] = useState<EFacilityType | null>(null);
@@ -19,7 +18,7 @@ export function RegisterPage() {
   const [facilityContact, setFacilityContact] = useState<string>("");
   const [facilityHours, setFacilityHours] = useState<string>("");
   const [facilityFeatures, setFacilityFeatures] = useState<string>("");
-  const [informationTakenWay, setInformationTakenWay] = useState<EInfoTake | undefined>(undefined);
+  // const [informationTakenWay, setInformationTakenWay] = useState<EInfoTake | undefined>(undefined);
 
   const isFinished =
     facilityDirectorName.length > 0 &&
@@ -28,10 +27,9 @@ export function RegisterPage() {
     facilityNumber.length > 0 &&
     facilityPostcode.length > 0 &&
     facilityAddress.length > 0 &&
-    facilityAddressDetail.length > 0 &&
     facilityBusinessNumber.length > 0 &&
-    certificationImg !== null &&
-    informationTakenWay !== undefined;
+    certificationImg !== null;
+  // informationTakenWay !== undefined;
 
   const facilityAddressDetailRef = useRef<HTMLInputElement>(null);
   const certificationImgPreviewRef = useRef<HTMLImageElement>(null);
@@ -102,7 +100,7 @@ export function RegisterPage() {
   };
 
   const handleSubmit = () => {
-    if (selected === null || informationTakenWay === undefined) {
+    if (selected === null) {
       return;
     }
   };
@@ -144,7 +142,7 @@ export function RegisterPage() {
         </S.SelectButtonWrapper>
         {selected !== null && (
           <>
-            <S.Subtitle>2. 전문가 인증에 필요한 정보를 입력해주세요.</S.Subtitle>
+            <S.Subtitle>2. 기관 등록에 필요한 정보를 입력해주세요.</S.Subtitle>
             <S.InputBox>
               <S.CertInputBox>
                 <S.CertInputLabel>{selected === EFacilityType.HOSPITAL ? "병원장명*" : "약국장명*"}</S.CertInputLabel>
@@ -206,7 +204,7 @@ export function RegisterPage() {
                 </S.CertInputBox>
                 <S.CertAddressFooter>
                   <S.CertInputBox>
-                    <S.CertInputLabel>상세 주소*</S.CertInputLabel>
+                    <S.CertInputLabel>상세 주소</S.CertInputLabel>
                     <S.CertInput
                       type="text"
                       ref={facilityAddressDetailRef}
@@ -257,41 +255,41 @@ export function RegisterPage() {
                   onChange={(e) => setFacilityContact(e.currentTarget.value)}
                 />
               </S.CertInputBox>
-              <S.CertInputBox>
-                <S.CertInputLabel>정보 수정 수신 방법*</S.CertInputLabel>
-                <S.InfoTakeRadioBox>
-                  <label>
-                    <input
-                      type="radio"
-                      name="info-take"
-                      value={informationTakenWay}
-                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.EMAIL : false}
-                      onChange={() => setInformationTakenWay(EInfoTake.EMAIL)}
-                    />
-                    <span>이메일</span>
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="info-take"
-                      value={informationTakenWay}
-                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.PHONE : false}
-                      onChange={() => setInformationTakenWay(EInfoTake.PHONE)}
-                    />
-                    <span>휴대폰</span>
-                  </label>
-                  <label>
-                    <input
-                      type="radio"
-                      name="info-take"
-                      value={informationTakenWay}
-                      checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NONE : false}
-                      onChange={() => setInformationTakenWay(EInfoTake.NONE)}
-                    />
-                    <span>받지 않음</span>
-                  </label>
-                </S.InfoTakeRadioBox>
-              </S.CertInputBox>
+              {/*<S.CertInputBox>*/}
+              {/*  <S.CertInputLabel>정보 수정 수신 방법*</S.CertInputLabel>*/}
+              {/*  <S.InfoTakeRadioBox>*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*        type="radio"*/}
+              {/*        name="info-take"*/}
+              {/*        value={informationTakenWay}*/}
+              {/*        checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.EMAIL : false}*/}
+              {/*        onChange={() => setInformationTakenWay(EInfoTake.EMAIL)}*/}
+              {/*      />*/}
+              {/*      <span>이메일</span>*/}
+              {/*    </label>*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*        type="radio"*/}
+              {/*        name="info-take"*/}
+              {/*        value={informationTakenWay}*/}
+              {/*        checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.PHONE : false}*/}
+              {/*        onChange={() => setInformationTakenWay(EInfoTake.PHONE)}*/}
+              {/*      />*/}
+              {/*      <span>휴대폰</span>*/}
+              {/*    </label>*/}
+              {/*    <label>*/}
+              {/*      <input*/}
+              {/*        type="radio"*/}
+              {/*        name="info-take"*/}
+              {/*        value={informationTakenWay}*/}
+              {/*        checked={informationTakenWay !== undefined ? informationTakenWay === EInfoTake.NONE : false}*/}
+              {/*        onChange={() => setInformationTakenWay(EInfoTake.NONE)}*/}
+              {/*      />*/}
+              {/*      <span>받지 않음</span>*/}
+              {/*    </label>*/}
+              {/*  </S.InfoTakeRadioBox>*/}
+              {/*</S.CertInputBox>*/}
               <S.CertInputBoxHours>
                 <S.CertInputLabel>운영 시간(선택)</S.CertInputLabel>
                 <S.CertInput

@@ -2,7 +2,7 @@ import { useAdminExpertListViewController } from "@components/admin-main/expert-
 import * as S from "./style.ts";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Pagination from "react-js-pagination";
-import { PatientListModel } from "@components/main/patient-list/model.ts";
+import { PatientListModel } from "@store/patient-list.ts";
 import AdminExpertItem from "@components/admin-main/expert-item/view.tsx";
 import { EExpertField } from "@type/expert-field.ts";
 

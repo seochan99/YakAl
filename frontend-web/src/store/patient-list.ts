@@ -1,6 +1,6 @@
-import { ESex } from "../../../type/sex.ts";
-import { EOrder } from "../../../type/order.ts";
-import { EPatientField } from "../../../type/patient-field.ts";
+import { ESex } from "@type/sex.ts";
+import { EOrder } from "@type/order.ts";
+import { EPatientField } from "@type/patient-field.ts";
 
 type TPatientItem = {
   id: number;

@@ -6,9 +6,9 @@ import { ReactComponent as SearchIconSvg } from "/public/assets/icons/magnifying
 export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
-  width: 45rem;
-  margin: 2rem 0;
-  gap: 0.1rem;
+  align-items: stretch;
+  justify-content: start;
+  width: 100vw;
 `;
 
 export const InnerDiv = styled.div`
@@ -18,6 +18,23 @@ export const InnerDiv = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   gap: 1.5rem;
+`;
+
+export const CenteringMain = styled.main`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--Gray1, #f5f5f9);
+  flex: 1;
+`;
+
+export const ContentDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 45rem;
+  margin: 2rem 0;
+  gap: 0.1rem;
 `;
 
 export const TabBarDiv = styled.div`
@@ -203,7 +220,7 @@ export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 51rem;
+  height: 48.7rem;
 `;
 
 export const TableHeaderDiv = styled.div`

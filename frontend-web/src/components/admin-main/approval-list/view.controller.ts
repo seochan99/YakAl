@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-export const useAdminMainViewController = () => {
+export const useAdminApprovalListViewController = () => {
   const [isExpert, setIsExpert] = useState<boolean>(true);
 
   const onClickExpertList = useCallback(() => {

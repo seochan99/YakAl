@@ -25,6 +25,9 @@ import CertifyFailurePage from "./components/main/certify-failure/view.tsx";
 import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
 import AdminLogin from "./page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
+import AdminExpertDetail from "@components/admin-main/expert-detail/view.tsx";
+import { loader as adminExpertDetailLoader } from "@components/admin-main/expert-detail/loader.ts";
+import AdminApprovalList from "@components/admin-main/approval-list/view.tsx";
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -91,8 +94,20 @@ export const router = createBrowserRouter([
         element: <AdminLogin />,
       },
       {
-        path: "/admin/main",
+        path: "/admin",
         element: <AdminMain />,
+        errorElement: <NotFoundPage />,
+        children: [
+          {
+            path: "main",
+            element: <AdminApprovalList />,
+          },
+          {
+            path: "expert/:expertId",
+            element: <AdminExpertDetail />,
+            loader: adminExpertDetailLoader,
+          },
+        ],
       },
       {
         path: "",

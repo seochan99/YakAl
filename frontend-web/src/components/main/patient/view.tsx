@@ -1,11 +1,11 @@
 import * as S from "./style.ts";
 import { usePatientPageViewController } from "./view.controller.ts";
-import { ESex } from "../../../type/sex.ts";
-import getAge from "../../../util/get-age.ts";
+import { ESex } from "@type/sex.ts";
+import getAge from "@util/get-age.ts";
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
 import Summary from "./child/summary/view.tsx";
-import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 import Medication from "./child/medication/view.tsx";
 import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";
