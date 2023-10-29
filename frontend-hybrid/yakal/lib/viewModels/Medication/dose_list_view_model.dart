@@ -15,12 +15,12 @@ import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
 class DoseListViewModel extends GetxController {
   final MedicationDirectProvider _medicationDirectProvider =
-  MedicationDirectProvider();
+      MedicationDirectProvider();
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
   final EnvelopAnalysisProvider _envelopAnalysisProvider =
-  EnvelopAnalysisProvider();
+      EnvelopAnalysisProvider();
   final MedicineCodeRepository _medicineCodeRepository =
-  MedicineCodeRepository();
+      MedicineCodeRepository();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
@@ -63,8 +63,7 @@ class DoseListViewModel extends GetxController {
 
       if (kDebugMode) {
         print(
-            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch
-                .target!} / Similarity: ${bestMatch.bestMatch.rating!}");
+            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch.target!} / Similarity: ${bestMatch.bestMatch.rating!}");
       }
 
       // 유사도가 70% 이상인 경우만 고려
@@ -201,8 +200,8 @@ class DoseListViewModel extends GetxController {
     return _notAddableList.length;
   }
 
-  void toggle(int groupIndex, int itemIndex, ETakingTime takingTime,
-      bool toBeTake) {
+  void toggle(
+      int groupIndex, int itemIndex, ETakingTime takingTime, bool toBeTake) {
     var isTaking = _groupList[groupIndex].takingTime[takingTime.index];
 
     if (isTaking == toBeTake) {
@@ -215,7 +214,7 @@ class DoseListViewModel extends GetxController {
     Function deepEq = const DeepCollectionEquality().equals;
 
     var item =
-    DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
+        DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
 
     _groupList[groupIndex].doseList.removeAt(itemIndex);
 
