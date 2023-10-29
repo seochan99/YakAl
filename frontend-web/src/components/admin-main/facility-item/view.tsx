@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import { EFacilityType } from "@type/facility-type.ts";
-import { getDateString } from "@util/get-date-string.ts";
+import { getDateStringFromDate } from "@util/get-date-string-from-date.ts";
 import { TFacilityItem } from "@store/admin-facility-list.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
@@ -36,7 +36,7 @@ function FacilityItem({ facilityInfo }: TFacilityItemProps) {
           <S.RepresentativeSpan>{representative}</S.RepresentativeSpan>
         </Tooltip>
         <S.TelephoneSpan>{representativeTel}</S.TelephoneSpan>
-        <S.RequestDateSpan>{getDateString(requestedAt)}</S.RequestDateSpan>
+        <S.RequestDateSpan>{getDateStringFromDate(requestedAt)}</S.RequestDateSpan>
       </S.StyledLink>
     </S.OuterDiv>
   );

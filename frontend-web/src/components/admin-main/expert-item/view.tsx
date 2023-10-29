@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import { EJob } from "@type/job.ts";
-import { getDateString } from "@util/get-date-string.ts";
+import { getDateStringFromDate } from "@util/get-date-string-from-date.ts";
 import { TExpertItem } from "@store/admin-expert-list.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
@@ -36,7 +36,7 @@ function AdminExpertItem({ expertInfo }: TExpertItemProps) {
           <S.FacilityNameSpan>{belongName}</S.FacilityNameSpan>
         </Tooltip>
         <S.TelephoneSpan>{tel}</S.TelephoneSpan>
-        <S.RequestDateSpan>{getDateString(requestedAt)}</S.RequestDateSpan>
+        <S.RequestDateSpan>{getDateStringFromDate(requestedAt)}</S.RequestDateSpan>
       </S.StyledLink>
     </S.OuterDiv>
   );
