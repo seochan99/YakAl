@@ -2,11 +2,7 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.request.IdentifyDto;
-import com.viewpharm.yakal.dto.request.UpdateIsAllowedNotificationDto;
-import com.viewpharm.yakal.dto.request.UpdateIsDetailDto;
-import com.viewpharm.yakal.dto.request.UpdateNameDto;
-import com.viewpharm.yakal.dto.request.UpdateUserInfoDto;
+import com.viewpharm.yakal.dto.request.*;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.dto.response.UserInfoDto;
 import com.viewpharm.yakal.service.UserService;
@@ -15,11 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -103,5 +95,11 @@ public class UserController {
     public ResponseDto<?> updateIsAllowedNotification(@UserId Long id, @RequestBody @Valid UpdateIsAllowedNotificationDto updateIsAllowedNotificationDto) {
         userService.updateIsAllowedNotification(id, updateIsAllowedNotificationDto.getIsAllowedNotification());
         return ResponseDto.ok(null);
+    }
+
+    @PutMapping("/device")
+    @Operation(summary = "디바이스 토큰 등록")
+    public ResponseDto<Boolean> updateUserDevice(@UserId Long userId, @RequestBody UserDeviceRequestDto requestDto) {
+        return ResponseDto.ok(userService.updateUserDevice(userId, requestDto));
     }
 }

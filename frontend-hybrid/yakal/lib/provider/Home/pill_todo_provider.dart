@@ -34,9 +34,18 @@ class PillTodoProvider {
       futures.add(dio.get("/drug/info", queryParameters: {
         "drugcode": kdCode,
         "drugType": "N",
+      }).catchError((e) {
+        print("Error occurred for request with kdCode: $kdCode");
+        // Handle specific error for the failed request here
       }));
     }
 
+    try {
+      await Future.wait(futures);
+    } catch (e) {
+      print("Error occurred for request with kdCode: $kdCodeList");
+      // Handle specific error for the failed request here
+    }
     List<Response> responses = await Future.wait(futures);
     Map<String, String> base64ImageMap = {};
 
@@ -46,6 +55,8 @@ class PillTodoProvider {
 
         base64ImageMap[kdCodeList[i]] =
             jsonResponse['DrugInfo']['IdentaImage'] ?? "";
+      } else {
+        base64ImageMap[kdCodeList[i]] = "";
       }
     }
 

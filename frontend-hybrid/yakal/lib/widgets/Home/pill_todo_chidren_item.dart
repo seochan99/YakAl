@@ -14,12 +14,15 @@ class PillTodoChildrenItem extends StatefulWidget {
   final Function(ETakingTime, int) onClickChildrenCheckBox;
   final Function(String, String)? onClickChildrenItemView;
 
+  final bool isModal;
+
   const PillTodoChildrenItem(
       {required this.todoDate,
       required this.eTakingTime,
       required this.pillTodoChildren,
       required this.onClickChildrenCheckBox,
       this.onClickChildrenItemView,
+      required this.isModal,
       Key? key})
       : super(key: key);
 
@@ -34,6 +37,8 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   late final Function(ETakingTime, int) onClickChildrenCheckBox;
   late final Function(String, String)? onClickChildrenItemView;
 
+  late final bool isModal;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -43,6 +48,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
     pillTodoChildren = widget.pillTodoChildren;
     onClickChildrenCheckBox = widget.onClickChildrenCheckBox;
     onClickChildrenItemView = widget.onClickChildrenItemView;
+    isModal = widget.isModal;
   }
 
   @override
@@ -108,44 +114,53 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
               ],
             ),
             const Spacer(),
-            InkWell(
-              onTap: () {
-                // 3일이 지난 경우 수정 불가능
-                if (DateTime.now().difference(todoDate).inDays > 3) {
-                  Get.snackbar('복약 기록', '3일이 지나면 수정이 불가능해요!',
+            if (!isModal)
+              InkWell(
+                onTap: () {
+                  // 3일 이상 지난 경우
+                  if (DateTime.now().isAfter(todoDate.add(Duration(days: 3)))) {
+                    Get.snackbar(
+                      '복약 기록',
+                      '3일이 지나면 수정이 불가능해요!',
                       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       duration: const Duration(seconds: 1, microseconds: 500),
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: ColorStyles.gray1,
-                      colorText: Colors.black);
-                }
-                // 오늘 날짜보다 이후인 경우 수정 불가능
-                else if (DateTime.now().difference(todoDate).inDays < 0) {
-                  Get.snackbar('복약 기록', '미래의 복약 기록을 작성하는 것은 불가능해요.',
+                      colorText: Colors.black,
+                    );
+                  }
+                  // 미래의 날짜인 경우
+                  else if (DateTime.now().isBefore(todoDate)) {
+                    print("${DateTime.now()} ${todoDate}");
+                    Get.snackbar(
+                      '복약 기록',
+                      '미래의 복약 기록을 작성하는 것은 불가능해요.',
                       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       duration: const Duration(seconds: 1, microseconds: 500),
                       snackPosition: SnackPosition.BOTTOM,
                       backgroundColor: ColorStyles.gray1,
-                      colorText: Colors.black);
-                }
-                // 복약 기록 수정 가능
-                else {
-                  onClickChildrenCheckBox(eTakingTime, pillTodoChildren.id);
-                }
-              },
-              // InkWell Repple Effect 없애기
-              splashColor: Colors.transparent,
-              child: Container(
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(24)),
-                width: 48,
-                height: 48,
-                child: pillTodoChildren.isTaken
-                    ? SvgPicture.asset('assets/icons/icon-check-oval-on-24.svg')
-                    : SvgPicture.asset(
-                        'assets/icons/icon-check-oval-off-24.svg'),
+                      colorText: Colors.black,
+                    );
+                  }
+                  // 조건을 만족하는 경우
+                  else {
+                    onClickChildrenCheckBox(eTakingTime, pillTodoChildren.id);
+                  }
+                },
+                // InkWell Repple Effect 없애기
+                splashColor: Colors.transparent,
+                child: Container(
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(24)),
+                  width: 48,
+                  height: 48,
+                  child: pillTodoChildren.isTaken
+                      ? SvgPicture.asset(
+                          'assets/icons/icon-check-oval-on-24.svg')
+                      : SvgPicture.asset(
+                          'assets/icons/icon-check-oval-off-24.svg'),
+                ),
               ),
-            ),
             SizedBox.fromSize(size: const Size(5, 20)),
           ],
         ),

@@ -4,13 +4,13 @@
 
 # 👋 팀원 소개
 
-## Front-End([Android](./frontend-android/README.md), [iOS](./frontend-ios/README.md), [Web](./frontend-web/README.md))
+## Front-End([App](./frontend-hybrid/readme.md), [Web](./frontend-web/README.md))
 
 | 이름                                      | 개발 파트                              |
 | ----------------------------------------- | -------------------------------------- |
-| [서희찬](https://github.com/seochan99)    | 모바일(IOS, Swift)                     |
-| [손형준](https://github.com/HyungJoonSon) | 모바일(Android, Kotlin), 인프라(CI/CD) |
-| [김도훈](https://github.com/DoHunKim1215) | 웹(React)                              |
+| [서희찬](https://github.com/seochan99)    | 모바일(Flutter)                     |
+| [손형준](https://github.com/HyungJoonSon) | 모바일(Flutter), 인프라(NCP) |
+| [김도훈](https://github.com/DoHunKim1215) | 웹(React), 모바일(Flutter)             |
 
 ## Back-end([WAS](./backend-server/README.md), [OCR](./ocr/README.md))
 
@@ -27,15 +27,15 @@
 
 <div>
     <img src="https://img.shields.io/badge/Spring Boot-6DB33F?style=for-the-badge&logo=Spring Boot&logoColor=white" />
+    <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=swift&logoColor=white" />
 </div>
 
 ## Stack
 
 <div>
     <img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white"/>
-    <img src="https://img.shields.io/badge/Swift-FA7343?style=for-the-badge&logo=swift&logoColor=white" />
+    <img src="https://img.shields.io/badge/Dart-0175C2?style=for-the-badge&logo=openjdk&logoColor=white"/>
     <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
-    <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white">
     <br>
     <!-- Front 추가 -->
     <img src="https://img.shields.io/badge/http-0.13.6-red?style=for-the-badge"/>
@@ -88,5 +88,20 @@
 | 🗃      | :card_file_box             | 데이버베이스 관련 수정   |
 
 ## Lisence
-소스코드를 제외한 아이디어에 대해서 이용(수업 과제용, 상업용 등)을 허락하지 않습니다.<br>
-all right reserved.
+GNU GENERAL PUBLIC LICENSE
+Version 3, 29 June 2007
+
+Copyright (C) 2023 ViewPharm Company
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.

@@ -52,7 +52,7 @@ class IdentificationEntryScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                "assets/icons/logo.png",
+                "assets/icons/img-join-1.png",
                 width: MediaQuery.of(context).size.width * 0.55,
               ),
             ],

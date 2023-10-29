@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
@@ -14,6 +15,22 @@ class User {
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
+  String get deviceToken => _deviceToken;
+  String _deviceToken;
+
+  // deviceToken을 스토리지에 설정하기
+  Future<void> setDeviceToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("DEVICE_TOKEN", token);
+    _deviceToken = token;
+  }
+
+  Future<void> fetchAndSetDeviceToken() async {
+    final token = await FirebaseMessaging.instance.getToken();
+    if (token != null) {
+      setDeviceToken(token);
+    }
+  }
 
   // 스토리지에서 유저 정보 가져오기
   Future<void> _init() async {
@@ -115,9 +132,10 @@ class User {
     this.breakfastTime = "8:00",
     this.lunchTime = "12:00",
     this.dinnerTime = "19:00",
+    String deviceToken = "",
     HospitalRecordList? hospitalRecordList,
     SpecialNote? specialNote,
-  }) {
+  }) : _deviceToken = deviceToken {
     hospitalRecordList = hospitalRecordList ??
         HospitalRecordList(
           admissionRecords: [],

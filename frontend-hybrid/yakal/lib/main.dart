@@ -1,6 +1,11 @@
+import 'dart:io';
+
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -32,13 +37,39 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
+
+// device 토큰 저장
+Future<void> sendDeviceToken(String deviceToken, bool isIos) async {
+  try {
+    Map<String, dynamic> requestBody = {
+      'device_token': deviceToken,
+      'is_ios': false
+    };
+
+    var dio = await authDioWithContext();
+    var response = await dio.put("/user/device", data: requestBody);
+
+    if (response.statusCode == 200) {
+      print('sendDeviceToken - Success');
+    } else {
+      print('sendDeviceToken - Failure: ${response.statusCode}');
+    }
+  } catch (error) {}
+}
 
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
 
+  // await Firebase.initializeApp();
+
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
+
+  // String deviceToken = await getDeviceToken(); // fetch the device token
+  // bool isIos = Platform.isIOS; // check if the platform is iOS
+  // await sendDeviceToken(deviceToken, isIos); // send the device token
 
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +84,10 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  // initializeNotification();
+
+  // final token = await FirebaseMessaging.instance.getToken();
+  // print("FCM TOKEN : $token ");
   // locator init
   initializeDateFormatting().then((value) =>
       runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
@@ -74,6 +109,26 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
+        colorSchemeSeed: Colors.blue,
+        // colorScheme:
+        //   const ColorScheme(
+        //     brightness: Brightness.light,
+        //     // primary는 앱바, 플로팅버튼, 텍스트필드 등의 색상을 지정합니다.
+        //     primary: Colors.blue,
+        //     onPrimary: Colors.white,
+        //     // secondary는 앱바의 타이틀, 플로팅버튼의 아이콘 등의 색상을 지정합니다.
+        //     secondary: Colors.white,
+        //     onSecondary: Colors.white,
+        //     // error는 에러 메시지 등의 색상을 지정합니다.
+        //     error: Colors.red,
+        //     onError: Colors.white,
+        //     // background는 앱의 배경색을 지정합니다.
+        //     background: Colors.white,
+        //     onBackground: Colors.white,
+        //     // surface는 카드, 버튼 등의 색상을 지정합니다.
+        //     surface: Colors.white,
+        //     onSurface: Colors.black,
+        //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       // initialRoute: initialRoute,
@@ -84,7 +139,7 @@ class MyApp extends StatelessWidget {
           name: '/',
           page: () => const MyBottomNavigationBar(),
         ),
-        GetPage(name: '/home', page: () => HomeScreen()),
+        GetPage(name: '/home', page: () => const HomeScreen()),
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",

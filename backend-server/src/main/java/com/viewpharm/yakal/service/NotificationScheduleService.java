@@ -192,6 +192,8 @@ public class NotificationScheduleService {
                 .content(requestDto.getBody())
                 .user(user).build());
 
+        notificationUtil.sendNotificationByToken(requestDto);
+
         return Boolean.TRUE;
     }
 }

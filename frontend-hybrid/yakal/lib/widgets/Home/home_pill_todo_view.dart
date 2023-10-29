@@ -56,11 +56,13 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
                 ],
               )
             : ListView.builder(
+                addAutomaticKeepAlives: true,
                 itemCount: viewModel.pillTodoParents.length,
                 itemBuilder: (context, index) {
                   return PillTodoParentItem(
                     todoDate: viewModel.todoDate,
                     pillTodoParent: viewModel.pillTodoParents[index],
+                    isOverLap: viewModel.pillTodoParents[index].isOverLap,
                     onClickParentCheckBox: (eTakingTime) {
                       viewModel.onClickParentCheckBox(eTakingTime);
                     },
