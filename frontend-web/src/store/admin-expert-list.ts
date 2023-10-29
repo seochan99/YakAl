@@ -22,7 +22,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원",
   },
   {
@@ -30,7 +30,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "맹약사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "서울아산병원",
   },
   {
@@ -38,7 +38,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "박박사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "중앙대학교 부속병원",
   },
   {
@@ -46,7 +46,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원1",
   },
   {
@@ -54,7 +54,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "박박사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원2",
   },
   {
@@ -62,7 +62,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원3",
   },
   {
@@ -70,7 +70,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "맹약사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원4",
   },
   {
@@ -78,7 +78,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원5",
   },
   {
@@ -86,7 +86,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원6",
   },
   {
@@ -94,7 +94,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "맹약사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원7",
   },
   {
@@ -102,7 +102,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원8",
   },
   {
@@ -110,7 +110,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "맹약사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원9",
   },
   {
@@ -118,7 +118,7 @@ const expertList: TExpertItem[] = [
     job: EJob.PHARMACIST,
     name: "맹약사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원10",
   },
   {
@@ -126,7 +126,7 @@ const expertList: TExpertItem[] = [
     job: EJob.DOCTOR,
     name: "김의사",
     requestedAt: new Date("2023-09-01"),
-    tel: "01044444444",
+    tel: "010-2832-1945",
     belongName: "분당 차병원11",
   },
 ];

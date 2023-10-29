@@ -4,7 +4,7 @@ export const facilityList = [
   {
     id: 1,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원1",
     requested_at: new Date("2023-09-01"),
@@ -12,7 +12,7 @@ export const facilityList = [
   {
     id: 2,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원2",
     requested_at: new Date("2023-09-01"),
@@ -20,7 +20,7 @@ export const facilityList = [
   {
     id: 3,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원3",
     requested_at: new Date("2023-09-01"),
@@ -28,7 +28,7 @@ export const facilityList = [
   {
     id: 4,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원4",
     requested_at: new Date("2023-09-01"),
@@ -36,7 +36,7 @@ export const facilityList = [
   {
     id: 5,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원5",
     requested_at: new Date("2023-09-01"),
@@ -44,7 +44,7 @@ export const facilityList = [
   {
     id: 6,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원6",
     requested_at: new Date("2023-09-01"),
@@ -52,7 +52,7 @@ export const facilityList = [
   {
     id: 7,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원7",
     requested_at: new Date("2023-09-01"),
@@ -60,7 +60,7 @@ export const facilityList = [
   {
     id: 8,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원8",
     requested_at: new Date("2023-09-01"),
@@ -68,7 +68,7 @@ export const facilityList = [
   {
     id: 9,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원9",
     requested_at: new Date("2023-09-01"),
@@ -76,7 +76,7 @@ export const facilityList = [
   {
     id: 10,
     type: EFacilityType.HOSPITAL,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원10",
     requested_at: new Date("2023-09-01"),
@@ -84,7 +84,7 @@ export const facilityList = [
   {
     id: 11,
     type: EFacilityType.PHARMACY,
-    directorPhone: "01044444444",
+    directorPhone: "010-2832-1945",
     directorName: "홍길동",
     name: "분당 차병원11",
     requested_at: new Date("2023-09-01"),

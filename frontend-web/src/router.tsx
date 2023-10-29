@@ -27,7 +27,9 @@ import AdminLogin from "./page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
 import AdminExpertDetail from "@components/admin-main/expert-detail/view.tsx";
 import { loader as adminExpertDetailLoader } from "@components/admin-main/expert-detail/loader.ts";
+import { loader as adminFacilityDetailLoader } from "@components/admin-main/facility-detail/loader.ts";
 import AdminApprovalList from "@components/admin-main/approval-list/view.tsx";
+import AdminFacilityDetail from "@components/admin-main/facility-detail/view.tsx";
 
 export const EXPERT_HOME = "/expert";
 export const EXPERT_LOGIN_ROUTE = "/expert/login";
@@ -106,6 +108,11 @@ export const router = createBrowserRouter([
             path: "expert/:expertId",
             element: <AdminExpertDetail />,
             loader: adminExpertDetailLoader,
+          },
+          {
+            path: "facility/:facilityId",
+            element: <AdminFacilityDetail />,
+            loader: adminFacilityDetailLoader,
           },
         ],
       },
