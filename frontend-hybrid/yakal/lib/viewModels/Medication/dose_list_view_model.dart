@@ -38,14 +38,40 @@ class DoseListViewModel extends GetxController {
 
     var medicinesName = await _medicineCodeRepository.getMedicinesName();
 
+    if (kDebugMode) {
+      print(
+          "🎑 [OCR Log] medicinesName[0:10]: ${medicinesName.sublist(0, 10)}");
+    }
+
     var futures = <Future<List<SearchMedicineModel>>>[];
+    var names = <String>[];
 
     for (var text in textList) {
-      var nonSpaceText = text.replaceAll(" ", "");
-      var bestMatch =
-          StringSimilarity.findBestMatch(nonSpaceText, medicinesName);
+      // 공백문자 제거
+      var nonSpaceText = text.replaceAll(RegExp(r"\s"), "");
 
-      if (bestMatch.bestMatch.rating! > 0.7) {
+      // 한글, 숫자, 'm', 'g' 외의 모든 문자 제거
+      var korText = nonSpaceText.replaceAll(RegExp(r"[^가-힣0-9mg]"), "");
+
+      // 전처리 결과가 empty string이면 고려하지 않음
+      if (korText == "") {
+        continue;
+      }
+
+      // 전처리 결과와 가장 유사한 약 이름 검색
+      var bestMatch = StringSimilarity.findBestMatch(korText, medicinesName);
+
+      if (kDebugMode) {
+        print(
+            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch.target!} / Similarity: ${bestMatch.bestMatch.rating!}");
+      }
+
+      // 유사도가 70% 이상인 경우만 고려
+      if (bestMatch.bestMatch.rating! >= 0.7) {
+        // 있다면 해당 약을 추가
+        names.add(bestMatch.bestMatch.target!);
+
+        // kims code 검색 대기열 추가
         futures.add(
           _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
         );
@@ -55,15 +81,28 @@ class DoseListViewModel extends GetxController {
     List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
     var doseNameCodeList = <Map<String, String>>[];
 
-    for (var search in searchList) {
-      if (search.isEmpty) {
-        continue;
-      }
+    for (var i = 0; i < searchList.length; ++i) {
+      var searchItem = searchList[i];
 
-      doseNameCodeList.add({
-        "name": search[0].name,
-        "code": search[0].code,
-      });
+      if (searchItem.isEmpty) {
+        if (kDebugMode) {
+          print("🎑 [OCR Log] ${names[i]} Has No Picture...");
+        }
+
+        doseNameCodeList.add({
+          "name": names[i],
+          "code": "",
+        });
+      } else {
+        if (kDebugMode) {
+          print("🎑 [OCR Log] ${names[i]} Has Picture.");
+        }
+
+        doseNameCodeList.add({
+          "name": names[i],
+          "code": searchItem[0].code,
+        });
+      }
     }
 
     var doseNameCodeListWithoutOverlap = <Map<String, String>>[];
@@ -71,8 +110,7 @@ class DoseListViewModel extends GetxController {
     outerLoop:
     for (var element in doseNameCodeList) {
       for (var newElement in doseNameCodeListWithoutOverlap) {
-        if (newElement["name"] == element["name"] &&
-            newElement["code"] == element["code"]) {
+        if (newElement["name"] == element["name"]) {
           continue outerLoop;
         }
       }
@@ -81,7 +119,7 @@ class DoseListViewModel extends GetxController {
 
     if (kDebugMode) {
       print(
-          "🎑 [OCR Log] KIMS Medicine Search Result: $doseNameCodeListWithoutOverlap");
+          "🎑 [OCR Log] Medicine Search Result: $doseNameCodeListWithoutOverlap");
     }
 
     if (doseNameCodeListWithoutOverlap.isEmpty) {
@@ -268,7 +306,9 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
-        futures.add(_addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
+        futures.add(dose.kimsCode == ""
+            ? Future<String?>.value("")
+            : _addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
       }
     }
 

@@ -54,18 +54,13 @@ npm run dev -- --host
 
 ## Design Pattern
 
-![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FI0Ia7%2FbtrEaN93m03%2FQvgBPWN6BlfR7dcRQ9g2a0%2Fimg.jpg)
-
 * 소수의 컴포넌트에 종속된 로컬 데이터는 MVVM 패턴을 적용하여 데이터와 뷰를 분리
-
-![](https://t1.daumcdn.net/thumb/R720x0/?fname=http://t1.daumcdn.net/brunch/service/user/1OLd/image/JHTtx7AD-xlDJHdutxQBnUdnXQo.png)
-
 * 다수의 컴포넌트에 종속된 글로벌 데이터는 Redux를 활용한 MVI 패턴을 이용하여 데이터의 변화를 쉽게 반영할 수 있도록 함
 
 ## Styling Rule
 
 * 본 프로젝트는 Styled-Component를 이용해 컴포넌트에 독립적으로 스타일링을 한다.
-* `import * as S from "./style.ts"`의 형식으로 스타일 ts 파일을 import한다.
+* `import * as S from "./global_style.ts"`의 형식으로 스타일 ts 파일을 import한다.
 * 이로 인해 Styled Component와 Non-Styled Component가 구별된다.
 * 또한 스타일된 HTMl 태그는 이름 맨 뒤에 어떤 태그인지 표시해야 한다.
 * ex) `S.OuterFooter`는 스타일링된 `<footer>`, `WarningPage`는 일반 컴포넌트

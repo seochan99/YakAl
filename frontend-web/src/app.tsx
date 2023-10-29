@@ -1,18 +1,18 @@
 import { RouterProvider } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { useEffect } from "react";
-import { router } from "./global/router.tsx";
-import { GlobalStyle } from "./global/style/style.ts";
+import { router } from "./router.tsx";
+import { GlobalStyle } from "./style/global_style.ts";
 
 function App() {
   /* Dynamic page title */
   const pathname = window.location.pathname;
 
   useEffect(() => {
-    if (pathname.startsWith("/expert")) {
-      document.title = "약 알 - 전문가 WEB";
-    } else {
+    if (pathname.startsWith("/admin")) {
       document.title = "약 알 - 관리자 WEB";
+    } else {
+      document.title = "약 알 - 전문가 WEB";
     }
   }, [pathname]);
 
