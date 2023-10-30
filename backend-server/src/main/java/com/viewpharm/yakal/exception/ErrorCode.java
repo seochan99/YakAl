@@ -26,6 +26,7 @@ public enum ErrorCode {
     NOT_FOUND_NOTE("4054", HttpStatus.NOT_FOUND, "해당 특이사항이 존재하지 않습니다."),
     NOT_FOUND_SURBEY("4055", HttpStatus.NOT_FOUND, "해당 설문이 존재하지 않습니다."),
     NOT_FOUND_ANSWER("4056", HttpStatus.NOT_FOUND, "해당 설문결과가 존재하지 않습니다."),
+    NOT_FOUND_NOTABLE_FEATURE("4057", HttpStatus.NOT_FOUND, "해당 특이사항이 존재하지 않습니다."),
     NOT_FOUND_DIAGNOSIS("4057", HttpStatus.NOT_FOUND, "해당 과거 병명이 존재하지 않습니다."),
     NOT_FOUND_HEALTHFOOD("4058", HttpStatus.NOT_FOUND, "해당 건강기능 식품이 존재하지 않습니다."),
     NOT_FOUND_REGISTRATION("4059", HttpStatus.NOT_FOUND, "해당 등록신청 사항이 존재하지 않습니다."),
@@ -47,6 +48,7 @@ public enum ErrorCode {
     DUPLICATION_HEALTHFOOD("4011", HttpStatus.BAD_REQUEST, "Duplication HealthFood"),
     DUPLICATION_GUARDIAN("4012", HttpStatus.BAD_REQUEST, "해당 보호자 관계가 이미 있습니다."),
     EQUAL_GUARDIAN("4013", HttpStatus.BAD_REQUEST, "같은 유저는 보호자가 될 수 없습니다."),
+    DUPLICATION_NOTABLE_FEATURE("4014", HttpStatus.BAD_REQUEST, "존재하는 특이사항입니다."),
 
     // Server, File Up/DownLoad Error
     SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "Internal Server Error"),

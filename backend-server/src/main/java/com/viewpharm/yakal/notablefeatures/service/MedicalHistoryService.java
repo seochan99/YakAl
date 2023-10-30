@@ -54,7 +54,7 @@ public class MedicalHistoryService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         MedicalHistory diagnosis = medicalHistoryRepository.findById(diagnosisId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DIAGNOSIS));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTABLE_FEATURE));
 
         //전문가는 못 삭제 하도록 함
         if (diagnosis.getUser().getId() != userId)

@@ -30,19 +30,19 @@ public class NotableFeatureController {
     @PostMapping("/underlying-conditions")
     @Operation(summary = "기저 질환 작성", description = "기저 질환 작성")
     public ResponseDto<?> createUnderlyingCondition(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(underlyingConditionService.createUnderlyingCondition(id, requestDto));
     }
 
     @GetMapping("/underlying-conditions")
     @Operation(summary = "기저 질환 리스트", description = "자신이 작성한 기저 질환 목록 읽기")
     public ResponseDto<?> readUnderlyingConditions(@UserId Long id) {
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(underlyingConditionService.readUnderlyingConditions(id));
     }
 
     @DeleteMapping("/underlying-conditions/{underlyingConditionId}")
     @Operation(summary = "기저 질환 삭제", description = "특정 기저 질환 삭제")
     public ResponseDto<?> deleteUnderlyingCondition(@UserId Long id, @PathVariable Long underlyingConditionId) {
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(underlyingConditionService.deleteUnderlyingCondition(id, underlyingConditionId));
     }
 
     /**
