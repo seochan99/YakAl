@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Login/LoginEntry/style.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Login/social_login_button.dart';
 
@@ -72,8 +72,9 @@ class LoginEntryScreen extends StatelessWidget {
                           color: ColorStyles.black,
                           backgroundColor: ColorStyles.white,
                           iconPath: "assets/icons/google.svg",
-                          onPressed: () {
-                            _showComingSoonSnackBar(context);
+                          onPressed: () async {
+                            final GoogleSignInAccount? googleUser =
+                                await GoogleSignIn().signIn();
                           },
                         ),
                 ],

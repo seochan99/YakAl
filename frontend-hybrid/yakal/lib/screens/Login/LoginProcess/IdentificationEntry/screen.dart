@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Login/LoginProcess/IdentificationEntry/style.dart';
-import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
@@ -59,20 +58,6 @@ class IdentificationEntryScreen extends StatelessWidget {
           ),
           Row(
             children: [
-              SizedBox(
-                width: MediaQuery.of(context).size.width / 3.5,
-                child: BottomButton(
-                  "건너뛰기",
-                  onPressed: () {
-                    routeController.goto(LoginRoute.nicknameInput);
-                  },
-                  backgroundColor: ColorStyles.gray2,
-                  color: ColorStyles.gray5,
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
               Expanded(
                 child: BottomButton(
                   "인증하기",

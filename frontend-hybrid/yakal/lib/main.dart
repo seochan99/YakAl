@@ -1,11 +1,6 @@
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -131,8 +126,8 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      // initialRoute: initialRoute,
-      initialRoute: "/pill/add/ocrEnvelop",
+      initialRoute: initialRoute,
+      // initialRoute: "/pill/add/ocrEnvelop",
       // 라우팅 설정
       getPages: [
         GetPage(
