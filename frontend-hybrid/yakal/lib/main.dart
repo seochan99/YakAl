@@ -67,10 +67,6 @@ void main() async {
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
 
-  // String deviceToken = await getDeviceToken(); // fetch the device token
-  // bool isIos = Platform.isIOS; // check if the platform is iOS
-  // await sendDeviceToken(deviceToken, isIos); // send the device token
-
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
