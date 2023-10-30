@@ -3,18 +3,14 @@ package com.viewpharm.yakal.notablefeatures.service;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.notablefeatures.domain.Allergy;
 import com.viewpharm.yakal.notablefeatures.domain.Fall;
-import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureRequestDto;
-import com.viewpharm.yakal.notablefeatures.dto.response.NotableFeatureStringResponseDto;
-import com.viewpharm.yakal.notablefeatures.repository.AllergyRepository;
+import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureDto;
+import com.viewpharm.yakal.notablefeatures.dto.response.NotableFeatureStringDto;
 import com.viewpharm.yakal.notablefeatures.repository.FallRepository;
 import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.type.EJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +22,7 @@ public class FallService {
     private final FallRepository fallRepository;
     private final UserRepository userRepository;
 
-    public Boolean createFall(Long userId, NotableFeatureRequestDto requestDto) {
+    public Boolean createFall(Long userId, NotableFeatureDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (requestDto.getNotableFeature().isEmpty())
@@ -40,13 +36,13 @@ public class FallService {
         return Boolean.TRUE;
     }
 
-    public List<NotableFeatureStringResponseDto> readFalls(Long userId) {
+    public List<NotableFeatureStringDto> readFalls(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         List<Fall> falls = fallRepository.findAllByUserOrderByDateDesc(user);
 
         return falls.stream()
-                .map(fall -> new NotableFeatureStringResponseDto(fall.getId(), fall.getDate().toString()))
+                .map(fall -> new NotableFeatureStringDto(fall.getId(), fall.getDate().toString()))
                 .collect(Collectors.toList());
     }
 

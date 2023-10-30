@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.dto.response;
 
 
+import com.viewpharm.yakal.exception.dto.ArgumentNotValidExceptionDto;
+import com.viewpharm.yakal.exception.dto.ExceptionDto;
 import lombok.Builder;
 import lombok.Getter;
 import io.micrometer.common.lang.Nullable;

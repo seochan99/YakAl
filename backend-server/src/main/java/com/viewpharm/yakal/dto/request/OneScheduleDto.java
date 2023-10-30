@@ -1,6 +1,5 @@
 package com.viewpharm.yakal.dto.request;
 
-import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.annotation.Enum;
 import com.viewpharm.yakal.type.EDosingTime;
 import jakarta.validation.constraints.DecimalMin;
@@ -10,7 +9,6 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OneScheduleDto {

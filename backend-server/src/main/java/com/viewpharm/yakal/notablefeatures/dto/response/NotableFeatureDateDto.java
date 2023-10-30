@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotableFeatureDateResponseDto {
+public class NotableFeatureDateDto {
     @NotNull
     private Long id;
     @NotNull

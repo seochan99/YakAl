@@ -2,7 +2,7 @@ package com.viewpharm.yakal.notablefeatures.controller;
 
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.response.ResponseDto;
-import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureRequestDto;
+import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.notablefeatures.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +28,7 @@ public class NotableFeatureController {
      */
     @PostMapping("/underlying-conditions")
     @Operation(summary = "기저 질환 작성", description = "기저 질환 작성")
-    public ResponseDto<?> createUnderlyingCondition(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createUnderlyingCondition(@UserId Long id, @RequestBody @Valid NotableFeatureDto requestDto) {
         return ResponseDto.ok(underlyingConditionService.createUnderlyingCondition(id, requestDto));
     }
 
@@ -49,7 +49,7 @@ public class NotableFeatureController {
      */
     @PostMapping("/medical-histories")
     @Operation(summary = "과거 병명 작성", description = "과거 병명 작성")
-    public ResponseDto<?> createMedicalHistories(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createMedicalHistories(@UserId Long id, @RequestBody @Valid NotableFeatureDto requestDto) {
         return ResponseDto.ok(medicalHistoryService.createMedicalHistory(id, requestDto));
     }
 
@@ -70,7 +70,7 @@ public class NotableFeatureController {
      */
     @PostMapping("/dietary-supplements")
     @Operation(summary = "건강 기능 식품 Create", description = "건강 기능 식품 작성")
-    public ResponseDto<?> createDietarySupplement(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createDietarySupplement(@UserId Long id, @RequestBody @Valid NotableFeatureDto requestDto) {
         return ResponseDto.ok(dietarySupplementService.createDietarySupplement(id, requestDto));
     }
 
@@ -91,7 +91,7 @@ public class NotableFeatureController {
      */
     @PostMapping("/allergies")
     @Operation(summary = "알러지 Create", description = "알러지 작성")
-    public ResponseDto<?> createAllergy(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createAllergy(@UserId Long id, @RequestBody @Valid NotableFeatureDto requestDto) {
         return ResponseDto.ok(allergyService.createAllergy(id, requestDto));
     }
 
@@ -112,7 +112,7 @@ public class NotableFeatureController {
      */
     @PostMapping("/falls")
     @Operation(summary = "낙상 사고 Create", description = "낙상 사고 작성")
-    public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Valid NotableFeatureDto requestDto) {
         return ResponseDto.ok(fallService.createFall(id, requestDto));
     }
 

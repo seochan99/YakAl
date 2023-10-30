@@ -1,7 +1,6 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
-import com.viewpharm.yakal.domain.LoginLog;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.repository.ImageRepository;
@@ -17,7 +16,6 @@ import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.utils.OAuth2Util;
 import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

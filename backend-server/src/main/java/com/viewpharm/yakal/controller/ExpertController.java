@@ -20,13 +20,10 @@ import java.util.List;
 @RequestMapping("/api/v1/expert")
 @Tag(name = "Expert", description = "전문가 웹 관련 API 제공")
 public class ExpertController {
-
     private final UserService userService;
     private final DoseService doseService;
     private final SurbeyService surbeyService;
-    private final DietarySupplementService dietarySupplementService;
     private final CounselService counselService;
-    private final MedicalHistoryService medicalHistoryService;
 
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
@@ -58,37 +55,5 @@ public class ExpertController {
     @Operation(summary = "환자 리스트", description = "환자 이름으로 리스트 가져오기")
     public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
         return ResponseDto.ok(counselService.getPatientListByName(id, name, sort, order, page, num));
-    }
-
-    //기능 삭제 예정
-    @Deprecated
-    @PostMapping("/patient/{patientId}/note")
-    @Operation(summary = "특이사항 추가", description = "특이사항 추가")
-    public ResponseDto<Boolean> createNote(@UserId Long id, @PathVariable Long patientId, @Valid @RequestBody NoteRequestDto requestDto) {
-        return ResponseDto.ok(counselService.createNote(id, patientId, requestDto));
-    }
-
-    //기능 삭제 예정
-    @Deprecated
-    @PutMapping("/note/{noteId}")
-    @Operation(summary = "특이사항 수정", description = "특이사항 수정하기")
-    public ResponseDto<NoteDetailDto> updateNote(@UserId Long id, @PathVariable Long noteId, @Valid @RequestBody NoteRequestDto requestDto) {
-        return ResponseDto.ok(counselService.updateNote(id, noteId, requestDto));
-    }
-
-    //기능 삭제 예정
-    @Deprecated
-    @DeleteMapping("/note/{noteId}")
-    @Operation(summary = "특이사항 삭제", description = "특이사항 삭제하기")
-    public ResponseDto<Boolean> deleteNote(@UserId Long id, @PathVariable Long noteId) {
-        return ResponseDto.ok(counselService.deleteNote(id, noteId));
-    }
-
-    //기능 삭제 예정
-    @Deprecated
-    @GetMapping("/patient/{patientId}/note")
-    @Operation(summary = "특이사항 가져오기", description = "특정 상담 특이사항 가져오기")
-    public ResponseDto<NoteAllDto> readNote(@UserId Long id, @PathVariable Long patientId, @RequestParam("page") Long page, @RequestParam(value = "num", defaultValue = "5") Long num) {
-        return ResponseDto.ok(counselService.getAllNoteList(id, patientId, page, num));
     }
 }

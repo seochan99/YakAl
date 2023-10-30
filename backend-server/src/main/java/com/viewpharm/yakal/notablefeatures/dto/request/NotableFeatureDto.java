@@ -11,7 +11,7 @@ import java.sql.Date;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotableFeatureRequestDto {
+public class NotableFeatureDto {
     @NotNull
     @Size(min = 1, max = 20)
     private String notableFeature;

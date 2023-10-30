@@ -1,12 +1,7 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.domain.Notification;
 import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.repository.NotificationRepository;
 import com.viewpharm.yakal.utils.NotificationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +15,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class NotificationScheduleService {
-    private final NotificationRepository notificationRepository;
     private final NotificationUtil notificationUtil;
     private final UserRepository userRepository;
 
@@ -48,16 +42,6 @@ public class NotificationScheduleService {
             String title = userInformation.getUsername() + "님, 저녁 약 드실 시간이네요!";
             String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = userInformation.getUserId();
-
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            Notification notification = Notification.builder()
-                    .title(title)
-                    .content(content)
-                    .user(user).build();
-
-            notificationRepository.save(notification);
-
 
             notificationUserRequestDto = NotificationUserRequestDto.builder()
                     .targetUserId(userId)
@@ -87,15 +71,6 @@ public class NotificationScheduleService {
             String title = userInformation.getUsername() + "님, 저녁 약 드실 시간이네요!";
             String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = userInformation.getUserId();
-
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            Notification notification = Notification.builder()
-                    .title(title)
-                    .content(content)
-                    .user(user).build();
-
-            notificationRepository.save(notification);
 
             notificationUserRequestDto = NotificationUserRequestDto.builder()
                     .targetUserId(userId)
@@ -127,15 +102,6 @@ public class NotificationScheduleService {
             String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = userInformation.getUserId();
 
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            Notification notification = Notification.builder()
-                    .title(title)
-                    .content(content)
-                    .user(user).build();
-
-            notificationRepository.save(notification);
-
             notificationUserRequestDto = NotificationUserRequestDto.builder()
                     .targetUserId(userId)
                     .title(title)
@@ -163,16 +129,6 @@ public class NotificationScheduleService {
             String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = userInformation.getUserId();
 
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-            Notification notification = Notification.builder()
-                    .title(title)
-                    .content(content)
-                    .user(user).build();
-
-            notificationRepository.save(notification);
-
-
             notificationUserRequestDto = NotificationUserRequestDto.builder()
                     .targetUserId(userId)
                     .title(title)
@@ -183,15 +139,6 @@ public class NotificationScheduleService {
     }
 
     public Boolean sendPushNotificationTest2(Long userId, NotificationUserRequestDto requestDto) throws Exception {
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        notificationRepository.save(Notification.builder()
-                .title(requestDto.getTitle())
-                .content(requestDto.getBody())
-                .user(user).build());
-
         notificationUtil.sendNotificationByToken(requestDto);
 
         return Boolean.TRUE;

@@ -2,10 +2,10 @@ package com.viewpharm.yakal.notablefeatures.service;
 
 import com.viewpharm.yakal.notablefeatures.domain.MedicalHistory;
 import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureRequestDto;
+import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.notablefeatures.dto.response.NotableFeatureStringResponseDto;
+import com.viewpharm.yakal.notablefeatures.dto.response.NotableFeatureStringDto;
 import com.viewpharm.yakal.notablefeatures.repository.MedicalHistoryRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EJob;
@@ -23,7 +23,7 @@ public class MedicalHistoryService {
     private final MedicalHistoryRepository medicalHistoryRepository;
     private final UserRepository userRepository;
 
-    public Boolean createMedicalHistory(Long userId, NotableFeatureRequestDto requestDto) {
+    public Boolean createMedicalHistory(Long userId, NotableFeatureDto requestDto) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -38,14 +38,14 @@ public class MedicalHistoryService {
         return Boolean.TRUE;
     }
 
-    public List<NotableFeatureStringResponseDto> readMedicalHistories(Long userId) {
+    public List<NotableFeatureStringDto> readMedicalHistories(Long userId) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         List<MedicalHistory> medicalHistories = medicalHistoryRepository.findAllByUserOrderByIdDesc(user);
 
         return medicalHistories.stream()
-                .map(medicalHistory -> new NotableFeatureStringResponseDto(medicalHistory.getId(), medicalHistory.getName()))
+                .map(medicalHistory -> new NotableFeatureStringDto(medicalHistory.getId(), medicalHistory.getName()))
                 .collect(Collectors.toList());
     }
 
@@ -63,7 +63,7 @@ public class MedicalHistoryService {
     }
 
     //전문가가 환자의 과거 병명 리스트
-    public List<NotableFeatureStringResponseDto> getDiagnosisListForExpert(Long expertId, Long patientId) {
+    public List<NotableFeatureStringDto> getDiagnosisListForExpert(Long expertId, Long patientId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
@@ -73,7 +73,7 @@ public class MedicalHistoryService {
         List<MedicalHistory> diagnoses = medicalHistoryRepository.findAllByUserOrderByIdDesc(patient);
 
         return diagnoses.stream()
-                .map(d -> new NotableFeatureStringResponseDto(d.getId(), d.getName()))
+                .map(d -> new NotableFeatureStringDto(d.getId(), d.getName()))
                 .collect(Collectors.toList());
     }
 }

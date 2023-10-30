@@ -126,16 +126,7 @@ public class User {
     private List<Prescription> prescriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Notification> notifications = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Dose> doses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Board> board = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
     private List<Counsel> counselForExpert = new ArrayList<>();
