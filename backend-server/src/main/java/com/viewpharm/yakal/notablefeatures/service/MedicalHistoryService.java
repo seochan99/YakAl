@@ -50,9 +50,6 @@ public class MedicalHistoryService {
     }
 
     public Boolean deleteMedicalHistory(Long userId, Long diagnosisId) {
-        //유저 확인
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
         MedicalHistory diagnosis = medicalHistoryRepository.findById(diagnosisId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTABLE_FEATURE));
 

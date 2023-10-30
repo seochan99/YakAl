@@ -57,9 +57,6 @@ public class DietarySupplementService {
     }
 
     public Boolean deleteDietarySupplement(Long userId, Long healthFoodId) {
-        //유저 확인
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
        DietarySupplement dietarySupplement = dietarySupplementRepository.findById(healthFoodId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTABLE_FEATURE));
 
@@ -88,5 +85,4 @@ public class DietarySupplementService {
 
         return result;
     }
-
 }

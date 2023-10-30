@@ -1,6 +1,5 @@
 package com.viewpharm.yakal.notablefeatures.controller;
 
-import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureRequestDto;
@@ -81,10 +80,10 @@ public class NotableFeatureController {
         return ResponseDto.ok(dietarySupplementService.readDietarySupplements(id));
     }
 
-    @DeleteMapping("/dietary-supplements/{dietarySupplementsId}")
+    @DeleteMapping("/dietary-supplements/{dietarySupplementId}")
     @Operation(summary = "건강 기능 식품 Delete", description = "건강 기능 식품 삭제")
-    public ResponseDto<?> deleteDietarySupplement(@UserId Long id, @PathVariable Long dietarySupplementsId) {
-        return ResponseDto.ok(dietarySupplementService.deleteDietarySupplement(id, dietarySupplementsId));
+    public ResponseDto<?> deleteDietarySupplement(@UserId Long id, @PathVariable Long dietarySupplementId) {
+        return ResponseDto.ok(dietarySupplementService.deleteDietarySupplement(id, dietarySupplementId));
     }
 
     /**
@@ -93,25 +92,27 @@ public class NotableFeatureController {
     @PostMapping("/allergies")
     @Operation(summary = "알러지 Create", description = "알러지 작성")
     public ResponseDto<?> createAllergy(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(allergyService.createAllergy(id, requestDto));
     }
 
     @GetMapping("/allergies")
     @Operation(summary = "알러지 Read", description = "자신이 작성한 알러지 리스트 들고오기")
     public ResponseDto<?> readAllergies(@UserId Long id) {
-        return ResponseDto.ok(null);    }
+        return ResponseDto.ok(allergyService.readAllergies(id));
+    }
 
-    @DeleteMapping("/allergies/{dietarySupplementsId}")
+    @DeleteMapping("/allergies/{allergiyId}")
     @Operation(summary = "알러지 Delete", description = "알러지 삭제")
-    public ResponseDto<?> deleteAllergy(@UserId Long id, @PathVariable Long dietarySupplementsId) {
-        return ResponseDto.ok(null);    }
+    public ResponseDto<?> deleteAllergy(@UserId Long id, @PathVariable Long allergiyId) {
+        return ResponseDto.ok(allergyService.deleteAllergies(id, allergiyId));
+    }
 
     /**
      * 낙상 사고
      */
     @PostMapping("/falls")
     @Operation(summary = "낙상 사고 Create", description = "낙상 사고 작성")
-    public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Date @Valid NotableFeatureRequestDto requestDto) {
+    public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
         return ResponseDto.ok(null);    }
 
     @GetMapping("/falls")

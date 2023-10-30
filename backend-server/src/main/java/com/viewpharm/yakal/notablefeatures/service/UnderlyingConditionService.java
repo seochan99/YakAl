@@ -56,8 +56,6 @@ public class UnderlyingConditionService {
     }
 
     public Boolean deleteUnderlyingCondition(Long userId, Long underlyingConditionId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
         UnderlyingCondition underlyingCondition = underlyingConditionRepository.findById(underlyingConditionId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTABLE_FEATURE));
 
