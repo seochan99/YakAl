@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.dto.response;
 
-import com.viewpharm.yakal.type.EJob;
+import com.viewpharm.yakal.base.type.EJob;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

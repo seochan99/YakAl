@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.dto.request;
 
-import com.viewpharm.yakal.type.EJob;
+import com.viewpharm.yakal.base.type.EJob;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;

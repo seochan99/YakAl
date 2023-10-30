@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EMedical;
+import com.viewpharm.yakal.base.type.EMedical;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

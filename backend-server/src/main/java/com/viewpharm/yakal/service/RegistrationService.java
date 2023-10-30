@@ -1,18 +1,11 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
-import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.Registration;
-import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.request.CreatePrescriptionDto;
-import com.viewpharm.yakal.dto.response.BoardListDto;
 import com.viewpharm.yakal.dto.response.MedicalRegisterDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.repository.ImageRepository;
 import com.viewpharm.yakal.repository.RegistrationRepository;
-import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.type.EImageUseType;
+import com.viewpharm.yakal.base.type.EImageUseType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

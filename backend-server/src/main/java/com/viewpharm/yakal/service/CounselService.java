@@ -2,14 +2,13 @@ package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Counsel;
 import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.request.NoteRequestDto;
 import com.viewpharm.yakal.dto.response.*;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.common.exception.CommonException;
+import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.repository.AnswerRepository;
 import com.viewpharm.yakal.repository.CounselRepository;
 import com.viewpharm.yakal.repository.UserRepository;
-import com.viewpharm.yakal.type.EJob;
+import com.viewpharm.yakal.base.type.EJob;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

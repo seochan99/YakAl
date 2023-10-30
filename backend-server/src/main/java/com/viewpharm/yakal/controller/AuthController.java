@@ -1,18 +1,18 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.DisableSwaggerSecurity;
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.DisableSwaggerSecurity;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.JwtTokenDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
-import com.viewpharm.yakal.security.JwtProvider;
+import com.viewpharm.yakal.common.exception.CommonException;
+import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.common.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
 import com.viewpharm.yakal.dto.response.ResponseDto;
-import com.viewpharm.yakal.type.ELoginProvider;
-import com.viewpharm.yakal.type.EPlatform;
-import com.viewpharm.yakal.type.ERole;
-import com.viewpharm.yakal.type.EValidity;
-import com.viewpharm.yakal.utils.OAuth2Util;
+import com.viewpharm.yakal.base.type.ELoginProvider;
+import com.viewpharm.yakal.base.type.EPlatform;
+import com.viewpharm.yakal.base.type.ERole;
+import com.viewpharm.yakal.base.type.EValidity;
+import com.viewpharm.yakal.base.utils.OAuth2Util;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
@@ -21,20 +21,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Slf4j
 @RestController

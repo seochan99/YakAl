@@ -3,17 +3,15 @@ package com.viewpharm.yakal.service;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.CreatePrescriptionDto;
-import com.viewpharm.yakal.dto.response.PrescribedItemDto;
 import com.viewpharm.yakal.dto.response.PrescriptionDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.common.exception.CommonException;
+import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

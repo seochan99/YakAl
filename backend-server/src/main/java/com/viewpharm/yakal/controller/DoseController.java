@@ -1,13 +1,13 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.Date;
-import com.viewpharm.yakal.annotation.Enum;
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.Date;
+import com.viewpharm.yakal.common.annotation.Enum;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.dto.request.UpdateIsTakenDto;
 import com.viewpharm.yakal.service.DoseService;
-import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.base.type.EDosingTime;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -15,15 +15,12 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 

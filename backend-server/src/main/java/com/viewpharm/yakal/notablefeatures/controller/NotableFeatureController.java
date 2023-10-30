@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.notablefeatures.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.notablefeatures.service.*;

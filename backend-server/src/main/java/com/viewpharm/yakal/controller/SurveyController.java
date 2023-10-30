@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.request.AnswerRequestDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.service.SurbeyService;
@@ -10,8 +10,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController

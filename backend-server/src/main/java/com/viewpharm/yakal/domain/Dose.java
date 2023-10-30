@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.base.type.EDosingTime;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

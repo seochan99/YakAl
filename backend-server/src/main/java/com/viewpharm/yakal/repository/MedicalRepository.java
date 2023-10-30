@@ -1,9 +1,8 @@
 package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.Medical;
-import com.viewpharm.yakal.type.EMedical;
+import com.viewpharm.yakal.base.type.EMedical;
 import org.locationtech.jts.geom.Point;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

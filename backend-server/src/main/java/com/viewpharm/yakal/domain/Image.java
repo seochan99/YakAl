@@ -1,14 +1,12 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EImageUseType;
+import com.viewpharm.yakal.base.type.EImageUseType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
-
-import java.util.UUID;
 
 @Entity
 @Getter

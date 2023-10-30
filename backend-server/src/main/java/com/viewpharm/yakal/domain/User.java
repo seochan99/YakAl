@@ -1,10 +1,10 @@
 package com.viewpharm.yakal.domain;
 
 import com.viewpharm.yakal.notablefeatures.domain.*;
-import com.viewpharm.yakal.type.EJob;
-import com.viewpharm.yakal.type.ELoginProvider;
-import com.viewpharm.yakal.type.ERole;
-import com.viewpharm.yakal.type.ESex;
+import com.viewpharm.yakal.base.type.EJob;
+import com.viewpharm.yakal.base.type.ELoginProvider;
+import com.viewpharm.yakal.base.type.ERole;
+import com.viewpharm.yakal.base.type.ESex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

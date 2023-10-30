@@ -1,21 +1,18 @@
 package com.viewpharm.yakal.admin.controller;
 
-import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.service.*;
-import com.viewpharm.yakal.type.EMedical;
+import com.viewpharm.yakal.base.type.EMedical;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.YearMonth;
+
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.*;
 import com.viewpharm.yakal.dto.response.ResponseDto;

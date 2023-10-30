@@ -1,19 +1,13 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.dto.request.NoteRequestDto;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
-import com.viewpharm.yakal.notablefeatures.service.MedicalHistoryService;
-import com.viewpharm.yakal.notablefeatures.service.DietarySupplementService;
 import com.viewpharm.yakal.service.*;
-import com.viewpharm.yakal.type.EPeriod;
+import com.viewpharm.yakal.base.type.EPeriod;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
