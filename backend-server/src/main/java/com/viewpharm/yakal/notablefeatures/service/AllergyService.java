@@ -68,7 +68,6 @@ public class AllergyService {
         return Boolean.TRUE;
     }
 
-    //전문가가 환자의 건강 식품 리스트
     public List<NotableFeatureStringResponseDto> getHealthFoodListForExpert(Long expertId,Long patientId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));

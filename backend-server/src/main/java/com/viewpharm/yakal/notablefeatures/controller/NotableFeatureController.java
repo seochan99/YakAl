@@ -113,15 +113,18 @@ public class NotableFeatureController {
     @PostMapping("/falls")
     @Operation(summary = "낙상 사고 Create", description = "낙상 사고 작성")
     public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(null);    }
+        return ResponseDto.ok(fallService.createFall(id, requestDto));
+    }
 
     @GetMapping("/falls")
     @Operation(summary = "낙상 사고 Read", description = "자신이 작성한 낙상 사고 리스트 들고오기")
     public ResponseDto<?> readFalls(@UserId Long id) {
-        return ResponseDto.ok(null);    }
+        return ResponseDto.ok(fallService.readFalls(id));
+    }
 
     @DeleteMapping("/falls/{fallId}")
     @Operation(summary = "낙상 사고 Delete", description = "낙상 사고 삭제")
     public ResponseDto<?> deleteFall(@UserId Long id, @PathVariable Long fallId) {
-        return ResponseDto.ok(null);    }
+        return ResponseDto.ok(fallService.deleteFall(id, fallId));
+    }
 }
