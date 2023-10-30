@@ -1,8 +1,7 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.Date;
-import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.dto.request.BoardRequestDto;
+import com.viewpharm.yakal.common.annotation.Date;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.PatientDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.dto.response.UserListDtoForGuardian;

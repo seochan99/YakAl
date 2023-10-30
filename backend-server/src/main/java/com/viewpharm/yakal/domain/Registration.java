@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.ERecive;
+import com.viewpharm.yakal.base.type.EMedical;
+import com.viewpharm.yakal.base.type.ERecive;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;

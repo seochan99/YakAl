@@ -1,14 +1,12 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.dto.response.MedicalRegisterDto;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.ResponseDto;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.common.exception.CommonException;
+import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.service.ExpertService;
 import com.viewpharm.yakal.service.ImageService;
-import com.viewpharm.yakal.service.RegistrationService;
-import com.viewpharm.yakal.type.EImageUseType;
+import com.viewpharm.yakal.base.type.EImageUseType;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;

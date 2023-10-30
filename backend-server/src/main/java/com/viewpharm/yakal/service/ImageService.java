@@ -2,10 +2,10 @@ package com.viewpharm.yakal.service;
 
 
 import com.viewpharm.yakal.domain.*;
-import com.viewpharm.yakal.exception.CommonException;
-import com.viewpharm.yakal.exception.ErrorCode;
+import com.viewpharm.yakal.common.exception.CommonException;
+import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.repository.*;
-import com.viewpharm.yakal.type.EImageUseType;
+import com.viewpharm.yakal.base.type.EImageUseType;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,9 +17,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 import java.util.UUID;
-
-import static com.viewpharm.yakal.type.EImageUseType.EXPERT;
-import static com.viewpharm.yakal.type.EImageUseType.REGISTER;
 
 @Service
 @RequiredArgsConstructor

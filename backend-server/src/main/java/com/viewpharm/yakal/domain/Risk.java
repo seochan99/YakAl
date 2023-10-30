@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EMedicalProperties;
+import com.viewpharm.yakal.base.type.EMedicalProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

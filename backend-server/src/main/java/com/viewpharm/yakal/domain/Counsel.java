@@ -34,8 +34,6 @@ public class Counsel extends BaseCreateEntity {
 
     //----------------------------------------------------------------
 
-    @OneToMany(mappedBy = "counsel", fetch = FetchType.LAZY)
-    private List<Note> notes = new ArrayList<>();
 
     public void deleteCounsel() {
         this.isDeleted = true;

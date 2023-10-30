@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.validator;
 
-import com.viewpharm.yakal.annotation.Enum;
+import com.viewpharm.yakal.common.annotation.Enum;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

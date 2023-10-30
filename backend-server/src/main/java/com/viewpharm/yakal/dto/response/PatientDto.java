@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.dto.response;
 
-import com.viewpharm.yakal.type.ESex;
+import com.viewpharm.yakal.base.type.ESex;
 import lombok.Builder;
 import lombok.Getter;
 

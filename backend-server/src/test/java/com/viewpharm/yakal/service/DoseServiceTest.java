@@ -1,23 +1,18 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.request.OneMedicineScheduleDto;
 import com.viewpharm.yakal.dto.request.OneScheduleDto;
 import com.viewpharm.yakal.repository.DoseRepository;
-import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.base.type.EDosingTime;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 class DoseServiceTest {
