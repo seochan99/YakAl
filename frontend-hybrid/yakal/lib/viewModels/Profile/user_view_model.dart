@@ -92,7 +92,14 @@ class UserViewModel extends GetxController {
   // 마케팅 정보 동의 여부
   void updateMarketingAgreement(bool isAgreed) {
     user.update((val) {
-      val?.setIsiAgreedMarketing(isAgreed);
+      val?.setIsAgreedMarketing(isAgreed);
+    });
+  }
+
+  // 본인인증 여부
+  void updateIsIdentified(bool isIdentified) {
+    user.update((val) {
+      val?.setIsIdentified(isIdentified);
     });
   }
 

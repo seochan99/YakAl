@@ -131,18 +131,14 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
 
       await userViewModel.fetchNameAndMode(context);
 
-      routeController.goto(LoginRoute.terms);
-      Get.toNamed("/login/process");
-
       if (userViewModel.user.value.isAgreedMarketing == null) {
         routeController.goto(LoginRoute.terms);
         Get.toNamed("/login/process");
         return;
       }
 
-      final regex = RegExp(r'user#\d{6}');
-      if (regex.hasMatch(userViewModel.user.value.nickName)) {
-        routeController.goto(LoginRoute.nicknameInput);
+      if (userViewModel.user.value.isIdentified == false) {
+        routeController.goto(LoginRoute.identifyEntry);
         Get.toNamed("/login/process");
         return;
       }
