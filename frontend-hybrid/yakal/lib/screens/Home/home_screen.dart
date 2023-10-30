@@ -31,23 +31,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    init();
+    // init();
   }
 
 // push notification
-  init() async {
-    print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
-    // get deviceToken
-    String? deviceToken = await getDeviceToken();
-    print(deviceToken);
-    print("############################################################");
+  // init() async {
+  //   print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
+  //   // get deviceToken
+  //   // String? deviceToken = await getDeviceToken();
+  //   // print(deviceToken);
+  //   // print("############################################################");
 
-    // listen for user to click on notification
-    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
-      String? title = remoteMessage.notification!.title;
-      String? description = remoteMessage.notification!.body;
-    });
-  }
+  //   // listen for user to click on notification
+  //   // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
+  //   //   String? title = remoteMessage.notification!.title;
+  //   //   String? description = remoteMessage.notification!.body;
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
