@@ -118,7 +118,8 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
               InkWell(
                 onTap: () {
                   // 3일 이상 지난 경우
-                  if (DateTime.now().isAfter(todoDate.add(Duration(days: 3)))) {
+                  if (DateTime.now()
+                      .isAfter(todoDate.add(const Duration(days: 3)))) {
                     Get.snackbar(
                       '복약 기록',
                       '3일이 지나면 수정이 불가능해요!',
@@ -131,7 +132,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                   }
                   // 미래의 날짜인 경우
                   else if (DateTime.now().isBefore(todoDate)) {
-                    print("${DateTime.now()} ${todoDate}");
+                    print("${DateTime.now()} $todoDate");
                     Get.snackbar(
                       '복약 기록',
                       '미래의 복약 기록을 작성하는 것은 불가능해요.',

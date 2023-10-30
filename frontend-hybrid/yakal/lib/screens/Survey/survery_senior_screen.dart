@@ -75,6 +75,11 @@ class SurveSenioryList extends StatelessWidget {
                   Get.to(() => SurveyDetailType1Screen(
                         survey: tests[index],
                       ));
+                } else {
+                  // result Screen that survey
+                  Get.toNamed('/survey/result', arguments: {
+                    'survey': tests[index],
+                  });
                 }
               },
               child: Container(

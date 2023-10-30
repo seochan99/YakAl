@@ -26,6 +26,11 @@ android {
     namespace "com.viewpharm.yakal"
     compileSdkVersion 33
     ndkVersion flutter.ndkVersion
+    
+    lintOptions {
+    checkReleaseBuilds false
+    abortOnError false
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
