@@ -1,17 +1,17 @@
-package com.viewpharm.yakal.dto.request;
+package com.viewpharm.yakal.notablefeatures.dto.response;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DiagnosisRequestDto {
+public class NotableFeatureStringResponseDto {
     @NotNull
-    @Size(min = 1)
+    private Long id;
+    @NotNull
     private String name;
 }

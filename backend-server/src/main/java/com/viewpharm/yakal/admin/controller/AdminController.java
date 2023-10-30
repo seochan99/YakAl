@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.controller;
+package com.viewpharm.yakal.admin.controller;
 
 import com.viewpharm.yakal.annotation.Date;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
@@ -28,8 +28,6 @@ import java.util.List;
 public class AdminController {
 
     private final MedicalService medicalService;
-    private final LoginLogService loginLogService;
-    private final NotificationService notificationService;
     private final RegistrationService registrationService;
 
     private final UserService userService;
@@ -56,7 +54,7 @@ public class AdminController {
     }
 
     @GetMapping("/medical/register/pharmacy")
-    @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
+    @Operation(summary = "약국 가져오기", description = "등록된 약국을 가져온다")
     public ResponseDto<MedicalListAndTotalDto> getRegisterPharmacy(
             @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam("name") @Nullable String name
     ) {
@@ -90,38 +88,5 @@ public class AdminController {
     public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
         userService.updateIsCertified(id,updateAdminRequestDto);
         return ResponseDto.ok(null);
-    }
-
-    @GetMapping("/loginLog/day/week/{date}")
-    @Operation(summary = "사용자 통계 가져오기", description = "하루 단위로 일주일 치 가져오기")
-    public ResponseDto<List<LoginLogListDto>> getLoginLogForWeek(@PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        return ResponseDto.ok(loginLogService.getUserOneDayForWeek(date));
-    }
-
-    @GetMapping("/loginLog/day/month/{month}")
-    @Operation(summary = "사용자 통계 가져오기", description = "하루 단위로 한달 치 가져오기")
-    public ResponseDto<List<LoginLogListDto>> getLoginLogForMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
-    ) {
-        return ResponseDto.ok(loginLogService.getUserOneDayForMonth(yearMonth));
-    }
-
-    @GetMapping("/loginLog/month/{month}")
-    @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 6개월 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForSixMonth(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
-    ) {
-        return ResponseDto.ok(loginLogService.getUserOneMonthForSixMonth(yearMonth));
-    }
-
-    @GetMapping("/loginLog/year/{month}")
-    @Operation(summary = "사용자 통계 가져오기", description = "한달 단위로 일년 치 가져오기")
-    public ResponseDto<List<LoginLogListForMonthDto>> getLoginLogForYear(@PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
-    ) {
-        return ResponseDto.ok(loginLogService.getUserOneMonthForYear(yearMonth));
-    }
-
-    @GetMapping("/notification/{date}")
-    @Operation(summary = "알림 통계 가져오기", description = "받은 날짜 한시간 단위로 통계 가져오기")
-    public ResponseDto<List<NotificationPerHourListDto>> getNotificationNumberPerHour(@PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
-        return ResponseDto.ok(notificationService.getNotificationNumberPerHour(date));
     }
 }

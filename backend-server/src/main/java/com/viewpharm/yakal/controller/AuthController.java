@@ -165,8 +165,6 @@ public class AuthController {
             throw new CommonException(ErrorCode.SERVER_ERROR);
         }
 
-        authService.saveLoginTime(LocalDate.now());
-
         map.put("validity", EValidity.VALID.toString());
         return ResponseDto.ok(map);
     }

@@ -5,7 +5,6 @@ import com.viewpharm.yakal.domain.LoginLog;
 import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.repository.ImageRepository;
-import com.viewpharm.yakal.repository.LoginLogRepository;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.security.JwtProvider;
 import com.viewpharm.yakal.type.EImageUseType;
@@ -40,7 +39,6 @@ import java.util.Map;
 public class AuthService {
 
     private final UserRepository userRepository;
-    private final LoginLogRepository loginLogRepository;
     private final JwtProvider jwtProvider;
     private final OAuth2Util oAuth2Util;
     private final ImageRepository imageRepository;
@@ -164,10 +162,5 @@ public class AuthService {
         response.addCookie(accessTokenCookie);
 
         response.sendRedirect(FRONTEND_HOST + "/expert/login/social/" + loginProvider.toString().toLowerCase());
-    }
-
-    public void saveLoginTime(LocalDate date) {
-        loginLogRepository.save(LoginLog.builder()
-                .loginTime(date).build());
     }
 }

@@ -3,6 +3,8 @@ package com.viewpharm.yakal.controller;
 import com.viewpharm.yakal.annotation.UserId;
 import com.viewpharm.yakal.dto.request.NoteRequestDto;
 import com.viewpharm.yakal.dto.response.*;
+import com.viewpharm.yakal.notablefeatures.service.MedicalHistoryService;
+import com.viewpharm.yakal.notablefeatures.service.DietarySupplementService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.type.EPeriod;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,9 +24,9 @@ public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
     private final SurbeyService surbeyService;
-    private final HealthFoodService healthFoodService;
+    private final DietarySupplementService dietarySupplementService;
     private final CounselService counselService;
-    private final DiagnosisService diagnosisService;
+    private final MedicalHistoryService medicalHistoryService;
 
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
@@ -44,14 +46,6 @@ public class ExpertController {
     @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
     public ResponseDto<AnswerAllDto> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
         return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
-    }
-
-    //비타민으로 변경 예정
-    @Deprecated
-    @GetMapping("/patient/{patientId}/healthfood")
-    @Operation(summary = "건강 기능 식품 리스트", description = "전문가가 특정 환자 건강 기능 식품 리스트 들고오기")
-    public ResponseDto<List<HealthFoodListDto>> getAllHealthFoodListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(healthFoodService.getHealthFoodListForExpert(id, patientId));
     }
 
     @GetMapping("/patient")
@@ -96,13 +90,5 @@ public class ExpertController {
     @Operation(summary = "특이사항 가져오기", description = "특정 상담 특이사항 가져오기")
     public ResponseDto<NoteAllDto> readNote(@UserId Long id, @PathVariable Long patientId, @RequestParam("page") Long page, @RequestParam(value = "num", defaultValue = "5") Long num) {
         return ResponseDto.ok(counselService.getAllNoteList(id, patientId, page, num));
-    }
-
-    //기저 질환 및 알러지로 변경예정
-    @Deprecated
-    @GetMapping("/patient/{patientId}/diagnosis")
-    @Operation(summary = "병명 리스트", description = "전문가가 특정 환자 과거 병명 리스트 들고오기")
-    public ResponseDto<List<DiagnosisListDto>> getAllDiagnosisListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(diagnosisService.getDiagnosisListForExpert(id, patientId));
     }
 }

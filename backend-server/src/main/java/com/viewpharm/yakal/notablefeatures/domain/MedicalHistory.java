@@ -1,5 +1,6 @@
-package com.viewpharm.yakal.domain;
+package com.viewpharm.yakal.notablefeatures.domain;
 
+import com.viewpharm.yakal.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,14 +9,11 @@ import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 //기저 질환 및 알러지로 변경예정
-@Deprecated
 @Entity
 @Getter
-@Setter
-@DynamicUpdate
 @NoArgsConstructor
-@Table(name = "diagnosis")
-public class Diagnosis {
+@Table(name = "medical_histories")
+public class MedicalHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -34,7 +32,7 @@ public class Diagnosis {
     }
 
     @Builder
-    public Diagnosis(String name, User user) {
+    public MedicalHistory(String name, User user) {
         this.name = name;
         this.user = user;
     }

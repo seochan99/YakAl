@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.notablefeatures.domain.MedicalHistory;
 import com.viewpharm.yakal.type.EJob;
 import com.viewpharm.yakal.type.ELoginProvider;
 import com.viewpharm.yakal.type.ERole;
@@ -146,7 +147,7 @@ public class User {
     private List<Answer> answers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Diagnosis> diagnoses = new ArrayList<>();
+    private List<MedicalHistory> diagnoses = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Guardian> protectedPerson;
