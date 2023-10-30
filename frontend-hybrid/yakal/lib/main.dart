@@ -90,7 +90,7 @@ void main() async {
   // print("FCM TOKEN : $token ");
   // locator init
   initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
+      runApp(MyApp(initialRoute: accessToken != null ? '/login' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
@@ -131,8 +131,8 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      // initialRoute: initialRoute,
-      initialRoute: "/pill/add/ocrEnvelop",
+      initialRoute: initialRoute,
+      // initialRoute: "/pill/add/ocrEnvelop",
       // 라우팅 설정
       getPages: [
         GetPage(
