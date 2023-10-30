@@ -46,7 +46,6 @@ public class RegistrationService {
                 .medicalAddress(medicalRegisterDto.getMedicalAddress())
                 .medicalDetailAddress(medicalRegisterDto.getMedicalDetailAddress())
                 .businessRegistrationNumber(medicalRegisterDto.getBusinessRegistrationNumber())
-                .eRecive(medicalRegisterDto.getReciveType())
                 .medicalRuntime(medicalRegisterDto.getMedicalRuntime())
                 .medicalCharacteristics(medicalRegisterDto.getMedicalCharacteristics())
                 .isPrecessed(Boolean.FALSE)
@@ -73,9 +72,9 @@ public class RegistrationService {
         List<Registration> registrations = registrationRepository.getRegistrationByIsPrecessedFalse(pageable);
         List<MedicalRegisterDto> result = registrations.stream()
                 .map(b -> new MedicalRegisterDto(b.getEMedical(),b.getDirectorName(),b.getDirectorTel(),
-                        b.getMedicalName(),b.getMedicalTel(),b.getZipCode(),b.getMedicalAddress(),
+                        b.getMedicalName(),b.getMedicalNumber(),b.getMedicalTel(),b.getZipCode(),b.getMedicalAddress(),
                         b.getMedicalDetailAddress(),b.getBusinessRegistrationNumber(),b.getImage().getPath(),
-                        b.getERecive(),b.getMedicalRuntime(),b.getMedicalCharacteristics()))
+                        b.getMedicalRuntime(),b.getMedicalCharacteristics()))
                 .collect(Collectors.toList());
         return result;
     }

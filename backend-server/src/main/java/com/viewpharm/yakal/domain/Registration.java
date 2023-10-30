@@ -1,7 +1,6 @@
 package com.viewpharm.yakal.domain;
 
 import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.ERecive;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -32,6 +31,9 @@ public class Registration {
     private String medicalName;
 
     @Column(nullable = false)
+    private String medicalNumber;
+
+    @Column(nullable = false)
     private String medicalTel;
 
     @Column(nullable = false)
@@ -49,9 +51,6 @@ public class Registration {
     @OneToOne(mappedBy = "registration", fetch = FetchType.LAZY)
     private Image image;
 
-    @Column(nullable = false)
-    private ERecive eRecive;
-
     @Column
     private String medicalRuntime;
 
@@ -62,19 +61,20 @@ public class Registration {
     private Boolean isPrecessed;
 
     @Builder
-    public Registration(Long id, EMedical eMedical, String directorName, String directorTel, String medicalName, String medicalTel, String zipCode, String medicalAddress, String medicalDetailAddress, String businessRegistrationNumber, Image image, ERecive eRecive, String medicalRuntime, String medicalCharacteristics, Boolean isPrecessed) {
+    public Registration(Long id, EMedical eMedical, String directorName, String directorTel, String medicalName, String medicalNumber,
+                        String medicalTel, String zipCode, String medicalAddress, String medicalDetailAddress, String businessRegistrationNumber, Image image, String medicalRuntime, String medicalCharacteristics, Boolean isPrecessed) {
         this.id = id;
         this.eMedical = eMedical;
         this.directorName = directorName;
         this.directorTel = directorTel;
         this.medicalName = medicalName;
+        this.medicalNumber = medicalNumber;
         this.medicalTel = medicalTel;
         this.zipCode = zipCode;
         this.medicalAddress = medicalAddress;
         this.medicalDetailAddress = medicalDetailAddress;
         this.businessRegistrationNumber = businessRegistrationNumber;
         this.image = image;
-        this.eRecive = eRecive;
         this.medicalRuntime = medicalRuntime;
         this.medicalCharacteristics = medicalCharacteristics;
         this.isPrecessed = isPrecessed;

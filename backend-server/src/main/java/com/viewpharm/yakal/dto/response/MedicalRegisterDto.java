@@ -1,7 +1,6 @@
 package com.viewpharm.yakal.dto.response;
 
 import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.ERecive;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
@@ -23,6 +22,8 @@ public class MedicalRegisterDto {
     @NotNull
     private String medicalName;
     @NotNull
+    private String medicalNumber;
+    @NotNull
     private String medicalTel;
     @NotNull
     private String zipCode;
@@ -33,7 +34,6 @@ public class MedicalRegisterDto {
     private String businessRegistrationNumber;
     private String imagePath;
     @Enumerated(EnumType.STRING)
-    private ERecive reciveType;
     private String medicalRuntime;
     private String medicalCharacteristics;
 }
