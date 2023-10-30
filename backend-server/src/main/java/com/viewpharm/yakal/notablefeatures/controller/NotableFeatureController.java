@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/notablefeature")
+@RequestMapping("/api/v1/notable-feature")
 @Tag(name = "NotableFeature", description = "특이사항")
 public class NotableFeatureController {
     private final UnderlyingConditionService underlyingConditionService;
@@ -50,20 +50,20 @@ public class NotableFeatureController {
      */
     @PostMapping("/medical-histories")
     @Operation(summary = "과거 병명 작성", description = "과거 병명 작성")
-    public ResponseDto<?> createMedicalHistory(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(medicalHistoryService.createDiagnosis(id, requestDto));
+    public ResponseDto<?> createMedicalHistories(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
+        return ResponseDto.ok(medicalHistoryService.createMedicalHistory(id, requestDto));
     }
 
     @GetMapping("/medical-histories")
     @Operation(summary = "과거 병명 리스트", description = "자신이 작성한 과거 병명 리스트 들고오기")
     public ResponseDto<?> readMedicalHistories(@UserId Long id) {
-        return ResponseDto.ok(medicalHistoryService.getDiagnosisList(id));
+        return ResponseDto.ok(medicalHistoryService.readMedicalHistories(id));
     }
 
     @DeleteMapping("/medical-histories/{medicalHistoryId}")
     @Operation(summary = "과거 병명 삭제", description = "특정 과거 병명 삭제")
     public ResponseDto<Boolean> deleteMedicalHistory(@UserId Long id, @PathVariable Long medicalHistoryId) {
-        return ResponseDto.ok(medicalHistoryService.deleteDiagnosis(id, medicalHistoryId));
+        return ResponseDto.ok(medicalHistoryService.deleteMedicalHistory(id, medicalHistoryId));
     }
 
     /**
