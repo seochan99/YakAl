@@ -90,7 +90,7 @@ void main() async {
   // print("FCM TOKEN : $token ");
   // locator init
   initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/login' : '/login')));
+      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
 }
 
 class MyApp extends StatelessWidget {
