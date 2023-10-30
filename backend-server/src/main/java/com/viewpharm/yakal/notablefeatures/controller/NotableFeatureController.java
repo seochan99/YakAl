@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/notable-feature")
+@RequestMapping("/api/v1/notable-features")
 @Tag(name = "NotableFeature", description = "특이사항")
 public class NotableFeatureController {
     private final UnderlyingConditionService underlyingConditionService;
