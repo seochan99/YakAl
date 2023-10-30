@@ -1,3 +1,5 @@
+import 'package:yakal/utilities/api/api.dart';
+
 import 'question_model.dart';
 import './question_data.dart';
 
@@ -29,10 +31,6 @@ class SurveyModel {
   });
 
   int get getTotalScore => totalScore;
-
-  set setTotalScore(int score) {
-    totalScore = score;
-  }
 
   void setComment(int score, {List<dynamic>? results}) {
     switch (title) {

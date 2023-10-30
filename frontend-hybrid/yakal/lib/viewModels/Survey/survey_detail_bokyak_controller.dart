@@ -14,6 +14,31 @@ class SurveyDetailBokyakController extends GetxController {
     selectedOptions = List.filled(surveyModel.questions.length, null);
   }
 
+  Future<void> setDoneSurvey() async {
+    var dio = await authDioWithContext();
+
+    try {
+      var response = await dio.get("/survey/answer/my");
+
+      if (response.statusCode == 200) {
+        List dataList = response.data['data']['datalist'];
+
+        for (var data in dataList) {
+          if (data['title'] == surveyModel.title) {
+            surveyModel.isCompleted = true;
+            update(); // GetX의 update 메서드를 호출하여 UI에 변경 사항을 반영합니다.
+            return;
+          }
+        }
+        surveyModel.isCompleted = false;
+      } else {
+        surveyModel.isCompleted = false;
+      }
+    } catch (e) {
+      throw Exception('Failed to load PillTodoParents');
+    }
+  }
+
   late List<String?> selectedOptions;
 
   void onOptionSelected(int questionIndex, int optionIndex) {
@@ -42,6 +67,7 @@ class SurveyDetailBokyakController extends GetxController {
     return totalScore;
   }
 
+// 완료 버튼 활성화 여부
   bool isCompletionEnabled() {
     for (var question in surveyModel.questions) {
       if (selectedOptions[surveyModel.questions.indexOf(question)] == null) {
@@ -67,6 +93,7 @@ class SurveyDetailBokyakController extends GetxController {
     return arms;
   }
 
+// 완료버튼을 눌렀을때
   Future handleButtonPress() async {
     int totalScore = calculateTotalScore();
     // 서버로 arms 리스트 보내기
