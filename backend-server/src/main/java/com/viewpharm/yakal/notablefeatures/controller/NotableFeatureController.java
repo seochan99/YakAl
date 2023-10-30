@@ -72,19 +72,19 @@ public class NotableFeatureController {
     @PostMapping("/dietary-supplements")
     @Operation(summary = "건강 기능 식품 Create", description = "건강 기능 식품 작성")
     public ResponseDto<?> createDietarySupplement(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(dietarySupplementService.createHealthFood(id, requestDto));
+        return ResponseDto.ok(dietarySupplementService.createDietarySupplement(id, requestDto));
     }
 
     @GetMapping("/dietary-supplements")
     @Operation(summary = "건강 기능 식품 Read", description = "자신이 작성한 건강 기능 식품 리스트 들고오기")
     public ResponseDto<?> readDietarySupplements(@UserId Long id) {
-        return ResponseDto.ok(dietarySupplementService.getHealthFoodList(id));
+        return ResponseDto.ok(dietarySupplementService.readDietarySupplements(id));
     }
 
     @DeleteMapping("/dietary-supplements/{dietarySupplementsId}")
     @Operation(summary = "건강 기능 식품 Delete", description = "건강 기능 식품 삭제")
     public ResponseDto<?> deleteDietarySupplement(@UserId Long id, @PathVariable Long dietarySupplementsId) {
-        return ResponseDto.ok(dietarySupplementService.deleteHealthFood(id, dietarySupplementsId));
+        return ResponseDto.ok(dietarySupplementService.deleteDietarySupplement(id, dietarySupplementsId));
     }
 
     /**
@@ -93,20 +93,18 @@ public class NotableFeatureController {
     @PostMapping("/allergies")
     @Operation(summary = "알러지 Create", description = "알러지 작성")
     public ResponseDto<?> createAllergy(@UserId Long id, @RequestBody @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(dietarySupplementService.createHealthFood(id, requestDto));
+        return ResponseDto.ok(null);
     }
 
     @GetMapping("/allergies")
     @Operation(summary = "알러지 Read", description = "자신이 작성한 알러지 리스트 들고오기")
     public ResponseDto<?> readAllergies(@UserId Long id) {
-        return ResponseDto.ok(dietarySupplementService.getHealthFoodList(id));
-    }
+        return ResponseDto.ok(null);    }
 
     @DeleteMapping("/allergies/{dietarySupplementsId}")
     @Operation(summary = "알러지 Delete", description = "알러지 삭제")
     public ResponseDto<?> deleteAllergy(@UserId Long id, @PathVariable Long dietarySupplementsId) {
-        return ResponseDto.ok(dietarySupplementService.deleteHealthFood(id, dietarySupplementsId));
-    }
+        return ResponseDto.ok(null);    }
 
     /**
      * 낙상 사고
@@ -114,18 +112,15 @@ public class NotableFeatureController {
     @PostMapping("/falls")
     @Operation(summary = "낙상 사고 Create", description = "낙상 사고 작성")
     public ResponseDto<?> createFall(@UserId Long id, @RequestBody @Date @Valid NotableFeatureRequestDto requestDto) {
-        return ResponseDto.ok(dietarySupplementService.createHealthFood(id, requestDto));
-    }
+        return ResponseDto.ok(null);    }
 
     @GetMapping("/falls")
     @Operation(summary = "낙상 사고 Read", description = "자신이 작성한 낙상 사고 리스트 들고오기")
     public ResponseDto<?> readFalls(@UserId Long id) {
-        return ResponseDto.ok(dietarySupplementService.getHealthFoodList(id));
-    }
+        return ResponseDto.ok(null);    }
 
     @DeleteMapping("/falls/{fallId}")
     @Operation(summary = "낙상 사고 Delete", description = "낙상 사고 삭제")
     public ResponseDto<?> deleteFall(@UserId Long id, @PathVariable Long fallId) {
-        return ResponseDto.ok(dietarySupplementService.deleteHealthFood(id, fallId));
-    }
+        return ResponseDto.ok(null);    }
 }

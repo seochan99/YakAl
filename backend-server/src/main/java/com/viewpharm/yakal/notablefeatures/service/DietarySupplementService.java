@@ -6,6 +6,7 @@ import com.viewpharm.yakal.notablefeatures.dto.request.NotableFeatureRequestDto;
 import com.viewpharm.yakal.exception.CommonException;
 import com.viewpharm.yakal.exception.ErrorCode;
 import com.viewpharm.yakal.notablefeatures.dto.response.NotableFeatureStringResponseDto;
+import com.viewpharm.yakal.notablefeatures.repository.DietarySupplementRepository;
 import com.viewpharm.yakal.repository.HealthFoodRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.type.EJob;
@@ -18,25 +19,24 @@ import java.util.List;
 import java.util.stream.Collectors;
 @Slf4j
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class DietarySupplementService {
-    private final HealthFoodRepository healthFoodRepository;
+    private final DietarySupplementRepository dietarySupplementRepository;
     private final UserRepository userRepository;
 
-    public Boolean createHealthFood(Long userId, NotableFeatureRequestDto requestDto) {
+    public Boolean createDietarySupplement(Long userId, NotableFeatureRequestDto requestDto) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        if (requestDto.getNotableFeature().length() == 0)
+        if (requestDto.getNotableFeature().isEmpty())
             throw new CommonException(ErrorCode.NOT_EXIST_PARAMETER);
 
-        healthFoodRepository.findByName(requestDto.getNotableFeature())
+        dietarySupplementRepository.findByName(requestDto.getNotableFeature())
                 .ifPresent(h -> {
-                    throw new CommonException(ErrorCode.DUPLICATION_HEALTHFOOD);
+                    throw new CommonException(ErrorCode.DUPLICATION_NOTABLE_FEATURE);
                 });
 
-        healthFoodRepository.save(DietarySupplement.builder()
+        dietarySupplementRepository.save(DietarySupplement.builder()
                 .name(requestDto.getNotableFeature())
                 .user(user)
                 .build());
@@ -44,33 +44,32 @@ public class DietarySupplementService {
         return Boolean.TRUE;
     }
 
-    public Boolean deleteHealthFood(Long userId, Long healthFoodId) {
+    //자신의 건강 식품 리스트
+    public List<NotableFeatureStringResponseDto> readDietarySupplements(Long userId) {
         //유저 확인
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-       DietarySupplement dietarySupplement = healthFoodRepository.findById(healthFoodId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_HEALTHFOOD));
+        List<DietarySupplement> dietarySupplements = dietarySupplementRepository.findAllByUserOrderByIdDesc(user);
+
+        return dietarySupplements.stream()
+                .map(dietarySupplement -> new NotableFeatureStringResponseDto(dietarySupplement.getId(), dietarySupplement.getName()))
+                .collect(Collectors.toList());
+    }
+
+    public Boolean deleteDietarySupplement(Long userId, Long healthFoodId) {
+        //유저 확인
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+       DietarySupplement dietarySupplement = dietarySupplementRepository.findById(healthFoodId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_NOTABLE_FEATURE));
 
         //전문가는 못 삭제 하도록 함
         if (dietarySupplement.getUser().getId() != userId)
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
-        healthFoodRepository.delete(dietarySupplement);
+        dietarySupplementRepository.delete(dietarySupplement);
 
         return Boolean.TRUE;
-    }
-    //자신의 건강 식품 리스트
-    public List<NotableFeatureStringResponseDto> getHealthFoodList(Long userId) {
-        //유저 확인
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        List<DietarySupplement> dietarySupplements = healthFoodRepository.findAllByUser(user);
-
-        List<NotableFeatureStringResponseDto> result = dietarySupplements.stream()
-                .map(h -> new NotableFeatureStringResponseDto(h.getId(), h.getName()))
-                .collect(Collectors.toList());
-
-        return result;
     }
 
     //전문가가 환자의 건강 식품 리스트
@@ -81,7 +80,7 @@ public class DietarySupplementService {
         //유저 확인
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        List<DietarySupplement> dietarySupplements = healthFoodRepository.findAllByUser(patient);
+        List<DietarySupplement> dietarySupplements = dietarySupplementRepository.findAllByUserOrderByIdDesc(patient);
 
         List<NotableFeatureStringResponseDto> result = dietarySupplements.stream()
                 .map(h -> new NotableFeatureStringResponseDto(h.getId(), h.getName()))
