@@ -15,18 +15,10 @@ class SurveyResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SurveyModel survey = (Get.arguments as Map<dynamic, dynamic>)['survey'];
-    List<dynamic>? myResults =
-        (Get.arguments as Map<dynamic, dynamic>)['results'];
+
     UserViewModel userViewModel = Get.put(UserViewModel());
 
     // comment 설정
-
-    // 시청각, 흡연은 result도 넘겨주기
-    if (survey.title == "시청각 테스트" || survey.title == "흡연력 테스트") {
-      survey.setComment(survey.totalScore, results: myResults!);
-    } else {
-      survey.setComment(survey.totalScore);
-    }
 
     return Scaffold(
       appBar: AppBar(

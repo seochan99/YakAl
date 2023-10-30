@@ -86,6 +86,9 @@ class SurveyDetailBokyakController extends GetxController {
         // 완료 여부 업데이트
         surveyModel.isCompleted = true;
 
+        // result Comment 셋팅
+        surveyModel.setComment(surveyModel.totalScore);
+
         // 결과 페이지 이동
         Get.toNamed('/survey/result',
             arguments: {'survey': surveyModel, 'results': results});
