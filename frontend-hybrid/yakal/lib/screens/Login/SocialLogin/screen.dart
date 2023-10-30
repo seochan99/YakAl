@@ -1,14 +1,9 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' as foundation;
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/provider/Login/social_login_provider.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/enum/login_platform.dart';
@@ -29,96 +24,20 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
   final userViewModel = Get.put(UserViewModel(), permanent: true);
   final routeController = Get.put(LoginRouteController());
 
+  final socialLoginProvider = SocialLoginProvider();
+
   bool get isiOS =>
       foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
-
-  Future<bool> _kakaoLoginByAccessToken(String accessToken) async {
-    var dio = Dio();
-
-    dio.options.headers["authorization"] = "Bearer $accessToken";
-
-    try {
-      var tokenResponse = await dio.post(
-        "${dotenv.get("YAKAL_SERVER_HOST")}/auth/kakao",
-      );
-
-      final newAccessToken =
-          tokenResponse.data["data"]["accessToken"] as String;
-      final newRefreshToken =
-          tokenResponse.data["data"]["refreshToken"] as String;
-
-      const storage = FlutterSecureStorage();
-
-      await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
-      await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
-
-      if (kDebugMode) {
-        print("🎉 Successfully logged in to Kakao!");
-      }
-
-      return true;
-    } catch (error) {
-      if (kDebugMode) {
-        print("🚨 [Kakao login failed] $error");
-      }
-
-      return false;
-    }
-  }
-
-  Future<bool> _kakaoLogin() async {
-    if (await isKakaoTalkInstalled()) {
-      try {
-        OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
-
-        return await _kakaoLoginByAccessToken(token.accessToken);
-      } catch (error) {
-        if (kDebugMode) {
-          print("🚨 [Kakao login failed] $error");
-        }
-
-        // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-        // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-        if (error is PlatformException && error.code == 'CANCELED') {
-          return false;
-        }
-
-        // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인
-        try {
-          OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-
-          return await _kakaoLoginByAccessToken(token.accessToken);
-        } catch (error) {
-          if (kDebugMode) {
-            print("🚨 [Kakao login failed] $error");
-          }
-
-          return false;
-        }
-      }
-    } else {
-      try {
-        OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-
-        return await _kakaoLoginByAccessToken(token.accessToken);
-      } catch (error) {
-        if (kDebugMode) {
-          print("🚨 [Kakao login failed] $error");
-        }
-
-        return false;
-      }
-    }
-  }
 
   Future<void> _login(ELoginPlatform loginPlatform) async {
     late bool isSuccess;
 
     switch (loginPlatform) {
       case ELoginPlatform.KAKAO:
-        isSuccess = await _kakaoLogin();
+        isSuccess = await socialLoginProvider.kakaoLogin();
         break;
       case ELoginPlatform.GOOGLE:
+        isSuccess = await socialLoginProvider.googleLogin();
         break;
       case ELoginPlatform.APPLE:
         break;
@@ -149,11 +68,25 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
         return;
       }
 
+      late String message;
+
+      switch (loginPlatform) {
+        case ELoginPlatform.KAKAO:
+          message = '키키오 로그인에 실패했습니다.';
+          break;
+        case ELoginPlatform.GOOGLE:
+          message = '구글 로그인에 실패했습니다.';
+          break;
+        case ELoginPlatform.APPLE:
+          message = '애플 로그인에 실패했습니다.';
+          break;
+      }
+
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           behavior: SnackBarBehavior.floating,
-          content: Text('키키오 로그인에 실패했습니다.'),
-          duration: Duration(seconds: 3),
+          content: Text(message),
+          duration: const Duration(seconds: 3),
         ),
       );
     }
