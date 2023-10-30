@@ -22,6 +22,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
       CalendarRepository(calendarProvider: CalendarProvider());
 
   // Model
+  late final bool _isDetail;
   final Rx<CalendarDate> _calendarDate =
       Rx<CalendarDate>(CalendarDate.selectedDate(selectedDate: DateTime.now()));
   late final Rx<DateTime> _todoDate;
@@ -43,6 +44,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   bool get isLoadedCalendar => _isLoadedCalendar.value;
   Map<String, Rx<CalendarDay>> get calendarDays => _calendarDays;
+
+  @override
+  bool get isDetail => _isDetail;
   @override
   bool get isLoaded => _isLoaded.value;
   @override
@@ -55,6 +59,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
     _todoDate = Rx<DateTime>(_calendarDate.value.selectedDate);
 
+    fetchIsDetail();
     updateCalendarDays();
     updatePillTodoAndDate();
   }
@@ -262,5 +267,9 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
     if (beforeMonth != _calendarDate.value.focusedDate.month) {
       updateCalendarDays();
     }
+  }
+
+  void fetchIsDetail() {
+    _pillTodoRepository.getIsDetail().then((value) => _isDetail = value);
   }
 }

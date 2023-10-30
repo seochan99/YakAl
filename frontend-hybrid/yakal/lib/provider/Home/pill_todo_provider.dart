@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/utilities/api/api.dart';
 
@@ -92,5 +93,12 @@ class PillTodoProvider {
     } else {
       return false;
     }
+  }
+
+  Future<bool> readUserIsDetail() async {
+    final prefs = await SharedPreferences.getInstance();
+    bool mode = prefs.getBool("MODE") ?? true;
+
+    return mode;
   }
 }
