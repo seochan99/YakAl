@@ -15,10 +15,18 @@ class SurveyResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SurveyModel survey = (Get.arguments as Map<dynamic, dynamic>)['survey'];
+    List<dynamic>? myResults =
+        (Get.arguments as Map<dynamic, dynamic>)['results'];
     UserViewModel userViewModel = Get.put(UserViewModel());
 
     // comment 설정
-    survey.setComment(survey.totalScore);
+
+    // 시청각, 흡연은 result도 넘겨주기
+    if (survey.title == "시청각 테스트" || survey.title == "흡연력 테스트") {
+      survey.setComment(survey.totalScore, results: myResults!);
+    } else {
+      survey.setComment(survey.totalScore);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -59,12 +67,6 @@ class SurveyResultScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Get.offAllNamed('/seniorSurvey');
-                    // issue : bottomNavigation이 사라짐.. 고민 중...
-                    // Get.back();
-                    // Get.back();
-                    // Popuntill
-
-                    // 이러면 새로고침해야지 완료로 바뀜..고민중..
                   },
                   child: const Text(
                     "다른 테스트 하기",
@@ -108,6 +110,7 @@ class SurveyResultHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          // sruvey type
           Text(
             survey.resultComment,
             style: const TextStyle(

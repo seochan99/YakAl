@@ -34,12 +34,7 @@ class SurveyModel {
     totalScore = score;
   }
 
-  void dispose() {
-    // Dispose of any resources or subscriptions here
-    // This method will be called when you want to clean up the SurveyModel
-  }
-
-  void setComment(int score) {
+  void setComment(int score, {List<dynamic>? results}) {
     switch (title) {
       case '복약 순응도 테스트':
         resultComment = '$score/48점 입니다.';
@@ -93,15 +88,8 @@ class SurveyModel {
         }
         break;
       case "시청각 테스트":
-        if (score == 0) {
-          resultComment = '건강한 상태입니다';
-        } else if (score >= 1 && score <= 2) {
-          resultComment = "노쇠 전단계가 의심됩니다";
-        } else if (score >= 3) {
-          resultComment = "노쇠가 의심됩니다.";
-        } else {
-          resultComment = '건강한 상태입니다';
-        }
+        resultComment =
+            "안경 ${results![0] == 0 ? "사용" : "미사용"}, 보청기 ${results[1] == 0 ? "사용" : "미사용"}";
         break;
       case "일상생활 동작 지수":
         if (score <= 4) {
@@ -148,7 +136,48 @@ class SurveyModel {
         }
         break;
       case "흡연력 테스트":
-        resultComment = '$score/10점 입니다.';
+        print(results);
+        if (results![0] == 0) {
+          resultComment = "피우지 않습니다";
+        } else {
+          dynamic pastYear;
+          dynamic oneDaySmoke;
+          switch (results[1]) {
+            case 1:
+              pastYear = "1년 미만";
+              break;
+            case 2:
+              pastYear = "3년 미만";
+              break;
+            case 3:
+              pastYear = "10년 미만";
+              break;
+            case 4:
+              pastYear = "10년 이상";
+              break;
+            default:
+              pastYear = "1년 미만"; // This handles any unexpected value
+              break;
+          }
+          switch (results[2]) {
+            case 1:
+              oneDaySmoke = "1/2갑 미만";
+              break;
+            case 2:
+              oneDaySmoke = "1/2갑 ~ 2갑";
+              break;
+            case 3:
+              oneDaySmoke = "1 ~ 2갑";
+              break;
+            case 4:
+              oneDaySmoke = "2갑 이상";
+              break;
+            default:
+              oneDaySmoke = "2갑 이상"; // This handles any unexpected value
+              break;
+          }
+          resultComment = "현재 또는 과거에 $pastYear 피웠으며,\n하루 흡연량은$oneDaySmoke 입니다";
+        }
       case "간이 영양 상태 조사":
         if (0 <= score && score <= 7) {
           resultComment = "영양 불량 상태입니다";
@@ -387,17 +416,17 @@ final List<SurveyModel> tests = [
       QuestionModel(
         question: questionSmoking[0],
         options: ["피우지 않는다.", "과거에 피웠으나 지금은 끊었다.", "현재 피운다."],
-        scores: [1, 2000, 4000],
+        scores: [0, 1, 2],
       ),
       QuestionModel(
         question: questionSmoking[1],
         options: ["피우지 않는다.", "1년 미만", "3년 미만", "10년 미만", "10년 이상"],
-        scores: [1, 100, 200, 300, 400],
+        scores: [0, 1, 2, 3, 4],
       ),
       QuestionModel(
         question: questionSmoking[2],
         options: ["피우지 않는다.", "1/2갑 미만", "1/2갑 ~ 2갑", "1 ~ 2갑", "2갑 이상"],
-        scores: [1, 10, 20, 30, 40],
+        scores: [0, 1, 2, 3, 4],
       ),
     ],
     totalScore: 0,

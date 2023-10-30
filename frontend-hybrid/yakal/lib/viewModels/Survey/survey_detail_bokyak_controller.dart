@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
+import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 class SurveyDetailBokyakController extends GetxController {
   final SurveyModel surveyModel;
@@ -61,15 +67,43 @@ class SurveyDetailBokyakController extends GetxController {
     return arms;
   }
 
-  void handleButtonPress() {
+  Future handleButtonPress() async {
     int totalScore = calculateTotalScore();
     // 서버로 arms 리스트 보내기
-    List arms = allScoreList();
-    surveyModel.totalScore = totalScore;
-    surveyModel.isCompleted = true;
-    print("선택항목들은 :  $arms");
+    List results = allScoreList();
 
-    Get.toNamed('/survey/result',
-        arguments: {'survey': surveyModel, 'arms': arms});
+    var dio = await authDioWithContext();
+
+    try {
+      // 설문 결과 등록
+      var response = await dio.post("/survey/${surveyModel.id}/answer",
+          data: {"content": jsonEncode(results), "score": totalScore});
+
+      // 200이면
+      if (response.statusCode == 200) {
+        // 총점
+        surveyModel.totalScore = totalScore;
+        // 완료 여부 업데이트
+        surveyModel.isCompleted = true;
+
+        // 결과 페이지 이동
+        Get.toNamed('/survey/result',
+            arguments: {'survey': surveyModel, 'results': results});
+
+        // 데이터 반환
+        return response.data['data'];
+      }
+    } catch (e) {
+      Get.snackbar(
+        '설문 결과',
+        '설문 결과 등록에 실패했어요.',
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(seconds: 1, microseconds: 500),
+        snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: ColorStyles.gray1,
+        colorText: Colors.black,
+      );
+      throw Exception('Failed to load PillTodoParents');
+    }
   }
 }
