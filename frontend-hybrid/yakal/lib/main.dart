@@ -10,9 +10,8 @@ import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
-import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
-import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
@@ -154,16 +153,12 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/login',
-          page: () => const LoginEntryScreen(),
+          page: () => const SocialLoginScreen(),
           children: [
             GetPage(
               name: '/process',
               page: () => LoginProcess(),
               transition: Transition.noTransition,
-            ),
-            GetPage(
-              name: '/kakao',
-              page: () => const KakaoLoginScreen(),
             ),
             GetPage(
               name: '/identify/process',

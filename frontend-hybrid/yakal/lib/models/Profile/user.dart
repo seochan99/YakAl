@@ -7,6 +7,7 @@ import 'package:yakal/utilities/api/api.dart';
 class User {
   String nickName;
   bool mode;
+  bool isFinishedIdentification;
   bool? isAgreedMarketing;
   bool notiIsAllowed;
   String breakfastTime;
@@ -15,6 +16,7 @@ class User {
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
+
   String get deviceToken => _deviceToken;
   String _deviceToken;
 
@@ -37,14 +39,13 @@ class User {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
     mode = prefs.getBool("MODE") ?? true;
+    isFinishedIdentification =
+        prefs.getBool("IS_FINISHED_IDENTIFICATION") ?? false;
+    isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING") ?? false;
     notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
     breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
     lunchTime = prefs.getString("LUNCH_TIME") ?? "";
     dinnerTime = prefs.getString("DINNER_TIME") ?? "";
-
-    if (prefs.getBool("IS_AGREED_MARKETING") != null) {
-      isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING")!;
-    }
   }
 
   // 유저 정보 초기화, 토큰은 그대로 남아있음
@@ -127,6 +128,7 @@ class User {
   User({
     this.nickName = "약알",
     this.mode = true,
+    this.isFinishedIdentification = false,
     this.guardian,
     this.notiIsAllowed = true,
     this.breakfastTime = "8:00",
