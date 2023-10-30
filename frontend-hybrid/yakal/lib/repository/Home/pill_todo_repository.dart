@@ -4,7 +4,6 @@ import 'package:yakal/models/Home/overlap_info.dart';
 import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/provider/Home/pill_todo_provider.dart';
 
-import '../../models/Home/atc_code.dart';
 import '../../models/Home/e_taking_time.dart';
 import '../../models/Home/pill_todo_children.dart';
 
@@ -88,5 +87,9 @@ class PillTodoRepository {
 
   Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
     return await _pillTodoProvider.updatePillTodoChildren(doseId, isTaken);
+  }
+
+  Future<bool> getIsDetail() async {
+    return await _pillTodoProvider.readUserIsDetail();
   }
 }

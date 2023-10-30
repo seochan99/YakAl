@@ -10,6 +10,7 @@ import 'package:yakal/widgets/Home/pill_overlap_modal_view.dart';
 import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
+  final bool isDetail;
   final DateTime todoDate;
   final PillTodoParent pillTodoParent;
   final bool isOverLap;
@@ -19,7 +20,8 @@ class PillTodoParentItem extends StatefulWidget {
   final Function(String, String)? onClickChildrenItemView;
 
   const PillTodoParentItem(
-      {required this.todoDate,
+      {required this.isDetail,
+      required this.todoDate,
       required this.pillTodoParent,
       required this.isOverLap,
       required this.onClickParentCheckBox,
@@ -34,6 +36,7 @@ class PillTodoParentItem extends StatefulWidget {
 }
 
 class _PillTodoParentItemState extends State<PillTodoParentItem> {
+  late final bool isDetail;
   late final DateTime todoDate;
   late bool isOverLap;
   late final PillTodoParent pillTodoParent;
@@ -46,6 +49,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    isDetail = widget.isDetail;
     todoDate = widget.todoDate;
     isOverLap = widget.isOverLap;
     pillTodoParent = widget.pillTodoParent;
@@ -267,6 +271,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               itemCount: pillTodoParent.todos.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return PillTodoChildrenItem(
+                                  isDetail: isDetail,
                                   todoDate: todoDate,
                                   eTakingTime: pillTodoParent.eTakingTime,
                                   pillTodoChildren: pillTodoParent.todos[index],

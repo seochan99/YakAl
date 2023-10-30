@@ -62,6 +62,7 @@ class _CalendarPillInfoViewState extends State<CalendarPillInfoView> {
                 : SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) => PillTodoParentItem(
+                        isDetail: viewModel.isDetail,
                         todoDate: viewModel.todoDate,
                         pillTodoParent: viewModel.pillTodoParents[index],
                         isOverLap: viewModel.pillTodoParents[index].isOverLap,

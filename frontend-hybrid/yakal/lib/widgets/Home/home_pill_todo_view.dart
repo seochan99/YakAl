@@ -60,6 +60,7 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
                 itemCount: viewModel.pillTodoParents.length,
                 itemBuilder: (context, index) {
                   return PillTodoParentItem(
+                    isDetail: viewModel.isDetail,
                     todoDate: viewModel.todoDate,
                     pillTodoParent: viewModel.pillTodoParents[index],
                     isOverLap: viewModel.pillTodoParents[index].isOverLap,
