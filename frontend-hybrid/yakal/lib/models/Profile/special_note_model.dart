@@ -1,7 +1,7 @@
 // 특이사항
 class SpecialNote {
-  List<String> underlyingConditions;
-  List<String> allergies;
+  List<ItemWithNameAndId> underlyingConditions;
+  List<ItemWithNameAndId> allergies;
   List<DateTime> falls;
   List<ItemWithNameAndId> diagnosis;
   List<ItemWithNameAndId> healthfood;

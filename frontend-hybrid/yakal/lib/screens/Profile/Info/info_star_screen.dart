@@ -25,6 +25,9 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     super.initState();
     widget.userViewModel.loadSpeicalNote('medical-histories');
     widget.userViewModel.loadSpeicalNote('dietary-supplements');
+    widget.userViewModel.loadSpeicalNote('underlying-conditions');
+    widget.userViewModel.loadSpeicalNote('allergies');
+    widget.userViewModel.loadSpeicalNote('falls');
   }
 
   @override
@@ -40,7 +43,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     String getTitleFromRecordType(String recordType) {
       String title = '';
       switch (recordType) {
-        case 'underlyingConditions':
+        case 'underlying-conditions':
           title = '기저 질환';
           break;
         case 'allergies':
@@ -98,7 +101,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "${getTitleFromRecordType(title)} 추가",
+                              '${getTitleFromRecordType(title)} 추가',
                               style: const TextStyle(
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w700,
@@ -113,7 +116,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                               fontWeight: FontWeight.w700,
                             )),
                         const SizedBox(height: 12),
-                        title == "falls"
+                        title == 'falls'
                             ? InkWell(
                                 onTap: () async {
                                   DateTime? picked = await showDatePicker(
@@ -141,8 +144,8 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                       const SizedBox(width: 8.0),
                                       Text(
                                         item != null
-                                            ? "${item!.year}-${item!.month}-${item!.day}"
-                                            : "날짜 선택",
+                                            ? '${item!.year}-${item!.month}-${item!.day}'
+                                            : '날짜 선택',
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: item != null
@@ -160,7 +163,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                 },
                                 controller: itemController,
                                 decoration: InputDecoration(
-                                  labelText: "항목 입력",
+                                  labelText: '항목 입력',
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8.0),
                                     borderSide: const BorderSide(
@@ -195,7 +198,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                       }
                                     : null,
                                 child: const Text(
-                                  "완료",
+                                  '완료',
                                   style: TextStyle(fontSize: 20.0),
                                 ),
                               );
@@ -219,7 +222,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
       if (specialNote != null) {
         switch (title) {
-          case 'underlyingConditions':
+          case 'underlying-conditions':
             filteredRecords = specialNote.underlyingConditions;
             break;
           case 'allergies':
@@ -254,15 +257,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    // DEL
-                    if (title == 'dietary-supplements' ||
-                        title == 'medical-histories') {
-                      widget.userViewModel
-                          .removeSpecialNoteItem(title, record.id);
-                      return;
-                    } else {
-                      widget.userViewModel.removeSpecialNoteItem(title, index);
-                    }
+                    // DELETE
+                    widget.userViewModel
+                        .removeSpecialNoteItem(title, record.id);
+                    return;
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -273,10 +271,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                 title: Text(
                   title == 'falls'
                       ? DateFormat('yyyy-MM-dd').format(record as DateTime)
-                      : title == 'dietary-supplements' ||
-                              title == 'medical-histories'
-                          ? (record as ItemWithNameAndId).name
-                          : record.toString(),
+                      : (record as ItemWithNameAndId).name,
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,
@@ -296,7 +291,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: DefaultBackAppbar(title: "특이사항 추가"),
+        child: DefaultBackAppbar(title: '특이사항 추가'),
       ),
       body: Container(
         color: Colors.white,
@@ -319,7 +314,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 6),
-                        const Text("평소 앓고 있는 만성적 질병",
+                        const Text('평소 앓고 있는 만성적 질병',
                             style: TextStyle(
                               color: ColorStyles.gray5,
                               fontSize: 16,
@@ -335,14 +330,14 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                       .underlyingConditions.isNotEmpty
                               ? buildInfoStarRecords(
                                   // emergency
-                                  title: "underlyingConditions")
+                                  title: 'underlying-conditions')
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
-                          content: "병명 추가",
+                          content: '병명 추가',
                           actionSheet: () =>
-                              {showBottomSheet("underlyingConditions")},
+                              {showBottomSheet('underlying-conditions')},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 알러지 ---------------- */
@@ -354,17 +349,18 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         ),
                         const SizedBox(height: 16),
                         Obx(
-                          () => widget.userViewModel.user.value.specialNote !=
-                                      null &&
-                                  widget.userViewModel.user.value.specialNote!
-                                      .allergies.isNotEmpty
-                              ? buildInfoStarRecords(title: "allergies")
-                              : const SizedBox.shrink(),
+                          () {
+                            if (widget.userViewModel.user.value.specialNote ==
+                                null) {
+                              return const SizedBox.shrink();
+                            }
+                            return buildInfoStarRecords(title: 'allergies');
+                          },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
-                          content: "항목 추가",
-                          actionSheet: () => {showBottomSheet("allergies")},
+                          content: '항목 추가',
+                          actionSheet: () => {showBottomSheet('allergies')},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 낙상 사고 ---------------- */
@@ -374,7 +370,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 6),
-                        const Text("의도하지 않게 넘어지거나 떨어져서 다치는 것",
+                        const Text('의도하지 않게 넘어지거나 떨어져서 다치는 것',
                             style: TextStyle(
                               color: ColorStyles.gray5,
                               fontSize: 16,
@@ -388,13 +384,13 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                       .falls.isNotEmpty
                               ? buildInfoStarRecords(
                                   // emergency
-                                  title: "falls")
+                                  title: 'falls')
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
-                          content: "날짜 추가",
-                          actionSheet: () => {showBottomSheet("falls")},
+                          content: '날짜 추가',
+                          actionSheet: () => {showBottomSheet('falls')},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 복약중인 건강식품 ---------------- */
@@ -411,14 +407,16 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                 null) {
                               return const SizedBox.shrink();
                             }
-                            return buildInfoStarRecords(title: "healthfood");
+                            return buildInfoStarRecords(
+                                title: 'dietary-supplements');
                           },
                         ),
                         // ADD
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
-                          content: "항목 추가",
-                          actionSheet: () => {showBottomSheet("healthfood")},
+                          content: '항목 추가',
+                          actionSheet: () =>
+                              {showBottomSheet('dietary-supplements')},
                         ),
                         const SizedBox(height: 48),
                         /* ---------------- 진단 병 목록 ---------------- */
@@ -434,13 +432,15 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                 null) {
                               return const SizedBox.shrink();
                             }
-                            return buildInfoStarRecords(title: "diagnosis");
+                            return buildInfoStarRecords(
+                                title: 'medical-histories');
                           },
                         ),
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
-                          content: "병명 추가",
-                          actionSheet: () => {showBottomSheet("diagnosis")},
+                          content: '병명 추가',
+                          actionSheet: () =>
+                              {showBottomSheet('medical-histories')},
                         ),
                         const SizedBox(height: 48),
                       ],
