@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
@@ -15,6 +16,25 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
+// device 토큰 저장
+Future<void> sendDeviceToken(String deviceToken) async {
+  try {
+    Map<String, dynamic> requestBody = {
+      'device_token': deviceToken,
+      'is_ios': false
+    };
+
+    var dio = await authDioWithContext();
+    var response = await dio.put("/user/device", data: requestBody);
+
+    if (response.statusCode == 200) {
+      print('sendDeviceToken - Success');
+    } else {
+      print('sendDeviceToken - Failure: ${response.statusCode}');
+    }
+  } catch (error) {}
+}
+
 class _HomeScreenState extends State<HomeScreen> {
   final HomeViewModel viewModel = Get.put(HomeViewModel());
 
@@ -26,9 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   init() async {
     String deviceToken = await getDeviceToken();
-    print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
-    print(deviceToken);
-    print("############################################################");
+
+    print("device TOKEN : $deviceToken");
+    sendDeviceToken(deviceToken);
 
     // listen for user to click on notification
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
