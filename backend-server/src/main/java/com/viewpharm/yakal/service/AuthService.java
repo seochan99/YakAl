@@ -158,6 +158,6 @@ public class AuthService {
         response.addCookie(refreshTokenSecureCookie);
         response.addCookie(accessTokenCookie);
 
-        response.sendRedirect(FRONTEND_HOST + "/expert/login/social/" + loginProvider.toString().toLowerCase());
+        response.sendRedirect(FRONTEND_HOST + "/login/social/" + loginProvider.toString().toLowerCase());
     }
 }

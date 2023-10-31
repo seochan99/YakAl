@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.user.service;
 
+import com.viewpharm.yakal.medicalappointment.repository.MedicalAppointmentRepository;
 import com.viewpharm.yakal.user.domain.Expert;
 import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.Medical;
@@ -33,6 +34,7 @@ public class ExpertService {
     private final UserRepository userRepository;
     private final ImageRepository imageRepository;
     private final MedicalRepository medicalRepository;
+    private final MedicalAppointmentRepository medicalAppointmentRepository;
 
     @Value("${spring.image.path}")
     private String FOLDER_PATH;
@@ -104,4 +106,6 @@ public class ExpertService {
         // 이미지 삭제 처리 로직은 구현 안함
         return Boolean.TRUE;
     }
+
+//    public Boolean updateIsFavorite(Long expertId, Boolean)
 }
