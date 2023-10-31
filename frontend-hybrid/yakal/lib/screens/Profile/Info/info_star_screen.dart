@@ -272,9 +272,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                   ),
                 ),
                 title: Text(
-                  title == 'falls'
-                      ? DateFormat('yyyy-MM-dd').format(record as DateTime)
-                      : (record as ItemWithNameAndId).name,
+                  (record as ItemWithNameAndId).name,
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 
@@ -164,13 +165,31 @@ class SpecialListViewModel extends GetxController {
     }
   }
 
-  /*---------------------- 특이사항 추가 함수  ---------------------- */
   Future<void> addSpecialNoteItem(String title, dynamic item) async {
-    // 특이사항 추가 요청 POST
+    dynamic dataToSend;
+
     try {
+      // 특이사항 추가 요청을 위한 Dio 인스턴스 생성
       var dio = await authDioWithContext();
-      var response = await dio.post("/notable-features/$title",
-          data: {"notableFeature": item as String});
+
+      // title이 "falls"인 경우, DateTime 타입으로 데이터를 변환
+      if (title == "falls") {
+        if (item is DateTime) {
+          String formattedDate = DateFormat('yyyy-MM-dd').format(item);
+          dataToSend = {"notableFeature": formattedDate};
+        } else {
+          throw Exception(
+              "Exception: Expected item to be of type DateTime for title 'falls'");
+        }
+      } else {
+        dataToSend = {"notableFeature": item.toString()};
+      }
+
+      // POST 요청
+      var response =
+          await dio.post("/notable-features/$title", data: dataToSend);
+
+      // 이후 로직 (상태 코드 검사, 사용자 업데이트 등)
       loadSpeicalNote(title);
 
       if (response.statusCode == 200 && response.data['success']) {
