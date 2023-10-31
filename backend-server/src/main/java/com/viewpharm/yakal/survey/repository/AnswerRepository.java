@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.survey.repository;
 
 import com.viewpharm.yakal.survey.domain.Answer;
-import com.viewpharm.yakal.survey.domain.Surbey;
+import com.viewpharm.yakal.survey.domain.Survey;
 import com.viewpharm.yakal.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,7 +15,7 @@ import java.util.Optional;
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
-    Optional<Answer> findBySurbeyAndUser(Surbey surbey, User user);
+    Optional<Answer> findBySurveyAndUser(Survey survey, User user);
 
     List<Answer> findAllByUser(User user);
 

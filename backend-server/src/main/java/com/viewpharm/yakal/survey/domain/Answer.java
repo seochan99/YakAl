@@ -30,22 +30,26 @@ public class Answer {
     @Column(name = "create_date", nullable = false)
     private LocalDate createdDate;
 
+    @Column(name = "result_comment", nullable = false)
+    private String resultComment;
+
     //-------------------------------------------------------------------
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "surbey_id")
-    private Surbey surbey;
+    private Survey survey;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Builder
-    public Answer(String content, int score, Surbey surbey, User user) {
+    public Answer(String content, int score, Survey survey, String resultComment, User user) {
         this.content = content;
         this.score = score;
-        this.surbey = surbey;
+        this.survey = survey;
         this.createdDate = LocalDate.now();
+        this.resultComment = resultComment;
         this.user = user;
     }
 }

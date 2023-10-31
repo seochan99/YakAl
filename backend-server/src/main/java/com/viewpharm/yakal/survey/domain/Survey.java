@@ -14,8 +14,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicUpdate
-@Table(name = "surbeys")
-public class Surbey {
+@Table(name = "surveys")
+public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -23,6 +23,9 @@ public class Surbey {
 
     @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "mini_title", nullable = false)
+    private String miniTitle;
 
     @Column(name = "introduction", nullable = false)
     private String introduction;
@@ -32,12 +35,13 @@ public class Surbey {
 
     //-------------------------------------------------------------------
 
-    @OneToMany(mappedBy = "surbey", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
     @Builder
-    public Surbey(String title, String introduction, String totalScore) {
+    public Survey(String title, String miniTitle, String introduction, String totalScore) {
         this.title = title;
+        this.miniTitle = miniTitle;
         this.introduction = introduction;
         this.totalScore = totalScore;
     }
