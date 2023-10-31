@@ -16,9 +16,8 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 이름, 모드 가져오기
-  Future<void> fetchNameAndMode(BuildContext context) async {
-    await user.value.fetch(context)
+  Future<void> fetchLoginInfo() async {
+    await user.value.fetchLoginInfo();
     user.refresh();
   }
 
