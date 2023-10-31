@@ -84,6 +84,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByNameAndBirthday(String name, LocalDate birthday);
 
+    @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
+    List<User> searchUserByGuardian(@Param("user") User user);
+
     interface UserNotificationForm {
         Long getUserId();
 
