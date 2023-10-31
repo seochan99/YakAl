@@ -133,6 +133,9 @@ class SpecialListViewModel extends GetxController {
           case 'allergies':
             val?.specialNote?.allergies.assignAll(fetchedItems);
             break;
+          case 'falls':
+            val?.specialNote?.falls.assignAll(fetchedItems);
+            break;
           default:
             break;
         }
