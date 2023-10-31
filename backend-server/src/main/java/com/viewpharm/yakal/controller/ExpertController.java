@@ -3,6 +3,7 @@ package com.viewpharm.yakal.controller;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.guardian.service.GuardianService;
+import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,7 +19,7 @@ public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
     private final SurbeyService surbeyService;
-    private final CounselService counselService;
+    private final MedicalAppointmentService medicalAppointmentService;
     private final GuardianService guardianService;
 
     @GetMapping("")
@@ -44,13 +45,13 @@ public class ExpertController {
     @GetMapping("/patient")
     @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
     public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(counselService.getPatientList(id, sort, order, page, num));
+        return ResponseDto.ok(medicalAppointmentService.getPatientList(id, sort, order, page, num));
     }
 
     @GetMapping("/patient/name")
     @Operation(summary = "환자 리스트", description = "환자 이름으로 리스트 가져오기")
     public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(counselService.getPatientListByName(id, name, sort, order, page, num));
+        return ResponseDto.ok(medicalAppointmentService.getPatientListByName(id, name, sort, order, page, num));
     }
 
     @Deprecated

@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.domain;
 
 import com.viewpharm.yakal.guardian.domain.Guardian;
+import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
 import com.viewpharm.yakal.notablefeature.domain.*;
 import com.viewpharm.yakal.base.type.EJob;
@@ -131,10 +132,10 @@ public class User {
     private List<Dose> doses = new ArrayList<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
-    private List<Counsel> counselForExpert = new ArrayList<>();
+    private List<MedicalAppointment> medicalAppointmentForExpert = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-    private List<Counsel> counselForPatient = new ArrayList<>();
+    private List<MedicalAppointment> medicalAppointmentForPatient = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();

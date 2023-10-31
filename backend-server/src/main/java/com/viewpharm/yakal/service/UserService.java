@@ -8,6 +8,7 @@ import com.viewpharm.yakal.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.dto.response.UserExpertDto;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.repository.AnswerRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -23,6 +24,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -182,5 +185,13 @@ public class UserService {
 
         user.updateDevice(requestDto.getDevice_token(), requestDto.getIs_ios());
         return Boolean.TRUE;
+    }
+
+    public List<UserListDtoForGuardian> searchUserForGuardian(String name, LocalDate birthday) {
+        List<User> users = userRepository.findByNameAndBirthday(name, birthday);
+
+        return users.stream()
+                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
+                .collect(Collectors.toList());
     }
 }

@@ -13,25 +13,25 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseDto<?> handleConstraintViolationException(ConstraintViolationException e) {
-        log.error("handleConstraintViolationException() in GlobalExceptionHandler throw ConstraintViolationException : {}", e.fillInStackTrace());
+        log.error("handleConstraintViolationException() in GlobalExceptionHandler throw ConstraintViolationException : {}", e.getMessage());
         return ResponseDto.toResponseEntity(e);
     }
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     public ResponseDto<?> handleArgumentNotValidException(MethodArgumentNotValidException e) {
-        log.error("handleArgumentNotValidException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}", e.fillInStackTrace());
+        log.error("handleArgumentNotValidException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}", e.getMessage());
         return ResponseDto.toResponseEntity(e);
     }
 
     @ExceptionHandler(value = {CommonException.class})
     public ResponseDto<?> handleApiException(CommonException e) {
-        log.error("handleApiException() in GlobalExceptionHandler throw CommonException : {}", e.fillInStackTrace());
+        log.error("handleApiException() in GlobalExceptionHandler throw CommonException : {}", e.getMessage());
         return ResponseDto.toResponseEntity(e);
     }
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseDto<?> handleException(Exception e) {
-        log.error("handleException() in GlobalExceptionHandler throw Exception : {}", e.fillInStackTrace());
+        log.error("handleException() in GlobalExceptionHandler throw Exception : {}", e.getMessage());
         return ResponseDto.toResponseEntity(new CommonException(ErrorCode.SERVER_ERROR));
     }
 }

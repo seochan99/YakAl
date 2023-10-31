@@ -1,19 +1,24 @@
 package com.viewpharm.yakal.controller;
 
+import com.viewpharm.yakal.common.annotation.Date;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.request.*;
 import com.viewpharm.yakal.dto.response.ResponseDto;
 import com.viewpharm.yakal.dto.response.UserInfoDto;
+import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -22,7 +27,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @Tag(name = "User", description = "사용자 정보 열람, 수정 및 사용자 탈퇴")
 public class UserController {
-
     private final UserService userService;
     @GetMapping("")
     @Operation(summary = "사용자 정보 가져오기")
@@ -101,5 +105,19 @@ public class UserController {
     @Operation(summary = "디바이스 토큰 등록")
     public ResponseDto<Boolean> updateUserDevice(@UserId Long userId, @RequestBody UserDeviceRequestDto requestDto) {
         return ResponseDto.ok(userService.updateUserDevice(userId, requestDto));
+    }
+
+    @GetMapping("/general-search")
+    @Operation(summary = "등록할 보호자 검색", description = "등록할 보호자 검색")
+    public ResponseDto<?> readGeneralUsers(@RequestParam("name") String name,
+                                           @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return ResponseDto.ok(userService.searchUserForGuardian(name, date));
+    }
+
+    @GetMapping("/expert-search")
+    @Operation(summary = "진료 신청할 전문가 검색", description = "진료 신청할 전문가 검색")
+    public ResponseDto<?> readExpertUsers(@RequestParam("userName") String userName,
+                                          @RequestParam("medicalName") String expertName) {
+        return ResponseDto.ok(null);
     }
 }

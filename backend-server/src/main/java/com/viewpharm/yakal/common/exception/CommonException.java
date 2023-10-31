@@ -10,4 +10,9 @@ public class CommonException extends RuntimeException {
     public ErrorCode getErrorCode() {
         return errorCode;
     }
+
+    @Override
+    public String getMessage() {
+        return errorCode.getMessage();
+    }
 }

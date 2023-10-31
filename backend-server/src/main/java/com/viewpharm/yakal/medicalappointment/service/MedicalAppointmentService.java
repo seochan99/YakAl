@@ -1,12 +1,12 @@
-package com.viewpharm.yakal.service;
+package com.viewpharm.yakal.medicalappointment.service;
 
-import com.viewpharm.yakal.domain.Counsel;
+import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.domain.User;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.repository.AnswerRepository;
-import com.viewpharm.yakal.repository.CounselRepository;
+import com.viewpharm.yakal.medicalappointment.repository.MedicalAppointmentRepository;
 import com.viewpharm.yakal.repository.UserRepository;
 import com.viewpharm.yakal.base.type.EJob;
 import lombok.RequiredArgsConstructor;
@@ -25,12 +25,12 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CounselService {
+public class MedicalAppointmentService {
     private final UserRepository userRepository;
-    private final CounselRepository counselRepository;
+    private final MedicalAppointmentRepository medicalAppointmentRepository;
     private final AnswerRepository answerRepository;
 
-    public Boolean createCounsel(Long expertId, Long patientId) {
+    public Boolean createMedicalAppointment(Long expertId, Long patientId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
@@ -38,12 +38,12 @@ public class CounselService {
         User patient = userRepository.findByIdAndJob(patientId, EJob.PATIENT).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PATIENT));
 
         //상담 중복 확인
-        counselRepository.findByExpertAndPatient(expert, patient)
+        medicalAppointmentRepository.findByExpertAndPatient(expert, patient)
                 .ifPresent(c -> {
                     throw new CommonException(ErrorCode.DUPLICATION_COUNSEL);
                 });
 
-        counselRepository.save(Counsel.builder()
+        medicalAppointmentRepository.save(MedicalAppointment.builder()
                 .expert(expert)
                 .patient(patient)
                 .build());
@@ -51,18 +51,18 @@ public class CounselService {
         return Boolean.TRUE;
     }
 
-    public Boolean deleteCounsel(Long expertId, Long counselId) {
+    public Boolean deleteMedicalAppointment(Long expertId, Long counselId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        Counsel counsel = counselRepository.findByIdAndIsDeleted(counselId, false)
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByIdAndIsDeleted(counselId, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_COUNSEL));
 
         //상담 전문가와 요청 전문가 비교
-        if (counsel.getExpert().getId() != expert.getId())
+        if (medicalAppointment.getExpert().getId() != expert.getId())
             throw new CommonException(ErrorCode.NOT_EQUAL);
 
-        counsel.deleteCounsel();
+//        medicalAppointment.deleteCounsel();
 
         return Boolean.TRUE;
     }
@@ -84,7 +84,7 @@ public class CounselService {
             paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.birthday"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
-        Page<Counsel> counselList = counselRepository.findListByExpert(expert, paging);
+        Page<MedicalAppointment> counselList = medicalAppointmentRepository.findListByExpert(expert, paging);
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
         List<PatientDto> patientDtoList = counselList.stream()
@@ -115,7 +115,7 @@ public class CounselService {
             paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(order, "patient.birthday"));
         else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
 
-        Page<Counsel> counselList = counselRepository.findListByExpertAndPatientName(expert, name, paging);
+        Page<MedicalAppointment> counselList = medicalAppointmentRepository.findListByExpertAndPatientName(expert, name, paging);
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
 
         List<PatientDto> patientDtoList = counselList.stream()
