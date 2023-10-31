@@ -1,5 +1,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:yakal/utilities/api/api.dart';
@@ -50,7 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
     print("device TOKEN : $deviceToken");
     sendDeviceToken(deviceToken);
 
-    // listen for user to click on notification
+    // 앱이 열려 있을때 알림 받기
+    FirebaseMessaging.onMessage.listen((RemoteMessage? message) {
+      if (message != null) {
+        if (message.notification != null) {}
+      }
+    });
+
+    // 앱이 백그라운드 상태일때 알림 받기
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
       String? title = remoteMessage.notification!.title;
       String? description = remoteMessage.notification!.body;
@@ -58,20 +66,35 @@ class _HomeScreenState extends State<HomeScreen> {
       //im gonna have an alertdialog when clicking from push notification
       Alert(
         context: context,
-        type: AlertType.error,
+        type: AlertType.info,
+        style: const AlertStyle(
+          backgroundColor: Colors.white,
+          titleStyle: TextStyle(color: Colors.black),
+          descStyle: TextStyle(color: Colors.black),
+        ),
         title: title, // title from push notification data
         desc: description, // description from push notifcation data
+
         buttons: [
           DialogButton(
             onPressed: () => Navigator.pop(context),
             width: 120,
             child: const Text(
-              "COOL",
+              "확인",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           )
         ],
       ).show();
+    });
+
+    // 앱이 완전히 종료된 상태에서 알림을 클릭하여 앱을 열었을때 알림 받기
+    FirebaseMessaging.instance
+        .getInitialMessage()
+        .then((RemoteMessage? message) {
+      if (message != null) {
+        if (message.notification != null) {}
+      }
     });
   }
 
