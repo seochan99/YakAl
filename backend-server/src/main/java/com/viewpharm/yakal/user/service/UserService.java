@@ -193,15 +193,12 @@ public class UserService {
     public Boolean updateUserDevice(Long userId, UserDeviceRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.updateDevice(requestDto.getDevice_token(), requestDto.getIs_ios());
+        user.updateDevice(requestDto.getDevice_token());
         return Boolean.TRUE;
     }
 
     public List<UserListDtoForGuardian> searchUserForGuardian(String name, LocalDate birthday) {
-        log.info("name: {}, birthday: {}", name, birthday);
-        List<User> users = userRepository.searchByNameAndBirthday(name, birthday);
-
-        log.info("users: {}", users);
+        List<User> users = userRepository.findByNameAndBirthday(name, birthday);
 
         return users.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))

@@ -9,5 +9,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDeviceRequestDto {
     private String device_token;
-    private Boolean is_ios;
 }

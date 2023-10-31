@@ -5,6 +5,9 @@ import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
+import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
+import com.viewpharm.yakal.medicalestablishments.dto.request.MedicalEstablishmentDto;
+import com.viewpharm.yakal.medicalestablishments.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
 import com.viewpharm.yakal.survey.service.SurveyService;
@@ -13,7 +16,9 @@ import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,6 +31,7 @@ public class ExpertController {
     private final DoseService doseService;
     private final SurveyService surveyService;
     private final MedicalAppointmentService medicalAppointmentService;
+    private final MedicalEstablishmentService medicalEstablishmentService;
     private final GuardianService guardianService;
 
 
@@ -33,6 +39,13 @@ public class ExpertController {
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
     public ResponseDto<UserExpertDto> getExpertInfo(@UserId Long userId) {
         return ResponseDto.ok(userService.getUserExpertInfo(userId));
+    }
+
+    @PostMapping(value = "/medical-establishments", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "의료기관 등록", description = "의료기관 등록")
+    public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message")MedicalEstablishmentDto requestDto,
+                                                     @RequestPart(value = "file") MultipartFile imgFile) {
+        return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
     }
 
     // 권한에 관한 부분 추가 해야 함 (만료기한)
@@ -43,7 +56,18 @@ public class ExpertController {
         return ResponseDto.ok(doseService.getPrescribedDoses(userId, page, num, ePeriod));
     }
 
-    @GetMapping("/patient/{patientId}/surbey")
+    /**
+     * 8번, 보호자 정보 가져 오기
+     * @param userId
+     * @return ResponseDto<?>
+     */
+    @GetMapping("/patient/{userId}/guardian")
+    @Operation(summary = "보호자 정보 가져오기", description = "환자의 Id로 보호자 정보를 가져온다")
+    public ResponseDto<?> getGuardianInfo(@PathVariable Long userId) {
+        return ResponseDto.ok(guardianService.readResentGuardian(userId));
+    }
+
+    @GetMapping("/patient/{patientId}/survey")
     @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
     public ResponseDto<?> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
         return ResponseDto.ok(surveyService.getAllAnswerListForExpert(id, patientId));
