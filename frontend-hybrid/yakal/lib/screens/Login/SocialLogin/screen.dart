@@ -2,17 +2,94 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:yakal/screens/Login/LoginEntry/style.dart';
+import 'package:yakal/provider/Login/social_login_provider.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
+import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/utilities/enum/login_platform.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/social_login_button.dart';
 
 import '../../../widgets/Base/outer_frame.dart';
 
-class LoginEntryScreen extends StatelessWidget {
+class SocialLoginScreen extends StatefulWidget {
+  const SocialLoginScreen({super.key});
+
+  @override
+  State<SocialLoginScreen> createState() => _SocialLoginScreenState();
+}
+
+class _SocialLoginScreenState extends State<SocialLoginScreen> {
+  final userViewModel = Get.put(UserViewModel(), permanent: true);
+  final routeController = Get.put(LoginRouteController());
+
+  final socialLoginProvider = SocialLoginProvider();
+
   bool get isiOS =>
       foundation.defaultTargetPlatform == foundation.TargetPlatform.iOS;
 
-  const LoginEntryScreen({super.key});
+  Future<void> _login(ELoginPlatform loginPlatform) async {
+    late bool isSuccess;
+
+    switch (loginPlatform) {
+      case ELoginPlatform.KAKAO:
+        isSuccess = await socialLoginProvider.kakaoLogin();
+        break;
+      case ELoginPlatform.GOOGLE:
+        isSuccess = await socialLoginProvider.googleLogin();
+        break;
+      case ELoginPlatform.APPLE:
+        break;
+    }
+
+    if (isSuccess) {
+      if (!context.mounted) {
+        return;
+      }
+
+      await userViewModel.fetchNameAndMode(context);
+
+      if (userViewModel.user.value.isAgreedMarketing == null) {
+        routeController.goto(LoginRoute.terms);
+        Get.toNamed("/login/process");
+        return;
+      }
+
+      if (userViewModel.user.value.isIdentified == false) {
+        routeController.goto(LoginRoute.identifyEntry);
+        Get.toNamed("/login/process");
+        return;
+      }
+
+      Get.offAllNamed("/");
+    } else {
+      if (!context.mounted) {
+        return;
+      }
+
+      late String message;
+
+      switch (loginPlatform) {
+        case ELoginPlatform.KAKAO:
+          message = '키키오 로그인에 실패했습니다.';
+          break;
+        case ELoginPlatform.GOOGLE:
+          message = '구글 로그인에 실패했습니다.';
+          break;
+        case ELoginPlatform.APPLE:
+          message = '애플 로그인에 실패했습니다.';
+          break;
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          content: Text(message),
+          duration: const Duration(seconds: 3),
+        ),
+      );
+    }
+  }
 
   void _showComingSoonSnackBar(BuildContext context) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -51,7 +128,7 @@ class LoginEntryScreen extends StatelessWidget {
                     backgroundColor: const Color(0xFFFEE500),
                     iconPath: "assets/icons/kakao.svg",
                     onPressed: () {
-                      Get.toNamed("/login/kakao");
+                      _login(ELoginPlatform.KAKAO);
                     },
                   ),
                   const SizedBox(
@@ -72,8 +149,8 @@ class LoginEntryScreen extends StatelessWidget {
                           color: ColorStyles.black,
                           backgroundColor: ColorStyles.white,
                           iconPath: "assets/icons/google.svg",
-                          onPressed: () {
-                            _showComingSoonSnackBar(context);
+                          onPressed: () async {
+                            _login(ELoginPlatform.GOOGLE);
                           },
                         ),
                 ],
