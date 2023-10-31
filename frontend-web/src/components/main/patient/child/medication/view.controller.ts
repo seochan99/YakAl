@@ -1,4 +1,4 @@
-import { PatientModel } from "../../model.ts";
+import { PatientModel } from "@store/patient.ts";
 import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { PatientPageViewModel } from "../../view.model.ts";

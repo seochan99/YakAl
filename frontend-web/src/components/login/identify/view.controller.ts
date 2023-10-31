@@ -20,7 +20,7 @@ export const useIdentifyPageViewController = () => {
 
   const [identifyStart, setIdentifyStart] = useState<boolean>(false);
 
-  const onIdentifyClick = useCallback(() => {
+  const onIdentificationClick = useCallback(() => {
     setIdentifyStart(true);
 
     const cookies = new Cookies();
@@ -45,24 +45,25 @@ export const useIdentifyPageViewController = () => {
         logOnDev(`🛬 [Identification Response] ${response}`);
         if (response.success) {
           logOnDev(`🎉 [Identification Success]`);
+          
           const sendIdentifyResponse = await identify(response.imp_uid);
 
           if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            naviagte("/expert/login/identify/success");
+            naviagte("/expert/login/identify/result", { state: { isSuccess: true } });
             return;
           } else {
-            naviagte("/expert/login/identify/failure");
+            naviagte("/expert/login/identify/result", { state: { isSuccess: false } });
             return;
           }
         } else {
           logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
           /* Identification Failure Logic */
-          naviagte("/expert/login/identify/failure");
+          naviagte("/expert/login/identify/result", { state: { isSuccess: false } });
           return;
         }
       },
     );
   }, [setIdentifyStart, naviagte]);
 
-  return { identifyStart, onIdentificationClick: onIdentifyClick };
+  return { identifyStart, onIdentificationClick };
 };

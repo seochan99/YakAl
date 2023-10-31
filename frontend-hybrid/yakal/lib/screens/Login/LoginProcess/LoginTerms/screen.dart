@@ -9,11 +9,7 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 
-class LoginTermsScreen extends StatelessWidget {
-  final userViewModel = Get.find<UserViewModel>();
-  final routeController = Get.find<LoginRouteController>();
-  final termsCheckedController = Get.put(_TermsCheckedController());
-
+class LoginTermsScreen extends StatefulWidget {
   static const List<Map<String, Object>> terms = [
     {
       "isRequired": true,
@@ -92,6 +88,41 @@ class LoginTermsScreen extends StatelessWidget {
   LoginTermsScreen({super.key});
 
   @override
+  State<LoginTermsScreen> createState() => _LoginTermsScreenState();
+}
+
+class _LoginTermsScreenState extends State<LoginTermsScreen> {
+  final userViewModel = Get.find<UserViewModel>();
+
+  final routeController = Get.find<LoginRouteController>();
+
+  final termsCheckedController = Get.put(_TermsCheckedController());
+
+  void onPressedNextButton() {
+    var isAgreedMarketing = termsCheckedController.isChecked[3];
+
+    userViewModel.updateMarketingAgreement(isAgreedMarketing).then(
+      (_) {
+        routeController.goto(LoginRoute.identifyEntry);
+      },
+    ).catchError(
+      (_) {
+        if (!context.mounted) {
+          return;
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text("약관 동의 여부 설정에 실패했습니다."),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(30.0),
@@ -139,7 +170,7 @@ class LoginTermsScreen extends StatelessWidget {
                 height: 32,
               ),
               ...List.generate(
-                terms.length,
+                LoginTermsScreen.terms.length,
                 (index) => Column(
                   children: [
                     Row(
@@ -161,13 +192,14 @@ class LoginTermsScreen extends StatelessWidget {
                               width: 16,
                             ),
                             Text(
-                              "(${terms[index]["isRequired"] as bool ? "필수" : "선택"})",
-                              style: (terms[index]["isRequired"] as bool
+                              "(${LoginTermsScreen.terms[index]["isRequired"] as bool ? "필수" : "선택"})",
+                              style: (LoginTermsScreen.terms[index]
+                                      ["isRequired"] as bool
                                   ? LoginTermsStyle.checkedRequired
                                   : LoginTermsStyle.checkedOptional),
                             ),
                             Text(
-                              " ${terms[index]["title"] as String}",
+                              " ${LoginTermsScreen.terms[index]["title"] as String}",
                               style: LoginTermsStyle.checkedRequired,
                             ),
                           ],
@@ -198,8 +230,10 @@ class LoginTermsScreen extends StatelessWidget {
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
                                 return TermsDetailScreen(
-                                  title: terms[index]["title"] as String,
-                                  content: terms[index]["content"] as String,
+                                  title: LoginTermsScreen.terms[index]["title"]
+                                      as String,
+                                  content: LoginTermsScreen.terms[index]
+                                      ["content"] as String,
                                 );
                               },
                             );
@@ -229,15 +263,7 @@ class LoginTermsScreen extends StatelessWidget {
                         termsCheckedController.isCheckedRequiredAll();
 
                     return TextButton(
-                      onPressed: canMoveNext
-                          ? () {
-                              var isAgreedMarketing =
-                                  termsCheckedController.isChecked[3];
-                              userViewModel
-                                  .updateMarketingAgreement(isAgreedMarketing);
-                              routeController.goto(LoginRoute.identifyEntry);
-                            }
-                          : null,
+                      onPressed: canMoveNext ? onPressedNextButton : null,
                       style: TextButton.styleFrom(
                         backgroundColor:
                             canMoveNext ? ColorStyles.main : ColorStyles.gray2,

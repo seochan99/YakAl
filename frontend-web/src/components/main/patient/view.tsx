@@ -9,6 +9,8 @@ import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 import Medication from "./child/medication/view.tsx";
 import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";
+import Skeleton from "@mui/material/Skeleton";
+import { convertRemToPixels } from "@util/rem-to-px.ts";
 
 function PatientPage() {
   const {
@@ -16,49 +18,63 @@ function PatientPage() {
     tab: { currentTab, tabInfos, onClickTab },
   } = usePatientPageViewController();
 
-  if (patientInfo.base === null) {
-    return <></>;
-  }
-
-  const {
-    base: { name, profileImg, birthday, sex, tel },
-  } = patientInfo;
+  const { base, protector } = patientInfo;
 
   return (
     <S.OuterDiv>
       <S.HeaderDiv>
         <S.BackLink to="/expert/patient">
           <S.StyledLinkIconSvg />
-          환자 목록으로
+          {"환자 목록으로"}
         </S.BackLink>
-        <S.BaseInfoDiv>
-          <S.SelfBaseTitle>
-            <span>본인</span>
-          </S.SelfBaseTitle>
-          <S.PatientImg src={profileImg === "" ? "/assets/icons/no-profile-icon.png" : profileImg} />
-          <S.InfoTextDiv>
-            <S.NameSexBirthDiv>
-              <S.NameSpan>
-                {name.substring(0, 4)}
-                {name.length > 4 ? "..." : ""}
-              </S.NameSpan>
-              <S.IconContainedSpan>
-                {`${birthday[0]}. ${birthday[1] < 10 ? "0" : ""}${birthday[1]}. ${birthday[2] < 10 ? "0" : ""}${
-                  birthday[2]
-                }.`}
-                {`(${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
-              </S.IconContainedSpan>
-              <S.IconContainedSpan>
-                {sex === ESex.MALE ? "남성" : "여성"}
-                {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-              </S.IconContainedSpan>
-            </S.NameSexBirthDiv>
-            <S.NormalSpan>{`Tel. ${tel}`}</S.NormalSpan>
-          </S.InfoTextDiv>
-        </S.BaseInfoDiv>
-        <S.BaseInfoDiv>
-          <S.NokComingSoonDiv>{"보호자 기능 추가 예정입니다."}</S.NokComingSoonDiv>
-        </S.BaseInfoDiv>
+        {base === null ? (
+          <Skeleton variant="rounded" width={convertRemToPixels(30)} height={convertRemToPixels(6)} />
+        ) : (
+          <S.BaseInfoDiv>
+            <S.SelfBaseTitle>
+              <span>{"본인"}</span>
+            </S.SelfBaseTitle>
+            <S.PatientImg src={base.profileImg === "" ? "/assets/icons/no-profile-icon.png" : base.profileImg} />
+            <S.InfoTextDiv>
+              <S.NameSexBirthDiv>
+                <S.NameSpan>
+                  {base.name.substring(0, 4)}
+                  {base.name.length > 4 ? "..." : ""}
+                </S.NameSpan>
+                <S.IconContainedSpan>
+                  {`${base.birthday[0]}. ${base.birthday[1] < 10 ? "0" : ""}${base.birthday[1]}. ${
+                    base.birthday[2] < 10 ? "0" : ""
+                  }${base.birthday[2]}.`}
+                  {`(${getAge(new Date(base.birthday[0], base.birthday[1] - 1, base.birthday[2]))}세)`}
+                </S.IconContainedSpan>
+                <S.IconContainedSpan>
+                  {base.sex === ESex.MALE ? "남성" : "여성"}
+                  {base.sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
+                </S.IconContainedSpan>
+              </S.NameSexBirthDiv>
+              <S.NormalSpan>{`Tel. ${base.tel}`}</S.NormalSpan>
+            </S.InfoTextDiv>
+          </S.BaseInfoDiv>
+        )}
+        {protector === null ? (
+          <Skeleton variant="rounded" width={convertRemToPixels(30)} height={convertRemToPixels(6)} />
+        ) : (
+          <S.BaseInfoDiv>
+            <S.SelfBaseTitle>
+              <span>{"보호자"}</span>
+            </S.SelfBaseTitle>
+            <S.InfoTextDiv>
+              <S.NameSexBirthDiv>
+                <S.NameSpan>
+                  {protector.name.substring(0, 4)}
+                  {protector.name.length > 4 ? "..." : ""}
+                </S.NameSpan>
+                <S.IconContainedSpan>{`(${protector.relationship})`}</S.IconContainedSpan>
+              </S.NameSexBirthDiv>
+              <S.NormalSpan>{`Tel. ${protector.tel}`}</S.NormalSpan>
+            </S.InfoTextDiv>
+          </S.BaseInfoDiv>
+        )}
       </S.HeaderDiv>
       <S.BodyDiv>
         <S.TabBarDiv>

@@ -124,7 +124,8 @@ class AddMedicineProvider {
           for (var j = 0; j < 4; ++j) {
             if (group.takingTime[j]) {
               schedule["schedules"].add(<String, dynamic>{
-                "date": "${now.year}-${now.month}-${now.day}",
+                "date":
+                    "${now.year}-${now.month < 10 ? "0${now.month}" : now.month}-${now.day < 10 ? "0${now.day}" : now.day}",
                 "time": ETakingTime.values[j]
                     .toString()
                     .substring("ETakingTime.".length),

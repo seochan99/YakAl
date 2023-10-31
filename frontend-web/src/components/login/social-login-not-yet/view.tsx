@@ -14,7 +14,7 @@ function SocialLoginNotYetPage() {
         </>
       }
     >
-      <S.BackLink to="/expert/login">로그인 메인 페이지로</S.BackLink>
+      <S.BackLink to="/expert/login">{"로그인 메인 페이지로"}</S.BackLink>
     </WarningPage>
   );
 }
