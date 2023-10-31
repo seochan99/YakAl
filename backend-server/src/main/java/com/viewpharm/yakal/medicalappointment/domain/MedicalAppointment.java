@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
+import java.time.LocalTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -33,10 +35,18 @@ public class MedicalAppointment extends BaseCreateEntity {
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
+    @Column(name = "is_favorite", nullable = false)
+    private Boolean isFavorite;
+
+    public void updateIsFavorite(Boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     @Builder
     public MedicalAppointment(User patient, User expert) {
         this.patient = patient;
         this.expert = expert;
         this.isDeleted = false;
+        this.isFavorite = false;
     }
 }

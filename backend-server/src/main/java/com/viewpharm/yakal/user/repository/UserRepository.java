@@ -42,38 +42,34 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateIsCertified(Long userId, Boolean isCertified, EJob job);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.breakfast_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.breakfast_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndBreakfastTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.lunch_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.lunch_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndLunchTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.dinner_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.dinner_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndDinnerTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.dinner_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.breakfast_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
