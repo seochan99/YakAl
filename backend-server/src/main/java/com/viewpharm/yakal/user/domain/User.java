@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.user.domain;
 
+import com.viewpharm.yakal.medicalestablishments.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
 import com.viewpharm.yakal.survey.domain.Answer;
 import com.viewpharm.yakal.domain.Dose;
@@ -137,6 +138,9 @@ public class User {
     /**
      * ONE-TO-MANY RELATION
      */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ExpertCertification> expertCertifications = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Prescription> prescriptions = new ArrayList<>();
 

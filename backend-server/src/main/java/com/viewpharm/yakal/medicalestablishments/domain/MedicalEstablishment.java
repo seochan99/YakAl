@@ -2,7 +2,6 @@ package com.viewpharm.yakal.medicalestablishments.domain;
 
 
 import com.viewpharm.yakal.base.type.EMedical;
-import com.viewpharm.yakal.domain.Prescription;
 import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -66,6 +65,9 @@ public class MedicalEstablishment {
 
     @OneToMany(mappedBy = "medicalEstablishment", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "medicalEstablishment", fetch = FetchType.LAZY)
+    private List<ExpertCertification> expertCertifications = new ArrayList<>();
 
     @Builder
     public MedicalEstablishment(EMedical type, String chiefName, String chiefTel, String name, String establishmentNumber, String zipCode, String address, String businessNumber, String tel, String clinicHours, String features, String chiefLicenseImg) {

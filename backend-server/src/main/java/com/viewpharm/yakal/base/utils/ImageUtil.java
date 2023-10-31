@@ -40,6 +40,7 @@ public class ImageUtil {
         try {
             file.transferTo(new File(filePath));
         } catch (Exception e) {
+            e.printStackTrace();
             throw new CommonException(ErrorCode.FILE_UPLOAD);
         }
 

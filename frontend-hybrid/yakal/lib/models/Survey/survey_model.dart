@@ -134,7 +134,6 @@ class SurveyModel {
         }
         break;
       case "흡연력 테스트":
-        print(results);
         if (results![0] == 0) {
           resultComment = "피우지 않습니다";
         } else {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
 class SettingSignoutScreen extends StatelessWidget {
   const SettingSignoutScreen({Key? key}) : super(key: key);
@@ -10,11 +11,11 @@ class SettingSignoutScreen extends StatelessWidget {
     return Scaffold(
       // color
 
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        centerTitle: true,
-        title: const Text('회원 탈퇴'),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: DefaultBackAppbar(
+          title: "회원 탈퇴",
+        ),
       ),
       body: Container(
         color: Colors.white,
