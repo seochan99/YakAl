@@ -1,9 +1,12 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.type.EJob;
-import com.viewpharm.yakal.type.ELoginProvider;
-import com.viewpharm.yakal.type.ERole;
-import com.viewpharm.yakal.type.ESex;
+import com.viewpharm.yakal.guardian.domain.Guardian;
+import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
+import com.viewpharm.yakal.notablefeature.domain.*;
+import com.viewpharm.yakal.base.type.EJob;
+import com.viewpharm.yakal.base.type.ELoginProvider;
+import com.viewpharm.yakal.base.type.ERole;
+import com.viewpharm.yakal.base.type.ESex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -125,16 +128,7 @@ public class User {
     private List<Prescription> prescriptions = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Notification> notifications = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Dose> doses = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Board> board = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Like> likes = new ArrayList<>();
 
     @OneToMany(mappedBy = "expert", fetch = FetchType.LAZY)
     private List<Counsel> counselForExpert = new ArrayList<>();
@@ -145,14 +139,29 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Diagnosis> diagnoses = new ArrayList<>();
-
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Guardian> protectedPerson;
 
     @OneToMany(mappedBy = "guardian", fetch = FetchType.LAZY)
     private List<Guardian> myGuardian;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<HospitalizationRecord> hospitalizationRecords = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UnderlyingCondition> underlyingConditions = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<MedicalHistory> medicalHistories = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<DietarySupplement> dietarySupplements = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Allergy> allergies = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Fall> falls = new ArrayList<>();
 
     public User(final String socialId,
                 final ELoginProvider loginProvider,

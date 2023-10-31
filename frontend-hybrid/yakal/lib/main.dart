@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -61,10 +62,6 @@ void main() async {
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
 
-  // String deviceToken = await getDeviceToken(); // fetch the device token
-  // bool isIos = Platform.isIOS; // check if the platform is iOS
-  // await sendDeviceToken(deviceToken, isIos); // send the device token
-
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
@@ -100,10 +97,20 @@ class MyApp extends StatelessWidget {
     // 앱 실행
     return GetMaterialApp(
       title: '약 알',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        // if it's a RTL language
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        // include country code too
+      ],
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+
         // colorScheme:
         //   const ColorScheme(
         //     brightness: Brightness.light,

@@ -1,7 +1,6 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.UserId;
-import com.viewpharm.yakal.domain.Prescription;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.request.CreatePrescriptionDto;
 import com.viewpharm.yakal.dto.response.PrescriptionDto;
 import com.viewpharm.yakal.dto.response.ResponseDto;

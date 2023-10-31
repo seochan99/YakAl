@@ -1,12 +1,11 @@
 package com.viewpharm.yakal.dto.response;
 
-import com.viewpharm.yakal.type.EMedical;
-import com.viewpharm.yakal.type.ERecive;
+import com.viewpharm.yakal.base.type.EMedical;
+import com.viewpharm.yakal.base.type.ERecive;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter

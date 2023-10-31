@@ -1,10 +1,8 @@
 package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.type.EJob;
-import com.viewpharm.yakal.type.ELoginProvider;
-import com.viewpharm.yakal.type.ERole;
-import com.viewpharm.yakal.type.ESex;
+import com.viewpharm.yakal.base.type.EJob;
+import com.viewpharm.yakal.base.type.ELoginProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

@@ -1,13 +1,13 @@
 package com.viewpharm.yakal.controller;
 
-import com.viewpharm.yakal.annotation.Date;
-import com.viewpharm.yakal.annotation.Enum;
-import com.viewpharm.yakal.annotation.UserId;
+import com.viewpharm.yakal.common.annotation.Date;
+import com.viewpharm.yakal.common.annotation.Enum;
+import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.dto.request.UpdateIsTakenDto;
 import com.viewpharm.yakal.service.DoseService;
-import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.base.type.EDosingTime;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -15,25 +15,20 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 
-import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Nullable;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.YearMonth;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/dose")
 @Tag(name = "Dose", description = "환자의 복용 정보 추가, 열람, 수정, 삭제")
 public class DoseController {
-
     private final DoseService doseService;
 
     @GetMapping("/day/{date}")
@@ -46,38 +41,6 @@ public class DoseController {
         return ResponseDto.ok(oneDayScheduleDto);
     }
 
-    @GetMapping("/day/progress/{date}")
-    @Operation(summary = "하루 복용 달성도 가져오기", description = "환자가 지정한 날짜의 약 복용 달성도를 가져온다.")
-    public ResponseDto<OneDayProgressDto> getOneDayDoseProgress(
-            @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
-    ) {
-        final Long progressOrNull = doseService.getOneDayProgressOrNull(id, date);
-        final OneDayProgressDto oneDayProgressDto = new OneDayProgressDto(date.toString(), progressOrNull);
-        return ResponseDto.ok(oneDayProgressDto);
-    }
-
-
-    @GetMapping("/week/{date}")
-    @Operation(summary = "일주일 복용 달성도와 성분 중복 여부 가져오기", description = "환자가 지정한 날짜가 포함된 일주일동안의 약 복용 달성도를 하루 단위로 가져온다.")
-    public ResponseDto<Map<DayOfWeek, OneDaySummaryDto>> getOneWeekDose(
-            @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date
-    ) {
-        final Map<DayOfWeek, OneDaySummaryDto> oneDaySummary = doseService.getOneWeekSummary(id, date);
-        return ResponseDto.ok(oneDaySummary);
-    }
-
-    @GetMapping("/month/{month}")
-    @Operation(summary = "한 달 복용 달성도 가져오기", description = "환자가 지정한 달의 약 복용 달성도를 하루 단위로 가져온다.")
-    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
-            @UserId Long id,
-            @PathVariable("month") @Valid @DateTimeFormat(pattern = "yyyy-MM") YearMonth yearMonth
-    ) {
-        final List<OneDaySummaryDto> oneMonthSummary = doseService.getOneMonthSummary(id, yearMonth);
-        return ResponseDto.ok(oneMonthSummary);
-    }
-
     @GetMapping("/between")
     @Operation(summary = "날짜 사이의 복용 달성도 가져오기", description = "두개의 날짜 사이의 약 복용 달성도를 하루 단위로 가져온다.")
     public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
@@ -87,12 +50,6 @@ public class DoseController {
     ) {
         final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
         return ResponseDto.ok(oneMonthSummary);
-    }
-
-    @GetMapping("/name")
-    @Operation(summary = "약 이름으로 kdCode와 atcCode 가져오기")
-    public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename){
-        return ResponseDto.ok(doseService.getKDCodeAndATCCode(dosename));
     }
 
     @PatchMapping("/count")
@@ -147,5 +104,12 @@ public class DoseController {
     ){
         doseService.deleteSchedule(doesIdList);
         return ResponseDto.ok(null);
+    }
+
+    @Deprecated
+    @GetMapping("/name")
+    @Operation(summary = "약 이름으로 kdCode와 atcCode 가져오기")
+    public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename){
+        return ResponseDto.ok(doseService.getKDCodeAndATCCode(dosename));
     }
 }

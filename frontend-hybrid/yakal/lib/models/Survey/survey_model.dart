@@ -1,7 +1,10 @@
+import 'package:yakal/utilities/api/api.dart';
+
 import 'question_model.dart';
 import './question_data.dart';
 
 class SurveyModel {
+  final int id;
   final String title;
   final String comment;
   final String time;
@@ -14,6 +17,7 @@ class SurveyModel {
   final String resultDescription;
 
   SurveyModel({
+    required this.id,
     required this.title,
     required this.comment,
     required this.questions,
@@ -28,16 +32,7 @@ class SurveyModel {
 
   int get getTotalScore => totalScore;
 
-  set setTotalScore(int score) {
-    totalScore = score;
-  }
-
-  void dispose() {
-    // Dispose of any resources or subscriptions here
-    // This method will be called when you want to clean up the SurveyModel
-  }
-
-  void setComment(int score) {
+  void setComment(int score, {List<dynamic>? results}) {
     switch (title) {
       case '복약 순응도 테스트':
         resultComment = '$score/48점 입니다.';
@@ -91,15 +86,8 @@ class SurveyModel {
         }
         break;
       case "시청각 테스트":
-        if (score == 0) {
-          resultComment = '건강한 상태입니다';
-        } else if (score >= 1 && score <= 2) {
-          resultComment = "노쇠 전단계가 의심됩니다";
-        } else if (score >= 3) {
-          resultComment = "노쇠가 의심됩니다.";
-        } else {
-          resultComment = '건강한 상태입니다';
-        }
+        resultComment =
+            "안경 ${results![0] == 0 ? "사용" : "미사용"}, 보청기 ${results[1] == 0 ? "사용" : "미사용"}";
         break;
       case "일상생활 동작 지수":
         if (score <= 4) {
@@ -146,7 +134,48 @@ class SurveyModel {
         }
         break;
       case "흡연력 테스트":
-        resultComment = '$score/10점 입니다.';
+        print(results);
+        if (results![0] == 0) {
+          resultComment = "피우지 않습니다";
+        } else {
+          dynamic pastYear;
+          dynamic oneDaySmoke;
+          switch (results[1]) {
+            case 1:
+              pastYear = "1년 미만";
+              break;
+            case 2:
+              pastYear = "3년 미만";
+              break;
+            case 3:
+              pastYear = "10년 미만";
+              break;
+            case 4:
+              pastYear = "10년 이상";
+              break;
+            default:
+              pastYear = "1년 미만"; // This handles any unexpected value
+              break;
+          }
+          switch (results[2]) {
+            case 1:
+              oneDaySmoke = "1/2갑 미만";
+              break;
+            case 2:
+              oneDaySmoke = "1/2갑 ~ 2갑";
+              break;
+            case 3:
+              oneDaySmoke = "1 ~ 2갑";
+              break;
+            case 4:
+              oneDaySmoke = "2갑 이상";
+              break;
+            default:
+              oneDaySmoke = "2갑 이상"; // This handles any unexpected value
+              break;
+          }
+          resultComment = "현재 또는 과거에 $pastYear 피웠으며,\n하루 흡연량은$oneDaySmoke 입니다";
+        }
       case "간이 영양 상태 조사":
         if (0 <= score && score <= 7) {
           resultComment = "영양 불량 상태입니다";
@@ -169,6 +198,7 @@ class SurveyModel {
 
 final List<SurveyModel> tests = [
   SurveyModel(
+    id: 1,
     title: '복약 순응도 테스트',
     comment: '약알 이용자의 복약 습관과 복약 순응도를 파악하여 의약품 복용에 도움을 드리기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-1.svg',
@@ -190,7 +220,7 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
-    // 2
+    id: 2,
     title: '우울 척도 테스트',
     comment:
         '이용자의 우울 여부는 일상생활의 동기부여나 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',
@@ -213,7 +243,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
-    // id : 3
+    id: 3,
     title: '노쇠 테스트',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 노쇠 증상에 해당되는지 여부를 파악하여 도움을 드리기 위한 설문입니다.',
@@ -236,7 +266,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
-    // id : 4
+    id: 4,
     title: '간이 영양 상태 조사',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 이용자의 영양상태를 파악하여 맞춤형 식단 및 생활습관을 안내드릴 수 있습니다.',
@@ -283,6 +313,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 5,
     title: '일상생활 동작 지수',
     comment:
         '노인분들을 대상으로 하는 일회성 설문조사입니다. 일상에서의 동작을 무리없이 수행할 수 있는지 여부를 파악하여 이용자에게 물리치료 요법을 추천드릴 수 있습니다.',
@@ -305,6 +336,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 6,
     title: '음주력 테스트',
     comment: '이용자의 음주 습관과 빈도를 파악하기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-6.svg',
@@ -371,6 +403,7 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
+    id: 7,
     title: '흡연력 테스트',
     comment: '이용자의 흡연 여부와 흡연 습관을 파악하기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-7.svg',
@@ -381,17 +414,17 @@ final List<SurveyModel> tests = [
       QuestionModel(
         question: questionSmoking[0],
         options: ["피우지 않는다.", "과거에 피웠으나 지금은 끊었다.", "현재 피운다."],
-        scores: [1, 2000, 4000],
+        scores: [0, 1, 2],
       ),
       QuestionModel(
         question: questionSmoking[1],
         options: ["피우지 않는다.", "1년 미만", "3년 미만", "10년 미만", "10년 이상"],
-        scores: [1, 100, 200, 300, 400],
+        scores: [0, 1, 2, 3, 4],
       ),
       QuestionModel(
         question: questionSmoking[2],
         options: ["피우지 않는다.", "1/2갑 미만", "1/2갑 ~ 2갑", "1 ~ 2갑", "2갑 이상"],
-        scores: [1, 10, 20, 30, 40],
+        scores: [0, 1, 2, 3, 4],
       ),
     ],
     totalScore: 0,
@@ -401,6 +434,7 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
+    id: 8,
     title: '시청각 테스트',
     comment: '이용자의 안경 및 보청기 사용유무를 파악하기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-8.svg',
@@ -422,6 +456,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 9,
     title: '치매 테스트',
     comment: '이용자의 인지기능(사고력과 기억력)이 어떻게 변화되어 왔는지 파악하기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-9.svg',
@@ -443,6 +478,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 10,
     title: '섬망 테스트',
     comment:
         '이용자의 뇌 기능과 연관된 섬망 증상을 파악하기 위한 설문입니다. 과거 병원에 입원 하셨을 때의 경험을 토대로 답변해주시기 바랍니다.',
@@ -465,6 +501,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 11,
     title: '불면증 심각도 테스트',
     comment: '이용자의 불면증에 해당하는지 여부를 파악하여 수면 건강 및 전체적인 건강에 도움을 드리기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-11.svg',
@@ -486,6 +523,7 @@ final List<SurveyModel> tests = [
     isSenior: 2,
   ),
   SurveyModel(
+    id: 12,
     title: '폐쇄성 수면 무호흡증',
     comment: '이용자의 수면 중 무호흡증 여부를 파악하여 수면 건강에 도움을 드리기 위한 설문입니다.',
     iconPath: 'assets/icons/icon-test-12.svg',
@@ -507,6 +545,7 @@ final List<SurveyModel> tests = [
     isSenior: 0,
   ),
   SurveyModel(
+    id: 13,
     title: '우울증 선별 테스트',
     comment:
         '이용자의 우울 여부는 일상생활의 동기부여 나 의약품 복약 준수도에 영향을 미칠 수 있습니다. 이용자의 상태를 파악하여 심리 상담 등 도움을 드릴 수 있습니다.',

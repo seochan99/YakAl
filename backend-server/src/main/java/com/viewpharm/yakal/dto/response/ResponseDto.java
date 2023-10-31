@@ -1,11 +1,13 @@
 package com.viewpharm.yakal.dto.response;
 
 
+import com.viewpharm.yakal.common.exception.dto.ArgumentNotValidExceptionDto;
+import com.viewpharm.yakal.common.exception.dto.ExceptionDto;
 import lombok.Builder;
 import lombok.Getter;
 import io.micrometer.common.lang.Nullable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.viewpharm.yakal.exception.CommonException;
+import com.viewpharm.yakal.common.exception.CommonException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;

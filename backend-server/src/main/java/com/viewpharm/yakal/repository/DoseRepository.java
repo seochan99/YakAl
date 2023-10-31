@@ -2,7 +2,7 @@ package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.DoseName;
-import com.viewpharm.yakal.type.EDosingTime;
+import com.viewpharm.yakal.base.type.EDosingTime;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

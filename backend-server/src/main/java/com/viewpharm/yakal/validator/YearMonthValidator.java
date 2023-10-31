@@ -1,10 +1,9 @@
 package com.viewpharm.yakal.validator;
 
-import com.viewpharm.yakal.annotation.YearMonth;
+import com.viewpharm.yakal.common.annotation.YearMonth;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-import java.lang.annotation.Annotation;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;

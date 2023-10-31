@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.dto.response;
 
 import com.viewpharm.yakal.dto.PointDto;
-import com.viewpharm.yakal.type.EMedical;
+import com.viewpharm.yakal.base.type.EMedical;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
