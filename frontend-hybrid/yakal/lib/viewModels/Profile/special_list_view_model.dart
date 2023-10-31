@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
@@ -25,10 +26,13 @@ class SpecialListViewModel extends GetxController {
                 break;
               case 'medical-histories':
                 val?.specialNote?.diagnosis = response.data['data'];
+              case 'underlying-conditions':
+                val?.specialNote?.underlyingConditions = response.data['data'];
+              case 'allergies':
+                val?.specialNote?.allergies = response.data['data'];
+              case 'falls':
+                val?.specialNote?.falls = response.data['data'];
                 break;
-              // underlyingConditions : 기저질환
-              // allergies : 알러지
-              // falls : 낙상 Date
               default:
                 break;
             }

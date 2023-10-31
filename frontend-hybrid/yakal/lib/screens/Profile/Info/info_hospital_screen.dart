@@ -18,6 +18,14 @@ class InfoHospitalScreen extends StatefulWidget {
 
 class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
   final TextEditingController _locationController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.userViewModel.loadMedicalRecord("hospitalization-records");
+    widget.userViewModel.loadMedicalRecord("emergency-records");
+  }
+
   @override
   Widget build(BuildContext context) {
     // 완료 버튼 누르면
@@ -233,6 +241,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
             final HospitalRecord record = entry.value;
 
             return Container(
+              margin: const EdgeInsets.only(bottom: 8),
               decoration: BoxDecoration(
                 border: Border.all(color: ColorStyles.gray2),
                 borderRadius: BorderRadius.circular(10),
