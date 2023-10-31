@@ -1,19 +1,15 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.dto.response.ResponseDto;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
-import com.viewpharm.yakal.service.ExpertService;
+import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.user.service.ExpertService;
 import com.viewpharm.yakal.service.ImageService;
 import com.viewpharm.yakal.base.type.EImageUseType;
-import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

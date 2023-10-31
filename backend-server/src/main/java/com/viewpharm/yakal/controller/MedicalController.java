@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.dto.response.MedicalRegisterDto;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.service.RegistrationService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

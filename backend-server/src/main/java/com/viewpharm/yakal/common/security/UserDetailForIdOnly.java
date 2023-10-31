@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.common.security;
 
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

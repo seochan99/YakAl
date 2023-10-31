@@ -11,6 +11,8 @@ import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.repository.*;
 import com.viewpharm.yakal.base.type.EDosingTime;
 import com.viewpharm.yakal.base.type.EPeriod;
+import com.viewpharm.yakal.user.domain.User;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

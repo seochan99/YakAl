@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.utils.NotificationUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

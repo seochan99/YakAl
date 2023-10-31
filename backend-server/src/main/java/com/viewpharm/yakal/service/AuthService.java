@@ -2,13 +2,13 @@ package com.viewpharm.yakal.service;
 
 import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.Prescription;
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.repository.ImageRepository;
 import com.viewpharm.yakal.repository.PrescriptionRepository;
 import com.viewpharm.yakal.common.security.JwtProvider;
 import com.viewpharm.yakal.base.type.EImageUseType;
 import com.viewpharm.yakal.base.type.ELoginProvider;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.common.exception.CommonException;

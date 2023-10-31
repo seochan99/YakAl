@@ -1,13 +1,13 @@
 package com.viewpharm.yakal.notablefeature.service;
 
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.notablefeature.domain.Fall;
 import com.viewpharm.yakal.notablefeature.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.notablefeature.dto.response.NotableFeatureStringDto;
 import com.viewpharm.yakal.notablefeature.repository.FallRepository;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

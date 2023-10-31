@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.guardian.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

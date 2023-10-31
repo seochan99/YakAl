@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.domain;
 
+import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
