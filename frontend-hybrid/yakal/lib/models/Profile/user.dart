@@ -157,13 +157,23 @@ class User {
 
 // 보호자
 class Guardian {
+  int id;
   String name;
-  DateTime? birthDate;
+  String birthDate;
 
   Guardian({
+    required this.id,
     required this.name,
-    this.birthDate,
+    required this.birthDate,
   });
+
+  factory Guardian.fromJson(Map<dynamic, dynamic> json) {
+    return Guardian(
+      id: json['id'],
+      name: json['name'],
+      birthDate: json['birthday'],
+    );
+  }
 }
 
 // 병원 기록

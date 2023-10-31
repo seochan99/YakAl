@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:yakal/models/Profile/user.dart';
+import 'package:yakal/viewModels/Profile/guardian_controller.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
@@ -14,8 +17,15 @@ class InfoBohoScreen extends StatefulWidget {
 }
 
 class _InfoBohoScreenState extends State<InfoBohoScreen> {
+  String bohoName = '';
+  String bohoBirth = '';
+  int bohoId = 0;
+  bool isLoading = false;
+  bool isSelectedBoho = false;
+
   final TextEditingController _bohoNameController = TextEditingController();
   DateTime? _selectedBirthDate;
+  final GuardianController guardianController = Get.put(GuardianController());
 
   @override
   void dispose() {
@@ -24,17 +34,25 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
   }
 
   void _handleButtonPress() {
-    final String guardianName = _bohoNameController.text;
-    final DateTime? guardianBirthDate = _selectedBirthDate;
-
-    widget.userViewModel.addOrUpdateGuardian(guardianName, guardianBirthDate);
-
+    widget.userViewModel.addOrUpdateGuardian(bohoId);
     _bohoNameController.clear();
     setState(() {
       _selectedBirthDate = null;
     });
 
-    Navigator.pop(context);
+    // Navigator.pop(context);
+  }
+
+  void _handleButtonPress2() async {
+    final String guardianName = _bohoNameController.text;
+    final String birth = DateFormat('yyyy-MM-dd').format(_selectedBirthDate!);
+
+    await guardianController.getGuardians(guardianName, birth);
+    // 상태를 갱신하여 UI를 업데이트합니다.
+    setState(() {
+      _bohoNameController.clear();
+      _selectedBirthDate = null;
+    });
   }
 
   Future<void> _selectBirthDate(BuildContext context) async {
@@ -124,13 +142,51 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 16),
-                      // 보호자가 있으면 보호자 이름, 생년월일 표시
-                      // 보호자가 없으면 '등록된 보호자가 없습니다.' 표시
                       Text(
                         widget.userViewModel.user.value.guardian == null
                             ? '등록된 보호자가 없습니다.'
                             : '${widget.userViewModel.user.value.guardian!.name}님 (${widget.userViewModel.user.value.guardian!.birthDate})',
-                      )
+                      ),
+                      const SizedBox(height: 24),
+                      const Text(
+                        '보호자를 선택해주세요!',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w700),
+                      ),
+                      const SizedBox(height: 16),
+                      // 검색 결과로 나오는 보호자
+
+                      Obx(() {
+                        return guardianController.guardians.isEmpty
+                            ? Text(
+                                '검색된 보호자가 없습니다.${guardianController.guardians}')
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: guardianController.guardians.length,
+                                itemBuilder: (context, index) {
+                                  final guardian =
+                                      guardianController.guardians[index];
+                                  return Card(
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          bohoId = guardian.id;
+                                          isSelectedBoho = true;
+                                        });
+                                      },
+                                      highlightColor:
+                                          Colors.blue.withOpacity(0.3),
+                                      child: ListTile(
+                                        title: Text(guardian.name),
+                                        subtitle: Text(
+                                          guardian.birthDate,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                      })
                     ],
                   ),
                 ),
@@ -148,7 +204,6 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                 builder: (context, value, child) {
                   final isButtonEnabled =
                       value.text.isNotEmpty && _selectedBirthDate != null;
-
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
@@ -160,10 +215,42 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    onPressed: isButtonEnabled ? _handleButtonPress : null,
+                    onPressed: isButtonEnabled ? _handleButtonPress2 : null,
                     child:
-                        const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
+                        const Text("검색 하기", style: TextStyle(fontSize: 20.0)),
                   );
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(
+                20.0,
+                0.0,
+                20.0,
+                30,
+              ),
+              child: ValueListenableBuilder<TextEditingValue>(
+                valueListenable: _bohoNameController,
+                builder: (context, value, child) {
+                  final isButtonEnabled = isSelectedBoho;
+                  return isButtonEnabled
+                      ? ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(double.infinity, 50),
+                            foregroundColor: Colors.white,
+                            backgroundColor: isButtonEnabled
+                                ? const Color(0xff2666f6)
+                                : Colors.grey,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          onPressed:
+                              isButtonEnabled ? _handleButtonPress : null,
+                          child: const Text("추가 하기",
+                              style: TextStyle(fontSize: 20.0)),
+                        )
+                      : Container();
                 },
               ),
             ),

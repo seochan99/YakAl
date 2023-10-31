@@ -18,7 +18,7 @@ class SurveyDetailBokyakController extends GetxController {
     var dio = await authDioWithContext();
 
     try {
-      var response = await dio.get("/survey/answer/my");
+      var response = await dio.get("/survey/answer");
 
       if (response.statusCode == 200) {
         List dataList = response.data['data']['datalist'];

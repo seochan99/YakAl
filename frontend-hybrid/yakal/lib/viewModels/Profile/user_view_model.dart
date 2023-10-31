@@ -1,7 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 
 import '../../models/Profile/user.dart';
@@ -16,6 +17,7 @@ class UserViewModel extends GetxController {
     });
   }
 
+  // 이름, 모드 가져오기
   Future<void> fetchNameAndMode(BuildContext context) async {
     await user.value.fetch(context);
     user.refresh();
@@ -105,11 +107,63 @@ class UserViewModel extends GetxController {
     });
   }
 
-  // 보호자 정보 추가
-  void addOrUpdateGuardian(String name, DateTime? birthDate) {
-    user.update((val) {
-      val?.guardian = Guardian(name: name, birthDate: birthDate);
-    });
+// /api/v1/guardians
+  Future<void> fetchGuardian() async {
+    try {
+      var dio = await authDioWithContext();
+
+      var response = await dio.get("/guardians");
+      if (response.statusCode == 200 && response.data['success']) {
+        user.update((val) {
+          // val?.guardian = Guardian.fromJson(response.data['data']);
+          // val?.guardian = Guardian(name: name, birthDate: birthDate);
+        });
+      }
+    } catch (e) {
+      throw Exception("Exception while updating nickname: $e");
+    }
+  }
+
+  Future<void> loadGuardian() async {
+    try {
+      await fetchGuardian(); // Assuming this sets 'fetchedItems'
+      print("--------------------------dsads----------------------------");
+
+      user.update((val) {
+        // If 'val' or 'hospitalRecordList' is null, initialize 'hospitalRecordList'
+        val?.guardian ??= Guardian(
+          id: 0,
+          name: "",
+          birthDate: "",
+        );
+
+        // Assuming 'fetchedItems' is set by 'fetchGuardian'
+        // if (fetchedItems != null) {
+        //   val?.guardian.assignAll(fetchedItems);
+        // } else {
+        //   print("Warning: fetchedItems is null");
+        // }
+      });
+    } catch (e) {
+      throw Exception("Exception while adding health medication: $e");
+    }
+  }
+
+  // 보호자 정보 추가, id만 전달
+  Future<void> addOrUpdateGuardian(int id) async {
+    try {
+      var dio = await authDioWithContext();
+      final response = await dio.post("/guardians/$id");
+      loadGuardian();
+
+      if (response.statusCode == 200) {
+        print("guardianData : ${response.data}");
+      } else {
+        throw Exception('Failed to fetch guardian information');
+      }
+    } catch (e) {
+      print("Error occurred: $e");
+    }
   }
 
   /*---------------------- 데이터 패치하기 - heatrlfood, dignosis ---------------------- */
@@ -137,9 +191,6 @@ class UserViewModel extends GetxController {
     try {
       // item 가져오기
       List<HospitalRecord> fetchedItems = await fetchMedicalRecord(title);
-      print("--------------------------dsads----------------------------");
-      print("$title 의 $fetchedItems");
-
       // update 진행
       user.update((val) {
         // null이면 생성
@@ -157,7 +208,6 @@ class UserViewModel extends GetxController {
             val?.hospitalRecordList?.emergencyRoomVisits
                 .assignAll(fetchedItems);
             break;
-
           default:
             break;
         }
@@ -196,13 +246,6 @@ class UserViewModel extends GetxController {
     } catch (e) {
       throw Exception("Exception while fetching addMedicalRecord: $e");
     }
-
-    // val?.hospitalRecordList?.admissionRecords.add(
-    //       HospitalRecord(
-    //         date: admissionDate,
-    //         location: location,
-    //       ),
-    //     );
   }
 
 // 병원 기록 삭제
@@ -218,18 +261,4 @@ class UserViewModel extends GetxController {
     }
     return;
   }
-
-  // // 입원기록 삭제
-  // void removeHospitalRecord(int index) {
-  //   user.update((val) {
-  //     val?.hospitalRecordList?.admissionRecords.removeAt(index);
-  //   });
-  // }
-
-  // // 응급실 기록 삭제
-  // void removeEmergencyRoomVisit(int index) {
-  //   user.update((val) {
-  //     val?.hospitalRecordList?.emergencyRoomVisits.removeAt(index);
-  //   });
-  // }
 }
