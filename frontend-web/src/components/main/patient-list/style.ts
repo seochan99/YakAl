@@ -203,7 +203,7 @@ export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 51rem;
+  height: 49rem;
 `;
 
 export const TableHeaderDiv = styled.div`

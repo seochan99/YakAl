@@ -3,7 +3,7 @@ import { logOnDev } from "../../../util/log-on-dev.ts";
 import { useNavigate } from "react-router-dom";
 import { identify } from "../../../api/auth/user/api.ts";
 import { HttpStatusCode } from "axios";
-import { authAxios } from "@api/auth/instance.ts";
+import { Cookies } from "react-cookie";
 
 type TIdResponse = {
   error_code: string | null;
@@ -23,14 +23,14 @@ export const useIdentifyPageViewController = () => {
   const onIdentificationClick = useCallback(() => {
     setIdentifyStart(true);
 
-    // const cookies = new Cookies();
-    //
-    // if (!cookies.get("accessToken") || cookies.get("accessToken") === "") {
-    //   naviagte("/login/social/not-yet");
-    //   return;
-    // }
-    //
-    // cookies.remove("accessToken", { path: "/" });
+    const cookies = new Cookies();
+
+    if (!cookies.get("accessToken") || cookies.get("accessToken") === "") {
+      naviagte("/login/social/not-yet");
+      return;
+    }
+
+    cookies.remove("accessToken", { path: "/" });
 
     const IMP = window.IMP;
     IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
@@ -47,10 +47,6 @@ export const useIdentifyPageViewController = () => {
 
         if (response.success) {
           logOnDev(`🎉 [Identification Success]`);
-
-          authAxios.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI0Iiwicm9sIjoiUk9MRV9NT0JJTEUiLCJpYXQiOjE2OTg3Nzk5MTEsImV4cCI6MTY5ODc4MzUxMX0.GeEVkgMUzkdTwnEGkvsGygskpC-dz1O0ySmshezwbmVOqSog_zW0IKCwoRmwkTnKqADOEBLHi-Xtvapd3CDWmA`;
 
           const sendIdentifyResponse = await identify(response.imp_uid);
 

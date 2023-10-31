@@ -140,7 +140,7 @@ export function RegistrationPage() {
                   <label htmlFor="file">파일찾기</label>
                   <input
                     type="file"
-                    accept="image/jpg,impge/png,image/jpeg,image/gif"
+                    accept="image/jpg,image/png,image/jpeg,image/gif"
                     id="file"
                     name="cerification_img"
                     onChange={handleCertImgChange}

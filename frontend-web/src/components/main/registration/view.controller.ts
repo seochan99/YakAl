@@ -1,6 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
 import { EFacilityType } from "@type/facility-type.ts";
 import { useNavigate } from "react-router-dom";
+import { registerFacility } from "@api/auth/experts/api.ts";
 
 export const useRegistrationPageViewController = () => {
   const [selected, setSelected] = useState<EFacilityType | null>(null);
@@ -192,12 +193,52 @@ export const useRegistrationPageViewController = () => {
   }, []);
 
   const handleSubmit = useCallback(() => {
-    if (selected === null) {
+    if (selected === null || !isFinished) {
       return;
     }
 
-    navigate("/expert/registration/result", { state: { isSuccess: true } });
-  }, [selected, navigate]);
+    registerFacility(
+      {
+        type: selected,
+        chiefName: facilityDirectorName,
+        chiefTel: directorPhoneNumber,
+        facilityName,
+        facilityNumber,
+        zipCode: facilityPostcode,
+        address: facilityAddress,
+        businessRegiNumber: facilityBusinessNumber,
+        tel: facilityContact,
+        clinicHours: facilityHours,
+        features: facilityFeatures,
+      },
+      certificationImg,
+    )
+      .then((value) => {
+        if (value.data.data) {
+          navigate("/expert/registration/result", { state: { isSuccess: true } });
+        } else {
+          navigate("/expert/registration/result", { state: { isSuccess: false } });
+        }
+      })
+      .catch(() => {
+        navigate("/expert/registration/result", { state: { isSuccess: false } });
+      });
+  }, [
+    selected,
+    isFinished,
+    facilityDirectorName,
+    directorPhoneNumber,
+    facilityName,
+    facilityNumber,
+    facilityPostcode,
+    facilityAddress,
+    facilityBusinessNumber,
+    facilityContact,
+    facilityHours,
+    facilityFeatures,
+    certificationImg,
+    navigate,
+  ]);
 
   return {
     selected,

@@ -4,10 +4,13 @@ import { authAxios } from "@api/auth/instance.ts";
 import { TSortBy } from "@store/patient-list.ts";
 import { EPatientField } from "@type/patient-field.ts";
 import { EOrder } from "@type/order.ts";
+import { TFacilityInfo } from "@api/auth/experts/types/facility-info.ts";
+import { EFacilityType } from "@type/facility-type.ts";
 
 export const getPatientList = async <T = CommonResponse<null>>(
   sortBy: TSortBy,
   page: number,
+  nameQuery: string,
 ): Promise<AxiosResponse<T>> => {
   let sortCriteria;
 
@@ -23,9 +26,46 @@ export const getPatientList = async <T = CommonResponse<null>>(
       break;
   }
 
+  if (nameQuery.length > 0) {
+    return await authAxios.get<T, AxiosResponse<T>>(
+      `/experts/patient/name?name=${nameQuery}&sort=${sortCriteria}&order=${
+        sortBy.order === EOrder.DESC ? "desc" : "asc"
+      }&page=${page - 1}&num=10`,
+    );
+  }
+
   return await authAxios.get<T, AxiosResponse<T>>(
     `/experts/patient?sort=${sortCriteria}&order=${sortBy.order === EOrder.DESC ? "desc" : "asc"}&page=${
       page - 1
     }&num=10`,
   );
+};
+
+export const getLatestDoses = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/doses`);
+};
+
+export const registerFacility = async <T = CommonResponse<null>>(
+  facilityInfo: TFacilityInfo,
+  certificateImg: File,
+): Promise<AxiosResponse<T>> => {
+  const formData = new FormData();
+
+  formData.append(
+    "message",
+    new Blob(
+      [
+        JSON.stringify({
+          ...facilityInfo,
+          type: EFacilityType[facilityInfo.type],
+        }),
+      ],
+      { type: "application/json" },
+    ),
+  );
+  formData.append("file", certificateImg);
+
+  return await authAxios.post<T, AxiosResponse<T>>(`/experts/medical-establishments`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
 };

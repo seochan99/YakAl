@@ -60,7 +60,7 @@ export class PatientListModel {
   /* PUBLIC METHOD */
   public fetch = async () => {
     try {
-      const response = await getPatientList(this.sortBy, this.pageNumber);
+      const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery);
 
       this.patientList = (response.data.data! as { datalist: TPatientItem[] }).datalist;
       this.totalCount = (
