@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -57,13 +58,13 @@ Future<void> sendDeviceToken(String deviceToken, bool isIos) async {
 void main() async {
   await dotenv.load(fileName: "assets/config/.env");
 
-  // await Firebase.initializeApp();
-
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
 
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   const storage = FlutterSecureStorage();

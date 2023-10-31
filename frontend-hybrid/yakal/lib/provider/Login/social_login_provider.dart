@@ -104,7 +104,7 @@ class SocialLoginProvider {
         ],
       );
 
-      var accessToken = credential.identityToken;
+      var accessToken = credential.authorizationCode;
       print("APPLE의 accesTOKEN은 $accessToken");
 
       if (accessToken == null) {

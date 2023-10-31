@@ -1,22 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Home/pill_floating_action_buttom.dart';
 import 'package:yakal/widgets/Home/home_info_layout.dart';
 
 import '../../widgets/Home/home_pill_todo_view.dart';
-
-Future getDeviceToken() async {
-  await FirebaseMessaging.instance.requestPermission();
-
-  FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
-
-  // String? deviceToken = await firebaseMessage.getToken();
-
-  // print("deviceToken: $deviceToken");
-  // return (deviceToken == null) ? "" : deviceToken;
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -30,24 +20,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    init();
     super.initState();
-    // init();
   }
 
-// push notification
-  // init() async {
-  //   print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
-  //   // get deviceToken
-  //   // String? deviceToken = await getDeviceToken();
-  //   // print(deviceToken);
-  //   // print("############################################################");
+  init() async {
+    String deviceToken = await getDeviceToken();
+    print("###### PRINT DEVICE TOKEN TO USE FOR PUSH NOTIFCIATION ######");
+    print(deviceToken);
+    print("############################################################");
 
-  //   // listen for user to click on notification
-  //   // FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
-  //   //   String? title = remoteMessage.notification!.title;
-  //   //   String? description = remoteMessage.notification!.body;
-  //   // });
-  // }
+    // listen for user to click on notification
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage remoteMessage) {
+      String? title = remoteMessage.notification!.title;
+      String? description = remoteMessage.notification!.body;
+
+      //im gonna have an alertdialog when clicking from push notification
+      Alert(
+        context: context,
+        type: AlertType.error,
+        title: title, // title from push notification data
+        desc: description, // description from push notifcation data
+        buttons: [
+          DialogButton(
+            onPressed: () => Navigator.pop(context),
+            width: 120,
+            child: const Text(
+              "COOL",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ],
+      ).show();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,5 +89,14 @@ class _HomeScreenState extends State<HomeScreen> {
         PillFloatingActionButton(viewModel)
       ]),
     );
+  }
+
+  //get device token to use for push notification
+  Future getDeviceToken() async {
+    //request user permission for push notification
+    FirebaseMessaging.instance.requestPermission();
+    FirebaseMessaging firebaseMessage = FirebaseMessaging.instance;
+    String? deviceToken = await firebaseMessage.getToken();
+    return (deviceToken == null) ? "" : deviceToken;
   }
 }

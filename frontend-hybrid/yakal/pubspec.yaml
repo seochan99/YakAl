@@ -47,6 +47,7 @@ dependencies:
     flutter_local_notifications: ^16.1.0
     webview_flutter: ^4.4.1
     sign_in_with_apple: ^5.0.0
+    rflutter_alert: ^2.0.7
 
 dev_dependencies:
     flutter_test:

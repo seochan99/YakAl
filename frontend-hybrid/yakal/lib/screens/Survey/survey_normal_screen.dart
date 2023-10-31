@@ -24,7 +24,7 @@ class SurveyNormalScreen extends StatelessWidget {
                 size: 32, color: Color(0xff151515)),
             onPressed: () {
               // Get.back();
-              Get.offAndToNamed('/');
+              Get.back();
             },
           )),
       body: Container(
