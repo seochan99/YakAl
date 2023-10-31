@@ -197,7 +197,7 @@ export class PatientModel {
   // @ts-ignore
   public static fetchProtector = async (patientId: number) => {
     this.patientInfo.protector = {
-      name: "홍길동",
+      name: "홍귀동",
       relationship: "형제",
       tel: "010-2222-2222",
     };

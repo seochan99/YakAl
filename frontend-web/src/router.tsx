@@ -1,27 +1,26 @@
 import { createBrowserRouter } from "react-router-dom";
-import { MainPage as ExpertMain } from "./page/main/view.tsx";
-import NotFoundPage from "./page/not-found/view.tsx";
-import { LoginPage as ExpertLogin } from "./page/login/view.tsx";
-import LoginMainPage from "./components/login/main/view.tsx";
-import TermsPage from "./components/login/terms/view.tsx";
+import { MainPage as ExpertMain } from "@page/main/view.tsx";
+import NotFoundPage from "@page/not-found/view.tsx";
+import { LoginPage as ExpertLogin } from "@page/login/view.tsx";
+import LoginMainPage from "@components/login/main/view.tsx";
+import TermsPage from "@components/login/terms/view.tsx";
 
-import PatientListPage from "./components/main/patient-list/view.tsx";
-import { DashboardPage as ExpertDashboard } from "./components/main/dashboard/view.tsx";
-import PatientPage from "./components/main/patient/view.tsx";
+import PatientListPage from "@components/main/patient-list/view.tsx";
+import { DashboardPage as ExpertDashboard } from "@components/main/dashboard/view.tsx";
+import PatientPage from "@components/main/patient/view.tsx";
 
-import SocialLoginFailurePage from "./components/login/social-login-failure/view.tsx";
+import SocialLoginFailurePage from "@components/login/social-login-failure/view.tsx";
 import { RegistrationPage as ExpertFacilityRegistration } from "@components/main/registration/view.tsx";
-import MyPage from "./components/main/mypage/view.tsx";
-import SocialLogin from "./components/login/social-login/view.tsx";
-import LoadingPage from "./page/loading/view.tsx";
-import IdentifyPage from "./components/login/identify/view.tsx";
-import IdentifyFailurePage from "./components/login/identify-failure/view.tsx";
+import MyPage from "@components/main/mypage/view.tsx";
+import SocialLogin from "@components/login/social-login/view.tsx";
+import LoadingPage from "@page/loading/view.tsx";
+import IdentifyPage from "@components/login/identify/view.tsx";
+import IdentifyResultPage from "@components/login/identify-result/view.tsx";
 import CertificationPage from "@components/main/certification/view.tsx";
-import IdentifySuccessPage from "./components/login/identify-success/view.tsx";
 import RegistrationResultPage from "@components/main/registration-result/view.tsx";
 import CertificationResultPage from "@components/main/certification-result/view.tsx";
-import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
-import AdminLogin from "./page/admin-login/view.tsx";
+import SocialLoginNotYetPage from "@components/login/social-login-not-yet/view.tsx";
+import AdminLogin from "@page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
 import AdminExpertDetail from "@components/admin-main/expert-detail/view.tsx";
 import { loader as adminExpertDetailLoader } from "@components/admin-main/expert-detail/loader.ts";
@@ -143,12 +142,8 @@ export const router = createBrowserRouter([
                 element: <IdentifyPage />,
               },
               {
-                path: "identify/failure",
-                element: <IdentifyFailurePage />,
-              },
-              {
-                path: "identify/success",
-                element: <IdentifySuccessPage />,
+                path: "identify/result",
+                element: <IdentifyResultPage />,
               },
             ],
           },

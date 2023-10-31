@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { useLocation } from "react-router-dom";
-import { MainPageModel } from "@store/main.ts";
+import { MainPageModel } from "@store/main-page.ts";
 import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 export const useMainPageViewController = () => {

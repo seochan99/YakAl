@@ -1,9 +1,9 @@
 import * as S from "./style.ts";
 import { Outlet } from "react-router-dom";
 
-import Footer from "../../layout/footer/view.tsx";
-import Header from "../../layout/header/view.tsx";
-import Profile from "../../components/main/profile/view.tsx";
+import Footer from "@layout/footer/view.tsx";
+import Header from "@layout/header/view.tsx";
+import Profile from "@components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useMainPageViewController } from "./view.controller.ts";
