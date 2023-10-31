@@ -131,7 +131,6 @@ export const SelectButton = styled.button`
 
   & svg {
     height: 1.5rem;
-    transition: 0.3s;
   }
 
   & span {
@@ -145,7 +144,7 @@ export const SelectButton = styled.button`
     line-height: 1rem;
   }
 
-  &.open svg {
+  &.asc svg {
     transform: rotate(180deg);
   }
 

@@ -6,6 +6,7 @@ import Pagination from "react-js-pagination";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PatientItem from "./child/patient-item/view.tsx";
 import { PatientListModel } from "@store/patient-list.ts";
+import { EOrder } from "@type/order.ts";
 
 function PatientListPage() {
   const {
@@ -53,7 +54,7 @@ function PatientListPage() {
           </S.SearchBarDiv>
           <S.SelectDiv data-role="selectbox">
             <S.SelectButton
-              className={sortingOptionOpen ? "open" : ""}
+              className={sorting.order === EOrder.ASC ? "asc" : ""}
               onClick={() => setSortingOptionOpen(!sortingOptionOpen)}
             >
               <ArrowDropDownIcon />

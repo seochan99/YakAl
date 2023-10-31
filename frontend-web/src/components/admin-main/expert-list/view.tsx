@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import { PatientListModel } from "@store/patient-list.ts";
 import AdminExpertItem from "@components/admin-main/expert-item/view.tsx";
 import { EExpertField } from "@type/expert-field.ts";
+import { EOrder } from "@type/order.ts";
 
 function AdminExpertList() {
   const {
@@ -34,7 +35,7 @@ function AdminExpertList() {
         </S.SearchBarDiv>
         <S.SelectDiv data-role="selectbox">
           <S.SelectButton
-            className={sortingOptionOpen ? "open" : ""}
+            className={sorting.order === EOrder.ASC ? "asc" : ""}
             onClick={() => setSortingOptionOpen(!sortingOptionOpen)}
           >
             <ArrowDropDownIcon />

@@ -1,6 +1,7 @@
 import { ESex } from "@type/sex.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
+import { compareDateArray } from "@util/compare-date-array.ts";
 
 type TPatientItem = {
   id: number;
@@ -19,7 +20,7 @@ const patientList = [
     id: 1,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1991, 12, 12],
     sex: ESex.MALE,
     lastQuestionnaireDate: [2022, 12, 12],
     tel: "010-1111-1111",
@@ -28,10 +29,10 @@ const patientList = [
   {
     id: 2,
     profileImg: "",
-    name: "홍길동",
+    name: "홍닐돌",
     birthday: [1992, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2021, 12, 12],
     tel: "010-1111-1111",
     isManaged: true,
   },
@@ -39,9 +40,9 @@ const patientList = [
     id: 3,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1992, 1, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2021, 11, 12],
     tel: "010-1111-1111",
     isManaged: true,
   },
@@ -49,9 +50,9 @@ const patientList = [
     id: 4,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1992, 4, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2021, 11, 13],
     tel: "010-1111-1111",
     isManaged: true,
   },
@@ -59,9 +60,9 @@ const patientList = [
     id: 5,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1993, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2021, 10, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -69,9 +70,9 @@ const patientList = [
     id: 6,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1993, 12, 13],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2020, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -79,9 +80,9 @@ const patientList = [
     id: 7,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1994, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2019, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -89,9 +90,9 @@ const patientList = [
     id: 8,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1995, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2018, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -99,9 +100,9 @@ const patientList = [
     id: 9,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1996, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2017, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -109,9 +110,9 @@ const patientList = [
     id: 10,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1996, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2016, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -119,9 +120,9 @@ const patientList = [
     id: 11,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1997, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2015, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -129,9 +130,9 @@ const patientList = [
     id: 12,
     profileImg: "",
     name: "홍길동",
-    birthday: [1992, 12, 12],
+    birthday: [1998, 12, 12],
     sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
+    lastQuestionnaireDate: [2014, 12, 12],
     tel: "010-1111-1111",
     isManaged: false,
   },
@@ -176,14 +177,46 @@ export class PatientListModel {
   public fetch = async () => {
     // Dummy
     this.patientList = null;
+
     if (this.isOnlyManaged) {
       this.patientList = patientList.filter((patientItem) => patientItem.isManaged);
     } else {
       this.patientList = patientList;
     }
+
+    switch (this.sortBy.field) {
+      case EPatientField.NAME:
+        if (this.sortBy.order === EOrder.DESC) {
+          this.patientList.sort((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
+        } else {
+          this.patientList.sort((a, b) => (a.name > b.name ? 1 : a.name < b.name ? -1 : 0));
+        }
+        break;
+      case EPatientField.BIRTHDAY:
+        if (this.sortBy.order === EOrder.DESC) {
+          this.patientList.sort((a, b) => compareDateArray(a.birthday, b.birthday));
+        } else {
+          this.patientList.sort((a, b) => -compareDateArray(a.birthday, b.birthday));
+        }
+        break;
+      case EPatientField.LAST_QUESTIONNAIRE_DATE:
+        if (this.sortBy.order === EOrder.DESC) {
+          this.patientList.sort((a, b) => -compareDateArray(a.lastQuestionnaireDate, b.lastQuestionnaireDate));
+        } else {
+          this.patientList.sort((a, b) => compareDateArray(a.lastQuestionnaireDate, b.lastQuestionnaireDate));
+        }
+        break;
+      default:
+        break;
+    }
+
     this.totalCount = this.patientList.length;
-    if (this.pageNumber === 1) this.patientList = this.patientList.slice(0, 10);
-    else this.patientList = this.patientList.slice(10, 12);
+
+    if (this.pageNumber === 1) {
+      this.patientList = this.patientList.slice(0, 10);
+    } else {
+      this.patientList = this.patientList.slice(10, 12);
+    }
   };
 
   public isLoading = () => {
