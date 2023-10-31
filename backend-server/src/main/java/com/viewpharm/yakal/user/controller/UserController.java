@@ -43,22 +43,6 @@ public class UserController {
         return ResponseDto.ok(userInfoDto);
     }
 
-    @PatchMapping("")
-    @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
-    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
-        userService.updateUserInfo(
-                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
-        );
-        return ResponseDto.ok(null);
-    }
-
-    @PatchMapping("/identify")
-    @Operation(summary = "사용자 본인인증")
-    public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
-        userService.identify(id, identifyDto.getImpUid());
-        return ResponseDto.ok(null);
-    }
-
     @GetMapping("/check/identification")
     @Operation(summary = "사용자 본인인증 여부 확인")
     public ResponseDto<Map<String, Boolean>> checkIdentification(@UserId Long id) {
@@ -76,6 +60,20 @@ public class UserController {
         final Map<String, Boolean> map = new HashMap<>(1);
         map.put("isRegistered", userService.checkIsRegistered(id));
         return ResponseDto.ok(map);
+    }
+
+    @PatchMapping("/identify")
+    @Operation(summary = "사용자 본인인증")
+    public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
+        userService.identify(id, identifyDto.getImpUid());
+        return ResponseDto.ok(null);
+    }
+
+    @PatchMapping("/optional-agreement")
+    @Operation(summary = "선택 약관 동의 여부 수정하기")
+    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateIsOptionalAgreementDto updateDto) {
+        userService.updateUserOptionalAgreement(id, updateDto.getIsOptionalAgreementAccepted());
+        return ResponseDto.ok(null);
     }
 
     @PatchMapping("/name")
@@ -117,4 +115,14 @@ public class UserController {
     public ResponseDto<?> readExpertUsers(@RequestParam("name") String expertName) {
         return ResponseDto.ok(userService.searchUserForExpert(expertName));
     }
+
+//    @Deprecated
+//    @PatchMapping("")
+//    @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
+//    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
+//        userService.updateUserInfo(
+//                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
+//        );
+//        return ResponseDto.ok(null);
+//    }
 }

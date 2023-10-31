@@ -160,4 +160,11 @@ public class AuthService {
 
         response.sendRedirect(FRONTEND_HOST + "/expert/login/social/" + loginProvider.toString().toLowerCase());
     }
+
+    public EPlatform getPlatform(Long userId) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        log.info("{}", user.getRole());
+
+        return user.getRole().equals(ERole.ROLE_WEB) ? EPlatform.WEB : EPlatform.MOBILE;
+    }
 }

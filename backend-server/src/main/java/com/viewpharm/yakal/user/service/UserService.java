@@ -124,6 +124,13 @@ public class UserService {
                 .build();
     }
 
+    public void updateUserOptionalAgreement(final Long userId, final Boolean isOptionalAgreement) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        user.updateIsOptionalAgreementAccepted(isOptionalAgreement);
+    }
+
     public void updateUserInfo(final Long userId, final String name, final Boolean isDetail) {
         final Integer isUpdated = userRepository.updateNameAndIsDetailById(userId, name, isDetail);
 
