@@ -1,12 +1,13 @@
 import * as S from "./style.ts";
 import { useLoginMainPageViewController } from "./view.controller.ts";
-import { Alert, Slide, SlideProps, Snackbar } from "@mui/material";
+import { ESnackbarType } from "@type/snackbar-type.ts";
+import YakalSnackbar from "@components/snackbar/view.tsx";
 
 function LoginMainPage() {
   const {
     onKakaoLoginClick,
     onGoogleLoginClick,
-    snackbarController: { open, onClose },
+    snackbarController: { open, setOpen },
   } = useLoginMainPageViewController();
 
   return (
@@ -37,17 +38,7 @@ function LoginMainPage() {
           </S.GoogleButton>
         </S.InnerButtonsDiv>
       </S.LoginDiv>
-      <Snackbar
-        open={open}
-        autoHideDuration={4000}
-        onClose={onClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-        TransitionComponent={(props: SlideProps) => <Slide {...props} direction="up" children={props.children} />}
-      >
-        <Alert onClose={onClose} severity="error" elevation={6} variant="filled">
-          {"로그인 화면으로 이동하는데 실패했습니다. 다시 시도해주세요."}
-        </Alert>
-      </Snackbar>
+      <YakalSnackbar open={open} setOpen={setOpen} type={ESnackbarType.LOGIN_FAILED} />
     </S.OuterDiv>
   );
 }

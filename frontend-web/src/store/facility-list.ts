@@ -1,92 +1,67 @@
-import { EFacilityType } from "@type/facility-type.ts";
+export type TExpertFacilityItem = {
+  id: number;
+  name: string;
+  address: string;
+};
 
-export const facilityList = [
-  {
-    id: 1,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원1",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 2,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원2",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 3,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원3",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 4,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원4",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 5,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원5",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 6,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원6",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 7,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원7",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 8,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원8",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 9,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원9",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 10,
-    type: EFacilityType.HOSPITAL,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원10",
-    requested_at: new Date("2023-09-01"),
-  },
-  {
-    id: 11,
-    type: EFacilityType.PHARMACY,
-    directorPhone: "010-2832-1945",
-    directorName: "홍길동",
-    name: "분당 차병원11",
-    requested_at: new Date("2023-09-01"),
-  },
-];
+export class ExpertFacilityListModel {
+  /* CONSTANTS */
+  public static readonly FACILITY_COUNT_PER_PAGE = 5;
+
+  /* PRIVATE MEMBER VARIABLE */
+  private facilityList: TExpertFacilityItem[] | null = null;
+  private totalCount: number | null = null;
+
+  private pageNumber = 1;
+
+  private nameQuery = "";
+
+  /* SINGLETON */
+  private static instance: ExpertFacilityListModel | null = null;
+
+  private constructor() {
+    return;
+  }
+
+  public static getInstance = () => {
+    if (ExpertFacilityListModel.instance !== null) {
+      return ExpertFacilityListModel.instance;
+    }
+
+    ExpertFacilityListModel.instance = new ExpertFacilityListModel();
+    return ExpertFacilityListModel.instance;
+  };
+
+  /* PUBLIC METHOD */
+  public invalidate = async () => {
+    this.facilityList = null;
+  };
+
+  public fetch = async () => {};
+
+  public isLoading = () => this.facilityList == null;
+
+  public getFacilityList = () => this.facilityList;
+
+  public getPagingInfo = () => ({ pageNumber: this.pageNumber, totalCount: this.totalCount });
+
+  public getNameQuery = () => this.nameQuery;
+
+  public setPageNumber = async (pageNumber: number) => {
+    if (this.totalCount === null) {
+      return;
+    }
+
+    if (1 > pageNumber || pageNumber > this.totalCount / ExpertFacilityListModel.FACILITY_COUNT_PER_PAGE + 1) {
+      return;
+    }
+
+    this.pageNumber = pageNumber;
+    await this.fetch();
+  };
+
+  public setNameQuery = async (nameQuery: string) => {
+    this.nameQuery = nameQuery;
+    await this.fetch();
+  };
+}

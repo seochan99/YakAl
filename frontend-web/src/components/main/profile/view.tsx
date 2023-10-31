@@ -8,12 +8,12 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { useMediaQuery } from "react-responsive";
-import { EJob } from "../../../type/job.ts";
+import { EJob } from "@type/job.ts";
 
 type TProfileProps = {
-  job?: EJob;
-  department?: string;
-  belong?: string;
+  job: EJob | null;
+  department: string | null;
+  belong: string | null;
   name: string;
   imgSrc: string;
 };
@@ -101,7 +101,7 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
                 <S.DetailNamePostfix>{"님"}</S.DetailNamePostfix>
               </S.DetailNameBox>
               <S.DetailJob>
-                {job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon />}
+                {job ? job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
                 {jobDetail ? (
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")

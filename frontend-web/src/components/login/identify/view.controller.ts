@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { Cookies } from "react-cookie";
 import { logOnDev } from "../../../util/log-on-dev.ts";
 import { useNavigate } from "react-router-dom";
 import { identify } from "../../../api/auth/user/api.ts";
 import { HttpStatusCode } from "axios";
+import { Cookies } from "react-cookie";
 
 type TIdResponse = {
   error_code: string | null;
@@ -26,7 +26,7 @@ export const useIdentifyPageViewController = () => {
     const cookies = new Cookies();
 
     if (!cookies.get("accessToken") || cookies.get("accessToken") === "") {
-      naviagte("/expert/login/social/not-yet");
+      naviagte("/login/social/not-yet");
       return;
     }
 
@@ -38,27 +38,30 @@ export const useIdentifyPageViewController = () => {
     /* Pop Up Integrated Identification Window */
     IMP.certification(
       {
+        pg: "inicis_unified",
         merchant_uid: `mid_${Date.now().toString()}`,
         popup: true,
       },
       async (response: TIdResponse) => {
         logOnDev(`🛬 [Identification Response] ${response}`);
+
         if (response.success) {
           logOnDev(`🎉 [Identification Success]`);
-          
+
           const sendIdentifyResponse = await identify(response.imp_uid);
 
           if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            naviagte("/expert/login/identify/result", { state: { isSuccess: true } });
+            naviagte("/login/identify/result", { state: { isSuccess: true } });
             return;
           } else {
-            naviagte("/expert/login/identify/result", { state: { isSuccess: false } });
+            naviagte("/login/identify/result", { state: { isSuccess: false } });
             return;
           }
         } else {
           logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
+
           /* Identification Failure Logic */
-          naviagte("/expert/login/identify/result", { state: { isSuccess: false } });
+          naviagte("/login/identify/result", { state: { isSuccess: false } });
           return;
         }
       },

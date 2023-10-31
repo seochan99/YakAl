@@ -2,7 +2,6 @@ import * as S from "./style.ts";
 import Pagination from "react-js-pagination";
 import { EJob } from "@type/job.ts";
 import { ListFooter } from "@style/global_style.ts";
-import { facilityList } from "@store/facility-list.ts";
 import { useCertificationPageViewController } from "@components/main/certification/view.controller.ts";
 
 const PAGING_SIZE = 5;
@@ -16,7 +15,8 @@ function CertificationPage() {
     selectedFacility,
     facilityNameSearchQuery,
     onChangeSearchbar,
-    page,
+    isLoading,
+    pagingInfo,
     handleFacilityItemClick,
     handlePageChange,
     certImgFileName,
@@ -26,7 +26,13 @@ function CertificationPage() {
     handleBelongImgChange,
     belongImgPreviewRef,
     handleSubmit,
+    onEnterSearchbar,
+    facilityList,
   } = useCertificationPageViewController();
+
+  if (isLoading || facilityList === null || pagingInfo === null) {
+    return <></>;
+  }
 
   return (
     <S.Outer>
@@ -77,7 +83,7 @@ function CertificationPage() {
                   name={"facility-address"}
                   placeholder={"기관 주소"}
                   readOnly={true}
-                  value={selectedFacility ? selectedFacility.directorName : ""}
+                  value={selectedFacility ? selectedFacility.address : ""}
                 />
               </S.BelongInputBox>
               <S.SearchBar>
@@ -87,6 +93,7 @@ function CertificationPage() {
                   placeholder="기관명으로 검색"
                   value={facilityNameSearchQuery}
                   onChange={onChangeSearchbar}
+                  onKeyUp={onEnterSearchbar}
                 />
               </S.SearchBar>
               <S.SearchResultBox>
@@ -94,24 +101,24 @@ function CertificationPage() {
                   <S.NameHeader>기관명</S.NameHeader>
                   <S.AddressHeader>기관 주소</S.AddressHeader>
                 </S.ListHeader>
-                {facilityList.slice((page - 1) * 5, page * 5).map((facility) => (
+                {facilityList.map((facility) => (
                   <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
                     <S.ItemName>
                       {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
                     </S.ItemName>
                     <S.ItemAddress>
-                      {facility.directorName.length > 41
-                        ? facility.directorName.substring(0, 40).concat("...")
-                        : facility.directorName}
+                      {facility.address.length > 41
+                        ? facility.address.substring(0, 40).concat("...")
+                        : facility.address}
                     </S.ItemAddress>
                   </S.Item>
                 ))}
               </S.SearchResultBox>
               <ListFooter>
                 <Pagination
-                  activePage={page}
+                  activePage={pagingInfo.pageNumber}
                   itemsCountPerPage={PAGING_SIZE}
-                  totalItemsCount={facilityList.length}
+                  totalItemsCount={pagingInfo.totalCount!}
                   pageRangeDisplayed={PAGING_SIZE}
                   prevPageText={"‹"}
                   nextPageText={"›"}

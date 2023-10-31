@@ -1,5 +1,6 @@
 import { ESex } from "@type/sex.ts";
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { getLatestDoses } from "@api/auth/experts/api.ts";
 
 type TPatientInfo = {
   base: {
@@ -203,23 +204,22 @@ export class PatientModel {
     };
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchLastETC = async (patientId: number) => {
-    this.patientInfo.medication.etc = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      page: 1,
-      total: null,
-    };
+    try {
+      const response = await getLatestDoses(patientId);
+
+      this.patientInfo.medication.etc = {
+        list: response.data.data,
+        page: 1,
+        total: null,
+      };
+    } catch (error) {
+      this.patientInfo.medication.etc = {
+        list: [],
+        page: 1,
+        total: null,
+      };
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment

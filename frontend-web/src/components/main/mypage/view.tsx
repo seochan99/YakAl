@@ -20,8 +20,17 @@ function MyPage() {
         <S.MainHeader>
           <S.Title>내 정보</S.Title>
           <S.VerifiedText>
-            <S.VerifiedIcon />
-            전문가 인증이 완료된 사용자입니다.
+            {jobDetail && belong ? (
+              <>
+                <S.VerifiedIcon />
+                {"전문가 인증이 완료된 사용자입니다."}
+              </>
+            ) : (
+              <>
+                <S.UnverifiedIcon />
+                {"전문가 인증이 안된 사용자입니다."}
+              </>
+            )}
           </S.VerifiedText>
         </S.MainHeader>
         <S.InnerBox>
@@ -35,7 +44,7 @@ function MyPage() {
           </S.InputBox>
           <S.InputBox>
             <S.StyledInputLabel>직종 및 분과</S.StyledInputLabel>
-            <S.StyledInput value={jobDetail} readOnly={true} />
+            <S.StyledInput value={jobDetail ?? "정보 없음"} readOnly={true} />
           </S.InputBox>
           <S.InputBox>
             <S.StyledInputLabel>연락처</S.StyledInputLabel>
@@ -43,7 +52,7 @@ function MyPage() {
           </S.InputBox>
           <S.BelongInputBox>
             <S.StyledInputLabel>소속</S.StyledInputLabel>
-            <S.StyledInput value={belong} readOnly={true} />
+            <S.StyledInput value={belong ?? "정보 없음"} readOnly={true} />
           </S.BelongInputBox>
         </S.InnerBox>
       </S.MainSection>

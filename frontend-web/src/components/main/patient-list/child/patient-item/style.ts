@@ -31,11 +31,6 @@ export const StyledLink = styled(Link)`
   flex: 1;
 `;
 
-export const ProfileImg = styled.img`
-  height: 2rem;
-  width: 2rem;
-`;
-
 export const NameSpan = styled.span`
   width: calc(100% / 4);
   color: var(--Black, #151515);

@@ -10,7 +10,7 @@ type TSummaryMedicationProps = {
 };
 
 function SummaryMedication({ etcList }: TSummaryMedicationProps) {
-  if (!etcList) {
+  if (etcList === null) {
     return <></>;
   }
 

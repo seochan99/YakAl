@@ -1,16 +1,18 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { EJob } from "@type/job.ts";
 import { useNavigate } from "react-router-dom";
-import { facilityList } from "@store/facility-list.ts";
+import { ExpertFacilityListViewModel } from "@components/main/certification/view.model.ts";
+import { TExpertFacilityItem } from "@store/facility-list.ts";
 
 export const useCertificationPageViewController = () => {
+  ExpertFacilityListViewModel.use();
+
   const [selected, setSelected] = useState<EJob | null>(null);
   const [certificationImg, setCertificationImg] = useState<File | null>(null);
   const [certImgFileName, setCertImgFileName] = useState<string>("첨부파일");
   const [belongImg, setBelongImg] = useState<File | null>(null);
   const [belongImgFileName, setBelongImgFileName] = useState<string>("첨부파일");
-  const [page, setPage] = useState<number>(1);
-  const [selectedFacility, setSelectedFacility] = useState<any>(null);
+  const [selectedFacility, setSelectedFacility] = useState<TExpertFacilityItem | null>(null);
   const [facilityNameSearchQuery, setFacilityNameSearchQuery] = useState<string>("");
 
   const navigate = useNavigate();
@@ -20,9 +22,19 @@ export const useCertificationPageViewController = () => {
 
   const isFinished = selectedFacility !== null && certificationImg !== null && belongImg !== null;
 
-  const handlePageChange = useCallback((page: number) => {
-    setPage(page);
-  }, []);
+  const { fetch, getState, setPageNumber, setNameQuery } = ExpertFacilityListViewModel;
+  const { isLoading, facilityList, pagingInfo } = getState();
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
+
+  const handlePageChange = useCallback(
+    (page: number) => {
+      setPageNumber(page);
+    },
+    [setPageNumber],
+  );
 
   const onClickDoctor = useCallback(() => {
     setSelected(EJob.DOCTOR);
@@ -34,9 +46,21 @@ export const useCertificationPageViewController = () => {
     setSelectedFacility(null);
   }, []);
 
-  const onChangeSearchbar = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
-    setFacilityNameSearchQuery(event.target.value);
-  }, []);
+  const onChangeSearchbar = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setFacilityNameSearchQuery(event.currentTarget.value);
+    },
+    [setNameQuery],
+  );
+
+  const onEnterSearchbar = useCallback(
+    (event: React.KeyboardEvent<HTMLInputElement>) => {
+      if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
+        setNameQuery(facilityNameSearchQuery);
+      }
+    },
+    [facilityNameSearchQuery, setNameQuery],
+  );
 
   const handleCertImgChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
@@ -93,11 +117,11 @@ export const useCertificationPageViewController = () => {
   }, []);
 
   const handleFacilityItemClick = (id: number) => () => {
-    const selectedItem = facilityList.findLast((facility) => facility.id === id);
-
-    if (selectedItem) {
-      setSelectedFacility(selectedItem);
+    if (facilityList === null) {
+      return;
     }
+
+    setSelectedFacility(facilityList.filter((element) => element.id === id)[0]);
   };
 
   const handleSubmit = useCallback(() => {
@@ -112,7 +136,8 @@ export const useCertificationPageViewController = () => {
     selectedFacility,
     facilityNameSearchQuery,
     onChangeSearchbar,
-    page,
+    isLoading,
+    pagingInfo,
     handleFacilityItemClick,
     handlePageChange,
     certImgFileName,
@@ -122,5 +147,7 @@ export const useCertificationPageViewController = () => {
     handleBelongImgChange,
     belongImgPreviewRef,
     handleSubmit,
+    onEnterSearchbar,
+    facilityList,
   };
 };
