@@ -51,13 +51,13 @@ export const BackLink = styled(Link)`
 export const BaseInfoDiv = styled.div`
   /* Variable */
   --WidthPadding: 1.5rem;
-  --HeightPadding: 1rem;
+  --HeightPadding: 1.3rem;
 
   /* Style */
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: center;
+  align-items: stretch;
   gap: 1.5rem;
   width: calc(30rem - var(--WidthPadding) * 2);
   height: calc(6rem - var(--HeightPadding) * 2);
@@ -79,8 +79,7 @@ export const SelfBaseTitle = styled.div`
 `;
 
 export const PatientImg = styled.img`
-  width: 4rem;
-  height: 4rem;
+  object-fit: contain;
 `;
 
 export const InfoTextDiv = styled.div`
@@ -88,7 +87,6 @@ export const InfoTextDiv = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  gap: 1rem;
 `;
 
 export const NameSexBirthDiv = styled.div`
