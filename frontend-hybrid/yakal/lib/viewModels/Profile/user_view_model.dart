@@ -113,7 +113,7 @@ class UserViewModel extends GetxController {
       var dio = await authDioWithContext();
 
       var response = await dio.get("/guardians");
-      print(response);
+      print("guardians : $response");
 
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {

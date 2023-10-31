@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:yakal/screens/Profile/Appointment/appointment_screen.dart';
 
 class ProfileHeaderShareButton extends StatelessWidget {
   const ProfileHeaderShareButton({
@@ -24,7 +26,8 @@ class ProfileHeaderShareButton extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        // Get.toNamed("/login");
+        // 잔믄기 인증으로 가기
+        Get.to(() => const AppointmentScreen());
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,

@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
-import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
 import 'package:yakal/widgets/Profile/profile_info_icon_btn_widget.dart';
 import 'package:yakal/widgets/Profile/profile_setting_row_box_widget.dart';
