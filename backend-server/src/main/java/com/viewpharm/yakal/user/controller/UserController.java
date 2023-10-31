@@ -109,7 +109,6 @@ public class UserController {
     public ResponseDto<?> readGeneralUsers(@RequestParam("name") String name,
                                            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 
-        log.info("name: {}, date: {}", name, date);
         return ResponseDto.ok(userService.searchUserForGuardian(name, date));
     }
 
