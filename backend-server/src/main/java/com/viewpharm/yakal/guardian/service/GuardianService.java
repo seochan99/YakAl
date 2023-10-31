@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.guardian.service;
 
 import com.viewpharm.yakal.guardian.domain.Guardian;
+import com.viewpharm.yakal.guardian.dto.response.GuardianTelDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.dto.response.PatientDto;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -56,6 +58,23 @@ public class GuardianService {
                         .name(u.getName()).build())
                 .collect(Collectors.toList());
     }
+
+    public GuardianTelDto readResentGuardian(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Optional<User> resentGuardianOpt = userRepository.searchResentGuardianForUser(user);
+
+        if (resentGuardianOpt.isEmpty())
+            return GuardianTelDto.builder().build();
+        else {
+            User resentGuardian = resentGuardianOpt.get();
+
+            return GuardianTelDto.builder()
+                    .id(resentGuardian.getId())
+                    .realName(resentGuardian.getRealName())
+                    .tel(resentGuardian.getTel()).build();
+        }
+    }
+
 
     public Boolean deleteGuardian(Long userId, Long guardianId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));

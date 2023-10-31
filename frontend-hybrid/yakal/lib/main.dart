@@ -109,8 +109,8 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: initialRoute,
-      // initialRoute: "/login",
+      // initialRoute: initialRoute,
+      initialRoute: "/login",
       // 라우팅 설정
       getPages: [
         GetPage(

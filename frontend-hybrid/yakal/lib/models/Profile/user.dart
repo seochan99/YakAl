@@ -1,5 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/api/api.dart';
@@ -7,7 +6,7 @@ import 'package:yakal/utilities/api/api.dart';
 class User {
   String nickName;
   bool mode;
-  bool? isIdentified;
+  bool isIdentified;
   bool? isAgreedMarketing;
   bool notiIsAllowed;
   String breakfastTime;
@@ -60,19 +59,30 @@ class User {
   }
 
   // 유저 이름과 모드를 서버에서 가져옴
-  Future<void> fetch(BuildContext context) async {
-    final dio = await authDio(context);
+  Future<void> fetchLoginInfo() async {
+    final dio = await authDioWithContext();
 
-    final response = await dio.get("/user");
+    final response = await dio.get("/user/check/register");
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
 
-      nickName = response.data["data"]["nickname"];
+      nickName = response.data["data"]["isRegistered"]["name"] as String;
       prefs.setString("NICKNAME", nickName);
 
-      mode = response.data["data"]["isDetail"] as bool;
+      mode = response.data["data"]["isRegistered"]["isDetail"] as bool;
       prefs.setBool("MODE", mode);
+
+      isAgreedMarketing =
+          response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
+      if (isAgreedMarketing != null) {
+        prefs.setBool("MODE", mode);
+      } else {
+        prefs.remove("MODE");
+      }
+
+      isIdentified = response.data["data"]["isRegistered"]["isIdentified"];
+      prefs.setBool("IS_IDENTIFICATION", isIdentified);
     }
   }
 

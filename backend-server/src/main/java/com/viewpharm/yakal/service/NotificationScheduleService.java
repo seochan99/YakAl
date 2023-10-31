@@ -114,8 +114,8 @@ public class NotificationScheduleService {
         //현재 날짜
 //        LocalDate nowDate = LocalDate.now();
 //        LocalTime nowTime = LocalTime.now();
-        LocalDate nowDate = LocalDate.of(2023, 8, 8);
-        LocalTime nowTime = LocalTime.of(22, 0, 0);
+        LocalDate nowDate = LocalDate.of(2023, 11, 14);
+        LocalTime nowTime = LocalTime.of(9, 0, 0);
         //날짜와 시간으로 알약 리스트 찾기
         // 레포로 옮기기
         //select user_id from doses where date='2023-07-24' and time ='DINNER' group by user_id;
@@ -128,6 +128,9 @@ public class NotificationScheduleService {
             String title = userInformation.getUsername() + "님, 저녁 약 드실 시간이네요!";
             String content = userInformation.getCount() + "개 먹어야 해요!"; //갯수 가져와서 넣기
             Long userId = userInformation.getUserId();
+
+            log.info(title);
+            log.info(content);
 
             notificationUserRequestDto = NotificationUserRequestDto.builder()
                     .targetUserId(userId)

@@ -144,7 +144,7 @@ public class AuthService {
             final HttpServletResponse response,
             final ELoginProvider loginProvider
     ) throws IOException {
-        final String FRONTEND_HOST = "http://localhost:5173"; // Front Server Host -> 배포 시 변경
+        final String FRONTEND_HOST = "https://localhost:5173"; // Front Server Host -> 배포 시 변경
 
         final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.getRefreshToken());
         refreshTokenSecureCookie.setPath("/");
@@ -158,6 +158,13 @@ public class AuthService {
         response.addCookie(refreshTokenSecureCookie);
         response.addCookie(accessTokenCookie);
 
-        response.sendRedirect(FRONTEND_HOST + "/expert/login/social/" + loginProvider.toString().toLowerCase());
+        response.sendRedirect(FRONTEND_HOST + "/login/social/" + loginProvider.toString().toLowerCase());
+    }
+
+    public EPlatform getPlatform(Long userId) {
+        final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        log.info("{}", user.getRole());
+
+        return user.getRole().equals(ERole.ROLE_WEB) ? EPlatform.WEB : EPlatform.MOBILE;
     }
 }

@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import FacilityItem from "@components/admin-main/facility-item/view.tsx";
 import { EFacilityField } from "@type/facility-field.ts";
 import { AdminFacilityListModel } from "@store/admin-facility-list.ts";
+import { EOrder } from "@type/order.ts";
 
 function AdminFacilityList() {
   const {
@@ -34,7 +35,7 @@ function AdminFacilityList() {
         </S.SearchBarDiv>
         <S.SelectDiv data-role="selectbox">
           <S.SelectButton
-            className={sortingOptionOpen ? "open" : ""}
+            className={sorting.order === EOrder.ASC ? "asc" : ""}
             onClick={() => setSortingOptionOpen(!sortingOptionOpen)}
           >
             <ArrowDropDownIcon />

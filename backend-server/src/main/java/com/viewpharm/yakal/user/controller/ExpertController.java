@@ -5,27 +5,38 @@ import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
+import com.viewpharm.yakal.medicalestablishments.dto.request.ExpertCertificationDto;
+import com.viewpharm.yakal.medicalestablishments.dto.request.MedicalEstablishmentDto;
+import com.viewpharm.yakal.medicalestablishments.service.ExpertCertificationService;
+import com.viewpharm.yakal.medicalestablishments.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
-import com.viewpharm.yakal.survey.dto.response.AnswerAllDto;
-import com.viewpharm.yakal.survey.service.SurbeyService;
+import com.viewpharm.yakal.survey.service.SurveyService;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/expert")
+@RequestMapping("/api/v1/experts")
 @Tag(name = "Expert", description = "전문가 웹 관련 API 제공")
 public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
-    private final SurbeyService surbeyService;
-    private final MedicalAppointmentService medicalAppointmentService;
+    private final SurveyService surveyService;
     private final GuardianService guardianService;
+    private final MedicalAppointmentService medicalAppointmentService;
+
+    private final MedicalEstablishmentService medicalEstablishmentService;
+    private final ExpertCertificationService expertCertificationService;
+
 
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
@@ -33,18 +44,45 @@ public class ExpertController {
         return ResponseDto.ok(userService.getUserExpertInfo(userId));
     }
 
+    @PostMapping(value = "/medical-establishments", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "의료기관 등록", description = "의료기관 등록")
+    public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message")MedicalEstablishmentDto requestDto,
+                                                     @RequestPart(value = "file") MultipartFile imgFile) {
+        return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
+    }
+
+    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "전문가 등록", description = "전문가 등록")
+    public ResponseDto<?> createExpertCertification(@UserId Long userId,
+                                                    @RequestPart(value = "message") ExpertCertificationDto requestDto,
+                                                    @RequestPart(value = "certificate") MultipartFile imgFile,
+                                                    @RequestPart(value = "affiliation") MultipartFile affiliationImgFile) {
+        return ResponseDto.ok(expertCertificationService.createExpertCertification(userId, requestDto, imgFile, affiliationImgFile));
+    }
+
     // 권한에 관한 부분 추가 해야 함 (만료기한)
     @GetMapping("/patient/{userId}/dose")
     @Operation(summary = "약정보 가져오기", description = "환자의 Id로 처방받은 약을 가져온다")
     public ResponseDto<PrescribedDto> getPrescrbiedDoses(@PathVariable Long userId
-            , @RequestParam("page") Integer page, @RequestParam("num") Integer num, @RequestParam("period") EPeriod ePeriod){
+            , @RequestParam("page") Integer page, @RequestParam("num") Integer num, @RequestParam("period") EPeriod ePeriod) {
         return ResponseDto.ok(doseService.getPrescribedDoses(userId, page, num, ePeriod));
     }
 
-    @GetMapping("/patient/{patientId}/surbey")
+    /**
+     * 8번, 보호자 정보 가져 오기
+     * @param userId
+     * @return ResponseDto<?>
+     */
+    @GetMapping("/patient/{userId}/guardian")
+    @Operation(summary = "보호자 정보 가져오기", description = "환자의 Id로 보호자 정보를 가져온다")
+    public ResponseDto<?> getGuardianInfo(@PathVariable Long userId) {
+        return ResponseDto.ok(guardianService.readResentGuardian(userId));
+    }
+
+    @GetMapping("/patient/{patientId}/survey")
     @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
-    public ResponseDto<AnswerAllDto> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
+    public ResponseDto<?> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
+        return ResponseDto.ok(surveyService.getAllAnswerListForExpert(id, patientId));
     }
 
     @GetMapping("/patient")
@@ -71,5 +109,17 @@ public class ExpertController {
     @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
     public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
         return ResponseDto.ok(guardianService.readGuardian(patientId));
+    }
+
+    @PatchMapping("/medical-appointment/{patientId}")
+    @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
+    public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
+        return ResponseDto.ok(medicalAppointmentService.updateIsFavorite(expertId, patientId));
+    }
+
+    @GetMapping("/patient/{patientId}/doses")
+    @Operation(summary = "환자 최근 처방약 조회", description = "환자 최근 처방약 5개 조회")
+    public ResponseDto<List<DoseRecentDto>> readRecentDoses(@UserId Long userId, @PathVariable Long patientId) {
+        return ResponseDto.ok(doseService.readRecentDoses(userId, patientId));
     }
 }

@@ -42,38 +42,34 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateIsCertified(Long userId, Boolean isCertified, EJob job);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.breakfast_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.breakfast_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndBreakfastTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.lunch_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.lunch_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndLunchTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.dinner_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.dinner_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndDinnerTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
-            " FROM (SELECT m.user_id as user_id, name as user_name, d.id as dose_id" +
-            " from mobile_users m" +
-            " inner join users u on m.user_id = u.id" +
-            " inner join doses d on m.user_id = d.user_id" +
-            " where d.date = :date and m.dinner_time = :localTime) as q" +
+            " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
+            " from users u" +
+            " inner join doses d on u.id = d.user_id" +
+            " where d.date = :date and u.breakfast_time = :localTime) as q" +
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
@@ -84,11 +80,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByNameAndBirthday(String name, LocalDate birthday);
 
-    @Query("select u from User u where u.name=:name and (u.job=:doctor or u.job = :pharmacist)")
-    List<User> findByNameAndJobOrJob(String name, EJob doctor, EJob pharmacist);
+    @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
+    List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
 
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
     List<User> searchGuardianForUser(@Param("user") User user);
+
+    @Query("select u from User u join fetch u.myGuardian g where g.patient=:user order by g.createdDate desc limit 1")
+    Optional<User> searchResentGuardianForUser(@Param("user") User user);
 
     @Query("select u from User u join fetch u.medicalAppointmentForPatient ma where ma.patient=:user")
     List<User> searchExpertForUser(@Param("user") User user);

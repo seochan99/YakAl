@@ -1,5 +1,8 @@
 package com.viewpharm.yakal.user.service;
 
+import com.viewpharm.yakal.base.type.EJob;
+import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
+import com.viewpharm.yakal.medicalappointment.repository.MedicalAppointmentRepository;
 import com.viewpharm.yakal.user.domain.Expert;
 import com.viewpharm.yakal.domain.Image;
 import com.viewpharm.yakal.domain.Medical;
@@ -37,12 +40,12 @@ public class ExpertService {
     @Value("${spring.image.path}")
     private String FOLDER_PATH;
 
-    public Long createExpert(final Long userId,final Long medicalId,Boolean type){
+    public Long createExpert(final Long userId, final Long medicalId, Boolean type) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        final Medical medical = medicalRepository.findById(medicalId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));
+        final Medical medical = medicalRepository.findById(medicalId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL));
 
         // Expert 가 이미 존재하는 경우
-        if(user.getExpert() != null)
+        if (user.getExpert() != null)
             return user.getExpert().getId();
 
 
@@ -73,27 +76,27 @@ public class ExpertService {
         return expert.getId();
     }
 
-    public List<ExpertRegisterDto> getExpertRegisterList(Long pageIndex, Long pageSize){
+    public List<ExpertRegisterDto> getExpertRegisterList(Long pageIndex, Long pageSize) {
         Pageable pageable = PageRequest.of(pageIndex.intValue(), pageSize.intValue());
         // 전문가 처리 안된 등록 불러오기
-        List<Expert> experts = expertRepository.findExpertByIsProcessed(false,pageable);
+        List<Expert> experts = expertRepository.findExpertByIsProcessed(false, pageable);
 
         //Dto 변환
         List<ExpertRegisterDto> registerDtoList = experts.stream()
-                .map(b -> new ExpertRegisterDto(b.getMedical().getId(),b.getUser().getName(),b.getUser().getBirthday()
-                ,b.getImages().get(0).getPath(),b.getImages().get(1).getPath(),b.getCreateDate()))
+                .map(b -> new ExpertRegisterDto(b.getMedical().getId(), b.getUser().getName(), b.getUser().getBirthday()
+                        , b.getImages().get(0).getPath(), b.getImages().get(1).getPath(), b.getCreateDate()))
                 .collect(Collectors.toList());
 
         return registerDtoList;
     }
 
-    public Boolean updateMedicalRegister(final Long id, final UpdateAdminRequestDto updateAdminRequestDto){
+    public Boolean updateMedicalRegister(final Long id, final UpdateAdminRequestDto updateAdminRequestDto) {
         Boolean isAllow = updateAdminRequestDto.getIsAllow();
-        if(!isAllow)
+        if (!isAllow)
             return Boolean.TRUE;
 
-        User user = userRepository.findById(id).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Expert expert = expertRepository.findByUser(user).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        User user = userRepository.findById(id).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        Expert expert = expertRepository.findByUser(user).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         // 전문가 업데이트
         expert.setIsProcessed(isAllow);

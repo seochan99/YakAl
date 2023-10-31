@@ -1,19 +1,12 @@
 import * as S from "./style.ts";
-import { EJob } from "../../../type/job.ts";
+import { useMyPageViewController } from "@components/main/mypage/view.controller.ts";
 
 function MyPage() {
-  const name = "홍길동";
-  const birthday = new Date("2022-01-01");
-  const tel = "010-9999-9999";
-  const job = EJob.DOCTOR;
-  const department = "가정의학과";
+  const { name, formattedBirthday, tel, jobDetail, belong, isLoading } = useMyPageViewController();
 
-  const formattedBirthday = `${birthday.getFullYear()}. ${
-    birthday.getMonth() + 1 < 10 ? "0".concat((birthday.getMonth() + 1).toString()) : birthday.getMonth() + 1
-  }. ${birthday.getDate()}.`;
-
-  const jobDetail: string | undefined =
-    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
+  if (isLoading()) {
+    return <></>;
+  }
 
   return (
     <S.Outer>
@@ -50,7 +43,7 @@ function MyPage() {
           </S.InputBox>
           <S.BelongInputBox>
             <S.StyledInputLabel>소속</S.StyledInputLabel>
-            <S.StyledInput value={"중앙대학교 부속병원"} readOnly={true} />
+            <S.StyledInput value={belong} readOnly={true} />
           </S.BelongInputBox>
         </S.InnerBox>
       </S.MainSection>

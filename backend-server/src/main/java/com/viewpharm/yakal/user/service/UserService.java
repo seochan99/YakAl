@@ -5,12 +5,14 @@ import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
+import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
+import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -97,7 +100,7 @@ public class UserService {
 
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.setName(name);
+        user.setRealName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
         user.setIsIdentified(true);
@@ -111,17 +114,24 @@ public class UserService {
     }
 
     public UserExpertDto getUserExpertInfo(final Long userId) {
+        //전문가 확인
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        return UserExpertDto.builder()
+                .name(expert.getName())
+                .tel(expert.getTel())
+                .birthday(expert.getBirthday())
+                .job(expert.getJob())
+                .department(expert.getDepartment())
+                .build();
+    }
+
+    public void updateUserOptionalAgreement(final Long userId, final Boolean isOptionalAgreement) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return UserExpertDto.builder()
-                .name(user.getName())
-                .tel(user.getTel())
-                .birthday(user.getBirthday())
-                .job(user.getJob())
-                .department(user.getDepartment())
-
-                .build();
+        user.updateIsOptionalAgreementAccepted(isOptionalAgreement);
     }
 
     public void updateUserInfo(final Long userId, final String name, final Boolean isDetail) {
@@ -132,16 +142,15 @@ public class UserService {
         }
     }
 
-    public boolean checkIsRegistered(final Long userId) throws CommonException {
+    public UserRegisterDto checkIsRegistered(final Long userId) throws CommonException {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return (user.getBirthday() != null
-                && user.getName() != null
-                //&& user.getSex() != null
-                && user.getIsDetail() != null
-                && user.getBreakfastTime() != null
-                && user.getLunchTime() != null
-                && user.getDinnerTime() != null);
+        return UserRegisterDto.builder()
+                .name(user.getName())
+                .isDetail(user.getIsDetail())
+                .isOptionalAgreementAccepted(user.getIsOptionalAgreementAccepted())
+                .isIdentified(user.getIsIdentified())
+                .build();
     }
 
     public void updateName(final Long userId, final String name) {
@@ -184,7 +193,7 @@ public class UserService {
     public Boolean updateUserDevice(Long userId, UserDeviceRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.updateDevice(requestDto.getDevice_token(), requestDto.getIs_ios());
+        user.updateDevice(requestDto.getDevice_token());
         return Boolean.TRUE;
     }
 
@@ -197,10 +206,28 @@ public class UserService {
     }
 
     public List<UserListDtoForGuardian> searchUserForExpert(String expertName) {
-        List<User> experts = userRepository.findByNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
+        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
 
         return experts.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
                 .collect(Collectors.toList());
+    }
+
+    public Boolean setUserNotificationTime(Long userId, UpdateNotificationTimeDto requestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        LocalTime time = requestDto.getTime();
+
+        if (requestDto.getTimezone().equals("breakfast") && time.isAfter(LocalTime.of(06, 59, 59)) && time.isBefore(LocalTime.of(11, 00, 00))) {
+            user.updateBreakfastNotificationTime(requestDto.getTime());
+        } else if (requestDto.getTimezone().equals("lunch") && time.isAfter(LocalTime.of(10, 59, 59)) && time.isBefore(LocalTime.of(17, 00, 00))) {
+            user.updateLunchNotificationTime(requestDto.getTime());
+        } else if (requestDto.getTimezone().equals("dinner") && time.isAfter(LocalTime.of(16, 59, 59)) && time.isBefore(LocalTime.of(23, 59, 59))) {
+            user.updateDinnerNotificationTime(requestDto.getTime());
+        } else {
+            throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        }
+
+        return Boolean.TRUE;
     }
 }

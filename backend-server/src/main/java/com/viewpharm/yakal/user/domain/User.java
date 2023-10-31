@@ -1,5 +1,7 @@
 package com.viewpharm.yakal.user.domain;
 
+import com.viewpharm.yakal.medicalestablishments.domain.ExpertCertification;
+import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
 import com.viewpharm.yakal.survey.domain.Answer;
 import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.Image;
@@ -43,6 +45,9 @@ public class User {
     /**
      * COLUMNS
      */
+    @Column(name = "real_name", columnDefinition = "CHAR(20)")
+    private String realName;
+
     @Column(name = "name", columnDefinition = "CHAR(20)")
     private String name;
 
@@ -80,23 +85,23 @@ public class User {
     @Column(name = "is_login", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isLogin;
 
-    @Column(name = "is_ios", columnDefinition = "TINYINT(1)")
-    private Boolean isIos;
-
     @Column(name = "is_detail", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isDetail;
 
     @Column(name = "noti_is_allowed", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean notiIsAllowed;
 
-    @Column(name = "breakfastTime")
+    @Column(name = "breakfastTime", nullable = false)
     private LocalTime breakfastTime;
 
-    @Column(name = "lunchTime")
+    @Column(name = "lunchTime", nullable = false)
     private LocalTime lunchTime;
 
-    @Column(name = "dinnerTime")
+    @Column(name = "dinnerTime", nullable = false)
     private LocalTime dinnerTime;
+
+    @Column(name = "is_optional_agreement_accepted")
+    private Boolean isOptionalAgreementAccepted;
 
     //초기 직업은 환자로 설정
     @Column(name = "job")
@@ -125,10 +130,17 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Expert expert;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medical_establishment_id")
+    private MedicalEstablishment medicalEstablishment;
+
 
     /**
      * ONE-TO-MANY RELATION
      */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<ExpertCertification> expertCertifications = new ArrayList<>();
+
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Prescription> prescriptions = new ArrayList<>();
 
@@ -181,14 +193,30 @@ public class User {
         this.notiIsAllowed = true;
         this.image = image;
         this.isIdentified = false;
+        this.isOptionalAgreementAccepted = null;
         this.breakfastTime = LocalTime.of(9,0,0);
         this.lunchTime = LocalTime.of(13,0,0);
         this.dinnerTime = LocalTime.of(18,0,0);
     }
 
-    public void updateDevice(String deviceToken, Boolean isIos) {
+    public void updateIsOptionalAgreementAccepted(Boolean isOptionalAgreementAccepted) {
+        this.isOptionalAgreementAccepted = isOptionalAgreementAccepted;
+    }
+
+    public void updateDevice(String deviceToken) {
         this.deviceToken = deviceToken;
-        this.isIos = isIos;
+    }
+
+    public void updateBreakfastNotificationTime(LocalTime breakfastTime) {
+        this.breakfastTime = breakfastTime;
+    }
+
+    public void updateLunchNotificationTime(LocalTime lunchTime) {
+        this.lunchTime = lunchTime;
+    }
+
+    public void updateDinnerNotificationTime(LocalTime dinnerTime) {
+        this.dinnerTime = dinnerTime;
     }
 
     public void logout() {

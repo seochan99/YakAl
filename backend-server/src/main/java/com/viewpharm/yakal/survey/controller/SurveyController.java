@@ -2,10 +2,8 @@ package com.viewpharm.yakal.survey.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.survey.dto.response.AnswerAllDto;
-import com.viewpharm.yakal.survey.dto.response.AnswerDetailDto;
 import com.viewpharm.yakal.survey.dto.request.AnswerRequestDto;
-import com.viewpharm.yakal.survey.service.SurbeyService;
+import com.viewpharm.yakal.survey.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -16,34 +14,30 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/survey")
+@RequestMapping("/api/v1/surveys")
 @Tag(name = "Survey", description = "설문조사")
 public class SurveyController {
-    private final SurbeyService surbeyService;
+    private final SurveyService surveyService;
 
     @PostMapping("/{surveyId}/answer")
     @Operation(summary = "설문 작성", description = "설문 작성")
-    public ResponseDto<Boolean> createAnswer(@UserId Long id, @PathVariable Long surveyId, @RequestBody @Valid AnswerRequestDto requestDto) {
-        return ResponseDto.ok(surbeyService.createAnswer(id, surveyId, requestDto));
+    public ResponseDto<?> createAnswer(@UserId Long id, @PathVariable Long surveyId, @RequestBody @Valid AnswerRequestDto requestDto) {
+        return ResponseDto.ok(surveyService.createAnswer(id, surveyId, requestDto));
     }
 
-    @GetMapping("/{answerId}")
-    @Operation(summary = "설문 가져오기", description = "설문 가져오기")
-    public ResponseDto<AnswerDetailDto> readAnswer(@UserId Long id, @PathVariable Long answerId) {
-        return ResponseDto.ok(surbeyService.readAnswer(id, answerId));
+    @GetMapping("/answer")
+    @Operation(summary = "설문 목록 가져오기", description = "설문 목록 가져오기")
+    public ResponseDto<?> readAnswer(@UserId Long userId) {
+        return ResponseDto.ok(surveyService.readAnswers(userId));
     }
 
-    @DeleteMapping("/{answerId}")
+    @DeleteMapping("/{surveyId}/answer")
     @Operation(summary = "설문 삭제", description = "특정 설문 삭제")
-    public ResponseDto<Boolean> deleteAnswer(@UserId Long id, @PathVariable Long answerId) {
-        return ResponseDto.ok(surbeyService.deleteAnswer(id, answerId));
+    public ResponseDto<?> deleteAnswer(@UserId Long id, @PathVariable Long surveyId) {
+        return ResponseDto.ok(surveyService.deleteAnswer(id, surveyId));
     }
 
-    @GetMapping("/answer/my")
-    @Operation(summary = "설문 리스트", description = "자신이 작성한 설문 리스트 들고오기")
-    public ResponseDto<AnswerAllDto> getAllAnswerList(@UserId Long id) {
-        return ResponseDto.ok(surbeyService.getAllAnswerList(id));
-    }
+
 
 
 

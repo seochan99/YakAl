@@ -41,10 +41,29 @@ export const LeftTitleDiv = styled.div`
 export const RightTitleDiv = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: end;
-  gap: 0.6rem;
+  align-items: center;
+  gap: 1rem;
   min-width: 30%;
   justify-content: end;
+`;
+
+export const RiskLevelDiv = styled.div<{ riskLevel: number }>`
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 1.7rem;
+  color: var(--White, #fff);
+  background-color: ${(params) =>
+    params.riskLevel === 3
+      ? "var(--Red, #fb5d5d)"
+      : params.riskLevel === 2
+      ? "var(--Yellow, #fb5d5d)"
+      : params.riskLevel === 1
+      ? "var(--Green)"
+      : "var(--Gray1)"};
 `;
 
 export const TitleSpan = styled.span`
@@ -94,6 +113,15 @@ export const RowDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
   padding: 1rem 1.25rem;
+  align-items: center;
+  gap: 1rem;
+`;
+
+export const AnticholinergicRowDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.775rem 1.25rem;
   align-items: center;
   gap: 1rem;
 `;
