@@ -39,6 +39,7 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
         isSuccess = await socialLoginProvider.googleLogin();
         break;
       case ELoginPlatform.APPLE:
+        isSuccess = await socialLoginProvider.appleLogin();
         break;
     }
 
@@ -71,7 +72,7 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
 
       switch (loginPlatform) {
         case ELoginPlatform.KAKAO:
-          message = '키키오 로그인에 실패했습니다.';
+          message = '카카오 로그인에 실패했습니다.';
           break;
         case ELoginPlatform.GOOGLE:
           message = '구글 로그인에 실패했습니다.';
@@ -141,7 +142,7 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
                           backgroundColor: ColorStyles.black,
                           iconPath: "assets/icons/apple.svg",
                           onPressed: () {
-                            _showComingSoonSnackBar(context);
+                            _login(ELoginPlatform.APPLE);
                           },
                         )
                       : SocialLoginButton(

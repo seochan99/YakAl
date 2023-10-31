@@ -18,7 +18,7 @@ class SurveyDetailBokyakController extends GetxController {
     var dio = await authDioWithContext();
 
     try {
-      var response = await dio.get("/survey/answer");
+      var response = await dio.get("/surveys/answer");
 
       if (response.statusCode == 200) {
         List dataList = response.data['data']['datalist'];
@@ -103,7 +103,7 @@ class SurveyDetailBokyakController extends GetxController {
 
     try {
       // 설문 결과 등록
-      var response = await dio.post("/survey/${surveyModel.id}/answer",
+      var response = await dio.post("/surveys/${surveyModel.id}/answer",
           data: {"content": jsonEncode(results), "score": totalScore});
 
       // 200이면

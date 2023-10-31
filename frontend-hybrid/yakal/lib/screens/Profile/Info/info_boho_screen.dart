@@ -22,6 +22,7 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
   int bohoId = 0;
   bool isLoading = false;
   bool isSelectedBoho = false;
+  bool isSelectedSearch = false;
 
   final TextEditingController _bohoNameController = TextEditingController();
   DateTime? _selectedBirthDate;
@@ -39,7 +40,6 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
     setState(() {
       _selectedBirthDate = null;
     });
-
     // Navigator.pop(context);
   }
 
@@ -142,11 +142,13 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 16),
-                      Text(
-                        widget.userViewModel.user.value.guardian == null
-                            ? '등록된 보호자가 없습니다.'
-                            : '${widget.userViewModel.user.value.guardian!.name}님 (${widget.userViewModel.user.value.guardian!.birthDate})',
-                      ),
+                      Obx(() {
+                        return Text(
+                          widget.userViewModel.user.value.guardian == null
+                              ? '등록된 보호자가 없습니다.'
+                              : '${widget.userViewModel.user.value.guardian!.name}님 (${widget.userViewModel.user.value.guardian!.birthDate})',
+                        );
+                      }),
                       const SizedBox(height: 24),
                       const Text(
                         '보호자를 선택해주세요!',
@@ -158,8 +160,7 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
 
                       Obx(() {
                         return guardianController.guardians.isEmpty
-                            ? Text(
-                                '검색된 보호자가 없습니다.${guardianController.guardians}')
+                            ? const Text('검색된 보호자가 없습니다.')
                             : ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: guardianController.guardians.length,
@@ -169,6 +170,7 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                                   return Card(
                                     child: InkWell(
                                       onTap: () {
+                                        _handleButtonPress();
                                         setState(() {
                                           bohoId = guardian.id;
                                           isSelectedBoho = true;
@@ -202,8 +204,9 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
               child: ValueListenableBuilder<TextEditingValue>(
                 valueListenable: _bohoNameController,
                 builder: (context, value, child) {
-                  final isButtonEnabled =
-                      value.text.isNotEmpty && _selectedBirthDate != null;
+                  final isButtonEnabled = value.text.isNotEmpty &&
+                      _selectedBirthDate != null &&
+                      !isSelectedBoho;
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
@@ -222,38 +225,38 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                 },
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(
-                20.0,
-                0.0,
-                20.0,
-                30,
-              ),
-              child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _bohoNameController,
-                builder: (context, value, child) {
-                  final isButtonEnabled = isSelectedBoho;
-                  return isButtonEnabled
-                      ? ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            minimumSize: const Size(double.infinity, 50),
-                            foregroundColor: Colors.white,
-                            backgroundColor: isButtonEnabled
-                                ? const Color(0xff2666f6)
-                                : Colors.grey,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                            ),
-                          ),
-                          onPressed:
-                              isButtonEnabled ? _handleButtonPress : null,
-                          child: const Text("추가 하기",
-                              style: TextStyle(fontSize: 20.0)),
-                        )
-                      : Container();
-                },
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(
+            //     20.0,
+            //     0.0,
+            //     20.0,
+            //     30,
+            //   ),
+            //   child: ValueListenableBuilder<TextEditingValue>(
+            //     valueListenable: _bohoNameController,
+            //     builder: (context, value, child) {
+            //       final isButtonEnabled = isSelectedBoho;
+            //       return isButtonEnabled
+            //           ? ElevatedButton(
+            //               style: ElevatedButton.styleFrom(
+            //                 minimumSize: const Size(double.infinity, 50),
+            //                 foregroundColor: Colors.white,
+            //                 backgroundColor: isButtonEnabled
+            //                     ? const Color(0xff2666f6)
+            //                     : Colors.grey,
+            //                 shape: RoundedRectangleBorder(
+            //                   borderRadius: BorderRadius.circular(8.0),
+            //                 ),
+            //               ),
+            //               onPressed:
+            //                   isButtonEnabled ? _handleButtonPress : null,
+            //               child: const Text("추가 하기",
+            //                   style: TextStyle(fontSize: 20.0)),
+            //             )
+            //           : Container();
+            //     },
+            //   ),
+            // ),
           ],
         ),
       ),

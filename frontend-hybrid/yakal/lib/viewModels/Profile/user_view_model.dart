@@ -113,10 +113,11 @@ class UserViewModel extends GetxController {
       var dio = await authDioWithContext();
 
       var response = await dio.get("/guardians");
+      print(response);
+
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {
-          // val?.guardian = Guardian.fromJson(response.data['data']);
-          // val?.guardian = Guardian(name: name, birthDate: birthDate);
+          val?.guardian = Guardian.fromJson(response.data['data']);
         });
       }
     } catch (e) {

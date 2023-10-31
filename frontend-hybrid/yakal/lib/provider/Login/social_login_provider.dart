@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:yakal/utilities/enum/login_platform.dart';
 
 class SocialLoginProvider {
@@ -90,6 +91,38 @@ class SocialLoginProvider {
         return false;
       }
     }
+  }
+
+  // apple login
+  Future<bool> appleLogin() async {
+    try {
+      final AuthorizationCredentialAppleID credential =
+          await SignInWithApple.getAppleIDCredential(
+        scopes: [
+          AppleIDAuthorizationScopes.email,
+          AppleIDAuthorizationScopes.fullName,
+        ],
+      );
+
+      var accessToken = credential.identityToken;
+      print("APPLE의 accesTOKEN은 $accessToken");
+
+      if (accessToken == null) {
+        return false;
+      }
+
+      return await _loginByAccessToken(accessToken, ELoginPlatform.APPLE);
+    } catch (error) {
+      print('error = $error');
+      return false;
+    }
+  }
+
+  Future<String?> requestAppleAccessToken(
+      AuthorizationCredentialAppleID credential) async {
+    return null;
+
+    // return await _loginByAccessToken(credential, ELoginPlatform.APPLE);
   }
 
   Future<bool> googleLogin() async {
