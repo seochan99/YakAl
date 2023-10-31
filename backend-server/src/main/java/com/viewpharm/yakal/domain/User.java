@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.domain;
 
-import com.viewpharm.yakal.notablefeatures.domain.*;
+import com.viewpharm.yakal.guardian.domain.Guardian;
+import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
+import com.viewpharm.yakal.notablefeature.domain.*;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.ERole;
@@ -142,6 +144,9 @@ public class User {
 
     @OneToMany(mappedBy = "guardian", fetch = FetchType.LAZY)
     private List<Guardian> myGuardian;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<HospitalizationRecord> hospitalizationRecords = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UnderlyingCondition> underlyingConditions = new ArrayList<>();

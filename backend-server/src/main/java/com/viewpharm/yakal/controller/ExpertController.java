@@ -2,6 +2,7 @@ package com.viewpharm.yakal.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
+import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +19,7 @@ public class ExpertController {
     private final DoseService doseService;
     private final SurbeyService surbeyService;
     private final CounselService counselService;
+    private final GuardianService guardianService;
 
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
@@ -49,5 +51,19 @@ public class ExpertController {
     @Operation(summary = "환자 리스트", description = "환자 이름으로 리스트 가져오기")
     public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
         return ResponseDto.ok(counselService.getPatientListByName(id, name, sort, order, page, num));
+    }
+
+    @Deprecated
+    @GetMapping("/guardian/{guardianId}")
+    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
+    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
+        return ResponseDto.ok(guardianService.readPatient(guardianId));
+    }
+
+    @Deprecated
+    @GetMapping("/patient/{patientId}")
+    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
+    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
+        return ResponseDto.ok(guardianService.readGuardian(patientId));
     }
 }
