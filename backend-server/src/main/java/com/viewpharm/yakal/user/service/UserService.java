@@ -5,6 +5,7 @@ import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
+import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.common.exception.CommonException;
@@ -24,6 +25,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -202,5 +204,23 @@ public class UserService {
         return experts.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
                 .collect(Collectors.toList());
+    }
+
+    public Boolean setUserNotificationTime(Long userId, UpdateNotificationTimeDto requestDto) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        LocalTime time = requestDto.getTime();
+
+        if (requestDto.getTimezone().equals("breakfast") && time.isAfter(LocalTime.of(06, 59, 59)) && time.isBefore(LocalTime.of(11, 00, 00))) {
+            user.updateBreakfastNotificationTime(requestDto.getTime());
+        } else if (requestDto.getTimezone().equals("lunch") && time.isAfter(LocalTime.of(10, 59, 59)) && time.isBefore(LocalTime.of(17, 00, 00))) {
+            user.updateLunchNotificationTime(requestDto.getTime());
+        } else if (requestDto.getTimezone().equals("dinner") && time.isAfter(LocalTime.of(16, 59, 59)) && time.isBefore(LocalTime.of(23, 59, 59))) {
+            user.updateDinnerNotificationTime(requestDto.getTime());
+        } else {
+            throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        }
+
+        return Boolean.TRUE;
     }
 }

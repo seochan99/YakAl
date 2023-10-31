@@ -181,14 +181,26 @@ public class User {
         this.notiIsAllowed = true;
         this.image = image;
         this.isIdentified = false;
-        this.breakfastTime = LocalTime.of(9,0,0);
-        this.lunchTime = LocalTime.of(13,0,0);
-        this.dinnerTime = LocalTime.of(18,0,0);
+        this.breakfastTime = LocalTime.of(9, 0, 0);
+        this.lunchTime = LocalTime.of(13, 0, 0);
+        this.dinnerTime = LocalTime.of(18, 0, 0);
     }
 
     public void updateDevice(String deviceToken, Boolean isIos) {
         this.deviceToken = deviceToken;
         this.isIos = isIos;
+    }
+
+    public void updateBreakfastNotificationTime(LocalTime breakfastTime) {
+        this.breakfastTime = breakfastTime;
+    }
+
+    public void updateLunchNotificationTime(LocalTime lunchTime) {
+        this.lunchTime = lunchTime;
+    }
+
+    public void updateDinnerNotificationTime(LocalTime dinnerTime) {
+        this.dinnerTime = dinnerTime;
     }
 
     public void logout() {

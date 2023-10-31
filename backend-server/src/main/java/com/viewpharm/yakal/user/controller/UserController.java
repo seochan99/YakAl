@@ -117,4 +117,10 @@ public class UserController {
     public ResponseDto<?> readExpertUsers(@RequestParam("name") String expertName) {
         return ResponseDto.ok(userService.searchUserForExpert(expertName));
     }
+
+    @PatchMapping("/notification-time")
+    @Operation(summary = "유저 알림 시간 설정", description = "유저 알림 시간 설정")
+    public ResponseDto<?> setUserNotificationTime(@UserId Long userId, @RequestBody UpdateNotificationTimeDto requestDto) {
+        return ResponseDto.ok(userService.setUserNotificationTime(userId, requestDto));
+    }
 }
