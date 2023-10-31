@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.user.domain;
 
+import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
 import com.viewpharm.yakal.survey.domain.Answer;
 import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.Image;
@@ -83,9 +84,6 @@ public class User {
     @Column(name = "is_login", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isLogin;
 
-    @Column(name = "is_ios", columnDefinition = "TINYINT(1)")
-    private Boolean isIos;
-
     @Column(name = "is_detail", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isDetail;
 
@@ -130,6 +128,10 @@ public class User {
 
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     private Expert expert;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "medical_establishment_id")
+    private MedicalEstablishment medicalEstablishment;
 
 
     /**
@@ -197,9 +199,8 @@ public class User {
         this.isOptionalAgreementAccepted = isOptionalAgreementAccepted;
     }
 
-    public void updateDevice(String deviceToken, Boolean isIos) {
+    public void updateDevice(String deviceToken) {
         this.deviceToken = deviceToken;
-        this.isIos = isIos;
     }
 
     public void updateBreakfastNotificationTime(LocalTime breakfastTime) {

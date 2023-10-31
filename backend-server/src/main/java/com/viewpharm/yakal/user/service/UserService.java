@@ -193,7 +193,7 @@ public class UserService {
     public Boolean updateUserDevice(Long userId, UserDeviceRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.updateDevice(requestDto.getDevice_token(), requestDto.getIs_ios());
+        user.updateDevice(requestDto.getDevice_token());
         return Boolean.TRUE;
     }
 

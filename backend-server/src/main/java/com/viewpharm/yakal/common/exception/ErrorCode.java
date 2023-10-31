@@ -44,6 +44,7 @@ public enum ErrorCode {
     DUPLICATION_GUARDIAN("4012", HttpStatus.BAD_REQUEST, "해당 보호자 관계가 이미 있습니다."),
     EQUAL_GUARDIAN("4013", HttpStatus.BAD_REQUEST, "같은 유저는 보호자가 될 수 없습니다."),
     DUPLICATION_NOTABLE_FEATURE("4014", HttpStatus.BAD_REQUEST, "존재하는 특이사항입니다."),
+    DUPLICATION_MEDICAL_ESTABLISHMENT("4015", HttpStatus.BAD_REQUEST, "이미 존재하는 의료기관입니다."),
 
     // Server, File Up/DownLoad Error
     SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "API 서버 오류입니다. 혹은 아닐 수도... End Point를 확인해주세요!"),
@@ -83,7 +84,7 @@ public enum ErrorCode {
 
     TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "Unknown Error"),
 
-    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "Insufficient Privileges Error");
+    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "권한이 부족합니다.");
 
     private final String code;
     private final HttpStatus httpStatus;

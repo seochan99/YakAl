@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.controller;
+package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.base.ResponseDto;
