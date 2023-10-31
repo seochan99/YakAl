@@ -150,7 +150,7 @@ class ProfileScreen extends StatelessWidget {
                           text: '버전 정보', routerLinkText: null),
                       Container(color: ColorStyles.gray1, height: 8),
                       const ProfileSettingRowBoxWidget(
-                          text: '전문가 인증', routerLinkText: "/wishList"),
+                          text: '전문가 인증', routerLinkText: "/certification"),
                     ],
                   );
                 }),
