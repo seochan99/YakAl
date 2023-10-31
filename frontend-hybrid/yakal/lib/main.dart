@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -102,10 +103,20 @@ class MyApp extends StatelessWidget {
     // 앱 실행
     return GetMaterialApp(
       title: '약 알',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        // if it's a RTL language
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        // include country code too
+      ],
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+
         // colorScheme:
         //   const ColorScheme(
         //     brightness: Brightness.light,
