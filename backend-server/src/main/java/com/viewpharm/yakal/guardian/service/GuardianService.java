@@ -57,6 +57,18 @@ public class GuardianService {
                 .collect(Collectors.toList());
     }
 
+    public UserListDtoForGuardian readResentGuardian(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        User resentGuardian = userRepository.searchResentGuardianForUser(user).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
+
+
+        return UserListDtoForGuardian.builder().
+                id(resentGuardian.getId())
+                .birthday(resentGuardian.getBirthday().toString())
+                .name(resentGuardian.getName()).build();
+    }
+
+
     public Boolean deleteGuardian(Long userId, Long guardianId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         User guardian = userRepository.findById(guardianId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
