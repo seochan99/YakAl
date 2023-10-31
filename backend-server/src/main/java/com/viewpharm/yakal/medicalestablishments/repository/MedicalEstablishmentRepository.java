@@ -8,4 +8,6 @@ import java.util.Optional;
 public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEstablishment, Long> {
 
     Optional<MedicalEstablishment> findByEstablishmentNumberAndIsRegister(String establishmentNumber, Boolean isRegister);
+
+    Optional<MedicalEstablishment> findByIdAndIsRegister(Long id, Boolean isRegister);
 }

@@ -5,8 +5,9 @@ import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
-import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
+import com.viewpharm.yakal.medicalestablishments.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishments.dto.request.MedicalEstablishmentDto;
+import com.viewpharm.yakal.medicalestablishments.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishments.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
@@ -30,9 +31,11 @@ public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
     private final SurveyService surveyService;
-    private final MedicalAppointmentService medicalAppointmentService;
-    private final MedicalEstablishmentService medicalEstablishmentService;
     private final GuardianService guardianService;
+    private final MedicalAppointmentService medicalAppointmentService;
+
+    private final MedicalEstablishmentService medicalEstablishmentService;
+    private final ExpertCertificationService expertCertificationService;
 
 
     @GetMapping("")
@@ -46,6 +49,15 @@ public class ExpertController {
     public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message")MedicalEstablishmentDto requestDto,
                                                      @RequestPart(value = "file") MultipartFile imgFile) {
         return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
+    }
+
+    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @Operation(summary = "전문가 등록", description = "전문가 등록")
+    public ResponseDto<?> createExpertCertification(@UserId Long userId,
+                                                    @RequestPart(value = "message") ExpertCertificationDto requestDto,
+                                                    @RequestPart(value = "certificate") MultipartFile imgFile,
+                                                    @RequestPart(value = "affiliation") MultipartFile affiliationImgFile) {
+        return ResponseDto.ok(expertCertificationService.createExpertCertification(userId, requestDto, imgFile, affiliationImgFile));
     }
 
     // 권한에 관한 부분 추가 해야 함 (만료기한)
