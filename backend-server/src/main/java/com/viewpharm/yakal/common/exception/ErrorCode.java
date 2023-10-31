@@ -27,6 +27,7 @@ public enum ErrorCode {
     NOT_FOUND_SURBEY("4055", HttpStatus.NOT_FOUND, "해당 설문이 존재하지 않습니다."),
     NOT_FOUND_ANSWER("4056", HttpStatus.NOT_FOUND, "해당 설문결과가 존재하지 않습니다."),
     NOT_FOUND_NOTABLE_FEATURE("4057", HttpStatus.NOT_FOUND, "해당 특이사항이 존재하지 않습니다."),
+    NOT_FOUND_MEDICAL_RECORD("4058", HttpStatus.NOT_FOUND, "해당 진료기록이 존재하지 않습니다."),
     NOT_FOUND_DIAGNOSIS("4057", HttpStatus.NOT_FOUND, "해당 과거 병명이 존재하지 않습니다."),
     NOT_FOUND_HEALTHFOOD("4058", HttpStatus.NOT_FOUND, "해당 건강기능 식품이 존재하지 않습니다."),
     NOT_FOUND_REGISTRATION("4059", HttpStatus.NOT_FOUND, "해당 등록신청 사항이 존재하지 않습니다."),
