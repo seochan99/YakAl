@@ -1,7 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { PatientPageViewModel } from "./view.model.ts";
 import { useCallback, useEffect } from "react";
-import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 
 export const usePatientPageViewController = () => {
   PatientPageViewModel.use();
@@ -13,6 +13,7 @@ export const usePatientPageViewController = () => {
   const patientId = +location.pathname.substring(lastSlashIndex + 1);
 
   useEffect(() => {
+    PatientPageViewModel.fetchProtector(patientId);
     PatientPageViewModel.fetchBase(patientId);
   }, [patientId]);
 

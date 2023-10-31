@@ -66,21 +66,6 @@ export const BaseInfoDiv = styled.div`
   background: var(--White, #fff);
 `;
 
-export const NokComingSoonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  justify-self: center;
-  width: 100%;
-  color: var(--Gray4, #90909f);
-  font-family: SUIT, serif;
-  font-size: 1.2rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.2rem;
-`;
-
 export const SelfBaseTitle = styled.div`
   display: inline-flex;
   flex-direction: column;

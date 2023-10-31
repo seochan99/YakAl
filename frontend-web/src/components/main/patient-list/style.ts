@@ -169,6 +169,7 @@ export const SelectList = styled.ul`
   border: 0.1rem solid var(--Gray3, #c6c6cf);
   right: 0;
   width: 7.1rem;
+  z-index: 100;
 `;
 
 export const SelectItem = styled.li`

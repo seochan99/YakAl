@@ -16,12 +16,13 @@ function PatientPage() {
     tab: { currentTab, tabInfos, onClickTab },
   } = usePatientPageViewController();
 
-  if (patientInfo.base === null) {
+  if (patientInfo.base === null || patientInfo.protector === null) {
     return <></>;
   }
 
   const {
     base: { name, profileImg, birthday, sex, tel },
+    protector: { name: pName, relationship: pRelationship, tel: pTel },
   } = patientInfo;
 
   return (
@@ -57,7 +58,19 @@ function PatientPage() {
           </S.InfoTextDiv>
         </S.BaseInfoDiv>
         <S.BaseInfoDiv>
-          <S.NokComingSoonDiv>{"보호자 기능 추가 예정입니다."}</S.NokComingSoonDiv>
+          <S.SelfBaseTitle>
+            <span>{"보호자"}</span>
+          </S.SelfBaseTitle>
+          <S.InfoTextDiv>
+            <S.NameSexBirthDiv>
+              <S.NameSpan>
+                {pName.substring(0, 4)}
+                {pName.length > 4 ? "..." : ""}
+              </S.NameSpan>
+              <S.IconContainedSpan>{`(${pRelationship})`}</S.IconContainedSpan>
+            </S.NameSexBirthDiv>
+            <S.NormalSpan>{`Tel. ${pTel}`}</S.NormalSpan>
+          </S.InfoTextDiv>
         </S.BaseInfoDiv>
       </S.HeaderDiv>
       <S.BodyDiv>

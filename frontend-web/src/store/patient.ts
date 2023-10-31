@@ -1,5 +1,5 @@
-import { ESex } from "../../../type/sex.ts";
-import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
+import { ESex } from "@type/sex.ts";
+import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 
 type TPatientInfo = {
   base: {
@@ -7,6 +7,11 @@ type TPatientInfo = {
     profileImg: string;
     birthday: number[];
     sex: ESex;
+    tel: string;
+  } | null;
+  protector: {
+    name: string;
+    relationship: string;
     tel: string;
   } | null;
   medication: {
@@ -74,6 +79,7 @@ type TPatientInfo = {
 export class PatientModel {
   private static patientInfo: TPatientInfo = {
     base: null,
+    protector: null,
     medication: {
       etc: {
         list: null,
@@ -107,6 +113,7 @@ export class PatientModel {
   public static invalidate = () => {
     this.patientInfo = {
       base: null,
+      protector: null,
       medication: {
         etc: {
           list: null,
@@ -132,6 +139,10 @@ export class PatientModel {
 
   public static invalidateBase = () => {
     this.patientInfo.base = null;
+  };
+
+  public static invalidateProtector = () => {
+    this.patientInfo.protector = null;
   };
 
   public static invalidateETC = () => {
@@ -179,6 +190,16 @@ export class PatientModel {
       birthday: [1993, 12, 19],
       sex: ESex.MALE,
       tel: "010-1111-1111",
+    };
+  };
+
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  public static fetchProtector = async (patientId: number) => {
+    this.patientInfo.protector = {
+      name: "홍길동",
+      relationship: "형제",
+      tel: "010-2222-2222",
     };
   };
 
