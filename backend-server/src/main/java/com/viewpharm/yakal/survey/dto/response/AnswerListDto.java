@@ -5,12 +5,16 @@ import lombok.Getter;
 
 @Getter
 public class AnswerListDto {
+    Long id;
     String title;
     int result;
+    String resultComment;
 
     @Builder
-    public AnswerListDto(String title, int result) {
+    public AnswerListDto(Long id, String title, int result, String resultComment) {
+        this.id = id;
         this.title = title;
         this.result = result;
+        this.resultComment = resultComment;
     }
 }

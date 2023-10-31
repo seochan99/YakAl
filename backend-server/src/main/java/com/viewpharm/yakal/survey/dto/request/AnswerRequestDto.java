@@ -18,4 +18,8 @@ public class AnswerRequestDto {
     @NotNull
     @Min(0)
     private int score;
+
+    @NotNull
+    @Size(min = 1)
+    private String resultComment;
 }

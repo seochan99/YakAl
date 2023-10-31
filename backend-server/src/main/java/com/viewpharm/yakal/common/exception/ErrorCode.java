@@ -46,7 +46,7 @@ public enum ErrorCode {
     DUPLICATION_NOTABLE_FEATURE("4014", HttpStatus.BAD_REQUEST, "존재하는 특이사항입니다."),
 
     // Server, File Up/DownLoad Error
-    SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "API 서버 오류입니다. 혹은 아닐수도..."),
+    SERVER_ERROR("5000", HttpStatus.INTERNAL_SERVER_ERROR, "API 서버 오류입니다. 혹은 아닐 수도... End Point를 확인해주세요!"),
 
     NOT_IMAGE_ERROR("5024", HttpStatus.INTERNAL_SERVER_ERROR, "Image 업로드를 실패하였습니다."),
 

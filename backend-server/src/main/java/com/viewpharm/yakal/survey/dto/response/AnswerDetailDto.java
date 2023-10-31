@@ -6,8 +6,8 @@ import lombok.Getter;
 @Getter
 public class AnswerDetailDto {
     String title;
-    String content;
     int result;
+    String content;
 
     @Builder
     public AnswerDetailDto(String title, String content, int result) {

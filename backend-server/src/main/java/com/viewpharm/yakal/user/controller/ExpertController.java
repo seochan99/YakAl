@@ -7,8 +7,7 @@ import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.service.*;
 import com.viewpharm.yakal.base.type.EPeriod;
-import com.viewpharm.yakal.survey.dto.response.AnswerAllDto;
-import com.viewpharm.yakal.survey.service.SurbeyService;
+import com.viewpharm.yakal.survey.service.SurveyService;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/expert")
+@RequestMapping("/api/v1/experts")
 @Tag(name = "Expert", description = "전문가 웹 관련 API 제공")
 public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
-    private final SurbeyService surbeyService;
+    private final SurveyService surveyService;
     private final MedicalAppointmentService medicalAppointmentService;
     private final GuardianService guardianService;
 
@@ -43,8 +42,8 @@ public class ExpertController {
 
     @GetMapping("/patient/{patientId}/surbey")
     @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
-    public ResponseDto<AnswerAllDto> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(surbeyService.getAllAnswerListForExpert(id, patientId));
+    public ResponseDto<?> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
+        return ResponseDto.ok(surveyService.getAllAnswerListForExpert(id, patientId));
     }
 
     @GetMapping("/patient")
