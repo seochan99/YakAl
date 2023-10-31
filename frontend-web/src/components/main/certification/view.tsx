@@ -3,11 +3,11 @@ import Pagination from "react-js-pagination";
 import { EJob } from "@type/job.ts";
 import { ListFooter } from "@style/global_style.ts";
 import { facilityList } from "@store/facility-list.ts";
-import { useCertifyPageViewController } from "@components/main/certify/view.controller.ts";
+import { useCertificationPageViewController } from "@components/main/certification/view.controller.ts";
 
 const PAGING_SIZE = 5;
 
-function CertifyPage() {
+function CertificationPage() {
   const {
     selected,
     isFinished,
@@ -26,7 +26,7 @@ function CertifyPage() {
     handleBelongImgChange,
     belongImgPreviewRef,
     handleSubmit,
-  } = useCertifyPageViewController();
+  } = useCertificationPageViewController();
 
   return (
     <S.Outer>
@@ -182,4 +182,4 @@ function CertifyPage() {
   );
 }
 
-export default CertifyPage;
+export default CertificationPage;

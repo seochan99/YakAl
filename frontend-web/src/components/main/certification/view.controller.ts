@@ -3,7 +3,7 @@ import { EJob } from "@type/job.ts";
 import { useNavigate } from "react-router-dom";
 import { facilityList } from "@store/facility-list.ts";
 
-export const useCertifyPageViewController = () => {
+export const useCertificationPageViewController = () => {
   const [selected, setSelected] = useState<EJob | null>(null);
   const [certificationImg, setCertificationImg] = useState<File | null>(null);
   const [certImgFileName, setCertImgFileName] = useState<string>("첨부파일");
@@ -20,9 +20,9 @@ export const useCertifyPageViewController = () => {
 
   const isFinished = selectedFacility !== null && certificationImg !== null && belongImg !== null;
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     setPage(page);
-  };
+  }, []);
 
   const onClickDoctor = useCallback(() => {
     setSelected(EJob.DOCTOR);
@@ -38,7 +38,7 @@ export const useCertifyPageViewController = () => {
     setFacilityNameSearchQuery(event.target.value);
   }, []);
 
-  const handleCertImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleCertImgChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
 
     if (fileList && fileList[0]) {
@@ -63,9 +63,9 @@ export const useCertifyPageViewController = () => {
       certificationImgPreviewRef.current.src = "";
       setCertImgFileName("첨부파일");
     }
-  };
+  }, []);
 
-  const handleBelongImgChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleBelongImgChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
 
     if (fileList && fileList[0]) {
@@ -90,7 +90,7 @@ export const useCertifyPageViewController = () => {
       belongImgPreviewRef.current.src = "";
       setBelongImgFileName("첨부파일");
     }
-  };
+  }, []);
 
   const handleFacilityItemClick = (id: number) => () => {
     const selectedItem = facilityList.findLast((facility) => facility.id === id);
@@ -100,9 +100,9 @@ export const useCertifyPageViewController = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = useCallback(() => {
     navigate("/expert/certification/result", { state: { isSuccess: true } });
-  };
+  }, [navigate]);
 
   return {
     selected,

@@ -2,8 +2,8 @@ import WarningPage from "@page/warning/view.tsx";
 import * as S from "./style.ts";
 import { useLocation } from "react-router-dom";
 
-function CertifyResultPage() {
-  const { state } = useLocation(); // 2번 라인
+function CertificationResultPage() {
+  const { state } = useLocation();
   const { isSuccess } = state;
 
   return (
@@ -16,4 +16,4 @@ function CertifyResultPage() {
   );
 }
 
-export default CertifyResultPage;
+export default CertificationResultPage;

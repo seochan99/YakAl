@@ -10,17 +10,16 @@ import { DashboardPage as ExpertDashboard } from "./components/main/dashboard/vi
 import PatientPage from "./components/main/patient/view.tsx";
 
 import SocialLoginFailurePage from "./components/login/social-login-failure/view.tsx";
-import { RegisterPage as ExpertFacilityRegistration } from "./components/main/register/view.tsx";
+import { RegistrationPage as ExpertFacilityRegistration } from "@components/main/registration/view.tsx";
 import MyPage from "./components/main/mypage/view.tsx";
 import SocialLogin from "./components/login/social-login/view.tsx";
 import LoadingPage from "./page/loading/view.tsx";
 import IdentifyPage from "./components/login/identify/view.tsx";
 import IdentifyFailurePage from "./components/login/identify-failure/view.tsx";
-import CertifyPage from "./components/main/certify/view.tsx";
+import CertificationPage from "@components/main/certification/view.tsx";
 import IdentifySuccessPage from "./components/login/identify-success/view.tsx";
-import RegisterSuccessPage from "./components/main/register-success/view.tsx";
-import RegisterFailurePage from "./components/main/register-failure/view.tsx";
-import CertifyResultPage from "@components/main/certify-result/view.tsx";
+import RegistrationResultPage from "@components/main/registration-result/view.tsx";
+import CertificationResultPage from "@components/main/certification-result/view.tsx";
 import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
 import AdminLogin from "./page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
@@ -63,20 +62,16 @@ export const router = createBrowserRouter([
                 element: <ExpertFacilityRegistration />,
               },
               {
-                path: "registration/success",
-                element: <RegisterSuccessPage />,
-              },
-              {
-                path: "registration/failure",
-                element: <RegisterFailurePage />,
+                path: "registration/result",
+                element: <RegistrationResultPage />,
               },
               {
                 path: "certification/result",
-                element: <CertifyResultPage />,
+                element: <CertificationResultPage />,
               },
               {
                 path: "certification",
-                element: <CertifyPage />,
+                element: <CertificationPage />,
               },
               {
                 path: "patient/:patientId",
