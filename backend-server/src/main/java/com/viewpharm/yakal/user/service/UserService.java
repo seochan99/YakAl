@@ -100,7 +100,7 @@ public class UserService {
 
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.setName(name);
+        user.setRealName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
         user.setIsIdentified(true);
@@ -206,7 +206,7 @@ public class UserService {
     }
 
     public List<UserListDtoForGuardian> searchUserForExpert(String expertName) {
-        List<User> experts = userRepository.findByNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
+        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
 
         return experts.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))

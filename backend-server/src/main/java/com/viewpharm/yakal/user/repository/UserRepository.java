@@ -84,8 +84,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     List<User> findByNameAndBirthday(String name, LocalDate birthday);
 
-    @Query("select u from User u where u.name=:name and (u.job=:doctor or u.job = :pharmacist)")
-    List<User> findByNameAndJobOrJob(String name, EJob doctor, EJob pharmacist);
+    @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
+    List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
 
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
     List<User> searchGuardianForUser(@Param("user") User user);
