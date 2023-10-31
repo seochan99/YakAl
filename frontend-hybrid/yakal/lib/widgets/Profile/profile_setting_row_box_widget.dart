@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 class ProfileSettingRowBoxWidget extends StatelessWidget {
@@ -18,8 +19,13 @@ class ProfileSettingRowBoxWidget extends StatelessWidget {
       child: InkWell(
         onTap: () {
           if (routerLinkText == "/certification") {
-            // WebView 페이지로 이동
-            // Get.to(() => const WebviewWithWebviewFlutterScreen());
+            // copy link
+            Clipboard.setData(const ClipboardData(
+                    text: 'https://yakal.dcs-hyungjoon.com/'))
+                .then((_) {
+              // Optionally, inform the user that the link has been copied
+              // For example, you could use a snackbar
+            });
           } else {
             // 다른 페이지로 이동
             Get.toNamed(routerLinkText ?? "/profile");
