@@ -13,8 +13,8 @@ export const usePatientPageViewController = () => {
   const patientId = +location.pathname.substring(lastSlashIndex + 1);
 
   useEffect(() => {
-    PatientPageViewModel.fetchProtector(patientId);
     PatientPageViewModel.fetchBase(patientId);
+    PatientPageViewModel.fetchProtector(patientId);
   }, [patientId]);
 
   const onClickTab = useCallback(

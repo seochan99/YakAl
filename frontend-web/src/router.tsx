@@ -20,8 +20,7 @@ import CertifyPage from "./components/main/certify/view.tsx";
 import IdentifySuccessPage from "./components/login/identify-success/view.tsx";
 import RegisterSuccessPage from "./components/main/register-success/view.tsx";
 import RegisterFailurePage from "./components/main/register-failure/view.tsx";
-import CertificationSuccess from "./components/main/certify-success/view.tsx";
-import CertifyFailurePage from "./components/main/certify-failure/view.tsx";
+import CertifyResultPage from "@components/main/certify-result/view.tsx";
 import SocialLoginNotYetPage from "./components/login/social-login-not-yet/view.tsx";
 import AdminLogin from "./page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
@@ -72,12 +71,8 @@ export const router = createBrowserRouter([
                 element: <RegisterFailurePage />,
               },
               {
-                path: "certification/success",
-                element: <CertificationSuccess />,
-              },
-              {
-                path: "certification/failure",
-                element: <CertifyFailurePage />,
+                path: "certification/result",
+                element: <CertifyResultPage />,
               },
               {
                 path: "certification",
