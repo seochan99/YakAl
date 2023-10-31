@@ -3,7 +3,7 @@ package com.viewpharm.yakal.guardian.service;
 import com.viewpharm.yakal.guardian.domain.Guardian;
 import com.viewpharm.yakal.guardian.dto.response.GuardianTelDto;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.dto.response.PatientDto;
+import com.viewpharm.yakal.user.dto.response.PatientDto;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;

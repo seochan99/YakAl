@@ -4,7 +4,7 @@ import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.dto.request.UpdateAdminRequestDto;
+import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;

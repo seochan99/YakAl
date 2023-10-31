@@ -2,7 +2,7 @@ package com.viewpharm.yakal.common.security;
 
 import com.viewpharm.yakal.common.constants.Constants;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.dto.response.JwtTokenDto;
+import com.viewpharm.yakal.common.JwtTokenDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;

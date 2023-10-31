@@ -1,13 +1,15 @@
 package com.viewpharm.yakal.medicalappointment.service;
 
+import com.viewpharm.yakal.base.PageInfo;
 import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalappointment.dto.MedicalAppointmentDto;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.medicalappointment.repository.MedicalAppointmentRepository;
+import com.viewpharm.yakal.user.dto.response.PatientAllDto;
+import com.viewpharm.yakal.user.dto.response.PatientDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.type.EJob;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
