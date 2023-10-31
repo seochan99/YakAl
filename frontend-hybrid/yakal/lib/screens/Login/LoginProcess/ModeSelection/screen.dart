@@ -40,7 +40,7 @@ class _ModeSelectionScreenState extends State<ModeSelectionScreen> {
 
       widget.userViewModel.updateMode(_mode == EMode.LITE);
       return;
-    } on DioException catch (error) {
+    } on DioException catch (_) {
       if (!context.mounted) {
         return;
       }

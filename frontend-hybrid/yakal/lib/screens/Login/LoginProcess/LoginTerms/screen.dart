@@ -114,7 +114,7 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             behavior: SnackBarBehavior.floating,
-            content: Text("약관 동의 여부 설정에 "),
+            content: Text("약관 동의 여부 설정에 실패했습니다."),
             duration: Duration(seconds: 3),
           ),
         );
