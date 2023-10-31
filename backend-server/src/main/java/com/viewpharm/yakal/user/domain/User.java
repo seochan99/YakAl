@@ -43,6 +43,9 @@ public class User {
     /**
      * COLUMNS
      */
+    @Column(name = "real_name", columnDefinition = "CHAR(20)")
+    private String realName;
+
     @Column(name = "name", columnDefinition = "CHAR(20)")
     private String name;
 
