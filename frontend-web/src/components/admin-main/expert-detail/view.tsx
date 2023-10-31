@@ -1,9 +1,10 @@
 import { useAdminExpertDetailViewController } from "@components/admin-main/expert-detail/view.controller.ts";
 import * as S from "./style.ts";
-import { EJob } from "@type/job.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import Skeleton from "@mui/material/Skeleton";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import ApprovalDialog from "@components/admin-main/approval-dialog/view.tsx";
+import { EJob } from "@type/job.ts";
+import { EFacilityType } from "@type/facility-type.ts";
 
 function AdminExpertDetail() {
   const {
@@ -22,7 +23,92 @@ function AdminExpertDetail() {
   } = useAdminExpertDetailViewController();
 
   if (isLoading || expertDetail == null) {
-    return <></>;
+    return (
+      <S.OuterDiv>
+        <S.HeaderDiv>
+          <S.BackLink to="/admin/main">
+            <S.StyledLinkIconSvg />
+            목록으로
+          </S.BackLink>
+        </S.HeaderDiv>
+        <S.InnerDiv>
+          <S.HeaderSpan>{"전문가 정보"}</S.HeaderSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>{"성함"}</S.NameSpan>
+            <Skeleton variant="rounded" width={"80%"} />
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>{"연락처"}</S.NameSpan>
+            <Skeleton variant="rounded" width={"80%"} />
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>{"직종"}</S.NameSpan>
+            <Skeleton variant="rounded" width={"80%"} />
+          </S.OneItemSpan>
+          <S.Bar />
+          <S.HeaderSpan>{"소속 기관 정보"}</S.HeaderSpan>
+          <S.BelongInfoDiv>
+            <S.BelongInnerDiv>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관명"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"요양기관 번호"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관 종류"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관장 성함"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관장 연락처"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관 우편번호"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+            </S.BelongInnerDiv>
+            <S.BelongInnerDiv>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관 주소"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"사업자등록번호"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관 연락처"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"운영 시간"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+              <S.OneItemSpan>
+                <S.NameSpan>{"기관 특징"}</S.NameSpan>
+                <Skeleton variant="rounded" width={"80%"} />
+              </S.OneItemSpan>
+            </S.BelongInnerDiv>
+          </S.BelongInfoDiv>
+          <S.Bar />
+          <S.HeaderSpan>{"전문가 인증 정보"}</S.HeaderSpan>
+          <S.ImgDiv>
+            <Skeleton variant="rounded" width={"100%"} />
+          </S.ImgDiv>
+          <S.OneItemSpan>
+            <S.NameSpan>{"신청일"}</S.NameSpan>
+            <Skeleton variant="rounded" width={"100%"} />
+          </S.OneItemSpan>
+        </S.InnerDiv>
+      </S.OuterDiv>
+    );
   }
 
   const {
@@ -43,8 +129,8 @@ function AdminExpertDetail() {
     tel: expertTel,
     requestedAt,
     type: jobType,
-    certificateImg,
-    affiliationImg,
+    // certificateImg,
+    // affiliationImg,
   } = expertDetail;
 
   return (

@@ -6,15 +6,22 @@ import Header from "../../layout/header/view.tsx";
 import Profile from "../../components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { EJob } from "@type/job.ts";
 import { useMainPageViewController } from "./view.controller.ts";
 import { EXPERT_HOME } from "../../router.tsx";
 
 export function MainPage() {
   const {
+    expertUser,
+    isLoading,
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   } = useMainPageViewController();
+
+  if (isLoading() || expertUser == null) {
+    return <></>;
+  }
+
+  const { name, job, department, belong } = expertUser;
 
   return (
     <S.OuterDiv>
@@ -34,10 +41,10 @@ export function MainPage() {
           </S.NavOuterDiv>
         )}
         <Profile
-          job={EJob.DOCTOR}
-          department={"가정의학과"}
-          belong={"중앙대학교 부속병원"}
-          name={"홍길동"}
+          job={job}
+          department={department}
+          belong={belong}
+          name={name}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />
       </Header>
