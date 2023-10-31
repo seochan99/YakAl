@@ -198,7 +198,10 @@ public class UserService {
     }
 
     public List<UserListDtoForGuardian> searchUserForGuardian(String name, LocalDate birthday) {
-        List<User> users = userRepository.findByNameAndBirthday(name, birthday);
+        log.info("name: {}, birthday: {}", name, birthday);
+        List<User> users = userRepository.searchByNameAndBirthday(name, birthday);
+
+        log.info("users: {}", users);
 
         return users.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
