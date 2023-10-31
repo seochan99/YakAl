@@ -33,16 +33,20 @@ public class Survey {
     @Column(name = "total_score", nullable = false)
     private String totalScore;
 
+    @Column(name = "is_senior", nullable = true)
+    private Boolean isSenior;
+
     //-------------------------------------------------------------------
 
     @OneToMany(mappedBy = "survey", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
 
     @Builder
-    public Survey(String title, String miniTitle, String introduction, String totalScore) {
+    public Survey(String title, String miniTitle, String introduction, String totalScore, Boolean isSenior) {
         this.title = title;
         this.miniTitle = miniTitle;
         this.introduction = introduction;
         this.totalScore = totalScore;
+        this.isSenior = isSenior;
     }
 }

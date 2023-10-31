@@ -119,27 +119,32 @@ public class SurveyService {
                 .build();
     }
 
-    //전문가가 환자 설문조사 리스트
-    public Map<String, ?> getAllAnswerListForExpert(Long expertId, Long patientId) {
+    //전문가가 환자 노인병 관련 설문조사 리스트
+    public Map<String, ?> getAllSeniorAnswerListForExpert(Long expertId, Long patientId) {
         //전문가 확인
         User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         //유저 확인
         User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+        List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyForSeniorByUser(patient.getId());
 
-        List<Answer> answers = answerRepository.findAllByUser(patient);
+        return answers.stream()
+                .collect(Collectors.toMap(a -> a.getMiniTitle(), a -> a.getContent()));
+    }
 
-        List<AnswerListDto> listDtos = answers.stream()
-                .map(a -> AnswerListDto.builder()
-                        .id(a.getId())
-                        .title(a.getSurvey().getTitle())
-                        .result(a.getScore())
-                        .resultComment(a.getResultComment())
-                        .build())
-                .collect(Collectors.toList());
+    //전문가가 환자 노인병 외 설문조사 리스트
+    public Map<String, ?> getAllNotSeniorAnswerListForExpert(Long expertId, Long patientId) {
+        //전문가 확인
+        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        return null;
+        //유저 확인
+        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyForNotSeniorByUser(patient.getId());
+
+        return answers.stream()
+                .collect(Collectors.toMap(a -> a.getMiniTitle(), a -> a.getContent()));
     }
 
 
