@@ -26,6 +26,7 @@ public class ExpertController {
     private final MedicalAppointmentService medicalAppointmentService;
     private final GuardianService guardianService;
 
+
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
     public ResponseDto<UserExpertDto> getExpertInfo(@UserId Long userId) {
@@ -36,7 +37,7 @@ public class ExpertController {
     @GetMapping("/patient/{userId}/dose")
     @Operation(summary = "약정보 가져오기", description = "환자의 Id로 처방받은 약을 가져온다")
     public ResponseDto<PrescribedDto> getPrescrbiedDoses(@PathVariable Long userId
-            , @RequestParam("page") Integer page, @RequestParam("num") Integer num, @RequestParam("period") EPeriod ePeriod){
+            , @RequestParam("page") Integer page, @RequestParam("num") Integer num, @RequestParam("period") EPeriod ePeriod) {
         return ResponseDto.ok(doseService.getPrescribedDoses(userId, page, num, ePeriod));
     }
 
@@ -72,9 +73,9 @@ public class ExpertController {
         return ResponseDto.ok(guardianService.readGuardian(patientId));
     }
 
-//    @PatchMapping("/medical-appointment/{patientId}")
-//    @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
-//    public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId @PathVariable Long patientId) {
-//        return ResponseDto.ok();
-//    }
+    @PatchMapping("/medical-appointment/{patientId}")
+    @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
+    public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
+        return ResponseDto.ok(medicalAppointmentService.updateIsFavorite(expertId, patientId));
+    }
 }
