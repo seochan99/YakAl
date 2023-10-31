@@ -119,7 +119,6 @@ public class AuthController {
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
     public ResponseDto<Object> logout(@UserId Long id, final HttpServletRequest request, final HttpServletResponse response) {
         EPlatform platform = authService.getPlatform(id);
-        log.info("platform: {}", platform);
 
         authService.logout(id);
 

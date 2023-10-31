@@ -54,11 +54,12 @@ public class UserController {
         return ResponseDto.ok(map);
     }
 
-    @GetMapping("/register")
+    @GetMapping("/check/register")
     @Operation(summary = "최초 로그인 시 설정되어야 하는 정보가 전부 설정되어있는지 확인")
     public ResponseDto<?> checkIsRegistered(@UserId Long id) {
-        final Map<String, Boolean> map = new HashMap<>(1);
+        final Map<String, Object> map = new HashMap<>(1);
         map.put("isRegistered", userService.checkIsRegistered(id));
+
         return ResponseDto.ok(map);
     }
 

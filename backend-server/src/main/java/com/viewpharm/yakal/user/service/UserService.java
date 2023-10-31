@@ -11,6 +11,7 @@ import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
+import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -139,16 +140,15 @@ public class UserService {
         }
     }
 
-    public boolean checkIsRegistered(final Long userId) throws CommonException {
+    public UserRegisterDto checkIsRegistered(final Long userId) throws CommonException {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return (user.getBirthday() != null
-                && user.getName() != null
-                //&& user.getSex() != null
-                && user.getIsDetail() != null
-                && user.getBreakfastTime() != null
-                && user.getLunchTime() != null
-                && user.getDinnerTime() != null);
+        return UserRegisterDto.builder()
+                .name(user.getName())
+                .isDetail(user.getIsDetail())
+                .isOptionalAgreementAccepted(user.getIsOptionalAgreementAccepted())
+                .isIdentified(user.getIsIdentified())
+                .build();
     }
 
     public void updateName(final Long userId, final String name) {
