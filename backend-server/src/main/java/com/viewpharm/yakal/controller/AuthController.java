@@ -7,7 +7,7 @@ import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.common.security.JwtProvider;
 import com.viewpharm.yakal.service.AuthService;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;

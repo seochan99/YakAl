@@ -2,12 +2,12 @@ package com.viewpharm.yakal.medicalrecord.service;
 
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
 import com.viewpharm.yakal.medicalrecord.dto.reqeust.MedicalRecordDto;
 import com.viewpharm.yakal.medicalrecord.dto.response.MedicalRecordStringDto;
 import com.viewpharm.yakal.medicalrecord.repository.HospitalizationRecordRepository;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.notablefeature.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.notablefeature.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.notablefeature.service.*;
 import io.swagger.v3.oas.annotations.Operation;

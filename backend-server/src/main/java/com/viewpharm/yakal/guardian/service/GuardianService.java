@@ -1,20 +1,19 @@
 package com.viewpharm.yakal.guardian.service;
 
 import com.viewpharm.yakal.guardian.domain.Guardian;
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.dto.response.PatientDto;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
-import com.viewpharm.yakal.repository.AnswerRepository;
+import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.guardian.repository.GuardianRepository;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +46,7 @@ public class GuardianService {
 
     public List<UserListDtoForGuardian> readGuardians(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        List<User> users = userRepository.searchUserByGuardian(user);
+        List<User> users = userRepository.searchGuardianForUser(user);
 
 
         return users.stream()

@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.repository;
 
 import com.viewpharm.yakal.domain.*;
+import com.viewpharm.yakal.user.domain.Expert;
+import com.viewpharm.yakal.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

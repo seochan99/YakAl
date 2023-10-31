@@ -1,11 +1,12 @@
 package com.viewpharm.yakal.controller;
 
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.common.annotation.Date;
 import com.viewpharm.yakal.common.annotation.Enum;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.dto.response.*;
-import com.viewpharm.yakal.dto.request.UpdateIsTakenDto;
+import com.viewpharm.yakal.user.dto.request.UpdateIsTakenDto;
 import com.viewpharm.yakal.service.DoseService;
 import com.viewpharm.yakal.base.type.EDosingTime;
 import io.swagger.v3.oas.annotations.Operation;

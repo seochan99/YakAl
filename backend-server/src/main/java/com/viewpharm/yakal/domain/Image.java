@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.domain;
 
 import com.viewpharm.yakal.base.type.EImageUseType;
+import com.viewpharm.yakal.user.domain.Expert;
+import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

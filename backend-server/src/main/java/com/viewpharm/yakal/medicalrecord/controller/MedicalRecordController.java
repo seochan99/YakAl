@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.medicalrecord.controller;
 
 import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.dto.response.ResponseDto;
+import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.medicalrecord.dto.reqeust.MedicalRecordDto;
 import com.viewpharm.yakal.medicalrecord.service.EmergencyRecordService;
 import com.viewpharm.yakal.medicalrecord.service.HospitalizationRecordService;

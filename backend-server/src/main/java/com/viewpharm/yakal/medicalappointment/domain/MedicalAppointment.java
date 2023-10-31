@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.medicalappointment.domain;
 
 import com.viewpharm.yakal.domain.BaseCreateEntity;
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,9 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -33,9 +30,6 @@ public class MedicalAppointment extends BaseCreateEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User expert;
 
-    @Column(name = "expired_date", nullable = false)
-    private Timestamp expiredDate;
-
     @Column(name = "is_deleted", nullable = false)
     private Boolean isDeleted;
 
@@ -43,7 +37,6 @@ public class MedicalAppointment extends BaseCreateEntity {
     public MedicalAppointment(User patient, User expert) {
         this.patient = patient;
         this.expert = expert;
-        this.expiredDate = Timestamp.valueOf(LocalDateTime.now().plusHours(6));
         this.isDeleted = false;
     }
 }
