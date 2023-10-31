@@ -20,11 +20,11 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
   final TextEditingController _locationController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // 완료 버튼 누르면
     void handleAdmissionButtonPress(DateTime selectedDate, String location,
         {required String title}) {
-      title == 'admissionRecords'
-          ? widget.userViewModel.addHospitalRecord(selectedDate, location)
-          : widget.userViewModel.addEmergencyRoomVisit(selectedDate, location);
+      // addMedicalRecord
+      widget.userViewModel.addMedicalRecord(selectedDate, location, title);
 
       _locationController.clear();
 
@@ -38,7 +38,6 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
       String location = '';
 
       // required title
-
       showModalBottomSheet<void>(
         isScrollControlled: true,
         context: context,
@@ -71,7 +70,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              title == "admissionRecords"
+                              title == 'hospitalization-records'
                                   ? '입원 기록 추가'
                                   : "응급실 방문 기록 추가",
                               style: const TextStyle(
@@ -80,7 +79,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                               ),
                             ),
                             Text(
-                              title == "admissionRecords"
+                              title == 'hospitalization-records'
                                   ? '입원 날짜와 장소를 입력하세요.'
                                   : "응급실 방문 날짜와 장소를 입력하세요.",
                               style: const TextStyle(fontSize: 16.0),
@@ -89,7 +88,9 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                            title == "admissionRecords" ? "입원 날짜" : "응급실 방문 날짜",
+                            title == 'hospitalization-records'
+                                ? "입원 날짜"
+                                : "응급실 방문 날짜",
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -137,7 +138,9 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                         ),
                         const SizedBox(height: 20),
                         Text(
-                            title == "admissionRecords" ? "입원 장소" : "응급실 방문 장소",
+                            title == 'hospitalization-records'
+                                ? "입원 장소"
+                                : "응급실 방문 장소",
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w700,
@@ -149,7 +152,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                           },
                           controller: _locationController,
                           decoration: InputDecoration(
-                            labelText: title == "admissionRecords"
+                            labelText: title == 'hospitalization-records'
                                 ? "입원 장소"
                                 : "응급실 방문 장소",
                             focusedBorder: OutlineInputBorder(
@@ -208,12 +211,12 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
 
     void showAdmissionBottomSheet() {
       // Show the admission bottom sheet
-      showBottomSheet("admissionRecords");
+      showBottomSheet('hospitalization-records');
     }
 
     void showEmergencyRoomBottomSheet() {
       // Show the emergency room bottom sheet
-      showBottomSheet("emergencyRoomVisits");
+      showBottomSheet('emergency-records');
     }
 
     Widget buildHospitalRecords({required String title}) {
@@ -221,14 +224,12 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
           widget.userViewModel.user.value.hospitalRecordList;
 
       if (hospitalRecordList != null) {
-        List<HospitalRecord> filteredRecords = title == 'admissionRecords'
+        List<dynamic> filteredRecords = title == 'hospitalization-records'
             ? hospitalRecordList.admissionRecords
             : hospitalRecordList.emergencyRoomVisits;
 
         return Column(
           children: filteredRecords.asMap().entries.map((entry) {
-            // hospitalRecordList.$title.asMap().entries.map((entry) {
-            final int index = entry.key;
             final HospitalRecord record = entry.value;
 
             return Container(
@@ -241,9 +242,8 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    title == 'admissionRecords'
-                        ? widget.userViewModel.removeHospitalRecord(index)
-                        : widget.userViewModel.removeEmergencyRoomVisit(index);
+                    widget.userViewModel.removeMedicalRecord(title, record.id);
+                    return;
                   },
                   child: SvgPicture.asset(
                     'assets/icons/icon-bin.svg',
@@ -252,7 +252,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                   ),
                 ),
                 title: Text(
-                  '${DateFormat('yyyy-MM-dd').format(record.date)} / ${record.location}',
+                  '${(record).date} / ${(record).location}',
                   style: const TextStyle(
                     color: ColorStyles.black,
                     fontSize: 16,
@@ -294,8 +294,8 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                           style: TextStyle(
                               fontSize: 24, fontWeight: FontWeight.w700),
                         ),
-
                         const SizedBox(height: 16),
+                        // 리스트 가져오기
                         Obx(
                           () => widget.userViewModel.user.value
                                           .hospitalRecordList !=
@@ -309,7 +309,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                       .isNotEmpty
                               ? buildHospitalRecords(
                                   // emergency
-                                  title: "admissionRecords")
+                                  title: 'hospitalization-records')
                               : const SizedBox.shrink(),
                         ),
 
@@ -360,8 +360,7 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                                       .hospitalRecordList!
                                       .emergencyRoomVisits
                                       .isNotEmpty
-                              ? buildHospitalRecords(
-                                  title: "emergencyRoomVisits")
+                              ? buildHospitalRecords(title: 'emergency-records')
                               : const SizedBox.shrink(),
                         ),
                         const SizedBox(height: 16),

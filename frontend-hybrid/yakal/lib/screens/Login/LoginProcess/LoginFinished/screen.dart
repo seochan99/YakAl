@@ -64,7 +64,7 @@ class LoginFinishedScreen extends StatelessWidget {
                 child: BottomButton(
                   "메인으로",
                   onPressed: () {
-                    Get.offAndToNamed("/");
+                    Get.offAllNamed("/");
                   },
                   backgroundColor: ColorStyles.main,
                   color: ColorStyles.white,

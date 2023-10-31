@@ -70,8 +70,6 @@ class SpecialListViewModel extends GetxController {
 
 /*---------------------- 특이사항 삭제 ---------------------- */
   Future<void> removeSpecialNoteItem(String title, int index) async {
-    /*---------------------- healthfood, diagnosis ---------------------- */
-
     try {
       var dio = await authDioWithContext();
       var response = await dio.delete("/notable-features/$title/$index");
@@ -82,25 +80,6 @@ class SpecialListViewModel extends GetxController {
       throw Exception("Exception while adding health medication: $e");
     }
     return;
-
-/*---------------------- underlyingConditions, allergies, falls ---------------------- */
-    // user.update((val) {
-    //   if (val?.specialNote != null) {
-    //     switch (title) {
-    //       case 'underlying-conditions':
-    //         val?.specialNote!.underlyingConditions.removeAt(index);
-    //         break;
-    //       case 'allergies':
-    //         val?.specialNote!.allergies.removeAt(index);
-    //         break;
-    //       case 'falls':
-    //         val?.specialNote!.falls.removeAt(index);
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   }
-    // });
   }
 
   /*---------------------- 패치시키고 로드하기 ---------------------- */

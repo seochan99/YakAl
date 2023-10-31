@@ -168,13 +168,23 @@ class Guardian {
 
 // 병원 기록
 class HospitalRecord {
-  DateTime date;
+  int id;
+  dynamic date;
   String location;
 
   HospitalRecord({
+    required this.id,
     required this.date,
     required this.location,
   });
+
+  factory HospitalRecord.fromJson(Map<dynamic, dynamic> json) {
+    return HospitalRecord(
+      id: json['id'],
+      date: json['recodeDate'],
+      location: json['hospitalName'],
+    );
+  }
 }
 
 // 병원 기록 리스트

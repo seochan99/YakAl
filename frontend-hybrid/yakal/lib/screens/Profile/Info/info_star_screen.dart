@@ -5,7 +5,6 @@ import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/special_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
-import 'package:intl/intl.dart';
 import 'package:yakal/widgets/Profile/ProfileInfo/profle_info_add_btn_widget.dart';
 
 class InfoStarScreen extends StatefulWidget {
@@ -246,7 +245,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
         return Column(
           children: filteredRecords.asMap().entries.map((entry) {
-            final int index = entry.key;
             final dynamic record = entry.value;
 
             return Container(
