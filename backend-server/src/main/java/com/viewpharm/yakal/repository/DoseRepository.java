@@ -3,6 +3,7 @@ package com.viewpharm.yakal.repository;
 import com.viewpharm.yakal.domain.Dose;
 import com.viewpharm.yakal.domain.DoseName;
 import com.viewpharm.yakal.base.type.EDosingTime;
+import com.viewpharm.yakal.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -51,6 +52,9 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             "where d.user_id = :userId and p.is_allow = true and p.prescribed_date >= :lastDate " +
             "group by name, score, prescribedDate order by prescribedDate", nativeQuery = true)
     List<prescribed> findAllByUserIdAndLastDate(@Param("userId") Long userId, @Param("lastDate") LocalDate lastDate);
+
+
+    List<Dose> findTop5ByUserAndIsDeletedOrderByDateDesc(User user, Boolean isDeleted);
 
     interface oneDaySummary {
 
