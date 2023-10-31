@@ -282,8 +282,9 @@ public class DoseService {
                 );
 
                 isInserted.add(!isOverlapped);
-
+                log.info("????");
                 if (!isOverlapped) {
+                    log.info(doseName.getDoseName().toString());
                     Risk risk = riskRepository.findById(doseName.getAtcCode()).orElseThrow(()->new CommonException(ErrorCode.NOT_FOUND_RISK));
                     final Dose dose = Dose.builder()
                             .kdCode(doseName)
