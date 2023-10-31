@@ -89,14 +89,17 @@ public class User {
     @Column(name = "noti_is_allowed", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean notiIsAllowed;
 
-    @Column(name = "breakfastTime")
+    @Column(name = "breakfastTime", nullable = false)
     private LocalTime breakfastTime;
 
-    @Column(name = "lunchTime")
+    @Column(name = "lunchTime", nullable = false)
     private LocalTime lunchTime;
 
-    @Column(name = "dinnerTime")
+    @Column(name = "dinnerTime", nullable = false)
     private LocalTime dinnerTime;
+
+    @Column(name = "is_optional_agreement_accepted")
+    private Boolean isOptionalAgreementAccepted;
 
     //초기 직업은 환자로 설정
     @Column(name = "job")
@@ -181,9 +184,14 @@ public class User {
         this.notiIsAllowed = true;
         this.image = image;
         this.isIdentified = false;
-        this.breakfastTime = LocalTime.of(9, 0, 0);
-        this.lunchTime = LocalTime.of(13, 0, 0);
-        this.dinnerTime = LocalTime.of(18, 0, 0);
+        this.isOptionalAgreementAccepted = null;
+        this.breakfastTime = LocalTime.of(9,0,0);
+        this.lunchTime = LocalTime.of(13,0,0);
+        this.dinnerTime = LocalTime.of(18,0,0);
+    }
+
+    public void updateIsOptionalAgreementAccepted(Boolean isOptionalAgreementAccepted) {
+        this.isOptionalAgreementAccepted = isOptionalAgreementAccepted;
     }
 
     public void updateDevice(String deviceToken, Boolean isIos) {
