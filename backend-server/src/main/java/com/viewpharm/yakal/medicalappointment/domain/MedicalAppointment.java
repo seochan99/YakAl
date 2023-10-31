@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.medicalappointment.domain;
 
-import com.viewpharm.yakal.domain.BaseCreateEntity;
+import com.viewpharm.yakal.base.BaseCreateEntity;
 import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,8 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
-import java.time.LocalTime;
 
 @Entity
 @Getter

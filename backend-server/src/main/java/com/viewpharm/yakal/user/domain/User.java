@@ -1,11 +1,10 @@
 package com.viewpharm.yakal.user.domain;
 
-import com.viewpharm.yakal.medicalestablishments.domain.ExpertCertification;
-import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
+import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
+import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.survey.domain.Answer;
-import com.viewpharm.yakal.domain.Dose;
-import com.viewpharm.yakal.domain.Image;
-import com.viewpharm.yakal.domain.Prescription;
+import com.viewpharm.yakal.prescription.domain.Dose;
+import com.viewpharm.yakal.prescription.domain.Prescription;
 import com.viewpharm.yakal.guardian.domain.Guardian;
 import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
@@ -120,15 +119,12 @@ public class User {
     @Column(name = "is_certified")
     private Boolean isCertified;
 
+    @Column(name = "profile_img")
+    private String profileImg = "0_default_profile.png";
 
     /**
-     * ONE-TO-ONE RELATION
+     * MANY-TO-ONE RELATION
      */
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Image image;
-
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    private Expert expert;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "medical_establishment_id")
@@ -182,8 +178,7 @@ public class User {
 
     public User(final String socialId,
                 final ELoginProvider loginProvider,
-                final ERole role,
-                final Image image) {
+                final ERole role) {
         this.role = role;
         this.createdDate = LocalDate.now();
         this.socialId = socialId;
@@ -191,7 +186,6 @@ public class User {
         this.isLogin = true;
         this.isDetail = true;
         this.notiIsAllowed = true;
-        this.image = image;
         this.isIdentified = false;
         this.isOptionalAgreementAccepted = null;
         this.breakfastTime = LocalTime.of(9,0,0);
