@@ -25,8 +25,8 @@ public class GuardianController {
 
     @GetMapping("")
     @Operation(summary = "보호자 조회", description = "보호자 추가(User용)")
-    public ResponseDto<?> readGuardians(@UserId Long userId) {
-        return ResponseDto.ok(guardianService.readGuardians(userId));
+    public ResponseDto<?> readGuardian(@UserId Long userId) {
+        return ResponseDto.ok(guardianService.readResentGuardian(userId));
     }
 
     @DeleteMapping("/{guardianUserID}")

@@ -86,6 +86,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
     List<User> searchGuardianForUser(@Param("user") User user);
 
+    @Query("select u from User u join fetch u.myGuardian g where g.patient=:user order by g.createdDate desc limit 1")
+    Optional<User> searchResentGuardianForUser(@Param("user") User user);
+
     @Query("select u from User u join fetch u.medicalAppointmentForPatient ma where ma.patient=:user")
     List<User> searchExpertForUser(@Param("user") User user);
 
