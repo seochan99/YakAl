@@ -19,4 +19,5 @@ public class UserExpertDto {
     final private String department;
     final private LocalDate birthday;
     final private String tel;
+    final private String belong;
 }

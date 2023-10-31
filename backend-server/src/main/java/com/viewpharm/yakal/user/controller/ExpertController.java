@@ -20,6 +20,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/experts")
@@ -101,5 +103,11 @@ public class ExpertController {
     @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
     public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
         return ResponseDto.ok(medicalAppointmentService.updateIsFavorite(expertId, patientId));
+    }
+
+    @GetMapping("/patient/{patientId}/doses")
+    @Operation(summary = "환자 최근 처방약 조회", description = "환자 최근 처방약 5개 조회")
+    public ResponseDto<List<DoseRecentDto>> readRecentDoses(@UserId Long userId, @PathVariable Long patientId) {
+        return ResponseDto.ok(doseService.readRecentDoses(userId, patientId));
     }
 }

@@ -114,16 +114,16 @@ public class UserService {
     }
 
     public UserExpertDto getUserExpertInfo(final Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        //전문가 확인
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         return UserExpertDto.builder()
-                .name(user.getName())
-                .tel(user.getTel())
-                .birthday(user.getBirthday())
-                .job(user.getJob())
-                .department(user.getDepartment())
-
+                .name(expert.getName())
+                .tel(expert.getTel())
+                .birthday(expert.getBirthday())
+                .job(expert.getJob())
+                .department(expert.getDepartment())
                 .build();
     }
 
