@@ -98,7 +98,7 @@ public class User {
     @Column(name = "dinnerTime", nullable = false)
     private LocalTime dinnerTime;
 
-    @Column(name = "is_optional_agreement_accepted", nullable = false)
+    @Column(name = "is_optional_agreement_accepted")
     private Boolean isOptionalAgreementAccepted;
 
     //초기 직업은 환자로 설정
@@ -184,7 +184,7 @@ public class User {
         this.notiIsAllowed = true;
         this.image = image;
         this.isIdentified = false;
-        this.isOptionalAgreementAccepted = false;
+        this.isOptionalAgreementAccepted = null;
         this.breakfastTime = LocalTime.of(9,0,0);
         this.lunchTime = LocalTime.of(13,0,0);
         this.dinnerTime = LocalTime.of(18,0,0);
