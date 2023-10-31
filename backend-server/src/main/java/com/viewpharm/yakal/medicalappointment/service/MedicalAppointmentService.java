@@ -150,4 +150,22 @@ public class MedicalAppointmentService {
 
         return null;
     }
+
+    public Boolean updateIsFavorite(Long expertId, Long patientId) {
+        //전문가 확인
+        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        //유저 확인
+        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
+
+        if (medicalAppointment.getIsFavorite() == true)
+            medicalAppointment.updateIsFavorite(false);
+        else
+            medicalAppointment.updateIsFavorite(true);
+
+        return Boolean.TRUE;
+    }
 }
