@@ -30,13 +30,14 @@ class SocialLoginProvider {
       await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
 
       if (kDebugMode) {
-        print("🎉 Successfully logged in to Kakao!");
+        print(
+            "🎉 Successfully logged in to ${loginPlatform.name.toLowerCase()}!");
       }
 
       return true;
     } catch (error) {
       if (kDebugMode) {
-        print("🚨 [Kakao login failed] $error");
+        print("🚨 [${loginPlatform.name} login failed] $error");
       }
 
       return false;

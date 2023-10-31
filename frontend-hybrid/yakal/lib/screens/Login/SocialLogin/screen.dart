@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart' as foundation;
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:yakal/provider/Login/social_login_provider.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
@@ -151,8 +150,7 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
                           backgroundColor: ColorStyles.white,
                           iconPath: "assets/icons/google.svg",
                           onPressed: () async {
-                            final GoogleSignInAccount? googleUser =
-                                await GoogleSignIn().signIn();
+                            _login(ELoginPlatform.GOOGLE);
                           },
                         ),
                 ],
