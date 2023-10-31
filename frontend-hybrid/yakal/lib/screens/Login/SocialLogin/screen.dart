@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -47,7 +48,12 @@ class _SocialLoginScreenState extends State<SocialLoginScreen> {
         return;
       }
 
-      await userViewModel.fetchNameAndMode(context);
+      await userViewModel.fetchLoginInfo();
+
+      if (kDebugMode) {
+        print(
+            "[Social Login Finished] name: ${userViewModel.user.value.nickName}, isDetail: ${userViewModel.user.value.mode}, isAgreedMarketing: ${userViewModel.user.value.isAgreedMarketing}, isIdentified: ${userViewModel.user.value.isIdentified}");
+      }
 
       if (userViewModel.user.value.isAgreedMarketing == null) {
         routeController.goto(LoginRoute.terms);

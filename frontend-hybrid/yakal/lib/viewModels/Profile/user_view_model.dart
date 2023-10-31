@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/api/api.dart';
 
@@ -14,8 +13,8 @@ class UserViewModel extends GetxController {
     });
   }
 
-  Future<void> fetchNameAndMode(BuildContext context) async {
-    await user.value.fetch(context);
+  Future<void> fetchLoginInfo() async {
+    await user.value.fetchLoginInfo();
     user.refresh();
   }
 
@@ -55,45 +54,43 @@ class UserViewModel extends GetxController {
 
   // 일반 모드, 라이트 모드
   Future<void> updateMode(bool newMode) async {
-    try {
-      var dio = await authDioWithContext();
+    var dio = await authDioWithContext();
 
-      var response =
-          await dio.patch("/user/detail", data: {"isDetail": newMode});
+    var response = await dio.patch("/user/detail", data: {"isDetail": newMode});
 
-      if (response.statusCode == 200 && response.data['success']) {
-        user.update((val) {
-          val?.setMode(response.data['data']['isDetail']);
-        });
-      } else {}
-    } catch (e) {
-      // print("Exception while updating mode: $e");
+    if (response.statusCode == 200 && response.data['success']) {
+      user.update((val) {
+        val?.setMode(response.data['data']['isDetail']);
+      });
     }
   }
 
 // 복약 알림 설정
   Future<void> updateNotification(bool mode) async {
-    try {
-      var dio = await authDioWithContext();
+    var dio = await authDioWithContext();
 
-      var response = await dio
-          .patch("/user/notification", data: {"isAllowedNotification": mode});
+    var response = await dio
+        .patch("/user/notification", data: {"isAllowedNotification": mode});
 
-      if (response.statusCode == 200 && response.data['success']) {
-        user.update((val) {
-          val?.setNoti(mode);
-        });
-      } else {}
-    } catch (e) {
-      // print("Exception while updating mode: $e");
+    if (response.statusCode == 200 && response.data['success']) {
+      user.update((val) {
+        val?.setNoti(mode);
+      });
     }
   }
 
   // 마케팅 정보 동의 여부
-  void updateMarketingAgreement(bool isAgreed) {
-    user.update((val) {
-      val?.setIsAgreedMarketing(isAgreed);
-    });
+  Future<void> updateMarketingAgreement(bool isAgreed) async {
+    var dio = await authDioWithContext();
+
+    var response = await dio.patch("/user/optional-agreement",
+        data: {"isOptionalAgreementAccepted": isAgreed});
+
+    if (response.statusCode == 200 && response.data['success']) {
+      user.update((val) {
+        val?.setIsAgreedMarketing(isAgreed);
+      });
+    }
   }
 
   // 본인인증 여부
