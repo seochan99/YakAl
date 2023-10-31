@@ -47,7 +47,7 @@ export const usePatientListPageViewController = () => {
     } else {
       setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
     }
-    
+
     setSortingOptionOpen(false);
   };
 
@@ -74,11 +74,7 @@ export const usePatientListPageViewController = () => {
   };
 
   const onClickToManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, true);
-  };
-
-  const onClickToNotManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, false);
+    setIsManaged(patientId);
   };
 
   return {
@@ -89,7 +85,6 @@ export const usePatientListPageViewController = () => {
       onSelectMangedList,
       onSelectEntireList,
       onClickToManageFactory,
-      onClickToNotManageFactory,
     },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },

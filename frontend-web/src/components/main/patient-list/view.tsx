@@ -13,13 +13,7 @@ function PatientListPage() {
   const {
     selectListRef,
     onChangePage,
-    managed: {
-      isOnlyManaged,
-      onSelectMangedList,
-      onSelectEntireList,
-      onClickToManageFactory,
-      onClickToNotManageFactory,
-    },
+    managed: { isOnlyManaged, onSelectMangedList, onSelectEntireList, onClickToManageFactory },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
     data: { patientList, paging, sorting },
@@ -92,7 +86,7 @@ function PatientListPage() {
                 key={patientItem.id}
                 patientInfo={patientItem}
                 onClickToManage={onClickToManageFactory(patientItem.id)}
-                onClickToNotManage={onClickToNotManageFactory(patientItem.id)}
+                onClickToNotManage={onClickToManageFactory(patientItem.id)}
               />
             ))
           )}

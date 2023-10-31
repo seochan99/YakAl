@@ -1,7 +1,7 @@
 import { ESex } from "@type/sex.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
-import { getPatientList } from "@api/auth/experts/api.ts";
+import { getPatientList, toggleIsFavorite } from "@api/auth/experts/api.ts";
 
 type TPatientItem = {
   id: number;
@@ -10,7 +10,7 @@ type TPatientItem = {
   sex: ESex;
   lastQuestionnaireDate: number[];
   tel: string;
-  isManaged: boolean;
+  isFavorite: boolean;
 };
 
 export type TSortBy = {
@@ -136,18 +136,12 @@ export class PatientListModel {
     await this.fetch();
   };
 
-  public setIsManaged = async (patientId: number, isManaged: boolean) => {
+  public setIsManaged = async (patientId: number) => {
     if (!this.patientList) {
       return;
     }
 
-    const patient = this.patientList.findLast((patientItem) => patientItem.id === patientId);
-
-    if (!patient) {
-      return;
-    }
-
-    patient.isManaged = isManaged;
+    await toggleIsFavorite(patientId);
     await this.fetch();
   };
 }

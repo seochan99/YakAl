@@ -58,8 +58,8 @@ export class PatientListViewModel {
     this.flush();
   };
 
-  public static setIsManaged = async (patientId: number, isManaged: boolean) => {
-    await this.patientListModel.setIsManaged(patientId, isManaged);
+  public static setIsManaged = async (patientId: number) => {
+    await this.patientListModel.setIsManaged(patientId);
     this.flush();
   };
 }

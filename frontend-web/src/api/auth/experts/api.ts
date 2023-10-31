@@ -69,3 +69,7 @@ export const registerFacility = async <T = CommonResponse<null>>(
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
+
+export const toggleIsFavorite = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
+  return await authAxios.patch<T, AxiosResponse<T>>(`/experts/medical-appointment/${patientId}`);
+};

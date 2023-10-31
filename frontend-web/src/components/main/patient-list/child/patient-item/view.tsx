@@ -3,8 +3,8 @@ import * as S from "./style.ts";
 import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
 import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
 import { useMediaQuery } from "react-responsive";
-import { ESex } from "../../../../../type/sex.ts";
-import getAge from "../../../../../util/get-age.ts";
+import { ESex } from "@type/sex.ts";
+import getAge from "@util/get-age.ts";
 
 type PatientItemProps = {
   patientInfo: {
@@ -14,7 +14,7 @@ type PatientItemProps = {
     birthday: number[];
     tel: string;
     lastQuestionnaireDate: number[];
-    isManaged: boolean;
+    isFavorite: boolean;
   };
   onClickToManage: () => void;
   onClickToNotManage: () => void;
@@ -23,7 +23,7 @@ type PatientItemProps = {
 function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: PatientItemProps) {
   const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
 
-  const { id, name, sex, birthday, tel, lastQuestionnaireDate, isManaged } = patientInfo;
+  const { id, name, sex, birthday, tel, lastQuestionnaireDate, isFavorite } = patientInfo;
 
   const dateDiff = lastQuestionnaireDate
     ? Math.floor(
@@ -73,8 +73,8 @@ function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: Patie
           <S.LastQuestionnaireDateSpan></S.LastQuestionnaireDateSpan>
         )}
       </S.StyledLink>
-      <S.StyledIconButton onClick={isManaged ? onClickToNotManage : onClickToManage}>
-        <S.StyledStarIcon className={isManaged ? "managed" : "unmanaged"} />
+      <S.StyledIconButton onClick={isFavorite ? onClickToNotManage : onClickToManage}>
+        <S.StyledStarIcon className={isFavorite ? "managed" : "unmanaged"} />
       </S.StyledIconButton>
     </S.OuterDiv>
   );
