@@ -94,14 +94,13 @@ class SettingScreen extends StatelessWidget {
   void showCustomDialog(BuildContext context) {
     Get.defaultDialog(
       // padding
-
       title: '로그아웃',
+      // background white
+      backgroundColor: Colors.white,
       titleStyle: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,
       ),
-      // 배경
-      // subtitle none
       content: const Text(
         '로그아웃 하시겠습니까?',
         style: TextStyle(
@@ -110,7 +109,6 @@ class SettingScreen extends StatelessWidget {
           color: Color(0xff464655),
         ),
       ),
-
       confirm: TextButton(
         onPressed: () async {
           try {
