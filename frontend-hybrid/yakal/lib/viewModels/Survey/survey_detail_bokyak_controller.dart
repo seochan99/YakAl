@@ -103,8 +103,11 @@ class SurveyDetailBokyakController extends GetxController {
 
     try {
       // 설문 결과 등록
-      var response = await dio.post("/surveys/${surveyModel.id}/answer",
-          data: {"content": jsonEncode(results), "score": totalScore});
+      var response = await dio.post("/surveys/${surveyModel.id}/answer", data: {
+        "content": jsonEncode(results),
+        "score": totalScore,
+        "resultComment": surveyModel.resultComment
+      });
 
       // 200이면
       if (response.statusCode == 200) {
@@ -117,7 +120,7 @@ class SurveyDetailBokyakController extends GetxController {
         surveyModel.setComment(surveyModel.totalScore);
 
         // 결과 페이지 이동
-        Get.toNamed('/survey/result',
+        Get.offNamed('/survey/result',
             arguments: {'survey': surveyModel, 'results': results});
 
         // 데이터 반환
