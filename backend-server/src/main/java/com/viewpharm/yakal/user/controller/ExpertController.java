@@ -5,7 +5,6 @@ import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.dto.response.*;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
-import com.viewpharm.yakal.medicalestablishments.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishments.dto.request.MedicalEstablishmentDto;
 import com.viewpharm.yakal.medicalestablishments.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.service.*;
@@ -67,10 +66,16 @@ public class ExpertController {
         return ResponseDto.ok(guardianService.readResentGuardian(userId));
     }
 
-    @GetMapping("/patient/{patientId}/survey")
-    @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 설문 리스트 들고오기")
+    @GetMapping("/patient/{patientId}/survey/senior")
+    @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 노인병 설문 리스트 들고오기")
     public ResponseDto<?> getAllAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
-        return ResponseDto.ok(surveyService.getAllAnswerListForExpert(id, patientId));
+        return ResponseDto.ok(surveyService.getAllSeniorAnswerListForExpert(id, patientId));
+    }
+
+    @GetMapping("/patient/{patientId}/survey/general")
+    @Operation(summary = "설문 리스트", description = "전문가가 특정 환자 노인병 외 설문 리스트 들고오기")
+    public ResponseDto<?> getAllNotSeniorAnswerListForExpert(@UserId Long id, @PathVariable Long patientId) {
+        return ResponseDto.ok(surveyService.getAllNotSeniorAnswerListForExpert(id, patientId));
     }
 
     @GetMapping("/patient")

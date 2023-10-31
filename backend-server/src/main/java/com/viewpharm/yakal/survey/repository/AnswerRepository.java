@@ -23,4 +23,23 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
 
     @Query("select a.createdDate from Answer a where a.user=:user order by a.createdDate desc limit 1")
     LocalDate findCreateDateByUser(@Param("user") User user);
+
+    @Query(value = "SELECT  a.content as Content, s.mini_title as MiniTitle from answers a " +
+            "inner join surveys s on a.surbey_id = s.id AND s.is_senior = true " +
+            "where a.user_id = :user", nativeQuery = true)
+    List<answerInfo> findSurveyForSeniorByUser(@Param("user") Long userId);
+
+    @Query(value = "SELECT  a.content as Content, s.mini_title as MiniTitle from answers a " +
+            "inner join surveys s on a.surbey_id = s.id AND s.is_senior = false " +
+            "where a.user_id = :user", nativeQuery = true)
+    List<answerInfo> findSurveyForNotSeniorByUser(@Param("user") Long userId);
+
+    interface answerInfo {
+        String getContent();
+
+        String getMiniTitle();
+
+    }
+
+
 }
