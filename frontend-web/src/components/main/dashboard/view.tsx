@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import * as S from "./style.ts";
-import DashboardMenuItem from "./menu-item";
+import DashboardMenuItem from "./menu-item/view.tsx";
 import { useMediaQuery } from "react-responsive";
 
 export type TMenuInfo = {

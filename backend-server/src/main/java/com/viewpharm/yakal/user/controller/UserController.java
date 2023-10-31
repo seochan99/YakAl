@@ -43,22 +43,6 @@ public class UserController {
         return ResponseDto.ok(userInfoDto);
     }
 
-    @PatchMapping("")
-    @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
-    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
-        userService.updateUserInfo(
-                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
-        );
-        return ResponseDto.ok(null);
-    }
-
-    @PatchMapping("/identify")
-    @Operation(summary = "사용자 본인인증")
-    public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
-        userService.identify(id, identifyDto.getImpUid());
-        return ResponseDto.ok(null);
-    }
-
     @GetMapping("/check/identification")
     @Operation(summary = "사용자 본인인증 여부 확인")
     public ResponseDto<Map<String, Boolean>> checkIdentification(@UserId Long id) {
@@ -70,12 +54,27 @@ public class UserController {
         return ResponseDto.ok(map);
     }
 
-    @GetMapping("/register")
+    @GetMapping("/check/register")
     @Operation(summary = "최초 로그인 시 설정되어야 하는 정보가 전부 설정되어있는지 확인")
     public ResponseDto<?> checkIsRegistered(@UserId Long id) {
-        final Map<String, Boolean> map = new HashMap<>(1);
+        final Map<String, Object> map = new HashMap<>(1);
         map.put("isRegistered", userService.checkIsRegistered(id));
+
         return ResponseDto.ok(map);
+    }
+
+    @PatchMapping("/identify")
+    @Operation(summary = "사용자 본인인증")
+    public ResponseDto<Map<String, String>> identify(@UserId Long id, @RequestBody @Valid IdentifyDto identifyDto) {
+        userService.identify(id, identifyDto.getImpUid());
+        return ResponseDto.ok(null);
+    }
+
+    @PatchMapping("/optional-agreement")
+    @Operation(summary = "선택 약관 동의 여부 수정하기")
+    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateIsOptionalAgreementDto updateDto) {
+        userService.updateUserOptionalAgreement(id, updateDto.getIsOptionalAgreementAccepted());
+        return ResponseDto.ok(null);
     }
 
     @PatchMapping("/name")
@@ -117,10 +116,20 @@ public class UserController {
     public ResponseDto<?> readExpertUsers(@RequestParam("name") String expertName) {
         return ResponseDto.ok(userService.searchUserForExpert(expertName));
     }
-
+  
     @PatchMapping("/notification-time")
     @Operation(summary = "유저 알림 시간 설정", description = "유저 알림 시간 설정")
     public ResponseDto<?> setUserNotificationTime(@UserId @Valid Long userId, @RequestBody UpdateNotificationTimeDto requestDto) {
         return ResponseDto.ok(userService.setUserNotificationTime(userId, requestDto));
     }
+
+//    @Deprecated
+//    @PatchMapping("")
+//    @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
+//    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
+//        userService.updateUserInfo(
+//                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
+//        );
+//        return ResponseDto.ok(null);
+//    }
 }

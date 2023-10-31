@@ -118,20 +118,24 @@ public class AuthController {
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
     public ResponseDto<Object> logout(@UserId Long id, final HttpServletRequest request, final HttpServletResponse response) {
+        EPlatform platform = authService.getPlatform(id);
+
         authService.logout(id);
 
-        final Cookie[] cookies = request.getCookies();
+        if (platform == EPlatform.WEB) {
+            final Cookie[] cookies = request.getCookies();
 
-        if (cookies == null) {
-            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
+            if (cookies == null) {
+                throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
+            }
+
+            final Cookie refreshTokenCookie = Arrays.stream(cookies).filter((cookie) -> cookie.getName().equals("refreshToken"))
+                    .findFirst().orElseThrow(() -> new CommonException(ErrorCode.INVALID_TOKEN_ERROR));
+
+            refreshTokenCookie.setMaxAge(0);
+
+            response.addCookie(refreshTokenCookie);
         }
-
-        final Cookie refreshTokenCookie = Arrays.stream(cookies).filter((cookie) -> cookie.getName().equals("refreshToken"))
-                .findFirst().orElseThrow(() -> new CommonException(ErrorCode.INVALID_TOKEN_ERROR));
-
-        refreshTokenCookie.setMaxAge(0);
-
-        response.addCookie(refreshTokenCookie);
 
         return ResponseDto.ok(null);
     }

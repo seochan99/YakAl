@@ -116,7 +116,7 @@ function Medication() {
             </S.HeaderDiv>
             <S.ContentDiv>
               {medication.anticholinergicDrugs.list.map((anticholinergicItem, index) => [
-                <S.RowDiv key={2 * index}>
+                <S.AnticholinergicRowDiv key={2 * index}>
                   <S.LeftTitleDiv>
                     <S.NormalSpan>{anticholinergicItem.name}</S.NormalSpan>
                   </S.LeftTitleDiv>
@@ -126,9 +126,11 @@ function Medication() {
                     }${anticholinergicItem.prescribedAt[1]}. ${anticholinergicItem.prescribedAt[2] < 10 ? "0" : ""}${
                       anticholinergicItem.prescribedAt[2]
                     }.`}</S.NormalSpan>
-                    <S.NormalSpan>{anticholinergicItem.riskLevel}</S.NormalSpan>
+                    <S.RiskLevelDiv riskLevel={anticholinergicItem.riskLevel}>
+                      {anticholinergicItem.riskLevel}
+                    </S.RiskLevelDiv>
                   </S.RightTitleDiv>
-                </S.RowDiv>,
+                </S.AnticholinergicRowDiv>,
                 <S.Bar key={2 * index + 1} />,
               ])}
               <S.PaginationDiv>

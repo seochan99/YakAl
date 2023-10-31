@@ -1,20 +1,26 @@
 import * as S from "./style.ts";
 import { Outlet } from "react-router-dom";
 
-import Footer from "../../layout/footer/view.tsx";
-import Header from "../../layout/header/view.tsx";
-import Profile from "../../components/main/profile/view.tsx";
+import Footer from "@layout/footer/view.tsx";
+import Header from "@layout/header/view.tsx";
+import Profile from "@components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { EJob } from "@type/job.ts";
 import { useMainPageViewController } from "./view.controller.ts";
-import { EXPERT_HOME } from "../../router.tsx";
 
 export function MainPage() {
   const {
+    expertUser,
+    isLoading,
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   } = useMainPageViewController();
+
+  if (isLoading() || expertUser == null) {
+    return <></>;
+  }
+
+  const { name, job, department, belong } = expertUser;
 
   return (
     <S.OuterDiv>
@@ -25,7 +31,7 @@ export function MainPage() {
               <S.ItemNavLink
                 key={navItem.path + "_" + navItem.name}
                 to={navItem.path}
-                end={navItem.path === EXPERT_HOME}
+                end={navItem.path === "/expert"}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
                 {navItem.name}
@@ -34,10 +40,10 @@ export function MainPage() {
           </S.NavOuterDiv>
         )}
         <Profile
-          job={EJob.DOCTOR}
-          department={"가정의학과"}
-          belong={"중앙대학교 부속병원"}
-          name={"홍길동"}
+          job={job}
+          department={department}
+          belong={belong}
+          name={name}
           imgSrc="https://mui.com/static/images/avatar/1.jpg"
         />
       </Header>
@@ -54,7 +60,7 @@ export function MainPage() {
             <S.MobileNavListDiv className={mobileNavOpen ? "open" : ""}>
               {navList.map((navItem) => (
                 <S.MobileItemNavLink
-                  end={navItem.path === EXPERT_HOME}
+                  end={navItem.path === "/expert"}
                   key={navItem.path + "_" + navItem.name}
                   to={navItem.path}
                   onClick={closeMobileNavList}

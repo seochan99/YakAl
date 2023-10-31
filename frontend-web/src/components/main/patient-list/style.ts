@@ -131,7 +131,6 @@ export const SelectButton = styled.button`
 
   & svg {
     height: 1.5rem;
-    transition: 0.3s;
   }
 
   & span {
@@ -145,7 +144,7 @@ export const SelectButton = styled.button`
     line-height: 1rem;
   }
 
-  &.open svg {
+  &.asc svg {
     transform: rotate(180deg);
   }
 
@@ -169,6 +168,7 @@ export const SelectList = styled.ul`
   border: 0.1rem solid var(--Gray3, #c6c6cf);
   right: 0;
   width: 7.1rem;
+  z-index: 100;
 `;
 
 export const SelectItem = styled.li`

@@ -12,6 +12,7 @@ import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
+import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -99,7 +100,7 @@ public class UserService {
 
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.setName(name);
+        user.setRealName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
         user.setIsIdentified(true);
@@ -126,6 +127,13 @@ public class UserService {
                 .build();
     }
 
+    public void updateUserOptionalAgreement(final Long userId, final Boolean isOptionalAgreement) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        user.updateIsOptionalAgreementAccepted(isOptionalAgreement);
+    }
+
     public void updateUserInfo(final Long userId, final String name, final Boolean isDetail) {
         final Integer isUpdated = userRepository.updateNameAndIsDetailById(userId, name, isDetail);
 
@@ -134,16 +142,15 @@ public class UserService {
         }
     }
 
-    public boolean checkIsRegistered(final Long userId) throws CommonException {
+    public UserRegisterDto checkIsRegistered(final Long userId) throws CommonException {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return (user.getBirthday() != null
-                && user.getName() != null
-                //&& user.getSex() != null
-                && user.getIsDetail() != null
-                && user.getBreakfastTime() != null
-                && user.getLunchTime() != null
-                && user.getDinnerTime() != null);
+        return UserRegisterDto.builder()
+                .name(user.getName())
+                .isDetail(user.getIsDetail())
+                .isOptionalAgreementAccepted(user.getIsOptionalAgreementAccepted())
+                .isIdentified(user.getIsIdentified())
+                .build();
     }
 
     public void updateName(final Long userId, final String name) {
@@ -199,7 +206,7 @@ public class UserService {
     }
 
     public List<UserListDtoForGuardian> searchUserForExpert(String expertName) {
-        List<User> experts = userRepository.findByNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
+        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
 
         return experts.stream()
                 .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
