@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 class ProfileSettingRowBoxWidget extends StatelessWidget {
   final String text;
@@ -23,8 +24,15 @@ class ProfileSettingRowBoxWidget extends StatelessWidget {
             Clipboard.setData(const ClipboardData(
                     text: 'https://yakal.dcs-hyungjoon.com/'))
                 .then((_) {
-              // Optionally, inform the user that the link has been copied
-              // For example, you could use a snackbar
+              Get.snackbar(
+                '전문가 인증 링크 복사',
+                '복사된 링크를 통해 웹에서 전문가 인증을 진행해주세요!',
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                duration: const Duration(seconds: 1, microseconds: 500),
+                snackPosition: SnackPosition.BOTTOM,
+                backgroundColor: ColorStyles.gray1,
+                colorText: Colors.black,
+              );
             });
           } else {
             // 다른 페이지로 이동
