@@ -47,8 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   init() async {
     String deviceToken = await getDeviceToken();
-
-    print("device TOKEN : $deviceToken");
     sendDeviceToken(deviceToken);
 
     // 앱이 열려 있을때 알림 받기

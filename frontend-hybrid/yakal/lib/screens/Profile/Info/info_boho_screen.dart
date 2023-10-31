@@ -20,7 +20,6 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
   String bohoName = '';
   String bohoBirth = '';
   int bohoId = 0;
-  bool isLoading = false;
   bool isSelectedBoho = false;
   bool isSelectedSearch = false;
 
