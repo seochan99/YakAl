@@ -7,7 +7,6 @@ import Profile from "@components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useMainPageViewController } from "./view.controller.ts";
-import { EXPERT_HOME } from "../../router.tsx";
 
 export function MainPage() {
   const {
@@ -32,7 +31,7 @@ export function MainPage() {
               <S.ItemNavLink
                 key={navItem.path + "_" + navItem.name}
                 to={navItem.path}
-                end={navItem.path === EXPERT_HOME}
+                end={navItem.path === "/expert"}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
                 {navItem.name}
@@ -61,7 +60,7 @@ export function MainPage() {
             <S.MobileNavListDiv className={mobileNavOpen ? "open" : ""}>
               {navList.map((navItem) => (
                 <S.MobileItemNavLink
-                  end={navItem.path === EXPERT_HOME}
+                  end={navItem.path === "/expert"}
                   key={navItem.path + "_" + navItem.name}
                   to={navItem.path}
                   onClick={closeMobileNavList}

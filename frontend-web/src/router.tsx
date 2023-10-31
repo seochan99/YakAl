@@ -28,10 +28,6 @@ import { loader as adminFacilityDetailLoader } from "@components/admin-main/faci
 import AdminApprovalList from "@components/admin-main/approval-list/view.tsx";
 import AdminFacilityDetail from "@components/admin-main/facility-detail/view.tsx";
 
-export const EXPERT_HOME = "/expert";
-export const EXPERT_LOGIN_ROUTE = "/expert/login";
-export const ADMIN_LOGIN_ROUTE = "/admin-login/login";
-
 export const router = createBrowserRouter([
   {
     errorElement: <NotFoundPage />,
