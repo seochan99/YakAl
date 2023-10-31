@@ -7,6 +7,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import PatientItem from "./child/patient-item/view.tsx";
 import { PatientListModel } from "@store/patient-list.ts";
 import { EOrder } from "@type/order.ts";
+import Skeleton from "@mui/material/Skeleton";
 
 function PatientListPage() {
   const {
@@ -21,12 +22,8 @@ function PatientListPage() {
     },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
-    data: { isLoading, patientList, paging, sorting },
+    data: { patientList, paging, sorting },
   } = usePatientListPageViewController();
-
-  if (isLoading || patientList === null) {
-    return <></>;
-  }
 
   return (
     <S.OuterDiv>
@@ -83,14 +80,22 @@ function PatientListPage() {
             <S.TelephoneSpan>{`전화번호`}</S.TelephoneSpan>
             <S.LastQuestionnaireDateSpan>{`최근 설문일`}</S.LastQuestionnaireDateSpan>
           </S.TableHeaderDiv>
-          {patientList.map((patientItem) => (
-            <PatientItem
-              key={patientItem.id}
-              patientInfo={patientItem}
-              onClickToManage={onClickToManageFactory(patientItem.id)}
-              onClickToNotManage={onClickToNotManageFactory(patientItem.id)}
-            />
-          ))}
+          {patientList === null ? (
+            <Skeleton variant="rounded" width={"100%"} />
+          ) : patientList.length === 0 ? (
+            <S.CenterDiv>
+              <S.NotFoundSpan>{"설문을 보낸 환자가 없습니다."}</S.NotFoundSpan>
+            </S.CenterDiv>
+          ) : (
+            patientList.map((patientItem) => (
+              <PatientItem
+                key={patientItem.id}
+                patientInfo={patientItem}
+                onClickToManage={onClickToManageFactory(patientItem.id)}
+                onClickToNotManage={onClickToNotManageFactory(patientItem.id)}
+              />
+            ))
+          )}
         </S.ListDiv>
         <S.PaginationDiv>
           <Pagination

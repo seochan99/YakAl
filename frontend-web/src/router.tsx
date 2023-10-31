@@ -114,31 +114,31 @@ export const router = createBrowserRouter([
                 element: <LoginMainPage />,
               },
               {
-                path: "terms",
+                path: "login/terms",
                 element: <TermsPage />,
               },
               {
-                path: "social/failure",
+                path: "login/social/failure",
                 element: <SocialLoginFailurePage />,
               },
               {
-                path: "social/not-yet",
+                path: "login/social/not-yet",
                 element: <SocialLoginNotYetPage />,
               },
               {
-                path: "social/kakao",
+                path: "login/social/kakao",
                 element: <SocialLogin />,
               },
               {
-                path: "social/google",
+                path: "login/social/google",
                 element: <SocialLogin />,
               },
               {
-                path: "identify",
+                path: "login/identify",
                 element: <IdentifyPage />,
               },
               {
-                path: "identify/result",
+                path: "login/identify/result",
                 element: <IdentifyResultPage />,
               },
             ],

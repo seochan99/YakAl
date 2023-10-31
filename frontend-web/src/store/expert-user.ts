@@ -4,18 +4,18 @@ export type TExpertUser = {
   name: string;
   birthday: Date;
   tel: string;
-  job: EJob;
-  department: string;
-  belong: string;
+  job: EJob | null;
+  department: string | null;
+  belong: string | null;
 };
 
 const expertUser: TExpertUser = {
   name: "홍길동",
   birthday: new Date("1998-01-01"),
   tel: "010-9999-9999",
-  job: EJob.DOCTOR,
-  department: "가정의학과",
-  belong: "중앙대학교광명병원",
+  job: null,
+  department: null,
+  belong: null,
 };
 
 export class ExpertUserModel {
@@ -39,10 +39,7 @@ export class ExpertUserModel {
   };
 
   /* PUBLIC METHOD */
-  // public fetch = async (expertId: number) => {
   public fetch = async () => {
-    this.expertUser = null;
-
     // Dummy async communication
     this.expertUser = expertUser;
   };

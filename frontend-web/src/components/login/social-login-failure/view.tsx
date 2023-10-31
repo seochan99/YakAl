@@ -4,7 +4,7 @@ import WarningPage from "../../../page/warning/view.tsx";
 function SocialLoginFailurePage() {
   return (
     <WarningPage
-      iconPath=":("
+      iconPath="/assets/icons/failure-icon.png"
       title="소셜 로그인 실패"
       subtitle="소셜 로그인에 문제가 발생했습니다. 다시 시도해주세요."
     >

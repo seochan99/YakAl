@@ -1,22 +1,23 @@
 import { useEffect } from "react";
-import { Cookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { authAxios } from "../../../api/auth/instance.ts";
 
 function SocialLogin() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const cookies = new Cookies();
-    const accessToken = cookies.get("accessToken");
+    // const cookies = new Cookies();
+    // const accessToken = cookies.get("accessToken");
 
-    if (!accessToken) {
-      navigate("/expert/login/social/failure");
-    }
+    // logOnDev(`🔑 [Access Token Received] ${accessToken}`);
 
-    authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    // if (!accessToken) {
+    //   navigate("/login/social/failure");
+    //   return;
+    // }
 
-    navigate("/expert/login/identify");
+    // authAxios.defaults.headers.common["Authorization"] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI0Iiwicm9sIjoiUk9MRV9NT0JJTEUiLCJpYXQiOjE2OTg3Nzk5MTEsImV4cCI6MTY5ODc4MzUxMX0.GeEVkgMUzkdTwnEGkvsGygskpC-dz1O0ySmshezwbmVOqSog_zW0IKCwoRmwkTnKqADOEBLHi-Xtvapd3CDWmA`;
+
+    navigate("/login/identify");
   }, [navigate]);
 
   return <></>;

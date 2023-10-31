@@ -3,24 +3,17 @@ import { Outlet } from "react-router-dom";
 
 import Footer from "@layout/footer/view.tsx";
 import Header from "@layout/header/view.tsx";
-import Profile from "@components/main/profile/view.tsx";
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useMainPageViewController } from "./view.controller.ts";
+import Profile from "@components/main/profile/view.tsx";
 
 export function MainPage() {
   const {
     expertUser,
-    isLoading,
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   } = useMainPageViewController();
-
-  if (isLoading() || expertUser == null) {
-    return <></>;
-  }
-
-  const { name, job, department, belong } = expertUser;
 
   return (
     <S.OuterDiv>
@@ -39,13 +32,15 @@ export function MainPage() {
             ))}
           </S.NavOuterDiv>
         )}
-        <Profile
-          job={job}
-          department={department}
-          belong={belong}
-          name={name}
-          imgSrc="https://mui.com/static/images/avatar/1.jpg"
-        />
+        {expertUser === null ? null : (
+          <Profile
+            job={expertUser.job}
+            department={expertUser.department}
+            belong={expertUser.belong}
+            name={expertUser.name}
+            imgSrc="https://mui.com/static/images/avatar/1.jpg"
+          />
+        )}
       </Header>
       {isWideMobile && currentNavItem && (
         <S.MobileNavOuterDiv>

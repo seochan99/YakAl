@@ -17,7 +17,7 @@ export function LoginPage() {
 
   return (
     <S.OuterDiv>
-      <Header to={"/expert/login"} />
+      <Header to={"/"} />
       <S.CenteringMain>
         <Outlet />
       </S.CenteringMain>

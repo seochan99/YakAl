@@ -211,7 +211,7 @@ export const TableHeaderDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 3rem;
+  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 1rem;
   border: 0;
   color: var(--Gray4, #90909f);
   font-family: SUIT, serif;
@@ -236,6 +236,24 @@ export const TelephoneSpan = styled.span`
 
 export const LastQuestionnaireDateSpan = styled.span`
   width: calc(100% / 2);
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
+
+export const NotFoundSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2rem;
+  text-align: center;
 `;
 
 export const PaginationDiv = styled.div`

@@ -1,47 +1,43 @@
-import { useCallback } from "react";
-import useSnackbar from "../../../hooks/use-snackbar.tsx";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
+import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "@api/noauth/auth/api.ts";
+import { HttpStatusCode, isAxiosError } from "axios";
 
 export const useLoginMainPageViewController = () => {
-  const { open, onClose, openSnackbar } = useSnackbar();
-
-  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   const onKakaoLoginClick = useCallback(async () => {
-    navigate("/expert");
-    // try {
-    //   const response = await getKakaoRedirectUrl();
-    //
-    //   if (response.status === HttpStatusCode.Ok) {
-    //     setOpen(false);
-    //     window.location.href = response.data.data.url;
-    //   }
-    // } catch (error) {
-    //   if (isAxiosError(error)) {
-    //     openSnackbar();
-    //   }
-    // }
-  }, [navigate]);
+    try {
+      const response = await getKakaoRedirectUrl();
+
+      if (response.status === HttpStatusCode.Ok) {
+        setOpen(false);
+        window.location.href = response.data.data.url;
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setOpen(true);
+      }
+    }
+  }, [setOpen]);
 
   const onGoogleLoginClick = useCallback(async () => {
-    navigate("/expert");
-    // try {
-    //   const response = await getGoogleRedirectUrl();
-    //
-    //   if (response.status === HttpStatusCode.Ok) {
-    //     setOpen(false);
-    //     window.location.href = response.data.data.url;
-    //   }
-    // } catch (error) {
-    //   if (isAxiosError(error)) {
-    //     openSnackbar();
-    //   }
-    // }
-  }, [navigate]);
+    try {
+      const response = await getGoogleRedirectUrl();
+
+      if (response.status === HttpStatusCode.Ok) {
+        setOpen(false);
+        window.location.href = response.data.data.url;
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        setOpen(true);
+      }
+    }
+  }, [setOpen]);
 
   return {
     onKakaoLoginClick,
     onGoogleLoginClick,
-    snackbarController: { open, onClose, openSnackbar },
+    snackbarController: { open, setOpen },
   };
 };
