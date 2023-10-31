@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
@@ -12,16 +13,10 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, // Set the background color to white
-
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        title: const Text('앱 설정'),
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: DefaultBackAppbar(
+          title: "앱 설정",
         ),
       ),
       body: SingleChildScrollView(

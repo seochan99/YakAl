@@ -2,6 +2,12 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CLIENT_ID</key>
+	<string>469080203233-bi62qnho9hm6cd08f8k9lnl5ms4gklfa.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.469080203233-bi62qnho9hm6cd08f8k9lnl5ms4gklfa</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>469080203233-fra57srqq55sdk42b4m0d432lt0f5nsj.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC6pfL5g_yn7A9zMg_VWphhr24DiGS-lwI</string>
 	<key>GCM_SENDER_ID</key>
@@ -15,16 +21,16 @@
 	<key>STORAGE_BUCKET</key>
 	<string>yakal-fdd3d.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false/>
+	<false></false>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_GCM_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true/>
+	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:469080203233:ios:35fc46375a69c4f03bbca0</string>
+	<string>1:469080203233:ios:885c4d633e6dde473bbca0</string>
 </dict>
 </plist>

@@ -1,71 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
-import 'package:yakal/models/Profile/user.dart';
-import 'package:yakal/viewModels/Profile/guardian_controller.dart';
+import 'package:yakal/viewModels/Profile/appointment_controller.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
-class InfoBohoScreen extends StatefulWidget {
-  final UserViewModel userViewModel = Get.put(UserViewModel());
+class AppointmentScreen extends StatefulWidget {
+  // viewmodel가져오기
+  // final UserViewModel userViewModel = Get.put(UserViewModel());
 
-  InfoBohoScreen({super.key});
+  const AppointmentScreen({super.key});
 
   @override
-  _InfoBohoScreenState createState() => _InfoBohoScreenState();
+  _AppointmentScreenState createState() => _AppointmentScreenState();
 }
 
-class _InfoBohoScreenState extends State<InfoBohoScreen> {
-  String bohoName = '';
-  String bohoBirth = '';
-  int bohoId = 0;
-  bool isSelectedBoho = false;
+class _AppointmentScreenState extends State<AppointmentScreen> {
+  String expertName = '';
+  String expertBirthDate = '';
+  int expertId = 0;
+  bool isSelectedExpert = false;
   bool isSelectedSearch = false;
 
-  final TextEditingController _bohoNameController = TextEditingController();
-  DateTime? _selectedBirthDate;
-  final GuardianController guardianController = Get.put(GuardianController());
+  final TextEditingController _expertNameController = TextEditingController();
+  final AppointmentController appointmentController =
+      Get.put(AppointmentController());
 
   @override
   void dispose() {
-    _bohoNameController.dispose();
+    _expertNameController.dispose();
     super.dispose();
   }
 
+// 추가하기 버튼 클릭시
   void _handleButtonPress() {
-    widget.userViewModel.addOrUpdateGuardian(bohoId);
-    _bohoNameController.clear();
-    setState(() {
-      _selectedBirthDate = null;
-    });
+    appointmentController.postExperts(expertId, expertName, expertBirthDate);
+    _expertNameController.clear();
+    setState(() {});
     // Navigator.pop(context);
   }
 
+// 검색하기 버튼 클릭시
   void _handleButtonPress2() async {
-    final String guardianName = _bohoNameController.text;
-    final String birth = DateFormat('yyyy-MM-dd').format(_selectedBirthDate!);
+    final String expertName = _expertNameController.text;
 
-    await guardianController.getGuardians(guardianName, birth);
-    // 상태를 갱신하여 UI를 업데이트합니다.
+    // expert 가져오기
+    await appointmentController.getExperts(expertName);
+
     setState(() {
-      _bohoNameController.clear();
-      _selectedBirthDate = null;
+      _expertNameController.clear();
     });
-  }
-
-  Future<void> _selectBirthDate(BuildContext context) async {
-    DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime.now(),
-    );
-    if (picked != null && picked != _selectedBirthDate) {
-      setState(() {
-        _selectedBirthDate = picked;
-      });
-    }
   }
 
   @override
@@ -73,7 +57,7 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
-        child: DefaultBackAppbar(title: "보호자 정보"),
+        child: DefaultBackAppbar(title: "전문가 검색"),
       ),
       body: Container(
         color: Colors.white,
@@ -89,98 +73,65 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const Text(
-                        '보호자 성함',
+                        '전문가 성함',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 16),
                       InputHorizontalTextFieldWidget(
-                        nickNameController: _bohoNameController,
-                        title: '보호자 성함',
+                        nickNameController: _expertNameController,
+                        title: '전문가 성함',
                       ),
-                      const SizedBox(height: 16),
-                      const Text(
-                        '보호자 생년월일',
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w700),
-                      ),
-                      const SizedBox(height: 16),
-                      InkWell(
-                        onTap: () => _selectBirthDate(context),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.calendar_today),
-                              const SizedBox(width: 8.0),
-                              Text(
-                                _selectedBirthDate != null
-                                    ? "${_selectedBirthDate!.year}-${_selectedBirthDate!.month}-${_selectedBirthDate!.day}"
-                                    : "선택하세요",
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: _selectedBirthDate != null
-                                      ? Colors.black
-                                      : Colors.grey,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      // 등록된 보호자
+
+                      // 등록된 전문가
                       const SizedBox(height: 24),
                       const Text(
-                        '등록된 보호자',
+                        '등록된 전문가',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 16),
                       Obx(() {
                         return Text(
-                          widget.userViewModel.user.value.guardian == null
-                              ? '등록된 보호자가 없습니다.'
-                              : '${widget.userViewModel.user.value.guardian!.name}님 (${widget.userViewModel.user.value.guardian!.birthDate})',
+                          appointmentController.myExperts == null
+                              ? '등록된 전문가가 없습니다.'
+                              : '${appointmentController.myExperts[0].name}님',
                         );
                       }),
                       const SizedBox(height: 24),
                       const Text(
-                        '보호자를 선택해주세요!',
+                        '전문가를 선택해주세요!',
                         style: TextStyle(
                             fontSize: 20, fontWeight: FontWeight.w700),
                       ),
                       const SizedBox(height: 16),
-                      // 검색 결과로 나오는 보호자
+                      // 검색 결과로 나오는 전문가
 
                       Obx(() {
-                        return guardianController.guardians.isEmpty
-                            ? const Text('검색된 보호자가 없습니다.')
+                        return appointmentController.epxerts.isEmpty
+                            ? const Text('검색된 전문가가 없습니다.')
                             : ListView.builder(
                                 shrinkWrap: true,
-                                itemCount: guardianController.guardians.length,
+                                itemCount: appointmentController.epxerts.length,
                                 itemBuilder: (context, index) {
-                                  final guardian =
-                                      guardianController.guardians[index];
+                                  final expert =
+                                      appointmentController.epxerts[index];
                                   return Card(
                                     child: InkWell(
                                       onTap: () {
-                                        // _handleButtonPress();
                                         setState(() {
-                                          bohoId = guardian.id;
-                                          isSelectedBoho = true;
+                                          expertName = expert.name;
+                                          expertBirthDate = expert.birthDate;
+                                          expertId = expert.id;
+                                          isSelectedExpert = true;
                                         });
                                       },
                                       highlightColor:
                                           Colors.blue.withOpacity(0.3),
                                       child: ListTile(
-                                        title: Text(guardian.name),
+                                        title: Text(expert.name),
                                         subtitle: Text(
-                                          guardian.birthDate,
+                                          expert.birthDate,
                                         ),
                                       ),
                                     ),
@@ -201,11 +152,10 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                 30,
               ),
               child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _bohoNameController,
+                valueListenable: _expertNameController,
                 builder: (context, value, child) {
-                  final isButtonEnabled = value.text.isNotEmpty &&
-                      _selectedBirthDate != null &&
-                      !isSelectedBoho;
+                  final isButtonEnabled =
+                      value.text.isNotEmpty && !isSelectedExpert;
                   return ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(double.infinity, 50),
@@ -232,9 +182,9 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
                 30,
               ),
               child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: _bohoNameController,
+                valueListenable: _expertNameController,
                 builder: (context, value, child) {
-                  final isButtonEnabled = isSelectedBoho;
+                  final isButtonEnabled = isSelectedExpert;
                   return isButtonEnabled
                       ? ElevatedButton(
                           style: ElevatedButton.styleFrom(
