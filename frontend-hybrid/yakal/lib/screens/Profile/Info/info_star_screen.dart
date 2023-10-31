@@ -23,8 +23,8 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
   @override
   void initState() {
     super.initState();
-    widget.userViewModel.loadSpeicalNote('diagnosis');
-    widget.userViewModel.loadSpeicalNote('healthfood');
+    widget.userViewModel.loadSpeicalNote('medical-histories');
+    widget.userViewModel.loadSpeicalNote('dietary-supplements');
   }
 
   @override
@@ -49,10 +49,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
         case 'falls':
           title = '낙상 사고';
           break;
-        case 'diagnosis':
+        case 'medical-histories':
           title = '1년 내 질병';
           break;
-        case 'healthfood':
+        case 'dietary-supplements':
           title = '복약중인 건강식품';
           break;
         default:
@@ -228,10 +228,10 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
           case 'falls':
             filteredRecords = specialNote.falls;
             break;
-          case 'diagnosis':
+          case 'medical-histories':
             filteredRecords = specialNote.diagnosis;
             break;
-          case 'healthfood':
+          case 'dietary-supplements':
             filteredRecords = specialNote.healthfood;
             break;
           default:
@@ -254,7 +254,9 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
-                    if (title == 'healthfood' || title == 'diagnosis') {
+                    // DEL
+                    if (title == 'dietary-supplements' ||
+                        title == 'medical-histories') {
                       widget.userViewModel
                           .removeSpecialNoteItem(title, record.id);
                       return;
@@ -271,7 +273,8 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                 title: Text(
                   title == 'falls'
                       ? DateFormat('yyyy-MM-dd').format(record as DateTime)
-                      : title == 'healthfood' || title == 'diagnosis'
+                      : title == 'dietary-supplements' ||
+                              title == 'medical-histories'
                           ? (record as ItemWithNameAndId).name
                           : record.toString(),
                   style: const TextStyle(
@@ -401,6 +404,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),
                         const SizedBox(height: 16),
+                        // GET
                         Obx(
                           () {
                             if (widget.userViewModel.user.value.specialNote ==
@@ -410,6 +414,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                             return buildInfoStarRecords(title: "healthfood");
                           },
                         ),
+                        // ADD
                         const SizedBox(height: 16),
                         InfoAddBtnWidget(
                           content: "항목 추가",

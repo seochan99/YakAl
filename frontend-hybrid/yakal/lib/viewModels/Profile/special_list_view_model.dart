@@ -11,18 +11,18 @@ class SpecialListViewModel extends GetxController {
 /*---------------------- 특이사항 가져오기 ---------------------- */
   Future<void> getSpecialNoteItem(String title) async {
     /*---------------------- healthfood, diagnosis ---------------------- */
-    if (title == 'healthfood' || title == 'diagnosis') {
+    if (title == 'dietary-supplements' || title == 'medical-histories') {
       try {
         var dio = await authDioWithContext();
-        var response = await dio.get("/$title");
+        var response = await dio.get("/notable-features/$title");
 
         if (response.statusCode == 200 && response.data['success']) {
           user.update((val) {
             switch (title) {
-              case 'healthfood':
+              case 'dietary-supplements':
                 val?.specialNote?.healthfood = response.data['data'];
                 break;
-              case 'diagnosis':
+              case 'medical-histories':
                 val?.specialNote?.diagnosis = response.data['data'];
                 break;
               // underlyingConditions : 기저질환
@@ -70,10 +70,10 @@ class SpecialListViewModel extends GetxController {
 /*---------------------- 특이사항 삭제 ---------------------- */
   Future<void> removeSpecialNoteItem(String title, int index) async {
     /*---------------------- healthfood, diagnosis ---------------------- */
-    if (title == 'healthfood' || title == 'diagnosis') {
+    if (title == 'dietary-supplements' || title == 'medical-histories') {
       try {
         var dio = await authDioWithContext();
-        var response = await dio.delete("/$title/$index");
+        var response = await dio.delete("/notable-features/$title/$index");
         if (response.statusCode == 200 && response.data['success']) {
           loadSpeicalNote(title);
         }
@@ -115,10 +115,10 @@ class SpecialListViewModel extends GetxController {
           healthfood: [],
         );
         switch (title) {
-          case 'diagnosis':
+          case 'medical-histories':
             val?.specialNote?.diagnosis.assignAll(fetchedItems);
             break;
-          case 'healthfood':
+          case 'dietary-supplements':
             val?.specialNote?.healthfood.assignAll(fetchedItems);
             break;
           default:
@@ -133,8 +133,9 @@ class SpecialListViewModel extends GetxController {
   /*---------------------- 데이터 패치하기 - heatrlfood, dignosis ---------------------- */
   Future<List<ItemWithNameAndId>> fetchSpeicalNote(title) async {
     try {
+      // notable-features
       var dio = await authDioWithContext();
-      var response = await dio.get("/$title/my");
+      var response = await dio.get("/notable-features/$title");
 
       if (response.statusCode == 200 && response.data['success']) {
         return (response.data['data'] as List<dynamic>)
@@ -150,11 +151,11 @@ class SpecialListViewModel extends GetxController {
 
   /*---------------------- 특이사항 추가 함수  ---------------------- */
   Future<void> addSpecialNoteItem(String title, dynamic item) async {
-    if (title == 'healthfood' || title == 'diagnosis') {
+    if (title == 'dietary-supplements' || title == 'medical-histories') {
       try {
         var dio = await authDioWithContext();
-        var response =
-            await dio.post("/$title", data: {"name": item as String});
+        var response = await dio
+            .post("/notable-features/$title", data: {"name": item as String});
         loadSpeicalNote(title);
 
         if (response.statusCode == 200 && response.data['success']) {
