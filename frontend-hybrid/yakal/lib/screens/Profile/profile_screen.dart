@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
+import 'package:yakal/viewModels/Survey/survey_list_controller.dart';
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_widget.dart';
 import 'package:yakal/widgets/Profile/profile_info_icon_btn_widget.dart';
 import 'package:yakal/widgets/Profile/profile_setting_row_box_widget.dart';
@@ -13,6 +15,8 @@ import 'package:yakal/widgets/Profile/profile_test_button_widget.dart';
 class ProfileScreen extends StatelessWidget {
   final bool showEditNicknameModal = false;
   final UserViewModel userViewModel = Get.put(UserViewModel());
+  final SurveyListController surveyListController =
+      Get.put(SurveyListController(tests: tests));
 
   final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
 
@@ -20,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    surveyListController.onInit();
     return Scaffold(
       body: Container(
         color: ColorStyles.white,

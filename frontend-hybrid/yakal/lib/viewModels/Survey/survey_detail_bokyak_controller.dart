@@ -14,30 +14,29 @@ class SurveyDetailBokyakController extends GetxController {
     selectedOptions = List.filled(surveyModel.questions.length, null);
   }
 
-  Future<void> setDoneSurvey() async {
-    var dio = await authDioWithContext();
+  // Future<void> setDoneSurvey() async {
+  //   var dio = await authDioWithContext();
 
-    try {
-      var response = await dio.get("/surveys/answer");
-
-      if (response.statusCode == 200) {
-        List dataList = response.data['data']['datalist'];
-
-        for (var data in dataList) {
-          if (data['title'] == surveyModel.title) {
-            surveyModel.isCompleted = true;
-            update(); // GetX의 update 메서드를 호출하여 UI에 변경 사항을 반영합니다.
-            return;
-          }
-        }
-        surveyModel.isCompleted = false;
-      } else {
-        surveyModel.isCompleted = false;
-      }
-    } catch (e) {
-      throw Exception('Failed to load PillTodoParents');
-    }
-  }
+  //   try {
+  //     var response = await dio.get("/surveys/answer");
+  //     if (response.statusCode == 200) {
+  //       List dataList = response.data['data']['result'];
+  //       for (var data in dataList) {
+  //         if (data['title'] == surveyModel.title) {
+  //           surveyModel.isCompleted = true;
+  //           surveyModel.resultComment = data['resultComment'];
+  //           update(); // GetX의 update 메서드를 호출하여 UI에 변경 사항을 반영합니다.
+  //           return;
+  //         }
+  //       }
+  //       surveyModel.isCompleted = false;
+  //     } else {
+  //       surveyModel.isCompleted = false;
+  //     }
+  //   } catch (e) {
+  //     throw Exception('Failed to load PillTodoParents');
+  //   }
+  // }
 
   late List<String?> selectedOptions;
 
@@ -101,6 +100,10 @@ class SurveyDetailBokyakController extends GetxController {
 
     var dio = await authDioWithContext();
 
+    surveyModel.totalScore = totalScore;
+
+    surveyModel.setComment(surveyModel.totalScore, results: results);
+
     try {
       // 설문 결과 등록
       var response = await dio.post("/surveys/${surveyModel.id}/answer", data: {
@@ -117,10 +120,9 @@ class SurveyDetailBokyakController extends GetxController {
         surveyModel.isCompleted = true;
 
         // result Comment 셋팅
-        surveyModel.setComment(surveyModel.totalScore);
 
         // 결과 페이지 이동
-        Get.offNamed('/survey/result',
+        Get.offAllNamed('/survey/result',
             arguments: {'survey': surveyModel, 'results': results});
 
         // 데이터 반환

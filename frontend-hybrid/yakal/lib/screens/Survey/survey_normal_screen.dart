@@ -89,6 +89,10 @@ class SurveyNormalList extends StatelessWidget {
                         Get.to(() => SurveyDetailType1Screen(
                               survey: tests[index],
                             ));
+                      } else {
+                        Get.toNamed('/survey/result', arguments: {
+                          'survey': tests[index],
+                        });
                       }
                     },
                     child: Container(

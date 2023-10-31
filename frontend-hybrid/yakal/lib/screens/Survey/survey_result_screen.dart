@@ -91,10 +91,10 @@ class SurveyResultScreen extends StatelessWidget {
                             foregroundColor: const Color(0xffffffff),
                           ),
                           onPressed: () {
-                            Get.back();
+                            Get.offAllNamed('/');
                           },
                           child: const Text(
-                            "다른 테스트 하기",
+                            "홈으로 가기",
                             style: TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.w700),
                           )),
