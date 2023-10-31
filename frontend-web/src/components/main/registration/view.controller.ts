@@ -205,7 +205,8 @@ export const useRegistrationPageViewController = () => {
         facilityName,
         facilityNumber,
         zipCode: facilityPostcode,
-        address: facilityAddress,
+        address:
+          facilityAddress + facilityAddressDetail + facilityAddressExtra === "" ? "" : ` ${facilityAddressExtra}`,
         businessRegiNumber: facilityBusinessNumber,
         tel: facilityContact,
         clinicHours: facilityHours,
