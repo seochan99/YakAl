@@ -199,6 +199,18 @@ public class User {
         this.isIos = isIos;
     }
 
+    public void updateBreakfastNotificationTime(LocalTime breakfastTime) {
+        this.breakfastTime = breakfastTime;
+    }
+
+    public void updateLunchNotificationTime(LocalTime lunchTime) {
+        this.lunchTime = lunchTime;
+    }
+
+    public void updateDinnerNotificationTime(LocalTime dinnerTime) {
+        this.dinnerTime = dinnerTime;
+    }
+
     public void logout() {
         setRefreshToken(null);
         this.deviceToken = null;

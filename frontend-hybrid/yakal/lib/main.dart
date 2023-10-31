@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -15,9 +11,8 @@ import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
-import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
-import 'package:yakal/screens/Login/LoginEntry/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
@@ -102,10 +97,20 @@ class MyApp extends StatelessWidget {
     // 앱 실행
     return GetMaterialApp(
       title: '약 알',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        // if it's a RTL language
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        // include country code too
+      ],
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+
         // colorScheme:
         //   const ColorScheme(
         //     brightness: Brightness.light,
@@ -128,7 +133,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
       initialRoute: initialRoute,
-      // initialRoute: "/pill/add/ocrEnvelop",
+      // initialRoute: "/login",
       // 라우팅 설정
       getPages: [
         GetPage(
@@ -155,16 +160,12 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/login',
-          page: () => const LoginEntryScreen(),
+          page: () => const SocialLoginScreen(),
           children: [
             GetPage(
               name: '/process',
               page: () => LoginProcess(),
               transition: Transition.noTransition,
-            ),
-            GetPage(
-              name: '/kakao',
-              page: () => const KakaoLoginScreen(),
             ),
             GetPage(
               name: '/identify/process',
