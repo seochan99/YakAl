@@ -79,7 +79,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByIdAndJob(Long userId, EJob patient);
 
     @Query("select u from User u where u.name=:name and u.birthday=:birthday")
-    List<User> findByNameAndBirthday(@Param("user") String name, @Param("birthday") LocalDate birthday);
+    List<User> searchByNameAndBirthday(@Param("name") String name, @Param("birthday") LocalDate birthday);
 
     @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
     List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
