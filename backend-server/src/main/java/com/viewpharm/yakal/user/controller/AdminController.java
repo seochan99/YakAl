@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.admin.controller;
+package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
