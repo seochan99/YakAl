@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     @ExceptionHandler(value = {ConstraintViolationException.class})
     public ResponseDto<?> handleConstraintViolationException(ConstraintViolationException e) {
         log.error("handleConstraintViolationException() in GlobalExceptionHandler throw ConstraintViolationException : {}", e.getStackTrace());

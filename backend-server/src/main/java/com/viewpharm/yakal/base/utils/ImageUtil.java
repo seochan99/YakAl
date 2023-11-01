@@ -1,9 +1,11 @@
 package com.viewpharm.yakal.base.utils;
 
-import com.viewpharm.yakal.base.type.EImageUseType;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
+<<<<<<< HEAD
 import com.viewpharm.yakal.user.domain.User;
+=======
+>>>>>>> 529c8b6695f392bcb5abb81bff77e920d1ec76f0
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
