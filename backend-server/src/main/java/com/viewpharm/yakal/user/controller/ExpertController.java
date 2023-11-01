@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
@@ -20,6 +21,7 @@ import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -52,6 +54,14 @@ public class ExpertController {
     public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message")MedicalEstablishmentDto requestDto,
                                                      @RequestPart(value = "file") MultipartFile imgFile) {
         return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
+    }
+
+    @GetMapping(value = "/medical-establishments/search")
+    @Operation(summary = "의료기관 검색", description = "의료기관 검색")
+    public ResponseDto<?> createMedicalEstablishment(@Param("medical") EMedical eMedical,
+                                                     @Param("word") String word,
+                                                     @Param("page") Integer page) {
+        return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishments(eMedical, word, page, 5));
     }
 
     @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})

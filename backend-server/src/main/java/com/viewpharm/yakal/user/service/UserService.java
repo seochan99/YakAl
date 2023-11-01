@@ -122,7 +122,7 @@ public class UserService {
                 .name(expert.getName())
                 .tel(expert.getTel())
                 .birthday(expert.getBirthday())
-                .job(expert.getJob())
+                .job(expert.getJob() == EJob.DOCTOR || expert.getJob() == EJob.PHARMACIST ? expert.getJob() : null)
                 .department(expert.getDepartment())
                 .build();
     }
