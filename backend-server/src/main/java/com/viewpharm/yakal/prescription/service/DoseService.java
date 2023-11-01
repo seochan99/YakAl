@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.prescription.service;
 
+import com.viewpharm.yakal.base.PageInfo;
 import com.viewpharm.yakal.base.type.EJob;
 
 import com.viewpharm.yakal.prescription.dto.request.CreateScheduleDto;
@@ -22,6 +23,10 @@ import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -362,7 +367,6 @@ public class DoseService {
     public List<DoseRecentDto> readRecentDoses(Long userId, Long patientId) {
         User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-
         User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
@@ -370,5 +374,94 @@ public class DoseService {
                 .map(d -> new DoseRecentDto(d.getKDCode().getDoseName(), d.getDate()))
                 .collect(Collectors.toList());
     }
+
+    public DoseAllDto readAllDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+
+        Sort.Direction order = Sort.Direction.ASC;
+        Pageable paging = null;
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
+
+        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
+
+        Page<Dose> doses = doseRepository.findByUserAndIsDeletedOrderByDateDesc(patient, false, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
+
+
+        List<DoseRecentDto> doseRecentDtos = doses.stream()
+                .map(d -> new DoseRecentDto(d.getKDCode().getDoseName(), d.getDate()))
+                .collect(Collectors.toList());
+
+
+        return DoseAllDto.builder()
+                .datalist(doseRecentDtos)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+    public DoseAllDto readBeerCriteriaDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+
+        Sort.Direction order = Sort.Direction.ASC;
+        Pageable paging = null;
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
+
+        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
+
+        Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsBeersOrderByDateDesc(patient.getId(), false, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
+
+
+        List<DoseRecentDto> doseRecentDtos = doses.stream()
+                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+                .collect(Collectors.toList());
+
+
+        return DoseAllDto.builder()
+                .datalist(doseRecentDtos)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+    public DoseAllDto readAnticholinergicDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+
+        Sort.Direction order = Sort.Direction.ASC;
+        Pageable paging = null;
+        if (ordering.equals("desc"))
+            order = Sort.Direction.DESC;
+
+        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
+
+        Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(patient.getId(), false, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
+
+
+        List<DoseRecentDto> doseRecentDtos = doses.stream()
+                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+                .collect(Collectors.toList());
+
+
+        return DoseAllDto.builder()
+                .datalist(doseRecentDtos)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+
 
 }

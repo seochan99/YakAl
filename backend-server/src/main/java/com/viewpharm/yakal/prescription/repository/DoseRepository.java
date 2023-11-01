@@ -4,6 +4,8 @@ import com.viewpharm.yakal.prescription.domain.Dose;
 import com.viewpharm.yakal.prescription.domain.DoseName;
 import com.viewpharm.yakal.base.type.EDosingTime;
 import com.viewpharm.yakal.user.domain.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,6 +57,26 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
 
     List<Dose> findTop5ByUserAndIsDeletedOrderByDateDesc(User user, Boolean isDeleted);
+
+    @Query(value = "SELECT dn.dose_name as DoseName, d.date as Date From doses d " +
+            "inner join dosenames dn on d.dosename_id  = dn.id " +
+            "inner join risks r on d.risks_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+            "where d.user_id = :userId AND d.is_deleted = :isDeleted", nativeQuery = true)
+    Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByDateDesc(@Param("userId") Long userId, @Param("isDeleted") Boolean isDeleted, Pageable pageable);
+
+    @Query(value = "SELECT dn.dose_name as DoseName, d.date as Date From doses d " +
+            "inner join dosenames dn on d.dosename_id  = dn.id " +
+            "inner join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+            "where d.user_id = :userId AND d.is_deleted = :isDeleted", nativeQuery = true)
+    Page<doseInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(@Param("userId") Long userId, @Param("isDeleted") Boolean isDeleted, Pageable pageable);
+
+    Page<Dose> findByUserAndIsDeletedOrderByDateDesc(User user, Boolean isDeleted, Pageable pageable);
+
+    interface doseInfo {
+        String getDoseName();
+
+        LocalDate getDate();
+    }
 
     interface oneDaySummary {
 
