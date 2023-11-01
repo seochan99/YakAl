@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/models/Profile/user.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/guardian_controller.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -36,6 +37,18 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
   void _handleButtonPress() {
     widget.userViewModel.addOrUpdateGuardian(bohoId);
     _bohoNameController.clear();
+
+    // 검색완료
+    Get.snackbar(
+      '보호자 정보 추가',
+      '보호자 정보 추가 완료(새로 추가시 업데이트 됩니다!)',
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      duration: const Duration(seconds: 2, microseconds: 500),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: ColorStyles.gray1,
+      colorText: Colors.black,
+    );
+
     setState(() {
       _selectedBirthDate = null;
     });
@@ -46,11 +59,23 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
     final String guardianName = _bohoNameController.text;
     final String birth = DateFormat('yyyy-MM-dd').format(_selectedBirthDate!);
 
+    // 검색완료
+    Get.snackbar(
+      '보호자 정보 검색',
+      '보호자 정보 검색 완료(보호자 이름, 생년월일을 정확히 입력해주셔야 해요!)',
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      duration: const Duration(seconds: 2, microseconds: 500),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: ColorStyles.gray1,
+      colorText: Colors.black,
+    );
+
     await guardianController.getGuardians(guardianName, birth);
     // 상태를 갱신하여 UI를 업데이트합니다.
     setState(() {
-      _bohoNameController.clear();
-      _selectedBirthDate = null;
+      // 비우지 말기
+      // _bohoNameController.clear();
+      // _selectedBirthDate = null;
     });
   }
 

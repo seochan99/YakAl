@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
@@ -108,11 +109,14 @@ class SettingScreen extends StatelessWidget {
         onPressed: () async {
           try {
             Get.offAllNamed('/login');
+            // 카카오 로그아웃
             await UserApi.instance.logout();
+            // 서버 로그아웃 호출
+            var dio = await authDioWithContext();
+            await dio.post('/auth/logout');
           } catch (e) {
             //error
           }
-          //
         },
         child: Container(
           decoration: BoxDecoration(

@@ -102,6 +102,12 @@ class SocialLoginProvider {
           AppleIDAuthorizationScopes.email,
           AppleIDAuthorizationScopes.fullName,
         ],
+        webAuthenticationOptions: WebAuthenticationOptions(
+          clientId: "yakal.viewpharm.H4Z6LMJ7UU",
+          redirectUri: Uri.parse(
+            "https://yakal.dcs-hyungjoon.com/api/v1/auth/apple/callback",
+          ),
+        ),
       );
 
       var accessToken = credential.authorizationCode;

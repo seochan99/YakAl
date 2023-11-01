@@ -389,6 +389,8 @@ class DoseListViewModel extends GetxController {
       print("[Read Prescription Id] $prescriptionId");
     }
 
+    print("prescriptionId: $prescriptionId");
+
     if (prescriptionId == -1) {
       return EAddScheduleResult.FAIL;
     }

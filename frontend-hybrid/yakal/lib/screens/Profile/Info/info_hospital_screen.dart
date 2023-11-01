@@ -34,6 +34,16 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
       // addMedicalRecord
       widget.userViewModel.addMedicalRecord(selectedDate, location, title);
 
+      Get.snackbar(
+        '추가 완료',
+        "병원기록이 추가 완료 됐습니다!",
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(seconds: 1, microseconds: 500),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: ColorStyles.gray1,
+        colorText: Colors.black,
+      );
+
       _locationController.clear();
 
       Navigator.pop(context);
@@ -251,6 +261,15 @@ class _InfoHospitalScreenState extends State<InfoHospitalScreen> {
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
                 trailing: InkWell(
                   onTap: () {
+                    Get.snackbar(
+                      '삭제 완료',
+                      "병원기 록이 삭제 완료됐습니다!",
+                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      duration: const Duration(seconds: 1, microseconds: 500),
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: ColorStyles.gray1,
+                      colorText: Colors.black,
+                    );
                     widget.userViewModel.removeMedicalRecord(title, record.id);
                     return;
                   },
