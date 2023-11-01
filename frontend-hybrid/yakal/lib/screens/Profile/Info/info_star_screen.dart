@@ -37,6 +37,15 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
       itemController.clear();
       Navigator.pop(context);
+      Get.snackbar(
+        '추가 완료',
+        "특이사항이 추가 완료됏습니다!",
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(seconds: 1, microseconds: 500),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: ColorStyles.gray1,
+        colorText: Colors.black,
+      );
     }
 
     String getTitleFromRecordType(String recordType) {
@@ -261,6 +270,16 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     // DELETE
                     widget.userViewModel
                         .removeSpecialNoteItem(title, record.id);
+
+                    Get.snackbar(
+                      '삭제 완료',
+                      "특이사항이 삭제 완료됐습니다!",
+                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      duration: const Duration(seconds: 1, microseconds: 500),
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: ColorStyles.gray1,
+                      colorText: Colors.black,
+                    );
                     return;
                   },
                   child: SvgPicture.asset(

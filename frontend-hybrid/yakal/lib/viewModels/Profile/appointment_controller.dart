@@ -15,7 +15,10 @@ class AppointmentController extends GetxController {
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
         print("epxertsData : $responseData");
-        final List<dynamic> epxertsData = responseData["data"];
+        final List<dynamic> epxertsData =
+            responseData["data"]; // 'results' 대신 "data" 사용
+        print("Debugging epxertsData");
+        print(epxertsData);
 
         epxerts.clear(); // Clear the existing list if needed
         epxerts.addAll(

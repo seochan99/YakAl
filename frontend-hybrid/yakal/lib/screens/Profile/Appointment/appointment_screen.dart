@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/appointment_controller.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -34,6 +35,15 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
 // 추가하기 버튼 클릭시
   void _handleButtonPress() {
+    Get.snackbar(
+      '전문가 정보 추가',
+      '전문가 정보 추가 완료(새로 추가시 업데이트 됩니다!)',
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      duration: const Duration(seconds: 2, microseconds: 500),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: ColorStyles.gray1,
+      colorText: Colors.black,
+    );
     appointmentController.postExperts(expertId, expertName, expertBirthDate);
     _expertNameController.clear();
     setState(() {});
@@ -42,6 +52,16 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
 
 // 검색하기 버튼 클릭시
   void _handleButtonPress2() async {
+    // 검색완료
+    Get.snackbar(
+      '전문가 검색',
+      '전문가 검색 완료(전문가 이름을 정확히 입력해주셔야 해요!)',
+      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+      duration: const Duration(seconds: 2, microseconds: 500),
+      snackPosition: SnackPosition.TOP,
+      backgroundColor: ColorStyles.gray1,
+      colorText: Colors.black,
+    );
     final String expertName = _expertNameController.text;
 
     // expert 가져오기
@@ -82,7 +102,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                         nickNameController: _expertNameController,
                         title: '전문가 성함',
                       ),
-
                       // 등록된 전문가
                       const SizedBox(height: 24),
                       const Text(
@@ -93,7 +112,7 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       const SizedBox(height: 16),
                       Obx(() {
                         return Text(
-                          appointmentController.myExperts == null
+                          appointmentController.myExperts.isEmpty
                               ? '등록된 전문가가 없습니다.'
                               : '${appointmentController.myExperts[0].name}님',
                         );
@@ -117,6 +136,9 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                   final expert =
                                       appointmentController.epxerts[index];
                                   return Card(
+                                    color: expert.id == expertId
+                                        ? Colors.blue.withOpacity(0.3)
+                                        : null, // 선택한 항목의 id와 현재 항목의 id를 비교
                                     child: InkWell(
                                       onTap: () {
                                         setState(() {
@@ -130,9 +152,6 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                           Colors.blue.withOpacity(0.3),
                                       child: ListTile(
                                         title: Text(expert.name),
-                                        subtitle: Text(
-                                          expert.birthDate,
-                                        ),
                                       ),
                                     ),
                                   );
