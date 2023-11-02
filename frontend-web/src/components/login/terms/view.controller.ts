@@ -2,9 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { Cookies } from "react-cookie";
 import { logOnDev } from "@util/log-on-dev.ts";
 import { useNavigate } from "react-router-dom";
+import { checkIsAgreed, setIsOptionalAgreementAccepted } from "@api/auth/user/api.ts";
+import { isAxiosError } from "axios";
 
 export function useTermsPageViewController() {
   /* React States */
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [isAgreed, setIsAgreed] = useState<boolean>(false);
 
   /* Custom Hooks */
@@ -24,11 +28,21 @@ export function useTermsPageViewController() {
   }, [isAgreed]);
 
   const onClickNextButton = useCallback(() => {
-    navigate("/login/identify", { state: { fromTerms: true } });
+    setIsOptionalAgreementAccepted(true)
+      .then(() => {
+        navigate("/login/identify", { state: { fromTerms: true } });
+      })
+      .catch((error) => {
+        if (isAxiosError(error)) {
+          setSnackbarOpen(true);
+        }
+      });
   }, [navigate]);
 
   /* useEffects */
   useEffect(() => {
+    setIsLoading(true);
+
     const cookies = new Cookies();
     const accessToken = cookies.get("accessToken");
 
@@ -38,7 +52,26 @@ export function useTermsPageViewController() {
     }
 
     cookies.remove("accessToken", { path: "/" });
-  }, [redirectToSocialLoginNotYeyPage]);
 
-  return { isAgreed, onClickIsAgreed, onClickNextButton };
+    checkIsAgreed()
+      .then((response) => {
+        const isAgreed = response.data.data.isOptionalAgreementAccepted;
+
+        if (isAgreed !== null) {
+          navigate("/login/identify", { state: { fromTerms: true } });
+          return;
+        }
+      })
+      .catch((error) => {
+        if (isAxiosError(error)) {
+          redirectToSocialLoginNotYeyPage();
+          return;
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, [navigate, redirectToSocialLoginNotYeyPage]);
+
+  return { isAgreed, onClickIsAgreed, onClickNextButton, snackbarOpen, setSnackbarOpen, isLoading };
 }

@@ -46,7 +46,6 @@ export const useIdentifyPageViewController = () => {
           const isIdentified = response.data.data.isIdentified;
 
           if (isIdentified) {
-            // User Is Already Identified
             navigate("/expert");
             return;
           }
@@ -57,7 +56,6 @@ export const useIdentifyPageViewController = () => {
         }
       })
       .catch((error) => {
-        // User Not Found -> Redirect To Social Login Not Yet
         if (isAxiosError(error)) {
           redirectToSocialLoginNotYeyPage();
           return;

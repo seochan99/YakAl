@@ -1,8 +1,12 @@
 import * as S from "./style.ts";
 import { useTermsPageViewController } from "@components/login/terms/view.controller.ts";
+import { ESnackbarType } from "@type/snackbar-type.ts";
+import YakalSnackbar from "@components/snackbar/view.tsx";
+import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 function TermsPage() {
-  const { isAgreed, onClickIsAgreed, onClickNextButton } = useTermsPageViewController();
+  const { isAgreed, onClickIsAgreed, onClickNextButton, snackbarOpen, setSnackbarOpen, isLoading } =
+    useTermsPageViewController();
 
   return (
     <S.OuterDiv>
@@ -41,6 +45,8 @@ function TermsPage() {
       <S.NextButton className={isAgreed ? "is-agreed" : ""} disabled={!isAgreed} onClick={onClickNextButton}>
         다음
       </S.NextButton>
+      <YakalSnackbar open={snackbarOpen} setOpen={setSnackbarOpen} type={ESnackbarType.TERMS_AGREEMENT_FAILED} />
+      {isLoading && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }
