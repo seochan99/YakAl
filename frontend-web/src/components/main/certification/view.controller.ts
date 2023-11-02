@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { EJob } from "@type/job.ts";
 import { useNavigate } from "react-router-dom";
 import { ExpertFacilityListViewModel } from "@components/main/certification/view.model.ts";
@@ -7,7 +7,6 @@ import { TExpertFacilityItem } from "@store/facility-list.ts";
 export const useCertificationPageViewController = () => {
   ExpertFacilityListViewModel.use();
 
-  const [selected, setSelected] = useState<EJob | null>(null);
   const [certificationImg, setCertificationImg] = useState<File | null>(null);
   const [certImgFileName, setCertImgFileName] = useState<string>("첨부파일");
   const [belongImg, setBelongImg] = useState<File | null>(null);
@@ -22,12 +21,8 @@ export const useCertificationPageViewController = () => {
 
   const isFinished = selectedFacility !== null && certificationImg !== null && belongImg !== null;
 
-  const { fetch, getState, setPageNumber, setNameQuery } = ExpertFacilityListViewModel;
-  const { isLoading, facilityList, pagingInfo } = getState();
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
+  const { getState, setPageNumber, setNameQuery, setSelectedJob } = ExpertFacilityListViewModel;
+  const { isLoading, facilityList, pagingInfo, selectedJob } = getState();
 
   const handlePageChange = useCallback(
     (page: number) => {
@@ -37,14 +32,14 @@ export const useCertificationPageViewController = () => {
   );
 
   const onClickDoctor = useCallback(() => {
-    setSelected(EJob.DOCTOR);
+    setSelectedJob(EJob.DOCTOR);
     setSelectedFacility(null);
-  }, []);
+  }, [setSelectedJob]);
 
   const onClickPharmacist = useCallback(() => {
-    setSelected(EJob.PHARMACIST);
+    setSelectedJob(EJob.PHARMACIST);
     setSelectedFacility(null);
-  }, []);
+  }, [setSelectedJob]);
 
   const onChangeSearchbar = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -129,7 +124,7 @@ export const useCertificationPageViewController = () => {
   }, [navigate]);
 
   return {
-    selected,
+    selectedJob,
     isFinished,
     onClickDoctor,
     onClickPharmacist,

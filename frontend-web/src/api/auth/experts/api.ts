@@ -73,3 +73,17 @@ export const registerFacility = async <T = CommonResponse<null>>(
 export const toggleIsFavorite = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
   return await authAxios.patch<T, AxiosResponse<T>>(`/experts/medical-appointment/${patientId}`);
 };
+
+export const getProtector = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/guardian`);
+};
+
+export const getApprovedFacilityList = async <T = CommonResponse<null>>(
+  nameQuery: string,
+  page: number,
+  facilityType: EFacilityType,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(
+    `/experts/medical-establishments/search?eMedical=${EFacilityType[facilityType]}&word=${nameQuery}&page=${page - 1}`,
+  );
+};

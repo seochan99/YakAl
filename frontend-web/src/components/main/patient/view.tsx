@@ -58,6 +58,10 @@ function PatientPage() {
         )}
         {protector === null ? (
           <Skeleton variant="rounded" width={convertRemToPixels(30)} height={convertRemToPixels(6)} />
+        ) : protector.name === "" && protector.tel === "" ? (
+          <S.BaseInfoDiv>
+            <S.CenterDiv>{"보호자가 존재하지 않습니다."}</S.CenterDiv>
+          </S.BaseInfoDiv>
         ) : (
           <S.BaseInfoDiv>
             <S.SelfBaseTitle>
@@ -69,7 +73,6 @@ function PatientPage() {
                   {protector.name.substring(0, 4)}
                   {protector.name.length > 4 ? "..." : ""}
                 </S.NameSpan>
-                <S.IconContainedSpan>{`(${protector.relationship})`}</S.IconContainedSpan>
               </S.NameSexBirthDiv>
               <S.NormalSpan>{`Tel. ${protector.tel}`}</S.NormalSpan>
             </S.InfoTextDiv>

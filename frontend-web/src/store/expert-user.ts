@@ -13,9 +13,9 @@ const expertUser: TExpertUser = {
   name: "홍길동",
   birthday: new Date("1998-01-01"),
   tel: "010-9999-9999",
-  job: null,
-  department: null,
-  belong: null,
+  job: EJob.DOCTOR,
+  department: "가정의학과",
+  belong: "중앙대학교광명병원",
 };
 
 export class ExpertUserModel {

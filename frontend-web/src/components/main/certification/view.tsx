@@ -8,14 +8,13 @@ const PAGING_SIZE = 5;
 
 function CertificationPage() {
   const {
-    selected,
+    selectedJob,
     isFinished,
     onClickDoctor,
     onClickPharmacist,
     selectedFacility,
     facilityNameSearchQuery,
     onChangeSearchbar,
-    isLoading,
     pagingInfo,
     handleFacilityItemClick,
     handlePageChange,
@@ -30,10 +29,6 @@ function CertificationPage() {
     facilityList,
   } = useCertificationPageViewController();
 
-  if (isLoading || facilityList === null || pagingInfo === null) {
-    return <></>;
-  }
-
   return (
     <S.Outer>
       <S.CertHeader>
@@ -42,9 +37,9 @@ function CertificationPage() {
           대시 보드로
         </S.BackButton>
         <S.ProgressBarWrapper>
-          <S.ProgressBar className={selected !== null ? "on" : "off"} />
-          <S.ProgressBar className={selected !== null && isFinished ? "on" : "off"} />
-          <S.ProgressText>{selected !== null ? (isFinished ? "2 / 2" : "1 / 2") : "0 / 2"}</S.ProgressText>
+          <S.ProgressBar className={selectedJob !== null ? "on" : "off"} />
+          <S.ProgressBar className={selectedJob !== null && isFinished ? "on" : "off"} />
+          <S.ProgressText>{selectedJob !== null ? (isFinished ? "2 / 2" : "1 / 2") : "0 / 2"}</S.ProgressText>
         </S.ProgressBarWrapper>
       </S.CertHeader>
       <S.InnerBox>
@@ -53,19 +48,22 @@ function CertificationPage() {
           1. 전문가 인증을 완료해야 본 서비스를 이용하실 수 있습니다. 아래에서 본인에게 해당되는 직군을 선탹해주세요.
         </S.Subtitle>
         <S.SelectButtonWrapper>
-          <S.SelectButtonBox className={selected === EJob.DOCTOR ? "selected" : "unselected"} onClick={onClickDoctor}>
+          <S.SelectButtonBox
+            className={selectedJob === EJob.DOCTOR ? "selected" : "unselected"}
+            onClick={onClickDoctor}
+          >
             <S.DoctorIcon />
             의사입니다.
           </S.SelectButtonBox>
           <S.SelectButtonBox
-            className={selected === EJob.PHARMACIST ? "selected" : "unselected"}
+            className={selectedJob === EJob.PHARMACIST ? "selected" : "unselected"}
             onClick={onClickPharmacist}
           >
             <S.PharmacistIcon />
             약사입니다.
           </S.SelectButtonBox>
         </S.SelectButtonWrapper>
-        {selected !== null && (
+        {selectedJob !== null && (
           <>
             <S.Subtitle>2. 전문가 인증에 필요한 정보를 입력해주세요.</S.Subtitle>
             <S.BelongInputBoxWrapper>
@@ -101,18 +99,22 @@ function CertificationPage() {
                   <S.NameHeader>기관명</S.NameHeader>
                   <S.AddressHeader>기관 주소</S.AddressHeader>
                 </S.ListHeader>
-                {facilityList.map((facility) => (
-                  <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
-                    <S.ItemName>
-                      {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
-                    </S.ItemName>
-                    <S.ItemAddress>
-                      {facility.address.length > 41
-                        ? facility.address.substring(0, 40).concat("...")
-                        : facility.address}
-                    </S.ItemAddress>
-                  </S.Item>
-                ))}
+                {facilityList === null ? (
+                  <></>
+                ) : (
+                  facilityList.map((facility) => (
+                    <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
+                      <S.ItemName>
+                        {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
+                      </S.ItemName>
+                      <S.ItemAddress>
+                        {facility.address.length > 41
+                          ? facility.address.substring(0, 40).concat("...")
+                          : facility.address}
+                      </S.ItemAddress>
+                    </S.Item>
+                  ))
+                )}
               </S.SearchResultBox>
               <ListFooter>
                 <Pagination
@@ -141,9 +143,9 @@ function CertificationPage() {
               </S.CertInputImgBox>
               <S.CertImgPreviewBox>
                 <S.CertExampleBox>
-                  {selected === EJob.DOCTOR ? <S.CertDoctorImgExample /> : <S.CertPharmacistEmgExample />}
+                  {selectedJob === EJob.DOCTOR ? <S.CertDoctorImgExample /> : <S.CertPharmacistEmgExample />}
                   <S.CertExampleText>
-                    {selected === EJob.DOCTOR
+                    {selectedJob === EJob.DOCTOR
                       ? "* 전문의 자격증을 성명과 주민등록번호가 잘 드러나도록 찍어서 제출해주세요."
                       : "* 약사 면허증을 성명, 생년월일이 잘 드러나도록 찍어서 제출해주세요."}
                   </S.CertExampleText>
@@ -179,8 +181,8 @@ function CertificationPage() {
         )}
       </S.InnerBox>
       <S.NextButton
-        className={selected !== null && isFinished ? "is-finished" : ""}
-        disabled={!(selected !== null && isFinished)}
+        className={selectedJob !== null && isFinished ? "is-finished" : ""}
+        disabled={!(selectedJob !== null && isFinished)}
         onClick={handleSubmit}
       >
         다음

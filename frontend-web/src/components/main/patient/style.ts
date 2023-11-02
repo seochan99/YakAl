@@ -78,6 +78,13 @@ export const SelfBaseTitle = styled.div`
   height: 100%;
 `;
 
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const PatientImg = styled.img`
   object-fit: contain;
 `;

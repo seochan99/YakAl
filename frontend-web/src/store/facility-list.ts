@@ -1,3 +1,7 @@
+import { getApprovedFacilityList } from "@api/auth/experts/api.ts";
+import { EJob } from "@type/job.ts";
+import { EFacilityType } from "@type/facility-type.ts";
+
 export type TExpertFacilityItem = {
   id: number;
   name: string;
@@ -11,6 +15,8 @@ export class ExpertFacilityListModel {
   /* PRIVATE MEMBER VARIABLE */
   private facilityList: TExpertFacilityItem[] | null = null;
   private totalCount: number | null = null;
+
+  private selectedJob: EJob | null = null;
 
   private pageNumber = 1;
 
@@ -37,11 +43,21 @@ export class ExpertFacilityListModel {
     this.facilityList = null;
   };
 
-  public fetch = async () => {};
+  public fetch = async () => {
+    getApprovedFacilityList(
+      this.nameQuery,
+      this.pageNumber,
+      this.selectedJob === EJob.DOCTOR ? EFacilityType.HOSPITAL : EFacilityType.PHARMACY,
+    ).then((value) => {
+      this.facilityList = value.data.data!;
+    });
+  };
 
   public isLoading = () => this.facilityList == null;
 
   public getFacilityList = () => this.facilityList;
+
+  public getSelectedJob = () => this.selectedJob;
 
   public getPagingInfo = () => ({ pageNumber: this.pageNumber, totalCount: this.totalCount });
 
@@ -62,6 +78,11 @@ export class ExpertFacilityListModel {
 
   public setNameQuery = async (nameQuery: string) => {
     this.nameQuery = nameQuery;
+    await this.fetch();
+  };
+
+  public setSelectedJob = async (job: EJob) => {
+    this.selectedJob = job;
     await this.fetch();
   };
 }

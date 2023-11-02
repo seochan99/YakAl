@@ -10,7 +10,7 @@ export const authAxios = axios.create({
 
 authAxios.defaults.headers.common[
   "Authorization"
-] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI0Iiwicm9sIjoiUk9MRV9XRUIiLCJpYXQiOjE2OTg3OTM5OTgsImV4cCI6MTY5ODc5NzU5OH0.kcG-JDiwulPyqFaWOGqkw1I-bCCO5QPK-MCJE5TW8vWBD6p2uUSK9owRJnsrebofauJJqHeH-rKCVW6lP-i8yQ`;
+] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI0Iiwicm9sIjoiUk9MRV9XRUIiLCJpYXQiOjE2OTg3OTg0MjAsImV4cCI6MTY5ODgwMjAyMH0.4hL1dmxudHXluebgk8GbP6MxH0x_nIHFESSht7Msc4oQpOtzkYq8LFjdi0Ki1ntr6y_fd3KIXxMv2_qTSzlDjg`;
 
 authAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
