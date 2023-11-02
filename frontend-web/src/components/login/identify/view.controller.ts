@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { logOnDev } from "../../../util/log-on-dev.ts";
+import { logOnDev } from "@util/log-on-dev.ts";
 import { useLocation, useNavigate } from "react-router-dom";
-import { checkIsIdentified, identify } from "../../../api/auth/user/api.ts";
+import { checkIsIdentified, identify } from "@api/auth/user/api.ts";
 import { HttpStatusCode, isAxiosError } from "axios";
 
 type TIdResponse = {
@@ -24,8 +24,10 @@ export const useIdentifyPageViewController = () => {
   const navigate = useNavigate();
 
   /* useStates */
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [identifyStart, setIdentifyStart] = useState<boolean>(false);
 
+  /* Functions */
   const redirectToSocialLoginNotYeyPage = useCallback(() => {
     logOnDev(
       `🚨 [Unauthorized Access] User Is About To Do Identification Without Social Login. Redirect To Failure Page...`,
@@ -34,7 +36,57 @@ export const useIdentifyPageViewController = () => {
     return;
   }, [navigate]);
 
+  const finishIdentification = useCallback(
+    (isSuccess: boolean) => {
+      setIsLoading(false);
+      navigate("/login/identify/result", { state: { isSuccess } });
+    },
+    [navigate],
+  );
+
+  const onIdentificationClick = useCallback(() => {
+    setIsLoading(true);
+    setIdentifyStart(true);
+
+    const IMP = window.IMP;
+    IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
+
+    /* Pop Up Integrated Identification Window */
+    IMP.certification(
+      {
+        pg: "inicis_unified",
+        merchant_uid: `mid_${Date.now().toString()}`,
+        popup: true,
+      },
+      async (response: TIdResponse) => {
+        logOnDev(`🛬 [Identification Response] ${response}`);
+
+        if (response.success) {
+          logOnDev(`🎉 [Identification Request Success]`);
+
+          const sendIdentifyResponse = await identify(response.imp_uid);
+
+          if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
+            logOnDev(`🎉 [User Registration Success]`);
+            finishIdentification(true);
+            return;
+          } else {
+            finishIdentification(false);
+            return;
+          }
+        } else {
+          logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
+          finishIdentification(false);
+          return;
+        }
+      },
+    );
+  }, [finishIdentification]);
+
+  /* useEffects */
   useEffect(() => {
+    setIsLoading(true);
+
     if (!fromTerms) {
       redirectToSocialLoginNotYeyPage();
       return;
@@ -60,48 +112,11 @@ export const useIdentifyPageViewController = () => {
           redirectToSocialLoginNotYeyPage();
           return;
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }, [fromTerms, navigate, redirectToSocialLoginNotYeyPage]);
 
-  const onIdentificationClick = useCallback(() => {
-    setIdentifyStart(true);
-
-    const IMP = window.IMP;
-    IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
-
-    /* Pop Up Integrated Identification Window */
-    IMP.certification(
-      {
-        pg: "inicis_unified",
-        merchant_uid: `mid_${Date.now().toString()}`,
-        popup: true,
-      },
-      async (response: TIdResponse) => {
-        logOnDev(`🛬 [Identification Response] ${response}`);
-
-        if (response.success) {
-          logOnDev(`🎉 [Identification Request Success]`);
-
-          const sendIdentifyResponse = await identify(response.imp_uid);
-
-          if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            logOnDev(`🎉 [User Registration Success]`);
-            navigate("/login/identify/result", { state: { isSuccess: true } });
-            return;
-          } else {
-            navigate("/login/identify/result", { state: { isSuccess: false } });
-            return;
-          }
-        } else {
-          logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
-
-          /* Identification Failure Logic */
-          navigate("/login/identify/result", { state: { isSuccess: false } });
-          return;
-        }
-      },
-    );
-  }, [setIdentifyStart, navigate]);
-
-  return { identifyStart, onIdentificationClick };
+  return { identifyStart, onIdentificationClick, isLoading };
 };

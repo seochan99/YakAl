@@ -4,7 +4,7 @@ import { useIdentifyPageViewController } from "./view.controller.ts";
 import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 function IdentifyPage() {
-  const { identifyStart, onIdentificationClick } = useIdentifyPageViewController();
+  const { identifyStart, onIdentificationClick, isLoading } = useIdentifyPageViewController();
 
   if (identifyStart) {
     return <WarningPage iconPath="/assets/icons/loading-icon.png" title="본인인증 수행 중" />;
@@ -17,7 +17,7 @@ function IdentifyPage() {
       subtitle="아래 버튼을 눌러서 본인인증을 수행해주세요."
     >
       <S.ButtonDiv onClick={onIdentificationClick}>본인 인증</S.ButtonDiv>
-      <LoadingSpinner />
+      {isLoading && <LoadingSpinner />}
     </WarningPage>
   );
 }
