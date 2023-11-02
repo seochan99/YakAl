@@ -1,9 +1,8 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { logOnDev } from "../../../util/log-on-dev.ts";
-import { useNavigate } from "react-router-dom";
-import { identify } from "../../../api/auth/user/api.ts";
-import { HttpStatusCode } from "axios";
-import { Cookies } from "react-cookie";
+import { useLocation, useNavigate } from "react-router-dom";
+import { checkIsIdentified, identify } from "../../../api/auth/user/api.ts";
+import { HttpStatusCode, isAxiosError } from "axios";
 
 type TIdResponse = {
   error_code: string | null;
@@ -16,21 +15,58 @@ type TIdResponse = {
 };
 
 export const useIdentifyPageViewController = () => {
-  const naviagte = useNavigate();
+  /* Location Params */
+  const {
+    state: { fromTerms },
+  } = useLocation();
 
+  /* Custom Hooks */
+  const navigate = useNavigate();
+
+  /* useStates */
   const [identifyStart, setIdentifyStart] = useState<boolean>(false);
 
-  const onIdentificationClick = useCallback(() => {
-    setIdentifyStart(true);
+  const redirectToSocialLoginNotYeyPage = useCallback(() => {
+    logOnDev(
+      `🚨 [Unauthorized Access] User Is About To Do Identification Without Social Login. Redirect To Failure Page...`,
+    );
+    navigate("/login/social/not-yet");
+    return;
+  }, [navigate]);
 
-    const cookies = new Cookies();
-
-    if (!cookies.get("accessToken") || cookies.get("accessToken") === "") {
-      naviagte("/login/social/not-yet");
+  useEffect(() => {
+    if (!fromTerms) {
+      redirectToSocialLoginNotYeyPage();
       return;
     }
 
-    cookies.remove("accessToken", { path: "/" });
+    checkIsIdentified()
+      .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          const isIdentified = response.data.data.isIdentified;
+
+          if (isIdentified) {
+            // User Is Already Identified
+            navigate("/expert");
+            return;
+          }
+        } else {
+          logOnDev(
+            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
+          );
+        }
+      })
+      .catch((error) => {
+        // User Not Found -> Redirect To Social Login Not Yet
+        if (isAxiosError(error)) {
+          redirectToSocialLoginNotYeyPage();
+          return;
+        }
+      });
+  }, [fromTerms, navigate, redirectToSocialLoginNotYeyPage]);
+
+  const onIdentificationClick = useCallback(() => {
+    setIdentifyStart(true);
 
     const IMP = window.IMP;
     IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
@@ -46,27 +82,28 @@ export const useIdentifyPageViewController = () => {
         logOnDev(`🛬 [Identification Response] ${response}`);
 
         if (response.success) {
-          logOnDev(`🎉 [Identification Success]`);
+          logOnDev(`🎉 [Identification Request Success]`);
 
           const sendIdentifyResponse = await identify(response.imp_uid);
 
           if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            naviagte("/login/identify/result", { state: { isSuccess: true } });
+            logOnDev(`🎉 [User Registration Success]`);
+            navigate("/login/identify/result", { state: { isSuccess: true } });
             return;
           } else {
-            naviagte("/login/identify/result", { state: { isSuccess: false } });
+            navigate("/login/identify/result", { state: { isSuccess: false } });
             return;
           }
         } else {
           logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
 
           /* Identification Failure Logic */
-          naviagte("/login/identify/result", { state: { isSuccess: false } });
+          navigate("/login/identify/result", { state: { isSuccess: false } });
           return;
         }
       },
     );
-  }, [setIdentifyStart, naviagte]);
+  }, [setIdentifyStart, navigate]);
 
   return { identifyStart, onIdentificationClick };
 };

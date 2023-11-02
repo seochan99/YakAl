@@ -11,16 +11,18 @@ function SocialLogin() {
     const cookies = new Cookies();
     const accessToken = cookies.get("accessToken");
 
-    logOnDev(`🔑 [Access Token Received] ${accessToken}`);
-
     if (!accessToken) {
+      logOnDev(`🚨 [Social Login Failed] Social Login Was Done But Access Token Was Lost. Redirect To Failure Page...`);
       navigate("/login/social/failure");
       return;
     }
 
+    logOnDev(`🔐 [Social Login Success] Social Login Is Successfully Done.`);
+    logOnDev(`🔑 [Access Token Received] ${accessToken}`);
+
     authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
-    navigate("/login/identify");
+    navigate("/login/terms");
   }, [navigate]);
 
   return <></>;
