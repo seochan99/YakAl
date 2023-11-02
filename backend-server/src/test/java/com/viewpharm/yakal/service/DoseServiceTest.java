@@ -1,9 +1,10 @@
 package com.viewpharm.yakal.service;
 
-import com.viewpharm.yakal.dto.request.OneMedicineScheduleDto;
-import com.viewpharm.yakal.dto.request.OneScheduleDto;
-import com.viewpharm.yakal.repository.DoseRepository;
+import com.viewpharm.yakal.prescription.dto.request.OneMedicineScheduleDto;
+import com.viewpharm.yakal.prescription.dto.request.OneScheduleDto;
+import com.viewpharm.yakal.prescription.repository.DoseRepository;
 import com.viewpharm.yakal.base.type.EDosingTime;
+import com.viewpharm.yakal.prescription.service.DoseService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

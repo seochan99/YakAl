@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
@@ -12,16 +14,10 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, // Set the background color to white
-
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        title: const Text('앱 설정'),
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: DefaultBackAppbar(
+          title: "앱 설정",
         ),
       ),
       body: SingleChildScrollView(
@@ -94,14 +90,13 @@ class SettingScreen extends StatelessWidget {
   void showCustomDialog(BuildContext context) {
     Get.defaultDialog(
       // padding
-
       title: '로그아웃',
+      // background white
+      backgroundColor: Colors.white,
       titleStyle: const TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,
       ),
-      // 배경
-      // subtitle none
       content: const Text(
         '로그아웃 하시겠습니까?',
         style: TextStyle(
@@ -110,16 +105,18 @@ class SettingScreen extends StatelessWidget {
           color: Color(0xff464655),
         ),
       ),
-
       confirm: TextButton(
         onPressed: () async {
           try {
             Get.offAllNamed('/login');
+            // 카카오 로그아웃
             await UserApi.instance.logout();
+            // 서버 로그아웃 호출
+            var dio = await authDioWithContext();
+            await dio.post('/auth/logout');
           } catch (e) {
             //error
           }
-          //
         },
         child: Container(
           decoration: BoxDecoration(

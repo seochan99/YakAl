@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.common.annotation;
 
-import com.viewpharm.yakal.validator.YearMonthValidator;
+import com.viewpharm.yakal.common.validator.YearMonthValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 

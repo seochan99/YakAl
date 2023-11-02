@@ -5,11 +5,11 @@ import com.google.firebase.messaging.FirebaseMessagingException;
 import com.google.firebase.messaging.Message;
 import com.google.firebase.messaging.Notification;
 
-import com.viewpharm.yakal.domain.User;
-import com.viewpharm.yakal.dto.request.NotificationUserRequestDto;
+import com.viewpharm.yakal.user.domain.User;
+import com.viewpharm.yakal.notification.dto.reqeust.NotificationUserRequestDto;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
-import com.viewpharm.yakal.repository.UserRepository;
+import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;

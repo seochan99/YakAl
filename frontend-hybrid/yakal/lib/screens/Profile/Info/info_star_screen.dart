@@ -5,7 +5,6 @@ import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/special_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
-import 'package:intl/intl.dart';
 import 'package:yakal/widgets/Profile/ProfileInfo/profle_info_add_btn_widget.dart';
 
 class InfoStarScreen extends StatefulWidget {
@@ -38,6 +37,15 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
       itemController.clear();
       Navigator.pop(context);
+      Get.snackbar(
+        '추가 완료',
+        "특이사항이 추가 완료됏습니다!",
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+        duration: const Duration(seconds: 1, microseconds: 500),
+        snackPosition: SnackPosition.TOP,
+        backgroundColor: ColorStyles.gray1,
+        colorText: Colors.black,
+      );
     }
 
     String getTitleFromRecordType(String recordType) {
@@ -246,7 +254,6 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
 
         return Column(
           children: filteredRecords.asMap().entries.map((entry) {
-            final int index = entry.key;
             final dynamic record = entry.value;
 
             return Container(
@@ -263,6 +270,16 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                     // DELETE
                     widget.userViewModel
                         .removeSpecialNoteItem(title, record.id);
+
+                    Get.snackbar(
+                      '삭제 완료',
+                      "특이사항이 삭제 완료됐습니다!",
+                      margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      duration: const Duration(seconds: 1, microseconds: 500),
+                      snackPosition: SnackPosition.TOP,
+                      backgroundColor: ColorStyles.gray1,
+                      colorText: Colors.black,
+                    );
                     return;
                   },
                   child: SvgPicture.asset(

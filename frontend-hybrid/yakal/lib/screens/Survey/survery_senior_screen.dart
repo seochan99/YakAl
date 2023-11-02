@@ -68,7 +68,7 @@ class SurveSenioryList extends StatelessWidget {
     return GetBuilder<SurveyListController>(
         init: surveyListController,
         initState: (_) {
-          surveyListController.updateAllSurveysCompletionStatus();
+          surveyListController.onInit();
         },
         builder: (context) {
           return Column(

@@ -56,11 +56,6 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
             request.setAttribute("exception", ErrorCode.TOKEN_UNKNOWN_ERROR);
 
             filterChain.doFilter(request, response);
-        } catch (CommonException e) {
-            log.error("FilterException throw CommonException Exception : {}", e.getMessage());
-            request.setAttribute("exception", e.getErrorCode());
-
-            filterChain.doFilter(request, response);
         } catch (Exception e) {
             log.error("FilterException throw Exception Exception : {}", e.getMessage());
             request.setAttribute("exception", ErrorCode.NOT_FOUND_USER);

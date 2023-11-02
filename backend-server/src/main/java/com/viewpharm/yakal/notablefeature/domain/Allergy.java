@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.notablefeature.domain;
 
-import com.viewpharm.yakal.domain.User;
+import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

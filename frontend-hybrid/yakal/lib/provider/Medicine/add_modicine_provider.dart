@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:intl/intl.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/utilities/api/api.dart';
@@ -125,7 +126,7 @@ class AddMedicineProvider {
             if (group.takingTime[j]) {
               schedule["schedules"].add(<String, dynamic>{
                 "date":
-                    "${now.year}-${now.month < 10 ? "0${now.month}" : now.month}-${now.day < 10 ? "0${now.day}" : now.day}",
+                    DateFormat('yyyy-MM-dd').format(now),
                 "time": ETakingTime.values[j]
                     .toString()
                     .substring("ETakingTime.".length),
