@@ -1,18 +1,12 @@
-import { ESex } from "@type/sex.ts";
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { getPatientBaseInfo, getProtectorInfo } from "@api/auth/experts/api.ts";
+import { isAxiosError } from "axios";
+import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
+import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 
 type TPatientInfo = {
-  base: {
-    name: string;
-    profileImg: string;
-    birthday: number[];
-    sex: ESex;
-    tel: string;
-  } | null;
-  protector: {
-    name: string;
-    tel: string;
-  } | null;
+  base: TPatientBase | null;
+  protector: TProtectorInfo | null;
   medication: {
     etc: {
       list:
@@ -180,25 +174,38 @@ export class PatientModel {
     this.patientInfo.screeningDetail = null;
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchBase = async (patientId: number) => {
-    this.patientInfo.base = {
-      name: "홍길동",
-      profileImg: "",
-      birthday: [1993, 12, 19],
-      sex: ESex.MALE,
-      tel: "010-1111-1111",
-    };
+    try {
+      const response = await getPatientBaseInfo(patientId);
+
+      this.patientInfo.base = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.base = {
+          name: "",
+          birthday: [],
+          tel: "",
+        };
+      }
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore
   public static fetchProtector = async (patientId: number) => {
-    this.patientInfo.protector = {
-      name: "홍귀동",
-      tel: "010-2222-2222",
-    };
+    try {
+      const response = await getProtectorInfo(patientId);
+
+      this.patientInfo.protector = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.protector = {
+          id: -1,
+          realName: "",
+          tel: "",
+        };
+      }
+    }
   };
 
   public static fetchLastETC = async (patientId: number) => {

@@ -7,6 +7,8 @@ import { EOrder } from "@type/order.ts";
 import { TFacilityInfo } from "@api/auth/experts/types/facility-info.ts";
 import { EFacilityType } from "@type/facility-type.ts";
 import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
+import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
+import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
@@ -74,7 +76,15 @@ export const toggleIsFavorite = async <T = CommonResponse<null>>(patientId: numb
   return await authAxios.patch<T, AxiosResponse<T>>(`/experts/medical-appointment/${patientId}`);
 };
 
-export const getProtector = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
+export const getPatientBaseInfo = async <T = CommonResponse<TPatientBase>>(
+  patientId: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}`);
+};
+
+export const getProtectorInfo = async <T = CommonResponse<TProtectorInfo>>(
+  patientId: number,
+): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/guardian`);
 };
 

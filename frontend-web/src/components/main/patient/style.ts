@@ -83,6 +83,13 @@ export const CenterDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
 `;
 
 export const PatientImg = styled.img`
