@@ -2,11 +2,9 @@ import * as S from "./style.ts";
 import { useTermsPageViewController } from "@components/login/terms/view.controller.ts";
 import { ESnackbarType } from "@type/snackbar-type.ts";
 import YakalSnackbar from "@components/snackbar/view.tsx";
-import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 function TermsPage() {
-  const { isAgreed, onClickIsAgreed, onClickNextButton, snackbarOpen, setSnackbarOpen, isLoading } =
-    useTermsPageViewController();
+  const { isAgreed, onClickIsAgreed, onClickNextButton, snackbarOpen, setSnackbarOpen } = useTermsPageViewController();
 
   return (
     <S.OuterDiv>
@@ -46,7 +44,6 @@ function TermsPage() {
         다음
       </S.NextButton>
       <YakalSnackbar open={snackbarOpen} setOpen={setSnackbarOpen} type={ESnackbarType.TERMS_AGREEMENT_FAILED} />
-      {isLoading && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }

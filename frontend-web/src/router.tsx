@@ -12,7 +12,7 @@ import PatientPage from "@components/main/patient/view.tsx";
 import SocialLoginFailurePage from "@components/login/social-login-failure/view.tsx";
 import { RegistrationPage as ExpertFacilityRegistration } from "@components/main/registration/view.tsx";
 import MyPage from "@components/main/mypage/view.tsx";
-import SocialLogin from "@components/login/social-login/view.tsx";
+import LoginProcessJunctionPage from "@components/login/login-process-junction/view.tsx";
 import LoadingPage from "@page/loading/view.tsx";
 import IdentifyPage from "@components/login/identify/view.tsx";
 import IdentifyResultPage from "@components/login/identify-result/view.tsx";
@@ -127,11 +127,11 @@ export const router = createBrowserRouter([
               },
               {
                 path: "login/social/kakao",
-                element: <SocialLogin />,
+                element: <LoginProcessJunctionPage />,
               },
               {
                 path: "login/social/google",
-                element: <SocialLogin />,
+                element: <LoginProcessJunctionPage />,
               },
               {
                 path: "login/identify",

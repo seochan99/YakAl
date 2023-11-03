@@ -45,14 +45,8 @@ export class ExpertUserModel {
   public fetchAndRedirect = async (navigate: NavigateFunction) => {
     getExpertUserInfo()
       .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
-          this.expertUser = response.data.data;
-          navigate("/expert");
-        } else {
-          logOnDev(
-            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
-          );
-        }
+        this.expertUser = response.data.data;
+        navigate("/expert");
       })
       .catch(() => {
         this.invalidate();

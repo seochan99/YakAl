@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { logOnDev } from "@util/log-on-dev.ts";
-import { useLocation, useNavigate } from "react-router-dom";
-import { checkIsIdentified, identify } from "@api/auth/user/api.ts";
-import { HttpStatusCode, isAxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
+import { identify } from "@api/auth/user/api.ts";
+import { HttpStatusCode } from "axios";
 
 type TIdResponse = {
   error_code: string | null;
@@ -15,9 +15,6 @@ type TIdResponse = {
 };
 
 export const useIdentifyPageViewController = () => {
-  /* Location Params */
-  const { state } = useLocation();
-
   /* Custom Hooks */
   const navigate = useNavigate();
 
@@ -25,14 +22,6 @@ export const useIdentifyPageViewController = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   /* Functions */
-  const redirectToSocialLoginNotYeyPage = useCallback(() => {
-    logOnDev(
-      `🚨 [Unauthorized Access] User Is About To Do Identification Without Social Login. Redirect To Failure Page...`,
-    );
-    navigate("/login/social/not-yet");
-    return;
-  }, [navigate]);
-
   const finishIdentification = useCallback(
     (isSuccess: boolean) => {
       setIsLoading(false);
@@ -78,41 +67,6 @@ export const useIdentifyPageViewController = () => {
       },
     );
   }, [finishIdentification]);
-
-  /* useEffects */
-  useEffect(() => {
-    setIsLoading(true);
-
-    if (!state?.fromTerms) {
-      redirectToSocialLoginNotYeyPage();
-      return;
-    }
-
-    checkIsIdentified()
-      .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
-          const isIdentified = response.data.data.isIdentified;
-
-          if (isIdentified) {
-            navigate("/expert");
-            return;
-          }
-        } else {
-          logOnDev(
-            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
-          );
-        }
-      })
-      .catch((error) => {
-        if (isAxiosError(error)) {
-          redirectToSocialLoginNotYeyPage();
-          return;
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  }, [state, navigate, redirectToSocialLoginNotYeyPage]);
 
   return { onIdentificationClick, isLoading };
 };

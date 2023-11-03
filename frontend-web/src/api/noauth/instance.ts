@@ -3,6 +3,7 @@ import { logOnDev } from "@util/log-on-dev.ts";
 
 export const noAuthAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_HOST,
+  withCredentials: true,
 });
 
 noAuthAxios.interceptors.request.use(
