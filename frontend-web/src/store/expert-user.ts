@@ -1,8 +1,6 @@
 import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
 import { getExpertUserInfo } from "@api/auth/experts/api.ts";
-import { HttpStatusCode } from "axios";
-import { logOnDev } from "@util/log-on-dev.ts";
-import { NavigateFunction } from "react-router-dom";
+import { isAxiosError } from "axios";
 
 export class ExpertUserModel {
   /* PRIVATE MEMBER VARIABLE */
@@ -26,32 +24,22 @@ export class ExpertUserModel {
 
   /* PUBLIC METHOD */
   public fetch = async () => {
-    getExpertUserInfo()
-      .then((response) => {
-        if (response.status === HttpStatusCode.Ok) {
-          this.expertUser = response.data.data;
-        } else {
-          logOnDev(
-            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
-          );
-        }
-      })
-      .catch(() => {
+    try {
+      const response = await getExpertUserInfo();
+
+      this.expertUser = response.data.data;
+      const { isOptionalAgreementAccepted, isIdentified } = this.expertUser;
+
+      if (isOptionalAgreementAccepted === null || !isIdentified) {
         this.invalidate();
         window.location.replace("/");
-      });
-  };
-
-  public fetchAndRedirect = async (navigate: NavigateFunction) => {
-    getExpertUserInfo()
-      .then((response) => {
-        this.expertUser = response.data.data;
-        navigate("/expert");
-      })
-      .catch(() => {
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
         this.invalidate();
-        navigate("/");
-      });
+        window.location.replace("/");
+      }
+    }
   };
 
   public invalidate = () => {

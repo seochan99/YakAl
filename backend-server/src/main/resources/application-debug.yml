@@ -69,10 +69,10 @@ client:
 server:
   ssl:
     enabled: true
-    key-store: yakal-debug.p12
-    key-store-password: yakal-debug
-    key-store-type: PKCS12
-    key-alias: yakal-debug
+    key-store: minica.jks # 생성한 .jks 파일 위치
+    key-store-password: "yakal-debug"  # .jks를 생성할 때 입력했던 keystore 비밀번호
+    key-password: "yakal-debug" # .jks를 생성할 때 입력했던 key 비밀번호
+    key-alias: "localhost"
   port: 8080
   http-address: "http://yakal.dcs-hyungjoon.com"
   https-address: "https://yakal.dcs-hyungjoon.com"

@@ -12,6 +12,7 @@ import LoadingSpinner from "@components/loading-spinner/view.tsx";
 export function MainPage() {
   const {
     expertUser,
+    isLoading,
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   } = useMainPageViewController();
@@ -74,7 +75,7 @@ export function MainPage() {
         <Outlet />
       </S.MainDiv>
       <Footer />
-      {expertUser === null && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }

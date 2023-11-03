@@ -124,6 +124,8 @@ public class UserService {
                 .birthday(expert.getBirthday())
                 .job(expert.getJob() == EJob.PATIENT ? null : expert.getJob())
                 .department(expert.getDepartment())
+                .isOptionalAgreementAccepted(expert.getIsOptionalAgreementAccepted())
+                .isIdentified(expert.getIsIdentified())
                 .build();
     }
 
