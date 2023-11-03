@@ -13,6 +13,7 @@ function PatientListPage() {
   const {
     selectListRef,
     onChangePage,
+    isExpert,
     managed: { isOnlyManaged, onSelectMangedList, onSelectEntireList, onClickToManageFactory },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
@@ -23,6 +24,14 @@ function PatientListPage() {
     return (
       <S.OuterDiv>
         <LoadingSpinner />
+      </S.OuterDiv>
+    );
+  }
+
+  if (!isExpert) {
+    return (
+      <S.OuterDiv>
+        <S.IsNotExpertSpan>{"전문가 인증이 필요한 기능입니다."}</S.IsNotExpertSpan>
       </S.OuterDiv>
     );
   }

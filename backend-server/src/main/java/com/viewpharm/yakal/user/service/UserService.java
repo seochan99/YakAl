@@ -4,6 +4,7 @@ import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.type.ERole;
+import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
@@ -118,12 +119,17 @@ public class UserService {
         User expert = userRepository.findByIdAndRole(userId, ERole.ROLE_WEB)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
+        String establishmentName = userRepository.getEstablishmentNameByIdAndRole(userId).orElseGet(() -> null);
+
+        log.info("name: {}", establishmentName);
+
         return UserExpertDto.builder()
                 .name(expert.getRealName())
                 .tel(expert.getTel())
                 .birthday(expert.getBirthday())
                 .job(expert.getJob() == EJob.PATIENT ? null : expert.getJob())
                 .department(expert.getDepartment())
+                .belong(establishmentName)
                 .isOptionalAgreementAccepted(expert.getIsOptionalAgreementAccepted())
                 .isIdentified(expert.getIsIdentified())
                 .build();

@@ -11,9 +11,9 @@ export const OuterDiv = styled.div`
 
 export const MainDiv = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  align-items: start;
+  align-items: center;
   flex: 1;
   background-color: var(--Gray1, #f5f5f9);
 `;

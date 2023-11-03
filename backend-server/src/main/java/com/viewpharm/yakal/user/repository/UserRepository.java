@@ -80,6 +80,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u where u.id = :id and u.role = :role")
     Optional<User> findByIdAndRole(@Param("id") Long userId, @Param("role") ERole role);
 
+    @Query("select m.name from User u join MedicalEstablishment m on u.medicalEstablishment.id = m.id where u.id = :id")
+    Optional<String> getEstablishmentNameByIdAndRole(@Param("id") Long userId);
+
     Optional<User> findByIdAndJob(Long userId, EJob patient);
 
     List<User> findByNameAndBirthday(String name, LocalDate birthday);

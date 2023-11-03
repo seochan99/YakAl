@@ -1,7 +1,7 @@
 import { ESex } from "@type/sex.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
-import { toggleIsFavorite } from "@api/auth/experts/api.ts";
+import { getPatientList, toggleIsFavorite } from "@api/auth/experts/api.ts";
 
 type TPatientItem = {
   id: number;
@@ -53,123 +53,123 @@ export class PatientListModel {
     return PatientListModel.instance;
   };
 
-  public invalidate = async () => {
+  public invalidate = () => {
     this.patientList = null;
   };
 
   /* PUBLIC METHOD */
   public fetch = async () => {
-    this.patientList = [
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: false,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: false,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: false,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: false,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-      {
-        id: 1,
-        name: "홍길동",
-        birthday: [1992, 12, 12],
-        sex: ESex.MALE,
-        lastQuestionnaireDate: [2022, 12, 12],
-        tel: "010-1111-1111",
-        isFavorite: true,
-      },
-    ];
-
-    this.totalCount = this.patientList.length;
-    // try {
-    //   const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery);
+    // this.patientList = [
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: false,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    //   {
+    //     id: 1,
+    //     name: "홍길동",
+    //     birthday: [1992, 12, 12],
+    //     sex: ESex.MALE,
+    //     lastQuestionnaireDate: [2022, 12, 12],
+    //     tel: "010-1111-1111",
+    //     isFavorite: true,
+    //   },
+    // ];
     //
-    //   this.patientList = (response.data.data! as { datalist: TPatientItem[] }).datalist;
-    //   this.totalCount = (
-    //     response.data.data! as {
-    //       pageInfo: {
-    //         page: number;
-    //         size: number;
-    //         totalElements: number;
-    //         totalPages: number;
-    //       };
-    //     }
-    //   ).pageInfo.totalElements;
-    // } catch (error) {
-    //   this.patientList = [];
-    // }
+    // this.totalCount = this.patientList.length;
+    try {
+      const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery);
+
+      this.patientList = (response.data.data! as { datalist: TPatientItem[] }).datalist;
+      this.totalCount = (
+        response.data.data! as {
+          pageInfo: {
+            page: number;
+            size: number;
+            totalElements: number;
+            totalPages: number;
+          };
+        }
+      ).pageInfo.totalElements;
+    } catch (error) {
+      this.patientList = [];
+    }
   };
 
   public isLoading = () => {

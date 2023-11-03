@@ -15,7 +15,6 @@ export function useLoginPageViewController() {
       `🚨 [Unauthorized Access] User Is About To Do Identification Without Social Login. Redirect To Failure Page...`,
     );
     navigate("/login/social/not-yet");
-    return;
   }, [navigate]);
 
   const checkIsIdentifiedCallback = useCallback(() => {

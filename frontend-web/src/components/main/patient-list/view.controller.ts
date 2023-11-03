@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { PatientListViewModel } from "./view.model.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 export const usePatientListPageViewController = () => {
   PatientListViewModel.use();
@@ -9,6 +10,12 @@ export const usePatientListPageViewController = () => {
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery, setIsOnlyManaged, setIsManaged } =
     PatientListViewModel;
   const { isLoading, isEmpty, patientList, paging, sorting, isOnlyManaged } = getStates();
+
+  const isExpert = !!(
+    ExpertUserViewModel.getExpertUser()?.belong &&
+    ExpertUserViewModel.getExpertUser()?.job &&
+    ExpertUserViewModel.getExpertUser()?.department
+  );
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -80,6 +87,7 @@ export const usePatientListPageViewController = () => {
   return {
     selectListRef,
     onChangePage,
+    isExpert,
     managed: {
       isOnlyManaged,
       onSelectMangedList,

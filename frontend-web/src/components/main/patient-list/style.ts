@@ -9,6 +9,7 @@ export const OuterDiv = styled.div`
   width: 45rem;
   margin: 2rem 0;
   gap: 0.1rem;
+  flex: 1;
 `;
 
 export const InnerDiv = styled.div`
@@ -320,12 +321,12 @@ export const PaginationDiv = styled.div`
   }
 `;
 
-export const SpinnerImg = styled.img`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 12rem;
-  height: 9rem;
-  border-radius: 1rem;
+export const IsNotExpertSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+  text-align: center;
 `;
