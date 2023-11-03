@@ -121,8 +121,6 @@ public class UserService {
 
         String establishmentName = userRepository.getEstablishmentNameByIdAndRole(userId).orElseGet(() -> null);
 
-        log.info("name: {}", establishmentName);
-
         return UserExpertDto.builder()
                 .name(expert.getRealName())
                 .tel(expert.getTel())

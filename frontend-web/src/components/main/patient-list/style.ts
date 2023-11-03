@@ -6,6 +6,7 @@ import { ReactComponent as SearchIconSvg } from "/public/assets/icons/magnifying
 export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 45rem;
   margin: 2rem 0;
   gap: 0.1rem;
@@ -205,6 +206,7 @@ export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  height: 49rem;
 `;
 
 export const TableHeaderDiv = styled.div`

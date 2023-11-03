@@ -1,10 +1,5 @@
 import * as S from "./style.ts";
-
-import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
-import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
-import { useMediaQuery } from "react-responsive";
-import { ESex } from "@type/sex.ts";
-import getAge from "@util/get-age.ts";
+import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 
 type PatientItemProps = {
   patientInfo: {
@@ -21,9 +16,7 @@ type PatientItemProps = {
 };
 
 function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: PatientItemProps) {
-  const isMiddleMobile = useMediaQuery({ query: "(max-width: 671px)" });
-
-  const { id, name, sex, birthday, tel, lastQuestionnaireDate, isFavorite } = patientInfo;
+  const { id, name, birthday, tel, lastQuestionnaireDate, isFavorite } = patientInfo;
 
   const dateDiff = lastQuestionnaireDate
     ? Math.floor(
@@ -38,24 +31,16 @@ function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: Patie
       <S.StyledLink to={`/expert/patient/${id}`}>
         {/*<S.ProfileImg src={profileImg === "" ? "/assets/icons/no-profile-icon.png" : profileImg} />*/}
         {name ? (
-          <S.NameSpan>
-            {name.length > 4 ? name.substring(0, 4) + "..." : name}
-            {isMiddleMobile && (sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />)}
-          </S.NameSpan>
+          <S.NameSpan>{name.length > 4 ? name.substring(0, 4) + "..." : name}</S.NameSpan>
         ) : (
           <S.NameSpan></S.NameSpan>
         )}
-        {sex ? (
-          <S.SexBirthdaySpan>
-            {`(`}
-            {sex === ESex.MALE ? "남성" : "여성"}
-            {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-            {`, ${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
-          </S.SexBirthdaySpan>
+        {birthday ? (
+          <S.SexBirthdaySpan>{`${getDateStringFromArray(birthday)}`}</S.SexBirthdaySpan>
         ) : (
           <S.SexBirthdaySpan></S.SexBirthdaySpan>
         )}
-        <S.TelephoneSpan>{tel ? tel : ""}</S.TelephoneSpan>
+        <S.TelephoneSpan>{tel?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`)}</S.TelephoneSpan>
         {lastQuestionnaireDate ? (
           <S.LastQuestionnaireDateSpan>
             {`${lastQuestionnaireDate[0]}.

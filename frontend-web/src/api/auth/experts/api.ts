@@ -16,6 +16,7 @@ export const getPatientList = async <T = CommonResponse<null>>(
   sortBy: TSortBy,
   page: number,
   nameQuery: string,
+  isOnlyManaged: boolean,
 ): Promise<AxiosResponse<T>> => {
   let sortCriteria;
 
@@ -31,16 +32,10 @@ export const getPatientList = async <T = CommonResponse<null>>(
       break;
   }
 
-  if (nameQuery.length > 0) {
-    return await authAxios.get<T, AxiosResponse<T>>(
-      `/experts/patient/name?name=${nameQuery}&sort=${sortCriteria}&order=${
-        sortBy.order === EOrder.DESC ? "desc" : "asc"
-      }&page=${page - 1}&num=10`,
-    );
-  }
-
   return await authAxios.get<T, AxiosResponse<T>>(
-    `/experts/patient?sort=${sortCriteria}&order=${sortBy.order === EOrder.DESC ? "desc" : "asc"}&page=${
+    `/experts/patient?${
+      nameQuery.length > 0 ? `name=${nameQuery}&` : ""
+    }favorite=${isOnlyManaged}&sort=${sortCriteria}&order=${sortBy.order === EOrder.DESC ? "desc" : "asc"}&page=${
       page - 1
     }&num=10`,
   );

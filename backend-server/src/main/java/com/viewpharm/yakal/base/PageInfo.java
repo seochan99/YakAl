@@ -1,9 +1,11 @@
 package com.viewpharm.yakal.base;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
+@Builder
 @AllArgsConstructor
 public class PageInfo {
     private int page; // 페이지 개수

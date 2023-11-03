@@ -51,6 +51,7 @@ authAxios.interceptors.response.use(
 
         if (accessTokenResponse.status === HttpStatusCode.Created) {
           axios.defaults.headers.common["Authorization"] = `Bearer ${accessTokenResponse.data.data.accessToken}`;
+          authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessTokenResponse.data.data.accessToken}`;
           return axios(originalRequest);
         } else {
           redirect("/");

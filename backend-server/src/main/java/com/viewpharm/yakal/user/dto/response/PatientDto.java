@@ -12,19 +12,17 @@ public class PatientDto {
     private String name;
     private ESex sex;
     private LocalDate birthday;
-    private int testProgress;
-    private LocalDate lastSurbey;
+    private LocalDate lastQuestionnaireDate;
     private String tel;
     private Boolean isFavorite;
 
     @Builder
-    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, int testProgress, LocalDate lastSurbey, String tel, Boolean isFavorite) {
+    public PatientDto(Long id, String name, ESex sex, LocalDate birthday, LocalDate lastQuestionnaireDate, String tel, Boolean isFavorite) {
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.birthday = birthday;
-        this.testProgress = testProgress;
-        this.lastSurbey = lastSurbey;
+        this.lastQuestionnaireDate = lastQuestionnaireDate;
         this.tel = tel;
         this.isFavorite = isFavorite;
     }

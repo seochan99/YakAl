@@ -21,8 +21,6 @@ export class PatientListViewModel {
   };
 
   public static fetch = async () => {
-    this.patientListModel.invalidate();
-    this.flush();
     await this.patientListModel.fetch();
     this.flush();
   };

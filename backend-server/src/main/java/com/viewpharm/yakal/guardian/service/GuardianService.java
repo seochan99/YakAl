@@ -104,8 +104,7 @@ public class GuardianService {
                 .name(patient.getName())
                 .sex(patient.getSex())
                 .birthday(patient.getBirthday())
-                .testProgress((int) (answerRepository.countAnswerByUser(patient) * 100 / 14))
-                .lastSurbey(answerRepository.findCreateDateByUser(patient))
+                .lastQuestionnaireDate(answerRepository.findCreateDateByUser(patient))
                 .tel(patient.getTel()).build();
     }
 
@@ -126,8 +125,7 @@ public class GuardianService {
                 .name(guardian.getName())
                 .sex(guardian.getSex())
                 .birthday(guardian.getBirthday())
-                .testProgress((int) (answerRepository.countAnswerByUser(guardian) * 100 / 14))
-                .lastSurbey(answerRepository.findCreateDateByUser(guardian))
+                .lastQuestionnaireDate(answerRepository.findCreateDateByUser(guardian))
                 .tel(guardian.getTel()).build();
     }
 }

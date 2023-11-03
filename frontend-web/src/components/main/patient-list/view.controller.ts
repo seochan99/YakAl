@@ -9,7 +9,7 @@ export const usePatientListPageViewController = () => {
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery, setIsOnlyManaged, setIsManaged } =
     PatientListViewModel;
-  const { isLoading, isEmpty, patientList, paging, sorting, isOnlyManaged } = getStates();
+  const { isLoading, isEmpty, patientList, paging, sorting, isOnlyManaged, nameQuery } = getStates();
 
   const isExpert = !!(
     ExpertUserViewModel.getExpertUser()?.belong &&
@@ -52,7 +52,11 @@ export const usePatientListPageViewController = () => {
         setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
       }
     } else {
-      setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+      if ((e.currentTarget.value as EPatientField) === EPatientField.LAST_QUESTIONNAIRE_DATE) {
+        setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+      } else {
+        setSortBy(EOrder.ASC, e.currentTarget.value as EPatientField);
+      }
     }
 
     setSortingOptionOpen(false);
@@ -69,12 +73,14 @@ export const usePatientListPageViewController = () => {
   };
 
   const onSelectMangedList = () => {
+    setNameQueryCache("");
     if (!isOnlyManaged) {
       setIsOnlyManaged(true);
     }
   };
 
   const onSelectEntireList = () => {
+    setNameQueryCache("");
     if (isOnlyManaged) {
       setIsOnlyManaged(false);
     }
@@ -94,7 +100,7 @@ export const usePatientListPageViewController = () => {
       onSelectEntireList,
       onClickToManageFactory,
     },
-    searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
+    searching: { nameQuery, nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
     data: { isLoading, patientList, paging, sorting, isEmpty },
   };

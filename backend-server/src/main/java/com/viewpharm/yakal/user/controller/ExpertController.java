@@ -27,6 +27,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -108,14 +110,18 @@ public class ExpertController {
 
     @GetMapping("/patient")
     @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(medicalAppointmentService.getPatientList(id, sort, order, page, num));
-    }
-
-    @GetMapping("/patient/name")
-    @Operation(summary = "환자 리스트", description = "환자 이름으로 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(medicalAppointmentService.getPatientListByName(id, name, sort, order, page, num));
+    public ResponseDto<PatientAllDto> getPatientList(
+            @UserId Long id,
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam("sort") String sort,
+            @RequestParam("order") String order,
+            @RequestParam("page") Long page,
+            @RequestParam(name = "num", defaultValue = "10") Long num,
+            @RequestParam(name="favorite", defaultValue = "true") Boolean onlyFavorite
+    ) {
+        return ResponseDto.ok(
+                medicalAppointmentService.getPatientList(id, URLDecoder.decode(name, StandardCharsets.UTF_8), sort, order, page, num, onlyFavorite)
+        );
     }
 
     @Deprecated
