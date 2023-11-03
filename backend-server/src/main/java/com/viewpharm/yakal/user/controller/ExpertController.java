@@ -140,8 +140,9 @@ public class ExpertController {
 
     @PatchMapping("/medical-appointment/{patientId}")
     @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
-    public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
-        return ResponseDto.ok(medicalAppointmentService.updateIsFavorite(expertId, patientId));
+    public ResponseDto<?> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
+        medicalAppointmentService.updateIsFavorite(expertId, patientId);
+        return ResponseDto.ok(null);
     }
 
     @GetMapping("/patient/{patientId}/doses")

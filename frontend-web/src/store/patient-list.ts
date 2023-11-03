@@ -2,6 +2,7 @@ import { ESex } from "@type/sex.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
 import { getPatientList, toggleIsFavorite } from "@api/auth/experts/api.ts";
+import { isAxiosError } from "axios";
 
 type TPatientItem = {
   id: number;
@@ -136,12 +137,25 @@ export class PatientListModel {
     await this.fetch();
   };
 
-  public setIsManaged = async (patientId: number) => {
+  public toggleIsManaged = async (patientId: number) => {
     if (this.patientList === null) {
       return;
     }
 
-    await toggleIsFavorite(patientId);
-    await this.fetch();
+    try {
+      await toggleIsFavorite(patientId);
+
+      const target = this.patientList.findLast((patientItem) => patientItem.id === patientId);
+
+      if (!target) {
+        return;
+      }
+
+      target.isFavorite = !target.isFavorite;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return;
+      }
+    }
   };
 }

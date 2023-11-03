@@ -60,7 +60,7 @@ export class PatientListViewModel {
   };
 
   public static setIsManaged = async (patientId: number) => {
-    await this.patientListModel.setIsManaged(patientId);
+    await this.patientListModel.toggleIsManaged(patientId);
     this.flush();
   };
 }

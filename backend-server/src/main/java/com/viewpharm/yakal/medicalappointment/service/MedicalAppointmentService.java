@@ -105,7 +105,7 @@ public class MedicalAppointmentService {
                     pageSize.intValue(),
                     Sort.by(
                             Sort.Order.by("lastModifiedDate").with(order),
-                            Sort.Order.desc("isFavorite")
+                            Sort.Order.by("patient.realName").with(order)
                     )
             );
             case "name" -> PageRequest.of(
@@ -113,7 +113,7 @@ public class MedicalAppointmentService {
                     pageSize.intValue(),
                     Sort.by(
                             Sort.Order.by("patient.realName").with(order),
-                            Sort.Order.desc("isFavorite")
+                            Sort.Order.by("lastModifiedDate").with(order)
                     )
             );
             case "birth" -> PageRequest.of(
@@ -121,7 +121,7 @@ public class MedicalAppointmentService {
                     pageSize.intValue(),
                     Sort.by(
                             Sort.Order.by("patient.birthday").with(order),
-                            Sort.Order.desc("isFavorite")
+                            Sort.Order.by("lastModifiedDate").with(order)
                     )
             );
             default -> throw new CommonException(ErrorCode.INVALID_ARGUMENT);
@@ -168,21 +168,15 @@ public class MedicalAppointmentService {
                 .build();
     }
 
-    public Boolean updateIsFavorite(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+    public void updateIsFavorite(Long expertId, Long patientId) {
+        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+        final MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
 
-        if (medicalAppointment.getIsFavorite() == true)
-            medicalAppointment.updateIsFavorite(false);
-        else
-            medicalAppointment.updateIsFavorite(true);
-
-        return Boolean.TRUE;
+        medicalAppointment.updateIsFavorite(!medicalAppointment.getIsFavorite());
     }
 }

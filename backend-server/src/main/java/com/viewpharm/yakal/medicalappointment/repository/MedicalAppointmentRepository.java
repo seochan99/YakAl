@@ -21,7 +21,7 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
 
     Optional<MedicalAppointment> findByExpertAndPatientAndIsDeleted(User expert, User patient, Boolean isDeleted);
 
-    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert=:expert")
+    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert")
     Page<MedicalAppointment> findListByExpert(@Param("expert") User expert, Pageable pageable);
 
     @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.isFavorite = true")
