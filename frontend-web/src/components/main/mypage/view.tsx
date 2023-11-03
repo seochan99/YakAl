@@ -1,16 +1,22 @@
 import * as S from "./style.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
-import { ExpertUserViewModel } from "@page/main/view.model.ts";
 import { EJob } from "@type/job.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 function MyPage() {
   const { getExpertUser } = ExpertUserViewModel;
-  const { name, birthday, tel, job, department, belong } = getExpertUser()!;
+  const expertUser = getExpertUser();
+
+  if (expertUser === null) {
+    return <></>;
+  }
+
+  const { department, job, name, belong, birthday, tel } = expertUser;
 
   const jobDetail: string | undefined =
     department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
 
-  const formattedTel = tel.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
+  const formattedTel = tel?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
   return (
     <S.Outer>
@@ -37,28 +43,28 @@ function MyPage() {
             )}
           </S.VerifiedText>
         </S.MainHeader>
-        <S.InnerBox>
-          <S.InputBox>
-            <S.StyledInputLabel>성함</S.StyledInputLabel>
-            <S.StyledInput value={name} readOnly={true} />
-          </S.InputBox>
-          <S.InputBox>
-            <S.StyledInputLabel>생년월일</S.StyledInputLabel>
-            <S.StyledInput value={getDateStringFromArray(birthday)} readOnly={true} />
-          </S.InputBox>
-          <S.InputBox>
-            <S.StyledInputLabel>직종 및 분과</S.StyledInputLabel>
-            <S.StyledInput value={jobDetail ?? "정보 없음"} readOnly={true} />
-          </S.InputBox>
-          <S.InputBox>
-            <S.StyledInputLabel>연락처</S.StyledInputLabel>
-            <S.StyledInput value={formattedTel} readOnly={true} />
-          </S.InputBox>
-          <S.BelongInputBox>
-            <S.StyledInputLabel>소속</S.StyledInputLabel>
-            <S.StyledInput value={belong ?? "정보 없음"} readOnly={true} />
-          </S.BelongInputBox>
-        </S.InnerBox>
+        <S.InnerDiv>
+          <S.OneItemSpan>
+            <S.NameSpan>성함</S.NameSpan>
+            {name ? <S.NormalSpan>{name}</S.NormalSpan> : null}
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>생년월일</S.NameSpan>
+            {birthday ? <S.NormalSpan>{getDateStringFromArray(birthday)}</S.NormalSpan> : null}
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>직종 및 분과</S.NameSpan>
+            <S.NormalSpan>{jobDetail ?? "정보 없음"}</S.NormalSpan>
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>연락처</S.NameSpan>
+            {tel ? <S.NormalSpan>{formattedTel}</S.NormalSpan> : null}
+          </S.OneItemSpan>
+          <S.OneItemSpan>
+            <S.NameSpan>소속</S.NameSpan>
+            <S.NormalSpan>{belong ?? "정보 없음"}</S.NormalSpan>
+          </S.OneItemSpan>
+        </S.InnerDiv>
       </S.MainSection>
     </S.Outer>
   );

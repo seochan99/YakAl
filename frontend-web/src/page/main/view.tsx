@@ -1,9 +1,7 @@
 import * as S from "./style.ts";
 import { Outlet } from "react-router-dom";
-
 import Footer from "@layout/footer/view.tsx";
 import Header from "@layout/header/view.tsx";
-
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useMainPageViewController } from "./view.controller.ts";
 import Profile from "@components/main/profile/view.tsx";
@@ -71,8 +69,9 @@ export function MainPage() {
           </S.DrawableListDiv>
         </S.MobileNavOuterDiv>
       )}
-      <S.MainDiv>
-        <Outlet />
+      {/* Date.now() : force re-rendering */}
+      <S.MainDiv key={Date.now()}>
+        <Outlet key={Date.now()} />
       </S.MainDiv>
       <Footer />
       {isLoading && <LoadingSpinner />}
