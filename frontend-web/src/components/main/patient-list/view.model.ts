@@ -28,9 +28,12 @@ export class PatientListViewModel {
   };
 
   public static getStates = () => {
+    const patientList = this.patientListModel.getPatientList();
+
     return {
       isLoading: this.patientListModel.isLoading(),
-      patientList: this.patientListModel.getPatientList(),
+      isEmpty: patientList ? patientList.length === 0 : 0,
+      patientList,
       paging: this.patientListModel.getPagingInfo(),
       sorting: this.patientListModel.getSortingInfo(),
       nameQuery: this.patientListModel.getNameQuery(),

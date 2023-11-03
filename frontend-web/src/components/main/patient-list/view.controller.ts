@@ -8,7 +8,7 @@ export const usePatientListPageViewController = () => {
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery, setIsOnlyManaged, setIsManaged } =
     PatientListViewModel;
-  const { isLoading, patientList, paging, sorting, isOnlyManaged } = getStates();
+  const { isLoading, isEmpty, patientList, paging, sorting, isOnlyManaged } = getStates();
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -88,6 +88,6 @@ export const usePatientListPageViewController = () => {
     },
     searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
-    data: { isLoading, patientList, paging, sorting },
+    data: { isLoading, patientList, paging, sorting, isEmpty },
   };
 };

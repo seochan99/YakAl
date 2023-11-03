@@ -18,6 +18,7 @@ export const InnerDiv = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   gap: 1.5rem;
+  height: 57rem;
 `;
 
 export const TabBarDiv = styled.div`
@@ -203,7 +204,6 @@ export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 49rem;
 `;
 
 export const TableHeaderDiv = styled.div`
@@ -318,4 +318,14 @@ export const PaginationDiv = styled.div`
   & ul.pagination li.active a {
     color: white;
   }
+`;
+
+export const SpinnerImg = styled.img`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 12rem;
+  height: 9rem;
+  border-radius: 1rem;
 `;
