@@ -433,7 +433,7 @@ public class DoseService {
                 .build();
     }
 
-    public DoseAllDto readAnticholinergicDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
+    public DoseAntiAllDto readAnticholinergicDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
         User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         User patient = userRepository.findById(patientId)
@@ -447,21 +447,20 @@ public class DoseService {
 
         paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
 
-        Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(patient.getId(), false, paging);
+        Page<DoseRepository.doseAntiInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(patient.getId(), false, paging);
         PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
 
 
-        List<DoseRecentDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+        List<DoseAntiDto> doseRecentDtos = doses.stream()
+                .map(d -> new DoseAntiDto(d.getDoseName(), d.getDate(), d.getRisk()))
                 .collect(Collectors.toList());
 
 
-        return DoseAllDto.builder()
+        return DoseAntiAllDto.builder()
                 .datalist(doseRecentDtos)
                 .pageInfo(pageInfo)
                 .build();
     }
-
 
 
 }
