@@ -16,16 +16,13 @@ type TIdResponse = {
 
 export const useIdentifyPageViewController = () => {
   /* Location Params */
-  const {
-    state: { fromTerms },
-  } = useLocation();
+  const { state } = useLocation();
 
   /* Custom Hooks */
   const navigate = useNavigate();
 
   /* useStates */
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [identifyStart, setIdentifyStart] = useState<boolean>(false);
 
   /* Functions */
   const redirectToSocialLoginNotYeyPage = useCallback(() => {
@@ -46,7 +43,6 @@ export const useIdentifyPageViewController = () => {
 
   const onIdentificationClick = useCallback(() => {
     setIsLoading(true);
-    setIdentifyStart(true);
 
     const IMP = window.IMP;
     IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
@@ -87,7 +83,7 @@ export const useIdentifyPageViewController = () => {
   useEffect(() => {
     setIsLoading(true);
 
-    if (!fromTerms) {
+    if (!state?.fromTerms) {
       redirectToSocialLoginNotYeyPage();
       return;
     }
@@ -116,7 +112,7 @@ export const useIdentifyPageViewController = () => {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [fromTerms, navigate, redirectToSocialLoginNotYeyPage]);
+  }, [state, navigate, redirectToSocialLoginNotYeyPage]);
 
-  return { identifyStart, onIdentificationClick, isLoading };
+  return { onIdentificationClick, isLoading };
 };

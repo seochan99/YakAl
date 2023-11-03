@@ -3,6 +3,7 @@ package com.viewpharm.yakal.user.service;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
+import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
@@ -114,17 +115,23 @@ public class UserService {
     }
 
     public UserExpertDto getUserExpertInfo(final Long userId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+        User expert = userRepository.findByIdAndRole(userId, ERole.ROLE_WEB)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         return UserExpertDto.builder()
-                .name(expert.getName())
+                .name(expert.getRealName())
                 .tel(expert.getTel())
                 .birthday(expert.getBirthday())
-                .job(expert.getJob() == EJob.DOCTOR || expert.getJob() == EJob.PHARMACIST ? expert.getJob() : null)
+                .job(expert.getJob() == EJob.PATIENT ? null : expert.getJob())
                 .department(expert.getDepartment())
                 .build();
+    }
+
+    public Boolean checkUserOptionalAgreement(final Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        return user.getIsOptionalAgreementAccepted();
     }
 
     public void updateUserOptionalAgreement(final Long userId, final Boolean isOptionalAgreement) {

@@ -6,6 +6,11 @@ import { EPatientField } from "@type/patient-field.ts";
 import { EOrder } from "@type/order.ts";
 import { TFacilityInfo } from "@api/auth/experts/types/facility-info.ts";
 import { EFacilityType } from "@type/facility-type.ts";
+import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
+
+export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
+};
 
 export const getPatientList = async <T = CommonResponse<null>>(
   sortBy: TSortBy,

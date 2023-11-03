@@ -70,6 +70,15 @@ public class UserController {
         return ResponseDto.ok(null);
     }
 
+    @GetMapping("/optional-agreement")
+    @Operation(summary = "선택 약관 동의 여부 조회하기")
+    public ResponseDto<Map<String, Object>> checkUserOptionalAgreement(@UserId Long id) {
+        final Map<String, Object> map = new HashMap<>(1);
+        map.put("isOptionalAgreementAccepted", userService.checkUserOptionalAgreement(id));
+
+        return ResponseDto.ok(map);
+    }
+
     @PatchMapping("/optional-agreement")
     @Operation(summary = "선택 약관 동의 여부 수정하기")
     public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateIsOptionalAgreementDto updateDto) {

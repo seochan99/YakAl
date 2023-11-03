@@ -7,6 +7,7 @@ import Header from "@layout/header/view.tsx";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useMainPageViewController } from "./view.controller.ts";
 import Profile from "@components/main/profile/view.tsx";
+import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 export function MainPage() {
   const {
@@ -73,6 +74,7 @@ export function MainPage() {
         <Outlet />
       </S.MainDiv>
       <Footer />
+      {expertUser === null && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }

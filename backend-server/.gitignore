@@ -30,6 +30,7 @@ out/
 !**/src/test/**/out/
 application-dev.yml
 application-local.yml
+application-debug.yml
 application-prod.yml
 *.p8
 *.p12

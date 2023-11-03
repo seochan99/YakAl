@@ -1,22 +1,8 @@
-import { EJob } from "@type/job.ts";
-
-export type TExpertUser = {
-  name: string;
-  birthday: Date;
-  tel: string;
-  job: EJob | null;
-  department: string | null;
-  belong: string | null;
-};
-
-const expertUser: TExpertUser = {
-  name: "홍길동",
-  birthday: new Date("1998-01-01"),
-  tel: "010-9999-9999",
-  job: EJob.DOCTOR,
-  department: "가정의학과",
-  belong: "중앙대학교광명병원",
-};
+import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
+import { getExpertUserInfo } from "@api/auth/experts/api.ts";
+import { HttpStatusCode } from "axios";
+import { logOnDev } from "@util/log-on-dev.ts";
+import { NavigateFunction } from "react-router-dom";
 
 export class ExpertUserModel {
   /* PRIVATE MEMBER VARIABLE */
@@ -40,8 +26,38 @@ export class ExpertUserModel {
 
   /* PUBLIC METHOD */
   public fetch = async () => {
-    // Dummy async communication
-    this.expertUser = expertUser;
+    getExpertUserInfo()
+      .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          this.expertUser = response.data.data;
+        } else {
+          logOnDev(
+            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
+          );
+        }
+      })
+      .catch(() => {
+        this.invalidate();
+        window.location.replace("/");
+      });
+  };
+
+  public fetchAndRedirect = async (navigate: NavigateFunction) => {
+    getExpertUserInfo()
+      .then((response) => {
+        if (response.status === HttpStatusCode.Ok) {
+          this.expertUser = response.data.data;
+          navigate("/expert");
+        } else {
+          logOnDev(
+            `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
+          );
+        }
+      })
+      .catch(() => {
+        this.invalidate();
+        navigate("/");
+      });
   };
 
   public invalidate = () => {

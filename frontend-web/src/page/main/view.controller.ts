@@ -16,8 +16,12 @@ export const useMainPageViewController = () => {
   const [mobileNavOpen, setMobileNavOpen] = useState<boolean>(false);
 
   useEffect(() => {
+    if (expertUser !== null) {
+      return;
+    }
+
     fetch();
-  }, [fetch]);
+  }, [expertUser, fetch]);
 
   const onClickMobileNavTitle = () => {
     setMobileNavOpen(!mobileNavOpen);

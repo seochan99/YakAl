@@ -1,12 +1,16 @@
 import * as S from "./style.ts";
-import { useMyPageViewController } from "@components/main/mypage/view.controller.ts";
+import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
+import { EJob } from "@type/job.ts";
 
 function MyPage() {
-  const { name, formattedBirthday, tel, jobDetail, belong, isLoading } = useMyPageViewController();
+  const { getExpertUser } = ExpertUserViewModel;
+  const { name, birthday, tel, job, department, belong } = getExpertUser()!;
 
-  if (isLoading()) {
-    return <></>;
-  }
+  const jobDetail: string | undefined =
+    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
+
+  const formattedTel = tel.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
   return (
     <S.Outer>
@@ -40,7 +44,7 @@ function MyPage() {
           </S.InputBox>
           <S.InputBox>
             <S.StyledInputLabel>생년월일</S.StyledInputLabel>
-            <S.StyledInput value={formattedBirthday} readOnly={true} />
+            <S.StyledInput value={getDateStringFromArray(birthday)} readOnly={true} />
           </S.InputBox>
           <S.InputBox>
             <S.StyledInputLabel>직종 및 분과</S.StyledInputLabel>
@@ -48,7 +52,7 @@ function MyPage() {
           </S.InputBox>
           <S.InputBox>
             <S.StyledInputLabel>연락처</S.StyledInputLabel>
-            <S.StyledInput value={tel} readOnly={true} />
+            <S.StyledInput value={formattedTel} readOnly={true} />
           </S.InputBox>
           <S.BelongInputBox>
             <S.StyledInputLabel>소속</S.StyledInputLabel>

@@ -7,7 +7,12 @@ import { VitePWA } from "vite-plugin-pwa";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), svgr({ svgrOptions: {} }), mkcert(), VitePWA({ devOptions: { enabled: false } })],
+  plugins: [
+    react(),
+    svgr({ svgrOptions: {} }),
+    mkcert(),
+    VitePWA({ selfDestroying: true, devOptions: { enabled: false } }),
+  ],
   resolve: {
     alias: [
       { find: "@", replacement: path.resolve(__dirname, "src") },
