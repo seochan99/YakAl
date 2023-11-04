@@ -47,7 +47,9 @@ export const RightTitleDiv = styled.div`
   justify-content: end;
 `;
 
-export const RiskLevelDiv = styled.div<{ riskLevel: number }>`
+export const RiskLevelDiv = styled.div<{
+  riskLevel: number;
+}>`
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
@@ -91,6 +93,16 @@ export const ContentDiv = styled.div`
   border: 2px solid var(--Gray2, #e9e9ee);
   background: var(--White, #fff);
   gap: 0.125rem;
+`;
+
+export const MedicationSummaryContentDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 0 0.5rem 0.5rem;
+  border: 2px solid var(--Gray2, #e9e9ee);
+  background: var(--White, #fff);
+  gap: 0.125rem;
+  height: 18rem;
 `;
 
 export const Bar = styled.hr`
@@ -198,4 +210,18 @@ export const PaginationDiv = styled.div`
   & ul.pagination li.active a {
     color: white;
   }
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
 `;

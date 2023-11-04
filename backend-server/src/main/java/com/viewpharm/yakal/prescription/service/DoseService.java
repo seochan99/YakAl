@@ -365,13 +365,13 @@ public class DoseService {
     }
 
     public List<DoseRecentDto> readRecentDoses(Long userId, Long patientId) {
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        User patient = userRepository.findById(patientId)
+        final User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return doseRepository.findTop5ByUserAndIsDeletedOrderByDateDesc(patient, false).stream()
-                .map(d -> new DoseRecentDto(d.getKDCode().getDoseName(), d.getDate()))
+        return doseRepository.findTop5ByUserAndIsDeletedOrderByDateDesc(patient.getId(), false).stream()
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
     }
 
@@ -423,7 +423,7 @@ public class DoseService {
 
 
         List<DoseRecentDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
 
 
@@ -452,7 +452,7 @@ public class DoseService {
 
 
         List<DoseRecentDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
 
 

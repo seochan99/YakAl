@@ -9,6 +9,7 @@ import { EFacilityType } from "@type/facility-type.ts";
 import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
 import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
 import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
+import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
@@ -43,7 +44,7 @@ export const getPatientList = async <T = CommonResponse<null>>(
   );
 };
 
-export const getLatestDoses = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
+export const getLatestDoses = async <T = CommonResponse<TDoseInfo[]>>(patientId: number): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/doses`);
 };
 

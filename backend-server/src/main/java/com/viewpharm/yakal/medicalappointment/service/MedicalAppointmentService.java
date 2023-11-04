@@ -3,6 +3,7 @@ package com.viewpharm.yakal.medicalappointment.service;
 import com.viewpharm.yakal.base.PageInfo;
 import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalappointment.dto.MedicalAppointmentDto;
+import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
@@ -178,5 +179,21 @@ public class MedicalAppointmentService {
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
 
         medicalAppointment.updateIsFavorite(!medicalAppointment.getIsFavorite());
+    }
+
+    public PatientBaseInfoDto readPatientBaseInfo(final Long expertId, final Long patientId) {
+        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        final MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
+
+        return PatientBaseInfoDto.builder()
+                .name(patient.getRealName())
+                .birthday(patient.getBirthday())
+                .tel(patient.getTel())
+                .build();
     }
 }

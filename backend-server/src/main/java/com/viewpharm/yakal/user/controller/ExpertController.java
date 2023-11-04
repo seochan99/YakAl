@@ -4,6 +4,7 @@ import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.guardian.service.GuardianService;
+import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
@@ -124,25 +125,31 @@ public class ExpertController {
         );
     }
 
-    @Deprecated
-    @GetMapping("/guardian/{guardianId}")
-    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
-    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
-        return ResponseDto.ok(guardianService.readPatient(guardianId));
-    }
-
-    @Deprecated
-    @GetMapping("/patient/{patientId}")
-    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
-    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
-        return ResponseDto.ok(guardianService.readGuardian(patientId));
-    }
+//    @Deprecated
+//    @GetMapping("/guardian/{guardianId}")
+//    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
+//    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
+//        return ResponseDto.ok(guardianService.readPatient(guardianId));
+//    }
+//
+//    @Deprecated
+//    @GetMapping("/patient/{patientId}")
+//    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
+//    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
+//        return ResponseDto.ok(guardianService.readGuardian(patientId));
+//    }
 
     @PatchMapping("/medical-appointment/{patientId}")
     @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
     public ResponseDto<?> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
         medicalAppointmentService.updateIsFavorite(expertId, patientId);
         return ResponseDto.ok(null);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    @Operation(summary = "환자 기본 정보 조회", description = "환자의 기본 인적 사항을 조회")
+    public ResponseDto<PatientBaseInfoDto> readPatientBase(@UserId Long userId, @PathVariable Long patientId) {
+        return ResponseDto.ok(medicalAppointmentService.readPatientBaseInfo(userId, patientId));
     }
 
     @GetMapping("/patient/{patientId}/doses")

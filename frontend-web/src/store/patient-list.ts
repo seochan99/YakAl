@@ -56,6 +56,7 @@ export class PatientListModel {
 
   public invalidate = () => {
     this.patientList = null;
+    this.totalCount = null;
   };
 
   /* PUBLIC METHOD */
@@ -76,11 +77,12 @@ export class PatientListModel {
       ).pageInfo.totalElements;
     } catch (error) {
       this.patientList = [];
+      this.totalCount = null;
     }
   };
 
   public isLoading = () => {
-    return this.patientList === null;
+    return this.patientList === null || this.totalCount === 0;
   };
 
   public getPatientList = () => {
@@ -144,6 +146,11 @@ export class PatientListModel {
 
     try {
       await toggleIsFavorite(patientId);
+
+      if (this.isOnlyManaged) {
+        await this.fetch();
+        return;
+      }
 
       const target = this.patientList.findLast((patientItem) => patientItem.id === patientId);
 

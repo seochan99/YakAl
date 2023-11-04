@@ -1,21 +1,17 @@
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
-import { getPatientBaseInfo, getProtectorInfo } from "@api/auth/experts/api.ts";
+import { getLatestDoses, getPatientBaseInfo, getProtectorInfo } from "@api/auth/experts/api.ts";
 import { isAxiosError } from "axios";
 import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
 import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
+import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
 
 type TPatientInfo = {
   base: TPatientBase | null;
   protector: TProtectorInfo | null;
   medication: {
     etc: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-          }[]
-        | null;
-      page: number;
+      list: TDoseInfo[] | null;
+      page: number | null;
       total: number | null;
     }; // 전문의약품
     armsProgress:
@@ -190,8 +186,6 @@ export class PatientModel {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchProtector = async (patientId: number) => {
     try {
       const response = await getProtectorInfo(patientId);
@@ -209,20 +203,19 @@ export class PatientModel {
   };
 
   public static fetchLastETC = async (patientId: number) => {
-    this.patientInfo.medication.etc = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      page: 1,
-      total: null,
-    };
+    try {
+      const response = await getLatestDoses(patientId);
+
+      this.patientInfo.medication.etc = { list: response.data.data, page: 1, total: response.data.data.length };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.etc = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -365,5 +358,17 @@ export class PatientModel {
   public static setAnticholinergicDrugsPage = async (page: number, patientId: number) => {
     this.patientInfo.medication.anticholinergicDrugs.page = page;
     await this.fetchAnticholinergic(patientId);
+  };
+
+  public static isLoading = () => {
+    if (this.currentTab === EPatientInfoTab.SUMMARY) {
+      return (
+        this.patientInfo.base === null ||
+        this.patientInfo.protector === null ||
+        this.patientInfo.medication.etc === null
+      );
+    }
+
+    return false;
   };
 }

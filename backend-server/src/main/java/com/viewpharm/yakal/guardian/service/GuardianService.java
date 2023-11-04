@@ -60,19 +60,15 @@ public class GuardianService {
     }
 
     public GuardianTelDto readResentGuardian(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        Optional<User> resentGuardianOpt = userRepository.searchResentGuardianForUser(user);
+        final User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        final User resentGuardian = userRepository.searchResentGuardianForUser(user)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
-        if (resentGuardianOpt.isEmpty())
-            return GuardianTelDto.builder().build();
-        else {
-            User resentGuardian = resentGuardianOpt.get();
-
-            return GuardianTelDto.builder()
-                    .id(resentGuardian.getId())
-                    .realName(resentGuardian.getRealName())
-                    .tel(resentGuardian.getTel()).build();
-        }
+        return GuardianTelDto.builder()
+                .id(resentGuardian.getId())
+                .realName(resentGuardian.getRealName())
+                .tel(resentGuardian.getTel()).build();
     }
 
 

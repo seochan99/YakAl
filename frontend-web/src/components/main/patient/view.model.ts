@@ -84,6 +84,7 @@ export class PatientPageViewModel {
 
   public static getStates = () => {
     return {
+      isLoading: this.patientPageModel.isLoading(),
       patientInfo: this.patientPageModel.getPatientInfo(),
       currentTab: this.patientPageModel.getCurrentTab(),
       tabInfos: this.patientPageModel.getTabInfos(),

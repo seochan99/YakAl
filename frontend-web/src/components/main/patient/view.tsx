@@ -7,9 +7,12 @@ import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";
 import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
 import getAge from "@util/get-age.ts";
+import { formatTel } from "@util/format-tel.ts";
+import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 
 function PatientPage() {
   const {
+    isLoading,
     patientInfo,
     tab: { currentTab, tabInfos, onClickTab },
   } = usePatientPageViewController();
@@ -45,7 +48,7 @@ function PatientPage() {
                     {`(${getAge(new Date(base.birthday[0], base.birthday[1] - 1, base.birthday[2]))}세)`}
                   </S.IconContainedSpan>
                 </S.NameSexBirthDiv>
-                <S.NormalSpan>{`Tel. ${base.tel}`}</S.NormalSpan>
+                <S.NormalSpan>{`Tel. ${formatTel(base.tel)}`}</S.NormalSpan>
               </S.InfoTextDiv>
             </>
           )}
@@ -86,12 +89,15 @@ function PatientPage() {
             </S.TabDiv>
           ))}
         </S.TabBarDiv>
-        <S.InnerDiv>
-          {currentTab === EPatientInfoTab.SUMMARY && <Summary />}
-          {currentTab === EPatientInfoTab.MEDICATION && <Medication />}
-          {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
-          {currentTab === EPatientInfoTab.SCREENING && <Screening />}
-        </S.InnerDiv>
+        {!isLoading && (
+          <S.InnerDiv>
+            {currentTab === EPatientInfoTab.SUMMARY && <Summary />}
+            {currentTab === EPatientInfoTab.MEDICATION && <Medication />}
+            {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
+            {currentTab === EPatientInfoTab.SCREENING && <Screening />}
+          </S.InnerDiv>
+        )}
+        {isLoading && <LoadingSpinner />}
       </S.BodyDiv>
     </S.OuterDiv>
   );
