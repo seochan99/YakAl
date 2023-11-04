@@ -69,20 +69,14 @@ function CertificationPage() {
             <S.BelongInputBoxWrapper>
               <S.CertInputLabel>소속 기관*</S.CertInputLabel>
               <S.BelongInputBox>
-                <S.BelongInput
-                  type={"text"}
-                  name={"facility-name"}
-                  placeholder={"기관명"}
-                  readOnly={true}
-                  value={selectedFacility ? selectedFacility.name : ""}
-                />
-                <S.BelongInput
-                  type={"text"}
-                  name={"facility-address"}
-                  placeholder={"기관 주소"}
-                  readOnly={true}
-                  value={selectedFacility ? selectedFacility.address : ""}
-                />
+                <S.BelongInfoRowDiv>
+                  <S.BelongLabelSpan>{"기관명"}</S.BelongLabelSpan>
+                  <S.BelongInfoSpan>{selectedFacility ? selectedFacility.name : ""}</S.BelongInfoSpan>
+                </S.BelongInfoRowDiv>
+                <S.BelongInfoRowDiv>
+                  <S.BelongLabelSpan>{"기관 주소"}</S.BelongLabelSpan>
+                  <S.BelongInfoSpan>{selectedFacility ? selectedFacility.address : ""}</S.BelongInfoSpan>
+                </S.BelongInfoRowDiv>
               </S.BelongInputBox>
               <S.SearchBar>
                 <S.SearchButton />
@@ -94,39 +88,47 @@ function CertificationPage() {
                   onKeyUp={onEnterSearchbar}
                 />
               </S.SearchBar>
-              <S.SearchResultBox>
-                <S.ListHeader>
-                  <S.NameHeader>기관명</S.NameHeader>
-                  <S.AddressHeader>기관 주소</S.AddressHeader>
-                </S.ListHeader>
-                {facilityList === null ? (
-                  <></>
-                ) : (
-                  facilityList.map((facility) => (
-                    <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
-                      <S.ItemName>
-                        {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
-                      </S.ItemName>
-                      <S.ItemAddress>
-                        {facility.address.length > 41
-                          ? facility.address.substring(0, 40).concat("...")
-                          : facility.address}
-                      </S.ItemAddress>
-                    </S.Item>
-                  ))
-                )}
-              </S.SearchResultBox>
-              <ListFooter>
-                <Pagination
-                  activePage={pagingInfo.pageNumber}
-                  itemsCountPerPage={PAGING_SIZE}
-                  totalItemsCount={pagingInfo.totalCount!}
-                  pageRangeDisplayed={PAGING_SIZE}
-                  prevPageText={"‹"}
-                  nextPageText={"›"}
-                  onChange={handlePageChange}
-                />
-              </ListFooter>
+              {facilityList === null ? (
+                <></>
+              ) : facilityList.length === 0 ? (
+                <S.SearchResultBox>
+                  <S.CenterDiv>{"기관 정보가 존재하지 않습니다."}</S.CenterDiv>
+                </S.SearchResultBox>
+              ) : (
+                <>
+                  <S.SearchResultBox>
+                    <S.ListHeader>
+                      <S.NameHeader>기관명</S.NameHeader>
+                      <S.AddressHeader>기관 주소</S.AddressHeader>
+                    </S.ListHeader>
+                    {facilityList.map((facility) => (
+                      <S.Item key={facility.name} onClick={handleFacilityItemClick(facility.id)}>
+                        <S.ItemName>
+                          {facility.name.length > 21 ? facility.name.substring(0, 20).concat("...") : facility.name}
+                        </S.ItemName>
+                        <S.ItemAddress>
+                          {facility.address.length > 41
+                            ? facility.address.substring(0, 40).concat("...")
+                            : facility.address}
+                        </S.ItemAddress>
+                      </S.Item>
+                    ))}
+                  </S.SearchResultBox>
+                </>
+              )}
+              {pagingInfo.pageNumber !== null && pagingInfo.totalCount !== null && (
+                <ListFooter>
+                  <Pagination
+                    activePage={pagingInfo.pageNumber}
+                    itemsCountPerPage={PAGING_SIZE}
+                    totalItemsCount={pagingInfo.totalCount}
+                    pageRangeDisplayed={PAGING_SIZE}
+                    prevPageText={"‹"}
+                    nextPageText={"›"}
+                    onChange={handlePageChange}
+                  />
+                </ListFooter>
+              )}
             </S.BelongInputBoxWrapper>
             <S.CertImgBox>
               <S.CertInputLabel>자격증 사진*</S.CertInputLabel>
@@ -135,7 +137,7 @@ function CertificationPage() {
                 <label htmlFor="cert">파일찾기</label>
                 <input
                   type="file"
-                  accept="image/jpg,impge/png,image/jpeg,image/gif"
+                  accept="image/jpg,image/png,image/jpeg,image/gif"
                   id="cert"
                   name="cerification_img"
                   onChange={handleCertImgChange}
@@ -169,7 +171,7 @@ function CertificationPage() {
                 <label htmlFor="belong">파일찾기</label>
                 <input
                   type="file"
-                  accept="image/jpg,impge/png,image/jpeg,image/gif"
+                  accept="image/jpg,image/png,image/jpeg,image/gif"
                   id="belong"
                   name="belong_img"
                   onChange={handleBelongImgChange}

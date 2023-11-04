@@ -18,8 +18,11 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
 
     Optional<MedicalEstablishment> findByIdAndIsRegister(Long id, Boolean isRegister);
 
-    @Query("select m from MedicalEstablishment m where m.type = :type and m.name like %:searchWord% and m.isRegister = true")
-    Page<MedicalEstablishment> findListBySearchWord(@Param("type") EMedical type,
+    @Query("select m from MedicalEstablishment m where m.type = :eType and m.name like %:searchWord% and m.isRegister = true")
+    Page<MedicalEstablishment> findListBySearchWord(@Param("eType") EMedical type,
                                                   @Param("searchWord") String searchWord,
                                                   Pageable pageable);
+
+    @Query("select m from MedicalEstablishment m where m.type = :eType and m.isRegister = true")
+    Page<MedicalEstablishment> findList(@Param("eType") EMedical type, Pageable pageable);
 }

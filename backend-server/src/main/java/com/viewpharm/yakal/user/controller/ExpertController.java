@@ -63,13 +63,13 @@ public class ExpertController {
 
     @GetMapping(value = "/medical-establishments/search")
     @Operation(summary = "의료기관 검색", description = "의료기관 검색")
-    public ResponseDto<?> createMedicalEstablishment(@Param("medical") EMedical eMedical,
-                                                     @Param("word") String word,
-                                                     @Param("page") Integer page) {
+    public ResponseDto<?> createMedicalEstablishment(@RequestParam(name = "medical") EMedical eMedical,
+                                                     @RequestParam(value = "word", required = false) String word,
+                                                     @RequestParam("page") Integer page) {
         return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishments(eMedical, word, page, 5));
     }
 
-    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/expert-certifications/expert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "전문가 등록", description = "전문가 등록")
     public ResponseDto<?> createExpertCertification(@UserId Long userId,
                                                     @RequestPart(value = "message") ExpertCertificationDto requestDto,

@@ -14,6 +14,8 @@ import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-synd
 import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
 import { TDoseETCInfo } from "@api/auth/experts/types/dose-etc-info.ts";
 import { TDoseRiskInfo } from "@api/auth/experts/types/dose-etc-with-risk.ts";
+import { TApprovedFacilityList } from "@api/auth/experts/types/approved-facility-list.ts";
+import { EJob } from "@type/job.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
@@ -100,6 +102,34 @@ export const registerFacility = async <T = CommonResponse<null>>(
   });
 };
 
+export const registerExpert = async <T = CommonResponse<null>>(
+  type: EJob,
+  facilityId: number,
+  certificateImg: File,
+  affiliationImg: File,
+): Promise<AxiosResponse<T>> => {
+  const formData = new FormData();
+
+  formData.append(
+    "message",
+    new Blob(
+      [
+        JSON.stringify({
+          type: type === EJob.DOCTOR ? EFacilityType[EFacilityType.HOSPITAL] : EFacilityType[EFacilityType.PHARMACY],
+          facilityId,
+        }),
+      ],
+      { type: "application/json" },
+    ),
+  );
+  formData.append("certificate", certificateImg);
+  formData.append("affiliation", affiliationImg);
+
+  return await authAxios.post<T, AxiosResponse<T>>(`/experts/expert-certifications/expert`, formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
 export const toggleIsFavorite = async <T = CommonResponse<null>>(patientId: number): Promise<AxiosResponse<T>> => {
   return await authAxios.patch<T, AxiosResponse<T>>(`/experts/medical-appointment/${patientId}`);
 };
@@ -116,13 +146,15 @@ export const getProtectorInfo = async <T = CommonResponse<TProtectorInfo>>(
   return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/guardian`);
 };
 
-export const getApprovedFacilityList = async <T = CommonResponse<null>>(
+export const getApprovedFacilityList = async <T = CommonResponse<TApprovedFacilityList>>(
   nameQuery: string,
   page: number,
   facilityType: EFacilityType,
 ): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(
-    `/experts/medical-establishments/search?eMedical=${EFacilityType[facilityType]}&word=${nameQuery}&page=${page - 1}`,
+    `/experts/medical-establishments/search?medical=${EFacilityType[facilityType]}${
+      nameQuery.length === 0 ? "" : `&word=${nameQuery}`
+    }&page=${page - 1}`,
   );
 };
 
