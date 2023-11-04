@@ -8,7 +8,7 @@ import Screening from "./child/screening/view.tsx";
 import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
 import getAge from "@util/get-age.ts";
 import { formatTel } from "@util/format-tel.ts";
-import LoadingSpinner from "@/components/loading-spinner/view.tsx";
+import LoadingBarrier from "@components/loading-barrier/view.tsx";
 
 function PatientPage() {
   const {
@@ -57,7 +57,7 @@ function PatientPage() {
           {protector === null ? (
             <></>
           ) : protector.id === -1 ? (
-            <S.CenterDiv>{"보호자가 존재하지 않습니다."}</S.CenterDiv>
+            <S.CenterDiv>{"보호자 정보가 존재하지 않습니다."}</S.CenterDiv>
           ) : (
             <>
               <S.SelfBaseTitle>
@@ -95,7 +95,7 @@ function PatientPage() {
           {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
           {currentTab === EPatientInfoTab.SCREENING && <Screening />}
         </S.InnerDiv>
-        {isLoading && <LoadingSpinner />}
+        {isLoading && <LoadingBarrier />}
       </S.BodyDiv>
     </S.OuterDiv>
   );

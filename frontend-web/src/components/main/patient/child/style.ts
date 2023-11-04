@@ -111,6 +111,10 @@ export const MedicationETCContentDiv = styled(ContentDiv)`
   height: 22.5rem;
 `;
 
+export const MedicationGraphContentDiv = styled(ContentDiv)`
+  height: 20rem;
+`;
+
 export const Bar = styled.hr`
   height: 0.125rem;
   margin: 0 1rem;

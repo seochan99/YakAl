@@ -1,6 +1,5 @@
 import * as S from "../style.ts";
 import Pagination from "react-js-pagination";
-import ARMSGraph from "./arms-graph/view.tsx";
 import { useMedicationViewController } from "./view.controller.ts";
 import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
@@ -114,11 +113,12 @@ function Medication() {
                 <S.SubtitleSpan>{"ARMS"}</S.SubtitleSpan>
               </S.LeftTitleDiv>
             </S.HeaderDiv>
-            <S.ContentDiv>
-              <S.GraphDiv>
-                <ARMSGraph arms={medication.armsProgress} />
-              </S.GraphDiv>
-            </S.ContentDiv>
+            <S.MedicationGraphContentDiv>
+              <S.CenterDiv>{"추후 제공될 예정입니다."}</S.CenterDiv>
+              {/*<S.GraphDiv>*/}
+              {/*  <ARMSGraph arms={medication.armsProgress} />*/}
+              {/*</S.GraphDiv>*/}
+            </S.MedicationGraphContentDiv>
           </S.CardDiv>
         ) : (
           <></>
