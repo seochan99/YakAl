@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -135,20 +136,20 @@ public class SurveyService {
         final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), true);
 
         final Map<String, Object> answerMap =  answers.stream()
-                .collect(Collectors.toMap(AnswerRepository.answerInfo::getMiniTitle, AnswerRepository.answerInfo::getContent));
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
 
         for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
             switch (entry.getKey()) {
                 case "mna" -> {
                     if (entry.getValue() == null) {
-                        entry.setValue(List.of());
+                        entry.setValue(Collections.emptyList());
                     } else {
                         entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
                     }
                 }
                 case "adl", "delirium" -> {
                     if (entry.getValue() == null) {
-                        entry.setValue(List.of());
+                        entry.setValue(Collections.emptyList());
                     } else {
                         entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
                     }
@@ -191,20 +192,20 @@ public class SurveyService {
         final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), false);
 
         final Map<String, Object> answerMap =  answers.stream()
-                .collect(Collectors.toMap(AnswerRepository.answerInfo::getMiniTitle, AnswerRepository.answerInfo::getContent));
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
 
         for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
             switch (entry.getKey()) {
                 case "arms", "phqNine", "drinking", "dementia", "insomnia", "smoking" -> {
                     if (entry.getValue() == null) {
-                        entry.setValue(List.of());
+                        entry.setValue(Collections.emptyList());
                     } else {
                         entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
                     }
                 }
                 case "gds", "frailty", "osa" -> {
                     if (entry.getValue() == null) {
-                        entry.setValue(List.of());
+                        entry.setValue(Collections.emptyList());
                     } else {
                         entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
                     }

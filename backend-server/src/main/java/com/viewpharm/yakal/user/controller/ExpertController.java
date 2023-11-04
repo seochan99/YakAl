@@ -11,6 +11,7 @@ import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishment
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.prescription.dto.response.DoseAllDto;
+import com.viewpharm.yakal.prescription.dto.response.DoseAllWithRiskDto;
 import com.viewpharm.yakal.prescription.dto.response.PrescribedDto;
 import com.viewpharm.yakal.prescription.service.DoseService;
 import com.viewpharm.yakal.base.type.EPeriod;
@@ -158,22 +159,22 @@ public class ExpertController {
         return ResponseDto.ok(doseService.readRecentDoses(userId, patientId));
     }
 
-    @GetMapping("/patient/{patientId}/doses/All")
+    @GetMapping("/patient/{patientId}/doses/all")
     @Operation(summary = "환자 처방약 조회", description = "환자 모든 처방약 조회")
-    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readAllDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readAllDoses(userId, patientId, page));
     }
 
-    @GetMapping("/patient/{patientId}/doses/Beer")
+    @GetMapping("/patient/{patientId}/doses/beers")
     @Operation(summary = "환자 처방약 조회", description = "환자 Beer Criteria 처방약 조회")
-    public ResponseDto<DoseAllDto> readBeerCriteriaDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readBeerCriteriaDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllDto> readBeerCriteriaDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readBeerCriteriaDoses(userId, patientId, page));
     }
 
-    @GetMapping("/patient/{patientId}/doses/Anti")
+    @GetMapping("/patient/{patientId}/doses/anticholinergic")
     @Operation(summary = "환자 처방약 조회", description = "환자 항콜린성 처방약 조회")
-    public ResponseDto<DoseAllDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllWithRiskDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, page));
     }
 
 }

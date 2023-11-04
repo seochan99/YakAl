@@ -1,5 +1,8 @@
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 import {
+  getAnticholinergicDoses,
+  getBeersDoses,
+  getDoses,
   getGeneralSurvey,
   getGeriatricSyndromeSurvey,
   getLatestDoses,
@@ -12,43 +15,37 @@ import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
 import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
 import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
+import { TDoseWithRisk } from "@api/auth/experts/types/dose-with-risk.ts";
 
 type TPatientInfo = {
   base: TPatientBase | null;
   protector: TProtectorInfo | null;
   medication: {
+    // 전문의약품
     etc: {
       list: TDoseInfo[] | null;
-      page: number | null;
+      page: number;
       total: number | null;
-    }; // 전문의약품
+    };
+    // ARMS 추이
     armsProgress:
       | {
           score: number;
           createdAt: number[];
         }[]
-      | null; // ARMS 추이
+      | null;
+    // 비어스 기준 약물
     beersCriteriaMedicines: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-          }[]
-        | null;
+      list: TDoseInfo[] | null;
       page: number;
       total: number | null;
-    }; // 비어스 기준 약물
+    };
+    // 항콜린성 약물
     anticholinergicDrugs: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-            riskLevel: number;
-          }[]
-        | null;
+      list: TDoseWithRisk[] | null;
       page: number;
       total: number | null;
-    }; // 항콜린성 약물
+    };
   };
   geriatricSyndrome: TGeriatricSyndromeResult;
   screeningDetail: TGeneralSurveyResult;
@@ -256,62 +253,64 @@ export class PatientModel {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchETC = async (patientId: number) => {
-    this.patientInfo.medication.etc = {
-      ...this.patientInfo.medication.etc,
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      total: 5,
-    };
+    try {
+      const response = await getDoses(patientId, this.patientInfo.medication.etc.page);
+
+      this.patientInfo.medication.etc = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.etc = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchBeersList = async (patientId: number) => {
-    this.patientInfo.medication.beersCriteriaMedicines = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      page: 1,
-      total: 5,
-    };
+    try {
+      const response = await getBeersDoses(patientId, this.patientInfo.medication.beersCriteriaMedicines.page);
+
+      this.patientInfo.medication.beersCriteriaMedicines = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.beersCriteriaMedicines = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchAnticholinergic = async (patientId: number) => {
-    this.patientInfo.medication.anticholinergicDrugs = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23], riskLevel: 1 },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-          riskLevel: 2,
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22], riskLevel: 3 },
-        { name: "스토가정", prescribedAt: [2023, 9, 20], riskLevel: 1 },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16], riskLevel: 2 },
-      ],
-      page: 1,
-      total: 5,
-    };
+    try {
+      const response = await getAnticholinergicDoses(patientId, this.patientInfo.medication.anticholinergicDrugs.page);
+
+      this.patientInfo.medication.anticholinergicDrugs = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.anticholinergicDrugs = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -411,8 +410,17 @@ export class PatientModel {
         this.patientInfo.geriatricSyndrome.mna === null ||
         this.patientInfo.screeningDetail.arms === null
       );
+    } else if (this.currentTab === EPatientInfoTab.MEDICATION) {
+      return (
+        this.patientInfo.medication.etc === null ||
+        this.patientInfo.medication.beersCriteriaMedicines === null ||
+        this.patientInfo.medication.anticholinergicDrugs === null ||
+        this.patientInfo.medication.armsProgress === null
+      );
+    } else if (this.currentTab === EPatientInfoTab.GERIATRIC_SYNDROME) {
+      return this.patientInfo.geriatricSyndrome.mna === null;
+    } else {
+      return this.patientInfo.screeningDetail.arms === null;
     }
-
-    return false;
   };
 }

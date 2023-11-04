@@ -95,14 +95,20 @@ export const ContentDiv = styled.div`
   gap: 0.125rem;
 `;
 
-export const MedicationSummaryContentDiv = styled.div`
+export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 0 0 0.5rem 0.5rem;
-  border: 2px solid var(--Gray2, #e9e9ee);
-  background: var(--White, #fff);
+  border: 0;
   gap: 0.125rem;
+  flex: 1;
+`;
+
+export const MedicationSummaryContentDiv = styled(ContentDiv)`
   height: 18rem;
+`;
+
+export const MedicationETCContentDiv = styled(ContentDiv)`
+  height: 22.5rem;
 `;
 
 export const Bar = styled.hr`

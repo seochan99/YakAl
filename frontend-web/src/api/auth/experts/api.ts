@@ -12,6 +12,8 @@ import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
 import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
 import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
+import { TDoseETCInfo } from "@api/auth/experts/types/dose-etc-info.ts";
+import { TDoseRiskInfo } from "@api/auth/experts/types/dose-etc-with-risk.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
@@ -48,6 +50,29 @@ export const getPatientList = async <T = CommonResponse<null>>(
 
 export const getLatestDoses = async <T = CommonResponse<TDoseInfo[]>>(patientId: number): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/doses`);
+};
+
+export const getDoses = async <T = CommonResponse<TDoseETCInfo>>(
+  patientId: number,
+  page: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/doses/all?page=${page - 1}`);
+};
+
+export const getBeersDoses = async <T = CommonResponse<TDoseETCInfo>>(
+  patientId: number,
+  page: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/doses/beers?page=${page - 1}`);
+};
+
+export const getAnticholinergicDoses = async <T = CommonResponse<TDoseRiskInfo>>(
+  patientId: number,
+  page: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(
+    `/experts/patient/${patientId}/doses/anticholinergic?page=${page - 1}`,
+  );
 };
 
 export const registerFacility = async <T = CommonResponse<null>>(
