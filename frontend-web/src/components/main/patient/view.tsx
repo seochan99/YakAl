@@ -89,14 +89,12 @@ function PatientPage() {
             </S.TabDiv>
           ))}
         </S.TabBarDiv>
-        {!isLoading && (
-          <S.InnerDiv>
-            {currentTab === EPatientInfoTab.SUMMARY && <Summary />}
-            {currentTab === EPatientInfoTab.MEDICATION && <Medication />}
-            {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
-            {currentTab === EPatientInfoTab.SCREENING && <Screening />}
-          </S.InnerDiv>
-        )}
+        <S.InnerDiv>
+          {currentTab === EPatientInfoTab.SUMMARY && <Summary />}
+          {currentTab === EPatientInfoTab.MEDICATION && <Medication />}
+          {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
+          {currentTab === EPatientInfoTab.SCREENING && <Screening />}
+        </S.InnerDiv>
         {isLoading && <LoadingSpinner />}
       </S.BodyDiv>
     </S.OuterDiv>

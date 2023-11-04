@@ -10,6 +10,8 @@ import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
 import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
 import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
@@ -97,4 +99,16 @@ export const getApprovedFacilityList = async <T = CommonResponse<null>>(
   return await authAxios.get<T, AxiosResponse<T>>(
     `/experts/medical-establishments/search?eMedical=${EFacilityType[facilityType]}&word=${nameQuery}&page=${page - 1}`,
   );
+};
+
+export const getGeriatricSyndromeSurvey = async <T = CommonResponse<TGeriatricSyndromeResult>>(
+  patientId: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/survey/senior`);
+};
+
+export const getGeneralSurvey = async <T = CommonResponse<TGeneralSurveyResult>>(
+  patientId: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/experts/patient/${patientId}/survey/general`);
 };

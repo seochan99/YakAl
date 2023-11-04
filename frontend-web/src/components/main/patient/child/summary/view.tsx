@@ -5,16 +5,16 @@ import SummaryScreening from "./children/screening.tsx";
 import SummaryMedication from "./children/medication.tsx";
 
 function Summary() {
-  const { medication, geriatricSyndrome, screeningDetail } = useSummaryViewController();
+  useSummaryViewController();
 
   return (
     <S.OuterDiv>
       <S.ColumnDiv>
-        <SummaryMedication etcList={medication.etc.list} />
-        <SummaryGeriatricSyndrome geriatricSyndrome={geriatricSyndrome} />
+        <SummaryMedication />
+        <SummaryGeriatricSyndrome />
       </S.ColumnDiv>
       <S.ColumnDiv>
-        <SummaryScreening screeningDetail={screeningDetail} />
+        <SummaryScreening />
       </S.ColumnDiv>
     </S.OuterDiv>
   );

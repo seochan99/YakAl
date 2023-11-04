@@ -1,34 +1,29 @@
 import * as S from "../../style.ts";
 import { Bar } from "../../style.ts";
+import { PatientPageViewModel } from "@components/main/patient/view.model.ts";
 
-type TSummaryGeriatricSyndromeProps = {
-  geriatricSyndrome: {
-    mna: number[];
-    adl: boolean[];
-    delirium: boolean[];
-    audiovisual: {
-      useGlasses: boolean;
-      useHearingAid: boolean;
-    };
-    fall: number[][];
-  } | null;
-};
-
-function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndromeProps) {
-  if (!geriatricSyndrome) {
-    return <></>;
-  }
+function SummaryGeriatricSyndrome() {
+  const { getStates } = PatientPageViewModel;
+  const {
+    patientInfo: { geriatricSyndrome },
+  } = getStates();
 
   const totalScore = {
-    mna: geriatricSyndrome.mna.reduce((sum, current) => sum + current, 0),
-    adl: geriatricSyndrome.adl.reduce(
-      (sum, current, currentIndex) =>
-        sum + (currentIndex === geriatricSyndrome.adl.length ? (current ? 0 : 1) : current ? 1 : 0),
-      0,
-    ),
-    delirium: geriatricSyndrome.delirium.reduce((sum, current) => sum + (current ? 1 : 0), 0),
+    mna: geriatricSyndrome.mna?.length === 0 ? -1 : geriatricSyndrome.mna?.reduce((sum, current) => sum + current, 0),
+    adl:
+      geriatricSyndrome.adl?.length === 0
+        ? -1
+        : geriatricSyndrome.adl?.reduce(
+            (sum, current, currentIndex) =>
+              sum + (currentIndex === geriatricSyndrome.adl?.length ? (current ? 0 : 1) : current ? 1 : 0),
+            0,
+          ),
+    delirium:
+      geriatricSyndrome.delirium?.length === 0
+        ? -1
+        : geriatricSyndrome.delirium?.reduce((sum, current) => sum + (current ? 1 : 0), 0),
     audioVisual: geriatricSyndrome.audiovisual,
-    fall: geriatricSyndrome.fall.length,
+    fall: geriatricSyndrome.fall?.length === 0 ? -1 : geriatricSyndrome.fall?.length,
   };
 
   return (
@@ -45,7 +40,9 @@ function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndro
             <S.NormalSpan>{"Fall past 12 months (낙상사고)"}</S.NormalSpan>
           </S.LeftTitleDiv>
           <S.RightTitleDiv>
-            <S.NormalSpan>{`${totalScore.fall}번`}</S.NormalSpan>
+            <S.NormalSpan>
+              {totalScore.fall ? (totalScore.fall === -1 ? "설문 결과 없음" : `${totalScore.fall}번`) : "-"}
+            </S.NormalSpan>
           </S.RightTitleDiv>
         </S.RowDiv>
         <Bar />
@@ -55,8 +52,18 @@ function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndro
           </S.LeftTitleDiv>
           <S.RightTitleDiv>
             <S.NormalSpan>
-              {1 <= totalScore.delirium && `섬망 의심`}
-              {totalScore.delirium === 0 && `정상`}
+              {totalScore.delirium ? (
+                totalScore.delirium === -1 ? (
+                  "설문 결과 없음"
+                ) : (
+                  <>
+                    {1 <= totalScore.delirium && `섬망 의심`}
+                    {totalScore.delirium === 0 && `정상`}
+                  </>
+                )
+              ) : (
+                "-"
+              )}
             </S.NormalSpan>
           </S.RightTitleDiv>
         </S.RowDiv>
@@ -67,9 +74,26 @@ function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndro
           </S.LeftTitleDiv>
           <S.RightTitleDiv>
             <S.NormalSpan>
-              {`안경: ${totalScore.audioVisual.useGlasses ? "사용" : "미사용"}`}
-              {` / `}
-              {`보청기: ${totalScore.audioVisual.useHearingAid ? "사용" : "미사용"}`}
+              {totalScore.audioVisual !== null ? (
+                <>
+                  {`안경${
+                    totalScore.audioVisual.useGlasses !== null
+                      ? totalScore.audioVisual.useGlasses
+                        ? ": 사용"
+                        : ": 미사용"
+                      : ""
+                  }`}
+                  {`, 보청기: ${
+                    totalScore.audioVisual.useHearingAid !== null
+                      ? totalScore.audioVisual.useHearingAid
+                        ? "사용"
+                        : "미사용"
+                      : "설문 결과 없음"
+                  }`}
+                </>
+              ) : (
+                <>{`안경: -, 보청기: -`}</>
+              )}
             </S.NormalSpan>
           </S.RightTitleDiv>
         </S.RowDiv>
@@ -80,8 +104,18 @@ function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndro
           </S.LeftTitleDiv>
           <S.RightTitleDiv>
             <S.NormalSpan>
-              {totalScore.adl <= 4 && `치매 상담 요망`}
-              {5 <= totalScore.adl && `정상`}
+              {totalScore.adl ? (
+                totalScore.adl === -1 ? (
+                  "설문 결과 없음"
+                ) : (
+                  <>
+                    {totalScore.adl <= 4 && `치매 상담 요망`}
+                    {5 <= totalScore.adl && `정상`}
+                  </>
+                )
+              ) : (
+                "-"
+              )}
             </S.NormalSpan>
           </S.RightTitleDiv>
         </S.RowDiv>
@@ -92,9 +126,19 @@ function SummaryGeriatricSyndrome({ geriatricSyndrome }: TSummaryGeriatricSyndro
           </S.LeftTitleDiv>
           <S.RightTitleDiv>
             <S.NormalSpan>
-              {12 <= totalScore.mna && totalScore.mna <= 14 && `정상`}
-              {8 <= totalScore.mna && totalScore.mna <= 11 && `영양불량 위험상태`}
-              {totalScore.mna <= 7 && `영양 불량 상태`}
+              {totalScore.mna ? (
+                totalScore.mna === -1 ? (
+                  "설문 결과 없음"
+                ) : (
+                  <>
+                    {12 <= totalScore.mna && totalScore.mna <= 14 && `정상`}
+                    {8 <= totalScore.mna && totalScore.mna <= 11 && `영양불량 위험상태`}
+                    {totalScore.mna <= 7 && `영양 불량 상태`}
+                  </>
+                )
+              ) : (
+                "-"
+              )}
             </S.NormalSpan>
           </S.RightTitleDiv>
         </S.RowDiv>

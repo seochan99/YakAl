@@ -1,9 +1,17 @@
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
-import { getLatestDoses, getPatientBaseInfo, getProtectorInfo } from "@api/auth/experts/api.ts";
+import {
+  getGeneralSurvey,
+  getGeriatricSyndromeSurvey,
+  getLatestDoses,
+  getPatientBaseInfo,
+  getProtectorInfo,
+} from "@api/auth/experts/api.ts";
 import { isAxiosError } from "axios";
 import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
 import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
 import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
 
 type TPatientInfo = {
   base: TPatientBase | null;
@@ -42,27 +50,8 @@ type TPatientInfo = {
       total: number | null;
     }; // 항콜린성 약물
   };
-  geriatricSyndrome: {
-    mna: number[];
-    adl: boolean[];
-    delirium: boolean[];
-    audiovisual: {
-      useGlasses: boolean;
-      useHearingAid: boolean;
-    };
-    fall: number[][];
-  } | null;
-  screeningDetail: {
-    arms: number[];
-    gds: boolean[];
-    phqNine: number[];
-    frailty: boolean[];
-    drinking: number[];
-    dementia: number[];
-    insomnia: number[];
-    osa: boolean[];
-    smoking: number[];
-  } | null;
+  geriatricSyndrome: TGeriatricSyndromeResult;
+  screeningDetail: TGeneralSurveyResult;
 };
 
 export class PatientModel {
@@ -87,9 +76,26 @@ export class PatientModel {
         total: null,
       },
     },
-    geriatricSyndrome: null,
-    screeningDetail: null,
+    geriatricSyndrome: {
+      mna: null,
+      adl: null,
+      delirium: null,
+      audiovisual: null,
+      fall: null,
+    },
+    screeningDetail: {
+      arms: null,
+      gds: null,
+      phqNine: null,
+      frailty: null,
+      drinking: null,
+      dementia: null,
+      insomnia: null,
+      osa: null,
+      smoking: null,
+    },
   };
+
   private static currentTab: EPatientInfoTab = EPatientInfoTab.SUMMARY;
 
   private static readonly patientInfoTab = [
@@ -121,8 +127,24 @@ export class PatientModel {
           total: null,
         },
       },
-      geriatricSyndrome: null,
-      screeningDetail: null,
+      geriatricSyndrome: {
+        mna: null,
+        adl: null,
+        delirium: null,
+        audiovisual: null,
+        fall: null,
+      },
+      screeningDetail: {
+        arms: null,
+        gds: null,
+        phqNine: null,
+        frailty: null,
+        drinking: null,
+        dementia: null,
+        insomnia: null,
+        osa: null,
+        smoking: null,
+      },
     };
   };
 
@@ -163,11 +185,27 @@ export class PatientModel {
   };
 
   public static invalidateGeriatricSyndrome = () => {
-    this.patientInfo.geriatricSyndrome = null;
+    this.patientInfo.geriatricSyndrome = {
+      mna: null,
+      adl: null,
+      delirium: null,
+      audiovisual: null,
+      fall: null,
+    };
   };
 
   public static invalidateScreening = () => {
-    this.patientInfo.screeningDetail = null;
+    this.patientInfo.screeningDetail = {
+      arms: null,
+      gds: null,
+      phqNine: null,
+      frailty: null,
+      drinking: null,
+      dementia: null,
+      insomnia: null,
+      osa: null,
+      smoking: null,
+    };
   };
 
   public static fetchBase = async (patientId: number) => {
@@ -287,38 +325,42 @@ export class PatientModel {
     ];
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchGeriatricSyndrome = async (patientId: number) => {
-    this.patientInfo.geriatricSyndrome = {
-      mna: [0, 0, 1, 0, 1, 3],
-      adl: [false, false, false, false, false, true],
-      delirium: [false, true, true, false],
-      audiovisual: {
-        useGlasses: true,
-        useHearingAid: true,
-      },
-      fall: [
-        [2023, 7, 11],
-        [2023, 6, 1],
-      ],
-    };
+    try {
+      const response = await getGeriatricSyndromeSurvey(patientId);
+      this.patientInfo.geriatricSyndrome = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.geriatricSyndrome = {
+          mna: [],
+          adl: [],
+          delirium: [],
+          audiovisual: { useGlasses: null, useHearingAid: null },
+          fall: [],
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchScreening = async (patientId: number) => {
-    this.patientInfo.screeningDetail = {
-      arms: [1, 2, 3, 4, 4, 3, 4, 1, 1, 2, 1, 4],
-      gds: [true, true, false, true, true, true, false, true, true, true, false, true, true, true],
-      phqNine: [0, 1, 2, 3, 2, 3, 3, 3, 2],
-      frailty: [true, true, false, false, true],
-      drinking: [0, 1, 2, 3, 4, 4, 4, 4, 4, 4],
-      dementia: [2, 1, 0, 0, 0, 0, 0, 0],
-      insomnia: [4, 3, 4, 2, 1, 0, 3],
-      osa: [false, true, true, false, true, true, false, true],
-      smoking: [2, 20, 1],
-    };
+    try {
+      const response = await getGeneralSurvey(patientId);
+      this.patientInfo.screeningDetail = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.screeningDetail = {
+          arms: [],
+          gds: [],
+          phqNine: [],
+          frailty: [],
+          drinking: [],
+          dementia: [],
+          insomnia: [],
+          osa: [],
+          smoking: [],
+        };
+      }
+    }
   };
 
   public static getPatientInfo = () => {
@@ -365,7 +407,9 @@ export class PatientModel {
       return (
         this.patientInfo.base === null ||
         this.patientInfo.protector === null ||
-        this.patientInfo.medication.etc === null
+        this.patientInfo.medication.etc === null ||
+        this.patientInfo.geriatricSyndrome.mna === null ||
+        this.patientInfo.screeningDetail.arms === null
       );
     }
 

@@ -55,7 +55,7 @@ function PatientItem({ patientInfo, onClickToManage, onClickToNotManage }: Patie
               : ` (${dateDiff}일 전)`}
           </S.LastQuestionnaireDateSpan>
         ) : (
-          <S.LastQuestionnaireDateSpan></S.LastQuestionnaireDateSpan>
+          <S.LastQuestionnaireDateSpan>{"-"}</S.LastQuestionnaireDateSpan>
         )}
       </S.StyledLink>
       <S.StyledIconButton onClick={isFavorite ? onClickToNotManage : onClickToManage}>
