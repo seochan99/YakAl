@@ -69,6 +69,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
+<<<<<<< HEAD
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt, r.score as Score From doses d " +
             "join dosenames dn on d.dosename_id  = dn.id " +
             "join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
@@ -79,6 +80,13 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<anticholinergicDoseInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
+=======
+    @Query(value = "SELECT dn.dose_name as DoseName, d.date as Date, r.score as Risk From doses d " +
+            "inner join dosenames dn on d.dosename_id  = dn.id " +
+            "inner join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+            "where d.user_id = :userId AND d.is_deleted = :isDeleted", nativeQuery = true)
+    Page<doseAntiInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(@Param("userId") Long userId, @Param("isDeleted") Boolean isDeleted, Pageable pageable);
+>>>>>>> ba836ae1ce418fa230bf764473694d1bbee2dc35
 
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt From doses d join dosenames dn on d.dosename_id  = dn.id " +
             "where d.user_id = :userId AND d.is_deleted = false",
@@ -86,6 +94,14 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
+
+    interface doseAntiInfo {
+        String getDoseName();
+
+        LocalDate getDate();
+
+        int getRisk();
+    }
 
     interface oneDaySummary {
 

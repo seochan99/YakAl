@@ -429,10 +429,17 @@ public class DoseService {
                 .build();
     }
 
+<<<<<<< HEAD
     public DoseAllWithRiskDto readAnticholinergicDoses(Long userId, Long patientId, Long pageIndex) {
         userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
         final User patient = userRepository.findById(patientId)
+=======
+    public DoseAntiAllDto readAnticholinergicDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
+        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        User patient = userRepository.findById(patientId)
+>>>>>>> ba836ae1ce418fa230bf764473694d1bbee2dc35
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         final int PAGE_SIZE = 5;
@@ -446,6 +453,7 @@ public class DoseService {
                 .totalPages(doses.getTotalPages())
                 .build();
 
+<<<<<<< HEAD
         final List<AnticholinergicDoseDto> doseDtoList = doses.stream()
                 .map(d -> new AnticholinergicDoseDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate(), d.getScore()))
                 .collect(Collectors.toList());
@@ -455,4 +463,24 @@ public class DoseService {
                 .pageInfo(pageInfo)
                 .build();
     }
+=======
+        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
+
+        Page<DoseRepository.doseAntiInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(patient.getId(), false, paging);
+        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
+
+
+        List<DoseAntiDto> doseRecentDtos = doses.stream()
+                .map(d -> new DoseAntiDto(d.getDoseName(), d.getDate(), d.getRisk()))
+                .collect(Collectors.toList());
+
+
+        return DoseAntiAllDto.builder()
+                .datalist(doseRecentDtos)
+                .pageInfo(pageInfo)
+                .build();
+    }
+
+
+>>>>>>> ba836ae1ce418fa230bf764473694d1bbee2dc35
 }
