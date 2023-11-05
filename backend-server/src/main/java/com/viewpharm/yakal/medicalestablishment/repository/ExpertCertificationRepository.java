@@ -3,9 +3,11 @@ package com.viewpharm.yakal.medicalestablishment.repository;
 import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.user.domain.User;
+import jakarta.persistence.PrePersist;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -14,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ExpertCertificationRepository extends JpaRepository<ExpertCertification, Long> {
-
     Optional<ExpertCertification> findByUserAndMedicalEstablishmentAndIsProcessed(User user, MedicalEstablishment medicalEstablishment, Boolean isProcessed);
 
     Optional<ExpertCertification> findByUserAndIsProcessed(User user, Boolean isProcessed);

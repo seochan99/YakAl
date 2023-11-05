@@ -2,8 +2,11 @@ package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.base.type.EMedical;
+import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
@@ -74,16 +77,35 @@ public class AdminController {
         return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, num));
     }
 
-    @PatchMapping("medical/register/{id}")
+    @PatchMapping("/medical/register/{id}")
     @Operation(summary = "의료기관 등록", description = "의료기관을 약알에 등록 혹은 반려")
     public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
         return ResponseDto.ok(null);
     }
 
-    @PatchMapping("expert/register/{id}")
+    @PatchMapping("/expert/register/{id}")
     @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
     public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
         userService.updateIsCertified(id, updateAdminRequestDto);
+        return ResponseDto.ok(null);
+    }
+
+    @GetMapping("/medical/{medicalId}/register/request")
+    @Operation(summary = "기관 신청 상세 정보", description = "기관 신청 상세 정보 조회")
+    public ResponseDto<MedicalEstablishmentDetailDto> getMedicalEstablishmentDetail(@PathVariable("medicalId") Long medicalId) {
+        return ResponseDto.ok(medicalEstablishmentService.getMedicalEstablishmentDetail(medicalId));
+    }
+
+    @PatchMapping("/medical/register")
+    @Operation(summary = "기관 신청 승인/거부", description = "기관 신청 승인/거부")
+    public ResponseDto<Boolean> approveMedicalEstablishment(@RequestBody MedicalEstablishmentForResisterDto requestDto) {
+        return ResponseDto.ok(medicalEstablishmentService.approveMedicalEstablishment(requestDto));
+    }
+
+    @PatchMapping("/expert/register")
+    @Operation(summary = "전문가 신청 승인/거부", description = "전문가 신청 승인/거부")
+    public ResponseDto<?> approveMedicalEstablishment(@RequestBody ExpertCertificationForResisterDto requestDto) {
+        expertCertificationService.approveExpertCertification(requestDto);
         return ResponseDto.ok(null);
     }
 

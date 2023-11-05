@@ -47,6 +47,9 @@ public class ExpertCertification {
     @Column(name = "created_at")
     private LocalDate createdDate;
 
+    public void updateIsProcessed(Boolean isProcessed) {
+        this.isProcessed = isProcessed;
+    }
 
     @Builder
     public ExpertCertification(MedicalEstablishment medicalEstablishment, User user, EMedical type, String licenseImg, String affiliationImg) {

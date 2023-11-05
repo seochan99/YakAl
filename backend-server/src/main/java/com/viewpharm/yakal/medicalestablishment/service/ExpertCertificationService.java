@@ -5,8 +5,11 @@ import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.utils.ImageUtil;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationListDto;
 import com.viewpharm.yakal.medicalestablishment.repository.ExpertCertificationRepository;
@@ -106,12 +109,21 @@ public class ExpertCertificationService {
                 .build();
 
         List<ExpertCertificationListDto> expertCertificationListDtos = expertCertificationList.stream()
-                .map(e -> new ExpertCertificationListDto(e.getId(),e.getName(),e.getJob(),e.getMedicalName(),e.getTel(),e.getDate()))
+                .map(e -> new ExpertCertificationListDto(e.getId(), e.getName(), e.getJob(), e.getMedicalName(), e.getTel(), e.getDate()))
                 .collect(Collectors.toList());
 
         return ExpertCertificationAllDto.builder()
                 .datalist(expertCertificationListDtos)
                 .pageInfo(pageInfo)
                 .build();
+    }
+
+    public Boolean approveExpertCertification(ExpertCertificationForResisterDto request) {
+        ExpertCertification ec = expertCertificationRepository.findById(request.getId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        //등록 승인
+        ec.updateIsProcessed(request.getIsApproval());
+        expertCertificationRepository.flush();
+        return Boolean.TRUE;
     }
 }

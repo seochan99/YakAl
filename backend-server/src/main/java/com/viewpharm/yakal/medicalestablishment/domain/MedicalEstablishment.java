@@ -76,6 +76,10 @@ public class MedicalEstablishment {
     @Column(name = "created_at")
     private LocalDate createdDate;
 
+    public void updateIsRegister(Boolean isRegister) {
+        this.isRegister = isRegister;
+    }
+
     @Builder
     public MedicalEstablishment(EMedical type, String chiefName, String chiefTel, String name, String establishmentNumber, String zipCode, String address, String businessNumber, String tel, String clinicHours, String features, String chiefLicenseImg) {
         this.type = type;
@@ -91,9 +95,5 @@ public class MedicalEstablishment {
         this.features = features;
         this.chiefLicenseImg = chiefLicenseImg;
         this.createdDate =LocalDate.now();
-    }
-
-    public void updateIsRegister(boolean isRegister) {
-        this.isRegister = isRegister;
     }
 }

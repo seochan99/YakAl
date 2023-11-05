@@ -7,7 +7,9 @@ import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListForAdminDto;
 import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
@@ -131,5 +133,21 @@ public class MedicalEstablishmentService {
                 .build();
     }
 
+    public MedicalEstablishmentDetailDto getMedicalEstablishmentDetail(Long medicalId) {
+        MedicalEstablishment me = medicalEstablishmentRepository.findById(medicalId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
+        return new MedicalEstablishmentDetailDto(me.getType().toString(), me.getChiefName(), me.getChiefTel(), me.getName()
+                , me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(),
+                me.getChiefLicenseImg(), me.getTel(), me.getClinicHours(), me.getFeatures(), me.getCreatedDate());
+    }
+
+    public Boolean approveMedicalEstablishment(MedicalEstablishmentForResisterDto request) {
+        MedicalEstablishment me = medicalEstablishmentRepository.findById(request.getId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
+        //등록 승인
+        me.updateIsRegister(request.getIsApproval());
+        medicalEstablishmentRepository.flush();
+        return Boolean.TRUE;
+    }
 }
