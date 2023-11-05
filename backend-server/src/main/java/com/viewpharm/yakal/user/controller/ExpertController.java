@@ -10,6 +10,7 @@ import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishment
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.prescription.dto.response.DoseAllDto;
+import com.viewpharm.yakal.prescription.dto.response.DoseAntiAllDto;
 import com.viewpharm.yakal.prescription.dto.response.PrescribedDto;
 import com.viewpharm.yakal.prescription.service.DoseService;
 import com.viewpharm.yakal.base.type.EPeriod;
@@ -158,7 +159,7 @@ public class ExpertController {
 
     @GetMapping("/patient/{patientId}/doses/Anti")
     @Operation(summary = "환자 처방약 조회", description = "환자 항콜린성 처방약 조회")
-    public ResponseDto<DoseAllDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
+    public ResponseDto<DoseAntiAllDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
         return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, order, page));
     }
 
