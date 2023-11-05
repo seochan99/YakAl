@@ -61,7 +61,7 @@ class SettingScreen extends StatelessWidget {
                     color: Color(0xff626272),
                     fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 16),
               const SettingTimeSelectionWidget(),
               /* -------------- 계정 설정  -------------- */
               const SizedBox(

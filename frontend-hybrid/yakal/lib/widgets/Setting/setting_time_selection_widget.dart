@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 class SettingTimeSelectionWidget extends StatefulWidget {
   const SettingTimeSelectionWidget({Key? key}) : super(key: key);
@@ -99,47 +100,71 @@ class _SettingTimeSelectionWidgetState
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildTimeRow(
-            '아침', 'assets/icons/icon-morning.svg', selectedTimes['아침']),
-        _buildTimeRow(
-            '점심', 'assets/icons/icon-afternoon.svg', selectedTimes['점심']),
-        _buildTimeRow(
-            '저녁', 'assets/icons/icon-evening.svg', selectedTimes['저녁']),
+        _buildTimeRow('아침', 'assets/icons/icon-morning.svg',
+            selectedTimes['아침'], '7:00 ~ 11:00'),
+        _buildTimeRow('점심', 'assets/icons/icon-afternoon.svg',
+            selectedTimes['점심'], '11:00 ~ 17:00'),
+        _buildTimeRow('저녁', 'assets/icons/icon-evening.svg',
+            selectedTimes['저녁'], '17:00 ~ 24:00'),
       ],
     );
   }
 
-  Widget _buildTimeRow(String period, String iconPath, String? time) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          iconPath,
-          width: 24,
-          height: 24,
+  Widget _buildTimeRow(
+      String period, String iconPath, String? time, String defaultTimeText) {
+    return InkWell(
+      onTap: () {
+        _selectTime(period);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
         ),
-        const SizedBox(width: 8),
-        Text(
-          period,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+        child: Row(
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      iconPath,
+                      width: 24,
+                      height: 24,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(width: 8),
+            Text(
+              period,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              defaultTimeText,
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff90909F),
+              ),
+            ),
+            const Spacer(),
+            Text(
+              time ?? '',
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: ColorStyles.black,
+              ),
+            ),
+            const Icon(Icons.chevron_right)
+          ],
         ),
-        const SizedBox(width: 24),
-        Text(
-          time ?? '',
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Color(0xff90909F),
-          ),
-        ),
-        const Spacer(),
-        IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () => _selectTime(period),
-        ),
-      ],
+      ),
     );
   }
 }
