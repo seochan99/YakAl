@@ -4,7 +4,6 @@ import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
-import '../../models/Home/overlap_info.dart';
 import '../../provider/Home/pill_todo_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
 
@@ -24,12 +23,16 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
 
   @override
   bool get isDetail => _isDetail;
+
   @override
   DateTime get todoDate => _todoDate.value;
+
   @override
   CountModel get countModel => _countModel.value;
+
   @override
   bool get isLoaded => _isLoaded.value;
+
   @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
@@ -182,6 +185,10 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
 
   void onClickPillAddButton() {
     _isExpanded.value = !_isExpanded.value;
+  }
+
+  void onClickOutOfPillAddMenu() {
+    _isExpanded.value = false;
   }
 
   void fetchIsDetail() {
