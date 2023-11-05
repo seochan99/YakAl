@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -73,7 +74,7 @@ public class MedicalEstablishment {
     private List<ExpertCertification> expertCertifications = new ArrayList<>();
 
     @Column(name = "created_at")
-    private Timestamp createdDate;
+    private LocalDate createdDate;
 
     @Builder
     public MedicalEstablishment(EMedical type, String chiefName, String chiefTel, String name, String establishmentNumber, String zipCode, String address, String businessNumber, String tel, String clinicHours, String features, String chiefLicenseImg) {
@@ -89,7 +90,7 @@ public class MedicalEstablishment {
         this.clinicHours = clinicHours;
         this.features = features;
         this.chiefLicenseImg = chiefLicenseImg;
-        this.createdDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        this.createdDate =LocalDate.now();
     }
 
     public void updateIsRegister(boolean isRegister) {

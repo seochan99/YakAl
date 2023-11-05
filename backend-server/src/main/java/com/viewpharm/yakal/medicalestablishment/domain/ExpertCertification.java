@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -44,7 +45,7 @@ public class ExpertCertification {
     private Boolean isProcessed = Boolean.FALSE;
 
     @Column(name = "created_at")
-    private Timestamp createdDate;
+    private LocalDate createdDate;
 
 
     @Builder
@@ -54,6 +55,6 @@ public class ExpertCertification {
         this.type = type;
         this.licenseImg = licenseImg;
         this.affiliationImg = affiliationImg;
-        this.createdDate = Timestamp.valueOf(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+        this.createdDate = LocalDate.now();
     }
 }
