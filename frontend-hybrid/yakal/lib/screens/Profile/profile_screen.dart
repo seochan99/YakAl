@@ -19,13 +19,6 @@ class ProfileScreen extends StatelessWidget {
   final SurveyListController surveyListController =
       Get.put(SurveyListController(tests: tests));
 
-  // Future<bool> getMingam() async {
-  //   // 민감정보 동의 여부 파악 isTrue
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   bool mingamTure = prefs.getBool('mingam') ?? false;
-  //   return mingamTure;
-  // }
-
   final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
 
   ProfileScreen({super.key});
