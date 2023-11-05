@@ -100,11 +100,11 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
     var isAgreedMarketing = termsCheckedController.isChecked[3];
 
     userViewModel.updateMarketingAgreement(isAgreedMarketing).then(
-      (_) {
+          (_) {
         routeController.goto(LoginRoute.identifyEntry);
       },
     ).catchError(
-      (_) {
+          (_) {
         if (!context.mounted) {
           return;
         }
@@ -118,6 +118,11 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
         );
       },
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -148,7 +153,7 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
               Row(
                 children: [
                   Obx(
-                    () {
+                        () {
                       return AuthCheckButton(
                         isChecked: termsCheckedController.isCheckedAll(),
                         onPressed: termsCheckedController.toggleAll,
@@ -169,86 +174,92 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
               ),
               ...List.generate(
                 LoginTermsScreen.terms.length,
-                (index) => Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    (index) =>
+                    Column(
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Obx(
-                              () {
-                                return AuthCheckButton(
-                                  isChecked:
+                            Row(
+                              children: [
+                                Obx(
+                                      () {
+                                    return AuthCheckButton(
+                                      isChecked:
                                       termsCheckedController.isChecked[index],
-                                  onPressed:
+                                      onPressed:
                                       termsCheckedController.toggle(index),
+                                    );
+                                  },
+                                ),
+                                const SizedBox(
+                                  width: 16,
+                                ),
+                                Text(
+                                  "(${LoginTermsScreen
+                                      .terms[index]["isRequired"] as bool
+                                      ? "필수"
+                                      : "선택"})",
+                                  style: (LoginTermsScreen.terms[index]
+                                  ["isRequired"] as bool
+                                      ? LoginTermsStyle.checkedRequired
+                                      : LoginTermsStyle.checkedOptional),
+                                ),
+                                Text(
+                                  " ${LoginTermsScreen
+                                      .terms[index]["title"] as String}",
+                                  style: LoginTermsStyle.checkedRequired,
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                showGeneralDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  transitionDuration: const Duration(
+                                    milliseconds: 250,
+                                  ),
+                                  transitionBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    return SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(0.0, 1.0),
+                                        end: const Offset(0.0, 0.0),
+                                      ).animate(
+                                        CurvedAnimation(
+                                          parent: animation,
+                                          curve: Curves.easeInOut,
+                                        ),
+                                      ),
+                                      child: child,
+                                    );
+                                  },
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    return TermsDetailScreen(
+                                      title: LoginTermsScreen
+                                          .terms[index]["title"]
+                                      as String,
+                                      content: LoginTermsScreen.terms[index]
+                                      ["content"] as String,
+                                    );
+                                  },
                                 );
                               },
-                            ),
-                            const SizedBox(
-                              width: 16,
-                            ),
-                            Text(
-                              "(${LoginTermsScreen.terms[index]["isRequired"] as bool ? "필수" : "선택"})",
-                              style: (LoginTermsScreen.terms[index]
-                                      ["isRequired"] as bool
-                                  ? LoginTermsStyle.checkedRequired
-                                  : LoginTermsStyle.checkedOptional),
-                            ),
-                            Text(
-                              " ${LoginTermsScreen.terms[index]["title"] as String}",
-                              style: LoginTermsStyle.checkedRequired,
+                              child: SvgPicture.asset(
+                                "assets/icons/next.svg",
+                                width: 8,
+                                height: 16,
+                              ),
                             ),
                           ],
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            showGeneralDialog(
-                              barrierDismissible: false,
-                              context: context,
-                              transitionDuration: const Duration(
-                                milliseconds: 250,
-                              ),
-                              transitionBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return SlideTransition(
-                                  position: Tween<Offset>(
-                                    begin: const Offset(0.0, 1.0),
-                                    end: const Offset(0.0, 0.0),
-                                  ).animate(
-                                    CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeInOut,
-                                    ),
-                                  ),
-                                  child: child,
-                                );
-                              },
-                              pageBuilder:
-                                  (context, animation, secondaryAnimation) {
-                                return TermsDetailScreen(
-                                  title: LoginTermsScreen.terms[index]["title"]
-                                      as String,
-                                  content: LoginTermsScreen.terms[index]
-                                      ["content"] as String,
-                                );
-                              },
-                            );
-                          },
-                          child: SvgPicture.asset(
-                            "assets/icons/next.svg",
-                            width: 8,
-                            height: 16,
-                          ),
+                        const SizedBox(
+                          height: 32,
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 32,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -256,15 +267,15 @@ class _LoginTermsScreenState extends State<LoginTermsScreen> {
             children: [
               Expanded(
                 child: Obx(
-                  () {
+                      () {
                     final canMoveNext =
-                        termsCheckedController.isCheckedRequiredAll();
+                    termsCheckedController.isCheckedRequiredAll();
 
                     return TextButton(
                       onPressed: canMoveNext ? onPressedNextButton : null,
                       style: TextButton.styleFrom(
                         backgroundColor:
-                            canMoveNext ? ColorStyles.main : ColorStyles.gray2,
+                        canMoveNext ? ColorStyles.main : ColorStyles.gray2,
                         splashFactory: NoSplash.splashFactory,
                         padding: const EdgeInsets.symmetric(
                           vertical: 18.0,

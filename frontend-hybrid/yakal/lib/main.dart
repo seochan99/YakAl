@@ -18,6 +18,7 @@ import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
+import 'package:yakal/screens/Medication/Prescription/screem.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
@@ -160,7 +161,8 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      initialRoute: initialRoute,
+      // initialRoute: initialRoute,
+      initialRoute: "/pill/add/prescription",
       // 라우팅 설정
       getPages: [
         GetPage(
@@ -263,6 +265,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/pill/add/final",
           page: () => AddMedicineScreen(),
+        ),
+        GetPage(
+          name: "/pill/add/prescription",
+          page: () => const PrescriptionScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],
