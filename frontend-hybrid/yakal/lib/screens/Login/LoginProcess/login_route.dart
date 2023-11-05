@@ -8,7 +8,6 @@ import 'package:yakal/screens/Login/LoginProcess/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/utilities/enum/login_process.dart';
-import 'package:yakal/widgets/Base/back_confirm_dialog.dart';
 import 'package:yakal/widgets/Base/not_route_back_dialog.dart';
 
 enum LoginRoute {
@@ -30,9 +29,11 @@ enum LoginRoute {
             barrierDismissible: true,
             barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
             builder: (BuildContext context) {
-              return const BackConfirmDialog(
+              return NotRouteBackConfirmDialog(
                 question: "다시 로그인하시겠습니까?",
-                backTo: "/login",
+                backAction: () {
+                  Get.offAllNamed("/login");
+                },
               );
             },
           );
@@ -92,7 +93,7 @@ enum LoginRoute {
   Widget get screen {
     switch (this) {
       case LoginRoute.terms:
-        return LoginTermsScreen();
+        return const LoginTermsScreen();
       case LoginRoute.identifyEntry:
         return IdentificationEntryScreen();
       case LoginRoute.identifyResult:
