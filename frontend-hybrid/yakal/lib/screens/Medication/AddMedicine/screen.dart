@@ -472,29 +472,31 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         );
                       },
                     ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 10.0,
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                      foregroundColor: ColorStyles.sub1,
-                      backgroundColor: ColorStyles.sub3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    onPressed: _switchMode,
-                    child: Text(
-                      _isModificationMode ? "수정 완료" : "기간/시간 수정",
-                      style: const TextStyle(
-                        color: ColorStyles.main,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
+                  _isModificationMode
+                      ? Container()
+                      : TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 10.0,
+                            ),
+                            splashFactory: NoSplash.splashFactory,
+                            foregroundColor: ColorStyles.sub1,
+                            backgroundColor: ColorStyles.sub3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          onPressed: _switchMode,
+                          child: Text(
+                            _isModificationMode ? "" : "기간/시간 수정",
+                            style: const TextStyle(
+                              color: ColorStyles.main,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
                 ],
               ),
               const SizedBox(
@@ -544,11 +546,8 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                                     },
                                   );
                                 },
-                          backgroundColor:
-                              _isLoading ? ColorStyles.gray2 : ColorStyles.red,
-                          color: _isLoading
-                              ? ColorStyles.gray5
-                              : ColorStyles.white,
+                          backgroundColor: ColorStyles.gray1,
+                          color: ColorStyles.gray5,
                         ),
                       ),
                       const SizedBox(
@@ -558,16 +557,17 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         flex: 2,
                         fit: FlexFit.tight,
                         child: BottomButton(
-                          "완료",
+                          _isModificationMode ? "수정 완료" : "추가하기",
+                          // onPressed: _isModificationMode || _isLoading
+                          //     ? _switchMode
+                          //     : _onTapSend(start, end),
                           onPressed: disabled || _isLoading
-                              ? null
+                              ? _switchMode
                               : _onTapSend(start, end),
-                          backgroundColor: disabled || _isLoading
-                              ? ColorStyles.gray2
+                          backgroundColor: _isModificationMode
+                              ? ColorStyles.sub1
                               : ColorStyles.main,
-                          color: disabled || _isLoading
-                              ? ColorStyles.gray5
-                              : ColorStyles.white,
+                          color: ColorStyles.white,
                         ),
                       ),
                     ],

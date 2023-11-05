@@ -33,7 +33,6 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
-import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
@@ -118,6 +117,7 @@ class MyApp extends StatelessWidget {
           page: () => const MyBottomNavigationBar(),
         ),
         GetPage(name: '/home', page: () => const HomeScreen()),
+        // 만약, 민감정보가 fasle이면 민감정보 동의 페이지로 true이면 profile 페이지로
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",
