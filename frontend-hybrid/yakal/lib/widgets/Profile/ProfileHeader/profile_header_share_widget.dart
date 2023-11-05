@@ -68,7 +68,6 @@ class ProfileHeaderShareButton extends StatelessWidget {
 
 [날짜]
 [사용자 이름 및 서명]
-
 '''));
         }
       },
