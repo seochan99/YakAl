@@ -36,6 +36,7 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 void main() async {
@@ -94,7 +95,7 @@ void main() async {
 
         initialRoute = "/";
       }
-    } on DioException catch (error) {
+    } on DioException {
       if (kDebugMode) {
         print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
       }

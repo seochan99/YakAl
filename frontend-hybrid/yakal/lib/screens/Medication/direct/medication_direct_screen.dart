@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
@@ -138,12 +139,12 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                               : medicines.map((medicine) {
                                   return ListTile(
                                     // medicinController.text와 같다면 배경색
-                                    tileColor:
+                                    textColor:
                                         medicine.name == medicinController.text
-                                            ? const Color(0xff2666f6)
-                                            : Colors.white,
+                                            ? ColorStyles.main
+                                            : ColorStyles.black,
+
                                     title: Text(medicine.name),
-                                    subtitle: Text(medicine.code),
                                     onTap: () {
                                       selectedMedicineName = medicine.name;
                                       selectedMedicineCode = medicine.code;

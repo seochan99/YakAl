@@ -4,12 +4,9 @@ import 'package:yakal/widgets/Profile/ProfileHeader/profie_header_text_widget.da
 import 'package:yakal/widgets/Profile/ProfileHeader/profile_header_share_widget.dart';
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({
-    super.key,
-    required this.userViewModel,
-  });
-
   final UserViewModel userViewModel;
+
+  const ProfileHeader({super.key, required this.userViewModel});
 
   @override
   Widget build(BuildContext context) {
