@@ -6,7 +6,7 @@ import { EPatientInfoTab } from "@type/patient-info-tab.ts";
 export const usePatientPageViewController = () => {
   PatientPageViewModel.use();
 
-  const { patientInfo, currentTab, tabInfos } = PatientPageViewModel.getStates();
+  const { isLoading, patientInfo, currentTab, tabInfos } = PatientPageViewModel.getStates();
 
   const location = useLocation();
   const lastSlashIndex = location.pathname.lastIndexOf("/");
@@ -24,5 +24,5 @@ export const usePatientPageViewController = () => {
     [],
   );
 
-  return { patientInfo, tab: { currentTab, tabInfos, onClickTab } };
+  return { isLoading, patientInfo, tab: { currentTab, tabInfos, onClickTab } };
 };

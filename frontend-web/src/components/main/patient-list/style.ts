@@ -6,9 +6,11 @@ import { ReactComponent as SearchIconSvg } from "/public/assets/icons/magnifying
 export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 45rem;
   margin: 2rem 0;
   gap: 0.1rem;
+  flex: 1;
 `;
 
 export const InnerDiv = styled.div`
@@ -18,6 +20,7 @@ export const InnerDiv = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   gap: 1.5rem;
+  height: 57rem;
 `;
 
 export const TabBarDiv = styled.div`
@@ -318,4 +321,14 @@ export const PaginationDiv = styled.div`
   & ul.pagination li.active a {
     color: white;
   }
+`;
+
+export const IsNotExpertSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+  text-align: center;
 `;

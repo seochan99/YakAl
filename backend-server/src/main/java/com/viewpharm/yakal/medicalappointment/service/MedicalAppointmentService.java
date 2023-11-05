@@ -3,6 +3,7 @@ package com.viewpharm.yakal.medicalappointment.service;
 import com.viewpharm.yakal.base.PageInfo;
 import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalappointment.dto.MedicalAppointmentDto;
+import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.common.exception.CommonException;
 import com.viewpharm.yakal.common.exception.ErrorCode;
@@ -88,27 +89,78 @@ public class MedicalAppointmentService {
         return Boolean.TRUE;
     }
 
-    public PatientAllDto getPatientList(Long expertId, String sorting, String ordering, Long pageIndex, Long pageSize) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-        Sort.Direction order = Sort.Direction.ASC;
-        Pageable paging = null;
-        if (ordering.equals("desc"))
+    public PatientAllDto getPatientList(Long expertId, String name, String sorting, String ordering, Long pageIndex, Long pageSize, Boolean onlyFavorite) {
+        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+
+        Sort.Direction order;
+
+        if (ordering.equals("desc")) {
             order = Sort.Direction.DESC;
+        } else {
+            order = Sort.Direction.ASC;
+        }
 
-        if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("lastModifiedDate").with(order)));
-        else if (sorting.equals("name"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("patient.name").with(order)));
-        else if (sorting.equals("birth"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("patient.birthday").with(order)));
-        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        final Pageable paging = switch (sorting) {
+            case "date" -> PageRequest.of(
+                    pageIndex.intValue(),
+                    pageSize.intValue(),
+                    Sort.by(
+                            Sort.Order.by("lastModifiedDate").with(order),
+                            Sort.Order.by("patient.realName").with(order)
+                    )
+            );
+            case "name" -> PageRequest.of(
+                    pageIndex.intValue(),
+                    pageSize.intValue(),
+                    Sort.by(
+                            Sort.Order.by("patient.realName").with(order),
+                            Sort.Order.by("lastModifiedDate").with(order)
+                    )
+            );
+            case "birth" -> PageRequest.of(
+                    pageIndex.intValue(),
+                    pageSize.intValue(),
+                    Sort.by(
+                            Sort.Order.by("patient.birthday").with(order),
+                            Sort.Order.by("lastModifiedDate").with(order)
+                    )
+            );
+            default -> throw new CommonException(ErrorCode.INVALID_ARGUMENT);
+        };
 
-        Page<MedicalAppointment> counselList = medicalAppointmentRepository.findListByExpert(expert, paging);
-        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
+        Page<MedicalAppointment> counselList;
 
-        List<PatientDto> patientDtoList = counselList.stream()
-                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient()), c.getPatient().getTel(),c.getIsFavorite()))
+        if (name.isEmpty()) {
+            if (onlyFavorite) {
+                counselList = medicalAppointmentRepository.findListByExpertAndIsFavorite(expert, paging);
+            } else {
+                counselList = medicalAppointmentRepository.findListByExpert(expert, paging);
+            }
+        } else {
+            if (onlyFavorite) {
+                counselList = medicalAppointmentRepository.findListByExpertAndIsFavoriteAndName(expert, name, paging);
+            } else {
+                counselList = medicalAppointmentRepository.findListByExpertAndName(expert, name, paging);
+            }
+        }
+
+        final PageInfo pageInfo = PageInfo.builder()
+                .page(pageIndex.intValue())
+                .size(pageSize.intValue())
+                .totalElements((int) counselList.getTotalElements())
+                .totalPages(counselList.getTotalPages())
+                .build();
+
+        final List<PatientDto> patientDtoList = counselList.stream()
+                .map(c -> PatientDto.builder()
+                        .id(c.getPatient().getId())
+                        .name(c.getPatient().getRealName())
+                        .sex(c.getPatient().getSex())
+                        .birthday( c.getPatient().getBirthday())
+                        .lastQuestionnaireDate(answerRepository.findCreateDateByUser(c.getPatient()))
+                        .tel(c.getPatient().getTel())
+                        .isFavorite(c.getIsFavorite())
+                        .build())
                 .collect(Collectors.toList());
 
         return PatientAllDto.builder()
@@ -117,52 +169,31 @@ public class MedicalAppointmentService {
                 .build();
     }
 
+    public void updateIsFavorite(Long expertId, Long patientId) {
+        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-    public PatientAllDto getPatientListByName(Long expertId, String name, String sorting, String ordering, Long pageIndex, Long pageSize) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-        Sort.Direction order = Sort.Direction.ASC;
-        Pageable paging = null;
-
-        if (ordering.equals("desc"))
-            order = Sort.Direction.DESC;
-
-        if (sorting.equals("date"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("lastModifiedDate").with(order)));
-        else if (sorting.equals("name"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("patient.name").with(order)));
-        else if (sorting.equals("birth"))
-            paging = PageRequest.of(pageIndex.intValue(), pageSize.intValue(), Sort.by(Sort.Order.desc("isFavorite"), Sort.Order.by("patient.birthday").with(order)));
-        else throw new CommonException(ErrorCode.INVALID_ARGUMENT);
-
-        Page<MedicalAppointment> counselList = medicalAppointmentRepository.findListByExpertAndPatientName(expert, name, paging);
-        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), pageSize.intValue(), (int) counselList.getTotalElements(), counselList.getTotalPages());
-
-        List<PatientDto> patientDtoList = counselList.stream()
-                .map(c -> new PatientDto(c.getPatient().getId(), c.getPatient().getName(), c.getPatient().getSex(), c.getPatient().getBirthday(), (int) (answerRepository.countAnswerByUser(c.getPatient()) * 100 / 14), answerRepository.findCreateDateByUser(c.getPatient()), c.getPatient().getTel(),c.getIsFavorite()))
-                .collect(Collectors.toList());
-
-        return PatientAllDto.builder()
-                .datalist(patientDtoList)
-                .pageInfo(pageInfo)
-                .build();
-    }
-
-    public Boolean updateIsFavorite(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+        final MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
 
-        if (medicalAppointment.getIsFavorite() == true)
-            medicalAppointment.updateIsFavorite(false);
-        else
-            medicalAppointment.updateIsFavorite(true);
+        medicalAppointment.updateIsFavorite(!medicalAppointment.getIsFavorite());
+    }
 
-        return Boolean.TRUE;
+    public PatientBaseInfoDto readPatientBaseInfo(final Long expertId, final Long patientId) {
+        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        final MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
+
+        return PatientBaseInfoDto.builder()
+                .name(patient.getRealName())
+                .birthday(patient.getBirthday())
+                .tel(patient.getTel())
+                .build();
     }
 }

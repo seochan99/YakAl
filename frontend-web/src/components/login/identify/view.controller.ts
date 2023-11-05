@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
-import { logOnDev } from "../../../util/log-on-dev.ts";
+import { logOnDev } from "@util/log-on-dev.ts";
 import { useNavigate } from "react-router-dom";
-import { identify } from "../../../api/auth/user/api.ts";
+import { identify } from "@api/auth/user/api.ts";
 import { HttpStatusCode } from "axios";
-import { Cookies } from "react-cookie";
 
 type TIdResponse = {
   error_code: string | null;
@@ -16,21 +15,23 @@ type TIdResponse = {
 };
 
 export const useIdentifyPageViewController = () => {
-  const naviagte = useNavigate();
+  /* Custom Hooks */
+  const navigate = useNavigate();
 
-  const [identifyStart, setIdentifyStart] = useState<boolean>(false);
+  /* useStates */
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  /* Functions */
+  const finishIdentification = useCallback(
+    (isSuccess: boolean) => {
+      setIsLoading(false);
+      navigate("/login/identify/result", { state: { isSuccess } });
+    },
+    [navigate],
+  );
 
   const onIdentificationClick = useCallback(() => {
-    setIdentifyStart(true);
-
-    const cookies = new Cookies();
-
-    if (!cookies.get("accessToken") || cookies.get("accessToken") === "") {
-      naviagte("/login/social/not-yet");
-      return;
-    }
-
-    cookies.remove("accessToken", { path: "/" });
+    setIsLoading(true);
 
     const IMP = window.IMP;
     IMP.init(`${import.meta.env.VITE_MERCHANDISE_ID}`);
@@ -46,27 +47,26 @@ export const useIdentifyPageViewController = () => {
         logOnDev(`🛬 [Identification Response] ${response}`);
 
         if (response.success) {
-          logOnDev(`🎉 [Identification Success]`);
+          logOnDev(`🎉 [Identification Request Success]`);
 
           const sendIdentifyResponse = await identify(response.imp_uid);
 
           if (sendIdentifyResponse.status === HttpStatusCode.Ok) {
-            naviagte("/login/identify/result", { state: { isSuccess: true } });
+            logOnDev(`🎉 [User Registration Success]`);
+            finishIdentification(true);
             return;
           } else {
-            naviagte("/login/identify/result", { state: { isSuccess: false } });
+            finishIdentification(false);
             return;
           }
         } else {
           logOnDev(`🚨 [Identification Failure] ${response.error_code} | ${response.error_msg}`);
-
-          /* Identification Failure Logic */
-          naviagte("/login/identify/result", { state: { isSuccess: false } });
+          finishIdentification(false);
           return;
         }
       },
     );
-  }, [setIdentifyStart, naviagte]);
+  }, [finishIdentification]);
 
-  return { identifyStart, onIdentificationClick };
+  return { onIdentificationClick, isLoading };
 };

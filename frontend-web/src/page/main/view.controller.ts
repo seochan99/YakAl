@@ -34,7 +34,7 @@ export const useMainPageViewController = () => {
 
   return {
     expertUser,
-    isLoading,
+    isLoading: isLoading(),
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   };

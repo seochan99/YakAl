@@ -365,102 +365,94 @@ public class DoseService {
     }
 
     public List<DoseRecentDto> readRecentDoses(Long userId, Long patientId) {
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        User patient = userRepository.findById(patientId)
+        userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return doseRepository.findTop5ByUserAndIsDeletedOrderByDateDesc(patient, false).stream()
-                .map(d -> new DoseRecentDto(d.getKDCode().getDoseName(), d.getDate()))
+        return doseRepository.findTop5ByUserAndIsDeletedOrderByCreatedDesc(patient.getId()).stream()
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
     }
 
-    public DoseAllDto readAllDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        User patient = userRepository.findById(patientId)
+    public DoseAllDto readAllDoses(Long userId, Long patientId, Long pageIndex) {
+        userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+        final int PAGE_SIZE = 5;
 
-        Sort.Direction order = Sort.Direction.ASC;
-        Pageable paging = null;
-        if (ordering.equals("desc"))
-            order = Sort.Direction.DESC;
+        final PageRequest paging = PageRequest.of(pageIndex.intValue(), PAGE_SIZE, Sort.by(Sort.Direction.DESC, "created_at"));
+        final Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedOrderByCreatedDesc(patient.getId(), paging);
+        final PageInfo pageInfo = PageInfo.builder()
+                .page(pageIndex.intValue())
+                .size(PAGE_SIZE)
+                .totalElements((int) doses.getTotalElements())
+                .totalPages(doses.getTotalPages())
+                .build();
 
-        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
-
-        Page<Dose> doses = doseRepository.findByUserAndIsDeletedOrderByDateDesc(patient, false, paging);
-        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
-
-
-        List<DoseRecentDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseRecentDto(d.getKDCode().getDoseName(), d.getDate()))
+        final List<DoseRecentDto> doseRecentDtoList = doses.stream()
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
-
 
         return DoseAllDto.builder()
-                .datalist(doseRecentDtos)
+                .datalist(doseRecentDtoList)
                 .pageInfo(pageInfo)
                 .build();
     }
 
-    public DoseAllDto readBeerCriteriaDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        User patient = userRepository.findById(patientId)
+    public DoseAllDto readBeerCriteriaDoses(Long userId, Long patientId, Long pageIndex) {
+        userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+        final int PAGE_SIZE = 5;
 
-        Sort.Direction order = Sort.Direction.ASC;
-        Pageable paging = null;
-        if (ordering.equals("desc"))
-            order = Sort.Direction.DESC;
+        final PageRequest paging = PageRequest.of(pageIndex.intValue(), PAGE_SIZE, Sort.by(Sort.Direction.DESC, "created_at"));
+        final Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsBeersOrderByCreatedDesc(patient.getId(), paging);
+        final PageInfo pageInfo = PageInfo.builder()
+                .page(pageIndex.intValue())
+                .size(PAGE_SIZE)
+                .totalElements((int) doses.getTotalElements())
+                .totalPages(doses.getTotalPages())
+                .build();
 
-        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
-
-        Page<DoseRepository.doseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsBeersOrderByDateDesc(patient.getId(), false, paging);
-        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
-
-
-        List<DoseRecentDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseRecentDto(d.getDoseName(), d.getDate()))
+        List<DoseRecentDto> doseDtoList = doses.stream()
+                .map(d -> new DoseRecentDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate()))
                 .collect(Collectors.toList());
-
 
         return DoseAllDto.builder()
-                .datalist(doseRecentDtos)
+                .datalist(doseDtoList)
                 .pageInfo(pageInfo)
                 .build();
     }
 
-    public DoseAntiAllDto readAnticholinergicDoses(Long userId, Long patientId, String ordering, Long pageIndex) {
-        User expert = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        User patient = userRepository.findById(patientId)
+    public DoseAllWithRiskDto readAnticholinergicDoses(Long userId, Long patientId, Long pageIndex) {
+        userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
+        final int PAGE_SIZE = 5;
 
-        Sort.Direction order = Sort.Direction.ASC;
-        Pageable paging = null;
-        if (ordering.equals("desc"))
-            order = Sort.Direction.DESC;
+        final PageRequest paging = PageRequest.of(pageIndex.intValue(), PAGE_SIZE, Sort.by(Sort.Direction.DESC, "created_at"));
+        final Page<DoseRepository.anticholinergicDoseInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByCreatedDesc(patient.getId(), paging);
+        final PageInfo pageInfo = PageInfo.builder()
+                .page(pageIndex.intValue())
+                .size(PAGE_SIZE)
+                .totalElements((int) doses.getTotalElements())
+                .totalPages(doses.getTotalPages())
+                .build();
 
-        paging = PageRequest.of(pageIndex.intValue(), 5, Sort.by(order, "date"));
-
-        Page<DoseRepository.doseAntiInfo> doses = doseRepository.findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(patient.getId(), false, paging);
-        PageInfo pageInfo = new PageInfo(pageIndex.intValue(), 5, (int) doses.getTotalElements(), doses.getTotalPages());
-
-
-        List<DoseAntiDto> doseRecentDtos = doses.stream()
-                .map(d -> new DoseAntiDto(d.getDoseName(), d.getDate(), d.getRisk()))
+        final List<AnticholinergicDoseDto> doseDtoList = doses.stream()
+                .map(d -> new AnticholinergicDoseDto(d.getName(), d.getPrescribedAt().toLocalDateTime().toLocalDate(), d.getScore()))
                 .collect(Collectors.toList());
 
-
-        return DoseAntiAllDto.builder()
-                .datalist(doseRecentDtos)
+        return DoseAllWithRiskDto.builder()
+                .datalist(doseDtoList)
                 .pageInfo(pageInfo)
                 .build();
     }
-
-
 }

@@ -1,5 +1,8 @@
 package com.viewpharm.yakal.survey.service;
 
+import com.viewpharm.yakal.base.utils.SurveyParseUtil;
+import com.viewpharm.yakal.notablefeature.domain.Fall;
+import com.viewpharm.yakal.notablefeature.repository.FallRepository;
 import com.viewpharm.yakal.survey.domain.Answer;
 import com.viewpharm.yakal.survey.domain.Survey;
 import com.viewpharm.yakal.user.domain.User;
@@ -17,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +36,9 @@ public class SurveyService {
     private final UserRepository userRepository;
     private final SurveyRepository surveyRepository;
     private final AnswerRepository answerRepository;
+    private final FallRepository fallRepository;
 
+    private final SurveyParseUtil surveyParseUtil;
 
     public Map<String, String> createAnswer(Long userId, Long surveyId, AnswerRequestDto requestDto) {
         //유저 확인
@@ -119,33 +126,93 @@ public class SurveyService {
                 .build();
     }
 
-    //전문가가 환자 노인병 관련 설문조사 리스트
-    public Map<String, ?> getAllSeniorAnswerListForExpert(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+    public Map<String, Object> getAllSeniorAnswerListForExpert(Long expertId, Long patientId) {
+        userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyForSeniorByUser(patient.getId());
+        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), true);
 
-        return answers.stream()
-                .collect(Collectors.toMap(a -> a.getMiniTitle(), a -> a.getContent()));
+        final Map<String, Object> answerMap =  answers.stream()
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
+
+        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
+            switch (entry.getKey()) {
+                case "mna" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "adl", "delirium" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "audiovisual" -> {
+                    final Map<String, Boolean> audiovisualAnswerMap = new HashMap<>(2);
+
+                    if (entry.getValue() == null) {
+                        audiovisualAnswerMap.put("useGlasses", null);
+                        audiovisualAnswerMap.put("useHearingAid", null);
+                    } else {
+                        final List<Boolean> audiovisualAnswerList = surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue());
+                        audiovisualAnswerMap.put("useGlasses", audiovisualAnswerList.get(0));
+                        audiovisualAnswerMap.put("useHearingAid", audiovisualAnswerList.get(1));
+                    }
+
+                    entry.setValue(audiovisualAnswerMap);
+                }
+            }
+        }
+
+        final List<Fall> falls = fallRepository.findAllByUserOrderByDateDesc(patient);
+
+        final List<LocalDate> fallDateList = falls.stream()
+                .map(f -> f.getDate().toLocalDate())
+                .toList();
+
+        answerMap.put("fall", fallDateList);
+
+        return answerMap;
     }
 
-    //전문가가 환자 노인병 외 설문조사 리스트
-    public Map<String, ?> getAllNotSeniorAnswerListForExpert(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+    public Map<String, Object> getAllNotSeniorAnswerListForExpert(Long expertId, Long patientId) {
+        userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyForNotSeniorByUser(patient.getId());
+        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), false);
 
-        return answers.stream()
-                .collect(Collectors.toMap(a -> a.getMiniTitle(), a -> a.getContent()));
+        final Map<String, Object> answerMap =  answers.stream()
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
+
+        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
+            switch (entry.getKey()) {
+                case "arms", "phqNine", "drinking", "dementia", "insomnia", "smoking" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "gds", "frailty", "osa" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
+                    }
+                }
+            }
+        }
+
+        return answerMap;
     }
-
-
 }

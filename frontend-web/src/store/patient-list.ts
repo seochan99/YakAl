@@ -1,7 +1,8 @@
 import { ESex } from "@type/sex.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
-import { getPatientList } from "@api/auth/experts/api.ts";
+import { getPatientList, toggleIsFavorite } from "@api/auth/experts/api.ts";
+import { isAxiosError } from "axios";
 
 type TPatientItem = {
   id: number;
@@ -10,7 +11,7 @@ type TPatientItem = {
   sex: ESex;
   lastQuestionnaireDate: number[];
   tel: string;
-  isManaged: boolean;
+  isFavorite: boolean;
 };
 
 export type TSortBy = {
@@ -53,14 +54,15 @@ export class PatientListModel {
     return PatientListModel.instance;
   };
 
-  public invalidate = async () => {
+  public invalidate = () => {
     this.patientList = null;
+    this.totalCount = null;
   };
 
   /* PUBLIC METHOD */
   public fetch = async () => {
     try {
-      const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery);
+      const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery, this.isOnlyManaged);
 
       this.patientList = (response.data.data! as { datalist: TPatientItem[] }).datalist;
       this.totalCount = (
@@ -75,11 +77,12 @@ export class PatientListModel {
       ).pageInfo.totalElements;
     } catch (error) {
       this.patientList = [];
+      this.totalCount = null;
     }
   };
 
   public isLoading = () => {
-    return this.patientList === null;
+    return this.patientList === null || this.totalCount === 0;
   };
 
   public getPatientList = () => {
@@ -136,18 +139,30 @@ export class PatientListModel {
     await this.fetch();
   };
 
-  public setIsManaged = async (patientId: number, isManaged: boolean) => {
-    if (!this.patientList) {
+  public toggleIsManaged = async (patientId: number) => {
+    if (this.patientList === null) {
       return;
     }
 
-    const patient = this.patientList.findLast((patientItem) => patientItem.id === patientId);
+    try {
+      await toggleIsFavorite(patientId);
 
-    if (!patient) {
-      return;
+      if (this.isOnlyManaged) {
+        await this.fetch();
+        return;
+      }
+
+      const target = this.patientList.findLast((patientItem) => patientItem.id === patientId);
+
+      if (!target) {
+        return;
+      }
+
+      target.isFavorite = !target.isFavorite;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return;
+      }
     }
-
-    patient.isManaged = isManaged;
-    await this.fetch();
   };
 }

@@ -1,10 +1,13 @@
-import { PatientModel } from "@store/patient.ts";
 import { useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { PatientPageViewModel } from "../../view.model.ts";
 
 export const useMedicationViewController = () => {
-  const { medication } = PatientModel.getPatientInfo();
+  const { getStates } = PatientPageViewModel;
+  const {
+    patientInfo: { medication },
+    isLoading,
+  } = getStates();
 
   const location = useLocation();
   const lastSlashIndex = location.pathname.lastIndexOf("/");
@@ -19,24 +22,37 @@ export const useMedicationViewController = () => {
 
   const onChangeETCPage = useCallback(
     (page: number) => {
+      if (medication.etc.page === page) {
+        return;
+      }
       PatientPageViewModel.setETCPage(page, patientId);
     },
-    [patientId],
+    [medication.etc.page, patientId],
   );
 
   const onChangeBeersListPage = useCallback(
     (page: number) => {
+      if (medication.beersCriteriaMedicines.page === page) {
+        return;
+      }
       PatientPageViewModel.setBeersListPage(page, patientId);
     },
-    [patientId],
+    [medication.beersCriteriaMedicines.page, patientId],
   );
 
   const onChangeAnticholinergicDrugsPage = useCallback(
     (page: number) => {
+      if (medication.anticholinergicDrugs.page === page) {
+        return;
+      }
       PatientPageViewModel.setAnticholinergicDrugsPage(page, patientId);
     },
-    [patientId],
+    [medication.anticholinergicDrugs.page, patientId],
   );
 
-  return { medication, paging: { onChangeETCPage, onChangeBeersListPage, onChangeAnticholinergicDrugsPage } };
+  return {
+    isLoading,
+    medication,
+    paging: { onChangeETCPage, onChangeBeersListPage, onChangeAnticholinergicDrugsPage },
+  };
 };

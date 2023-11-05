@@ -20,4 +20,6 @@ public class UserExpertDto {
     final private LocalDate birthday;
     final private String tel;
     final private String belong;
+    final private Boolean isOptionalAgreementAccepted;
+    final private Boolean isIdentified;
 }

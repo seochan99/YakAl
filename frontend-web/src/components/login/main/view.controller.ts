@@ -1,17 +1,22 @@
 import { useCallback, useState } from "react";
 import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "@api/noauth/auth/api.ts";
 import { HttpStatusCode, isAxiosError } from "axios";
+import { logOnDev } from "@util/log-on-dev.ts";
 
 export const useLoginMainPageViewController = () => {
   const [open, setOpen] = useState<boolean>(false);
-
+  
   const onKakaoLoginClick = useCallback(async () => {
     try {
       const response = await getKakaoRedirectUrl();
 
       if (response.status === HttpStatusCode.Ok) {
-        setOpen(false);
         window.location.href = response.data.data.url;
+      } else {
+        logOnDev(
+          `🤔 [Invalid Http Response Code] Code ${response.status} Is Received But ${HttpStatusCode.Ok} Is Expected.`,
+        );
+        setOpen(true);
       }
     } catch (error) {
       if (isAxiosError(error)) {
@@ -25,7 +30,6 @@ export const useLoginMainPageViewController = () => {
       const response = await getGoogleRedirectUrl();
 
       if (response.status === HttpStatusCode.Ok) {
-        setOpen(false);
         window.location.href = response.data.data.url;
       }
     } catch (error) {

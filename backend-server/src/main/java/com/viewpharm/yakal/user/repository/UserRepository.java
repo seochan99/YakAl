@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.user.repository;
 
+import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.type.ELoginProvider;
@@ -75,6 +76,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
     Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
+
+    @Query("select u from User u where u.id = :id and u.role = :role")
+    Optional<User> findByIdAndRole(@Param("id") Long userId, @Param("role") ERole role);
+
+    @Query("select m.name from User u join MedicalEstablishment m on u.medicalEstablishment.id = m.id where u.id = :id")
+    Optional<String> getEstablishmentNameByIdAndRole(@Param("id") Long userId);
 
     Optional<User> findByIdAndJob(Long userId, EJob patient);
 

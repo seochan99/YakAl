@@ -1,10 +1,9 @@
 import * as S from "./style.ts";
 import WarningPage from "../../../page/warning/view.tsx";
-import { useLocation } from "react-router-dom";
+import { useIdentifyResultPageViewController } from "@components/login/identify-result/view.controller.ts";
 
 function IdentifyResultPage() {
-  const { state } = useLocation();
-  const { isSuccess } = state;
+  const { isSuccess } = useIdentifyResultPageViewController();
 
   return (
     <WarningPage

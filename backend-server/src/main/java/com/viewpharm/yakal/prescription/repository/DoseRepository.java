@@ -3,7 +3,6 @@ package com.viewpharm.yakal.prescription.repository;
 import com.viewpharm.yakal.prescription.domain.Dose;
 import com.viewpharm.yakal.prescription.domain.DoseName;
 import com.viewpharm.yakal.base.type.EDosingTime;
-import com.viewpharm.yakal.user.domain.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,6 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -56,27 +56,36 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     List<prescribed> findAllByUserIdAndLastDate(@Param("userId") Long userId, @Param("lastDate") LocalDate lastDate);
 
 
-    List<Dose> findTop5ByUserAndIsDeletedOrderByDateDesc(User user, Boolean isDeleted);
+    @Query(value = "select distinctrow d.created_at as PrescribedAt, dn.dose_name as Name from doses d join dosenames dn on d.dosename_id = dn.id " +
+            "where d.user_id = :userId and d.is_deleted = false order by d.created_at desc limit 5", nativeQuery = true)
+    List<doseInfo> findTop5ByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId);
 
-    @Query(value = "SELECT dn.dose_name as DoseName, d.date as Date From doses d " +
-            "inner join dosenames dn on d.dosename_id  = dn.id " +
-            "inner join risks r on d.risks_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
-            "where d.user_id = :userId AND d.is_deleted = :isDeleted", nativeQuery = true)
-    Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByDateDesc(@Param("userId") Long userId, @Param("isDeleted") Boolean isDeleted, Pageable pageable);
+    @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt From doses d join dosenames dn on d.dosename_id  = dn.id " +
+            "join risks r on d.risks_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+            "where d.user_id = :userId AND d.is_deleted = false",
+            countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at) From doses d join dosenames dn on d.dosename_id  = dn.id " +
+                    "join risks r on d.risks_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+                    "where d.user_id = :userId AND d.is_deleted = false",
+            nativeQuery = true)
+    Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
-    @Query(value = "SELECT dn.dose_name as DoseName, d.date as Date, r.score as Risk From doses d " +
-            "inner join dosenames dn on d.dosename_id  = dn.id " +
-            "inner join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
-            "where d.user_id = :userId AND d.is_deleted = :isDeleted", nativeQuery = true)
-    Page<doseAntiInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByDateDesc(@Param("userId") Long userId, @Param("isDeleted") Boolean isDeleted, Pageable pageable);
+    @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt, r.score as Score From doses d " +
+            "join dosenames dn on d.dosename_id  = dn.id " +
+            "join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+            "where d.user_id = :userId AND d.is_deleted = false",
+            countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at, r.score) From doses d " +
+                    "join dosenames dn on d.dosename_id  = dn.id " +
+                    "join risks r on d.risks_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+                    "where d.user_id = :userId AND d.is_deleted = false",
+            nativeQuery = true)
+    Page<anticholinergicDoseInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
-    Page<Dose> findByUserAndIsDeletedOrderByDateDesc(User user, Boolean isDeleted, Pageable pageable);
-
-    interface doseInfo {
-        String getDoseName();
-
-        LocalDate getDate();
-    }
+    @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt From doses d join dosenames dn on d.dosename_id  = dn.id " +
+            "where d.user_id = :userId AND d.is_deleted = false",
+            countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at) From doses d join dosenames dn on d.dosename_id  = dn.id " +
+                    "where d.user_id = :userId AND d.is_deleted = false",
+            nativeQuery = true)
+    Page<doseInfo> findByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
     interface doseAntiInfo {
         String getDoseName();
@@ -117,4 +126,14 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
         LocalDate getPrescribedDate();
     }
 
+    interface doseInfo {
+        String getName();
+        Timestamp getPrescribedAt();
+    }
+
+    interface anticholinergicDoseInfo {
+        String getName();
+        Timestamp getPrescribedAt();
+        Integer getScore();
+    }
 }

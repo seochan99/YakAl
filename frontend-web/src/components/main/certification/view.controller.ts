@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import { EJob } from "@type/job.ts";
 import { useNavigate } from "react-router-dom";
 import { ExpertFacilityListViewModel } from "@components/main/certification/view.model.ts";
-import { TExpertFacilityItem } from "@store/facility-list.ts";
+import { TApprovedFacilityItem } from "@api/auth/experts/types/approved-facility-item.ts";
+import { registerExpert } from "@api/auth/experts/api.ts";
 
 export const useCertificationPageViewController = () => {
   ExpertFacilityListViewModel.use();
 
-  const [selected, setSelected] = useState<EJob | null>(null);
   const [certificationImg, setCertificationImg] = useState<File | null>(null);
   const [certImgFileName, setCertImgFileName] = useState<string>("첨부파일");
   const [belongImg, setBelongImg] = useState<File | null>(null);
   const [belongImgFileName, setBelongImgFileName] = useState<string>("첨부파일");
-  const [selectedFacility, setSelectedFacility] = useState<TExpertFacilityItem | null>(null);
+  const [selectedFacility, setSelectedFacility] = useState<TApprovedFacilityItem | null>(null);
   const [facilityNameSearchQuery, setFacilityNameSearchQuery] = useState<string>("");
 
   const navigate = useNavigate();
@@ -22,12 +22,8 @@ export const useCertificationPageViewController = () => {
 
   const isFinished = selectedFacility !== null && certificationImg !== null && belongImg !== null;
 
-  const { fetch, getState, setPageNumber, setNameQuery } = ExpertFacilityListViewModel;
-  const { isLoading, facilityList, pagingInfo } = getState();
-
-  useEffect(() => {
-    fetch();
-  }, [fetch]);
+  const { getState, setPageNumber, setNameQuery, setSelectedJob } = ExpertFacilityListViewModel;
+  const { isLoading, facilityList, pagingInfo, selectedJob } = getState();
 
   const handlePageChange = useCallback(
     (page: number) => {
@@ -37,26 +33,24 @@ export const useCertificationPageViewController = () => {
   );
 
   const onClickDoctor = useCallback(() => {
-    setSelected(EJob.DOCTOR);
+    setSelectedJob(EJob.DOCTOR);
     setSelectedFacility(null);
-  }, []);
+  }, [setSelectedJob]);
 
   const onClickPharmacist = useCallback(() => {
-    setSelected(EJob.PHARMACIST);
+    setSelectedJob(EJob.PHARMACIST);
     setSelectedFacility(null);
-  }, []);
+  }, [setSelectedJob]);
 
-  const onChangeSearchbar = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setFacilityNameSearchQuery(event.currentTarget.value);
-    },
-    [setNameQuery],
-  );
+  const onChangeSearchbar = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
+    setFacilityNameSearchQuery(event.currentTarget.value);
+  }, []);
 
   const onEnterSearchbar = useCallback(
     (event: React.KeyboardEvent<HTMLInputElement>) => {
       if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
         setNameQuery(facilityNameSearchQuery);
+        setSelectedFacility(null);
       }
     },
     [facilityNameSearchQuery, setNameQuery],
@@ -125,11 +119,17 @@ export const useCertificationPageViewController = () => {
   };
 
   const handleSubmit = useCallback(() => {
-    navigate("/expert/certification/result", { state: { isSuccess: true } });
-  }, [navigate]);
+    registerExpert(selectedJob!, selectedFacility!.id, certificationImg!, belongImg!)
+      .then(() => {
+        navigate("/expert/certification/result", { state: { isSuccess: true } });
+      })
+      .catch(() => {
+        navigate("/expert/certification/result", { state: { isSuccess: false } });
+      });
+  }, [belongImg, certificationImg, navigate, selectedFacility, selectedJob]);
 
   return {
-    selected,
+    selectedJob,
     isFinished,
     onClickDoctor,
     onClickPharmacist,

@@ -1,22 +1,6 @@
-import { EJob } from "@type/job.ts";
-
-export type TExpertUser = {
-  name: string;
-  birthday: Date;
-  tel: string;
-  job: EJob | null;
-  department: string | null;
-  belong: string | null;
-};
-
-const expertUser: TExpertUser = {
-  name: "홍길동",
-  birthday: new Date("1998-01-01"),
-  tel: "010-9999-9999",
-  job: null,
-  department: null,
-  belong: null,
-};
+import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
+import { getExpertUserInfo } from "@api/auth/experts/api.ts";
+import { isAxiosError } from "axios";
 
 export class ExpertUserModel {
   /* PRIVATE MEMBER VARIABLE */
@@ -40,8 +24,22 @@ export class ExpertUserModel {
 
   /* PUBLIC METHOD */
   public fetch = async () => {
-    // Dummy async communication
-    this.expertUser = expertUser;
+    try {
+      const response = await getExpertUserInfo();
+
+      this.expertUser = response.data.data;
+      const { isOptionalAgreementAccepted, isIdentified } = this.expertUser;
+
+      if (isOptionalAgreementAccepted === null || !isIdentified) {
+        this.invalidate();
+        window.location.replace("/");
+      }
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.invalidate();
+        window.location.replace("/");
+      }
+    }
   };
 
   public invalidate = () => {

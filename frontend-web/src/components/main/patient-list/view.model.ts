@@ -21,16 +21,17 @@ export class PatientListViewModel {
   };
 
   public static fetch = async () => {
-    this.patientListModel.invalidate();
-    this.flush();
     await this.patientListModel.fetch();
     this.flush();
   };
 
   public static getStates = () => {
+    const patientList = this.patientListModel.getPatientList();
+
     return {
       isLoading: this.patientListModel.isLoading(),
-      patientList: this.patientListModel.getPatientList(),
+      isEmpty: patientList ? patientList.length === 0 : 0,
+      patientList,
       paging: this.patientListModel.getPagingInfo(),
       sorting: this.patientListModel.getSortingInfo(),
       nameQuery: this.patientListModel.getNameQuery(),
@@ -58,8 +59,8 @@ export class PatientListViewModel {
     this.flush();
   };
 
-  public static setIsManaged = async (patientId: number, isManaged: boolean) => {
-    await this.patientListModel.setIsManaged(patientId, isManaged);
+  public static setIsManaged = async (patientId: number) => {
+    await this.patientListModel.toggleIsManaged(patientId);
     this.flush();
   };
 }

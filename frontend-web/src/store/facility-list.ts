@@ -1,16 +1,18 @@
-export type TExpertFacilityItem = {
-  id: number;
-  name: string;
-  address: string;
-};
+import { getApprovedFacilityList } from "@api/auth/experts/api.ts";
+import { EJob } from "@type/job.ts";
+import { EFacilityType } from "@type/facility-type.ts";
+import { isAxiosError } from "axios";
+import { TApprovedFacilityItem } from "@api/auth/experts/types/approved-facility-item.ts";
 
 export class ExpertFacilityListModel {
   /* CONSTANTS */
   public static readonly FACILITY_COUNT_PER_PAGE = 5;
 
   /* PRIVATE MEMBER VARIABLE */
-  private facilityList: TExpertFacilityItem[] | null = null;
+  private facilityList: TApprovedFacilityItem[] | null = null;
   private totalCount: number | null = null;
+
+  private selectedJob: EJob | null = null;
 
   private pageNumber = 1;
 
@@ -37,11 +39,31 @@ export class ExpertFacilityListModel {
     this.facilityList = null;
   };
 
-  public fetch = async () => {};
+  public fetch = async () => {
+    try {
+      const response = await getApprovedFacilityList(
+        this.nameQuery,
+        this.pageNumber,
+        this.selectedJob === EJob.DOCTOR ? EFacilityType.HOSPITAL : EFacilityType.PHARMACY,
+      );
+
+      this.facilityList = response.data.data.dataList;
+      this.pageNumber = response.data.data.pageInfo.page + 1;
+      this.totalCount = response.data.data.pageInfo.totalElements;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.facilityList = [];
+        this.pageNumber = 1;
+        this.totalCount = 0;
+      }
+    }
+  };
 
   public isLoading = () => this.facilityList == null;
 
   public getFacilityList = () => this.facilityList;
+
+  public getSelectedJob = () => this.selectedJob;
 
   public getPagingInfo = () => ({ pageNumber: this.pageNumber, totalCount: this.totalCount });
 
@@ -62,6 +84,11 @@ export class ExpertFacilityListModel {
 
   public setNameQuery = async (nameQuery: string) => {
     this.nameQuery = nameQuery;
+    await this.fetch();
+  };
+
+  public setSelectedJob = async (job: EJob) => {
+    this.selectedJob = job;
     await this.fetch();
   };
 }

@@ -8,10 +8,6 @@ export const authAxios = axios.create({
   withCredentials: true,
 });
 
-authAxios.defaults.headers.common[
-  "Authorization"
-] = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1aWQiOiI0Iiwicm9sIjoiUk9MRV9XRUIiLCJpYXQiOjE2OTg3ODc0NDcsImV4cCI6MTY5ODc5MTA0N30.QQrPModJ3A5Ex2g_APi_fU_TJfeFREmi2OEyufMvfNsxihq3qUDRNDnwNgF_eHswKguk2Hi-su8E_7IMPoOvMg`;
-
 authAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
     /* Logging */
@@ -55,6 +51,7 @@ authAxios.interceptors.response.use(
 
         if (accessTokenResponse.status === HttpStatusCode.Created) {
           axios.defaults.headers.common["Authorization"] = `Bearer ${accessTokenResponse.data.data.accessToken}`;
+          authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessTokenResponse.data.data.accessToken}`;
           return axios(originalRequest);
         } else {
           redirect("/");

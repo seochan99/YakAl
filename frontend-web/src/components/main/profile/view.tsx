@@ -14,7 +14,7 @@ type TProfileProps = {
   job: EJob | null;
   department: string | null;
   belong: string | null;
-  name: string;
+  name: string | null;
   imgSrc: string;
 };
 
@@ -62,10 +62,12 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
         {!isMobile && (
           <S.ProfileText>
             {jobDetail ? <S.Job>{jobDetail}</S.Job> : null}
-            <S.NameBox>
-              <S.Name>{name}</S.Name>
-              <S.NamePostfix>님</S.NamePostfix>
-            </S.NameBox>
+            {name ? (
+              <S.NameBox>
+                <S.Name>{name}</S.Name>
+                <S.NamePostfix>님</S.NamePostfix>
+              </S.NameBox>
+            ) : null}
           </S.ProfileText>
         )}
         <S.SmallBadge
@@ -95,11 +97,13 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
         <S.DetailProfile>
           <S.DrawerHeader>
             <S.DetailProfileBox>
-              <S.DetailNameBox>
-                <S.DetailNamePrefix>{"안녕하세요."}</S.DetailNamePrefix>
-                <S.DetailName>{name.length > 4 ? name.slice(0, 4).concat("...") : name}</S.DetailName>
-                <S.DetailNamePostfix>{"님"}</S.DetailNamePostfix>
-              </S.DetailNameBox>
+              {name ? (
+                <S.DetailNameBox>
+                  <S.DetailNamePrefix>{"안녕하세요."}</S.DetailNamePrefix>
+                  <S.DetailName>{name.length > 4 ? name.slice(0, 4).concat("...") : name}</S.DetailName>
+                  <S.DetailNamePostfix>{"님"}</S.DetailNamePostfix>
+                </S.DetailNameBox>
+              ) : null}
               <S.DetailJob>
                 {job ? job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
                 {jobDetail ? (

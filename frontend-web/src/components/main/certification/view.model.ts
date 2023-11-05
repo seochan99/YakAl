@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { ExpertFacilityListModel } from "@store/facility-list.ts";
+import { EJob } from "@type/job.ts";
 
 export class ExpertFacilityListViewModel {
   private static updater = false;
@@ -31,6 +32,7 @@ export class ExpertFacilityListViewModel {
       facilityList: this.expertFacilityListModel.getFacilityList(),
       pagingInfo: this.expertFacilityListModel.getPagingInfo(),
       nameQuery: this.expertFacilityListModel.getNameQuery(),
+      selectedJob: this.expertFacilityListModel.getSelectedJob(),
     };
   };
 
@@ -41,6 +43,11 @@ export class ExpertFacilityListViewModel {
 
   public static setNameQuery = async (nameQuery: string) => {
     await this.expertFacilityListModel.setNameQuery(nameQuery);
+    this.flush();
+  };
+
+  public static setSelectedJob = async (job: EJob) => {
+    await this.expertFacilityListModel.setSelectedJob(job);
     this.flush();
   };
 }

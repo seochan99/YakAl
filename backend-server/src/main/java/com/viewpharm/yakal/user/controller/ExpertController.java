@@ -4,13 +4,14 @@ import com.viewpharm.yakal.base.ResponseDto;
 import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.common.annotation.UserId;
 import com.viewpharm.yakal.guardian.service.GuardianService;
+import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.prescription.dto.response.DoseAllDto;
-import com.viewpharm.yakal.prescription.dto.response.DoseAntiAllDto;
+import com.viewpharm.yakal.prescription.dto.response.DoseAllWithRiskDto;
 import com.viewpharm.yakal.prescription.dto.response.PrescribedDto;
 import com.viewpharm.yakal.prescription.service.DoseService;
 import com.viewpharm.yakal.base.type.EPeriod;
@@ -23,11 +24,12 @@ import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @RestController
@@ -60,13 +62,13 @@ public class ExpertController {
 
     @GetMapping(value = "/medical-establishments/search")
     @Operation(summary = "의료기관 검색", description = "의료기관 검색")
-    public ResponseDto<?> createMedicalEstablishment(@Param("medical") EMedical eMedical,
-                                                     @Param("word") String word,
-                                                     @Param("page") Integer page) {
+    public ResponseDto<?> createMedicalEstablishment(@RequestParam(name = "medical") EMedical eMedical,
+                                                     @RequestParam(value = "word", required = false) String word,
+                                                     @RequestParam("page") Integer page) {
         return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishments(eMedical, word, page, 5));
     }
 
-    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/expert-certifications/expert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "전문가 등록", description = "전문가 등록")
     public ResponseDto<?> createExpertCertification(@UserId Long userId,
                                                     @RequestPart(value = "message") ExpertCertificationDto requestDto,
@@ -109,34 +111,45 @@ public class ExpertController {
 
     @GetMapping("/patient")
     @Operation(summary = "환자 리스트", description = "환자 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(medicalAppointmentService.getPatientList(id, sort, order, page, num));
+    public ResponseDto<PatientAllDto> getPatientList(
+            @UserId Long id,
+            @RequestParam(name = "name", defaultValue = "") String name,
+            @RequestParam("sort") String sort,
+            @RequestParam("order") String order,
+            @RequestParam("page") Long page,
+            @RequestParam(name = "num", defaultValue = "10") Long num,
+            @RequestParam(name="favorite", defaultValue = "true") Boolean onlyFavorite
+    ) {
+        return ResponseDto.ok(
+                medicalAppointmentService.getPatientList(id, URLDecoder.decode(name, StandardCharsets.UTF_8), sort, order, page, num, onlyFavorite)
+        );
     }
 
-    @GetMapping("/patient/name")
-    @Operation(summary = "환자 리스트", description = "환자 이름으로 리스트 가져오기")
-    public ResponseDto<PatientAllDto> getPatientList(@UserId Long id, @RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("page") Long page, @RequestParam(name = "num", defaultValue = "10") Long num) {
-        return ResponseDto.ok(medicalAppointmentService.getPatientListByName(id, name, sort, order, page, num));
-    }
-
-    @Deprecated
-    @GetMapping("/guardian/{guardianId}")
-    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
-    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
-        return ResponseDto.ok(guardianService.readPatient(guardianId));
-    }
-
-    @Deprecated
-    @GetMapping("/patient/{patientId}")
-    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
-    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
-        return ResponseDto.ok(guardianService.readGuardian(patientId));
-    }
+//    @Deprecated
+//    @GetMapping("/guardian/{guardianId}")
+//    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
+//    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
+//        return ResponseDto.ok(guardianService.readPatient(guardianId));
+//    }
+//
+//    @Deprecated
+//    @GetMapping("/patient/{patientId}")
+//    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
+//    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
+//        return ResponseDto.ok(guardianService.readGuardian(patientId));
+//    }
 
     @PatchMapping("/medical-appointment/{patientId}")
     @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
-    public ResponseDto<Boolean> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
-        return ResponseDto.ok(medicalAppointmentService.updateIsFavorite(expertId, patientId));
+    public ResponseDto<?> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
+        medicalAppointmentService.updateIsFavorite(expertId, patientId);
+        return ResponseDto.ok(null);
+    }
+
+    @GetMapping("/patient/{patientId}")
+    @Operation(summary = "환자 기본 정보 조회", description = "환자의 기본 인적 사항을 조회")
+    public ResponseDto<PatientBaseInfoDto> readPatientBase(@UserId Long userId, @PathVariable Long patientId) {
+        return ResponseDto.ok(medicalAppointmentService.readPatientBaseInfo(userId, patientId));
     }
 
     @GetMapping("/patient/{patientId}/doses")
@@ -145,22 +158,22 @@ public class ExpertController {
         return ResponseDto.ok(doseService.readRecentDoses(userId, patientId));
     }
 
-    @GetMapping("/patient/{patientId}/doses/All")
+    @GetMapping("/patient/{patientId}/doses/all")
     @Operation(summary = "환자 처방약 조회", description = "환자 모든 처방약 조회")
-    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readAllDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readAllDoses(userId, patientId, page));
     }
 
-    @GetMapping("/patient/{patientId}/doses/Beer")
+    @GetMapping("/patient/{patientId}/doses/beers")
     @Operation(summary = "환자 처방약 조회", description = "환자 Beer Criteria 처방약 조회")
-    public ResponseDto<DoseAllDto> readBeerCriteriaDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readBeerCriteriaDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllDto> readBeerCriteriaDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readBeerCriteriaDoses(userId, patientId, page));
     }
 
-    @GetMapping("/patient/{patientId}/doses/Anti")
+    @GetMapping("/patient/{patientId}/doses/anticholinergic")
     @Operation(summary = "환자 처방약 조회", description = "환자 항콜린성 처방약 조회")
-    public ResponseDto<DoseAntiAllDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("order") String order, @RequestParam("page") Long page) {
-        return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, order, page));
+    public ResponseDto<DoseAllWithRiskDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+        return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, page));
     }
 
 }

@@ -52,14 +52,19 @@ public class MedicalEstablishmentService {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("id").descending());
 
         // 의료기관 검색
-        Page< MedicalEstablishment> medicalEstablishments = medicalEstablishmentRepository.findListBySearchWord(eMedical, searchWord, pageRequest);
+        Page< MedicalEstablishment> medicalEstablishments;
+        if (searchWord == null) {
+            medicalEstablishments = medicalEstablishmentRepository.findList(eMedical, pageRequest);
+        } else {
+            medicalEstablishments = medicalEstablishmentRepository.findListBySearchWord(eMedical, searchWord, pageRequest);
+        }
 
         // 의료기관 검색 결과
         PageInfo pageInfo = new PageInfo(page, size, (int) medicalEstablishments.getTotalElements(), medicalEstablishments.getTotalPages());
 
         List<MedicalEstablishmentListDto> list = medicalEstablishments.stream()
                 .map(me -> new MedicalEstablishmentListDto(me.getId(), me.getName(), me.getAddress()))
-                .collect(Collectors.toList());
+                .toList();
 
         return Map.of("pageInfo", pageInfo, "dataList", list);
     }

@@ -2,13 +2,20 @@ import React, { useEffect, useRef, useState } from "react";
 import { PatientListViewModel } from "./view.model.ts";
 import { EOrder } from "@type/order.ts";
 import { EPatientField } from "@type/patient-field.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 export const usePatientListPageViewController = () => {
   PatientListViewModel.use();
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery, setIsOnlyManaged, setIsManaged } =
     PatientListViewModel;
-  const { isLoading, patientList, paging, sorting, isOnlyManaged } = getStates();
+  const { isLoading, isEmpty, patientList, paging, sorting, isOnlyManaged, nameQuery } = getStates();
+
+  const isExpert = !!(
+    ExpertUserViewModel.getExpertUser()?.belong &&
+    ExpertUserViewModel.getExpertUser()?.job &&
+    ExpertUserViewModel.getExpertUser()?.department
+  );
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -45,9 +52,13 @@ export const usePatientListPageViewController = () => {
         setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
       }
     } else {
-      setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+      if ((e.currentTarget.value as EPatientField) === EPatientField.LAST_QUESTIONNAIRE_DATE) {
+        setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+      } else {
+        setSortBy(EOrder.ASC, e.currentTarget.value as EPatientField);
+      }
     }
-    
+
     setSortingOptionOpen(false);
   };
 
@@ -62,37 +73,35 @@ export const usePatientListPageViewController = () => {
   };
 
   const onSelectMangedList = () => {
+    setNameQueryCache("");
     if (!isOnlyManaged) {
       setIsOnlyManaged(true);
     }
   };
 
   const onSelectEntireList = () => {
+    setNameQueryCache("");
     if (isOnlyManaged) {
       setIsOnlyManaged(false);
     }
   };
 
   const onClickToManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, true);
-  };
-
-  const onClickToNotManageFactory = (patientId: number) => () => {
-    setIsManaged(patientId, false);
+    setIsManaged(patientId);
   };
 
   return {
     selectListRef,
     onChangePage,
+    isExpert,
     managed: {
       isOnlyManaged,
       onSelectMangedList,
       onSelectEntireList,
       onClickToManageFactory,
-      onClickToNotManageFactory,
     },
-    searching: { nameQueryCache, setNameQueryCache, onSearchBarEnter },
+    searching: { nameQuery, nameQueryCache, setNameQueryCache, onSearchBarEnter },
     sorting: { onSelectSortingOption, sortingOptionOpen, setSortingOptionOpen },
-    data: { isLoading, patientList, paging, sorting },
+    data: { isLoading, patientList, paging, sorting, isEmpty },
   };
 };

@@ -1,80 +1,54 @@
-import { ESex } from "@type/sex.ts";
 import { EPatientInfoTab } from "@type/patient-info-tab.ts";
-import { getLatestDoses } from "@api/auth/experts/api.ts";
+import {
+  getAnticholinergicDoses,
+  getBeersDoses,
+  getDoses,
+  getGeneralSurvey,
+  getGeriatricSyndromeSurvey,
+  getLatestDoses,
+  getPatientBaseInfo,
+  getProtectorInfo,
+} from "@api/auth/experts/api.ts";
+import { isAxiosError } from "axios";
+import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
+import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
+import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
+import { TDoseWithRisk } from "@api/auth/experts/types/dose-with-risk.ts";
 
 type TPatientInfo = {
-  base: {
-    name: string;
-    profileImg: string;
-    birthday: number[];
-    sex: ESex;
-    tel: string;
-  } | null;
-  protector: {
-    name: string;
-    relationship: string;
-    tel: string;
-  } | null;
+  base: TPatientBase | null;
+  protector: TProtectorInfo | null;
   medication: {
+    // 전문의약품
     etc: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-          }[]
-        | null;
+      list: TDoseInfo[] | null;
       page: number;
       total: number | null;
-    }; // 전문의약품
+    };
+    // ARMS 추이
     armsProgress:
       | {
           score: number;
           createdAt: number[];
         }[]
-      | null; // ARMS 추이
+      | null;
+    // 비어스 기준 약물
     beersCriteriaMedicines: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-          }[]
-        | null;
+      list: TDoseInfo[] | null;
       page: number;
       total: number | null;
-    }; // 비어스 기준 약물
-    anticholinergicDrugs: {
-      list:
-        | {
-            name: string;
-            prescribedAt: number[];
-            riskLevel: number;
-          }[]
-        | null;
-      page: number;
-      total: number | null;
-    }; // 항콜린성 약물
-  };
-  geriatricSyndrome: {
-    mna: number[];
-    adl: boolean[];
-    delirium: boolean[];
-    audiovisual: {
-      useGlasses: boolean;
-      useHearingAid: boolean;
     };
-    fall: number[][];
-  } | null;
-  screeningDetail: {
-    arms: number[];
-    gds: boolean[];
-    phqNine: number[];
-    frailty: boolean[];
-    drinking: number[];
-    dementia: number[];
-    insomnia: number[];
-    osa: boolean[];
-    smoking: number[];
-  } | null;
+    // 항콜린성 약물
+    anticholinergicDrugs: {
+      list: TDoseWithRisk[] | null;
+      page: number;
+      total: number | null;
+    };
+  };
+  geriatricSyndrome: TGeriatricSyndromeResult;
+  screeningDetail: TGeneralSurveyResult;
 };
 
 export class PatientModel {
@@ -99,9 +73,26 @@ export class PatientModel {
         total: null,
       },
     },
-    geriatricSyndrome: null,
-    screeningDetail: null,
+    geriatricSyndrome: {
+      mna: null,
+      adl: null,
+      delirium: null,
+      audiovisual: null,
+      fall: null,
+    },
+    screeningDetail: {
+      arms: null,
+      gds: null,
+      phqNine: null,
+      frailty: null,
+      drinking: null,
+      dementia: null,
+      insomnia: null,
+      osa: null,
+      smoking: null,
+    },
   };
+
   private static currentTab: EPatientInfoTab = EPatientInfoTab.SUMMARY;
 
   private static readonly patientInfoTab = [
@@ -133,8 +124,24 @@ export class PatientModel {
           total: null,
         },
       },
-      geriatricSyndrome: null,
-      screeningDetail: null,
+      geriatricSyndrome: {
+        mna: null,
+        adl: null,
+        delirium: null,
+        audiovisual: null,
+        fall: null,
+      },
+      screeningDetail: {
+        arms: null,
+        gds: null,
+        phqNine: null,
+        frailty: null,
+        drinking: null,
+        dementia: null,
+        insomnia: null,
+        osa: null,
+        smoking: null,
+      },
     };
   };
 
@@ -175,109 +182,135 @@ export class PatientModel {
   };
 
   public static invalidateGeriatricSyndrome = () => {
-    this.patientInfo.geriatricSyndrome = null;
+    this.patientInfo.geriatricSyndrome = {
+      mna: null,
+      adl: null,
+      delirium: null,
+      audiovisual: null,
+      fall: null,
+    };
   };
 
   public static invalidateScreening = () => {
-    this.patientInfo.screeningDetail = null;
+    this.patientInfo.screeningDetail = {
+      arms: null,
+      gds: null,
+      phqNine: null,
+      frailty: null,
+      drinking: null,
+      dementia: null,
+      insomnia: null,
+      osa: null,
+      smoking: null,
+    };
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchBase = async (patientId: number) => {
-    this.patientInfo.base = {
-      name: "홍길동",
-      profileImg: "",
-      birthday: [1993, 12, 19],
-      sex: ESex.MALE,
-      tel: "010-1111-1111",
-    };
+    try {
+      const response = await getPatientBaseInfo(patientId);
+
+      this.patientInfo.base = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.base = {
+          name: "",
+          birthday: [],
+          tel: "",
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchProtector = async (patientId: number) => {
-    this.patientInfo.protector = {
-      name: "홍귀동",
-      relationship: "형제",
-      tel: "010-2222-2222",
-    };
+    try {
+      const response = await getProtectorInfo(patientId);
+
+      this.patientInfo.protector = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.protector = {
+          id: -1,
+          realName: "",
+          tel: "",
+        };
+      }
+    }
   };
 
   public static fetchLastETC = async (patientId: number) => {
     try {
       const response = await getLatestDoses(patientId);
 
-      this.patientInfo.medication.etc = {
-        list: response.data.data,
-        page: 1,
-        total: null,
-      };
+      this.patientInfo.medication.etc = { list: response.data.data, page: 1, total: response.data.data.length };
     } catch (error) {
-      this.patientInfo.medication.etc = {
-        list: [],
-        page: 1,
-        total: null,
-      };
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.etc = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchETC = async (patientId: number) => {
-    this.patientInfo.medication.etc = {
-      ...this.patientInfo.medication.etc,
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      total: 5,
-    };
+    try {
+      const response = await getDoses(patientId, this.patientInfo.medication.etc.page);
+
+      this.patientInfo.medication.etc = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.etc = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchBeersList = async (patientId: number) => {
-    this.patientInfo.medication.beersCriteriaMedicines = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23] },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22] },
-        { name: "스토가정", prescribedAt: [2023, 9, 20] },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16] },
-      ],
-      page: 1,
-      total: 5,
-    };
+    try {
+      const response = await getBeersDoses(patientId, this.patientInfo.medication.beersCriteriaMedicines.page);
+
+      this.patientInfo.medication.beersCriteriaMedicines = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.beersCriteriaMedicines = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchAnticholinergic = async (patientId: number) => {
-    this.patientInfo.medication.anticholinergicDrugs = {
-      list: [
-        { name: "동화디트로판정", prescribedAt: [2023, 9, 23], riskLevel: 1 },
-        {
-          name: "가나릴정",
-          prescribedAt: [2023, 9, 23],
-          riskLevel: 2,
-        },
-        { name: "아낙정", prescribedAt: [2023, 9, 22], riskLevel: 3 },
-        { name: "스토가정", prescribedAt: [2023, 9, 20], riskLevel: 1 },
-        { name: "네가박트정", prescribedAt: [2023, 9, 16], riskLevel: 2 },
-      ],
-      page: 1,
-      total: 5,
-    };
+    try {
+      const response = await getAnticholinergicDoses(patientId, this.patientInfo.medication.anticholinergicDrugs.page);
+
+      this.patientInfo.medication.anticholinergicDrugs = {
+        list: response.data.data.datalist,
+        page: response.data.data.pageInfo.page + 1,
+        total: response.data.data.pageInfo.totalElements,
+      };
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.medication.anticholinergicDrugs = {
+          list: [],
+          page: 0,
+          total: 0,
+        };
+      }
+    }
   };
 
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -291,38 +324,42 @@ export class PatientModel {
     ];
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchGeriatricSyndrome = async (patientId: number) => {
-    this.patientInfo.geriatricSyndrome = {
-      mna: [0, 0, 1, 0, 1, 3],
-      adl: [false, false, false, false, false, true],
-      delirium: [false, true, true, false],
-      audiovisual: {
-        useGlasses: true,
-        useHearingAid: true,
-      },
-      fall: [
-        [2023, 7, 11],
-        [2023, 6, 1],
-      ],
-    };
+    try {
+      const response = await getGeriatricSyndromeSurvey(patientId);
+      this.patientInfo.geriatricSyndrome = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.geriatricSyndrome = {
+          mna: [],
+          adl: [],
+          delirium: [],
+          audiovisual: { useGlasses: null, useHearingAid: null },
+          fall: [],
+        };
+      }
+    }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
   public static fetchScreening = async (patientId: number) => {
-    this.patientInfo.screeningDetail = {
-      arms: [1, 2, 3, 4, 4, 3, 4, 1, 1, 2, 1, 4],
-      gds: [true, true, false, true, true, true, false, true, true, true, false, true, true, true],
-      phqNine: [0, 1, 2, 3, 2, 3, 3, 3, 2],
-      frailty: [true, true, false, false, true],
-      drinking: [0, 1, 2, 3, 4, 4, 4, 4, 4, 4],
-      dementia: [2, 1, 0, 0, 0, 0, 0, 0],
-      insomnia: [4, 3, 4, 2, 1, 0, 3],
-      osa: [false, true, true, false, true, true, false, true],
-      smoking: [2, 20, 1],
-    };
+    try {
+      const response = await getGeneralSurvey(patientId);
+      this.patientInfo.screeningDetail = response.data.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.patientInfo.screeningDetail = {
+          arms: [],
+          gds: [],
+          phqNine: [],
+          frailty: [],
+          drinking: [],
+          dementia: [],
+          insomnia: [],
+          osa: [],
+          smoking: [],
+        };
+      }
+    }
   };
 
   public static getPatientInfo = () => {
@@ -362,5 +399,28 @@ export class PatientModel {
   public static setAnticholinergicDrugsPage = async (page: number, patientId: number) => {
     this.patientInfo.medication.anticholinergicDrugs.page = page;
     await this.fetchAnticholinergic(patientId);
+  };
+
+  public static isLoading = () => {
+    if (this.currentTab === EPatientInfoTab.SUMMARY) {
+      return (
+        this.patientInfo.base === null ||
+        this.patientInfo.protector === null ||
+        this.patientInfo.medication.etc === null ||
+        this.patientInfo.geriatricSyndrome.mna === null ||
+        this.patientInfo.screeningDetail.arms === null
+      );
+    } else if (this.currentTab === EPatientInfoTab.MEDICATION) {
+      return (
+        this.patientInfo.medication.etc === null ||
+        this.patientInfo.medication.beersCriteriaMedicines === null ||
+        this.patientInfo.medication.anticholinergicDrugs === null ||
+        this.patientInfo.medication.armsProgress === null
+      );
+    } else if (this.currentTab === EPatientInfoTab.GERIATRIC_SYNDROME) {
+      return this.patientInfo.geriatricSyndrome.mna === null;
+    } else {
+      return this.patientInfo.screeningDetail.arms === null;
+    }
   };
 }

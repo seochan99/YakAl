@@ -285,26 +285,44 @@ export const CertInputLabel = styled.span`
 export const BelongInputBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 0.6rem;
+  gap: 1rem;
+  padding: 0.6rem 0;
 `;
 
-export const BelongInput = styled.input`
-  & {
-    color: #151515;
-    text-align: left;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1rem;
-    height: 1rem;
-    border: 0.15rem solid var(--color-surface-900);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    outline: none;
-  }
+export const BelongInfoRowDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 
-  &:focus {
-    border: 0.15rem solid var(--color-primary-100);
-  }
+export const BelongLabelSpan = styled.span`
+  color: var(--Black, #151515);
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1rem;
+  font-family: SUIT, serif;
+  width: 6rem;
+`;
+
+export const BelongInfoSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1rem;
+  font-family: SUIT, serif;
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
 `;
 
 export const CertInputImgBox = styled.div`

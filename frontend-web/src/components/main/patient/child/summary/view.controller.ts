@@ -16,8 +16,6 @@ export const useSummaryViewController = () => {
   }, [patientId]);
 
   return {
-    medication: patientInfo.medication,
-    geriatricSyndrome: patientInfo.geriatricSyndrome,
     screeningDetail: patientInfo.screeningDetail,
   };
 };
