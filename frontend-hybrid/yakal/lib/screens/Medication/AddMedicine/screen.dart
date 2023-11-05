@@ -9,6 +9,7 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
+import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
@@ -352,9 +353,9 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
       child: OuterFrame(
         outOfSafeAreaColor: ColorStyles.white,
         safeAreaColor: ColorStyles.white,
-        appBar: const CustomizedBackAppBar(
-          onPressed: null,
-          title: "약 추가하기",
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: DefaultBackAppbar(title: "약 추가"),
         ),
         child: Padding(
           padding: const EdgeInsets.all(30.0),

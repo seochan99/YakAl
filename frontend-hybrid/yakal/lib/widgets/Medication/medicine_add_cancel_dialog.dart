@@ -15,6 +15,7 @@ class MedicineAddCancelDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: ColorStyles.white,
+      surfaceTintColor: ColorStyles.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -32,7 +33,6 @@ class MedicineAddCancelDialog extends StatelessWidget {
               Text(
                 question,
                 style: const TextStyle(
-                  fontFamily: "Pretendard",
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                   height: 1.6,

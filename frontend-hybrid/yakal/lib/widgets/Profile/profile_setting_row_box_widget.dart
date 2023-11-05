@@ -19,6 +19,7 @@ class ProfileSettingRowBoxWidget extends StatelessWidget {
       color: Colors.white,
       child: InkWell(
         onTap: () {
+          if (routerLinkText == null) return;
           if (routerLinkText == "/certification") {
             // copy link
             Clipboard.setData(const ClipboardData(
