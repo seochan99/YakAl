@@ -8,8 +8,9 @@ class MyBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: MyBottomNavigationBarContent(), // Use a separate widget for content
+    return Scaffold(
+      body:
+          const MyBottomNavigationBarContent(), // Use a separate widget for content
       bottomNavigationBar: MyBottomNavBar(),
     );
   }
@@ -27,7 +28,7 @@ class MyBottomNavigationBarContent extends StatelessWidget {
       return IndexedStack(
         index: controller.currentIndex.value,
         children: [
-          HomeScreen(),
+          const HomeScreen(),
           ProfileScreen(),
         ],
       );
@@ -36,7 +37,10 @@ class MyBottomNavigationBarContent extends StatelessWidget {
 }
 
 class MyBottomNavBar extends StatelessWidget {
-  const MyBottomNavBar({Key? key}) : super(key: key);
+  final MyBottomNavigationBarController mybottomNavigationBarController =
+      Get.put(MyBottomNavigationBarController(), permanent: true);
+
+  MyBottomNavBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +48,11 @@ class MyBottomNavBar extends StatelessWidget {
       data: ThemeData(
         canvasColor: Colors.white,
       ),
-      child: GetX<MyBottomNavigationBarController>(
-        builder: (controller) {
+      child: Obx(
+        () {
           // GetX를 사용하여 컨트롤러의 currentIndex를 가져옴
           return BottomNavigationBar(
-            currentIndex: controller.currentIndex.value,
+            currentIndex: mybottomNavigationBarController.currentIndex.value,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
@@ -59,7 +63,7 @@ class MyBottomNavBar extends StatelessWidget {
                 label: '내 정보',
               ),
             ],
-            onTap: controller.changeTabIndex,
+            onTap: mybottomNavigationBarController.changeTabIndex,
           );
         },
       ),

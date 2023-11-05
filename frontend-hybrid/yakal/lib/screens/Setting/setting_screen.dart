@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
+import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
@@ -15,12 +17,19 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, // Set the background color to white
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
-        child: DefaultBackAppbar(
-          title: "앱 설정",
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: CustomizedBackAppBar(
+            title: "앱 설정",
+            onPressed: () {
+              final MyBottomNavigationBarController
+                  mybottomNavigationBarController =
+                  Get.put(MyBottomNavigationBarController(), permanent: true);
+              mybottomNavigationBarController.changeTabIndex(1);
+              Get.offAllNamed("/");
+            }),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
