@@ -85,7 +85,7 @@ class LoginTermsScreen extends StatefulWidget {
     },
   ];
 
-  LoginTermsScreen({super.key});
+  const LoginTermsScreen({super.key});
 
   @override
   State<LoginTermsScreen> createState() => _LoginTermsScreenState();
@@ -93,9 +93,7 @@ class LoginTermsScreen extends StatefulWidget {
 
 class _LoginTermsScreenState extends State<LoginTermsScreen> {
   final userViewModel = Get.find<UserViewModel>();
-
   final routeController = Get.find<LoginRouteController>();
-
   final termsCheckedController = Get.put(_TermsCheckedController());
 
   void onPressedNextButton() {
