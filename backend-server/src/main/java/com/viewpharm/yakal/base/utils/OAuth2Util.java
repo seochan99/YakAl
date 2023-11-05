@@ -33,8 +33,10 @@ import java.io.FileReader;
 import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.KeyFactory;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.security.spec.RSAPublicKeySpec;
 import java.util.Base64;
 import java.util.Date;
@@ -89,6 +91,8 @@ public class OAuth2Util {
     private String GOOGLE_CLIENT_SECRET;
     @Value("${client.registration.google.redirect-uri: aaa.bbb.ccc}")
     private String GOOGLE_REDIRECT_URL;
+
+    private static final RestTemplate restTemplate = new RestTemplate();
 
     public String getKakaoRedirectUrl() {
         return KAKAO_AUTHORIZATION_URL
@@ -163,97 +167,186 @@ public class OAuth2Util {
                 .getAsString();
     }
 
-    public String getAppleUserInformation(final String authorizationCode) throws CommonException {
-        final WebClient appleIdWebClient = WebClient.builder()
-                .defaultHeaders(httpHeaders -> {
-                    httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-                })
-                .build();
+//    public String getAppleUserInformation(final String authorizationCode) throws CommonException {
+//        final WebClient appleIdWebClient = WebClient.builder()
+//                .defaultHeaders(httpHeaders -> {
+//                    httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+//                })
+//                .build();
+//
+//        try {
+//            final InputStream inputStream = new ClassPathResource(APPLE_KEY_NAME).getInputStream();
+//            final File file = File.createTempFile("AuthKey", ".p8");
+//
+//            try {
+//                FileUtils.copyInputStreamToFile(inputStream, file);
+//            } finally {
+//                IOUtils.closeQuietly(inputStream);
+//            }
+//
+//            final PEMParser pemParser = new PEMParser(new FileReader(file));
+//            final JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+//            final PrivateKeyInfo object = (PrivateKeyInfo) pemParser.readObject();
+//            final PrivateKey pKey = converter.getPrivateKey(object);
+//            pemParser.close();
+//
+//            final String secretKey = Jwts.builder()
+//                    .setHeaderParam(JwsHeader.KEY_ID, APPLE_CLIENT_KEY)
+//                    .setIssuer(APPLE_TEAM_ID)
+//                    .setAudience(APPLE_BASE_URL)
+//                    .setSubject(APPLE_CLIENT_ID)
+//                    .setExpiration(new Date(System.currentTimeMillis() + (10000 * 60 * 5)))
+//                    .setIssuedAt(new Date(System.currentTimeMillis()))
+//                    .signWith(SignatureAlgorithm.ES256, pKey)
+//                    .compact();
+//
+//            final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+//            parameters.add("grant_type", "authorization_code");
+//            parameters.add("client_id", APPLE_CLIENT_ID);
+//            parameters.add("client_secret", secretKey);
+//            parameters.add("code", authorizationCode);
+//            parameters.add("redirect_uri", APPLE_REDIRECT_URL);
+//
+//            final String responseJsonBody = appleIdWebClient.post()
+//                    .uri(APPLE_TOKEN_URL)
+//                    .body(BodyInserters.fromFormData(parameters))
+//                    .retrieve()
+//                    .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
+//                            clientResponse -> {
+//                                throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
+//                            })
+//                    .bodyToMono(String.class)
+//                    .flux()
+//                    .toStream()
+//                    .findFirst()
+//                    .orElseThrow(() -> new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR));
+//
+//            final AppleIdTokenResponse appleIdTokenResponse = new ObjectMapper().readValue(responseJsonBody, AppleIdTokenResponse.class);
+//
+//            final WebClient publicKeyWebClient = WebClient.create();
+//
+//            final Key publicKeyResponseBody = publicKeyWebClient.get()
+//                    .uri(APPLE_JWT_URL)
+//                    .retrieve()
+//                    .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
+//                            clientResponse -> {
+//                                throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
+//                            })
+//                    .bodyToMono(Key.class)
+//                    .flux()
+//                    .toStream()
+//                    .findFirst()
+//                    .orElseThrow(() -> new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR));
+//
+//            String userId = null;
+//
+//            for (JWTSetKeys keys : publicKeyResponseBody.getKeys()) {
+//                final BigInteger modulus = new BigInteger(1, Base64.getUrlDecoder().decode(keys.getN()));
+//                final BigInteger exponent = new BigInteger(1, Base64.getUrlDecoder().decode(keys.getE()));
+//                final PublicKey publicKey = KeyFactory.getInstance(keys.getKty()).generatePublic(new RSAPublicKeySpec(modulus, exponent));
+//
+//                try {
+//                    final Claims claims = Jwts.parser()
+//                            .setSigningKey(publicKey)
+//                            .parseClaimsJws(appleIdTokenResponse.getId_token()).getBody();
+//                    userId = claims.get("sub", String.class);
+//                } catch (Exception e) {
+//                }
+//            }
+//
+//            return userId;
+//        } catch (Exception e) {
+//            throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
+//        }
+//    }
 
+    public String getAppleUserInformation(String authorizationCode)  {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/x-www-form-urlencoded");
         try {
-            final InputStream inputStream = new ClassPathResource(APPLE_KEY_NAME).getInputStream();
-            final File file = File.createTempFile("AuthKey", ".p8");
-
-            try {
-                FileUtils.copyInputStreamToFile(inputStream, file);
-            } finally {
-                IOUtils.closeQuietly(inputStream);
-            }
-
-            final PEMParser pemParser = new PEMParser(new FileReader(file));
-            final JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
-            final PrivateKeyInfo object = (PrivateKeyInfo) pemParser.readObject();
-            final PrivateKey pKey = converter.getPrivateKey(object);
-            pemParser.close();
-
-            final String secretKey = Jwts.builder()
-                    .setHeaderParam(JwsHeader.KEY_ID, APPLE_CLIENT_KEY)
-                    .setIssuer(APPLE_TEAM_ID)
-                    .setAudience(APPLE_BASE_URL)
-                    .setSubject(APPLE_CLIENT_ID)
-                    .setExpiration(new Date(System.currentTimeMillis() + (10000 * 60 * 5)))
-                    .setIssuedAt(new Date(System.currentTimeMillis()))
-                    .signWith(SignatureAlgorithm.ES256, pKey)
-                    .compact();
-
-            final MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
+            MultiValueMap<String, String> parameters = new LinkedMultiValueMap<>();
             parameters.add("grant_type", "authorization_code");
             parameters.add("client_id", APPLE_CLIENT_ID);
-            parameters.add("client_secret", secretKey);
+            parameters.add("client_secret", generateSecretKey());
             parameters.add("code", authorizationCode);
             parameters.add("redirect_uri", APPLE_REDIRECT_URL);
+            HttpEntity<MultiValueMap<String, String>> entity = new HttpEntity<MultiValueMap<String, String>>(parameters, headers);
 
-            final String responseJsonBody = appleIdWebClient.post()
-                    .uri(APPLE_TOKEN_URL)
-                    .body(BodyInserters.fromFormData(parameters))
-                    .retrieve()
-                    .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
-                            clientResponse -> {
-                                throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
-                            })
-                    .bodyToMono(String.class)
-                    .flux()
-                    .toStream()
-                    .findFirst()
-                    .orElseThrow(() -> new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR));
+            ResponseEntity<String> responseEntity = restTemplate.postForEntity(APPLE_TOKEN_URL, entity, String.class);
 
-            final AppleIdTokenResponse appleIdTokenResponse = new ObjectMapper().readValue(responseJsonBody, AppleIdTokenResponse.class);
-
-            final WebClient publicKeyWebClient = WebClient.create();
-
-            final Key publicKeyResponseBody = publicKeyWebClient.get()
-                    .uri(APPLE_JWT_URL)
-                    .retrieve()
-                    .onStatus(httpStatusCode -> httpStatusCode.is4xxClientError() || httpStatusCode.is5xxServerError(),
-                            clientResponse -> {
-                                throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
-                            })
-                    .bodyToMono(Key.class)
-                    .flux()
-                    .toStream()
-                    .findFirst()
-                    .orElseThrow(() -> new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR));
-
-            String userId = null;
-
-            for (JWTSetKeys keys : publicKeyResponseBody.getKeys()) {
-                final BigInteger modulus = new BigInteger(1, Base64.getUrlDecoder().decode(keys.getN()));
-                final BigInteger exponent = new BigInteger(1, Base64.getUrlDecoder().decode(keys.getE()));
-                final PublicKey publicKey = KeyFactory.getInstance(keys.getKty()).generatePublic(new RSAPublicKeySpec(modulus, exponent));
-
-                try {
-                    final Claims claims = Jwts.parser()
-                            .setSigningKey(publicKey)
-                            .parseClaimsJws(appleIdTokenResponse.getId_token()).getBody();
-                    userId = claims.get("sub", String.class);
-                } catch (Exception e) {
-                }
+            if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                AppleIdTokenResponse appleIdTokenResponse = new ObjectMapper().readValue(responseEntity.getBody(), AppleIdTokenResponse.class);
+                return getUserInfo(appleIdTokenResponse);
             }
-
-            return userId;
         } catch (Exception e) {
-            throw new CommonException(ErrorCode.AUTH_SERVER_USER_INFO_ERROR);
+            log.error("{}", e.getMessage());
         }
+        return null;
+    }
+
+    private String generateSecretKey() throws Exception {
+        PrivateKey pKey = generatePrivateKey();
+        return Jwts.builder()
+                .setHeaderParam(JwsHeader.KEY_ID, APPLE_CLIENT_KEY)
+                .setIssuer(APPLE_TEAM_ID)
+                .setAudience(APPLE_BASE_URL)
+                .setSubject(APPLE_CLIENT_ID)
+                .setExpiration(new Date(System.currentTimeMillis() + (10000 * 60 * 5)))
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .signWith(SignatureAlgorithm.ES256, pKey)
+                .compact();
+    }
+
+    private PrivateKey generatePrivateKey() throws Exception {
+        InputStream inputStream = new ClassPathResource(APPLE_KEY_NAME).getInputStream();
+
+        File file = File.createTempFile("AuthKey", ".p8");
+        try {
+            FileUtils.copyInputStreamToFile(inputStream, file);
+        } finally {
+            IOUtils.closeQuietly(inputStream);
+        }
+
+        final PEMParser pemParser = new PEMParser(new FileReader(file));
+        final JcaPEMKeyConverter converter = new JcaPEMKeyConverter();
+        final PrivateKeyInfo object = (PrivateKeyInfo) pemParser.readObject();
+        final PrivateKey pKey = converter.getPrivateKey(object);
+        pemParser.close();
+        return pKey;
+    }
+
+    private String getUserInfo(AppleIdTokenResponse appleIdTokenResponse) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Key> responseEntity = restTemplate.getForEntity(APPLE_JWT_URL, Key.class);
+        if (responseEntity.getStatusCode().is2xxSuccessful()) {
+            String user = createPublicKeyApple(appleIdTokenResponse, responseEntity.getBody().getKeys());
+            return user;
+        }
+
+        return "User id Not Found";
+    }
+
+    private String createPublicKeyApple(AppleIdTokenResponse appleIdTokenResponse, List<JWTSetKeys> keysList) throws NoSuchAlgorithmException, InvalidKeySpecException {
+        JWTSetKeys applePublicKey = null;
+        for (JWTSetKeys keys : keysList) {
+            applePublicKey = keys;
+            BigInteger modulus = new BigInteger(1, Base64.getUrlDecoder().decode(applePublicKey.getN()));
+            BigInteger exponent = new BigInteger(1, Base64.getUrlDecoder().decode(applePublicKey.getE()));
+            PublicKey publicKey = KeyFactory.getInstance(applePublicKey.getKty()).generatePublic(new RSAPublicKeySpec(modulus, exponent));
+            try {
+                Claims claims = getClaims(publicKey, appleIdTokenResponse);
+                return claims.get("sub", String.class);
+            } catch (Exception exception) {
+            }
+        }
+
+        return "Error Occured...";
+    }
+
+    private Claims getClaims(PublicKey publicKey, AppleIdTokenResponse appleIdTokenResponse) {
+        return Jwts.parser()
+                .setSigningKey(publicKey)
+                .parseClaimsJws(appleIdTokenResponse.getId_token()).getBody();
     }
 
     @Getter
