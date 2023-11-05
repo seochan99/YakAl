@@ -138,7 +138,7 @@ class SurveyDetailBokyakController extends GetxController {
         backgroundColor: ColorStyles.gray1,
         colorText: Colors.black,
       );
-      throw Exception('Failed to load PillTodoParents');
+      throw Exception('Failed to load 설문등록');
     }
   }
 }
