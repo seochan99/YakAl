@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
@@ -17,6 +18,13 @@ class ProfileScreen extends StatelessWidget {
   final UserViewModel userViewModel = Get.put(UserViewModel());
   final SurveyListController surveyListController =
       Get.put(SurveyListController(tests: tests));
+
+  // Future<bool> getMingam() async {
+  //   // 민감정보 동의 여부 파악 isTrue
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   bool mingamTure = prefs.getBool('mingam') ?? false;
+  //   return mingamTure;
+  // }
 
   final EdgeInsets sideMargin = const EdgeInsets.symmetric(horizontal: 20);
 

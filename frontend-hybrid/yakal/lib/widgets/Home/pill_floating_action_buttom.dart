@@ -94,7 +94,11 @@ class PillFloatingActionButton extends StatelessWidget {
                                 children: [
                                   SizedBox.fromSize(size: const Size(10, 0)),
                                   const Text('약 추가',
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      )),
                                 ],
                               ))
                         ],

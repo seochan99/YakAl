@@ -54,12 +54,13 @@ class _SettingTimeSelectionWidgetState
     }
   }
 
+  // 시간 업데이트 함수
   Future<void> updateNotificationTime(Map<String, String> data) async {
     try {
       var dio = await authDioWithContext();
       await dio.patch("/user/notification-time", data: data);
     } catch (e) {
-      print("Failed to update notification time: $e");
+      throw Exception('Failed to update notification time');
     }
   }
 
@@ -81,6 +82,7 @@ class _SettingTimeSelectionWidgetState
 
     //  시작 시간과 끝 시간을 선택
     TimeOfDay? startTime = await showTimePicker(
+      // colore
       context: context,
       initialTime: initialStartTime,
     );

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
@@ -9,6 +10,7 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
+import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
@@ -115,28 +117,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                             Row(
                               children: [
                                 Container(
-                                  width: 64,
-                                  height: 32,
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: ColorStyles.gray2,
-                                  ),
-                                  child: notAddableItem.base64Image != null
-                                      ? Image.memory(
-                                          base64Decode(
-                                            notAddableItem.base64Image!,
-                                          ),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : const Center(
-                                          child: Icon(
-                                            Icons.question_mark_outlined,
-                                            size: 18,
-                                            color: ColorStyles.gray3,
-                                          ),
-                                        ),
-                                ),
+                                    width: 64,
+                                    height: 32,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: ColorStyles.gray2,
+                                    ),
+                                    child: notAddableItem.base64Image != null
+                                        ? Image.memory(
+                                            base64Decode(
+                                              notAddableItem.base64Image!,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/icons/img-mainpill-default.svg",
+                                            width: 64,
+                                            height: 32,
+                                          )),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -194,28 +193,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                     Row(
                       children: [
                         Container(
-                          width: 64,
-                          height: 32,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: ColorStyles.gray2,
-                          ),
-                          child: oneMedicine.base64Image != null
-                              ? Image.memory(
-                                  base64Decode(
-                                    oneMedicine.base64Image!,
-                                  ),
-                                  fit: BoxFit.cover,
-                                )
-                              : const Center(
-                                  child: Icon(
-                                    Icons.question_mark_outlined,
-                                    size: 18,
-                                    color: ColorStyles.gray3,
-                                  ),
-                                ),
-                        ),
+                            width: 64,
+                            height: 32,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: ColorStyles.gray2,
+                            ),
+                            child: oneMedicine.base64Image != null
+                                ? Image.memory(
+                                    base64Decode(
+                                      oneMedicine.base64Image!,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  )
+                                : SvgPicture.asset(
+                                    "assets/icons/img-mainpill-default.svg",
+                                    width: 64,
+                                    height: 32,
+                                  )),
                         const SizedBox(
                           width: 10,
                         ),
@@ -260,28 +256,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
             Row(
               children: [
                 Container(
-                  width: 64,
-                  height: 32,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: ColorStyles.gray2,
-                  ),
-                  child: modificationElement["item"].base64Image != null
-                      ? Image.memory(
-                          base64Decode(
-                            modificationElement["item"].base64Image!,
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                      : const Center(
-                          child: Icon(
-                            Icons.question_mark_outlined,
-                            size: 18,
-                            color: ColorStyles.gray3,
-                          ),
-                        ),
-                ),
+                    width: 64,
+                    height: 32,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: ColorStyles.gray2,
+                    ),
+                    child: modificationElement["item"].base64Image != null
+                        ? Image.memory(
+                            base64Decode(
+                              modificationElement["item"].base64Image!,
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : SvgPicture.asset(
+                            "assets/icons/img-mainpill-default.svg",
+                            width: 64,
+                            height: 32,
+                          )),
                 const SizedBox(
                   width: 10,
                 ),
@@ -352,9 +345,9 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
       child: OuterFrame(
         outOfSafeAreaColor: ColorStyles.white,
         safeAreaColor: ColorStyles.white,
-        appBar: const CustomizedBackAppBar(
-          onPressed: null,
-          title: "약 추가하기",
+        appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(kToolbarHeight),
+          child: DefaultBackAppbar(title: "약 추가"),
         ),
         child: Padding(
           padding: const EdgeInsets.all(30.0),
@@ -472,29 +465,31 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         );
                       },
                     ),
-                  TextButton(
-                    style: TextButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 8.0,
-                        horizontal: 10.0,
-                      ),
-                      splashFactory: NoSplash.splashFactory,
-                      foregroundColor: ColorStyles.sub1,
-                      backgroundColor: ColorStyles.sub3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    onPressed: _switchMode,
-                    child: Text(
-                      _isModificationMode ? "수정 완료" : "기간/시간 수정",
-                      style: const TextStyle(
-                        color: ColorStyles.main,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
+                  _isModificationMode
+                      ? Container()
+                      : TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 8.0,
+                              horizontal: 10.0,
+                            ),
+                            splashFactory: NoSplash.splashFactory,
+                            foregroundColor: ColorStyles.sub1,
+                            backgroundColor: ColorStyles.sub3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                          onPressed: _switchMode,
+                          child: Text(
+                            _isModificationMode ? "" : "기간/시간 수정",
+                            style: const TextStyle(
+                              color: ColorStyles.main,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
                 ],
               ),
               const SizedBox(
@@ -538,17 +533,19 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                                     barrierColor:
                                         const Color.fromRGBO(98, 98, 114, 0.4),
                                     builder: (BuildContext context) {
-                                      return const MedicineAddCancelDialog(
-                                        question: "약 추가를 취소하시겠습니까?",
-                                      );
+                                      return MedicineAddCancelDialog(
+                                          question: "약 추가를 취소하시겠습니까?",
+                                          confirmLabel: "취소하기",
+                                          cancelLabel: "아니요",
+                                          onConfirm: () {
+                                            Get.back();
+                                            Get.offAllNamed("/");
+                                          });
                                     },
                                   );
                                 },
-                          backgroundColor:
-                              _isLoading ? ColorStyles.gray2 : ColorStyles.red,
-                          color: _isLoading
-                              ? ColorStyles.gray5
-                              : ColorStyles.white,
+                          backgroundColor: ColorStyles.gray1,
+                          color: ColorStyles.gray5,
                         ),
                       ),
                       const SizedBox(
@@ -558,16 +555,17 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         flex: 2,
                         fit: FlexFit.tight,
                         child: BottomButton(
-                          "완료",
+                          _isModificationMode ? "수정 완료" : "추가하기",
+                          // onPressed: _isModificationMode || _isLoading
+                          //     ? _switchMode
+                          //     : _onTapSend(start, end),
                           onPressed: disabled || _isLoading
-                              ? null
+                              ? _switchMode
                               : _onTapSend(start, end),
-                          backgroundColor: disabled || _isLoading
-                              ? ColorStyles.gray2
+                          backgroundColor: _isModificationMode
+                              ? ColorStyles.sub1
                               : ColorStyles.main,
-                          color: disabled || _isLoading
-                              ? ColorStyles.gray5
-                              : ColorStyles.white,
+                          color: ColorStyles.white,
                         ),
                       ),
                     ],

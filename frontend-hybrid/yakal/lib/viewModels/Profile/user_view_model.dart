@@ -1,6 +1,10 @@
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/viewModels/Home/home_view_model.dart';
 
 import '../../models/Profile/user.dart';
 
@@ -61,8 +65,16 @@ class UserViewModel extends GetxController {
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {
-        val?.setMode(response.data['data']['isDetail']);
+        val?.setMode(newMode);
       });
+
+      // @override
+      // void onClose() {
+      //   Get.find<HomeViewModel>().updatePillTodoAndDate();
+      //   super.onClose();
+      // }
+
+      // onClose();
     }
   }
 
@@ -107,7 +119,8 @@ class UserViewModel extends GetxController {
       var dio = await authDioWithContext();
 
       var response = await dio.get("/guardians");
-      print("guardians : $response");
+
+      print("guardians의 정보는 이와같습니다 : $response");
 
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {
@@ -121,7 +134,7 @@ class UserViewModel extends GetxController {
 
   Future<void> loadGuardian() async {
     try {
-      await fetchGuardian(); // Assuming this sets 'fetchedItems'
+      await fetchGuardian();
       print("--------------------------dsads----------------------------");
 
       user.update((val) {
@@ -149,6 +162,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
       final response = await dio.post("/guardians/$id");
+      print("addOrUpdateGuardian : $response");
       loadGuardian();
 
       if (response.statusCode == 200) {

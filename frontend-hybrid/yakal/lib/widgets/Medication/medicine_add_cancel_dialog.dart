@@ -5,16 +5,23 @@ import '../../utilities/style/color_styles.dart';
 
 class MedicineAddCancelDialog extends StatelessWidget {
   final String question;
+  final String confirmLabel;
+  final String cancelLabel;
+  // confirm action
+  final Function() onConfirm;
 
-  const MedicineAddCancelDialog({
-    super.key,
-    required this.question,
-  });
+  const MedicineAddCancelDialog(
+      {super.key,
+      required this.question,
+      required this.confirmLabel,
+      required this.cancelLabel,
+      required this.onConfirm});
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
       backgroundColor: ColorStyles.white,
+      surfaceTintColor: ColorStyles.white,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16.0),
       ),
@@ -32,7 +39,6 @@ class MedicineAddCancelDialog extends StatelessWidget {
               Text(
                 question,
                 style: const TextStyle(
-                  fontFamily: "Pretendard",
                   fontSize: 20.0,
                   fontWeight: FontWeight.w700,
                   height: 1.6,
@@ -57,9 +63,10 @@ class MedicineAddCancelDialog extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        child: const Text(
-                          "아니요",
-                          style: TextStyle(
+                        // cacnel
+                        child: Text(
+                          cancelLabel,
+                          style: const TextStyle(
                             color: ColorStyles.gray6,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
@@ -72,13 +79,13 @@ class MedicineAddCancelDialog extends StatelessWidget {
                   const SizedBox(
                     width: 8,
                   ),
+                  // confirm
                   Expanded(
                     child: SizedBox(
                       height: 56,
                       child: TextButton(
                         onPressed: () {
-                          Get.back();
-                          Get.offAllNamed("/");
+                          onConfirm();
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.red,
@@ -87,9 +94,9 @@ class MedicineAddCancelDialog extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        child: const Text(
-                          "취소하기",
-                          style: TextStyle(
+                        child: Text(
+                          confirmLabel,
+                          style: const TextStyle(
                             color: ColorStyles.white,
                             fontSize: 20.0,
                             fontWeight: FontWeight.w600,
