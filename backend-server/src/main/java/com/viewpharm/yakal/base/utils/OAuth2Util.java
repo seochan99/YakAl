@@ -298,7 +298,7 @@ public class OAuth2Util {
     }
 
     private PrivateKey generatePrivateKey() throws Exception {
-        InputStream inputStream = new ClassPathResource("AuthKey_25QLY6KYS4.p8").getInputStream();
+        InputStream inputStream = new ClassPathResource(APPLE_KEY_NAME).getInputStream();
 
         File file = File.createTempFile("AuthKey", ".p8");
         try {
