@@ -180,7 +180,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    onPressed: _handleButtonPress,
+                    onPressed: isButtonEnabled ? _handleButtonPress : null,
                     child:
                         const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
                   );
