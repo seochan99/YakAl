@@ -93,7 +93,7 @@ class SurveyDetailBokyakController extends GetxController {
   }
 
 // 완료버튼을 눌렀을때
-  Future handleButtonPress() async {
+  Future handleButtonPress(bool isSenior) async {
     int totalScore = calculateTotalScore();
     // 서버로 arms 리스트 보내기
     List results = allScoreList();
@@ -122,8 +122,11 @@ class SurveyDetailBokyakController extends GetxController {
         // result Comment 셋팅
 
         // 결과 페이지 이동
-        Get.offAllNamed('/survey/result',
-            arguments: {'survey': surveyModel, 'results': results});
+        Get.offAllNamed('/survey/result', arguments: {
+          'survey': surveyModel,
+          'results': results,
+          'isSenior': isSenior
+        });
 
         // 데이터 반환
         return response.data['data'];
