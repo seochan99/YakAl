@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -97,10 +96,11 @@ void main() async {
         initialRoute = "/";
       }
     } catch (e) {
-      initialRoute = "/loing";
-      // if (kDebugMode) {
-      //   print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
-      // }
+      initialRoute = "/login";
+
+      if (kDebugMode) {
+        print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
+      }
 
       storage.deleteAll();
     }
