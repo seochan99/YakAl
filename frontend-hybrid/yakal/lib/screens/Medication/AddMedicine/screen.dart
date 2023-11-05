@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
@@ -116,28 +117,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                             Row(
                               children: [
                                 Container(
-                                  width: 64,
-                                  height: 32,
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    color: ColorStyles.gray2,
-                                  ),
-                                  child: notAddableItem.base64Image != null
-                                      ? Image.memory(
-                                          base64Decode(
-                                            notAddableItem.base64Image!,
-                                          ),
-                                          fit: BoxFit.cover,
-                                        )
-                                      : const Center(
-                                          child: Icon(
-                                            Icons.question_mark_outlined,
-                                            size: 18,
-                                            color: ColorStyles.gray3,
-                                          ),
-                                        ),
-                                ),
+                                    width: 64,
+                                    height: 32,
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      color: ColorStyles.gray2,
+                                    ),
+                                    child: notAddableItem.base64Image != null
+                                        ? Image.memory(
+                                            base64Decode(
+                                              notAddableItem.base64Image!,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/icons/img-mainpill-default.svg",
+                                            width: 64,
+                                            height: 32,
+                                          )),
                                 const SizedBox(
                                   width: 10,
                                 ),
@@ -195,28 +193,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                     Row(
                       children: [
                         Container(
-                          width: 64,
-                          height: 32,
-                          clipBehavior: Clip.hardEdge,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.0),
-                            color: ColorStyles.gray2,
-                          ),
-                          child: oneMedicine.base64Image != null
-                              ? Image.memory(
-                                  base64Decode(
-                                    oneMedicine.base64Image!,
-                                  ),
-                                  fit: BoxFit.cover,
-                                )
-                              : const Center(
-                                  child: Icon(
-                                    Icons.question_mark_outlined,
-                                    size: 18,
-                                    color: ColorStyles.gray3,
-                                  ),
-                                ),
-                        ),
+                            width: 64,
+                            height: 32,
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              color: ColorStyles.gray2,
+                            ),
+                            child: oneMedicine.base64Image != null
+                                ? Image.memory(
+                                    base64Decode(
+                                      oneMedicine.base64Image!,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  )
+                                : SvgPicture.asset(
+                                    "assets/icons/img-mainpill-default.svg",
+                                    width: 64,
+                                    height: 32,
+                                  )),
                         const SizedBox(
                           width: 10,
                         ),
@@ -261,28 +256,25 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
             Row(
               children: [
                 Container(
-                  width: 64,
-                  height: 32,
-                  clipBehavior: Clip.hardEdge,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.0),
-                    color: ColorStyles.gray2,
-                  ),
-                  child: modificationElement["item"].base64Image != null
-                      ? Image.memory(
-                          base64Decode(
-                            modificationElement["item"].base64Image!,
-                          ),
-                          fit: BoxFit.cover,
-                        )
-                      : const Center(
-                          child: Icon(
-                            Icons.question_mark_outlined,
-                            size: 18,
-                            color: ColorStyles.gray3,
-                          ),
-                        ),
-                ),
+                    width: 64,
+                    height: 32,
+                    clipBehavior: Clip.hardEdge,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.0),
+                      color: ColorStyles.gray2,
+                    ),
+                    child: modificationElement["item"].base64Image != null
+                        ? Image.memory(
+                            base64Decode(
+                              modificationElement["item"].base64Image!,
+                            ),
+                            fit: BoxFit.cover,
+                          )
+                        : SvgPicture.asset(
+                            "assets/icons/img-mainpill-default.svg",
+                            width: 64,
+                            height: 32,
+                          )),
                 const SizedBox(
                   width: 10,
                 ),

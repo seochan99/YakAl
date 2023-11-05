@@ -306,6 +306,7 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
+        // 킴스코드가 없으면
         futures.add(dose.kimsCode == ""
             ? Future<String?>.value("")
             : _addMedicineProvider.getMedicineBase64Image(dose.kimsCode));

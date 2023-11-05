@@ -29,7 +29,7 @@ class ProfileSettingRowBoxWidget extends StatelessWidget {
                 '전문가 인증 링크 복사',
                 '복사된 링크를 통해 웹에서 전문가 인증을 진행해주세요!',
                 margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                duration: const Duration(seconds: 1, microseconds: 500),
+                duration: const Duration(seconds: 1, microseconds: 1000),
                 snackPosition: SnackPosition.BOTTOM,
                 backgroundColor: ColorStyles.gray1,
                 colorText: Colors.black,
