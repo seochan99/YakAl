@@ -15,42 +15,49 @@ class ProfileTestButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isNarrow = MediaQuery.of(context).size.width <= 380;
+
     return TextButton(
-        // padding 20
-        style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          backgroundColor: btnColor,
-          // border none
+      // padding 20
+      style: TextButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
         ),
-        onPressed: () {
-          // senior normal
-          if (boldText == "시니어") {
-            Get.toNamed("/seniorSurvey");
-          } else {
-            Get.toNamed("/normalSurvey");
-          }
-        },
-        // rich text 일반만 bold체
-        child: RichText(
-          text: TextSpan(children: [
+        backgroundColor: btnColor,
+        // border none
+      ),
+      onPressed: () {
+        // senior normal
+        if (boldText == "시니어") {
+          Get.toNamed("/seniorSurvey");
+        } else {
+          Get.toNamed("/normalSurvey");
+        }
+      },
+      // rich text 일반만 bold체
+      child: RichText(
+        text: TextSpan(
+          children: [
             TextSpan(
-                text: boldText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                )),
+              text: boldText,
+              style: TextStyle(
+                fontSize: isNarrow ? 15 : 16,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
             TextSpan(
-                text: normalText,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
-                  color: Colors.white,
-                )),
-          ]),
-        ));
+              text: normalText,
+              style: TextStyle(
+                fontSize: isNarrow ? 15 : 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

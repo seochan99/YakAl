@@ -18,6 +18,7 @@ import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
+import 'package:yakal/screens/Medication/Prescription/screem.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
@@ -128,7 +129,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
-        // if it's a RTL language
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
         Locale('ko', 'KR'),
@@ -264,6 +265,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/pill/add/final",
           page: () => AddMedicineScreen(),
+        ),
+        GetPage(
+          name: "/pill/add/prescription",
+          page: () => const PrescriptionScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],

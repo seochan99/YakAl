@@ -36,7 +36,6 @@ function PatientPage() {
               <S.SelfBaseTitle>
                 <span>{"본인"}</span>
               </S.SelfBaseTitle>
-              <S.PatientImg src={"/assets/icons/no-profile-icon.png"} />
               <S.InfoTextDiv>
                 <S.NameSexBirthDiv>
                   <S.NameSpan>

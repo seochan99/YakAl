@@ -15,10 +15,9 @@ type TProfileProps = {
   department: string | null;
   belong: string | null;
   name: string | null;
-  imgSrc: string;
 };
 
-function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
+function Profile({ job, department, belong, name }: TProfileProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
@@ -43,16 +42,6 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
     window.localStorage.clear();
   };
 
-  const notificationsLabel = (count: number) => {
-    if (count === 0) {
-      return "no notifications";
-    }
-    if (count > 99) {
-      return "more than 99 notifications";
-    }
-    return `${count} notifications`;
-  };
-
   const jobDetail: string | undefined =
     department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
 
@@ -70,18 +59,6 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
             ) : null}
           </S.ProfileText>
         )}
-        <S.SmallBadge
-          aria-label={notificationsLabel(0)}
-          badgeContent={0}
-          color="error"
-          max={99}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right",
-          }}
-        >
-          <S.ProfileImg src={imgSrc} />
-        </S.SmallBadge>
       </S.ProfileBox>
       <SwipeableDrawer
         anchor="right"
@@ -129,7 +106,6 @@ function Profile({ job, department, belong, name, imgSrc }: TProfileProps) {
                 )}
               </S.DetailBelong>
             </S.DetailProfileBox>
-            <S.DrawerProfileImg src={imgSrc} />
           </S.DrawerHeader>
           <S.Bar />
           <S.DrawerTitle>
