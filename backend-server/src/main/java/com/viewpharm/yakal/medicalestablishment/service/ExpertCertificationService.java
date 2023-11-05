@@ -63,7 +63,7 @@ public class ExpertCertificationService {
     //전문가 신청 내역 조회
     public ExpertCertificationAllDto getExpertCertification(String name, String sorting, String ordering, Long pageIndex) {
         Sort.Direction order;
-
+        log.info(ordering.toString());
         if (ordering.equals("desc")) {
             order = Sort.Direction.DESC;
         } else {
@@ -75,17 +75,17 @@ public class ExpertCertificationService {
             case "date" -> PageRequest.of(
                     pageIndex.intValue(),
                     PAGE_SIZE,
-                    Sort.by(Sort.Direction.DESC, "created_at")
+                    Sort.by(order, "created_at")
             );
             case "name" -> PageRequest.of(
                     pageIndex.intValue(),
                     PAGE_SIZE,
-                    Sort.by(Sort.Direction.DESC, "user.name")
+                    Sort.by(order, "NAME")
             );
             case "medical" -> PageRequest.of(
                     pageIndex.intValue(),
                     PAGE_SIZE,
-                    Sort.by(Sort.Direction.DESC, "medicalEstablishment.name")
+                    Sort.by(order, "MEDICALNAME")
             );
             default -> throw new CommonException(ErrorCode.INVALID_ARGUMENT);
         };

@@ -1,8 +1,11 @@
 package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
+import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +29,7 @@ import java.util.List;
 public class AdminController {
     private final UserService userService;
     private final ExpertCertificationService expertCertificationService;
-
+    private final MedicalEstablishmentService medicalEstablishmentService;
 
 
     @GetMapping("/medical/update")
@@ -57,30 +60,30 @@ public class AdminController {
         return ResponseDto.ok(null);
     }
 
-    @GetMapping("medical/register/request")
-    @Operation(summary = "의료기관 등록 신청",description = "관리자가 의료기관 등록 신청한 목록 가져온다")
-    public ResponseDto<?> getMedicalRegisterReqeust(
-            @RequestParam("page") Long page, @RequestParam("num") Long num
-    ){
-        return ResponseDto.ok(null);
+    @GetMapping("/medical/register/request")
+    @Operation(summary = "의료기관 등록 신청", description = "관리자가 의료기관 등록 신청한 목록 가져온다")
+    public ResponseDto<MedicalEstablishmentAllDto> getMedicalRegisterRequest(
+            @RequestParam(value = "name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long num
+    ) {
+        return ResponseDto.ok(medicalEstablishmentService.getMedicalEstablishments(name, sort, order, num));
     }
 
     @GetMapping("/expert/register/request")
-    @Operation(summary = "전문가 등록 신청",description = "관리자가 전문가 등록 신청한 목록 가져온다")
-    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long page) {
-        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, page));
+    @Operation(summary = "전문가 등록 신청", description = "관리자가 전문가 등록 신청한 목록 가져온다")
+    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long num) {
+        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, num));
     }
 
     @PatchMapping("medical/register/{id}")
     @Operation(summary = "의료기관 등록", description = "의료기관을 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
+    public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
         return ResponseDto.ok(null);
     }
 
     @PatchMapping("expert/register/{id}")
     @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
-        userService.updateIsCertified(id,updateAdminRequestDto);
+    public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
+        userService.updateIsCertified(id, updateAdminRequestDto);
         return ResponseDto.ok(null);
     }
 
