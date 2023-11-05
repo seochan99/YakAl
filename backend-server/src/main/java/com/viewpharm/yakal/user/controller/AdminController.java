@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
+import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,6 +25,7 @@ import java.util.List;
 @Tag(name = "Admin", description = "관리자 전용 페이지 관련 API 제공")
 public class AdminController {
     private final UserService userService;
+    private final ExpertCertificationService expertCertificationService;
 
     @GetMapping("/medical/update")
     @Operation(summary = "의료기관 업데이트", description = "의료기관 엑셀파일을 입력으로 의료기관의 정보를 업데이트 합니다. (공공데이터 포털 3개월마다 업데이트)")
@@ -79,5 +82,11 @@ public class AdminController {
     public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto){
         userService.updateIsCertified(id,updateAdminRequestDto);
         return ResponseDto.ok(null);
+    }
+
+    @GetMapping("/expertcertification")
+    @Operation(summary = "전문가 신청 내역 조회", description = "전문가 신청 내역 조회")
+    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long page) {
+        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, page));
     }
 }

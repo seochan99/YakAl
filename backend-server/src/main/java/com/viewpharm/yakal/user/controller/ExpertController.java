@@ -8,6 +8,7 @@ import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.prescription.dto.response.DoseAllDto;
@@ -24,6 +25,7 @@ import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +38,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/experts")
 @Tag(name = "Expert", description = "전문가 웹 관련 API 제공")
+@Slf4j
 public class ExpertController {
     private final UserService userService;
     private final DoseService doseService;
@@ -118,7 +121,7 @@ public class ExpertController {
             @RequestParam("order") String order,
             @RequestParam("page") Long page,
             @RequestParam(name = "num", defaultValue = "10") Long num,
-            @RequestParam(name="favorite", defaultValue = "true") Boolean onlyFavorite
+            @RequestParam(name = "favorite", defaultValue = "true") Boolean onlyFavorite
     ) {
         return ResponseDto.ok(
                 medicalAppointmentService.getPatientList(id, URLDecoder.decode(name, StandardCharsets.UTF_8), sort, order, page, num, onlyFavorite)
@@ -175,5 +178,7 @@ public class ExpertController {
     public ResponseDto<DoseAllWithRiskDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
         return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, page));
     }
+
+
 
 }
