@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
@@ -20,38 +24,17 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
   bool _isLoadMoreRunning = false;
   List _prescriptionList = [];
 
-  List _prescriptionListUnit = [
-    "처방전",
-    "이다",
-    "약좀",
-    "그만",
-    "머거",
-    "제발",
-    "처방전",
-    "이다",
-    "약좀",
-    "그만",
-    "머거",
-    "제발",
-    "처방전",
-    "이다",
-    "약좀",
-    "그만",
-    "머거",
-    "제발"
-  ];
-
   void _initLoad() async {
     setState(() {
       _isFirstLoadRunning = true;
     });
 
     try {
-      // final dio = await authDioWithContext();
-      // final response = await dio.get("${dotenv.env['YAKAL_SERVER_HOST']}");
+      final dio = await authDioWithContext();
+      final response = await dio.get("${dotenv.env['YAKAL_SERVER_HOST']}");
 
       setState(() {
-        _prescriptionList = List.from(_prescriptionListUnit);
+        _prescriptionList = List.from(response.data);
       });
     } catch (e) {
       _prescriptionList = [];
@@ -74,23 +57,23 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
       _page += 1;
 
       try {
-        // final dio = await authDioWithContext();
-        // final response = await dio.get("${dotenv.env['YAKAL_SERVER_HOST']}");
-        // final List fetchedPrescription = json.decode(response.data);
+        final dio = await authDioWithContext();
+        final response = await dio.get("${dotenv.env['YAKAL_SERVER_HOST']}");
+        final List fetchedPrescription = json.decode(response.data);
 
         setState(() {
-          _prescriptionList.addAll(_prescriptionListUnit);
+          _prescriptionList.addAll(fetchedPrescription);
         });
 
-        // if (fetchedPrescription.isNotEmpty) {
-        //   setState(() {
-        //     _prescriptionList.addAll(fetchedPrescription);
-        //   });
-        // } else {
-        //   setState(() {
-        //     _hasNextPage = false;
-        //   });
-        // }
+        if (fetchedPrescription.isNotEmpty) {
+          setState(() {
+            _prescriptionList.addAll(fetchedPrescription);
+          });
+        } else {
+          setState(() {
+            _hasNextPage = false;
+          });
+        }
       } catch (e) {
         _prescriptionList = [];
       }
