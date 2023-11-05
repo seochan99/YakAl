@@ -65,12 +65,10 @@ public class AdminController {
         return ResponseDto.ok(null);
     }
 
-    @GetMapping("expert/register/request")
+    @GetMapping("/expert/register/request")
     @Operation(summary = "전문가 등록 신청",description = "관리자가 전문가 등록 신청한 목록 가져온다")
-    public ResponseDto<?> getExpertRegisterReqeust(
-            @RequestParam("page") Long page, @RequestParam("num") Long num
-    ){
-        return ResponseDto.ok(null);
+    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long page) {
+        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, page));
     }
 
     @PatchMapping("medical/register/{id}")
@@ -86,9 +84,5 @@ public class AdminController {
         return ResponseDto.ok(null);
     }
 
-    @GetMapping("/expertcertification")
-    @Operation(summary = "전문가 신청 내역 조회", description = "전문가 신청 내역 조회")
-    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long page) {
-        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, page));
-    }
+
 }
