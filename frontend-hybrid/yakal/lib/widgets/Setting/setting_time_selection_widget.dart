@@ -106,6 +106,27 @@ class _SettingTimeSelectionWidgetState
           initialTime: TimeOfDay.now(),
         ).then((value) {
           if (value != null) {
+            var startTimeMin =
+                takingTime.startTime.hour * 60 + takingTime.startTime.minute;
+            var endTimeMin =
+                takingTime.endTime.hour * 60 + takingTime.endTime.minute;
+            var valueMin = value.hour * 60 + value.minute;
+            if (valueMin < startTimeMin || valueMin > endTimeMin) {
+              Get.snackbar(
+                '${takingTime.korName} 시간대를 벗어났어요',
+                '${takingTime.startTime.hour}시 ~ ${takingTime.endTime.hour}시 사이의 시간을 선택해주세요!',
+                margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                duration: const Duration(milliseconds: 1500),
+                snackPosition: SnackPosition.TOP,
+                backgroundColor: ColorStyles.gray1,
+                colorText: Colors.black,
+              );
+              return;
+            }
+
+            // takingTime.startTime 이랑 takingTime.endTime 사이를 입력했는지 확인, 아니면 경고창 띄우기
+            // TimeofDay끼리 시간, 분 비교하기
+
             // 타임피커에서 선택한 시간을 저장
             widget.userViewModel.setMyTime(
               takingTime,

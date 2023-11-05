@@ -96,10 +96,11 @@ void main() async {
 
         initialRoute = "/";
       }
-    } on DioException {
-      if (kDebugMode) {
-        print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
-      }
+    } catch (e) {
+      initialRoute = "/loing";
+      // if (kDebugMode) {
+      //   print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
+      // }
 
       storage.deleteAll();
     }
