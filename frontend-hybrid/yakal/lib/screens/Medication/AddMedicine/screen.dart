@@ -533,9 +533,14 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                                     barrierColor:
                                         const Color.fromRGBO(98, 98, 114, 0.4),
                                     builder: (BuildContext context) {
-                                      return const MedicineAddCancelDialog(
-                                        question: "약 추가를 취소하시겠습니까?",
-                                      );
+                                      return MedicineAddCancelDialog(
+                                          question: "약 추가를 취소하시겠습니까?",
+                                          confirmLabel: "취소하기",
+                                          cancelLabel: "아니요",
+                                          onConfirm: () {
+                                            Get.back();
+                                            Get.offAllNamed("/");
+                                          });
                                     },
                                   );
                                 },
