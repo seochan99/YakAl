@@ -57,29 +57,35 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
               )
             : ListView.builder(
                 addAutomaticKeepAlives: true,
-                itemCount: viewModel.pillTodoParents.length,
+                itemCount: viewModel.pillTodoParents.length + 1,
                 itemBuilder: (context, index) {
-                  return PillTodoParentItem(
-                    isDetail: viewModel.isDetail,
-                    todoDate: viewModel.todoDate,
-                    pillTodoParent: viewModel.pillTodoParents[index],
-                    isOverLap: viewModel.pillTodoParents[index].isOverLap,
-                    onClickParentCheckBox: (eTakingTime) {
-                      viewModel.onClickParentCheckBox(eTakingTime);
-                    },
-                    onClickParentItemView: (eTakingTime) {
-                      viewModel.onClickParentItemView(eTakingTime);
-                    },
-                    onClickChildrenCheckBox: (eTakingTime, todoId) {
-                      viewModel.onClickChildrenCheckBox(eTakingTime, todoId);
-                    },
-                    onClickChildrenItemView: (String name, String kdCode) {
-                      Get.toNamed('/pill/detail', arguments: {
-                        'name': name,
-                        'kdCode': kdCode,
-                      });
-                    },
-                  );
+                  if (index == viewModel.pillTodoParents.length) {
+                    return const SizedBox(
+                      height: 100,
+                    );
+                  } else {
+                    return PillTodoParentItem(
+                      isDetail: viewModel.isDetail,
+                      todoDate: viewModel.todoDate,
+                      pillTodoParent: viewModel.pillTodoParents[index],
+                      isOverLap: viewModel.pillTodoParents[index].isOverLap,
+                      onClickParentCheckBox: (eTakingTime) {
+                        viewModel.onClickParentCheckBox(eTakingTime);
+                      },
+                      onClickParentItemView: (eTakingTime) {
+                        viewModel.onClickParentItemView(eTakingTime);
+                      },
+                      onClickChildrenCheckBox: (eTakingTime, todoId) {
+                        viewModel.onClickChildrenCheckBox(eTakingTime, todoId);
+                      },
+                      onClickChildrenItemView: (String name, String kdCode) {
+                        Get.toNamed('/pill/detail', arguments: {
+                          'name': name,
+                          'kdCode': kdCode,
+                        });
+                      },
+                    );
+                  }
                 },
               ));
   }
