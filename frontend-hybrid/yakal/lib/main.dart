@@ -96,7 +96,7 @@ void main() async {
 
         initialRoute = "/";
       }
-    } on DioException {
+    } on DioException catch (error) {
       if (kDebugMode) {
         print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
       }
