@@ -15,7 +15,9 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isNarrow = MediaQuery.of(context).size.width < 380;
     SurveyModel survey = (Get.arguments as Map<dynamic, dynamic>)['survey'];
+    bool isSenior = (Get.arguments as Map<dynamic, dynamic>)['isSenior'];
 
     UserViewModel userViewModel = Get.put(UserViewModel());
 
@@ -68,13 +70,14 @@ class SurveyResultScreen extends StatelessWidget {
                           onPressed: () {
                             Get.to(() => SurveyDetailType1Screen(
                                   survey: survey,
+                                  isSenior: isSenior,
                                 ));
                           },
-                          child: const Text(
-                            // "다른 테스트 하기",
+                          child: Text(
                             "다시 하기",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w700),
+                                fontSize: isNarrow ? 18 : 20,
+                                fontWeight: FontWeight.w700),
                           )),
                     ),
                     const SizedBox(
@@ -91,12 +94,14 @@ class SurveyResultScreen extends StatelessWidget {
                             foregroundColor: const Color(0xffffffff),
                           ),
                           onPressed: () {
-                            Get.offAllNamed('/');
+                            Get.offAllNamed(
+                                isSenior ? '/seniorSurvey' : '/normalSurvey');
                           },
-                          child: const Text(
-                            "홈으로 가기",
+                          child: Text(
+                            "목록으로 가기",
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w700),
+                                fontSize: isNarrow ? 18 : 20,
+                                fontWeight: FontWeight.w700),
                           )),
                     ),
                   ],

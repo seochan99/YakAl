@@ -23,8 +23,7 @@ class SurveySeniorScreen extends StatelessWidget {
           icon: const Icon(Icons.chevron_left,
               size: 32, color: Color(0xff151515)),
           onPressed: () {
-            Get.back();
-            // Get.offAndToNamed('/');
+            Get.offAndToNamed('/');
           },
         ),
       ),
@@ -81,12 +80,12 @@ class SurveSenioryList extends StatelessWidget {
                       // test type별로 별도 view구성 처리하기
                       if (!tests[index].isCompleted) {
                         Get.to(() => SurveyDetailType1Screen(
-                              survey: tests[index],
-                            ));
+                            survey: tests[index], isSenior: true));
                       } else {
                         // result Screen that survey
                         Get.toNamed('/survey/result', arguments: {
                           'survey': tests[index],
+                          'isSenior': true
                         });
                       }
                     },

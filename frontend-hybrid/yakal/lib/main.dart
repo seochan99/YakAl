@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +95,9 @@ void main() async {
 
         initialRoute = "/";
       }
-    } on DioException catch (error) {
+    } catch (e) {
+      initialRoute = "/login";
+
       if (kDebugMode) {
         print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
       }
