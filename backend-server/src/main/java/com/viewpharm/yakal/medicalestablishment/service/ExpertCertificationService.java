@@ -49,4 +49,9 @@ public class ExpertCertificationService {
 
         return Boolean.TRUE;
     }
+
+    //전문가 신청 내역 조회
+//    public Boolean getExpertCertification(){
+//
+//    }
 }
