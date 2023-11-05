@@ -288,24 +288,25 @@ class UserViewModel extends GetxController {
       print("timezone $timezone");
       print("formattedTime $formattedTime");
 
-      var response = await dio.patch("user/notification-time",
+      var response = await dio.patch("/user/notification-time",
           data: {"timezone": timezone, "time": formattedTime});
 
       print("fetchMyTime의 정보는 이와같습니다 : $response");
 
       if (response.statusCode == 200 && response.data['success']) {
+        var realFormattedTime = formattedTime.substring(0, 5);
         switch (takingTime) {
           case ETakingTime.breakfast:
             user.update((val) {
-              val?.breakfastTime = formattedTime;
+              val?.breakfastTime = realFormattedTime;
             });
           case ETakingTime.lunch:
             user.update((val) {
-              val?.lunchTime = formattedTime;
+              val?.lunchTime = realFormattedTime;
             });
           case ETakingTime.dinner:
             user.update((val) {
-              val?.dinnerTime = formattedTime;
+              val?.dinnerTime = realFormattedTime;
             });
           default:
             return;
