@@ -122,9 +122,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           const BoxDecoration(color: Color(0xffe9e9ee))),
                   /* ----------------- TodoList 뷰 -----------------  */
                   Expanded(child: HomePillTodoView(viewModel: viewModel)),
-                  const SizedBox(
-                    height: 55,
-                  )
                 ],
               ),
             ),
