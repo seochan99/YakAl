@@ -7,7 +7,6 @@ import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
-
 import 'style.dart';
 
 class NicknameInputScreen extends StatefulWidget {
@@ -37,7 +36,7 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
           await dio.patch("/user/name", data: {"nickname": _username});
 
       widget.userViewModel.updateNickName(_username);
-    } on DioException catch (error) {
+    } on DioException {
       if (!context.mounted) {
         return;
       }

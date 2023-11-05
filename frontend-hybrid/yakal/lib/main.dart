@@ -96,7 +96,7 @@ void main() async {
 
         initialRoute = "/";
       }
-    } on DioException catch (error) {
+    } on DioException {
       if (kDebugMode) {
         print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
       }
@@ -169,6 +169,7 @@ class MyApp extends StatelessWidget {
           page: () => const MyBottomNavigationBar(),
         ),
         GetPage(name: '/home', page: () => const HomeScreen()),
+        // 만약, 민감정보가 fasle이면 민감정보 동의 페이지로 true이면 profile 페이지로
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",

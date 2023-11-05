@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:yakal/models/Profile/user.dart';
 import 'package:yakal/utilities/api/api.dart';

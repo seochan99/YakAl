@@ -306,6 +306,7 @@ class DoseListViewModel extends GetxController {
     for (var group in _groupList) {
       for (var dose in group.doseList) {
         doseList.add(dose);
+        // 킴스코드가 없으면 빈 문자열을 추가
         futures.add(dose.kimsCode == ""
             ? Future<String?>.value("")
             : _addMedicineProvider.getMedicineBase64Image(dose.kimsCode));

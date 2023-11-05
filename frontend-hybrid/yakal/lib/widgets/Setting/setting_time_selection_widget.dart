@@ -1,9 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
+
+enum ETakingTime {
+  breakfast,
+  lunch,
+  dinner,
+}
+
+// ETakingTime 확장, 아침, 점심, 저녁, 이름, 시작 시간, 끝 시간, 시간대
+extension ETakingTimeExtension on ETakingTime {
+  String get korName {
+    switch (this) {
+      case ETakingTime.breakfast:
+        return '아침';
+      case ETakingTime.lunch:
+        return '점심';
+      case ETakingTime.dinner:
+        return '저녁';
+    }
+  }
+
+// 영어 이름
+  String get engName {
+    switch (this) {
+      case ETakingTime.breakfast:
+        return 'breakfast';
+      case ETakingTime.lunch:
+        return 'lunch';
+      case ETakingTime.dinner:
+        return 'dinner';
+    }
+  }
+
+  TimeOfDay get startTime {
+    switch (this) {
+      case ETakingTime.breakfast:
+        return const TimeOfDay(hour: 7, minute: 0);
+      case ETakingTime.lunch:
+        return const TimeOfDay(hour: 11, minute: 0);
+      case ETakingTime.dinner:
+        return const TimeOfDay(hour: 17, minute: 0);
+    }
+  }
+
+  // endtime
+  TimeOfDay get endTime {
+    switch (this) {
+      case ETakingTime.breakfast:
+        return const TimeOfDay(hour: 10, minute: 59);
+      case ETakingTime.lunch:
+        return const TimeOfDay(hour: 16, minute: 59);
+      case ETakingTime.dinner:
+        return const TimeOfDay(hour: 23, minute: 59);
+    }
+  }
+
+  // iconpath
+  String get iconPath {
+    switch (this) {
+      case ETakingTime.breakfast:
+        return 'assets/icons/icon-morning.svg';
+      case ETakingTime.lunch:
+        return 'assets/icons/icon-afternoon.svg';
+      case ETakingTime.dinner:
+        return 'assets/icons/icon-evening.svg';
+    }
+  }
+}
 
 class SettingTimeSelectionWidget extends StatefulWidget {
   const SettingTimeSelectionWidget({Key? key}) : super(key: key);
+  // userviewModel
+  UserViewModel get userViewModel => Get.find<UserViewModel>();
 
   @override
   _SettingTimeSelectionWidgetState createState() =>
@@ -12,132 +84,87 @@ class SettingTimeSelectionWidget extends StatefulWidget {
 
 class _SettingTimeSelectionWidgetState
     extends State<SettingTimeSelectionWidget> {
-  // 고정 시간 범위
-  Map<String, String> timeRanges = {'아침': '7:00', '점심': '11:00', '저녁': '17:00'};
-
-  Map<String, String> periodMapping = {
-    '아침': 'breakfast',
-    '점심': 'lunch',
-    '저녁': 'dinner',
-  };
-
-  // 선택 시간 범위
-  Map<String, String> selectedTimes = {
-    '아침': '7:00',
-    '점심': '11:00',
-    '저녁': '17:00'
-  };
-
-  // 시간 선택 함수
-  void _selectTime(String period) async {
-    TimeRange? selectedTime = await _showTimePicker(
-      context,
-      selectedTimes[period],
-    );
-
-    if (selectedTime != null) {
-      setState(() {
-        selectedTimes[period] = selectedTime.startTime;
-      });
-
-      String timezone =
-          periodMapping[period] ?? 'breakfast'; // default to breakfast
-
-      String time = selectedTimes[period] ?? '00:00';
-
-      Map<String, String> data = {
-        "timezone": timezone,
-        "time": time,
-      };
-
-      updateNotificationTime(data);
-    }
-  }
-
-  Future<void> updateNotificationTime(Map<String, String> data) async {
-    try {
-      var dio = await authDioWithContext();
-      await dio.patch("/user/notification-time", data: data);
-    } catch (e) {
-      print("Failed to update notification time: $e");
-    }
-  }
-
-  // 시간 picker 함수
-  Future<TimeRange?> _showTimePicker(
-      BuildContext context, String? defaultTime) async {
-    // 시간 범위를 시작 시간과 끝 시간으로 나누기
-    List<String> timeComponents = (defaultTime ?? '00:00').split(' - ');
-
-    List<String> startTimeComponents = timeComponents[0].split(':');
-    print(startTimeComponents[0]);
-    print(startTimeComponents[1]);
-
-    int startHours = int.parse(startTimeComponents[0]);
-    int startMinutes = int.parse(startTimeComponents[1]);
-
-    TimeOfDay initialStartTime =
-        TimeOfDay(hour: startHours, minute: startMinutes);
-
-    //  시작 시간과 끝 시간을 선택
-    TimeOfDay? startTime = await showTimePicker(
-      context: context,
-      initialTime: initialStartTime,
-    );
-
-    // 만약 시작 시간이 선택되지 않았다면 null 반환
-    if (startTime == null) return null;
-
-    return TimeRange(
-      startTime: '${startTime.hour}:${startTime.minute}',
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        _buildTimeRow(
-            '아침', 'assets/icons/icon-morning.svg', selectedTimes['아침']),
-        _buildTimeRow(
-            '점심', 'assets/icons/icon-afternoon.svg', selectedTimes['점심']),
-        _buildTimeRow(
-            '저녁', 'assets/icons/icon-evening.svg', selectedTimes['저녁']),
+        _buildTimeRow(ETakingTime.breakfast),
+        _buildTimeRow(ETakingTime.lunch),
+        _buildTimeRow(ETakingTime.dinner),
       ],
     );
   }
 
-  Widget _buildTimeRow(String period, String iconPath, String? time) {
-    return Row(
-      children: [
-        SvgPicture.asset(
-          iconPath,
-          width: 24,
-          height: 24,
+  Widget _buildTimeRow(
+    ETakingTime takingTime,
+  ) {
+    return InkWell(
+      onTap: () {
+        // 타임피커 열림
+        showTimePicker(
+          context: context,
+          initialTime: TimeOfDay.now(),
+        ).then((value) {
+          if (value != null) {
+            // 타임피커에서 선택한 시간을 저장
+            widget.userViewModel.setMyTime(
+              takingTime,
+              value,
+            );
+          }
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
         ),
-        const SizedBox(width: 8),
-        Text(
-          period,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
+        child: Row(
+          children: [
+            Column(
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      takingTime.iconPath,
+                      width: 24,
+                      height: 24,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const SizedBox(width: 8),
+            Text(
+              takingTime.korName,
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              "${takingTime.startTime.format(context)} ~ ${takingTime.endTime.format(context)}",
+              style: const TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+                color: Color(0xff90909F),
+              ),
+            ),
+            const Spacer(),
+            Obx(
+              () => Text(
+                widget.userViewModel.getMyTime(takingTime),
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: ColorStyles.black,
+                ),
+              ),
+            ),
+            const Icon(Icons.chevron_right)
+          ],
         ),
-        const SizedBox(width: 24),
-        Text(
-          time ?? '',
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Color(0xff90909F),
-          ),
-        ),
-        const Spacer(),
-        IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () => _selectTime(period),
-        ),
-      ],
+      ),
     );
   }
 }

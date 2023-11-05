@@ -1,6 +1,11 @@
+import 'dart:convert';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/viewModels/Home/home_view_model.dart';
+import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
 import '../../models/Profile/user.dart';
 
@@ -61,8 +66,16 @@ class UserViewModel extends GetxController {
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {
-        val?.setMode(response.data['data']['isDetail']);
+        val?.setMode(newMode);
       });
+
+      // @override
+      // void onClose() {
+      //   Get.find<HomeViewModel>().updatePillTodoAndDate();
+      //   super.onClose();
+      // }
+
+      // onClose();
     }
   }
 
@@ -107,7 +120,8 @@ class UserViewModel extends GetxController {
       var dio = await authDioWithContext();
 
       var response = await dio.get("/guardians");
-      print("guardians : $response");
+
+      print("guardians의 정보는 이와같습니다 : $response");
 
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {
@@ -121,7 +135,7 @@ class UserViewModel extends GetxController {
 
   Future<void> loadGuardian() async {
     try {
-      await fetchGuardian(); // Assuming this sets 'fetchedItems'
+      await fetchGuardian();
       print("--------------------------dsads----------------------------");
 
       user.update((val) {
@@ -149,6 +163,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
       final response = await dio.post("/guardians/$id");
+      print("addOrUpdateGuardian : $response");
       loadGuardian();
 
       if (response.statusCode == 200) {
@@ -255,5 +270,64 @@ class UserViewModel extends GetxController {
       throw Exception("Exception while adding health medication: $e");
     }
     return;
+  }
+
+  // 나의 시간대 GET
+  Future<void> setMyTime(ETakingTime takingTime, TimeOfDay selectedTime) async {
+    final String timezone = takingTime.engName;
+    final TimeOfDay time = selectedTime;
+    // TimeofDay의 time을 String(hh:mm:ss)으로 바꿔줘-!
+    final DateFormat context = DateFormat("HH:mm:ss");
+    final String formattedTime =
+        context.format(DateTime(1, 1, 1, time.hour, time.minute, 0, 0, 0));
+
+    print(formattedTime);
+
+    try {
+      var dio = await authDioWithContext();
+      print("timezone $timezone");
+      print("formattedTime $formattedTime");
+
+      var response = await dio.patch("/user/notification-time",
+          data: {"timezone": timezone, "time": formattedTime});
+
+      print("fetchMyTime의 정보는 이와같습니다 : $response");
+
+      if (response.statusCode == 200 && response.data['success']) {
+        var realFormattedTime = formattedTime.substring(0, 5);
+        switch (takingTime) {
+          case ETakingTime.breakfast:
+            user.update((val) {
+              val?.breakfastTime = realFormattedTime;
+            });
+          case ETakingTime.lunch:
+            user.update((val) {
+              val?.lunchTime = realFormattedTime;
+            });
+          case ETakingTime.dinner:
+            user.update((val) {
+              val?.dinnerTime = realFormattedTime;
+            });
+          default:
+            return;
+        }
+      }
+    } catch (e) {
+      throw Exception("Exception while updating nickname: $e");
+    }
+  }
+
+  // 나의 시간대 GETter
+  String getMyTime(ETakingTime takingTime) {
+    switch (takingTime) {
+      case ETakingTime.breakfast:
+        return user.value.breakfastTime;
+      case ETakingTime.lunch:
+        return user.value.lunchTime;
+      case ETakingTime.dinner:
+        return user.value.dinnerTime;
+      default:
+        return "00:00";
+    }
   }
 }
