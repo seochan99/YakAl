@@ -12,7 +12,7 @@ import 'style.dart';
 
 class NicknameInputScreen extends StatefulWidget {
   final UserViewModel userViewModel = Get.find<UserViewModel>();
-  final LoginRouteController routeController = Get.put(LoginRouteController());
+  final LoginRouteController routeController = Get.find<LoginRouteController>();
   final NicknameInputLoadingController loadingController =
       Get.find<NicknameInputLoadingController>();
 

@@ -27,6 +27,8 @@ public class AdminController {
     private final UserService userService;
     private final ExpertCertificationService expertCertificationService;
 
+
+
     @GetMapping("/medical/update")
     @Operation(summary = "의료기관 업데이트", description = "의료기관 엑셀파일을 입력으로 의료기관의 정보를 업데이트 합니다. (공공데이터 포털 3개월마다 업데이트)")
     public ResponseDto<Boolean> updateMedical() throws IOException {

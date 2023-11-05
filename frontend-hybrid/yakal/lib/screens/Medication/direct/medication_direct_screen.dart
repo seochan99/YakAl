@@ -40,7 +40,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
     try {
       List<SearchMedicineModel> fetchedMedicines =
-      await _medicationDirectProvider.searchMedicine(keyword);
+          await _medicationDirectProvider.searchMedicine(keyword);
       setState(() {
         medicines = fetchedMedicines;
         // 로딩 끝
@@ -122,38 +122,35 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                         Column(
                           children: isLoading
                               ? [
-                            Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      // 화면 절반 길이
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height /
-                                          4,
-                                    ),
-                                    const CircularProgressIndicator(),
-                                  ],
-                                ))
-                          ]
+                                  Center(
+                                      child: Column(
+                                    children: [
+                                      SizedBox(
+                                        // 화면 절반 길이
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4,
+                                      ),
+                                      const CircularProgressIndicator(),
+                                    ],
+                                  ))
+                                ]
                               : medicines.map((medicine) {
-                            return ListTile(
-                              // medicinController.text와 같다면 배경색
-                              tileColor:
-                              medicine.name == medicinController.text
-                                  ? const Color(0xff2666f6)
-                                  : Colors.white,
-                              title: Text(medicine.name),
-                              subtitle: Text(medicine.code),
-                              onTap: () {
-                                selectedMedicineName = medicine.name;
-                                selectedMedicineCode = medicine.code;
-                                medicinController.text = medicine.name;
-                              },
-                            );
-                          }).toList(),
+                                  return ListTile(
+                                    // medicinController.text와 같다면 배경색
+                                    tileColor:
+                                        medicine.name == medicinController.text
+                                            ? const Color(0xff2666f6)
+                                            : Colors.white,
+                                    title: Text(medicine.name),
+                                    subtitle: Text(medicine.code),
+                                    onTap: () {
+                                      selectedMedicineName = medicine.name;
+                                      selectedMedicineCode = medicine.code;
+                                      medicinController.text = medicine.name;
+                                    },
+                                  );
+                                }).toList(),
                         )
                       ],
                     ),
@@ -183,9 +180,9 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    onPressed: _handleButtonPress,
+                    onPressed: isButtonEnabled ? _handleButtonPress : null,
                     child:
-                    const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
+                        const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
                   );
                 },
               ),

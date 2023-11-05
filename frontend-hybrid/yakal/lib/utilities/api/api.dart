@@ -120,7 +120,13 @@ Future<Dio> authDio(BuildContext context) async {
           error.requestOptions.headers['Authorization'] =
               'Bearer $newAccessToken';
 
-          final clonedRequest = await dio.request(
+          final againDio = Dio(BaseOptions(
+            baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
+            connectTimeout: const Duration(milliseconds: 5000),
+            receiveTimeout: const Duration(milliseconds: 3000),
+          ));
+
+          final clonedRequest = await againDio.request(
             error.requestOptions.path,
             options: Options(
               method: error.requestOptions.method,
@@ -241,7 +247,13 @@ Future<Dio> authDioWithContext() async {
           error.requestOptions.headers['Authorization'] =
               'Bearer $newAccessToken';
 
-          final clonedRequest = await dio.request(
+          final againDio = Dio(BaseOptions(
+            baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
+            connectTimeout: const Duration(milliseconds: 5000),
+            receiveTimeout: const Duration(milliseconds: 3000),
+          ));
+
+          final clonedRequest = await againDio.request(
             error.requestOptions.path,
             options: Options(
               method: error.requestOptions.method,
