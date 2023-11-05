@@ -12,21 +12,21 @@ class SurveySeniorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          surfaceTintColor: Colors.white,
-          backgroundColor: Colors.white,
-          title: const Text(
-            '자가 진단 테스트 (65세 이상)',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left,
-                size: 32, color: Color(0xff151515)),
-            onPressed: () {
-              // Get.back();
-              Get.offAndToNamed('/');
-            },
-          )),
+        centerTitle: true,
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        title: const Text(
+          '자가 진단 테스트 (65세 이상)',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left,
+              size: 32, color: Color(0xff151515)),
+          onPressed: () {
+            Get.offAndToNamed('/');
+          },
+        ),
+      ),
       body: Container(
         color: Colors.white,
         child: SingleChildScrollView(
@@ -80,12 +80,12 @@ class SurveSenioryList extends StatelessWidget {
                       // test type별로 별도 view구성 처리하기
                       if (!tests[index].isCompleted) {
                         Get.to(() => SurveyDetailType1Screen(
-                              survey: tests[index],
-                            ));
+                            survey: tests[index], isSenior: true));
                       } else {
                         // result Screen that survey
                         Get.toNamed('/survey/result', arguments: {
                           'survey': tests[index],
+                          'isSenior': true
                         });
                       }
                     },

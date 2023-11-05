@@ -38,7 +38,6 @@ export function MainPage() {
             department={expertUser.department}
             belong={expertUser.belong}
             name={expertUser.name}
-            imgSrc="https://mui.com/static/images/avatar/1.jpg"
           />
         )}
       </Header>

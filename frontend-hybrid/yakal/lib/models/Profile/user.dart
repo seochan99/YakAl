@@ -111,9 +111,9 @@ class User {
     nickName = data['nickname'] ?? "";
     mode = data['isDetail'] ?? true;
     notiIsAllowed = data['notiIsAllowed'] ?? true;
-    breakfastTime = data['breakfastTime'] ?? "8:00";
-    lunchTime = data['lunchTime'] ?? "12:00";
-    dinnerTime = data['dinnerTime'] ?? "19:00";
+    breakfastTime = data['breakfastTime'] ?? "7:00";
+    lunchTime = data['lunchTime'] ?? "11:00";
+    dinnerTime = data['dinnerTime'] ?? "17:00";
     prefs.setString("NICKNAME", nickName);
     prefs.setBool("MODE", mode);
     prefs.setBool("NOTI_IS_ALLOWED", notiIsAllowed);

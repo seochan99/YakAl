@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:string_similarity/string_similarity.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
@@ -26,56 +25,20 @@ class DoseListViewModel extends GetxController {
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
 
   Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
-    var textList = await _envelopAnalysisProvider.getTextFromImage(imagePath);
+    var medicationList =
+        await _envelopAnalysisProvider.getTextFromImage(imagePath);
 
-    if (kDebugMode) {
-      print("🎑 [OCR Log] textList: $textList");
-    }
-
-    if (textList.isEmpty) {
+    if (medicationList.isEmpty) {
       return false;
-    }
-
-    var medicinesName = await _medicineCodeRepository.getMedicinesName();
-
-    if (kDebugMode) {
-      print(
-          "🎑 [OCR Log] medicinesName[0:10]: ${medicinesName.sublist(0, 10)}");
     }
 
     var futures = <Future<List<SearchMedicineModel>>>[];
     var names = <String>[];
 
-    for (var text in textList) {
-      // 공백문자 제거
-      var nonSpaceText = text.replaceAll(RegExp(r"\s"), "");
-
-      // 한글, 숫자, 'm', 'g' 외의 모든 문자 제거
-      var korText = nonSpaceText.replaceAll(RegExp(r"[^가-힣0-9mg]"), "");
-
-      // 전처리 결과가 empty string이면 고려하지 않음
-      if (korText == "") {
-        continue;
-      }
-
-      // 전처리 결과와 가장 유사한 약 이름 검색
-      var bestMatch = StringSimilarity.findBestMatch(korText, medicinesName);
-
-      if (kDebugMode) {
-        print(
-            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch.target!} / Similarity: ${bestMatch.bestMatch.rating!}");
-      }
-
-      // 유사도가 70% 이상인 경우만 고려
-      if (bestMatch.bestMatch.rating! >= 0.7) {
-        // 있다면 해당 약을 추가
-        names.add(bestMatch.bestMatch.target!);
-
-        // kims code 검색 대기열 추가
-        futures.add(
-          _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
-        );
-      }
+    for (var medication in medicationList) {
+      futures.add(
+        _medicationDirectProvider.searchMedicine(medication.name),
+      );
     }
 
     List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
@@ -85,19 +48,11 @@ class DoseListViewModel extends GetxController {
       var searchItem = searchList[i];
 
       if (searchItem.isEmpty) {
-        if (kDebugMode) {
-          print("🎑 [OCR Log] ${names[i]} Has No Picture...");
-        }
-
         doseNameCodeList.add({
           "name": names[i],
           "code": "",
         });
       } else {
-        if (kDebugMode) {
-          print("🎑 [OCR Log] ${names[i]} Has Picture.");
-        }
-
         doseNameCodeList.add({
           "name": names[i],
           "code": searchItem[0].code,
@@ -105,28 +60,7 @@ class DoseListViewModel extends GetxController {
       }
     }
 
-    var doseNameCodeListWithoutOverlap = <Map<String, String>>[];
-
-    outerLoop:
-    for (var element in doseNameCodeList) {
-      for (var newElement in doseNameCodeListWithoutOverlap) {
-        if (newElement["name"] == element["name"]) {
-          continue outerLoop;
-        }
-      }
-      doseNameCodeListWithoutOverlap.add(element);
-    }
-
-    if (kDebugMode) {
-      print(
-          "🎑 [OCR Log] Medicine Search Result: $doseNameCodeListWithoutOverlap");
-    }
-
-    if (doseNameCodeListWithoutOverlap.isEmpty) {
-      return false;
-    }
-
-    setGroupList(doseNameCodeListWithoutOverlap);
+    setGroupList(doseNameCodeList);
 
     return true;
   }

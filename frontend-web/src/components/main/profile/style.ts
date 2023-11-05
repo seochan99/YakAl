@@ -22,6 +22,7 @@ export const ProfileBox = styled.div`
   align-items: center;
   width: 100%;
   gap: 1.5rem;
+  padding: 0 2rem;
 `;
 
 export const SmallBadge = styled(Badge)`
