@@ -92,11 +92,12 @@ public class JwtProvider implements InitializingBean {
         final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
-        final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
+        final ERole role = ERole.of(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
 
         final User user = userRepository.findById(id).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (!Objects.equals(user.getId(), id) || user.getRole() != role || !user.getRefreshToken().equals(refreshToken)) {
+            log.error("Invalid Token");
             throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
         }
 
