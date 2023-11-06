@@ -67,7 +67,7 @@ public class GuardianService {
                 .id(resentGuardian.getId())
                 .birthDay(resentGuardian.getBirthday().toString())
                 .tel(resentGuardian.getTel())
-                .name(resentGuardian.getNickname()).build();
+                .name(resentGuardian.getName()).build();
     }
 
 
