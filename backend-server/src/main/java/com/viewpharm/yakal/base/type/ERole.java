@@ -11,7 +11,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum ERole {
     USER("ROLE_USER", "사용자"),
-    DOCTOR("ROLE_DOCTOR", "전문가"),
+    DOCTOR("ROLE_DOCTOR", "의사"),
     PHARMACIST("ROLE_PHARMACIST", "약사"),
     ADMIN("ROLE_ADMIN", "관리자");
 
