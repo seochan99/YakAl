@@ -56,6 +56,30 @@ public class Dose {
     @Column(name = "deleted_at")
     private Timestamp deleted;
 
+    @Column(name = "exist_morning")
+    private Boolean existMorning;
+
+    @Column(name = "exist_afternoon")
+    private Boolean existAfternoon;
+
+    @Column(name = "exist_evening")
+    private Boolean existEvening;
+
+    @Column(name = "exist_default")
+    private Boolean existDefault;
+
+    @Column(name = "is_morning_taken")
+    private Boolean isMorningTaken = false;
+
+    @Column(name = "is_afternoon_taken")
+    private Boolean isAfternoonTaken = false;
+
+    @Column(name = "is_evening_taken")
+    private Boolean isEveningTaken = false;
+
+    @Column(name = "is_default_taken")
+    private Boolean isDefaultTaken = false;
+
     /**
      * MANY-TO-ONE RELATION
      */
@@ -77,23 +101,38 @@ public class Dose {
     private User user;
 
     @Builder
-    public Dose(final DoseName kdCode,
-                final Risk atcCode,
-                final LocalDate date,
-                final Long pillCnt,
-                final Boolean isHalf,
-                final Prescription prescription,
-                final User user) {
-        this.KDCode = kdCode;
-        this.ATCCode = atcCode;
+    public Dose(LocalDate date, Long pillCnt, Boolean isHalf, Boolean existMorning,
+                Boolean existAfternoon, Boolean existEvening, Boolean existDefault,
+                DoseName KDCode, Risk ATCCode, Prescription prescription, User user) {
         this.date = date;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
+        this.existMorning = existMorning;
+        this.existAfternoon = existAfternoon;
+        this.existEvening = existEvening;
+        this.existDefault = existDefault;
+        this.KDCode = KDCode;
+        this.ATCCode = ATCCode;
         this.prescription = prescription;
         this.user = user;
         this.isDeleted = false;
         this.created = new Timestamp(System.currentTimeMillis());
     }
 
+    public void updateMorningTaken(final boolean isMorningTaken) {
+        this.isMorningTaken = isMorningTaken;
+    }
+
+    public void updateAfternoonTaken(final boolean isAfternoonTaken) {
+        this.isAfternoonTaken = isAfternoonTaken;
+    }
+
+    public void updateEveningTaken(final boolean isEveningTaken) {
+        this.isEveningTaken = isEveningTaken;
+    }
+
+    public void updateDefaultTaken(final boolean isDefaultTaken) {
+        this.isDefaultTaken = isDefaultTaken;
+    }
 
 }
