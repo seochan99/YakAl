@@ -1,7 +1,6 @@
 import * as S from "./style.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import { ExpertUserViewModel } from "@page/main/view.model.ts";
-import { EJob } from "@type/enum/job.ts";
 
 function MyPage() {
   const expertUser = ExpertUserViewModel.getExpertUser();
@@ -11,9 +10,7 @@ function MyPage() {
   }
 
   const jobDetail: string | undefined =
-    expertUser.department && expertUser.job
-      ? expertUser.department + " " + (expertUser.job ? (expertUser.job === EJob.DOCTOR ? "의사" : "약사") : "")
-      : undefined;
+    expertUser.department && expertUser.job ? expertUser.department + " " + (expertUser.job ?? "") : undefined;
 
   const formattedTel = expertUser.tel?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 

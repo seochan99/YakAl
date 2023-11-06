@@ -7,7 +7,6 @@ import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { EJob } from "@type/enum/job.ts";
 import { TProfileProps } from "@components/main/profile/props.ts";
 import { useProfileViewController } from "@components/main/profile/view.controller.ts";
 
@@ -57,7 +56,7 @@ function Profile(props: TProfileProps) {
                 </S.DetailNameBox>
               ) : null}
               <S.DetailJob>
-                {job ? job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
+                {job ? job === "의사" ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
                 {jobDetail ? (
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")

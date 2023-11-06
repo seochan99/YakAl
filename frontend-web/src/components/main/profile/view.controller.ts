@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { EJob } from "@type/enum/job.ts";
 import { TProfileProps } from "@components/main/profile/props.ts";
 
 export function useProfileViewController({ job, department, belong, name }: TProfileProps) {
@@ -28,8 +27,7 @@ export function useProfileViewController({ job, department, belong, name }: TPro
     window.localStorage.clear();
   };
 
-  const jobDetail: string | undefined =
-    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
+  const jobDetail: string | undefined = department && job ? department + " " + (job ?? "") : undefined;
 
   return {
     layout: { isMobile, iOS },

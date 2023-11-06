@@ -97,7 +97,7 @@ export const registerFacility = async <T = CommonResponse<null>>(
   );
   formData.append("file", certificateImg);
 
-  return await authAxios.post<T, AxiosResponse<T>>(`/experts/medical-establishments`, formData, {
+  return await authAxios.post<T, AxiosResponse<T>>(`/registrations/medical-establishments`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -125,7 +125,7 @@ export const registerExpert = async <T = CommonResponse<null>>(
   formData.append("certificate", certificateImg);
   formData.append("affiliation", affiliationImg);
 
-  return await authAxios.post<T, AxiosResponse<T>>(`/experts/expert-certifications/expert`, formData, {
+  return await authAxios.post<T, AxiosResponse<T>>(`/registrations/expert-certifications`, formData, {
     headers: { "Content-Type": "multipart/form-data" },
   });
 };
@@ -152,7 +152,7 @@ export const getApprovedFacilityList = async <T = CommonResponse<TApprovedFacili
   facilityType: EFacilityType,
 ): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(
-    `/experts/medical-establishments/search?medical=${EFacilityType[facilityType]}${
+    `/registrations/medical-establishments/search?medical=${EFacilityType[facilityType]}${
       nameQuery.length === 0 ? "" : `&word=${nameQuery}`
     }&page=${page - 1}`,
   );
