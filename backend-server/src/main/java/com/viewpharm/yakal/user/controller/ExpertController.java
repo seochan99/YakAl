@@ -1,14 +1,13 @@
 package com.viewpharm.yakal.user.controller;
 
-import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.base.type.EMedical;
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.guardian.service.GuardianService;
 import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.prescription.dto.response.DoseAllDto;
@@ -19,7 +18,6 @@ import com.viewpharm.yakal.base.type.EPeriod;
 import com.viewpharm.yakal.survey.service.SurveyService;
 import com.viewpharm.yakal.prescription.dto.response.DoseRecentDto;
 import com.viewpharm.yakal.user.dto.response.PatientAllDto;
-import com.viewpharm.yakal.user.dto.response.PatientDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;

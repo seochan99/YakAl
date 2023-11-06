@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.medicalrecord.service;
 
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.medicalrecord.domain.HospitalizationRecord;
 import com.viewpharm.yakal.medicalrecord.dto.reqeust.MedicalRecordDto;

@@ -1,9 +1,9 @@
 package com.viewpharm.yakal.prescription.controller;
 
-import com.viewpharm.yakal.base.ResponseDto;
-import com.viewpharm.yakal.common.annotation.Date;
-import com.viewpharm.yakal.common.annotation.Enum;
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.dto.ResponseDto;
+import com.viewpharm.yakal.base.annotation.Date;
+import com.viewpharm.yakal.base.annotation.Enum;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.prescription.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.user.dto.request.UpdateIsTakenDto;
 import com.viewpharm.yakal.prescription.service.DoseService;

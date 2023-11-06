@@ -1,15 +1,14 @@
 package com.viewpharm.yakal.medicalestablishment.service;
 
-import com.viewpharm.yakal.base.PageInfo;
+import com.viewpharm.yakal.base.dto.PageInfo;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.utils.ImageUtil;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
-import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationListDto;
 import com.viewpharm.yakal.medicalestablishment.repository.ExpertCertificationRepository;

@@ -1,12 +1,12 @@
 package com.viewpharm.yakal.medicalappointment.service;
 
-import com.viewpharm.yakal.base.PageInfo;
+import com.viewpharm.yakal.base.dto.PageInfo;
 import com.viewpharm.yakal.medicalappointment.domain.MedicalAppointment;
 import com.viewpharm.yakal.medicalappointment.dto.MedicalAppointmentDto;
 import com.viewpharm.yakal.medicalappointment.dto.PatientBaseInfoDto;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.medicalappointment.repository.MedicalAppointmentRepository;
 import com.viewpharm.yakal.user.dto.response.PatientAllDto;

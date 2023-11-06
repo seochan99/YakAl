@@ -1,8 +1,8 @@
 package com.viewpharm.yakal.notablefeature.service;
 
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.notablefeature.domain.Allergy;
 import com.viewpharm.yakal.notablefeature.dto.request.NotableFeatureDto;
 import com.viewpharm.yakal.notablefeature.dto.response.NotableFeatureStringDto;
