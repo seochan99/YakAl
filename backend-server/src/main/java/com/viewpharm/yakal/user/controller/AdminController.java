@@ -4,6 +4,7 @@ import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationDetailDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
@@ -91,6 +92,12 @@ public class AdminController {
     @Operation(summary = "기관 신청 상세 정보", description = "기관 신청 상세 정보 조회")
     public ResponseDto<MedicalEstablishmentDetailDto> getMedicalEstablishmentDetail(@PathVariable("medicalId") Long medicalId) {
         return ResponseDto.ok(medicalEstablishmentService.getMedicalEstablishmentDetail(medicalId));
+    }
+
+    @GetMapping("/expert/{expertCertificationId}/register/request")
+    @Operation(summary = "전문가 신청 상세 정보", description = "전문가 신청 상세 정보 조회")
+    public ResponseDto<ExpertCertificationDetailDto> getExpertCertificationDetail(@PathVariable("expertCertificationId") Long expertCertificationId) {
+        return ResponseDto.ok(expertCertificationService.getExpertCertificationDetail(expertCertificationId));
     }
 
     @PatchMapping("/medical/register")

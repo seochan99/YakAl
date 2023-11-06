@@ -5,13 +5,12 @@ import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.base.utils.ImageUtil;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
+import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListForAdminDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.*;
+import com.viewpharm.yakal.medicalestablishment.repository.ExpertCertificationRepository;
 import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,6 +30,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MedicalEstablishmentService {
     private final MedicalEstablishmentRepository medicalEstablishmentRepository;
+    private final ExpertCertificationRepository expertCertificationRepository;
     private final ImageUtil imageUtil;
 
     public Boolean createMedicalEstablishment(MedicalEstablishmentDto requestDto, MultipartFile imgFile) {

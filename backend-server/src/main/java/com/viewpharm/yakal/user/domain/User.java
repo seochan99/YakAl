@@ -183,9 +183,13 @@ public class User {
         this.notiIsAllowed = true;
         this.isIdentified = false;
         this.isOptionalAgreementAccepted = null;
-        this.breakfastTime = LocalTime.of(9,0,0);
-        this.lunchTime = LocalTime.of(13,0,0);
-        this.dinnerTime = LocalTime.of(18,0,0);
+        this.breakfastTime = LocalTime.of(9, 0, 0);
+        this.lunchTime = LocalTime.of(13, 0, 0);
+        this.dinnerTime = LocalTime.of(18, 0, 0);
+    }
+
+    public void updateDepartment(String department) {
+        this.department = department;
     }
 
     public void updateIsOptionalAgreementAccepted(Boolean isOptionalAgreementAccepted) {

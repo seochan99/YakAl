@@ -29,6 +29,7 @@ public enum ErrorCode {
     NOT_FOUND_DOSENAME("4060", HttpStatus.NOT_FOUND, "해당 약의 이름이 존재하지 않습니다."),
     NOT_FOUND_GUARDIAN("4061", HttpStatus.NOT_FOUND, "해당 보호자 관계가 존재하지 않습니다."),
     NOT_FOUND_MEDICAL_ESTABLISHMENT("4062", HttpStatus.NOT_FOUND, "해당 의료기관이 존재하지 않습니다."),
+    NOT_FOUND_EXPERT_CERTIFICATION("40623", HttpStatus.NOT_FOUND, "해당 전문가 신청이 존재하지 않습니다."),
 
     // Bad Request Error
     NOT_END_POINT("4000", HttpStatus.BAD_REQUEST, "End Point가 존재하지 않습니다."),
