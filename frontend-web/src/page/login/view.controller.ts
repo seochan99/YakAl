@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkIsAgreed, checkIsIdentified } from "@api/auth/user/api.ts";
+import { checkIsAgreed, checkIsIdentified } from "@api/auth/users.ts";
 import { isAxiosError } from "axios";
 import { logOnDev } from "@util/log-on-dev.ts";
 

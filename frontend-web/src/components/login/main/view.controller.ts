@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
-import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "@api/noauth/auth/api.ts";
+import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "@api/noauth/auth.ts";
 import { HttpStatusCode, isAxiosError } from "axios";
 import { logOnDev } from "@util/log-on-dev.ts";
 
 export const useLoginMainPageViewController = () => {
   const [open, setOpen] = useState<boolean>(false);
-  
+
   const onKakaoLoginClick = useCallback(async () => {
     try {
       const response = await getKakaoRedirectUrl();

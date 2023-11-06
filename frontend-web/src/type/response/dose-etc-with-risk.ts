@@ -1,4 +1,4 @@
-import { TDoseWithRisk } from "@api/auth/experts/types/dose-with-risk.ts";
+import { TDoseWithRisk } from "@type/response/dose-with-risk.ts";
 
 export type TDoseRiskInfo = {
   datalist: TDoseWithRisk[];

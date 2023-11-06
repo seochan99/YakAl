@@ -1,4 +1,4 @@
-import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
+import { TDoseInfo } from "@type/response/dose-info.ts";
 
 export type TDoseETCInfo = {
   datalist: TDoseInfo[];

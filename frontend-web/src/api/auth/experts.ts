@@ -4,17 +4,17 @@ import { authAxios } from "@api/auth/instance.ts";
 import { TSortBy } from "@store/patient-list.ts";
 import { EPatientField } from "@type/patient-field.ts";
 import { EOrder } from "@type/order.ts";
-import { TFacilityInfo } from "@api/auth/experts/types/facility-info.ts";
+import { TFacilityInfo } from "@type/response/facility-info.ts";
 import { EFacilityType } from "@type/facility-type.ts";
-import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
-import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
-import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
-import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
-import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
-import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
-import { TDoseETCInfo } from "@api/auth/experts/types/dose-etc-info.ts";
-import { TDoseRiskInfo } from "@api/auth/experts/types/dose-etc-with-risk.ts";
-import { TApprovedFacilityList } from "@api/auth/experts/types/approved-facility-list.ts";
+import { TExpertUser } from "@type/response/expert-user.ts";
+import { TPatientBase } from "@type/response/patient-base.ts";
+import { TProtectorInfo } from "@type/response/protector-info.ts";
+import { TDoseInfo } from "@type/response/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@type/response/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@type/response/general-survey-result.ts";
+import { TDoseETCInfo } from "@type/response/dose-etc-info.ts";
+import { TDoseRiskInfo } from "@type/response/dose-etc-with-risk.ts";
+import { TApprovedFacilityList } from "@type/response/approved-facility-list.ts";
 import { EJob } from "@type/job.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {

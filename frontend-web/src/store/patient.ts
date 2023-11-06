@@ -8,14 +8,14 @@ import {
   getLatestDoses,
   getPatientBaseInfo,
   getProtectorInfo,
-} from "@api/auth/experts/api.ts";
+} from "@api/auth/experts.ts";
 import { isAxiosError } from "axios";
-import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
-import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
-import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
-import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
-import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
-import { TDoseWithRisk } from "@api/auth/experts/types/dose-with-risk.ts";
+import { TPatientBase } from "@type/response/patient-base.ts";
+import { TProtectorInfo } from "@type/response/protector-info.ts";
+import { TDoseInfo } from "@type/response/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@type/response/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@type/response/general-survey-result.ts";
+import { TDoseWithRisk } from "@type/response/dose-with-risk.ts";
 
 type TPatientInfo = {
   base: TPatientBase | null;
