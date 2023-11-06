@@ -42,6 +42,10 @@ public interface ExpertCertificationRepository extends JpaRepository<ExpertCerti
                     "where u.name like %:name%", nativeQuery = true)
     Page<ExpertCertificationInfo> findExpertCertificationInfoByName(@Param("name") String name, Pageable pageable);
 
+
+    @Query("select ec from ExpertCertification ec join fetch ec.user where ec.id = :ecId")
+    Optional<ExpertCertification> findExpertCertificationInfoById(@Param("ecId") Long ecId);
+
     interface ExpertCertificationInfo {
         Long getId();
 

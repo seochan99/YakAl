@@ -10,7 +10,9 @@ import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationDetailDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationListDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentForExpertDto;
 import com.viewpharm.yakal.medicalestablishment.repository.ExpertCertificationRepository;
 import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
 import com.viewpharm.yakal.user.domain.User;
@@ -65,7 +67,7 @@ public class ExpertCertificationService {
     //전문가 신청 내역 조회
     public ExpertCertificationAllDto getExpertCertification(String name, String sorting, String ordering, Long pageIndex) {
         Sort.Direction order;
-        log.info(ordering.toString());
+
         if (ordering.equals("desc")) {
             order = Sort.Direction.DESC;
         } else {
@@ -119,10 +121,32 @@ public class ExpertCertificationService {
 
     public Boolean approveExpertCertification(ExpertCertificationForResisterDto request) {
         ExpertCertification ec = expertCertificationRepository.findById(request.getId())
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT_CERTIFICATION));
+
+        User expert = ec.getUser();
+        if (expert != null)
+            expert.updateDepartment(request.getDepartment());
+        else throw new CommonException(ErrorCode.NOT_FOUND_EXPERT);
+
         //등록 승인
         ec.updateIsProcessed(request.getIsApproval());
+        userRepository.flush();
         expertCertificationRepository.flush();
         return Boolean.TRUE;
+    }
+
+    public ExpertCertificationDetailDto getExpertCertificationDetail(Long expertId) {
+        ExpertCertification ec = expertCertificationRepository.findExpertCertificationInfoById(expertId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT_CERTIFICATION));
+
+        MedicalEstablishment me = ec.getMedicalEstablishment();
+        if (me == null) throw new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT);
+
+        MedicalEstablishmentForExpertDto medicalEstablishmentForExpertDto =
+                new MedicalEstablishmentForExpertDto(me.getType().toString(), me.getChiefName(), me.getChiefTel(), me.getName(),
+                        me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(), me.getTel(), me.getClinicHours()
+                        , me.getFeatures());
+        return new ExpertCertificationDetailDto(medicalEstablishmentForExpertDto, ec.getUser().getName(), ec.getUser().getTel()
+                , ec.getCreatedDate(), ec.getUser().getRole().toString(), ec.getLicenseImg(), ec.getAffiliationImg());
     }
 }
