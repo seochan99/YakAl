@@ -44,38 +44,10 @@ public class ExpertController {
     private final GuardianService guardianService;
     private final MedicalAppointmentService medicalAppointmentService;
 
-    private final MedicalEstablishmentService medicalEstablishmentService;
-    private final ExpertCertificationService expertCertificationService;
-
-
     @GetMapping("")
     @Operation(summary = "전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
     public ResponseDto<UserExpertDto> getExpertInfo(@UserId Long userId) {
         return ResponseDto.ok(userService.getUserExpertInfo(userId));
-    }
-
-    @PostMapping(value = "/medical-establishments", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "의료기관 등록", description = "의료기관 등록")
-    public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message") MedicalEstablishmentDto requestDto,
-                                                     @RequestPart(value = "file") MultipartFile imgFile) {
-        return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
-    }
-
-    @GetMapping(value = "/medical-establishments/search")
-    @Operation(summary = "의료기관 검색", description = "의료기관 검색")
-    public ResponseDto<?> readMedicalEstablishments(@RequestParam(name = "medical") EMedical eMedical,
-                                                    @RequestParam(value = "word", required = false) String word,
-                                                    @RequestParam("page") Integer page) {
-        return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishments(eMedical, word, page, 5));
-    }
-
-    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "전문가 등록", description = "전문가 등록")
-    public ResponseDto<?> createExpertCertification(@UserId Long userId,
-                                                    @RequestPart(value = "message") ExpertCertificationDto requestDto,
-                                                    @RequestPart(value = "certificate") MultipartFile imgFile,
-                                                    @RequestPart(value = "affiliation") MultipartFile affiliationImgFile) {
-        return ResponseDto.ok(expertCertificationService.createExpertCertification(userId, requestDto, imgFile, affiliationImgFile));
     }
 
     // 권한에 관한 부분 추가 해야 함 (만료기한)
@@ -87,8 +59,6 @@ public class ExpertController {
     }
 
     /**
-     * 8번, 보호자 정보 가져 오기
-     *
      * @param userId
      * @return ResponseDto<?>
      */
