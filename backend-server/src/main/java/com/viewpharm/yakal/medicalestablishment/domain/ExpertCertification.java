@@ -7,6 +7,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -39,6 +44,13 @@ public class ExpertCertification {
     @Column(name = "is_processed", nullable = false)
     private Boolean isProcessed = Boolean.FALSE;
 
+    @Column(name = "created_at")
+    private LocalDate createdDate;
+
+    public void updateIsProcessed(Boolean isProcessed) {
+        this.isProcessed = isProcessed;
+    }
+
     @Builder
     public ExpertCertification(MedicalEstablishment medicalEstablishment, User user, EMedical type, String licenseImg, String affiliationImg) {
         this.medicalEstablishment = medicalEstablishment;
@@ -46,5 +58,6 @@ public class ExpertCertification {
         this.type = type;
         this.licenseImg = licenseImg;
         this.affiliationImg = affiliationImg;
+        this.createdDate = LocalDate.now();
     }
 }

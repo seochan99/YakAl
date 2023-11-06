@@ -1,88 +1,16 @@
-from typing import Set, List, Union, Tuple
-
-from fuzzywuzzy import fuzz
-from difflib import SequenceMatcher
-from imutils.contours import sort_contours
-from imutils.perspective import four_point_transform
-import matplotlib.pyplot as plt
-import pytesseract
-import imutils
+import time
+from typing import Union
 import cv2
 import numpy as np
-import time
-
+import imutils
 import easyocr
-
-# 이미지 출력 함수
-def plt_imshow(title: Union[str, List] = 'image',
-               img: Union[np.ndarray, List[np.ndarray]] = None,
-               figsize: Tuple[int, int] = (16, 10)):
-    plt.figure(figsize=figsize)
-
-    if type(img) == list:
-        if type(title) == list:
-            titles = title
-        else:
-            titles = []
-
-            for i in range(len(img)):
-                titles.append(title)
-
-        for i in range(len(img)):
-            if len(img[i].shape) <= 2:
-                rgbImg = cv2.cvtColor(img[i], cv2.COLOR_GRAY2RGB)
-            else:
-                rgbImg = cv2.cvtColor(img[i], cv2.COLOR_BGR2RGB)
-
-            plt.subplot(1, len(img), i + 1), plt.imshow(rgbImg)
-            plt.title(titles[i])
-            plt.xticks([]), plt.yticks([])
-
-        plt.show()
-    else:
-        if len(img.shape) < 3:
-            rgbImg = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-        else:
-            rgbImg = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-
-        plt.imshow(rgbImg)
-        plt.title(title)
-        plt.xticks([]), plt.yticks([])
-        plt.show()
-
-# 이미지 두 개를 위아래 방향으로 합치는 함수, 너비는 큰쪽을 따라간다.
-def marge_image(img1: np.ndarray, img2: np.ndarray, gap: int = 10) -> np.ndarray:
-    """
-    Concatenate two numpy.ndarray images in the longitudinal direction.
-    The width of concatenated image is of the wider one.
-    The margin on the less-wide image is filled with white(255, 255, 255).
-    if img1 is empty array, second one could be returned.
-
-    :param img1: top image
-    :param img2: bottom image
-    :type img1: np.ndarray
-    :type img2: np.ndarray
-    :return: The concatenated image
-    :rtype: np.ndarray
-    """
-
-    if img1.size == 0:
-        return img2
-
-    width, img = (img1.shape[1], img1) if img1.shape[1] > img2.shape[1] else (img2.shape[1], img2)
-
-    if np.array_equal(img, img1):
-        img2 = cv2.copyMakeBorder(img2, top=gap, bottom=0, left=0, right=img1.shape[1] - img2.shape[1],
-                                  borderType=cv2.BORDER_CONSTANT, value=(255, 255, 255))
-    else:
-        img1 = cv2.copyMakeBorder(img1, top=0, bottom=gap, left=0, right=img2.shape[1] - img1.shape[1],
-                                  borderType=cv2.BORDER_CONSTANT, value=(255, 255, 255))
-
-    return np.concatenate((img1, img2), axis=0)
-
+from fuzzywuzzy import fuzz
+from imutils.contours import sort_contours
+from functions.marge_images import marge_images
+from functions.show_image import show_image
 
 # OCR 하는 함수 (path : 경로, vervose : 이미지 출력 여부)
-def ocr_prescription(path: str, verbose: bool = False):
+def image_to_text(path: str, verbose: bool = False):
     # 시간 측정 시작
     start = time.time()
 
@@ -90,14 +18,14 @@ def ocr_prescription(path: str, verbose: bool = False):
     org = cv2.imread(path)
 
     if verbose:
-        plt_imshow("Original", org, figsize=(32, 20))
+        show_image("Original", org, figsize=(32, 20))
 
     # 2. Prescription Edge Detection (처방전 틀 검출)
     preprocessed = org
     H, W, _ = preprocessed.shape
 
     if verbose:
-        plt_imshow("Preprocessed", preprocessed)
+        show_image("Preprocessed", preprocessed)
         
     
     # 3. Histogram Equalization (히스토그램 평탄화 부분)
@@ -116,9 +44,10 @@ def ocr_prescription(path: str, verbose: bool = False):
     img_clahe = cv2.cvtColor(img_clahe, cv2.COLOR_YUV2BGR)
     
     #--④ 결과 출력
-    plt_imshow('Before', org)
-    plt_imshow('CLAHE', img_clahe)
-    plt_imshow('equalizeHist', img_eq)
+    if verbose:
+        show_image('Before', org)
+        show_image('CLAHE', img_clahe)
+        show_image('equalizeHist', img_eq)
     
     # 4. 회전 변환 시작
     
@@ -171,13 +100,15 @@ def ocr_prescription(path: str, verbose: bool = False):
     
 
     # 결과 출력
-    plt_imshow('Original Image', img_gray)
-    plt_imshow('Rotated Image', rotated_image)
+    if verbose:
+        show_image('Original Image', img_gray)
+        show_image('Rotated Image', rotated_image)
     
     
     # Histogram 생성 (히스토그램 정규화 하는 과정 그래프로 보여주는거 굳이 할 필요 없음)
-    hist = cv2.calcHist([rotated_image],[0],None,[256], [0, 256])
-    plt.plot(hist)
+    if verbose:
+        hist = cv2.calcHist([rotated_image],[0],None,[256], [0, 256])
+        plt.plot(hist)
     
     if verbose:
         print("hist.shape:", hist.shape)
@@ -189,13 +120,14 @@ def ocr_prescription(path: str, verbose: bool = False):
     img_norm2 = cv2.normalize(rotated_image, None, 0, 255, cv2.NORM_MINMAX) #이거 하나로 바로 정규화
     
     # 위에서 히스토그램 과정 그래프 생성하는거 이것도 굳이 할 필요 없음    
-    hist = cv2.calcHist([rotated_image], [0], None, [256], [0, 255])
-    hist_norm2 = cv2.calcHist([rotated_image], [0], None, [256], [0, 255])
+    if verbose:
+        hist = cv2.calcHist([rotated_image], [0], None, [256], [0, 255])
+        hist_norm2 = cv2.calcHist([rotated_image], [0], None, [256], [0, 255])
     
     # 이미지 출력
     if verbose:
-        plt_imshow('Before', rotated_image)
-        plt_imshow('cv2.normalize()', img_norm2)
+        show_image('Before', rotated_image)
+        show_image('cv2.normalize()', img_norm2)
         # hists = {'Before' : hist, 'cv2.normalize()':hist_norm2}
         # for i, (k, v) in enumerate(hists.items()):
         #     plt.subplot(1,3,i+1)
@@ -209,7 +141,7 @@ def ocr_prescription(path: str, verbose: bool = False):
     #gray: np.ndarray = cv2.cvtColor(img_norm2, cv2.COLOR_BGR2GRAY)
     gray = img_norm2
     if verbose:
-        plt_imshow("Gray", gray)
+        show_image("Gray", gray)
 
     # 커널 크기 지정
     ksize = W // 768
@@ -228,7 +160,7 @@ def ocr_prescription(path: str, verbose: bool = False):
     # 타원형 + 직사각형 두번 해서 다양한 특징을 찾는다고 함(아마도..?)
     
     if verbose:
-        plt_imshow("Closed", closed)
+        show_image("Closed", closed)
         
     
 
@@ -286,7 +218,7 @@ def ocr_prescription(path: str, verbose: bool = False):
         cv2.putText(grouped, "(" + str(w) + ", " + str(h) + ")", (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, fontScale=1, color=color, thickness=3)
 
     if verbose:
-        plt_imshow("Grouped", grouped)
+        show_image("Grouped", grouped)
 
     # 5. OCR
     merged = np.array([])
@@ -295,7 +227,7 @@ def ocr_prescription(path: str, verbose: bool = False):
     reader = easyocr.Reader(['ko','en'], gpu=True)
 
     for idx, roi in enumerate(roi_list): # 나눴던 이미지 다시 합침
-        merged = marge_image(merged, roi, gap)
+        merged = marge_images(merged, roi, gap)
 
         if idx % 15 == 14 or idx == last:
             # 이미지에 여백 넣어서 틀어진거 맞춤
@@ -303,7 +235,7 @@ def ocr_prescription(path: str, verbose: bool = False):
                                         value=(255, 255, 255))
 
             if verbose:
-                plt_imshow("Merged", merged)
+                show_image("Merged", merged)
 
             #result.append(pytesseract.image_to_string(merged, config="--psm 4 --oem 1 -l kor"))
             # reader.readtext로 읽은 결과
@@ -318,34 +250,5 @@ def ocr_prescription(path: str, verbose: bool = False):
 
     words = "".join(result).splitlines() # 줄 바꿈 기준으로 나눔
     words = [word for word in words if word != ""]
-
-    print(result)
     
-    query = set(words) #중복 제거
-
-    medicines = ["알레그라정", "스토가정", "가나칸정", "아낙정", "가나릴정", "네가박트정", "에스오메정", "영풍오플록사신정", "바나건조시럽", "동아카나마이신황", "메나탄주",
-                 "아가브론시럽", "올메텍플러스정", "한미아스피린장용정", "바난정", "레보프라이드", "싸이메트정", "비졸본정", "록소날", "타이레놀이알서방정", "뮤테란캅셀",
-                 "종근당아목시실린캡슐", "코푸시럽", "어린이부루펜시럽", "바리다제정", "세파로캡슐", "아세클낙정", "스토엠정"]
-    result_set = set()  # 결과를 담을 집합(set) 생성
-    
-    
-    for q in query: # 중복 까지 제거한 단어들 차례로 봄
-        most_similar: Union[None, str] = None
-        similarity: int = 0
-    
-        for medicine in medicines: # 약들 한번씩 보면서 비교
-            q_cleaned = "".join(ch for ch in q if ord('가') <= ord(ch) <= ord('힣')) #현재 글자가 유효
-            if len(q_cleaned) < len(medicine) * 0.8: # 지금 비교하는 약이름과 길이가 너무 차이나면 건너뜀
-                continue
-    
-            ratio = fuzz.partial_ratio(q_cleaned, medicine)
-    
-            if ratio >= 70: # 유사도가 일정 이상이면
-                result_set.add(medicine) # 약 추가
-            
-    
-    result_list = list(result_set)  # 집합을 리스트로 변환
-    end = time.time()
-
-    print(f"Duration: {end - start:.5f} sec")
-    return result_list
+    return result

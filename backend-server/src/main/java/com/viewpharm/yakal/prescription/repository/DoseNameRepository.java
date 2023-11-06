@@ -13,4 +13,6 @@ public interface DoseNameRepository extends JpaRepository<DoseName, String> {
 
     @Query(value = "SELECT * FROM dosenames WHERE MATCH(dose_name) AGAINST(:dosename in boolean mode) LIMIT 1",nativeQuery = true)
     Optional<DoseName> findByDoseNameSimilar(String dosename);
+
+
 }

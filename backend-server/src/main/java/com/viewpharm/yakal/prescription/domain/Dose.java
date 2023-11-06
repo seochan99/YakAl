@@ -13,6 +13,8 @@ import org.hibernate.annotations.Where;
 
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -36,23 +38,8 @@ public class Dose {
      * COLUMNS
      */
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "dosename_id")
-    private DoseName KDCode;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "risks_id")
-    private Risk ATCCode;
-
     @Column(name = "date", nullable = false)
     private LocalDate date;
-
-    @Column(name = "time", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EDosingTime time;
-
-    @Column(name = "is_taken", columnDefinition = "TINYINT(1)", nullable = false)
-    private Boolean isTaken;
 
     @Column(name = "pill_cnt", nullable = false)
     private Long pillCnt;
@@ -69,9 +56,21 @@ public class Dose {
     @Column(name = "deleted_at")
     private Timestamp deleted;
 
+    @OneToMany(mappedBy = "dose", fetch = FetchType.LAZY)
+    private List<TakeDose> takeDoses = new ArrayList<>();
+
     /**
      * MANY-TO-ONE RELATION
      */
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "dosename_id")
+    private DoseName KDCode;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "risk_id")
+    private Risk ATCCode;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "prescription_id", nullable = false)
     private Prescription prescription;
@@ -82,27 +81,22 @@ public class Dose {
 
     @Builder
     public Dose(final DoseName kdCode,
-                final Risk ATCCode,
+                final Risk atcCode,
                 final LocalDate date,
-                final EDosingTime time,
                 final Long pillCnt,
                 final Boolean isHalf,
                 final Prescription prescription,
                 final User user) {
         this.KDCode = kdCode;
+        this.ATCCode = atcCode;
         this.date = date;
-        this.time = time;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
         this.prescription = prescription;
         this.user = user;
-        this.isTaken = false;
         this.isDeleted = false;
-        this.ATCCode = ATCCode;
         this.created = new Timestamp(System.currentTimeMillis());
     }
 
-    public void updateIsTaken(final Boolean isTaken) {
-        this.isTaken = isTaken;
-    }
+
 }

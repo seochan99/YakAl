@@ -23,8 +23,8 @@ public class NotificationScheduleService {
     //약 유저 확인
     //유저의 디바이스 토큰 가져와서 알림 보내기
 
-    //매일 아침7-11시 10분 간격 실행
-//    @Scheduled(cron = "0 0/30 7-11 * * *")
+    //매일 아침7-11시 5분 간격 실행
+//    @Scheduled(cron = "0 0/5 7-11 * * *")
 //    @SchedulerLock(
 //            name = "scheduledSendingMorningNotification",
 //            lockAtLeastFor = "PT29M",
@@ -52,8 +52,8 @@ public class NotificationScheduleService {
         }
     }
 
-    //매일 오후 11-17시 10분 간격 실행
-//    @Scheduled(cron = "0 0/30 11-17 * * *")
+    //매일 오후 11-17시 5분 간격 실행
+//    @Scheduled(cron = "0 0/5 11-17 * * *")
 //    @SchedulerLock(
 //            name = "scheduledSendingLunchNotification",
 //            lockAtLeastFor = "PT29M",
@@ -80,8 +80,8 @@ public class NotificationScheduleService {
         }
     }
 
-    //매일 저녁 17-23시 30분 간격 실행
-//    @Scheduled(cron = "0 0/30 17-23 * * *")
+    //매일 저녁 17-23시 5분 간격 실행
+//    @Scheduled(cron = "0 0/5 17-23 * * *")
 //    @SchedulerLock(
 //            name = "scheduledSendingDinnerNotification",
 //            lockAtLeastFor = "PT29M",
