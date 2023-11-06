@@ -3,9 +3,9 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useAdminFacilityListViewController } from "@components/admin-main/facility-list/view.controller.ts";
 import Pagination from "react-js-pagination";
 import FacilityItem from "@components/admin-main/facility-item/view.tsx";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
 import { AdminFacilityListModel } from "@store/admin-facility-list.ts";
-import { EOrder } from "@type/order.ts";
+import { EOrder } from "@type/enum/order.ts";
 
 function AdminFacilityList() {
   const {

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EOrder } from "@type/order.ts";
+import { EOrder } from "@type/enum/order.ts";
 import { AdminExpertListViewModel } from "@components/admin-main/expert-list/view.model.ts";
-import { EExpertField } from "@type/expert-field.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
 
 export const useAdminExpertListViewController = () => {
   AdminExpertListViewModel.use();

@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import { useLoginMainPageViewController } from "./view.controller.ts";
-import { ESnackbarType } from "@type/snackbar-type.ts";
+import { ESnackbarType } from "@type/enum/snackbar-type.ts";
 import YakalSnackbar from "@components/snackbar/view.tsx";
 
 function LoginMainPage() {

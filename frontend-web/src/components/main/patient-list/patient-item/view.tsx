@@ -5,7 +5,6 @@ type PatientItemProps = {
   patientInfo: {
     id: number;
     name: string;
-    sex: string;
     birthday: number[];
     tel: string;
     lastQuestionnaireDate: number[];

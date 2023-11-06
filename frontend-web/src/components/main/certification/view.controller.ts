@@ -1,5 +1,5 @@
 import React, { useCallback, useRef, useState } from "react";
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 import { useNavigate } from "react-router-dom";
 import { ExpertFacilityListViewModel } from "@components/main/certification/view.model.ts";
 import { TApprovedFacilityItem } from "@type/response/approved-facility-item.ts";

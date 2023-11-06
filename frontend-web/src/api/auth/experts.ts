@@ -2,10 +2,10 @@ import { CommonResponse } from "@api/response.ts";
 import { AxiosResponse } from "axios";
 import { authAxios } from "@api/auth/instance.ts";
 import { TSortBy } from "@store/patient-list.ts";
-import { EPatientField } from "@type/patient-field.ts";
-import { EOrder } from "@type/order.ts";
+import { EPatientField } from "@type/enum/patient-field.ts";
+import { EOrder } from "@type/enum/order.ts";
 import { TFacilityInfo } from "@type/response/facility-info.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { TExpertUser } from "@type/response/expert-user.ts";
 import { TPatientBase } from "@type/response/patient-base.ts";
 import { TProtectorInfo } from "@type/response/protector-info.ts";
@@ -15,7 +15,7 @@ import { TGeneralSurveyResult } from "@type/response/general-survey-result.ts";
 import { TDoseETCInfo } from "@type/response/dose-etc-info.ts";
 import { TDoseRiskInfo } from "@type/response/dose-etc-with-risk.ts";
 import { TApprovedFacilityList } from "@type/response/approved-facility-list.ts";
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
   return await authAxios.get<T, AxiosResponse<T>>(`/experts`);

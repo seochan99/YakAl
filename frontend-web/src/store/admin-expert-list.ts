@@ -1,9 +1,9 @@
-import { EOrder } from "@type/order.ts";
-import { EExpertField } from "@type/expert-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
 import { TAdminExpertItem } from "@type/response/admin-expert-item.ts";
 import { isAxiosError } from "axios";
 import { getExpertRequestList } from "@api/auth/admin.ts";
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export type TExpertListSort = {
   order: EOrder;

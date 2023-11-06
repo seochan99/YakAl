@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ExpertFacilityListModel } from "@store/facility-list.ts";
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export class ExpertFacilityListViewModel {
   private static updater = false;

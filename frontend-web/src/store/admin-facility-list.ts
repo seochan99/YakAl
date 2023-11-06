@@ -1,9 +1,9 @@
-import { EOrder } from "@type/order.ts";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
 import { getFacilityRequestList } from "@api/auth/admin.ts";
 import { TAdminFacilityItem } from "@type/response/admin-facility-item.ts";
 import { isAxiosError } from "axios";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 
 export type TFacilityListSortType = {
   order: EOrder;

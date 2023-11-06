@@ -1,7 +1,7 @@
 import * as S from "./style.ts";
 import { usePatientPageViewController } from "./view.controller.ts";
 import Summary from "./child/summary/view.tsx";
-import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 import Medication from "./child/medication/view.tsx";
 import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";

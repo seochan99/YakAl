@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AdminFacilityListModel } from "@store/admin-facility-list.ts";
-import { EOrder } from "@type/order.ts";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
 
 export class AdminFacilityListViewModel {
   private static updater: boolean;

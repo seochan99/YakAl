@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import ApprovalDialog from "@components/admin-main/approval-dialog/view.tsx";
 import { useAdminFacilityDetailViewController } from "@components/admin-main/facility-detail/view.controller.ts";

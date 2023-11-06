@@ -1,7 +1,7 @@
 import * as S from "../style.ts";
-import SummaryGeriatricSyndrome from "./children/geriatric-syndrome.tsx";
-import SummaryScreening from "./children/screening.tsx";
-import SummaryMedication from "./children/medication.tsx";
+import SummaryGeriatricSyndrome from "./geriatric-syndrome.tsx";
+import SummaryScreening from "./screening.tsx";
+import SummaryMedication from "./medication.tsx";
 
 function Summary() {
   return (

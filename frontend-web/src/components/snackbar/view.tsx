@@ -1,6 +1,6 @@
 import { Alert, Slide, SlideProps, Snackbar, SnackbarCloseReason } from "@mui/material";
 import React, { SyntheticEvent, useCallback } from "react";
-import { ESnackbarType } from "@type/snackbar-type.ts";
+import { ESnackbarType } from "@type/enum/snackbar-type.ts";
 
 type YakalSnackbarProps = {
   open: boolean;

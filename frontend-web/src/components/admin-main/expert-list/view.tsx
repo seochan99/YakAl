@@ -4,8 +4,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Pagination from "react-js-pagination";
 import { PatientListModel } from "@store/patient-list.ts";
 import AdminExpertItem from "@components/admin-main/expert-item/view.tsx";
-import { EExpertField } from "@type/expert-field.ts";
-import { EOrder } from "@type/order.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
+import { EOrder } from "@type/enum/order.ts";
 
 function AdminExpertList() {
   const {

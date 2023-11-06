@@ -1,6 +1,6 @@
 import { useCallback } from "react";
-import { useLocation } from "react-router-dom";
 import { PatientPageViewModel } from "../../view.model.ts";
+import { usePathId } from "@hooks/use-path-id.ts";
 
 export const useMedicationViewController = () => {
   const { getStates } = PatientPageViewModel;
@@ -9,9 +9,7 @@ export const useMedicationViewController = () => {
     isLoading,
   } = getStates();
 
-  const location = useLocation();
-  const lastSlashIndex = location.pathname.lastIndexOf("/");
-  const patientId = +location.pathname.substring(lastSlashIndex + 1);
+  const patientId = usePathId();
 
   const onChangeETCPage = useCallback(
     (page: number) => {

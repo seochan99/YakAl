@@ -1,4 +1,4 @@
-import * as S from "../../style.ts";
+import * as S from "../style.ts";
 import { PatientPageViewModel } from "@components/main/patient/view.model.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 

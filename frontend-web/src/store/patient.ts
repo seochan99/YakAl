@@ -1,4 +1,4 @@
-import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 import {
   getAnticholinergicDoses,
   getBeersDoses,

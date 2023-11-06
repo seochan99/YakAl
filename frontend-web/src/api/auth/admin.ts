@@ -1,13 +1,13 @@
 import { CommonResponse } from "@api/response.ts";
 import { AxiosResponse } from "axios";
 import { authAxios } from "@api/auth/instance.ts";
-import { EFacilityField } from "@type/facility-field.ts";
-import { EOrder } from "@type/order.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
+import { EOrder } from "@type/enum/order.ts";
 import { TFacilityListSortType } from "@store/admin-facility-list.ts";
 import { TAdminFacilityList } from "@type/response/admin-facility-list.ts";
 import { TAdminExpertList } from "@type/response/admin-expert-list.ts";
 import { TExpertListSort } from "@store/admin-expert-list.ts";
-import { EExpertField } from "@type/expert-field.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
 
 export const getFacilityRequestList = async <T = CommonResponse<TAdminFacilityList>>(
   nameQuery: string,

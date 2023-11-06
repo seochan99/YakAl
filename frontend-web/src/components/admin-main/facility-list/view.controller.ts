@@ -1,7 +1,7 @@
 import { AdminFacilityListViewModel } from "@components/admin-main/facility-list/view.model.ts";
 import React, { useEffect, useRef, useState } from "react";
-import { EOrder } from "@type/order.ts";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
 
 export const useAdminFacilityListViewController = () => {
   AdminFacilityListViewModel.use();

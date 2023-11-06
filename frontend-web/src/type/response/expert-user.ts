@@ -1,4 +1,4 @@
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export type TExpertUser = {
   name: string | null;

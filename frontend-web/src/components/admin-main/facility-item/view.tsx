@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import Tooltip from "@mui/material/Tooltip";

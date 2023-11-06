@@ -13,7 +13,6 @@ import SocialLoginFailurePage from "@components/login/social-login-failure/view.
 import { RegistrationPage as ExpertFacilityRegistration } from "@components/main/registration/view.tsx";
 import MyPage from "@components/main/mypage/view.tsx";
 import AfterSocialLoginPage from "@components/login/after-social-login/view.tsx";
-import LoadingPage from "@page/loading/view.tsx";
 import IdentifyPage from "@components/login/identify/view.tsx";
 import IdentifyResultPage from "@components/login/identify-result/view.tsx";
 import CertificationPage from "@components/main/certification/view.tsx";
@@ -140,11 +139,6 @@ export const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: "loading",
-        element: <LoadingPage />,
-        errorElement: <NotFoundPage />,
       },
     ],
   },

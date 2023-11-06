@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EJob } from "@type/job.ts";
+import { EJob } from "@type/enum/job.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import Tooltip from "@mui/material/Tooltip";
