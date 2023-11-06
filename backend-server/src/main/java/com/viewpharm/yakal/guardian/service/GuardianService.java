@@ -4,7 +4,7 @@ import com.viewpharm.yakal.guardian.domain.Guardian;
 import com.viewpharm.yakal.guardian.dto.response.GuardianTelDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.response.PatientDto;
-import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
+import com.viewpharm.yakal.user.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
@@ -49,12 +49,11 @@ public class GuardianService {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         List<User> users = userRepository.searchGuardianForUser(user);
 
-
         return users.stream()
                 .map(u -> UserListDtoForGuardian.builder().
                         id(u.getId())
                         .birthday(u.getBirthday().toString())
-                        .name(u.getName()).build())
+                        .nickname(u.getNickname()).build())
                 .collect(Collectors.toList());
     }
 

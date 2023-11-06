@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.guardian.dto.response;
+package com.viewpharm.yakal.user.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -8,13 +8,13 @@ import java.time.LocalDate;
 @Getter
 public class UserListDtoForGuardian {
     Long id;
-    String name;
+    String nickname;
     String birthday;
 
     @Builder
-    public UserListDtoForGuardian(Long id, String name, String birthday) {
+    public UserListDtoForGuardian(Long id, String nickname, String birthday) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
         this.birthday = birthday;
     }
 }
