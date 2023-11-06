@@ -9,10 +9,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppointment, Long> {
+
+    // 내가 공유한 상담 전문가 목록 뽑기, 이때 병원 이름 같이 fetch join
+    @Query("select m from MedicalAppointment m join fetch m.expert e join fetch e.medicalEstablishment where m.patient = :patient order by m.createDate desc")
+    List<MedicalAppointment> findExpertForPatient(User patient);
+
     Optional<MedicalAppointment> findByPatientIdAndIsDeleted(Long patientId, Boolean isDeleted);
 
     Page<MedicalAppointment> findByExpertIdAndIsDeleted(Long expertId, Boolean isDeleted, Pageable pageable);
