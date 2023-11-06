@@ -54,7 +54,7 @@ export class PatientListModel {
 
   public invalidate = () => {
     this.patientList = null;
-    this.totalCount = null;
+    this.totalCount = 0;
   };
 
   /* PUBLIC METHOD */
@@ -75,12 +75,12 @@ export class PatientListModel {
       ).pageInfo.totalElements;
     } catch (error) {
       this.patientList = [];
-      this.totalCount = null;
+      this.totalCount = 0;
     }
   };
 
   public isLoading = () => {
-    return this.patientList === null || this.totalCount === 0;
+    return this.patientList === null;
   };
 
   public getPatientList = () => {
