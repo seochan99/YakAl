@@ -83,9 +83,9 @@ public class User {
     @Column(name = "tel")
     private String tel;
 
-//    @Column(name = "sex")
-//    @Enumerated(EnumType.STRING)
-//    private ESex sex;
+    @Column(name = "sex")
+    @Enumerated(EnumType.STRING)
+    private ESex sex;
 
     /**
      * Optional Columns

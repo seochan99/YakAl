@@ -67,16 +67,18 @@ public class UnderlyingConditionService {
 
     //전문가가 환자의 과거 병명 리스트
     public List<NotableFeatureStringDto> readUnderlyingConditions(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+//        //전문가 확인
+//        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+//
+//        //유저 확인
+//        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+//
+//        List<UnderlyingCondition> underlyingConditions = underlyingConditionRepository.findAllByUserOrderByIdDesc(patient);
+//
+//        return underlyingConditions.stream()
+//                .map(UnderlyingCondition -> new NotableFeatureStringDto(UnderlyingCondition.getId(), UnderlyingCondition.getName()))
+//                .collect(Collectors.toList());
 
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        List<UnderlyingCondition> underlyingConditions = underlyingConditionRepository.findAllByUserOrderByIdDesc(patient);
-
-        return underlyingConditions.stream()
-                .map(UnderlyingCondition -> new NotableFeatureStringDto(UnderlyingCondition.getId(), UnderlyingCondition.getName()))
-                .collect(Collectors.toList());
+        return null;
     }
 }

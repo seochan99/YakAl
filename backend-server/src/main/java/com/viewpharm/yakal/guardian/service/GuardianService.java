@@ -66,7 +66,7 @@ public class GuardianService {
 
         return GuardianTelDto.builder()
                 .id(resentGuardian.getId())
-                .realName(resentGuardian.getRealName())
+                .realName(resentGuardian.getName())
                 .tel(resentGuardian.getTel()).build();
     }
 

@@ -64,26 +64,25 @@ public class AuthController {
         return ResponseDto.created(jwtTokenDto);
     }
 
-    /**
-     * Web Login API
-     */
-    @GetMapping("/kakao/callback")
-    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
-        final String accessToken = oAuth2Util.getKakaoAccessToken(code);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
-
-        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.KAKAO);
-    }
-
-    @GetMapping("/google/callback")
-    @Operation(summary = "Google 웹 로그인", description = "Google 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
-        final String accessToken = oAuth2Util.getGoogleAccessToken(code);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
-
-        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
-    }
+//    /**
+//     * Web Login API
+//     */
+//    @GetMapping("/kakao/callback")
+//    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+//    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
+//        final String accessToken = oAuth2Util.getKakaoAccessToken(code);
+//        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
+//
+//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.KAKAO);
+//    }
+//
+//    @GetMapping("/google/callback")
+//    @Operation(summary = "Google 웹 로그인", description = "Google 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
+//    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
+//        final String accessToken = oAuth2Util.getGoogleAccessToken(code);
+//        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
+//
+//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
 
     /**
      * Web Social Login Redirect URL

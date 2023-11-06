@@ -64,16 +64,18 @@ public class MedicalHistoryService {
 
     //전문가가 환자의 과거 병명 리스트
     public List<NotableFeatureStringDto> getDiagnosisListForExpert(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+//        //전문가 확인
+//        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+//
+//        //유저 확인
+//        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+//
+//        List<MedicalHistory> diagnoses = medicalHistoryRepository.findAllByUserOrderByIdDesc(patient);
+//
+//        return diagnoses.stream()
+//                .map(d -> new NotableFeatureStringDto(d.getId(), d.getName()))
+//                .collect(Collectors.toList());
 
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        List<MedicalHistory> diagnoses = medicalHistoryRepository.findAllByUserOrderByIdDesc(patient);
-
-        return diagnoses.stream()
-                .map(d -> new NotableFeatureStringDto(d.getId(), d.getName()))
-                .collect(Collectors.toList());
+        return null;
     }
 }

@@ -10,18 +10,18 @@ import com.viewpharm.yakal.prescription.repository.PrescriptionRepository;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -29,16 +29,16 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final PrescriptionRepository prescriptionRepository;
 
     @Override
-    public OAuth2User loadUser(OAuth2UserRequest userRequest) {
-        OAuth2User oauth2User = super.loadUser(userRequest);
+    public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         try {
-            return this.process(userRequest, oauth2User);
+            log.info("OAuth2UserRequest: {}", userRequest);
+            return this.process(userRequest, super.loadUser(userRequest));
         } catch (Exception ex) {
             throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
         }
     }
 
-    private OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
+    public OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
         ELoginProvider provider = ELoginProvider.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, oauth2User.getAttributes());
 
@@ -47,13 +47,14 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = null;
 
         if (userOpt.isEmpty()) {
-            user = userRepository.save(User.builder()
+            log.info("OAuth2User not found. Create new user.");
+            user = userRepository.saveAndFlush(User.builder()
                     .socialId(userInfo.getId())
                     .loginProvider(provider)
                     .role(ERole.USER)
                     .build());
 
-            prescriptionRepository.save(
+            prescriptionRepository.saveAndFlush(
                     Prescription.builder()
                             .user(user)
                             .pharmacyName("default")
@@ -62,6 +63,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             user = userOpt.get();
         }
+
+        log.info("OAuth2User found. User id: {}", user.getId());
 
         return UserPrincipal.create(user, oauth2User.getAttributes());
     }

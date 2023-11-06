@@ -69,18 +69,19 @@ public class DietarySupplementService {
 
     //전문가가 환자의 건강 식품 리스트
     public List<NotableFeatureStringDto> getHealthFoodListForExpert(Long expertId, Long patientId) {
-        //전문가 확인
-        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-
-        //유저 확인
-        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-
-        List<DietarySupplement> dietarySupplements = dietarySupplementRepository.findAllByUserOrderByIdDesc(patient);
-
-        List<NotableFeatureStringDto> result = dietarySupplements.stream()
-                .map(h -> new NotableFeatureStringDto(h.getId(), h.getName()))
-                .collect(Collectors.toList());
-
-        return result;
+//        //전문가 확인
+//        User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+//
+//        //유저 확인
+//        User patient = userRepository.findById(patientId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+//
+//        List<DietarySupplement> dietarySupplements = dietarySupplementRepository.findAllByUserOrderByIdDesc(patient);
+//
+//        List<NotableFeatureStringDto> result = dietarySupplements.stream()
+//                .map(h -> new NotableFeatureStringDto(h.getId(), h.getName()))
+//                .collect(Collectors.toList());
+//
+//        return result;
+        return null;
     }
 }

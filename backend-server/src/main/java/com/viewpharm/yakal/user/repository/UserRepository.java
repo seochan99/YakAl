@@ -38,9 +38,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("update User u set u.name = :name, u.isDetail = :isDetail where u.id = :userId")
     Integer updateNameAndIsDetailById(Long userId, String name, Boolean isDetail);
 
-    @Modifying(clearAutomatically = true)
-    @Query("update User u set u.isCertified = :isCertified, u.job = :job  where u.id = :userId")
-    Integer updateIsCertified(Long userId, Boolean isCertified, EJob job);
+//    @Modifying(clearAutomatically = true)
+//    @Query("update User u set u.isCertified = :isCertified, u.job = :job  where u.id = :userId")
+//    Integer updateIsCertified(Long userId, Boolean isCertified, EJob job);
 
     @Query(value = "SELECT user_id as UserId, user_name as Username, COUNT(dose_id) as Count" +
             " FROM (SELECT u.id as user_id, u.name as user_name, d.id as dose_id" +
@@ -74,8 +74,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
-    @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
-    Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
+//    @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
+//    Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
 
     @Query("select u from User u where u.id = :id and u.role = :role")
     Optional<User> findByIdAndRole(@Param("id") Long userId, @Param("role") ERole role);
@@ -83,12 +83,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select m.name from User u join MedicalEstablishment m on u.medicalEstablishment.id = m.id where u.id = :id")
     Optional<String> getEstablishmentNameByIdAndRole(@Param("id") Long userId);
 
-    Optional<User> findByIdAndJob(Long userId, EJob patient);
+    Optional<User> findById(Long userId);
 
     List<User> findByNameAndBirthday(String name, LocalDate birthday);
 
-    @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
-    List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
+//    @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
+//    List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
 
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
     List<User> searchGuardianForUser(@Param("user") User user);

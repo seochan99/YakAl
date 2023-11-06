@@ -47,10 +47,10 @@ public class SecurityConfig{
                 )
 
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
-                        .requestMatchers("/api/v1/**").hasAnyRole("USER", "EXPERT", "ADMIN")
-                        .requestMatchers("/api/v1/experts/**").hasAnyRole("EXPERT", "ADMIN")
-                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
+                        .requestMatchers("/api/v1/**").hasAnyRole("USER", "DOCTOR", "PHARMACY", "ADMIN")
+                        .requestMatchers("/api/v1/experts/**").hasAnyRole("DOCTOR", "PHARMACY", "ADMIN")
+                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2Login -> oauth2Login

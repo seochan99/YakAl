@@ -9,7 +9,8 @@ public class Constants {
             "/api/v1/auth/kakao", "/api/v1/auth/google", "/api/v1/auth/apple",
             "/api/v1/auth/kakao/callback", "/api/v1/auth/google/callback", "/api/v1/auth/apple/callback",
             "/api/v1/auth/reissue", "/api/v1/auth/reissue/secure", "/api/v1/auth/validate",
-            "/oauth2/authorization/kakao", "/api-docs.html", "/api-docs/**", "/swagger-ui/**",
+            "/oauth2/authorization/kakao", "/oauth2/authorization/google", "/oauth2/authorization/apple",
+            "/api-docs.html", "/api-docs/**", "/swagger-ui/**",
     };
 
     public static final String[] NO_NEED_AUTH_URLS_REGEX = {
