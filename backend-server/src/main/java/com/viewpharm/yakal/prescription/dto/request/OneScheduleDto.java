@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -17,8 +18,7 @@ public class OneScheduleDto {
     private LocalDate date;
 
     @NotNull
-    @Enum(enumClass = EDosingTime.class)
-    private EDosingTime time;
+    private List<Boolean> time;
 
     @NotNull
     @DecimalMin("0.0")
