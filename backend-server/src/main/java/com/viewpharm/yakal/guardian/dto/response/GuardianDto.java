@@ -8,13 +8,13 @@ public class GuardianDto {
     Long id;
     String name;
     String tel;
-    String birthDay;
+    String birthday;
 
     @Builder
-    public GuardianDto(Long id, String name, String tel, String birthDay) {
+    public GuardianDto(Long id, String name, String tel, String birthday) {
         this.id = id;
         this.name = name;
         this.tel = tel;
-        this.birthDay = birthDay;
+        this.birthday = birthday;
     }
 }

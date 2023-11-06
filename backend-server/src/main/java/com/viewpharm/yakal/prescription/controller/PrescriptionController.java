@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api/v1/prescription")
+@RequestMapping("api/v1/prescriptions")
 public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;
