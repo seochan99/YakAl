@@ -22,6 +22,7 @@ export function useLoginPageViewController() {
       })
       .catch((error) => {
         if (isAxiosError(error)) {
+          setIsLoading(false);
           navigate("/");
         }
       });
@@ -41,6 +42,7 @@ export function useLoginPageViewController() {
       })
       .catch((error) => {
         if (isAxiosError(error)) {
+          setIsLoading(false);
           navigate("/");
         }
       });

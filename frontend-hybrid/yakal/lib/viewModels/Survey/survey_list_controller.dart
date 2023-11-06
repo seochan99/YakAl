@@ -16,7 +16,7 @@ class SurveyListController extends GetxController {
   Future<void> updateAllSurveysCompletionStatus() async {
     var dio = await authDioWithContext();
     try {
-      var response = await dio.get("/surveys/answer");
+      var response = await dio.get("/surveys/answers");
       if (response.statusCode == 200) {
         List dataList = response.data['data']['result'];
         for (var survey in tests) {

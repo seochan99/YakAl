@@ -86,16 +86,22 @@ class SettingScreen extends StatelessWidget {
                         confirmLabel: "로그아웃",
                         cancelLabel: "아니요",
                         onConfirm: () async {
-                          try {
-                            Get.offAllNamed('/login');
-                            // 카카오 로그아웃
-                            await UserApi.instance.logout();
-                            // 서버 로그아웃 호출
-                            var dio = await authDioWithContext();
-                            await dio.post('/auth/logout?platform=MOBILE');
-                          } catch (e) {
-                            //error
-                          }
+                          UserApi.instance.logout().then((_) {
+                            authDioWithContext().then((dio) {
+                              dio
+                                  .patch('/auth/logout?platform=MOBILE')
+                                  .then((_) {
+                                Get.offAllNamed('/login');
+                              }).catchError((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('로그아웃에 실패했습니다.'),
+                                  ),
+                                );
+                                Get.offAllNamed('/');
+                              });
+                            });
+                          });
                         },
                       );
                     },

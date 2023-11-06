@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -106,7 +105,8 @@ class SurveyDetailBokyakController extends GetxController {
 
     try {
       // 설문 결과 등록
-      var response = await dio.post("/surveys/${surveyModel.id}/answer", data: {
+      var response =
+          await dio.post("/surveys/${surveyModel.id}/answers", data: {
         "content": jsonEncode(results),
         "score": totalScore,
         "resultComment": surveyModel.resultComment
