@@ -13,9 +13,8 @@ import java.time.LocalDate;
 @Builder
 @RequiredArgsConstructor
 public class UserExpertDto {
-
     final private String name;
-    final private EJob job;
+    final private String job;
     final private String department;
     final private LocalDate birthday;
     final private String tel;
