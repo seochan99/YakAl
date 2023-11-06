@@ -1,17 +1,17 @@
 import * as S from "./style.ts";
 import { EFacilityType } from "@type/facility-type.ts";
-import { getDateStringFromDate } from "@util/get-date-string-from-date.ts";
-import { TFacilityItem } from "@store/admin-facility-list.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import Tooltip from "@mui/material/Tooltip";
+import { TAdminFacilityItem } from "@type/response/admin-facility-item.ts";
+import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 
 type TFacilityItemProps = {
-  facilityInfo: TFacilityItem;
+  facilityInfo: TAdminFacilityItem;
 };
 
 function FacilityItem({ facilityInfo }: TFacilityItemProps) {
-  const { id, name, representative, representativeTel, facilityType, requestedAt } = facilityInfo;
+  const { id, name, directorName, directorTel, type, requestedAt } = facilityInfo;
 
   return (
     <S.OuterDiv>
@@ -20,7 +20,7 @@ function FacilityItem({ facilityInfo }: TFacilityItemProps) {
           <S.NameSpan>{name}</S.NameSpan>
         </Tooltip>
         <S.FacilityTypeSpan>
-          {facilityType === EFacilityType.HOSPITAL ? (
+          {type === EFacilityType.HOSPITAL ? (
             <>
               <LocalHospitalIcon />
               {"병원"}
@@ -32,11 +32,11 @@ function FacilityItem({ facilityInfo }: TFacilityItemProps) {
             </>
           )}
         </S.FacilityTypeSpan>
-        <Tooltip title={representative} followCursor>
-          <S.RepresentativeSpan>{representative}</S.RepresentativeSpan>
+        <Tooltip title={directorName} followCursor>
+          <S.RepresentativeSpan>{directorName}</S.RepresentativeSpan>
         </Tooltip>
-        <S.TelephoneSpan>{representativeTel}</S.TelephoneSpan>
-        <S.RequestDateSpan>{getDateStringFromDate(requestedAt)}</S.RequestDateSpan>
+        <S.TelephoneSpan>{directorTel}</S.TelephoneSpan>
+        <S.RequestDateSpan>{getDateStringFromArray(requestedAt)}</S.RequestDateSpan>
       </S.StyledLink>
     </S.OuterDiv>
   );

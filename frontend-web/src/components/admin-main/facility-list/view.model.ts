@@ -21,6 +21,8 @@ export class AdminFacilityListViewModel {
   };
 
   public static fetch = async () => {
+    this.facilityListModel.invalidate();
+    this.flush();
     await this.facilityListModel.fetch();
     this.flush();
   };

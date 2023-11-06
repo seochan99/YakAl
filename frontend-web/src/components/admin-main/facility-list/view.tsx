@@ -65,9 +65,11 @@ function AdminFacilityList() {
           <S.TelephoneSpan>{`기관장 전화번호`}</S.TelephoneSpan>
           <S.RequestDateSpan>{`신청일`}</S.RequestDateSpan>
         </S.TableHeaderDiv>
-        {facilityList.map((facilityItem) => (
-          <FacilityItem key={facilityItem.id} facilityInfo={facilityItem} />
-        ))}
+        {facilityList.length === 0 ? (
+          <S.CenterDiv>{"등록 신청한 기관이 존재하지 않습니다."}</S.CenterDiv>
+        ) : (
+          facilityList.map((facilityItem) => <FacilityItem key={facilityItem.id} facilityInfo={facilityItem} />)
+        )}
       </S.ListDiv>
       <S.PaginationDiv>
         <Pagination

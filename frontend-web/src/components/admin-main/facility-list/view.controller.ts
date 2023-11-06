@@ -7,7 +7,7 @@ export const useAdminFacilityListViewController = () => {
   AdminFacilityListViewModel.use();
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery } = AdminFacilityListViewModel;
-  const { isLoading, facilityList, paging, sorting } = getStates();
+  const { isLoading, facilityList, paging, sorting, nameQuery } = getStates();
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -37,16 +37,38 @@ export const useAdminFacilityListViewController = () => {
   }, [sortingOptionOpen, setSortingOptionOpen]);
 
   const onSelectSortingOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSortBy(EOrder.DESC, e.currentTarget.value as EFacilityField);
     setSortingOptionOpen(false);
+
+    const currentField = e.currentTarget.value as EFacilityField;
+    if (sorting.field === currentField) {
+      if (sorting.order === EOrder.DESC) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    } else {
+      if (currentField === EFacilityField.NAME || currentField === EFacilityField.REPRESENTATIVE) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    }
   };
 
   const onChangePage = (pageNumber: number) => {
+    if (pageNumber === paging.pageNumber) {
+      return;
+    }
+
     setPageNumber(pageNumber);
   };
 
   const onSearchBarEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
+      if (nameQueryCache === nameQuery) {
+        return;
+      }
+
       setNameQuery(nameQueryCache);
     }
   };

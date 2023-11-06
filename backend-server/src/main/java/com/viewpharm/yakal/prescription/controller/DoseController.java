@@ -44,49 +44,49 @@ public class DoseController {
         return ResponseDto.ok(oneDayScheduleDto);
     }
 
-    @GetMapping("/between")
-    @Operation(summary = "날짜 사이의 복용 달성도 가져오기", description = "두개의 날짜 사이의 약 복용 달성도를 하루 단위로 가져온다.")
-    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
-            @UserId Long id,
-            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
-            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
-    ) {
-        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
-        return ResponseDto.ok(oneMonthSummary);
-    }
-
-    @PatchMapping("/count")
-    @Operation(summary = "약 개수 변경",description = "특정 시간대의 특정 약의 개수를 ID로 특정하여 변경합니다.")
-    public ResponseDto<Map<String, Boolean>> updateDoseCount(
-            @UserId Long id,
-            @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
-    ) {
-        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(updateDoseCountDto);
-        return ResponseDto.ok(isUpdatedMap);
-    }
-
-    @PatchMapping("/taken/{date}/{time}")
-    @Operation(summary = "특정 시간대의 스케줄 모두 복용 처리 혹은 취소", description = "특정 시간대의 복용 스케줄을 모두 완료 처리 혹은 취소합니다.")
-    public ResponseDto<Boolean> updateIsTakenByTime(
-            @UserId Long id,
-            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
-            @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
-            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
-    ) {
-        doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
-        return ResponseDto.ok(null);
-    }
-
-    @PatchMapping("/taken/{id}")
-    @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
-    public ResponseDto<Boolean> updateIsTakenById(
-            @UserId Long id,
-            @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
-            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
-    ) {
-        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
-        return ResponseDto.ok(null);
-    }
+//    @GetMapping("/between")
+//    @Operation(summary = "날짜 사이의 복용 달성도 가져오기", description = "두개의 날짜 사이의 약 복용 달성도를 하루 단위로 가져온다.")
+//    public ResponseDto<List<OneDaySummaryDto>> getMonthDosePercent(
+//            @UserId Long id,
+//            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
+//            @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
+//    ) {
+//        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
+//        return ResponseDto.ok(oneMonthSummary);
+//    }
+//
+//    @PatchMapping("/count")
+//    @Operation(summary = "약 개수 변경",description = "특정 시간대의 특정 약의 개수를 ID로 특정하여 변경합니다.")
+//    public ResponseDto<Map<String, Boolean>> updateDoseCount(
+//            @UserId Long id,
+//            @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
+//    ) {
+//        final Map<String, Boolean> isUpdatedMap = doseService.updateDoseCount(updateDoseCountDto);
+//        return ResponseDto.ok(isUpdatedMap);
+//    }
+//
+//    @PatchMapping("/taken/{date}/{time}")
+//    @Operation(summary = "특정 시간대의 스케줄 모두 복용 처리 혹은 취소", description = "특정 시간대의 복용 스케줄을 모두 완료 처리 혹은 취소합니다.")
+//    public ResponseDto<Boolean> updateIsTakenByTime(
+//            @UserId Long id,
+//            @PathVariable("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date,
+//            @PathVariable(value = "time") @Valid @Enum(enumClass = EDosingTime.class) EDosingTime dosingTime,
+//            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
+//    ) {
+//        doseService.updateIsTakenByTime(id, date, dosingTime, updateIsTakenDto.getIsTaken());
+//        return ResponseDto.ok(null);
+//    }
+//
+//    @PatchMapping("/taken/{id}")
+//    @Operation(summary = "특정 시간대의 특정 약 복용 처리 혹은 취소", description = "특정 시간대에서 ID로 특정된 복용 스케줄을 완료 처리 혹은 취소합니다.")
+//    public ResponseDto<Boolean> updateIsTakenById(
+//            @UserId Long id,
+//            @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
+//            @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
+//    ) {
+//        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
+//        return ResponseDto.ok(null);
+//    }
 
     @PostMapping("")
     @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
