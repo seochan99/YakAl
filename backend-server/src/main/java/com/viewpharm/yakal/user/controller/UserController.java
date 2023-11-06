@@ -4,6 +4,7 @@ import com.viewpharm.yakal.base.annotation.Date;
 import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.base.dto.ResponseDto;
+import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.user.dto.response.UserInfoDto;
 import com.viewpharm.yakal.user.dto.request.*;
 import com.viewpharm.yakal.user.service.UserService;
@@ -41,6 +42,12 @@ public class UserController {
                 .build();
 
         return ResponseDto.ok(userInfoDto);
+    }
+
+    @GetMapping("/my-expert")
+    @Operation(summary = "나의 전문가 정보 가져오기", description = "로그인한 전문가의 정보를 가져온다")
+    public ResponseDto<UserExpertDto> getExpertInfo(@UserId Long userId) {
+        return ResponseDto.ok(userService.getUserExpertInfo(userId));
     }
 
     @GetMapping("/check/identification")
