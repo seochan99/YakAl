@@ -29,7 +29,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/dose")
+@RequestMapping("/api/v1/doses")
 @Tag(name = "Dose", description = "환자의 복용 정보 추가, 열람, 수정, 삭제")
 public class DoseController {
     private final DoseService doseService;
@@ -51,12 +51,12 @@ public class DoseController {
             @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
             @RequestParam @Valid @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate
     ) {
-        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate,endDate);
+        final List<OneDaySummaryDto> oneMonthSummary = doseService.getBetweenDaySummary(id, startDate, endDate);
         return ResponseDto.ok(oneMonthSummary);
     }
 
     @PatchMapping("/count")
-    @Operation(summary = "약 개수 변경",description = "특정 시간대의 특정 약의 개수를 ID로 특정하여 변경합니다.")
+    @Operation(summary = "약 개수 변경", description = "특정 시간대의 특정 약의 개수를 ID로 특정하여 변경합니다.")
     public ResponseDto<Map<String, Boolean>> updateDoseCount(
             @UserId Long id,
             @RequestBody Map<@NotNull @Range(min = 1L) Long, @NotNull @DecimalMin("0.5") Double> updateDoseCountDto
@@ -84,27 +84,27 @@ public class DoseController {
             @PathVariable("id") @Valid @Range(min = 1L) Long doesId,
             @RequestBody @Valid UpdateIsTakenDto updateIsTakenDto
     ) {
-        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken());
+        doseService.updateIsTakenById(doesId, updateIsTakenDto.getIsTaken(), updateIsTakenDto.getDosingTime());
         return ResponseDto.ok(null);
     }
 
     @PostMapping("")
-    @Operation(summary = "복용 스케쥴 추가",description = "특정 약에 대한 복용 스케줄을 추가합니다.")
+    @Operation(summary = "복용 스케쥴 추가", description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
             @Valid @RequestBody CreateScheduleDto createScheduleDto,
-            @RequestParam  @Nullable String inputName
+            @RequestParam @Nullable String inputName
     ) {
-        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto,inputName);
+        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto, inputName);
         return ResponseDto.created(isInserted);
     }
 
     @DeleteMapping("")
-    @Operation(summary = "선택된 약 스케줄 삭제",description = "약 스케줄 ID를 받아 그에 해당하는 스케줄을 삭제합니다.")
+    @Operation(summary = "선택된 약 스케줄 삭제", description = "약 스케줄 ID를 받아 그에 해당하는 스케줄을 삭제합니다.")
     public ResponseDto<Object> deleteScheduleByIds(
             @UserId Long id,
             @RequestBody List<Long> doesIdList
-    ){
+    ) {
         doseService.deleteSchedule(doesIdList);
         return ResponseDto.ok(null);
     }
@@ -112,7 +112,7 @@ public class DoseController {
     @Deprecated
     @GetMapping("/name")
     @Operation(summary = "약 이름으로 kdCode와 atcCode 가져오기")
-    public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename){
+    public ResponseDto<DoseCodesDto> getKDCodeAndATCCode(@RequestParam String dosename) {
         return ResponseDto.ok(doseService.getKDCodeAndATCCode(dosename));
     }
 }
