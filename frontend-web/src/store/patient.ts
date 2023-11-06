@@ -402,25 +402,14 @@ export class PatientModel {
   };
 
   public static isLoading = () => {
-    if (this.currentTab === EPatientInfoTab.SUMMARY) {
-      return (
-        this.patientInfo.base === null ||
-        this.patientInfo.protector === null ||
-        this.patientInfo.medication.etc === null ||
-        this.patientInfo.geriatricSyndrome.mna === null ||
-        this.patientInfo.screeningDetail.arms === null
-      );
-    } else if (this.currentTab === EPatientInfoTab.MEDICATION) {
-      return (
-        this.patientInfo.medication.etc === null ||
-        this.patientInfo.medication.beersCriteriaMedicines === null ||
-        this.patientInfo.medication.anticholinergicDrugs === null ||
-        this.patientInfo.medication.armsProgress === null
-      );
-    } else if (this.currentTab === EPatientInfoTab.GERIATRIC_SYNDROME) {
-      return this.patientInfo.geriatricSyndrome.mna === null;
-    } else {
-      return this.patientInfo.screeningDetail.arms === null;
-    }
+    return (
+      this.patientInfo.base === null ||
+      this.patientInfo.protector === null ||
+      this.patientInfo.medication.etc === null ||
+      this.patientInfo.geriatricSyndrome.mna === null ||
+      this.patientInfo.medication.beersCriteriaMedicines === null ||
+      this.patientInfo.medication.anticholinergicDrugs === null ||
+      this.patientInfo.screeningDetail.arms === null
+    );
   };
 }

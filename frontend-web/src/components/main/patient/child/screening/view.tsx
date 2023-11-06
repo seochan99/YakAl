@@ -93,10 +93,6 @@ const screeningQuestions = {
 function Screening() {
   const { screeningDetail } = useScreeningViewController();
 
-  if (!screeningDetail) {
-    return <></>;
-  }
-
   const totalScore = {
     arms: screeningDetail.arms?.length === 0 ? -1 : screeningDetail.arms?.reduce((sum, current) => sum + current, 0),
     gds:

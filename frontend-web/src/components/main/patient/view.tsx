@@ -8,7 +8,7 @@ import Screening from "./child/screening/view.tsx";
 import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
 import getAge from "@util/get-age.ts";
 import { formatTel } from "@util/format-tel.ts";
-import LoadingBarrier from "@components/loading-barrier/view.tsx";
+import LoadingBarrier from "@/components/loading-barrier/view.tsx";
 
 function PatientPage() {
   const {

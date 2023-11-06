@@ -15,6 +15,14 @@ export const usePatientPageViewController = () => {
   useEffect(() => {
     PatientPageViewModel.fetchBase(patientId);
     PatientPageViewModel.fetchProtector(patientId);
+    PatientPageViewModel.fetchLastETC(patientId);
+    PatientPageViewModel.fetchGeriatricSyndrome(patientId);
+    PatientPageViewModel.fetchScreening(patientId);
+    PatientPageViewModel.fetchScreening(patientId);
+    PatientPageViewModel.fetchETC(patientId);
+    PatientPageViewModel.fetchARMS(patientId);
+    PatientPageViewModel.fetchBeersList(patientId);
+    PatientPageViewModel.fetchAnticholinergic(patientId);
   }, [patientId]);
 
   const onClickTab = useCallback(

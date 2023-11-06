@@ -1,20 +1,8 @@
 import * as S from "../style.ts";
-import { PatientPageViewModel } from "@components/main/patient/view.model.ts";
-import { useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useGeriatricSyndromeViewController } from "@components/main/patient/child/geriatric-syndrome/view.controller.ts";
 
 function GeriatricSyndrome() {
-  const {
-    patientInfo: { geriatricSyndrome },
-  } = PatientPageViewModel.getStates();
-
-  const location = useLocation();
-  const lastSlashIndex = location.pathname.lastIndexOf("/");
-  const patientId = +location.pathname.substring(lastSlashIndex + 1);
-
-  useEffect(() => {
-    PatientPageViewModel.fetchGeriatricSyndrome(patientId);
-  }, [patientId]);
+  const { geriatricSyndrome } = useGeriatricSyndromeViewController();
 
   const totalScore = {
     mna: geriatricSyndrome.mna?.length === 0 ? -1 : geriatricSyndrome.mna?.reduce((sum, current) => sum + current, 0),
