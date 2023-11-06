@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.medicalappointment.controller;
 
-import com.viewpharm.yakal.common.annotation.UserId;
-import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.annotation.UserId;
+import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.medicalappointment.service.MedicalAppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

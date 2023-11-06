@@ -27,9 +27,9 @@ public interface MedicalAppointmentRepository extends JpaRepository<MedicalAppoi
     @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.isFavorite = true")
     Page<MedicalAppointment> findListByExpertAndIsFavorite(@Param("expert") User expert, Pageable pageable);
 
-    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.patient.realName like %:name%")
+    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.patient.name like %:name%")
     Page<MedicalAppointment> findListByExpertAndName(@Param("expert") User expert, @Param("name") String name, Pageable pageable);
 
-    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.isFavorite = true and m.patient.realName like %:name%")
+    @Query("select m from MedicalAppointment m join fetch m.patient where m.expert = :expert and m.isFavorite = true and m.patient.name like %:name%")
     Page<MedicalAppointment> findListByExpertAndIsFavoriteAndName(@Param("expert") User expert, @Param("name") String name, Pageable pageable);
 }

@@ -1,7 +1,6 @@
 package com.viewpharm.yakal.user.controller;
 
-import com.viewpharm.yakal.base.ResponseDto;
-import com.viewpharm.yakal.base.type.EMedical;
+import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import java.io.IOException;
 
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 @Slf4j
 @RestController

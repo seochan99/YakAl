@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.medicalappointment.domain;
 
-import com.viewpharm.yakal.base.BaseCreateEntity;
+import com.viewpharm.yakal.base.domain.BaseCreateEntity;
 import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

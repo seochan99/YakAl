@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.user.dto.response;
 
-import com.viewpharm.yakal.base.PageInfo;
+import com.viewpharm.yakal.base.dto.PageInfo;
 import lombok.Builder;
 import lombok.Getter;
 

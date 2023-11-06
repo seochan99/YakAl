@@ -1,9 +1,9 @@
 package com.viewpharm.yakal.user.controller;
 
-import com.viewpharm.yakal.common.annotation.Date;
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.annotation.Date;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.user.dto.response.UserInfoDto;
 import com.viewpharm.yakal.user.dto.request.*;
 import com.viewpharm.yakal.user.service.UserService;
@@ -21,7 +21,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Tag(name = "User", description = "사용자 정보 열람, 수정 및 사용자 탈퇴")
 public class UserController {
