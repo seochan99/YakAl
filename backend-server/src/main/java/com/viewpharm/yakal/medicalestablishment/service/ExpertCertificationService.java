@@ -38,26 +38,26 @@ public class ExpertCertificationService {
 
     public Boolean createExpertCertification(Long userId, ExpertCertificationDto requestDto,
                                              MultipartFile imgFile, MultipartFile affiliationImgFile) {
-//        User user = userRepository.findByIdAndJobOrJob(userId, EJob.DOCTOR, EJob.PHARMACIST)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-//
-//        MedicalEstablishment medicalEstablishment = medicalEstablishmentRepository.findByIdAndIsRegister(requestDto.getFacilityId(), true)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
-//
-//        expertCertificationRepository.findByUserAndIsProcessed(user, Boolean.TRUE)
-//                .ifPresent(expertCertification -> {
-//                    throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATION);
-//                });
-//
-//        expertCertificationRepository.findByUserAndMedicalEstablishmentAndIsProcessed(user, medicalEstablishment, Boolean.FALSE)
-//                .ifPresent(expertCertification -> {
-//                    throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATIONING);
-//                });
-//
-//        String licenseImg = imageUtil.uploadImage(imgFile);
-//        String affiliationImg = imageUtil.uploadImage(affiliationImgFile);
-//
-//        expertCertificationRepository.save(requestDto.toEntity(user, medicalEstablishment, licenseImg, affiliationImg));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        MedicalEstablishment medicalEstablishment = medicalEstablishmentRepository.findByIdAndIsRegister(requestDto.getFacilityId(), true)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
+
+        expertCertificationRepository.findByUserAndIsProcessed(user, Boolean.TRUE)
+                .ifPresent(expertCertification -> {
+                    throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATION);
+                });
+
+        expertCertificationRepository.findByUserAndMedicalEstablishmentAndIsProcessed(user, medicalEstablishment, Boolean.FALSE)
+                .ifPresent(expertCertification -> {
+                    throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATIONING);
+                });
+
+        String licenseImg = imageUtil.uploadImage(imgFile);
+        String affiliationImg = imageUtil.uploadImage(affiliationImgFile);
+
+        expertCertificationRepository.save(requestDto.toEntity(user, medicalEstablishment, licenseImg, affiliationImg));
 
         return Boolean.TRUE;
     }
