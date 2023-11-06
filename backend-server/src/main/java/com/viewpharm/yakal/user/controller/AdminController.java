@@ -105,6 +105,4 @@ public class AdminController {
         expertCertificationService.approveExpertCertification(requestDto);
         return ResponseDto.ok(null);
     }
-
-
 }
