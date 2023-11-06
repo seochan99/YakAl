@@ -21,7 +21,6 @@ Future<void> sendDeviceToken(String deviceToken) async {
   try {
     Map<String, dynamic> requestBody = {
       'deviceToken': deviceToken,
-      'is_ios': false
     };
 
     var dio = await authDioWithContext();
