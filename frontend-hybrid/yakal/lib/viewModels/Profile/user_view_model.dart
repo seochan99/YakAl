@@ -134,23 +134,6 @@ class UserViewModel extends GetxController {
   Future<void> loadGuardian() async {
     try {
       await fetchGuardian();
-      print("--------------------------dsads----------------------------");
-
-      user.update((val) {
-        // If 'val' or 'hospitalRecordList' is null, initialize 'hospitalRecordList'
-        val?.guardian ??= Guardian(
-          id: 0,
-          name: "",
-          birthDate: "",
-        );
-
-        // Assuming 'fetchedItems' is set by 'fetchGuardian'
-        // if (fetchedItems != null) {
-        //   val?.guardian.assignAll(fetchedItems);
-        // } else {
-        //   print("Warning: fetchedItems is null");
-        // }
-      });
     } catch (e) {
       throw Exception("Exception while adding health medication: $e");
     }

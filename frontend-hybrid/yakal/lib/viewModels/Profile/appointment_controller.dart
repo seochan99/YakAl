@@ -39,7 +39,7 @@ class AppointmentController extends GetxController {
         Expert(id: id, name: name, medicalEstablishment: medicalEstablishment));
     try {
       var dio = await authDioWithContext();
-      final response = await dio.post("/medical-appointment/$id");
+      final response = await dio.post("/medical-appointments/$id");
 
       if (response.statusCode == 200) {
         print("postExperts POST 성공 ");
