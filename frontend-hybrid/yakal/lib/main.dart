@@ -67,7 +67,7 @@ void main() async {
     final dio = await authDioWithContext();
 
     try {
-      final response = await dio.get("/user/check/register");
+      final response = await dio.get("/users/check/register");
 
       if (response.data["data"]["isRegistered"]
               ["isOptionalAgreementAccepted"] ==

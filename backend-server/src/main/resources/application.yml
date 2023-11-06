@@ -12,3 +12,9 @@ spring:
     active: prod
 
 ---
+
+spring:
+  profiles:
+    active: debug
+
+---

@@ -1,10 +1,7 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/utilities/api/api.dart';
-import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
 import '../../models/Profile/user.dart';
@@ -29,7 +26,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
       var response =
-          await dio.patch("/user/name", data: {"nickname": newNickName});
+          await dio.patch("/users/name", data: {"nickname": newNickName});
 
       if (response.statusCode == 200) {
         // Update local user object if server update was successful
@@ -47,7 +44,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
 
-      var response = await dio.get("/user");
+      var response = await dio.get("/users");
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {
           val?.updateFromApiResponse(response.data['data']);
@@ -62,7 +59,8 @@ class UserViewModel extends GetxController {
   Future<void> updateMode(bool newMode) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/user/detail", data: {"isDetail": newMode});
+    var response =
+        await dio.patch("/users/detail", data: {"isDetail": newMode});
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {

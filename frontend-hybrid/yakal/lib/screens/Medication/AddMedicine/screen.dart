@@ -323,11 +323,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return LoaderOverlay(
       child: OuterFrame(

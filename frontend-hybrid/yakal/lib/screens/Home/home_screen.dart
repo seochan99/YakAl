@@ -25,7 +25,7 @@ Future<void> sendDeviceToken(String deviceToken) async {
     };
 
     var dio = await authDioWithContext();
-    var response = await dio.put("/user/device", data: requestBody);
+    var response = await dio.put("/users/device", data: requestBody);
 
     if (response.statusCode == 200) {
       print('sendDeviceToken - Success');

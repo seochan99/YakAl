@@ -62,7 +62,7 @@ class User {
   Future<void> fetchLoginInfo() async {
     final dio = await authDioWithContext();
 
-    final response = await dio.get("/user/check/register");
+    final response = await dio.get("/users/check/register");
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
