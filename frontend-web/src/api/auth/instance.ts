@@ -43,7 +43,7 @@ authAxios.interceptors.response.use(
 
       const originalRequest = error.config as InternalAxiosRequestConfig;
 
-      if (error.response.status === HttpStatusCode.Forbidden || error.response.status === HttpStatusCode.Unauthorized) {
+      if (error.response.status === HttpStatusCode.Unauthorized) {
         /* Reissue Token */
         logOnDev(`♻️ [${method?.toUpperCase()}] ${url}`);
 

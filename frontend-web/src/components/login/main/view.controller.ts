@@ -1,31 +1,15 @@
 import { useCallback, useState } from "react";
-import { getGoogleRedirectUrl, getKakaoRedirectUrl } from "@api/noauth/auth.ts";
-import { isAxiosError } from "axios";
 
 export const useLoginMainPageViewController = () => {
   const [open, setOpen] = useState<boolean>(false);
 
   const onKakaoLoginClick = useCallback(async () => {
-    try {
-      const response = await getKakaoRedirectUrl();
-      window.location.href = response.data.data.url;
-    } catch (error) {
-      if (isAxiosError(error)) {
-        setOpen(true);
-      }
-    }
-  }, [setOpen]);
+    window.location.href = `${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/oauth2/authorization/kakao`;
+  }, []);
 
   const onGoogleLoginClick = useCallback(async () => {
-    try {
-      const response = await getGoogleRedirectUrl();
-      window.location.href = response.data.data.url;
-    } catch (error) {
-      if (isAxiosError(error)) {
-        setOpen(true);
-      }
-    }
-  }, [setOpen]);
+    window.location.href = `${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/oauth2/authorization/google`;
+  }, []);
 
   return {
     onKakaoLoginClick,

@@ -18,7 +18,7 @@ import { TApprovedFacilityList } from "@type/response/approved-facility-list.ts"
 import { EJob } from "@type/enum/job.ts";
 
 export const getExpertUserInfo = async <T = CommonResponse<TExpertUser>>(): Promise<AxiosResponse<T>> => {
-  return await authAxios.get<T, AxiosResponse<T>>(`/experts`);
+  return await authAxios.get<T, AxiosResponse<T>>(`/users/my-expert`);
 };
 
 export const getPatientList = async <T = CommonResponse<null>>(
