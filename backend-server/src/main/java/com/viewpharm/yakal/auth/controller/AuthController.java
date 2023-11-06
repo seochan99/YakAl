@@ -2,7 +2,7 @@ package com.viewpharm.yakal.auth.controller;
 
 import com.viewpharm.yakal.base.annotation.DisableSwaggerSecurity;
 import com.viewpharm.yakal.base.annotation.UserId;
-import com.viewpharm.yakal.auth.dto.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.auth.service.JwtProvider;
@@ -11,10 +11,7 @@ import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;
-import com.viewpharm.yakal.base.type.EValidity;
 import com.viewpharm.yakal.base.utils.OAuth2Util;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;
@@ -44,26 +41,26 @@ public class AuthController {
      * Mobile Login API
      */
     @PostMapping("/kakao")
-    @Operation(summary = "Kakao 로그인", description = "Kakao 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Kakao 로그인(App)", description = "Kakao 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingKAKAO(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_MOBILE);
+        final JwtTokenDto jwtTokenDto = authService.loginForMobile(accessToken, ELoginProvider.KAKAO);
         return ResponseDto.created(jwtTokenDto);
     }
 
     @PostMapping("/google")
-    @Operation(summary = "Google 로그인", description = "Google 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Google 로그인(App)", description = "Google 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<JwtTokenDto> loginUsingGOOGLE(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_MOBILE);
+        final JwtTokenDto jwtTokenDto = authService.loginForMobile(accessToken, ELoginProvider.GOOGLE);
         return ResponseDto.created(jwtTokenDto);
     }
 
     @PostMapping("/apple")
-    @Operation(summary = "Apple 로그인", description = "Apple 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
+    @Operation(summary = "Apple 로그인(App)", description = "Apple 액세스 토큰으로 사용자를 생성하고 JWT 토큰을 발급합니다.")
     public ResponseDto<?> loginUsingApple(final HttpServletRequest request) {
         final String accessToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.APPLE, ERole.ROLE_MOBILE);
+        final JwtTokenDto jwtTokenDto = authService.loginForMobile(accessToken, ELoginProvider.APPLE);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -117,9 +114,10 @@ public class AuthController {
      */
     @PatchMapping("/logout")
     @Operation(summary = "로그아웃", description = "전송된 액세스 토큰에 해당하는 모바일 사용자를 로그아웃시킵니다.")
-    public ResponseDto<Object> logout(@UserId Long id, final HttpServletRequest request, final HttpServletResponse response) {
-        EPlatform platform = authService.getPlatform(id);
-
+    public ResponseDto<Object> logout(@UserId Long id,
+                                      @RequestPart(value = "platform") EPlatform platform,
+                                      final HttpServletRequest request,
+                                      final HttpServletResponse response) {
         authService.logout(id);
 
         if (platform == EPlatform.WEB) {
@@ -141,39 +139,13 @@ public class AuthController {
     }
 
     /**
-     * Get Access Token Validity
-     */
-    @GetMapping("/validate")
-    @Operation(summary = "액세스 토큰 유효성 검사", description = "전송된 액세스 토큰이 유효한지 판별합니다.")
-    public ResponseDto<Object> validateAccessToken(final HttpServletRequest request) {
-        final String accessToken = jwtProvider.refineToken(request);
-
-        final Map<String, String> map = new HashMap<>(1);
-
-        try {
-            jwtProvider.validateToken(accessToken);
-        } catch (ExpiredJwtException e) {
-            map.put("validity", EValidity.EXPIRED.toString());
-            return ResponseDto.ok(map);
-        } catch (JwtException e) {
-            map.put("validity", EValidity.INVALID.toString());
-            return ResponseDto.ok(map);
-        } catch (Exception e) {
-            throw new CommonException(ErrorCode.SERVER_ERROR);
-        }
-
-        map.put("validity", EValidity.VALID.toString());
-        return ResponseDto.ok(map);
-    }
-
-    /**
      * Reissue Access Token
      */
     @PostMapping("/reissue")
     @Operation(summary = "액세스 토큰 재발급", description = "리프레시 토큰을 통해 만료된 액세스 토큰을 재발급합니다.")
     public ResponseDto<JwtTokenDto> reissue(final HttpServletRequest request) {
         final String refreshToken = jwtProvider.refineToken(request);
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken, EPlatform.MOBILE);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshToken);
         return ResponseDto.created(jwtTokenDto);
     }
 
@@ -192,7 +164,7 @@ public class AuthController {
         final Cookie refreshTokenCookie = Arrays.stream(cookies).filter((cookie) -> cookie.getName().equals("refreshToken"))
                 .findFirst().orElseThrow(() -> new CommonException(ErrorCode.INVALID_TOKEN_ERROR));
 
-        final JwtTokenDto jwtTokenDto = authService.reissue(refreshTokenCookie.getValue(), EPlatform.WEB);
+        final JwtTokenDto jwtTokenDto = authService.reissue(refreshTokenCookie.getValue());
 
         refreshTokenCookie.setValue(jwtTokenDto.getRefreshToken());
         refreshTokenCookie.setPath("/");

@@ -5,11 +5,10 @@ import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.prescription.repository.PrescriptionRepository;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.user.repository.UserRepository;
-import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.auth.dto.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
 import com.viewpharm.yakal.base.utils.OAuth2Util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -61,7 +60,7 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto login(final String accessToken, final ELoginProvider loginProvider, final ERole role) throws CommonException {
+    public JwtTokenDto loginForMobile(final String accessToken, final ELoginProvider loginProvider) {
         String socialId = null;
 
         switch (loginProvider) {
@@ -90,8 +89,11 @@ public class AuthService {
         User user = null;
 
         if (userOpt.isEmpty()) {
-            user = userRepository.save(
-                    new User(finalSocialId, loginProvider, role));
+            user = userRepository.save(User.builder()
+                            .socialId(finalSocialId)
+                            .loginProvider(loginProvider)
+                            .role(ERole.USER)
+                            .build());
 
             List<Prescription> prescriptionList = new ArrayList<>();
             prescriptionList.add(prescriptionRepository.save(
@@ -106,7 +108,7 @@ public class AuthService {
             user = userOpt.get();
         }
 
-        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole(), role == ERole.ROLE_WEB ? EPlatform.WEB : EPlatform.MOBILE);
+        final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
         user.setIsLogin(true);
 
@@ -125,8 +127,8 @@ public class AuthService {
     }
 
     @Transactional
-    public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) {
-        return jwtProvider.reissue(refreshToken, platform);
+    public JwtTokenDto reissue(final String refreshToken) {
+        return jwtProvider.reissue(refreshToken);
     }
 
     public void sendRedirectWithTokenCookieAdded(
@@ -149,12 +151,5 @@ public class AuthService {
         response.addCookie(accessTokenCookie);
 
         response.sendRedirect(FRONTEND_HOST + "/login/social/" + loginProvider.toString().toLowerCase());
-    }
-
-    public EPlatform getPlatform(Long userId) {
-        final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        log.info("{}", user.getRole());
-
-        return user.getRole().equals(ERole.ROLE_WEB) ? EPlatform.WEB : EPlatform.MOBILE;
     }
 }

@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.auth.service;
 
-import com.viewpharm.yakal.auth.domain.UserDetailForIdOnly;
+import com.viewpharm.yakal.auth.domain.UserPrincipal;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
@@ -21,8 +21,10 @@ public class UserDetailServiceForLoad implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws CommonException {
         final Long userId = Long.valueOf(username);
+
         final User user = userRepository.findByIdAndIsLoginAndRefreshTokenIsNotNull(userId, true)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        return UserDetailForIdOnly.create(user);
+
+        return UserPrincipal.create(user);
     }
 }

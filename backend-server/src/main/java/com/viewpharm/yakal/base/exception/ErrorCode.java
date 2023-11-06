@@ -67,27 +67,19 @@ public enum ErrorCode {
 
     IDENTIFICATION_ERROR("5024", HttpStatus.BAD_GATEWAY, "본인 인증에 실패하였습니다."),
 
-    // Access Denied Error
-    ACCESS_DENIED_ERROR("4010", HttpStatus.UNAUTHORIZED, "액세스 권한이 없습니다."),
-
     /**
      * 401 Unauthorized: Authentication and Authorization Error
      */
     EXPIRED_TOKEN_ERROR("4010", HttpStatus.UNAUTHORIZED, "만료된 토큰입니다."),
-
     INVALID_TOKEN_ERROR("4011", HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰입니다."),
+    TOKEN_MALFORMED_ERROR("4012", HttpStatus.UNAUTHORIZED, "토큰이 올바르지 않습니다."),
+    TOKEN_TYPE_ERROR("4014", HttpStatus.UNAUTHORIZED, "토큰 타입이 일치하지 않습니다."),
+    TOKEN_UNSUPPORTED_ERROR("4015", HttpStatus.UNAUTHORIZED, "지원하지않는 토큰입니다."),
+    TOKEN_GENERATION_ERROR("4016", HttpStatus.UNAUTHORIZED, "토큰 생성에 실패하였습니다."),
+    TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "알 수 없는 토큰입니다."),
 
-    TOKEN_MALFORMED_ERROR("4012", HttpStatus.UNAUTHORIZED, "Malformed Token Error"),
-
-    TOKEN_TYPE_ERROR("4014", HttpStatus.UNAUTHORIZED, "Type Token Error"),
-
-    TOKEN_UNSUPPORTED_ERROR("4015", HttpStatus.UNAUTHORIZED, "Unsupported Token Error"),
-
-    TOKEN_GENERATION_ERROR("4016", HttpStatus.UNAUTHORIZED, "Failed To Generate Token"),
-
-    TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "Unknown Error"),
-
-    INSUFFICIENT_PRIVILEGES_ERROR("4019", HttpStatus.UNAUTHORIZED, "권한이 부족합니다.");
+    // Access Denied Error
+    ACCESS_DENIED_ERROR("4030", HttpStatus.FORBIDDEN, "액세스 권한이 없습니다.");
 
     private final String code;
     private final HttpStatus httpStatus;

@@ -1,10 +1,13 @@
-package com.viewpharm.yakal.base.config;
+package com.viewpharm.yakal.auth.config;
 
+import com.viewpharm.yakal.auth.handler.OAuth2LoginFailureHandler;
+import com.viewpharm.yakal.auth.handler.OAuth2LoginSuccessHandler;
+import com.viewpharm.yakal.auth.service.CustomOAuth2UserService;
 import com.viewpharm.yakal.base.constants.Constants;
 import com.viewpharm.yakal.auth.service.UserDetailServiceForLoad;
 import com.viewpharm.yakal.auth.filter.JwtAuthenticationFilter;
 import com.viewpharm.yakal.auth.filter.JwtExceptionFilter;
-import com.viewpharm.yakal.auth.handler.JwtAccessDenied;
+import com.viewpharm.yakal.auth.handler.JwtAccessDeniedHandler;
 import com.viewpharm.yakal.auth.handler.JwtAuthEntryPoint;
 import com.viewpharm.yakal.auth.service.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -27,21 +30,36 @@ public class SecurityConfig{
     private final JwtProvider jwtProvider;
     private final UserDetailServiceForLoad userDetailServiceForLoad;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
-    private final JwtAccessDenied jwtAccessDeniedHandler;
+    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     protected SecurityFilterChain securityFilterChain(final HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .cors(cors -> cors.configure(httpSecurity))
                 .csrf(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .sessionManagement((sessionManagement) ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
+                        .requestMatchers("/api/v1/**").hasAnyRole("USER", "EXPERT", "ADMIN")
+                        .requestMatchers("/api/v1/experts/**").hasAnyRole("EXPERT", "ADMIN")
+                        .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
                         .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
                         .anyRequest().authenticated())
+
+                .oauth2Login(oauth2Login -> oauth2Login
+                        .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler(oAuth2LoginFailureHandler)
+                        .userInfoEndpoint(userInfoEndpoint -> userInfoEndpoint
+                                .userService(customOAuth2UserService)
+                        )
+                )
 
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler))

@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.auth.handler;
 
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.auth.dto.JwtErrorResponse;
+import com.viewpharm.yakal.auth.dto.request.JwtErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class JwtAccessDenied extends JwtErrorResponse implements AccessDeniedHandler {
+public class JwtAccessDeniedHandler extends JwtErrorResponse implements AccessDeniedHandler {
 
     @Override
     public void handle(final HttpServletRequest request,

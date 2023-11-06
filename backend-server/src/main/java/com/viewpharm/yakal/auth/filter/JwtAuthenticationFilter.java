@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.auth.filter;
 
-import com.viewpharm.yakal.auth.domain.UserDetailForIdOnly;
+import com.viewpharm.yakal.auth.domain.UserPrincipal;
 import com.viewpharm.yakal.auth.service.JwtProvider;
 import com.viewpharm.yakal.auth.service.UserDetailServiceForLoad;
 import com.viewpharm.yakal.base.constants.Constants;
@@ -44,11 +44,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String id = claims.get(Constants.USER_ID_CLAIM_NAME).toString();
         final ERole role = ERole.valueOf(claims.get(Constants.USER_ROLE_CLAIM_NAME).toString());
 
-        final UserDetailForIdOnly userDetails = (UserDetailForIdOnly) userDetailsService.loadUserByUsername(id);
+        final UserPrincipal userDetails = (UserPrincipal) userDetailsService.loadUserByUsername(id);
         final SimpleGrantedAuthority authority = (SimpleGrantedAuthority) userDetails.getAuthorities().iterator().next();
 
         if (role != ERole.valueOf(authority.getAuthority())) {
-            throw new CommonException(ErrorCode.INSUFFICIENT_PRIVILEGES_ERROR);
+            throw new CommonException(ErrorCode.ACCESS_DENIED_ERROR);
         }
 
         final UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(

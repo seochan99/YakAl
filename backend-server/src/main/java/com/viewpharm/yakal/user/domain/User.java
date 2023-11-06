@@ -14,10 +14,7 @@ import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.type.ESex;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
@@ -42,24 +39,8 @@ public class User {
     private Long id;
 
     /**
-     * COLUMNS
+     * UNIQUE COMPOSITION KEY
      */
-    @Column(name = "real_name", columnDefinition = "CHAR(20)")
-    private String realName;
-
-    @Column(name = "name", columnDefinition = "CHAR(20)")
-    private String name;
-
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private ERole role;
-
-    @Column(name = "created_date", nullable = false)
-    private LocalDate createdDate;
-
-    @Column(name = "refresh_token")
-    private String refreshToken;
-
     @Column(name = "social_id", nullable = false)
     private String socialId;
 
@@ -67,22 +48,48 @@ public class User {
     @Enumerated(EnumType.STRING)
     private ELoginProvider loginProvider;
 
-    @Column(name = "birthday")
-    private LocalDate birthday;
-
-    // 하이픈("-") 없이
-    @Column(name = "tel")
-    private String tel;
-
-    @Column(name = "sex")
+    @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private ESex sex;
+    private ERole role;
+
+    /**
+     * COLUMNS
+     */
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
 
     @Column(name = "device_token")
     private String deviceToken;
 
     @Column(name = "is_login", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isLogin;
+
+    @Column(name = "name", columnDefinition = "CHAR(20)")
+    private String name;
+
+    @Column(name = "nickname", columnDefinition = "CHAR(20)")
+    private String nickname;
+
+    @Column(name = "department")
+    private String department;
+
+    @Column(name = "created_date", nullable = false)
+    private LocalDate createdDate;
+
+    @Column(name = "birthday")
+    private LocalDate birthday;
+
+    @Column(name = "tel")
+    private String tel;
+
+//    @Column(name = "sex")
+//    @Enumerated(EnumType.STRING)
+//    private ESex sex;
+
+    /**
+     * Optional Columns
+     */
 
     @Column(name = "is_detail", columnDefinition = "TINYINT(1)", nullable = false)
     private Boolean isDetail;
@@ -102,22 +109,9 @@ public class User {
     @Column(name = "is_optional_agreement_accepted")
     private Boolean isOptionalAgreementAccepted;
 
-    //초기 직업은 환자로 설정
-    @Column(name = "job")
-    @Enumerated(EnumType.STRING)
-    private EJob job = EJob.PATIENT;
-
-    // 추후에 Enum화 해도 괜찮을듯 아직 전공 종류나 개수를 모름
-    @Column(name = "department")
-    private String department;
-
     // 인증 여부
     @Column(name = "is_identified", columnDefinition = "TINYINT(1)")
     private Boolean isIdentified;
-
-    //의사 약사 영양사 인증 여부
-    @Column(name = "is_certified")
-    private Boolean isCertified;
 
     @Column(name = "profile_img")
     private String profileImg = "0_default_profile.png";
@@ -176,6 +170,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Fall> falls = new ArrayList<>();
 
+    @Builder
     public User(final String socialId,
                 final ELoginProvider loginProvider,
                 final ERole role) {

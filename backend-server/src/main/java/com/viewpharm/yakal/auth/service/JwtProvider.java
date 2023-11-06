@@ -2,9 +2,8 @@ package com.viewpharm.yakal.auth.service;
 
 import com.viewpharm.yakal.base.constants.Constants;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.auth.dto.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
-import com.viewpharm.yakal.base.type.EPlatform;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.base.exception.CommonException;
@@ -19,6 +18,8 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -32,21 +33,17 @@ import java.util.Objects;
 
 @Slf4j
 @Component
+@Getter(AccessLevel.PROTECTED)
 @RequiredArgsConstructor
 public class JwtProvider implements InitializingBean {
-
-    private static final Long MOBILE_ACCESS_EXPIRED_MS = 2 * 60 * 60 * 1000L;        // 2 Hours
-    private static final Long MOBILE_REFRESH_EXPIRED_MS = 60 * 24 * 60 * 60 * 1000L; // 60 Days
-
-    private static final Long WEB_ACCESS_EXPIRED_MS = 60 * 60 * 1000L;           // 1 Hours
-    private static final Long WEB_REFRESH_EXPIRED_MS = 7 * 24 * 60 * 60 * 1000L; // 7 Days
-
+    private static final Long ACCESS_EXPIRED_MS = 2 * 60 * 60 * 1000L;        // 2 Hours
+    private static final Long REFRESH_EXPIRED_MS = 14 * 24 * 60 * 60 * 1000L; // 7 Days
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
     private final UserRepository userRepository;
 
-    @Value("${jwt.secret: abc}")
+    @Value("${jwt.secret}")
     private String secretKey;
     private Key key;
 
@@ -57,7 +54,7 @@ public class JwtProvider implements InitializingBean {
     }
 
     public int getWebRefreshTokenExpirationSecond() {
-        return (int) (WEB_REFRESH_EXPIRED_MS / 1000);
+        return (int) (REFRESH_EXPIRED_MS / 1000);
     }
 
     public String refineToken(final HttpServletRequest request) throws CommonException {
@@ -84,14 +81,14 @@ public class JwtProvider implements InitializingBean {
                 .compact();
     }
 
-    public JwtTokenDto createTotalToken(final Long id, final ERole ERole, final EPlatform platform) {
-        final String accessToken = createToken(id, ERole, platform == EPlatform.MOBILE ? MOBILE_ACCESS_EXPIRED_MS : WEB_ACCESS_EXPIRED_MS);
-        final String refreshToken = createToken(id, ERole,  platform == EPlatform.MOBILE ? MOBILE_REFRESH_EXPIRED_MS : WEB_REFRESH_EXPIRED_MS);
+    public JwtTokenDto createTotalToken(final Long id, final ERole role) {
+        final String accessToken = createToken(id, role, ACCESS_EXPIRED_MS);
+        final String refreshToken = createToken(id, role, REFRESH_EXPIRED_MS);
         return new JwtTokenDto(accessToken, refreshToken);
     }
 
     @Transactional
-    public JwtTokenDto reissue(final String refreshToken, final EPlatform platform) throws CommonException {
+    public JwtTokenDto reissue(final String refreshToken) {
         final Claims claims = validateToken(refreshToken);
 
         final Long id = Long.valueOf(claims.get(Constants.USER_ID_CLAIM_NAME).toString());
@@ -100,10 +97,10 @@ public class JwtProvider implements InitializingBean {
         final User user = userRepository.findById(id).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
         if (!Objects.equals(user.getId(), id) || user.getRole() != role || !user.getRefreshToken().equals(refreshToken)) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+            throw new CommonException(ErrorCode.INVALID_TOKEN_ERROR);
         }
 
-        final JwtTokenDto jwtTokenDto = createTotalToken(id, role, platform);
+        final JwtTokenDto jwtTokenDto = createTotalToken(id, role);
 
         user.setRefreshToken(jwtTokenDto.getRefreshToken());
 

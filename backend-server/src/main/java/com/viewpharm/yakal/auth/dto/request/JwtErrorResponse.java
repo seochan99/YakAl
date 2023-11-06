@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.auth.dto;
+package com.viewpharm.yakal.auth.dto.request;
 
 import com.viewpharm.yakal.base.exception.dto.ExceptionDto;
 import com.viewpharm.yakal.base.exception.ErrorCode;

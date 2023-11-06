@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.base.config;
+package com.viewpharm.yakal.auth.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
