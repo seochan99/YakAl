@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.auth.service;
 
-import com.viewpharm.yakal.auth.domain.UserPrincipal;
+import com.viewpharm.yakal.auth.info.UserPrincipal;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
@@ -11,10 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserDetailServiceForLoad implements UserDetailsService {
+public class CustomUserDetailService implements UserDetailsService {
 
     private final UserRepository userRepository;
 

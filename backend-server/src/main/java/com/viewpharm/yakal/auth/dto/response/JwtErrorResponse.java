@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.auth.dto.request;
+package com.viewpharm.yakal.auth.dto.response;
 
 import com.viewpharm.yakal.base.exception.dto.ExceptionDto;
 import com.viewpharm.yakal.base.exception.ErrorCode;
@@ -10,7 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public abstract class JwtErrorResponse {
-
     protected final void setErrorResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
         response.setContentType("application/json;charset=UTF-8");
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

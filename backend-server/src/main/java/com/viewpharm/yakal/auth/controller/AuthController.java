@@ -1,16 +1,14 @@
 package com.viewpharm.yakal.auth.controller;
 
-import com.viewpharm.yakal.base.annotation.DisableSwaggerSecurity;
 import com.viewpharm.yakal.base.annotation.UserId;
-import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.auth.service.JwtProvider;
+import com.viewpharm.yakal.auth.util.JwtProvider;
 import com.viewpharm.yakal.auth.service.AuthService;
 import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.EPlatform;
-import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.utils.OAuth2Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -35,7 +33,6 @@ public class AuthController {
 
     private final AuthService authService;
     private final JwtProvider jwtProvider;
-    private final OAuth2Util oAuth2Util;
 
     /**
      * Mobile Login API
@@ -62,50 +59,6 @@ public class AuthController {
         final String accessToken = jwtProvider.refineToken(request);
         final JwtTokenDto jwtTokenDto = authService.loginForMobile(accessToken, ELoginProvider.APPLE);
         return ResponseDto.created(jwtTokenDto);
-    }
-
-//    /**
-//     * Web Login API
-//     */
-//    @GetMapping("/kakao/callback")
-//    @Operation(summary = "Kakao 웹 로그인", description = "Kakao 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-//    public void loginUsingKakaoForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
-//        final String accessToken = oAuth2Util.getKakaoAccessToken(code);
-//        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.KAKAO, ERole.ROLE_WEB);
-//
-//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.KAKAO);
-//    }
-//
-//    @GetMapping("/google/callback")
-//    @Operation(summary = "Google 웹 로그인", description = "Google 인증 코드로 사용자를 생성하고 JWT 토큰을 발급합니다. (HttpOnly Cookie를 사용하는 웹 전용)")
-//    public void loginUsingGoogleForWeb(@RequestParam("code") final String code, final HttpServletResponse response) throws Exception {
-//        final String accessToken = oAuth2Util.getGoogleAccessToken(code);
-//        final JwtTokenDto jwtTokenDto = authService.login(accessToken, ELoginProvider.GOOGLE, ERole.ROLE_WEB);
-//
-//        authService.sendRedirectWithTokenCookieAdded(jwtTokenDto, response, ELoginProvider.GOOGLE);
-
-    /**
-     * Web Social Login Redirect URL
-     */
-    @GetMapping("/kakao")
-    @DisableSwaggerSecurity
-    @Operation(summary = "Kakao 인증 리다이렉트 URL 가져오기", description = "Kakao 인증 리다이렉트 URL을 가져옵니다.")
-    public ResponseDto<Map<String, String>> getKakaoRedirectUrl() {
-        return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.KAKAO));
-    }
-
-    @GetMapping("/google")
-    @DisableSwaggerSecurity
-    @Operation(summary = "Google 인증 리다이렉트 URL 가져오기", description = "Google 인증 리다이렉트 URL을 가져옵니다.")
-    public ResponseDto<Map<String, String>> getGoogleRedirectUrl() {
-        return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.GOOGLE));
-    }
-
-    @GetMapping("/apple")
-    @DisableSwaggerSecurity
-    @Operation(summary = "Apple 인증 리다이렉트 URL 가져오기", description = "Apple 인증 리다이렉트 URL을 가져옵니다.")
-    public ResponseDto<Map<String, String>> getAppleRedirectUrl() {
-        return ResponseDto.ok(authService.getRedirectUrl(ELoginProvider.APPLE));
     }
 
     /**
@@ -165,7 +118,7 @@ public class AuthController {
 
         final JwtTokenDto jwtTokenDto = authService.reissue(refreshTokenCookie.getValue());
 
-        refreshTokenCookie.setValue(jwtTokenDto.getRefreshToken());
+        refreshTokenCookie.setValue(jwtTokenDto.refreshToken());
         refreshTokenCookie.setPath("/");
         refreshTokenCookie.setSecure(true);
         refreshTokenCookie.setHttpOnly(true);
@@ -174,7 +127,7 @@ public class AuthController {
         response.addCookie(refreshTokenCookie);
 
         final Map<String, String> data = new HashMap<>(1);
-        data.put("accessToken", jwtTokenDto.getAccessToken());
+        data.put("accessToken", jwtTokenDto.accessToken());
 
         return ResponseDto.created(data);
     }

@@ -1,8 +1,8 @@
-package com.viewpharm.yakal.auth.service;
+package com.viewpharm.yakal.auth.util;
 
 import com.viewpharm.yakal.base.constants.Constants;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.exception.ErrorCode;
@@ -102,7 +102,7 @@ public class JwtProvider implements InitializingBean {
 
         final JwtTokenDto jwtTokenDto = createTotalToken(id, role);
 
-        user.setRefreshToken(jwtTokenDto.getRefreshToken());
+        user.setRefreshToken(jwtTokenDto.refreshToken());
 
         return jwtTokenDto;
     }

@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.auth.domain;
+package com.viewpharm.yakal.auth.info;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
