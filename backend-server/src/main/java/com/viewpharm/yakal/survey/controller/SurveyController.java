@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.survey.controller;
 
-import com.viewpharm.yakal.base.ResponseDto;
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.dto.ResponseDto;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.survey.dto.request.AnswerRequestDto;
 import com.viewpharm.yakal.survey.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;

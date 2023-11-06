@@ -56,9 +56,6 @@ public class Dose {
     @Column(name = "deleted_at")
     private Timestamp deleted;
 
-    @OneToMany(mappedBy = "dose", fetch = FetchType.LAZY)
-    private List<TakeDose> takeDoses = new ArrayList<>();
-
     /**
      * MANY-TO-ONE RELATION
      */

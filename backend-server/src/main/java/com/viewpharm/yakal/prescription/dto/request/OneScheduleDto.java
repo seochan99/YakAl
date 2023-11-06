@@ -1,6 +1,6 @@
 package com.viewpharm.yakal.prescription.dto.request;
 
-import com.viewpharm.yakal.common.annotation.Enum;
+import com.viewpharm.yakal.base.annotation.Enum;
 import com.viewpharm.yakal.base.type.EDosingTime;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;

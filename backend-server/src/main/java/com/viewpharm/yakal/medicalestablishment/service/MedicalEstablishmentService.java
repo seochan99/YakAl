@@ -1,10 +1,10 @@
 package com.viewpharm.yakal.medicalestablishment.service;
 
-import com.viewpharm.yakal.base.PageInfo;
+import com.viewpharm.yakal.base.dto.PageInfo;
 import com.viewpharm.yakal.base.type.EMedical;
 import com.viewpharm.yakal.base.utils.ImageUtil;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
@@ -13,8 +13,6 @@ import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmen
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListDto;
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListForAdminDto;
 import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
-import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

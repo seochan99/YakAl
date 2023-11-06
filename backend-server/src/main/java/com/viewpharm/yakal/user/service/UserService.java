@@ -4,14 +4,13 @@ import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.type.ERole;
-import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
@@ -102,7 +101,7 @@ public class UserService {
 
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.setRealName(name);
+        user.setName(name);
         user.setBirthday(LocalDate.parse(birth, DateTimeFormatter.ISO_DATE));
         user.setTel(phone);
         user.setIsIdentified(true);
@@ -116,16 +115,16 @@ public class UserService {
     }
 
     public UserExpertDto getUserExpertInfo(final Long userId) {
-        User expert = userRepository.findByIdAndRole(userId, ERole.ROLE_WEB)
+        User expert = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
         String establishmentName = userRepository.getEstablishmentNameByIdAndRole(userId).orElseGet(() -> null);
 
         return UserExpertDto.builder()
-                .name(expert.getRealName())
+                .name(expert.getName())
                 .tel(expert.getTel())
                 .birthday(expert.getBirthday())
-                .job(expert.getJob() == EJob.PATIENT ? null : expert.getJob())
+//                .job(expert.getJob()
                 .department(expert.getDepartment())
                 .belong(establishmentName)
                 .isOptionalAgreementAccepted(expert.getIsOptionalAgreementAccepted())
@@ -191,11 +190,11 @@ public class UserService {
     }
 
     public void updateIsCertified(final Long userId, final UpdateAdminRequestDto updateAdminRequestDto) {
-        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(), updateAdminRequestDto.getJob());
-
-        if (isUpdated == 0) {
-            throw new CommonException(ErrorCode.NOT_FOUND_USER);
-        }
+//        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(), updateAdminRequestDto.getJob());
+//
+//        if (isUpdated == 0) {
+//            throw new CommonException(ErrorCode.NOT_FOUND_USER);
+//        }
     }
 
     public Long countAnswer(final User user) {
@@ -219,11 +218,13 @@ public class UserService {
     }
 
     public List<UserListDtoForGuardian> searchUserForExpert(String expertName) {
-        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
+//        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
+//
+//        return experts.stream()
+//                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
+//                .collect(Collectors.toList());
 
-        return experts.stream()
-                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
-                .collect(Collectors.toList());
+        return null;
     }
 
     public Boolean setUserNotificationTime(Long userId, UpdateNotificationTimeDto requestDto) {

@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.notification;
 
-import com.viewpharm.yakal.base.ResponseDto;
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.dto.ResponseDto;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.notification.dto.reqeust.NotificationUserRequestDto;
 import com.viewpharm.yakal.notification.service.NotificationScheduleService;
 import io.swagger.v3.oas.annotations.tags.Tag;

@@ -1,9 +1,9 @@
 package com.viewpharm.yakal.prescription.controller;
 
-import com.viewpharm.yakal.common.annotation.UserId;
+import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.prescription.dto.request.CreatePrescriptionDto;
 import com.viewpharm.yakal.prescription.dto.response.PrescriptionDto;
-import com.viewpharm.yakal.base.ResponseDto;
+import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.prescription.service.PrescriptionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

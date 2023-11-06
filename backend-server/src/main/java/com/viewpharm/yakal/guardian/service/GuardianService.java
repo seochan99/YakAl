@@ -5,8 +5,8 @@ import com.viewpharm.yakal.guardian.dto.response.GuardianTelDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.response.PatientDto;
 import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
-import com.viewpharm.yakal.common.exception.CommonException;
-import com.viewpharm.yakal.common.exception.ErrorCode;
+import com.viewpharm.yakal.base.exception.CommonException;
+import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.guardian.repository.GuardianRepository;
 import com.viewpharm.yakal.user.repository.UserRepository;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -67,7 +66,7 @@ public class GuardianService {
 
         return GuardianTelDto.builder()
                 .id(resentGuardian.getId())
-                .realName(resentGuardian.getRealName())
+                .realName(resentGuardian.getName())
                 .tel(resentGuardian.getTel()).build();
     }
 
