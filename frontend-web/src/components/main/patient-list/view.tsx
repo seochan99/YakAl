@@ -1,12 +1,12 @@
 import * as S from "./style.ts";
 import { usePatientListPageViewController } from "./view.controller.ts";
-import { EPatientField } from "@type/patient-field.ts";
+import { EPatientField } from "@type/enum/patient-field.ts";
 import Pagination from "react-js-pagination";
 
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import PatientItem from "./child/patient-item/view.tsx";
+import PatientItem from "@components/main/patient-list/patient-item/view.tsx";
 import { PatientListModel } from "@store/patient-list.ts";
-import { EOrder } from "@type/order.ts";
+import { EOrder } from "@type/enum/order.ts";
 import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 function PatientListPage() {

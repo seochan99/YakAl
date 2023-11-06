@@ -4,8 +4,8 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import Pagination from "react-js-pagination";
 import { PatientListModel } from "@store/patient-list.ts";
 import AdminExpertItem from "@components/admin-main/expert-item/view.tsx";
-import { EExpertField } from "@type/expert-field.ts";
-import { EOrder } from "@type/order.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
+import { EOrder } from "@type/enum/order.ts";
 
 function AdminExpertList() {
   const {
@@ -65,9 +65,11 @@ function AdminExpertList() {
           <S.TelephoneSpan>{`전화번호`}</S.TelephoneSpan>
           <S.RequestDateSpan>{`신청일`}</S.RequestDateSpan>
         </S.TableHeaderDiv>
-        {expertList.map((expertItem) => (
-          <AdminExpertItem key={expertItem.id} expertInfo={expertItem} />
-        ))}
+        {expertList.length === 0 ? (
+          <S.CenterDiv>{"등록 신청한 전문가가 존재하지 않습니다."}</S.CenterDiv>
+        ) : (
+          expertList.map((expertItem) => <AdminExpertItem key={expertItem.id} expertInfo={expertItem} />)
+        )}
       </S.ListDiv>
       <S.PaginationDiv>
         <Pagination

@@ -46,7 +46,7 @@ export const ItemNavLink = styled(NavLink)`
   }
 
   &.active {
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
   }
 `;
 

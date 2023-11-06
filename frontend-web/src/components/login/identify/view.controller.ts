@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { logOnDev } from "@util/log-on-dev.ts";
 import { useNavigate } from "react-router-dom";
-import { identify } from "@api/auth/user/api.ts";
+import { identify } from "@api/auth/users.ts";
 import { HttpStatusCode } from "axios";
 
 type TIdResponse = {

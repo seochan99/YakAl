@@ -36,7 +36,7 @@ export const BackButton = styled(Link)`
     align-items: center;
     gap: 0.5rem;
     border-radius: 0.5rem;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-family: Pretendard;
     font-size: 1rem;
@@ -71,7 +71,7 @@ export const ProgressBar = styled.div`
   }
 
   &.off {
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
   }
 
   &.on {
@@ -103,7 +103,7 @@ export const Title = styled.span`
 `;
 
 export const Subtitle = styled.span`
-  color: var(--color-surface-500);
+  color: var(--Gray5, #626272);
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.6rem;
@@ -125,8 +125,8 @@ export const SelectButtonBox = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background-color: var(--color-surface-900);
-    color: var(--color-surface-100);
+    background-color: var(--Gray2, #e9e9ee);
+    color: var(--Black, #151515);
     font-size: 1.2rem;
     font-weight: 600;
     line-height: 1.2rem;
@@ -140,7 +140,7 @@ export const SelectButtonBox = styled.div`
   }
 
   &.unselected {
-    border: 0.15rem solid var(--color-surface-900);
+    border: 0.15rem solid var(--Gray2, #e9e9ee);
     opacity: 0.5;
   }
 
@@ -187,7 +187,7 @@ export const CertPostcodeInputBox = styled.div`
   grid-row: 3 / span 3;
   grid-column: 1 / span 2;
   border-radius: 0.25rem;
-  border: 0.15rem solid var(--color-surface-800);
+  border: 0.15rem solid var(--Gray2, #e9e9ee);
   padding: 1rem;
 `;
 
@@ -211,7 +211,7 @@ export const CertImgBox = styled.div`
   grid-row: 6 / span 3;
   grid-column: 2 / span 1;
   border-radius: 0.25rem;
-  border: 0.15rem solid var(--color-surface-800);
+  border: 0.15rem solid var(--Gray2, #e9e9ee);
   padding: 1rem;
 `;
 
@@ -231,7 +231,7 @@ export const PostcodeSearchButton = styled.button`
   & {
     border-radius: 0.25rem;
     border: 0;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 0.9rem;
     font-weight: 500;
@@ -242,17 +242,17 @@ export const PostcodeSearchButton = styled.button`
 
   &:hover {
     color: #fff;
-    background-color: var(--color-primary-200);
+    background-color: var(--Sub1, #5588fd);
   }
 
   &:active {
     color: #fff;
-    background-color: var(--color-primary-100);
+    background-color: var(--Main, #2666f6);
   }
 `;
 
 export const CertInputLabel = styled.span`
-  color: var(--color-surface-500);
+  color: var(--Gray5, #626272);
   font-size: 0.9rem;
   font-weight: 500;
   line-height: 0.9rem;
@@ -266,14 +266,14 @@ export const CertInput = styled.input`
     font-weight: 500;
     line-height: 1rem;
     height: 1rem;
-    border: 0.15rem solid var(--color-surface-900);
+    border: 0.15rem solid var(--Gray2, #e9e9ee);
     border-radius: 0.25rem;
     padding: 0.5rem;
     outline: none;
   }
 
   &:focus {
-    border: 0.15rem solid var(--color-primary-100);
+    border: 0.15rem solid var(--Main, #2666f6);
   }
 `;
 
@@ -283,7 +283,7 @@ export const CertTextarea = styled.textarea`
     font-size: 1rem;
     font-weight: 500;
     line-height: 1rem;
-    border: 0.15rem solid var(--color-surface-900);
+    border: 0.15rem solid var(--Gray2, #e9e9ee);
     border-radius: 0.25rem;
     resize: none;
     padding: 0.5rem;
@@ -291,7 +291,7 @@ export const CertTextarea = styled.textarea`
   }
 
   &:focus {
-    border: 0.15rem solid var(--color-primary-100);
+    border: 0.15rem solid var(--Main, #2666f6);
   }
 `;
 
@@ -301,7 +301,7 @@ export const CertInputImgBox = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    border: 0.15rem solid var(--color-surface-900);
+    border: 0.15rem solid var(--Gray2, #e9e9ee);
     border-radius: 0.25rem;
     padding: 0.5rem;
     height: 2rem;
@@ -328,7 +328,7 @@ export const CertInputImgBox = styled.div`
     align-self: stretch;
     border-radius: 0.25rem;
     border: 0;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 0.9rem;
     font-weight: 500;
@@ -337,11 +337,11 @@ export const CertInputImgBox = styled.div`
   }
 
   & label:hover {
-    background-color: var(--color-surface-800);
+    background-color: var(--Gray2, #e9e9ee);
   }
 
   & label:active {
-    background-color: var(--color-surface-700);
+    background-color: var(--Gray3, #c6c6cf);
   }
 
   & input[type="file"] {
@@ -376,11 +376,11 @@ export const InfoTakeRadioBox = styled.div`
   }
 
   & [type="radio"]:checked {
-    border: 0.3rem solid var(--color-primary-100);
+    border: 0.3rem solid var(--Main, #2666f6);
   }
 
   & [type="radio"]:focus-visible {
-    outline: 0.1rem dotted var(--color-primary-100);
+    outline: 0.1rem dotted var(--Main, #2666f6);
     outline-offset: max(2px, 0.1em);
   }
 
@@ -419,7 +419,7 @@ export const NextButton = styled.button`
   & {
     border-radius: 0.5rem;
     border: 0;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 1.25rem;
     font-weight: 600;

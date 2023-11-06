@@ -62,7 +62,7 @@ class User {
   Future<void> fetchLoginInfo() async {
     final dio = await authDioWithContext();
 
-    final response = await dio.get("/user/check/register");
+    final response = await dio.get("/users/check/register");
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
@@ -182,6 +182,27 @@ class Guardian {
       id: json['id'],
       name: json['name'],
       birthDate: json['birthday'],
+    );
+  }
+}
+
+// 전문가
+class Expert {
+  int id;
+  String name;
+  String medicalEstablishment;
+
+  Expert({
+    required this.id,
+    required this.name,
+    required this.medicalEstablishment,
+  });
+
+  factory Expert.fromJson(Map<dynamic, dynamic> json) {
+    return Expert(
+      id: json['id'],
+      name: json['name'],
+      medicalEstablishment: json['medicalEstablishment'],
     );
   }
 }

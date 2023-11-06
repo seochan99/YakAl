@@ -1,8 +1,8 @@
-import { getApprovedFacilityList } from "@api/auth/experts/api.ts";
-import { EJob } from "@type/job.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { getApprovedFacilityList } from "@api/auth/experts.ts";
+import { EJob } from "@type/enum/job.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { isAxiosError } from "axios";
-import { TApprovedFacilityItem } from "@api/auth/experts/types/approved-facility-item.ts";
+import { TApprovedFacilityItem } from "@type/response/approved-facility-item.ts";
 
 export class ExpertFacilityListModel {
   /* CONSTANTS */

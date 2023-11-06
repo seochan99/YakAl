@@ -3,7 +3,7 @@ import Header from "@layout/header/view.tsx";
 import Footer from "../../layout/footer/view.tsx";
 import useAdminLoginViewController from "@page/admin-login/view.controller.ts";
 import YakalSnackbar from "@components/snackbar/view.tsx";
-import { ESnackbarType } from "@type/snackbar-type.ts";
+import { ESnackbarType } from "@type/enum/snackbar-type.ts";
 
 function AdminLogin() {
   const {

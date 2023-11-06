@@ -1,49 +1,25 @@
 import { SwipeableDrawer } from "@mui/material";
 import * as S from "./style.ts";
-import React, { useState } from "react";
+import React from "react";
 
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
-import { useMediaQuery } from "react-responsive";
-import { EJob } from "@type/job.ts";
+import { TProfileProps } from "@components/main/profile/props.ts";
+import { useProfileViewController } from "@components/main/profile/view.controller.ts";
+import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 
-type TProfileProps = {
-  job: EJob | null;
-  department: string | null;
-  belong: string | null;
-  name: string | null;
-};
-
-function Profile({ job, department, belong, name }: TProfileProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
-
-  const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
-
-  const alertList = [{ id: 1, title: "알림입니다.", description: "알림 기능은 추가예정입니다." }];
-
-  const iOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
-
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      ((event as React.KeyboardEvent).key === "Tab" || (event as React.KeyboardEvent).key === "Shift")
-    ) {
-      return;
-    }
-
-    setIsOpen(open);
-  };
-
-  const handleLogoutClick = async () => {
-    window.localStorage.clear();
-  };
-
-  const jobDetail: string | undefined =
-    department && job ? department + " " + (job ? (job === EJob.DOCTOR ? "의사" : "약사") : "") : undefined;
+function Profile(props: TProfileProps) {
+  const {
+    layout: { isMobile, iOS },
+    data: { name, belong, job, jobDetail, alertList },
+    toggleDrawer,
+    isLoading,
+    handleLogoutClick,
+    drawerIsOpen,
+  } = useProfileViewController(props);
 
   return (
     <S.Outer>
@@ -62,7 +38,7 @@ function Profile({ job, department, belong, name }: TProfileProps) {
       </S.ProfileBox>
       <SwipeableDrawer
         anchor="right"
-        open={isOpen}
+        open={drawerIsOpen}
         onClose={toggleDrawer(false)}
         onOpen={toggleDrawer(true)}
         disableBackdropTransition={!iOS}
@@ -82,7 +58,7 @@ function Profile({ job, department, belong, name }: TProfileProps) {
                 </S.DetailNameBox>
               ) : null}
               <S.DetailJob>
-                {job ? job === EJob.DOCTOR ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
+                {job ? job === "의사" ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
                 {jobDetail ? (
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")
@@ -90,7 +66,7 @@ function Profile({ job, department, belong, name }: TProfileProps) {
                     jobDetail
                   )
                 ) : (
-                  <S.Red>전문가 인증 미완료</S.Red>
+                  <S.Red>{"전문가 인증 미완료"}</S.Red>
                 )}
               </S.DetailJob>
               <S.DetailBelong>
@@ -102,15 +78,15 @@ function Profile({ job, department, belong, name }: TProfileProps) {
                     belong
                   )
                 ) : (
-                  <S.Red>전문가 인증 미완료</S.Red>
+                  <S.Red>{"전문가 인증 미완료"}</S.Red>
                 )}
               </S.DetailBelong>
             </S.DetailProfileBox>
           </S.DrawerHeader>
           <S.Bar />
           <S.DrawerTitle>
-            <S.DrawerTitleText>알림</S.DrawerTitleText>
-            <S.AlertClearButton>모두 지우기</S.AlertClearButton>
+            <S.DrawerTitleText>{"알림"}</S.DrawerTitleText>
+            <S.AlertClearButton>{"모두 지우기"}</S.AlertClearButton>
           </S.DrawerTitle>
           <S.AlertBox>
             {alertList.map((alert) => (
@@ -123,10 +99,11 @@ function Profile({ job, department, belong, name }: TProfileProps) {
           </S.AlertBox>
           <S.Bar />
           <S.DrawerFooter>
-            <S.LogoutButton onClick={handleLogoutClick}>로그아웃</S.LogoutButton>
+            <S.LogoutButton onClick={handleLogoutClick}>{"로그아웃"}</S.LogoutButton>
           </S.DrawerFooter>
         </S.DetailProfile>
       </SwipeableDrawer>
+      {isLoading && <LoadingSpinner />}
     </S.Outer>
   );
 }

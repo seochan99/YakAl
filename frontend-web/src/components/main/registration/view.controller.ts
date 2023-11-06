@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from "react";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { useNavigate } from "react-router-dom";
-import { registerFacility } from "@api/auth/experts/api.ts";
+import { registerFacility } from "@api/auth/experts.ts";
 
 export const useRegistrationPageViewController = () => {
   const [selected, setSelected] = useState<EFacilityType | null>(null);
@@ -233,6 +233,8 @@ export const useRegistrationPageViewController = () => {
     facilityNumber,
     facilityPostcode,
     facilityAddress,
+    facilityAddressDetail,
+    facilityAddressExtra,
     facilityBusinessNumber,
     facilityContact,
     facilityHours,

@@ -1,4 +1,4 @@
-import { TApprovedFacilityItem } from "@api/auth/experts/types/approved-facility-item.ts";
+import { TApprovedFacilityItem } from "@type/response/approved-facility-item.ts";
 
 export type TApprovedFacilityList = {
   dataList: TApprovedFacilityItem[];

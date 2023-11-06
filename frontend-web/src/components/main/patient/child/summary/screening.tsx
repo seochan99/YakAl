@@ -1,4 +1,4 @@
-import * as S from "../../style.ts";
+import * as S from "../style.ts";
 import { PatientPageViewModel } from "@components/main/patient/view.model.ts";
 
 function SummaryScreening() {

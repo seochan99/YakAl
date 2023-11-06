@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { setIsOptionalAgreementAccepted } from "@api/auth/user/api.ts";
+import { setIsOptionalAgreementAccepted } from "@api/auth/users.ts";
 import { isAxiosError } from "axios";
 
 export function useTermsPageViewController() {

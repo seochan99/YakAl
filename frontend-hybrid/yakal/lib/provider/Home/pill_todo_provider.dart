@@ -12,8 +12,8 @@ class PillTodoProvider {
   Future<Map<String, dynamic>> getPillTodoParents(DateTime dateTime) async {
     var dio = await authDioWithContext();
 
-    var response =
-        await dio.get("/dose/day/${DateFormat('yyyy-MM-dd').format(dateTime)}");
+    var response = await dio
+        .get("/doses/day/${DateFormat('yyyy-MM-dd').format(dateTime)}");
 
     if (response.statusCode == 200) {
       print(response.data['data']);
@@ -70,7 +70,7 @@ class PillTodoProvider {
     String date = DateFormat('yyyy-MM-dd').format(dateTime);
     String takingTimeStr = takingTime.toString().split('.').last;
 
-    var response = await dio.patch("/dose/taken/$date/$takingTimeStr", data: {
+    var response = await dio.patch("/doses/taken/$date/$takingTimeStr", data: {
       "isTaken": isTaken,
     });
 
@@ -84,7 +84,7 @@ class PillTodoProvider {
   Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/dose/taken/$doseId", data: {
+    var response = await dio.patch("/doses/taken/$doseId", data: {
       "isTaken": isTaken,
     });
 

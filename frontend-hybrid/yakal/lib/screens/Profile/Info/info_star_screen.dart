@@ -439,7 +439,7 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                         const SizedBox(height: 48),
                         /* ---------------- 진단 병 목록 ---------------- */
                         const Text(
-                          '1년간 처단 받은 (진단)병',
+                          '1년간 진단 받은 병명',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),

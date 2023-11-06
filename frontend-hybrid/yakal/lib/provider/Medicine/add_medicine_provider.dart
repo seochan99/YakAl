@@ -1,7 +1,11 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
+import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
@@ -17,72 +21,14 @@ class AddMedicineProvider {
     try {
       final response = await dio.get(url.toString());
 
-      if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse = response.data;
+      Map<String, dynamic> jsonResponse = response.data;
 
-        String image = jsonResponse['DrugInfo']['IdentaImage'] ?? "";
-        return image;
-      } else {
-        assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-        return null;
-      }
+      String image = jsonResponse['DrugInfo']['IdentaImage'] ?? "";
+      return image;
     } on DioException catch (error) {
       return null;
     }
   }
-
-  // API 통신으로 약 코드 알아내기
-  // Future<DoseNameCodeModel?> getKDCodeAndATCCode(String dosename) async {
-  //   final dio = await authDioWithContext();
-  //
-  //   final exceptSpace = RegExp(r"\s");
-  //   final processedName = dosename.replaceAll(exceptSpace, "");
-  //
-  //   final Uri url = Uri.parse("/dose/name").replace(queryParameters: {
-  //     "dosename": processedName,
-  //   });
-  //
-  //   try {
-  //     var response = await dio.get(url.toString());
-  //
-  //     if (response.statusCode == 200) {
-  //       return DoseNameCodeModel(
-  //         name: dosename,
-  //         atcCode: response.data["data"]["atcCode"],
-  //         kdCode: response.data["data"]["kdCode"],
-  //       );
-  //     } else {
-  //       assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-  //       return null;
-  //     }
-  //   } on DioException catch (error) {
-  //     final koreanRegex = RegExp(r"[가-힣]");
-  //     final lastKorIndex = processedName.lastIndexOf(koreanRegex);
-  //     final processedInFail = processedName.substring(0, lastKorIndex + 1);
-  //
-  //     final Uri urlInFail = Uri.parse("/dose/name").replace(queryParameters: {
-  //       "dosename": processedInFail,
-  //     });
-  //
-  //     try {
-  //       var responseInFail = await dio.get(urlInFail.toString());
-  //
-  //       if (responseInFail.statusCode == 200) {
-  //         return DoseNameCodeModel(
-  //           name: dosename,
-  //           atcCode: responseInFail.data["data"]["atcCode"],
-  //           kdCode: responseInFail.data["data"]["kdCode"],
-  //         );
-  //       } else {
-  //         assert(
-  //             false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-  //         return null;
-  //       }
-  //     } on DioException catch (error) {
-  //       return null;
-  //     }
-  //   }
-  // }
 
   Future<int> getDefaultPrescriptionId() async {
     var dio = await authDioWithContext();
@@ -101,12 +47,10 @@ class AddMedicineProvider {
     }
   }
 
-  Future<EAddScheduleResult> addSchedule(
-    List<DoseGroupModel> groupList,
-    int prescriptionId,
-    DateTime start,
-    DateTime end,
-  ) async {
+  Future<EAddScheduleResult> addSchedule(List<DoseGroupModel> groupList,
+      int prescriptionId,
+      DateTime start,
+      DateTime end,) async {
     var requestBody = <String, dynamic>{
       "prescriptionId": prescriptionId,
       "medicines": [],
@@ -120,13 +64,14 @@ class AddMedicineProvider {
           "schedules": [],
         };
 
-        for (var i = 0; i < end.difference(start).inDays + 1; ++i) {
+        for (var i = 0; i < end
+            .difference(start)
+            .inDays + 1; ++i) {
           var now = start.add(Duration(days: i));
           for (var j = 0; j < 4; ++j) {
             if (group.takingTime[j]) {
               schedule["schedules"].add(<String, dynamic>{
-                "date":
-                    DateFormat('yyyy-MM-dd').format(now),
+                "date": DateFormat('yyyy-MM-dd').format(now),
                 "time": ETakingTime.values[j]
                     .toString()
                     .substring("ETakingTime.".length),
@@ -164,5 +109,56 @@ class AddMedicineProvider {
     } on DioException catch (error) {
       return EAddScheduleResult.FAIL;
     }
+  }
+
+  Future<List<SearchMedicineModel>> searchMedicine(String keyword) async {
+    final Dio dio = Dio();
+
+    final Uri url = Uri.parse("${dotenv.env['KIMS_SERVER_HOST']}/search/list")
+        .replace(queryParameters: {
+      "keyword": keyword,
+      "mode": "1",
+      "pageNo": "1",
+    });
+
+    String username = dotenv.env['KIMS_SERVER_USERNAME'] ?? "";
+    String password = dotenv.env['KIMS_SERVER_PASSWORD'] ?? "";
+
+    final String basicAuth =
+        'Basic ${base64Encode(utf8.encode('$username:$password'))}';
+
+    try {
+      final response = await dio.get(
+        url.toString(),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': basicAuth,
+          },
+        ),
+      );
+
+      Map<String, dynamic> jsonResponse = response.data;
+      if (jsonResponse.containsKey("List")) {
+        List<dynamic> list = jsonResponse["List"];
+        return list
+            .map((medicineJson) => SearchMedicineModel.fromJson(medicineJson))
+            .toList();
+      } else {
+        return [];
+      }
+    } on DioException catch (error) {
+      return [];
+    }
+  }
+
+  Future<String?> getBase64ImageFromName(String name) async {
+    final searchResponse = await searchMedicine(name);
+
+    if (searchResponse.isEmpty) {
+      return null;
+    }
+
+    return await getMedicineBase64Image(searchResponse[0].code);
   }
 }

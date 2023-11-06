@@ -3,8 +3,8 @@ import * as S from "./style.ts";
 import Skeleton from "@mui/material/Skeleton";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import ApprovalDialog from "@components/admin-main/approval-dialog/view.tsx";
-import { EJob } from "@type/job.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EJob } from "@type/enum/job.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 
 function AdminExpertDetail() {
   const {

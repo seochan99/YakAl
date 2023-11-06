@@ -1,4 +1,4 @@
-import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 import {
   getAnticholinergicDoses,
   getBeersDoses,
@@ -8,14 +8,14 @@ import {
   getLatestDoses,
   getPatientBaseInfo,
   getProtectorInfo,
-} from "@api/auth/experts/api.ts";
+} from "@api/auth/experts.ts";
 import { isAxiosError } from "axios";
-import { TPatientBase } from "@api/auth/experts/types/patient-base.ts";
-import { TProtectorInfo } from "@api/auth/experts/types/protector-info.ts";
-import { TDoseInfo } from "@api/auth/experts/types/dose-info.ts";
-import { TGeriatricSyndromeResult } from "@api/auth/experts/types/geriatric-syndrome-result.ts";
-import { TGeneralSurveyResult } from "@api/auth/experts/types/general-survey-result.ts";
-import { TDoseWithRisk } from "@api/auth/experts/types/dose-with-risk.ts";
+import { TPatientBase } from "@type/response/patient-base.ts";
+import { TProtectorInfo } from "@type/response/protector-info.ts";
+import { TDoseInfo } from "@type/response/dose-info.ts";
+import { TGeriatricSyndromeResult } from "@type/response/geriatric-syndrome-result.ts";
+import { TGeneralSurveyResult } from "@type/response/general-survey-result.ts";
+import { TDoseWithRisk } from "@type/response/dose-with-risk.ts";
 
 type TPatientInfo = {
   base: TPatientBase | null;
@@ -402,25 +402,14 @@ export class PatientModel {
   };
 
   public static isLoading = () => {
-    if (this.currentTab === EPatientInfoTab.SUMMARY) {
-      return (
-        this.patientInfo.base === null ||
-        this.patientInfo.protector === null ||
-        this.patientInfo.medication.etc === null ||
-        this.patientInfo.geriatricSyndrome.mna === null ||
-        this.patientInfo.screeningDetail.arms === null
-      );
-    } else if (this.currentTab === EPatientInfoTab.MEDICATION) {
-      return (
-        this.patientInfo.medication.etc === null ||
-        this.patientInfo.medication.beersCriteriaMedicines === null ||
-        this.patientInfo.medication.anticholinergicDrugs === null ||
-        this.patientInfo.medication.armsProgress === null
-      );
-    } else if (this.currentTab === EPatientInfoTab.GERIATRIC_SYNDROME) {
-      return this.patientInfo.geriatricSyndrome.mna === null;
-    } else {
-      return this.patientInfo.screeningDetail.arms === null;
-    }
+    return (
+      this.patientInfo.base === null ||
+      this.patientInfo.protector === null ||
+      this.patientInfo.medication.etc === null ||
+      this.patientInfo.geriatricSyndrome.mna === null ||
+      this.patientInfo.medication.beersCriteriaMedicines === null ||
+      this.patientInfo.medication.anticholinergicDrugs === null ||
+      this.patientInfo.screeningDetail.arms === null
+    );
   };
 }

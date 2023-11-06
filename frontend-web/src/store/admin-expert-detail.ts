@@ -1,5 +1,5 @@
-import { EJob } from "@type/job.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EJob } from "@type/enum/job.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 
 export type TExpertDetail = {
   belongInfo: {

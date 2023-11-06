@@ -18,6 +18,7 @@ export const InnerDiv = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   gap: 1.5rem;
+  height: 49.075rem;
 `;
 
 export const CenteringMain = styled.main`

@@ -13,4 +13,12 @@ class DoseNameCodeModel {
   String toString() {
     return "{name: $name, atcCode: $atcCode, kdCode: $kdCode}";
   }
+
+  factory DoseNameCodeModel.fromJson(Map<String, dynamic> json) {
+    return DoseNameCodeModel(
+      name: json["name"],
+      atcCode: json["atcCode"],
+      kdCode: json["kdCode"],
+    );
+  }
 }

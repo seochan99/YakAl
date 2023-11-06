@@ -1,4 +1,6 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -20,19 +22,20 @@ class HomeScreen extends StatefulWidget {
 Future<void> sendDeviceToken(String deviceToken) async {
   try {
     Map<String, dynamic> requestBody = {
-      'device_token': deviceToken,
-      'is_ios': false
+      'deviceToken': deviceToken,
     };
 
     var dio = await authDioWithContext();
-    var response = await dio.put("/user/device", data: requestBody);
+    var response = await dio.patch("/users/device", data: requestBody);
 
-    if (response.statusCode == 200) {
+    if (kDebugMode) {
       print('sendDeviceToken - Success');
-    } else {
-      print('sendDeviceToken - Failure: ${response.statusCode}');
     }
-  } catch (error) {}
+  } on DioException catch (error) {
+    if (kDebugMode) {
+      print('sendDeviceToken - Failure: ${error.response?.statusCode}');
+    }
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {

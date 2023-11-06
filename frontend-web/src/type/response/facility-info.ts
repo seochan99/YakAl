@@ -1,4 +1,4 @@
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 
 export type TFacilityInfo = {
   type: EFacilityType;

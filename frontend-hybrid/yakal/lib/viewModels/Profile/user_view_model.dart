@@ -1,10 +1,7 @@
-import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/utilities/api/api.dart';
-import 'package:yakal/viewModels/Home/home_view_model.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
 import '../../models/Profile/user.dart';
@@ -29,7 +26,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
       var response =
-          await dio.patch("/user/name", data: {"nickname": newNickName});
+          await dio.patch("/users/name", data: {"nickname": newNickName});
 
       if (response.statusCode == 200) {
         // Update local user object if server update was successful
@@ -47,7 +44,7 @@ class UserViewModel extends GetxController {
     try {
       var dio = await authDioWithContext();
 
-      var response = await dio.get("/user");
+      var response = await dio.get("/users");
       if (response.statusCode == 200 && response.data['success']) {
         user.update((val) {
           val?.updateFromApiResponse(response.data['data']);
@@ -62,7 +59,8 @@ class UserViewModel extends GetxController {
   Future<void> updateMode(bool newMode) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/user/detail", data: {"isDetail": newMode});
+    var response =
+        await dio.patch("/users/detail", data: {"isDetail": newMode});
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {
@@ -84,7 +82,7 @@ class UserViewModel extends GetxController {
     var dio = await authDioWithContext();
 
     var response = await dio
-        .patch("/user/notification", data: {"isAllowedNotification": mode});
+        .patch("/users/notification", data: {"isAllowedNotification": mode});
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {
@@ -97,7 +95,7 @@ class UserViewModel extends GetxController {
   Future<void> updateMarketingAgreement(bool isAgreed) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/user/optional-agreement",
+    var response = await dio.patch("/users/optional-agreement",
         data: {"isOptionalAgreementAccepted": isAgreed});
 
     if (response.statusCode == 200 && response.data['success']) {
@@ -136,23 +134,6 @@ class UserViewModel extends GetxController {
   Future<void> loadGuardian() async {
     try {
       await fetchGuardian();
-      print("--------------------------dsads----------------------------");
-
-      user.update((val) {
-        // If 'val' or 'hospitalRecordList' is null, initialize 'hospitalRecordList'
-        val?.guardian ??= Guardian(
-          id: 0,
-          name: "",
-          birthDate: "",
-        );
-
-        // Assuming 'fetchedItems' is set by 'fetchGuardian'
-        // if (fetchedItems != null) {
-        //   val?.guardian.assignAll(fetchedItems);
-        // } else {
-        //   print("Warning: fetchedItems is null");
-        // }
-      });
     } catch (e) {
       throw Exception("Exception while adding health medication: $e");
     }
@@ -288,7 +269,7 @@ class UserViewModel extends GetxController {
       print("timezone $timezone");
       print("formattedTime $formattedTime");
 
-      var response = await dio.patch("/user/notification-time",
+      var response = await dio.patch("/users/notification-time",
           data: {"timezone": timezone, "time": formattedTime});
 
       print("fetchMyTime의 정보는 이와같습니다 : $response");

@@ -1,5 +1,5 @@
-import { TExpertUser } from "@api/auth/experts/types/expert-user.ts";
-import { getExpertUserInfo } from "@api/auth/experts/api.ts";
+import { TExpertUser } from "@type/response/expert-user.ts";
+import { getExpertUserInfo } from "@api/auth/experts.ts";
 import { isAxiosError } from "axios";
 
 export class ExpertUserModel {

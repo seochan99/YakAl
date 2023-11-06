@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { useRegistrationPageViewController } from "@components/main/registration/view.controller.ts";
 
 export function RegistrationPage() {
