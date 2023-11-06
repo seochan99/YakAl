@@ -1,10 +1,9 @@
 package com.viewpharm.yakal.guardian.service;
 
 import com.viewpharm.yakal.guardian.domain.Guardian;
-import com.viewpharm.yakal.guardian.dto.response.GuardianTelDto;
+import com.viewpharm.yakal.guardian.dto.response.GuardianDto;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.response.PatientDto;
-import com.viewpharm.yakal.user.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
@@ -45,28 +44,30 @@ public class GuardianService {
         return Boolean.TRUE;
     }
 
-    public List<UserListDtoForGuardian> readGuardians(Long userId) {
+    public List<GuardianDto> readGuardians(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         List<User> users = userRepository.searchGuardianForUser(user);
 
         return users.stream()
-                .map(u -> UserListDtoForGuardian.builder().
+                .map(u -> GuardianDto.builder().
                         id(u.getId())
-                        .birthday(u.getBirthday().toString())
-                        .nickname(u.getNickname()).build())
+                        .birthDay(u.getBirthday().toString())
+                        .tel(u.getTel())
+                        .name(u.getNickname()).build())
                 .collect(Collectors.toList());
     }
 
-    public GuardianTelDto readResentGuardian(Long userId) {
+    public GuardianDto readResentGuardian(Long userId) {
         final User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final User resentGuardian = userRepository.searchResentGuardianForUser(user)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_GUARDIAN));
 
-        return GuardianTelDto.builder()
+        return GuardianDto.builder()
                 .id(resentGuardian.getId())
-                .realName(resentGuardian.getName())
-                .tel(resentGuardian.getTel()).build();
+                .birthDay(resentGuardian.getBirthday().toString())
+                .tel(resentGuardian.getTel())
+                .name(resentGuardian.getNickname()).build();
     }
 
 

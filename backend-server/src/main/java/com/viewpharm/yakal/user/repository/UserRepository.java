@@ -87,8 +87,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findById(Long userId);
 
-    @Query("select u from User u where u.nickname like %:nickname% and u.birthday = :birthday")
-    List<User> searchUserByNicknameAndBirthday(String nickname, LocalDate birthday);
+    @Query("select u from User u where u.name like %:name% and u.birthday = :birthday")
+    List<User> searchUserByNameAndBirthday(String name, LocalDate birthday);
 
     @Query("select u from User u join fetch u.medicalEstablishment where u.name like %:name% and (u.role = 'DOCTOR' or u.role = 'PHARMACIST')")
     List<User> searchExpertByName(String name);
