@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     private final UserRepository userRepository;
@@ -37,7 +38,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
     }
 
-    @Transactional
     public OAuth2User process(OAuth2UserRequest userRequest, OAuth2User oauth2User) {
         ELoginProvider provider = ELoginProvider.valueOf(userRequest.getClientRegistration().getRegistrationId().toUpperCase());
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, oauth2User.getAttributes());
