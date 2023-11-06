@@ -63,13 +63,13 @@ public class ExpertController {
 
     @GetMapping(value = "/medical-establishments/search")
     @Operation(summary = "의료기관 검색", description = "의료기관 검색")
-    public ResponseDto<?> createMedicalEstablishment(@RequestParam(name = "medical") EMedical eMedical,
-                                                     @RequestParam(value = "word", required = false) String word,
-                                                     @RequestParam("page") Integer page) {
+    public ResponseDto<?> readMedicalEstablishments(@RequestParam(name = "medical") EMedical eMedical,
+                                                    @RequestParam(value = "word", required = false) String word,
+                                                    @RequestParam("page") Integer page) {
         return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishments(eMedical, word, page, 5));
     }
 
-    @PostMapping(value = "/expert-certifications/expert", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/expert-certifications", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     @Operation(summary = "전문가 등록", description = "전문가 등록")
     public ResponseDto<?> createExpertCertification(@UserId Long userId,
                                                     @RequestPart(value = "message") ExpertCertificationDto requestDto,
@@ -126,20 +126,6 @@ public class ExpertController {
         );
     }
 
-//    @Deprecated
-//    @GetMapping("/guardian/{guardianId}")
-//    @Operation(summary = "보호중인 환자 찾기", description = "해당 유저가 보호하고 있는 유저 찾기")
-//    public ResponseDto<PatientDto> readPatient(@PathVariable Long guardianId) {
-//        return ResponseDto.ok(guardianService.readPatient(guardianId));
-//    }
-//
-//    @Deprecated
-//    @GetMapping("/patient/{patientId}")
-//    @Operation(summary = "보호자 찾기", description = "해당 유저의 보호자 찾기")
-//    public ResponseDto<PatientDto> readGuardian(@PathVariable Long patientId) {
-//        return ResponseDto.ok(guardianService.readGuardian(patientId));
-//    }
-
     @PatchMapping("/medical-appointment/{patientId}")
     @Operation(summary = "관심환자 여부 변경", description = "관심환자 여부 변경")
     public ResponseDto<?> updateIsFavorite(@UserId Long expertId, @PathVariable Long patientId) {
@@ -161,7 +147,9 @@ public class ExpertController {
 
     @GetMapping("/patient/{patientId}/doses/all")
     @Operation(summary = "환자 처방약 조회", description = "환자 모든 처방약 조회")
-    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
+    public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId,
+                                                @PathVariable Long patientId,
+                                                @RequestParam("page") Long page) {
         return ResponseDto.ok(doseService.readAllDoses(userId, patientId, page));
     }
 
@@ -176,7 +164,4 @@ public class ExpertController {
     public ResponseDto<DoseAllWithRiskDto> readAnticholinergicDoses(@UserId Long userId, @PathVariable Long patientId, @RequestParam("page") Long page) {
         return ResponseDto.ok(doseService.readAnticholinergicDoses(userId, patientId, page));
     }
-
-
-
 }
