@@ -10,7 +10,7 @@ import com.viewpharm.yakal.user.dto.response.ExpertListDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.user.dto.response.UserListDtoForGuardian;
+import com.viewpharm.yakal.user.dto.response.GuardianListDto;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
@@ -208,11 +208,11 @@ public class UserService {
         return Boolean.TRUE;
     }
 
-    public List<UserListDtoForGuardian> searchUserForGuardian(String nickname, LocalDate birthday) {
-        List<User> users = userRepository.searchUserByNicknameAndBirthday(nickname, birthday);
+    public List<GuardianListDto> searchUserForGuardian(String name, LocalDate birthday) {
+        List<User> users = userRepository.searchUserByNameAndBirthday(name, birthday);
 
         return users.stream()
-                .map(u -> new UserListDtoForGuardian(u.getId(), u.getNickname(), u.getBirthday().toString()))
+                .map(u -> new GuardianListDto(u.getId(), u.getName(), u.getBirthday().toString()))
                 .collect(Collectors.toList());
     }
 
