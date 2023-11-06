@@ -37,8 +37,22 @@ export const useAdminExpertListViewController = () => {
   }, [sortingOptionOpen, setSortingOptionOpen]);
 
   const onSelectSortingOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSortBy(EOrder.DESC, e.currentTarget.value as EExpertField);
     setSortingOptionOpen(false);
+
+    const currentField = e.currentTarget.value as EExpertField;
+    if (sorting.field === currentField) {
+      if (sorting.order === EOrder.DESC) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    } else {
+      if (currentField === EExpertField.NAME || currentField === EExpertField.BELONG_NAME) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    }
   };
 
   const onChangePage = (pageNumber: number) => {
