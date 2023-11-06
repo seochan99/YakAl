@@ -3,14 +3,14 @@ import 'package:yakal/models/Profile/user.dart';
 import 'package:yakal/utilities/api/api.dart';
 
 class AppointmentController extends GetxController {
-  var epxerts = <Guardian>[].obs;
-  var myExperts = <Guardian>[].obs;
+  var epxerts = <Expert>[].obs;
+  var myExperts = <Expert>[].obs;
 
   // 전문가 호출
   Future<void> getExperts(String name) async {
     try {
       var dio = await authDioWithContext();
-      final response = await dio.get("/user/expert-search?name=$name");
+      final response = await dio.get("/users/expert-search?name=$name");
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
@@ -21,8 +21,8 @@ class AppointmentController extends GetxController {
         print(epxertsData);
 
         epxerts.clear(); // Clear the existing list if needed
-        epxerts.addAll(
-            epxertsData.map((data) => Guardian.fromJson(data)).toList());
+        epxerts
+            .addAll(epxertsData.map((data) => Expert.fromJson(data)).toList());
       } else {
         throw Exception('Failed to fetch guardian information');
       }
@@ -32,9 +32,11 @@ class AppointmentController extends GetxController {
   }
 
   // 전문가 POST
-  Future<void> postExperts(int id, String name, String birthDate) async {
+  Future<void> postExperts(
+      int id, String name, String medicalEstablishment) async {
     // myExperts 에 id,name,birthDate 객체 리스트 요소 하나
-    myExperts.add(Guardian(id: id, name: name, birthDate: birthDate));
+    myExperts.add(
+        Expert(id: id, name: name, medicalEstablishment: medicalEstablishment));
     try {
       var dio = await authDioWithContext();
       final response = await dio.post("/medical-appointment/$id");

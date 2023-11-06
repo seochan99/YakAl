@@ -74,7 +74,7 @@ class User {
       prefs.setBool("MODE", mode);
 
       isAgreedMarketing =
-          response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
+      response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
       if (isAgreedMarketing != null) {
         prefs.setBool("MODE", mode);
       } else {
@@ -182,6 +182,27 @@ class Guardian {
       id: json['id'],
       name: json['name'],
       birthDate: json['birthday'],
+    );
+  }
+}
+
+// 전문가
+class Expert {
+  int id;
+  String name;
+  String medicalEstablishment;
+
+  Expert({
+    required this.id,
+    required this.name,
+    required this.medicalEstablishment,
+  });
+
+  factory Expert.fromJson(Map<dynamic, dynamic> json) {
+    return Expert(
+      id: json['id'],
+      name: json['name'],
+      medicalEstablishment: json['medicalEstablishment'],
     );
   }
 }

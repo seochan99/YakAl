@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/appointment_controller.dart';
-import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
@@ -18,7 +17,7 @@ class AppointmentScreen extends StatefulWidget {
 
 class _AppointmentScreenState extends State<AppointmentScreen> {
   String expertName = '';
-  String expertBirthDate = '';
+  String expertEstablishment = '';
   int expertId = 0;
   bool isSelectedExpert = false;
   bool isSelectedSearch = false;
@@ -44,7 +43,8 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
       backgroundColor: ColorStyles.gray1,
       colorText: Colors.black,
     );
-    appointmentController.postExperts(expertId, expertName, expertBirthDate);
+    appointmentController.postExperts(
+        expertId, expertName, expertEstablishment);
     _expertNameController.clear();
     setState(() {});
     // Navigator.pop(context);
@@ -141,12 +141,15 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                                         : null, // 선택한 항목의 id와 현재 항목의 id를 비교
                                     child: InkWell(
                                       onTap: () {
-                                        setState(() {
-                                          expertName = expert.name;
-                                          expertBirthDate = expert.birthDate;
-                                          expertId = expert.id;
-                                          isSelectedExpert = true;
-                                        });
+                                        setState(
+                                          () {
+                                            expertName = expert.name;
+                                            expertEstablishment =
+                                                expert.medicalEstablishment;
+                                            expertId = expert.id;
+                                            isSelectedExpert = true;
+                                          },
+                                        );
                                       },
                                       highlightColor:
                                           Colors.blue.withOpacity(0.3),
@@ -187,8 +190,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                       ),
                     ),
                     onPressed: isButtonEnabled ? _handleButtonPress2 : null,
-                    child:
-                        const Text("검색 하기", style: TextStyle(fontSize: 20.0)),
+                    child: const Text(
+                      "검색 하기",
+                      style: TextStyle(fontSize: 20.0),
+                    ),
                   );
                 },
               ),
@@ -218,8 +223,10 @@ class _AppointmentScreenState extends State<AppointmentScreen> {
                           ),
                           onPressed:
                               isButtonEnabled ? _handleButtonPress : null,
-                          child: const Text("추가 하기",
-                              style: TextStyle(fontSize: 20.0)),
+                          child: const Text(
+                            "추가 하기",
+                            style: TextStyle(fontSize: 20.0),
+                          ),
                         )
                       : Container();
                 },

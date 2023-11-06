@@ -9,7 +9,7 @@ class GuardianController extends GetxController {
     try {
       var dio = await authDioWithContext();
       final response =
-          await dio.get("/user/general-search?date=$birthday&name=$name");
+          await dio.get("/users/general-search?date=$birthday&nickname=$name");
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
