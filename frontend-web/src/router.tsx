@@ -102,11 +102,7 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "login/social/kakao",
-        element: <AfterSocialLoginPage />,
-      },
-      {
-        path: "login/social/google",
+        path: "login/social",
         element: <AfterSocialLoginPage />,
       },
       {
