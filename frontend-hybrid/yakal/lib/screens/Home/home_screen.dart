@@ -20,12 +20,12 @@ class HomeScreen extends StatefulWidget {
 Future<void> sendDeviceToken(String deviceToken) async {
   try {
     Map<String, dynamic> requestBody = {
-      'device_token': deviceToken,
+      'deviceToken': deviceToken,
       'is_ios': false
     };
 
     var dio = await authDioWithContext();
-    var response = await dio.put("/users/device", data: requestBody);
+    var response = await dio.patch("/users/device", data: requestBody);
 
     if (response.statusCode == 200) {
       print('sendDeviceToken - Success');
