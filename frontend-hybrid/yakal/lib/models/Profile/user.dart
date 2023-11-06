@@ -74,7 +74,7 @@ class User {
       prefs.setBool("MODE", mode);
 
       isAgreedMarketing =
-      response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
+          response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
       if (isAgreedMarketing != null) {
         prefs.setBool("MODE", mode);
       } else {

@@ -82,7 +82,7 @@ class UserViewModel extends GetxController {
     var dio = await authDioWithContext();
 
     var response = await dio
-        .patch("/user/notification", data: {"isAllowedNotification": mode});
+        .patch("/users/notification", data: {"isAllowedNotification": mode});
 
     if (response.statusCode == 200 && response.data['success']) {
       user.update((val) {
@@ -95,7 +95,7 @@ class UserViewModel extends GetxController {
   Future<void> updateMarketingAgreement(bool isAgreed) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/user/optional-agreement",
+    var response = await dio.patch("/users/optional-agreement",
         data: {"isOptionalAgreementAccepted": isAgreed});
 
     if (response.statusCode == 200 && response.data['success']) {
@@ -286,7 +286,7 @@ class UserViewModel extends GetxController {
       print("timezone $timezone");
       print("formattedTime $formattedTime");
 
-      var response = await dio.patch("/user/notification-time",
+      var response = await dio.patch("/users/notification-time",
           data: {"timezone": timezone, "time": formattedTime});
 
       print("fetchMyTime의 정보는 이와같습니다 : $response");
