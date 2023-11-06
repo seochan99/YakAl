@@ -3,6 +3,7 @@ package com.viewpharm.yakal.user.repository;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.base.type.ELoginProvider;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -78,8 +79,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " GROUP BY user_name, user_id", nativeQuery = true)
     List<UserNotificationForm> findByDateAndTime(@Param("date") LocalDate localDate, @Param("localTime") LocalTime localTime);
 
-//    @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
-//    Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
+    @Query("select u from User u where u.id=:id and (u.role = 'DOCTOR' or u.role = 'PHARMACIST')")
+    Optional<User> findExpertById(@Param("id") Long userId);
 
     @Query("select m.name from User u join MedicalEstablishment m on u.medicalEstablishment.id = m.id where u.id = :id")
     Optional<String> getEstablishmentNameByIdAndRole(@Param("id") Long userId);
@@ -97,9 +98,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user order by g.createdDate desc limit 1")
     Optional<User> searchResentGuardianForUser(@Param("user") User user);
-
-    @Query("select u from User u join fetch u.medicalAppointmentForPatient ma where ma.patient=:user")
-    List<User> searchExpertForUser(@Param("user") User user);
 
     interface UserNotificationForm {
         Long getUserId();

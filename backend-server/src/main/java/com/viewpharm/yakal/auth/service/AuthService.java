@@ -111,8 +111,8 @@ public class AuthService {
         user.setRefreshToken(jwtTokenDto.refreshToken());
         user.setIsLogin(true);
 
-        if (user.getName() == null) {
-            user.setName("user#" + String.format("%06d", user.getId()));
+        if (user.getNickname() == null) {
+            user.setNickname("user#" + String.format("%06d", user.getId()));
         }
 
         return jwtTokenDto;
