@@ -147,6 +147,6 @@ public class ExpertCertificationService {
                         me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(), me.getTel(), me.getClinicHours()
                         , me.getFeatures());
         return new ExpertCertificationDetailDto(medicalEstablishmentForExpertDto, ec.getUser().getName(), ec.getUser().getTel()
-                , ec.getCreatedDate(), ec.getType().toString(), ec.getLicenseImg(), ec.getAffiliationImg());
+                , ec.getCreatedDate(), ec.getUser().getRole().toString(), ec.getLicenseImg(), ec.getAffiliationImg());
     }
 }
