@@ -1,5 +1,6 @@
 import { AdminExpertDetailViewModel } from "@components/admin-main/expert-detail/view.model.ts";
 import React, { useCallback, useEffect, useState } from "react";
+import { useLoaderData } from "react-router-dom";
 
 export const useAdminExpertDetailViewController = () => {
   AdminExpertDetailViewModel.use();
@@ -8,15 +9,14 @@ export const useAdminExpertDetailViewController = () => {
   const [rejectionDialogOpen, setRejectionDialogOpen] = useState<boolean>(false);
   const [rejectionReason, setRejectionReason] = useState<string>("");
 
-  // const expertId = useLoaderData();
+  const expertId = useLoaderData();
 
   const { getState, fetch } = AdminExpertDetailViewModel;
   const { expertDetail, isLoading } = getState();
 
   useEffect(() => {
-    fetch();
     // fetch(expertId);
-  }, [fetch]);
+  }, [expertId, fetch]);
 
   const openApprovalDialog = useCallback(() => {
     setApprovalDialogOpen(true);

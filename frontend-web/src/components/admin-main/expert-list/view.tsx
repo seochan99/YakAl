@@ -65,9 +65,11 @@ function AdminExpertList() {
           <S.TelephoneSpan>{`전화번호`}</S.TelephoneSpan>
           <S.RequestDateSpan>{`신청일`}</S.RequestDateSpan>
         </S.TableHeaderDiv>
-        {expertList.map((expertItem) => (
-          <AdminExpertItem key={expertItem.id} expertInfo={expertItem} />
-        ))}
+        {expertList.length === 0 ? (
+          <S.CenterDiv>{"등록 신청한 전문가가 존재하지 않습니다."}</S.CenterDiv>
+        ) : (
+          expertList.map((expertItem) => <AdminExpertItem key={expertItem.id} expertInfo={expertItem} />)
+        )}
       </S.ListDiv>
       <S.PaginationDiv>
         <Pagination

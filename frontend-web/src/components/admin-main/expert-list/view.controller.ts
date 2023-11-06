@@ -7,7 +7,7 @@ export const useAdminExpertListViewController = () => {
   AdminExpertListViewModel.use();
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery } = AdminExpertListViewModel;
-  const { isLoading, expertList, paging, sorting } = getStates();
+  const { isLoading, expertList, paging, sorting, nameQuery } = getStates();
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -56,11 +56,19 @@ export const useAdminExpertListViewController = () => {
   };
 
   const onChangePage = (pageNumber: number) => {
+    if (pageNumber === paging.pageNumber) {
+      return;
+    }
+
     setPageNumber(pageNumber);
   };
 
   const onSearchBarEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
+      if (nameQuery === nameQueryCache) {
+        return;
+      }
+
       setNameQuery(nameQueryCache);
     }
   };

@@ -1,17 +1,17 @@
 import * as S from "./style.ts";
 import { EJob } from "@type/job.ts";
-import { getDateStringFromDate } from "@util/get-date-string-from-date.ts";
-import { TExpertItem } from "@store/admin-expert-list.ts";
 import LocalHospitalIcon from "@mui/icons-material/LocalHospital";
 import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import Tooltip from "@mui/material/Tooltip";
+import { TAdminExpertItem } from "@type/response/admin-expert-item.ts";
+import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 
 type TExpertItemProps = {
-  expertInfo: TExpertItem;
+  expertInfo: TAdminExpertItem;
 };
 
 function AdminExpertItem({ expertInfo }: TExpertItemProps) {
-  const { id, name, job, tel, belongName, requestedAt } = expertInfo;
+  const { id, name, type, tel, belong, requestedAt } = expertInfo;
 
   return (
     <S.OuterDiv>
@@ -20,7 +20,7 @@ function AdminExpertItem({ expertInfo }: TExpertItemProps) {
           <S.NameSpan>{name}</S.NameSpan>
         </Tooltip>
         <S.JobTypeSpan>
-          {job === EJob.DOCTOR ? (
+          {type === EJob.DOCTOR ? (
             <>
               <LocalHospitalIcon />
               {"의사"}
@@ -32,11 +32,11 @@ function AdminExpertItem({ expertInfo }: TExpertItemProps) {
             </>
           )}
         </S.JobTypeSpan>
-        <Tooltip title={belongName} followCursor>
-          <S.FacilityNameSpan>{belongName}</S.FacilityNameSpan>
+        <Tooltip title={belong} followCursor>
+          <S.FacilityNameSpan>{belong}</S.FacilityNameSpan>
         </Tooltip>
         <S.TelephoneSpan>{tel}</S.TelephoneSpan>
-        <S.RequestDateSpan>{getDateStringFromDate(requestedAt)}</S.RequestDateSpan>
+        <S.RequestDateSpan>{getDateStringFromArray(requestedAt)}</S.RequestDateSpan>
       </S.StyledLink>
     </S.OuterDiv>
   );

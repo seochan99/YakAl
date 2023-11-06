@@ -1,148 +1,27 @@
 import { EOrder } from "@type/order.ts";
-import { EJob } from "@type/job.ts";
 import { EExpertField } from "@type/expert-field.ts";
+import { TAdminExpertItem } from "@type/response/admin-expert-item.ts";
+import { isAxiosError } from "axios";
+import { getExpertRequestList } from "@api/auth/admin.ts";
+import { EJob } from "@type/job.ts";
 
-export type TExpertItem = {
-  id: number;
-  job: EJob;
-  name: string;
-  requestedAt: Date;
-  tel: string;
-  belongName: string;
-};
-
-type TExpertListSort = {
+export type TExpertListSort = {
   order: EOrder;
   field: EExpertField;
 };
-
-const expertList: TExpertItem[] = [
-  {
-    id: 1,
-    job: EJob.DOCTOR,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원",
-  },
-  {
-    id: 2,
-    job: EJob.PHARMACIST,
-    name: "맹약사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "서울아산병원",
-  },
-  {
-    id: 3,
-    job: EJob.DOCTOR,
-    name: "박박사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "중앙대학교 부속병원",
-  },
-  {
-    id: 4,
-    job: EJob.DOCTOR,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원1",
-  },
-  {
-    id: 5,
-    job: EJob.DOCTOR,
-    name: "박박사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원2",
-  },
-  {
-    id: 6,
-    job: EJob.PHARMACIST,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원3",
-  },
-  {
-    id: 7,
-    job: EJob.DOCTOR,
-    name: "맹약사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원4",
-  },
-  {
-    id: 8,
-    job: EJob.PHARMACIST,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원5",
-  },
-  {
-    id: 9,
-    job: EJob.PHARMACIST,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원6",
-  },
-  {
-    id: 10,
-    job: EJob.DOCTOR,
-    name: "맹약사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원7",
-  },
-  {
-    id: 11,
-    job: EJob.PHARMACIST,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원8",
-  },
-  {
-    id: 12,
-    job: EJob.PHARMACIST,
-    name: "맹약사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원9",
-  },
-  {
-    id: 13,
-    job: EJob.PHARMACIST,
-    name: "맹약사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원10",
-  },
-  {
-    id: 14,
-    job: EJob.DOCTOR,
-    name: "김의사",
-    requestedAt: new Date("2023-09-01"),
-    tel: "010-2832-1945",
-    belongName: "분당 차병원11",
-  },
-];
 
 export class AdminExpertListModel {
   /* CONSTANTS */
   public static readonly EXPERT_COUNT_PER_PAGE = 10;
 
   /* PRIVATE MEMBER VARIABLE */
-  private expertList: TExpertItem[] | null = null;
+  private expertList: TAdminExpertItem[] | null = null;
   private totalCount: number | null = null;
 
   private pageNumber = 1;
 
   private sortBy: TExpertListSort = {
-    order: EOrder.DESC,
+    order: EOrder.ASC,
     field: EExpertField.NAME,
   };
 
@@ -166,18 +45,32 @@ export class AdminExpertListModel {
 
   /* PUBLIC METHOD */
   public fetch = async () => {
-    this.expertList = null;
-
-    // Dummy async communication
-    this.expertList = expertList.slice(
-      (this.pageNumber - 1) * AdminExpertListModel.EXPERT_COUNT_PER_PAGE,
-      this.pageNumber * AdminExpertListModel.EXPERT_COUNT_PER_PAGE,
-    );
-
-    this.totalCount = expertList.length;
+    try {
+      const response = await getExpertRequestList(this.nameQuery, this.sortBy, this.pageNumber - 1);
+      this.expertList = response.data.data.datalist.map((item) => {
+        return {
+          ...item,
+          type: item.type === "DOCTOR" ? EJob.DOCTOR : EJob.PHARMACIST,
+        };
+      });
+      this.pageNumber = response.data.data.pageInfo.page + 1;
+      this.totalCount = response.data.data.pageInfo.totalElements;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.expertList = [];
+        this.pageNumber = 1;
+        this.totalCount = 0;
+      }
+    }
   };
 
-  public isLoading = () => this.expertList == null;
+  public invalidate = () => {
+    this.expertList = null;
+    this.pageNumber = 1;
+    this.totalCount = 0;
+  };
+
+  public isLoading = () => this.expertList === null;
 
   public getExpertList = () => this.expertList;
 

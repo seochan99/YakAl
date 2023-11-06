@@ -21,7 +21,7 @@ export class AdminFacilityListModel {
   private pageNumber = 1;
 
   private sortBy: TFacilityListSortType = {
-    order: EOrder.DESC,
+    order: EOrder.ASC,
     field: EFacilityField.NAME,
   };
 
