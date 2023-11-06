@@ -165,8 +165,8 @@ public class UserService {
                 .build();
     }
 
-    public void updateName(final Long userId, final String name) {
-        final Integer isUpdated = userRepository.updateNameById(userId, name);
+    public void updateName(final Long userId, final String nickname) {
+        final Integer isUpdated = userRepository.updateNickNameById(userId, nickname);
 
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);

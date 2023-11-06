@@ -35,8 +35,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateNotiIsAllowedById(Long userId, Boolean notiIsAllowed);
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.name = :name where u.id = :userId")
-    Integer updateNameById(Long userId, String name);
+    @Query("update User u set u.nickname = :nickname where u.id = :userId")
+    Integer updateNickNameById(Long userId, String nickname);
 
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.name = :name, u.isDetail = :isDetail where u.id = :userId")

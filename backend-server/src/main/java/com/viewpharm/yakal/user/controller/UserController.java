@@ -32,7 +32,7 @@ public class UserController {
     public ResponseDto<UserInfoDto> getUserInfo(@UserId Long id) {
         final User user = userService.getUserInfo(id);
         final UserInfoDto userInfoDto = UserInfoDto.builder()
-                .Nickname(user.getName())
+                .Nickname(user.getNickname())
                 .isDetail(user.getIsDetail())
                 .notiIsAllowed(user.getNotiIsAllowed())
                 .breakfastTime(user.getBreakfastTime().toString())
