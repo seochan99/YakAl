@@ -64,6 +64,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         }
 
         user.setIsLogin(true);
+        userRepository.flush();
 
         return UserPrincipal.create(user, oauth2User.getAttributes());
     }
