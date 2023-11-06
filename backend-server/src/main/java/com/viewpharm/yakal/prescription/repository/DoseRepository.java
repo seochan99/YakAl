@@ -61,7 +61,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             "case when d.isEveningTaken = true then 1 else 0 end + " +
             "case when d.isDefaultTaken = true then 1 else 0 end) as take, d.date as date " +
             "from Dose d where d.user.id = :userId and d.date between :start and :end group by d.date")
-    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(Long userId, LocalDate start, LocalDate end);
+    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(@Param("userId")Long userId, @Param("start")LocalDate start, @Param("end")LocalDate end);
 
     @Modifying(clearAutomatically = true)
     @Query("update Dose d set d.pillCnt = :pillCnt, d.isHalf = :isHalf where d.id = :doseId")
