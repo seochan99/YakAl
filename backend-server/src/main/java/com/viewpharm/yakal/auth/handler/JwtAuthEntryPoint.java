@@ -1,7 +1,7 @@
 package com.viewpharm.yakal.auth.handler;
 
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.auth.dto.request.JwtErrorResponse;
+import com.viewpharm.yakal.auth.dto.response.JwtErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;

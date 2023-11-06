@@ -1,8 +1,8 @@
 package com.viewpharm.yakal.auth.service;
 
-import com.viewpharm.yakal.auth.domain.OAuth2UserInfo;
-import com.viewpharm.yakal.auth.domain.OAuth2UserInfoFactory;
-import com.viewpharm.yakal.auth.domain.UserPrincipal;
+import com.viewpharm.yakal.auth.info.OAuth2UserInfo;
+import com.viewpharm.yakal.auth.info.factory.OAuth2UserInfoFactory;
+import com.viewpharm.yakal.auth.info.UserPrincipal;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.prescription.domain.Prescription;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.Optional;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
@@ -31,7 +30,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         try {
-            log.info("OAuth2UserRequest: {}", userRequest);
             return this.process(userRequest, super.loadUser(userRequest));
         } catch (Exception ex) {
             throw new InternalAuthenticationServiceException(ex.getMessage(), ex.getCause());
@@ -47,7 +45,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         User user = null;
 
         if (userOpt.isEmpty()) {
-            log.info("OAuth2User not found. Create new user.");
             user = userRepository.saveAndFlush(User.builder()
                     .socialId(userInfo.getId())
                     .loginProvider(provider)
@@ -63,8 +60,6 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         } else {
             user = userOpt.get();
         }
-
-        log.info("OAuth2User found. User id: {}", user.getId());
 
         return UserPrincipal.create(user, oauth2User.getAttributes());
     }

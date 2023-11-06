@@ -1,4 +1,4 @@
-package com.viewpharm.yakal.auth.domain;
+package com.viewpharm.yakal.auth.info;
 
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.ERole;
@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 
 @Getter
 @Setter(AccessLevel.PROTECTED)

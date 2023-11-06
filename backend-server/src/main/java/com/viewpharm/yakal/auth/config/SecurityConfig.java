@@ -4,12 +4,12 @@ import com.viewpharm.yakal.auth.handler.OAuth2LoginFailureHandler;
 import com.viewpharm.yakal.auth.handler.OAuth2LoginSuccessHandler;
 import com.viewpharm.yakal.auth.service.CustomOAuth2UserService;
 import com.viewpharm.yakal.base.constants.Constants;
-import com.viewpharm.yakal.auth.service.UserDetailServiceForLoad;
+import com.viewpharm.yakal.auth.service.CustomUserDetailService;
 import com.viewpharm.yakal.auth.filter.JwtAuthenticationFilter;
 import com.viewpharm.yakal.auth.filter.JwtExceptionFilter;
 import com.viewpharm.yakal.auth.handler.JwtAccessDeniedHandler;
 import com.viewpharm.yakal.auth.handler.JwtAuthEntryPoint;
-import com.viewpharm.yakal.auth.service.JwtProvider;
+import com.viewpharm.yakal.auth.util.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig{
 
     private final JwtProvider jwtProvider;
-    private final UserDetailServiceForLoad userDetailServiceForLoad;
+    private final CustomUserDetailService customUserDetailService;
     private final JwtAuthEntryPoint jwtAuthEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
@@ -64,7 +64,7 @@ public class SecurityConfig{
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthEntryPoint))
                 .exceptionHandling(exception -> exception.accessDeniedHandler(jwtAccessDeniedHandler))
 
-                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, userDetailServiceForLoad), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthenticationFilter(jwtProvider, customUserDetailService), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(new JwtExceptionFilter(), JwtAuthenticationFilter.class)
 
                 .getOrBuild();

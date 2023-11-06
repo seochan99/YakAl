@@ -2,7 +2,6 @@ package com.viewpharm.yakal.user.repository;
 
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.base.type.EJob;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,6 +16,11 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
+
+    // 리프레시 토큰 업데이트
+    @Modifying(clearAutomatically = true)
+    @Query(value = "update User u set u.refreshToken = :refreshToken where u.id = :userId")
+    void updateRefreshToken(@Param("userId") Long userId, @Param("refreshToken") String refreshToken);
 
     Optional<User> findBySocialIdAndLoginProvider(String socialId, ELoginProvider loginProvider);
 

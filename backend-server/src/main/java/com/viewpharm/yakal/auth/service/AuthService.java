@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.auth.service;
 
+import com.viewpharm.yakal.auth.util.JwtProvider;
 import com.viewpharm.yakal.prescription.domain.Prescription;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.prescription.repository.PrescriptionRepository;
@@ -8,13 +9,12 @@ import com.viewpharm.yakal.user.repository.UserRepository;
 import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.auth.dto.request.JwtTokenDto;
+import com.viewpharm.yakal.auth.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.base.utils.OAuth2Util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -109,7 +108,7 @@ public class AuthService {
         }
 
         final JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
-        user.setRefreshToken(jwtTokenDto.getRefreshToken());
+        user.setRefreshToken(jwtTokenDto.refreshToken());
         user.setIsLogin(true);
 
         if (user.getName() == null) {
@@ -138,13 +137,13 @@ public class AuthService {
     ) throws IOException {
         final String FRONTEND_HOST = "https://localhost:5173"; // Front Server Host -> 배포 시 변경
 
-        final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.getRefreshToken());
+        final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.refreshToken());
         refreshTokenSecureCookie.setPath("/");
         refreshTokenSecureCookie.setHttpOnly(true);
         refreshTokenSecureCookie.setSecure(true);
         refreshTokenSecureCookie.setMaxAge(jwtProvider.getWebRefreshTokenExpirationSecond());
 
-        final Cookie accessTokenCookie = new Cookie("accessToken", jwtTokenDto.getAccessToken());
+        final Cookie accessTokenCookie = new Cookie("accessToken", jwtTokenDto.accessToken());
         accessTokenCookie.setPath("/");
 
         response.addCookie(refreshTokenSecureCookie);
