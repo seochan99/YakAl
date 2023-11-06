@@ -30,7 +30,7 @@ export const BackButton = styled(Link)`
     align-items: center;
     gap: 0.5rem;
     border-radius: 0.5rem;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 1rem;
     font-weight: 600;
@@ -85,7 +85,7 @@ export const UnverifiedIcon = styled.img`
 `;
 
 export const VerifiedText = styled.span`
-  color: var(--color-surface-100);
+  color: var(--Black, #151515);
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.1rem;
