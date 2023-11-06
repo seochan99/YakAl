@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { TProfileProps } from "@components/main/profile/props.ts";
+import { logout } from "@api/auth/auth.ts";
 
 export function useProfileViewController({ job, department, belong, name }: TProfileProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
   const isMobile = useMediaQuery({ query: "(max-width: 480px)" });
@@ -24,7 +26,14 @@ export function useProfileViewController({ job, department, belong, name }: TPro
   };
 
   const handleLogoutClick = async () => {
-    window.localStorage.clear();
+    setIsLoading(true);
+    logout()
+      .then(() => {
+        window.location.href = "/";
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const jobDetail: string | undefined = department && job ? department + " " + (job ?? "") : undefined;
@@ -34,6 +43,7 @@ export function useProfileViewController({ job, department, belong, name }: TPro
     data: { name, belong, job, jobDetail, alertList },
     toggleDrawer,
     handleLogoutClick,
+    isLoading,
     drawerIsOpen,
   };
 }

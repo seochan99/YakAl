@@ -9,12 +9,14 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import CloseOutlinedIcon from "@mui/icons-material/CloseOutlined";
 import { TProfileProps } from "@components/main/profile/props.ts";
 import { useProfileViewController } from "@components/main/profile/view.controller.ts";
+import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 
 function Profile(props: TProfileProps) {
   const {
     layout: { isMobile, iOS },
     data: { name, belong, job, jobDetail, alertList },
     toggleDrawer,
+    isLoading,
     handleLogoutClick,
     drawerIsOpen,
   } = useProfileViewController(props);
@@ -101,6 +103,7 @@ function Profile(props: TProfileProps) {
           </S.DrawerFooter>
         </S.DetailProfile>
       </SwipeableDrawer>
+      {isLoading && <LoadingSpinner />}
     </S.Outer>
   );
 }
