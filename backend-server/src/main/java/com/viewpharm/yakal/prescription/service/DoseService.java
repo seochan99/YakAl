@@ -43,7 +43,7 @@ public class DoseService {
     private final RiskRepository riskRepository;
     private final DoseNameRepository doseNameRepository;
 
-//    private final TakeDoseRepository takeDoseRepository;
+    private final TakeDoseRepository takeDoseRepository;
 
     public <T> Map<EDosingTime, List<T>> createMap() {
         Map<EDosingTime, List<T>> map = new HashMap<>(EDosingTime.values().length);
@@ -97,180 +97,180 @@ public class DoseService {
         return new OneDayScheduleDto(date.toString(), totalCnt, scheduleMap, overlapMap);
     }
 
-//    public Long getOneDayProgressOrNull(final Long userId, final LocalDate date) {
-//        final oneDaySummary totalAndPortion = takeDoseRepository.countTotalAndTakenByUserIdAndDate(userId, date);
-//
-//        if (totalAndPortion.getTotal() == 0) {
-//            return null;
-//        }
-//
-//        return Math.round(totalAndPortion.getTake() / (double) totalAndPortion.getTotal() * 100.0);
-//    }
+    public Long getOneDayProgressOrNull(final Long userId, final LocalDate date) {
+        final oneDaySummary totalAndPortion = takeDoseRepository.countTotalAndTakenByUserIdAndDate(userId, date);
 
-//    public Map<DayOfWeek, OneDaySummaryDto> getOneWeekSummary(final Long userId, final LocalDate date) {
-//        final int ONE_WEEK_DAYS = DayOfWeek.values().length;
-//
-//        final LocalDate startOfWeek = date.minusDays(date.getDayOfWeek().getValue() % ONE_WEEK_DAYS);
-//        final LocalDate endOfWeek = startOfWeek.plusDays(ONE_WEEK_DAYS - 1);
-//
-//        final List<oneDaySummary> totalAndPortionList
-//                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfWeek, endOfWeek);
-//        final List<DoseRepository.overlap> overlapList
-//                = doseRepository.findOverlap(userId, startOfWeek, endOfWeek);
-//
-//        final Map<DayOfWeek, OneDaySummaryDto> oneWeekSummary = new HashMap<>(ONE_WEEK_DAYS);
-//
-//        // 일주일 각 날짜에 대한 처리
-//        for (int i = 0; i < ONE_WEEK_DAYS; ++i) {
-//            Long progressOrNull = null; // 초기값을 null로 설정
-//            LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
-//            Boolean isOverlapped = false;
-//
-//
-//            for (oneDaySummary summary : totalAndPortionList) {
-//                //성분 중복 검사
-//                for (DoseRepository.overlap overlap : overlapList
-//                ) {
-//                    if (overlap.getDate().equals(currentDate)) {
-//                        isOverlapped = true;
-//                        break;
-//                    }
-//                }
-//
-//                // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
-//                if (summary.getDate().equals(currentDate)) {
-//                    Long total = summary.getTotal();
-//                    Long portion = summary.getTake();
-//                    // progressOrNull 계산 (null인 경우 예외 처리)
-//                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
-//                    break;
-//                }
-//            }
-//
-//            // OneDaySummaryDto 객체 생성 및 결과 맵에 추가
-//            final OneDaySummaryDto oneDaySummaryDto = new OneDaySummaryDto(currentDate.toString(), progressOrNull, isOverlapped);
-//            oneWeekSummary.put(DayOfWeek.values()[(i + ONE_WEEK_DAYS - 1) % ONE_WEEK_DAYS], oneDaySummaryDto);
-//        }
-//
-//        return oneWeekSummary;
-//    }
-//
-//
-//    public List<OneDaySummaryDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
-//
-//        final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();
-//
-//        final LocalDate startOfMonth = yearMonth.atDay(1);
-//        final LocalDate endOfMonth = yearMonth.atEndOfMonth();
-//
-//        final List<oneDaySummary> totalAndPortionList
-//                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfMonth, endOfMonth);
-//        final List<DoseRepository.overlap> overlapList
-//                = doseRepository.findOverlap(userId, startOfMonth, endOfMonth);
-//
-//        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
-//
-//        for (int i = 0; i < ONE_MONTH_DAYS; ++i) {
-//            Long progressOrNull = null; // 초기값을 null로 설정
-//            LocalDate currentDate = startOfMonth.plusDays(i); // 현재 날짜 계산
-//            boolean isOverlapped = false;
-//
-//            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
-//            for (oneDaySummary summary : totalAndPortionList) {
-//                //성분 중복 검사
-//                for (DoseRepository.overlap overlap : overlapList
-//                ) {
-//                    if (overlap.getDate().equals(currentDate)) {
-//                        isOverlapped = true;
-//                        break;
-//                    }
-//                }
-//
-//                if (summary.getDate().equals(startOfMonth.plusDays(i))) {
-//                    Long total = summary.getTotal();
-//                    Long portion = summary.getTake();
-//                    // progressOrNull 계산 (null인 경우 예외 처리)
-//                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
-//                    break;
-//                }
-//            }
-//
-//            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(), progressOrNull, isOverlapped);
-//            oneMonthSummary.add(oneDaySummary);
-//
-//        }
-//
-//        return oneMonthSummary;
-//    }
-//
-//    public List<OneDaySummaryDto> getBetweenDaySummary(final Long userId, final LocalDate startDate, final LocalDate endDate) {
-//
-//        final List<oneDaySummary> totalAndPortionList
-//                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startDate, endDate);
-//        final List<DoseRepository.overlap> overlapList
-//                = doseRepository.findOverlap(userId, startDate, endDate);
-//
-//        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
-//
-//        for (int i = 0; i <= ChronoUnit.DAYS.between(startDate, endDate); ++i) {
-//            long progress = 0L; // 초기값을 0으로 설정
-//            LocalDate currentDate = startDate.plusDays(i); // 현재 날짜 계산
-//            boolean isOverlapped = false;
-//
-//            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
-//            for (oneDaySummary summary : totalAndPortionList) {
-//                //성분 중복 검사
-//                for (DoseRepository.overlap overlap : overlapList
-//                ) {
-//                    if (overlap.getDate().equals(currentDate)) {
-//                        isOverlapped = true;
-//                        break;
-//                    }
-//                }
-//
-//                if (summary.getDate().equals(startDate.plusDays(i))) {
-//                    Long total = summary.getTotal();
-//                    Long portion = summary.getTake();
-//                    progress = (total == null || total == 0) ? 0L : Math.round(portion / (double) total * 100.0);
-//                    break;
-//                }
-//            }
-//
-//            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(), progress, isOverlapped);
-//            oneMonthSummary.add(oneDaySummary);
-//
-//        }
-//
-//        return oneMonthSummary;
-//    }
-//
-//    public Map<String, Boolean> updateDoseCount(final Map<Long, Double> updateDoseCountDto) {
-//        final Map<String, Boolean> isUpdatedMap = new HashMap<>(updateDoseCountDto.size());
-//
-//        for (final Long doseId : updateDoseCountDto.keySet()) {
-//            final Double count = updateDoseCountDto.get(doseId);
-//            final Integer isUpdated = doseRepository.updateCountById(doseId, count.longValue(), count.toString().endsWith(".5"));
-//
-//            isUpdatedMap.put(doseId.toString(), isUpdated == 1);
-//        }
-//
-//        return isUpdatedMap;
-//    }
-//
-//    public void updateIsTakenByTime(final Long userId, final LocalDate date, final EDosingTime dosingTime, final Boolean isTaken) {
-//        List<Dose> doses = doseRepository.findByUserIdAndDate(userId, date);
-//        List<TakeDose> takeDoses = takeDoseRepository.findAllByIdAndDosingTime(doses,dosingTime);
-//        for (TakeDose takeDose : takeDoses
-//        ) {
-//            takeDose.updateIsTaken(isTaken);
-//        }
-//    }
-//
-//    public void updateIsTakenById(final Long doseId, final Boolean isTaken) {
-//        Dose dose = doseRepository.findById(doseId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSE));
-//        TakeDose takeDose = takeDoseRepository.findById(dose).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_DOSE));
-//        takeDose.updateIsTaken(isTaken);
-//    }
+        if (totalAndPortion.getTotal() == 0) {
+            return null;
+        }
+
+        return Math.round(totalAndPortion.getTake() / (double) totalAndPortion.getTotal() * 100.0);
+    }
+
+    public Map<DayOfWeek, OneDaySummaryDto> getOneWeekSummary(final Long userId, final LocalDate date) {
+        final int ONE_WEEK_DAYS = DayOfWeek.values().length;
+
+        final LocalDate startOfWeek = date.minusDays(date.getDayOfWeek().getValue() % ONE_WEEK_DAYS);
+        final LocalDate endOfWeek = startOfWeek.plusDays(ONE_WEEK_DAYS - 1);
+
+        final List<oneDaySummary> totalAndPortionList
+                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfWeek, endOfWeek);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId, startOfWeek, endOfWeek);
+
+        final Map<DayOfWeek, OneDaySummaryDto> oneWeekSummary = new HashMap<>(ONE_WEEK_DAYS);
+
+        // 일주일 각 날짜에 대한 처리
+        for (int i = 0; i < ONE_WEEK_DAYS; ++i) {
+            Long progressOrNull = null; // 초기값을 null로 설정
+            LocalDate currentDate = startOfWeek.plusDays(i); // 현재 날짜 계산
+            Boolean isOverlapped = false;
+
+
+            for (oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate)) {
+                        isOverlapped = true;
+                        break;
+                    }
+                }
+
+                // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+                if (summary.getDate().equals(currentDate)) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    // progressOrNull 계산 (null인 경우 예외 처리)
+                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
+
+            // OneDaySummaryDto 객체 생성 및 결과 맵에 추가
+            final OneDaySummaryDto oneDaySummaryDto = new OneDaySummaryDto(currentDate.toString(), progressOrNull, isOverlapped);
+            oneWeekSummary.put(DayOfWeek.values()[(i + ONE_WEEK_DAYS - 1) % ONE_WEEK_DAYS], oneDaySummaryDto);
+        }
+
+        return oneWeekSummary;
+    }
+
+
+    public List<OneDaySummaryDto> getOneMonthSummary(final Long userId, final YearMonth yearMonth) {
+
+        final int ONE_MONTH_DAYS = yearMonth.lengthOfMonth();
+
+        final LocalDate startOfMonth = yearMonth.atDay(1);
+        final LocalDate endOfMonth = yearMonth.atEndOfMonth();
+
+        final List<oneDaySummary> totalAndPortionList
+                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startOfMonth, endOfMonth);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId, startOfMonth, endOfMonth);
+
+        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
+
+        for (int i = 0; i < ONE_MONTH_DAYS; ++i) {
+            Long progressOrNull = null; // 초기값을 null로 설정
+            LocalDate currentDate = startOfMonth.plusDays(i); // 현재 날짜 계산
+            boolean isOverlapped = false;
+
+            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+            for (oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate)) {
+                        isOverlapped = true;
+                        break;
+                    }
+                }
+
+                if (summary.getDate().equals(startOfMonth.plusDays(i))) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    // progressOrNull 계산 (null인 경우 예외 처리)
+                    progressOrNull = (total == null || total == 0) ? null : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
+
+            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(), progressOrNull, isOverlapped);
+            oneMonthSummary.add(oneDaySummary);
+
+        }
+
+        return oneMonthSummary;
+    }
+
+    public List<OneDaySummaryDto> getBetweenDaySummary(final Long userId, final LocalDate startDate, final LocalDate endDate) {
+
+        final List<oneDaySummary> totalAndPortionList
+                = takeDoseRepository.countTotalAndTakenByUserIdInPeriod(userId, startDate, endDate);
+        final List<DoseRepository.overlap> overlapList
+                = doseRepository.findOverlap(userId, startDate, endDate);
+
+        List<OneDaySummaryDto> oneMonthSummary = new ArrayList<>();
+
+        for (int i = 0; i <= ChronoUnit.DAYS.between(startDate, endDate); ++i) {
+            long progress = 0L; // 초기값을 0으로 설정
+            LocalDate currentDate = startDate.plusDays(i); // 현재 날짜 계산
+            boolean isOverlapped = false;
+
+            // 결과 리스트에서 현재 날짜와 일치하는 데이터 찾기
+            for (oneDaySummary summary : totalAndPortionList) {
+                //성분 중복 검사
+                for (DoseRepository.overlap overlap : overlapList
+                ) {
+                    if (overlap.getDate().equals(currentDate)) {
+                        isOverlapped = true;
+                        break;
+                    }
+                }
+
+                if (summary.getDate().equals(startDate.plusDays(i))) {
+                    Long total = summary.getTotal();
+                    Long portion = summary.getTake();
+                    progress = (total == null || total == 0) ? 0L : Math.round(portion / (double) total * 100.0);
+                    break;
+                }
+            }
+
+            final OneDaySummaryDto oneDaySummary = new OneDaySummaryDto(currentDate.toString(), progress, isOverlapped);
+            oneMonthSummary.add(oneDaySummary);
+
+        }
+
+        return oneMonthSummary;
+    }
+
+    public Map<String, Boolean> updateDoseCount(final Map<Long, Double> updateDoseCountDto) {
+        final Map<String, Boolean> isUpdatedMap = new HashMap<>(updateDoseCountDto.size());
+
+        for (final Long doseId : updateDoseCountDto.keySet()) {
+            final Double count = updateDoseCountDto.get(doseId);
+            final Integer isUpdated = doseRepository.updateCountById(doseId, count.longValue(), count.toString().endsWith(".5"));
+
+            isUpdatedMap.put(doseId.toString(), isUpdated == 1);
+        }
+
+        return isUpdatedMap;
+    }
+
+    public void updateIsTakenByTime(final Long userId, final LocalDate date, final EDosingTime dosingTime, final Boolean isTaken) {
+        List<Dose> doses = doseRepository.findByUserIdAndDate(userId, date);
+        List<TakeDose> takeDoses = takeDoseRepository.findAllByIdAndDosingTime(doses,dosingTime);
+        for (TakeDose takeDose : takeDoses
+        ) {
+            takeDose.updateIsTaken(isTaken);
+        }
+    }
+
+    public void updateIsTakenById(final Long doseId, final Boolean isTaken) {
+        Dose dose = doseRepository.findById(doseId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSE));
+        TakeDose takeDose = takeDoseRepository.findById(dose).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_DOSE));
+        takeDose.updateIsTaken(isTaken);
+    }
 
     public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto, String inputName) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
