@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,16 +28,14 @@ Future<void> sendDeviceToken(String deviceToken) async {
     var dio = await authDioWithContext();
     var response = await dio.patch("/users/device", data: requestBody);
 
-    if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print('sendDeviceToken - Success');
-      }
-    } else {
-      if (kDebugMode) {
-        print('sendDeviceToken - Failure: ${response.statusCode}');
-      }
+    if (kDebugMode) {
+      print('sendDeviceToken - Success');
     }
-  } catch (error) {}
+  } on DioException catch (error) {
+    if (kDebugMode) {
+      print('sendDeviceToken - Failure: ${error.response?.statusCode}');
+    }
+  }
 }
 
 class _HomeScreenState extends State<HomeScreen> {
