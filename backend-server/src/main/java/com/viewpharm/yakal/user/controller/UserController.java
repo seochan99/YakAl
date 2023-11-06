@@ -122,7 +122,7 @@ public class UserController {
 
     @GetMapping("/general-search")
     @Operation(summary = "등록할 보호자 검색", description = "등록할 보호자 검색")
-    public ResponseDto<?> readGeneralUsers(@RequestParam("nickname") String name,
+    public ResponseDto<?> readGeneralUsers(@RequestParam("name") String name,
                                            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 
         return ResponseDto.ok(userService.searchUserForGuardian(name, date));

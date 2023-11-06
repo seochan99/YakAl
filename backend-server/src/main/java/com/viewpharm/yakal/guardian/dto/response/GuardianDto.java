@@ -4,15 +4,17 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class GuardianTelDto {
+public class GuardianDto {
     Long id;
-    String realName;
+    String name;
     String tel;
+    String birthDay;
 
     @Builder
-    public GuardianTelDto(Long id, String realName, String tel) {
+    public GuardianDto(Long id, String name, String tel, String birthDay) {
         this.id = id;
-        this.realName = realName;
+        this.name = name;
         this.tel = tel;
+        this.birthDay = birthDay;
     }
 }

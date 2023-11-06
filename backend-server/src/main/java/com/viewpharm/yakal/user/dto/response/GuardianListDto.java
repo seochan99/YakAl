@@ -3,18 +3,16 @@ package com.viewpharm.yakal.user.dto.response;
 import lombok.Builder;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Getter
-public class UserListDtoForGuardian {
+public class GuardianListDto {
     Long id;
-    String nickname;
+    String name;
     String birthday;
 
     @Builder
-    public UserListDtoForGuardian(Long id, String nickname, String birthday) {
+    public GuardianListDto(Long id, String name, String birthday) {
         this.id = id;
-        this.nickname = nickname;
+        this.name = name;
         this.birthday = birthday;
     }
 }
