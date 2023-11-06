@@ -106,7 +106,7 @@ function AdminFacilityDetail() {
         <S.HeaderSpan>{"전문가 인증 정보"}</S.HeaderSpan>
         <S.ImgDiv>
           <S.InnerImgDiv>
-            <img alt={"certificateImg"} />
+            <img alt={"certificateImg"} src={certificateImg} />
           </S.InnerImgDiv>
         </S.ImgDiv>
         <S.OneItemSpan>
