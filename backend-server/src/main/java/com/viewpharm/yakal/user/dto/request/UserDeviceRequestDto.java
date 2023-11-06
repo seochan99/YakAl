@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDeviceRequestDto {
-    private String device_token;
+    private String deviceToken;
 }

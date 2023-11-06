@@ -32,7 +32,7 @@ public class UserController {
     public ResponseDto<UserInfoDto> getUserInfo(@UserId Long id) {
         final User user = userService.getUserInfo(id);
         final UserInfoDto userInfoDto = UserInfoDto.builder()
-                .Nickname(user.getName())
+                .Nickname(user.getNickname())
                 .isDetail(user.getIsDetail())
                 .notiIsAllowed(user.getNotiIsAllowed())
                 .breakfastTime(user.getBreakfastTime().toString())
@@ -114,7 +114,7 @@ public class UserController {
         return ResponseDto.ok(null);
     }
 
-    @PutMapping("/device")
+    @PatchMapping("/device")
     @Operation(summary = "디바이스 토큰 등록")
     public ResponseDto<Boolean> updateUserDevice(@UserId Long userId, @RequestBody UserDeviceRequestDto requestDto) {
         return ResponseDto.ok(userService.updateUserDevice(userId, requestDto));
@@ -122,7 +122,7 @@ public class UserController {
 
     @GetMapping("/general-search")
     @Operation(summary = "등록할 보호자 검색", description = "등록할 보호자 검색")
-    public ResponseDto<?> readGeneralUsers(@RequestParam("name") String name,
+    public ResponseDto<?> readGeneralUsers(@RequestParam("nickname") String name,
                                            @RequestParam("date") @Valid @Date @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
 
         return ResponseDto.ok(userService.searchUserForGuardian(name, date));

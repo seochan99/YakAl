@@ -2,16 +2,15 @@ package com.viewpharm.yakal.user.service;
 
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
-import com.viewpharm.yakal.base.type.EJob;
-import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
+import com.viewpharm.yakal.user.dto.response.ExpertListDto;
 import com.viewpharm.yakal.user.dto.response.UserExpertDto;
 import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
-import com.viewpharm.yakal.guardian.dto.response.UserListDtoForGuardian;
+import com.viewpharm.yakal.user.dto.response.UserListDtoForGuardian;
 import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.user.dto.response.UserRegisterDto;
 import com.viewpharm.yakal.user.repository.UserRepository;
@@ -165,8 +164,8 @@ public class UserService {
                 .build();
     }
 
-    public void updateName(final Long userId, final String name) {
-        final Integer isUpdated = userRepository.updateNameById(userId, name);
+    public void updateName(final Long userId, final String nickname) {
+        final Integer isUpdated = userRepository.updateNickNameById(userId, nickname);
 
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
@@ -205,26 +204,24 @@ public class UserService {
     public Boolean updateUserDevice(Long userId, UserDeviceRequestDto requestDto) {
         User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        user.updateDevice(requestDto.getDevice_token());
+        user.updateDevice(requestDto.getDeviceToken());
         return Boolean.TRUE;
     }
 
-    public List<UserListDtoForGuardian> searchUserForGuardian(String name, LocalDate birthday) {
-        List<User> users = userRepository.findByNameAndBirthday(name, birthday);
+    public List<UserListDtoForGuardian> searchUserForGuardian(String nickname, LocalDate birthday) {
+        List<User> users = userRepository.searchUserByNicknameAndBirthday(nickname, birthday);
 
         return users.stream()
-                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
+                .map(u -> new UserListDtoForGuardian(u.getId(), u.getNickname(), u.getBirthday().toString()))
                 .collect(Collectors.toList());
     }
 
-    public List<UserListDtoForGuardian> searchUserForExpert(String expertName) {
-//        List<User> experts = userRepository.findByRealNameAndJobOrJob(expertName, EJob.DOCTOR, EJob.PHARMACIST);
-//
-//        return experts.stream()
-//                .map(u -> new UserListDtoForGuardian(u.getId(), u.getName(), u.getBirthday().toString()))
-//                .collect(Collectors.toList());
+    public List<ExpertListDto> searchUserForExpert(String expertName) {
+        List<User> experts = userRepository.searchExpertByName(expertName);
 
-        return null;
+        return experts.stream()
+                .map(u -> new ExpertListDto(u.getId(), u.getName(), u.getMedicalEstablishment().getName()))
+                .collect(Collectors.toList());
     }
 
     public Boolean setUserNotificationTime(Long userId, UpdateNotificationTimeDto requestDto) {

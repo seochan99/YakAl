@@ -35,8 +35,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Integer updateNotiIsAllowedById(Long userId, Boolean notiIsAllowed);
 
     @Modifying(clearAutomatically = true)
-    @Query("update User u set u.name = :name where u.id = :userId")
-    Integer updateNameById(Long userId, String name);
+    @Query("update User u set u.nickname = :nickname where u.id = :userId")
+    Integer updateNickNameById(Long userId, String nickname);
 
     @Modifying(clearAutomatically = true)
     @Query("update User u set u.name = :name, u.isDetail = :isDetail where u.id = :userId")
@@ -81,18 +81,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    @Query("select u from User u where u.id=:id and (u.job=:doctor or u.job = :pharmacist)")
 //    Optional<User> findByIdAndJobOrJob(@Param("id") Long userId, @Param("doctor") EJob doctor, @Param("pharmacist") EJob pharmacist);
 
-    @Query("select u from User u where u.id = :id and u.role = :role")
-    Optional<User> findByIdAndRole(@Param("id") Long userId, @Param("role") ERole role);
-
     @Query("select m.name from User u join MedicalEstablishment m on u.medicalEstablishment.id = m.id where u.id = :id")
     Optional<String> getEstablishmentNameByIdAndRole(@Param("id") Long userId);
 
     Optional<User> findById(Long userId);
 
-    List<User> findByNameAndBirthday(String name, LocalDate birthday);
+    @Query("select u from User u where u.nickname like %:nickname% and u.birthday = :birthday")
+    List<User> searchUserByNicknameAndBirthday(String nickname, LocalDate birthday);
 
-//    @Query("select u from User u where u.realName=:realName and (u.job=:doctor or u.job = :pharmacist)")
-//    List<User> findByRealNameAndJobOrJob(String realName, EJob doctor, EJob pharmacist);
+    @Query("select u from User u join fetch u.medicalEstablishment where u.name like %:name% and (u.role = 'DOCTOR' or u.role = 'PHARMACIST')")
+    List<User> searchExpertByName(String name);
 
     @Query("select u from User u join fetch u.myGuardian g where g.patient=:user")
     List<User> searchGuardianForUser(@Param("user") User user);
