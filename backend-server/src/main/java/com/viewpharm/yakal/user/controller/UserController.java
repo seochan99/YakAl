@@ -133,20 +133,10 @@ public class UserController {
     public ResponseDto<?> readExpertUsers(@RequestParam("name") String expertName) {
         return ResponseDto.ok(userService.searchUserForExpert(expertName));
     }
-  
+
     @PatchMapping("/notification-time")
     @Operation(summary = "유저 알림 시간 설정", description = "유저 알림 시간 설정")
     public ResponseDto<?> setUserNotificationTime(@UserId @Valid Long userId, @RequestBody UpdateNotificationTimeDto requestDto) {
         return ResponseDto.ok(userService.setUserNotificationTime(userId, requestDto));
     }
-
-//    @Deprecated
-//    @PatchMapping("")
-//    @Operation(summary = "최초 로그인 시 사용자 정보 일부 수정하기")
-//    public ResponseDto<?> updateUserInfo(@UserId Long id, @RequestBody @Valid UpdateUserInfoDto updateUserInfoDto) {
-//        userService.updateUserInfo(
-//                id, updateUserInfoDto.getNickname(), updateUserInfoDto.getIsDetail()
-//        );
-//        return ResponseDto.ok(null);
-//    }
 }
