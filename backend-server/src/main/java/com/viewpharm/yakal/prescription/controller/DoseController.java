@@ -92,10 +92,9 @@ public class DoseController {
     @Operation(summary = "복용 스케쥴 추가", description = "특정 약에 대한 복용 스케줄을 추가합니다.")
     public ResponseDto<List<Boolean>> createSchedule(
             @UserId Long id,
-            @Valid @RequestBody CreateScheduleDto createScheduleDto,
-            @RequestParam @Nullable String inputName
+            @Valid @RequestBody CreateScheduleDto createScheduleDto
     ) {
-        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto, inputName);
+        final List<Boolean> isInserted = doseService.createSchedule(id, createScheduleDto);
         return ResponseDto.created(isInserted);
     }
 

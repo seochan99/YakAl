@@ -2,9 +2,11 @@ package com.viewpharm.yakal.prescription.controller;
 
 import com.viewpharm.yakal.base.annotation.UserId;
 import com.viewpharm.yakal.prescription.dto.request.CreatePrescriptionDto;
+import com.viewpharm.yakal.prescription.dto.request.CreateScheduleDto;
 import com.viewpharm.yakal.prescription.dto.response.PrescriptionDto;
 import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.prescription.service.PrescriptionService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,5 +32,11 @@ public class PrescriptionController {
         return ResponseDto.ok(prescriptionService.createPrescription(id,prescriptionDto));
     }
 
+    @PostMapping("/doses")
+    public ResponseDto<List<Boolean>> createPrescription(
+            @UserId Long id,@Valid @RequestBody CreateScheduleDto createScheduleDto){
+
+        return ResponseDto.ok(prescriptionService.createSchedules(id,createScheduleDto));
+    }
 
 }
