@@ -1,115 +1,69 @@
 package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.dto.ResponseDto;
-import com.viewpharm.yakal.medicalestablishment.dto.request.ExpertCertificationForResisterDto;
-import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationAllDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.ExpertCertificationDetailDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentApproveDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
-import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
-import com.viewpharm.yakal.user.service.UserService;
+import com.viewpharm.yakal.user.dto.request.ExpertCertificationApproveDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/admin")
+@RequestMapping("/api/v1/admins")
 @Tag(name = "Admin", description = "관리자 전용 페이지 관련 API 제공")
 public class AdminController {
-    private final UserService userService;
     private final ExpertCertificationService expertCertificationService;
     private final MedicalEstablishmentService medicalEstablishmentService;
 
-
-    @GetMapping("/medical/update")
-    @Operation(summary = "의료기관 업데이트", description = "의료기관 엑셀파일을 입력으로 의료기관의 정보를 업데이트 합니다. (공공데이터 포털 3개월마다 업데이트)")
-    public ResponseDto<Boolean> updateMedical() throws IOException {
-        return ResponseDto.ok(null);
-    }
-
-    @GetMapping("/medical/search")
-    @Operation(summary = "의료기관 가져오기", description = "의료기관 이름으로 가져온다")
-    public ResponseDto<?> getMedicalByName(@RequestParam String name) {
-        return ResponseDto.ok(null);
-    }
-
-    @GetMapping("/medical/register/hospital")
-    @Operation(summary = "병원 가져오기", description = "등록된 병원을 가져온다")
-    public ResponseDto<?> getRegisterHospital(
-            @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam("name") @Nullable String name
+    @GetMapping("/medical-establishments")
+    @Operation(summary = "의료기관 신청 목록 조회", description = "관리자가 의료기관 신청 목록을 조회한다")
+    public ResponseDto<?> readMedicalEstablishments(@RequestParam(value = "name") String name,
+                                                    @RequestParam(value = "sort") String sort,
+                                                    @RequestParam(value = "order") String order,
+                                                    @RequestParam(value = "num") Long num
     ) {
-        return ResponseDto.ok(null);
+        return ResponseDto.ok(medicalEstablishmentService.readProposalMedicalEstablishments(name, sort, order, num));
     }
 
-    @GetMapping("/medical/register/pharmacy")
-    @Operation(summary = "약국 가져오기", description = "등록된 약국을 가져온다")
-    public ResponseDto<?> getRegisterPharmacy(
-            @RequestParam("page") Long page, @RequestParam("num") Long num, @RequestParam("name") @Nullable String name
-    ) {
-        return ResponseDto.ok(null);
+    @GetMapping("/medical-establishments/{medicalEstablishmentId}")
+    @Operation(summary = "의료기관 신청 상세 조회", description = "관리자가 의료기관 신청 상세 정보를 조회한다")
+    public ResponseDto<?> readMedicalEstablishmentDetail(@PathVariable("medicalEstablishmentId") Long medicalEstablishmentId) {
+        return ResponseDto.ok(medicalEstablishmentService.readMedicalEstablishmentDetail(medicalEstablishmentId));
     }
 
-    @GetMapping("/medical/register/request")
-    @Operation(summary = "의료기관 등록 신청", description = "관리자가 의료기관 등록 신청한 목록 가져온다")
-    public ResponseDto<MedicalEstablishmentAllDto> getMedicalRegisterRequest(
-            @RequestParam(value = "name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long num
-    ) {
-        return ResponseDto.ok(medicalEstablishmentService.getMedicalEstablishments(name, sort, order, num));
+    @PatchMapping("/medical-establishments/{medicalEstablishmentId}")
+    @Operation(summary = "의료기관 신청 승인/거부", description = "관리자가 의료기관 신청을 승인 혹은 거부한다")
+    public ResponseDto<?> approveMedicalEstablishment(@PathVariable Long medicalEstablishmentId,
+                                                      @RequestBody MedicalEstablishmentApproveDto approveDto) {
+        return ResponseDto.ok(medicalEstablishmentService.approveMedicalEstablishment(medicalEstablishmentId, approveDto));
     }
 
-    @GetMapping("/expert/register/request")
-    @Operation(summary = "전문가 등록 신청", description = "관리자가 전문가 등록 신청한 목록 가져온다")
-    public ResponseDto<ExpertCertificationAllDto> getExpertCertification(@RequestParam("name") String name, @RequestParam("sort") String sort, @RequestParam("order") String order, @RequestParam("num") Long num) {
-        return ResponseDto.ok(expertCertificationService.getExpertCertification(name, sort, order, num));
+    @GetMapping("/expert-certifications")
+    @Operation(summary = "전문가 신청 목록 조회", description = "관리자가 전문가 신청 목록을 조회한다")
+    public ResponseDto<?> readExpertCertifications(@RequestParam("name") String name,
+                                                   @RequestParam("sort") String sort,
+                                                   @RequestParam("order") String order,
+                                                   @RequestParam("num") Long num) {
+        return ResponseDto.ok(expertCertificationService.readProposalExpertCertifications(name, sort, order, num));
     }
 
-    @PatchMapping("/medical/register/{id}")
-    @Operation(summary = "의료기관 등록", description = "의료기관을 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> registerMedical(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
-        return ResponseDto.ok(null);
+    @GetMapping("/expert-certifications/{expertCertificationId}")
+    @Operation(summary = "전문가 신청 상세 조회", description = "관리자가 전문가 신청 상세 정보를 조회한다")
+    public ResponseDto<?> readExpertCertificationDetail(@RequestParam("expertCertificationId") Long expertCertificationId) {
+        return ResponseDto.ok(expertCertificationService.readExpertCertificationDetail(expertCertificationId));
     }
 
-    @PatchMapping("/expert/register/{id}")
-    @Operation(summary = "전문가 등록", description = "전문가로 약알에 등록 혹은 반려")
-    public ResponseDto<Boolean> certifyExpert(@PathVariable Long id, @RequestBody @Valid UpdateAdminRequestDto updateAdminRequestDto) {
-        userService.updateIsCertified(id, updateAdminRequestDto);
-        return ResponseDto.ok(null);
-    }
-
-    @GetMapping("/medical/{medicalId}/register/request")
-    @Operation(summary = "기관 신청 상세 정보", description = "기관 신청 상세 정보 조회")
-    public ResponseDto<MedicalEstablishmentDetailDto> getMedicalEstablishmentDetail(@PathVariable("medicalId") Long medicalId) {
-        return ResponseDto.ok(medicalEstablishmentService.getMedicalEstablishmentDetail(medicalId));
-    }
-
-    @GetMapping("/expert/{expertCertificationId}/register/request")
-    @Operation(summary = "전문가 신청 상세 정보", description = "전문가 신청 상세 정보 조회")
-    public ResponseDto<ExpertCertificationDetailDto> getExpertCertificationDetail(@PathVariable("expertCertificationId") Long expertCertificationId) {
-        return ResponseDto.ok(expertCertificationService.getExpertCertificationDetail(expertCertificationId));
-    }
-
-    @PatchMapping("/medical/register")
-    @Operation(summary = "기관 신청 승인/거부", description = "기관 신청 승인/거부")
-    public ResponseDto<Boolean> approveMedicalEstablishment(@RequestBody MedicalEstablishmentForResisterDto requestDto) {
-        return ResponseDto.ok(medicalEstablishmentService.approveMedicalEstablishment(requestDto));
-    }
-
-    @PatchMapping("/expert/register")
-    @Operation(summary = "전문가 신청 승인/거부", description = "전문가 신청 승인/거부")
-    public ResponseDto<?> approveMedicalEstablishment(@RequestBody ExpertCertificationForResisterDto requestDto) {
-        expertCertificationService.approveExpertCertification(requestDto);
-        return ResponseDto.ok(null);
+    @PatchMapping("/expert-certifications/{expertCertificationId}")
+    @Operation(summary = "전문가 신청 승인/거부", description = "관리자가 전문가 신청을 승인 혹은 거부한다")
+    public ResponseDto<?> approveExpertCertification(@PathVariable Long expertCertificationId,
+                                                     @RequestBody @Valid ExpertCertificationApproveDto approveDto) {
+        return ResponseDto.ok(expertCertificationService.updateExpertCertification(expertCertificationId, approveDto));
     }
 }
