@@ -5,3 +5,7 @@ export type TDenyReq = {
   department: string;
   job: EJob | string;
 };
+
+export type TApprovalReq = {
+  isApproval: boolean;
+};

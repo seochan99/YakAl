@@ -1,6 +1,8 @@
 import { AdminFacilityDetailViewModel } from "@components/admin-main/facility-detail/view.model.ts";
 import React, { useCallback, useEffect, useState } from "react";
 import { usePathId } from "@hooks/use-path-id.ts";
+import { denyFacility } from "@api/auth/admin.ts";
+import { useNavigate } from "react-router-dom";
 
 export const useAdminFacilityDetailViewController = () => {
   AdminFacilityDetailViewModel.use();
@@ -11,6 +13,8 @@ export const useAdminFacilityDetailViewController = () => {
 
   const { getState, fetch } = AdminFacilityDetailViewModel;
   const { facilityDetail, isLoading } = getState();
+
+  const navigate = useNavigate();
 
   const facilityId = usePathId();
 
@@ -36,13 +40,19 @@ export const useAdminFacilityDetailViewController = () => {
   }, [setRejectionDialogOpen]);
 
   const onClickOkayOnApprovalDialog = useCallback(() => {
-    setApprovalDialogOpen(false);
-  }, [setApprovalDialogOpen]);
+    denyFacility(facilityId, true).finally(() => {
+      setApprovalDialogOpen(false);
+      navigate("/admin");
+    });
+  }, [facilityId, navigate]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
-    setRejectionDialogOpen(false);
-    setRejectionReason("");
-  }, [setRejectionDialogOpen]);
+    denyFacility(facilityId, false).finally(() => {
+      setRejectionDialogOpen(false);
+      setRejectionReason("");
+      navigate("/admin");
+    });
+  }, [facilityId, navigate]);
 
   const onChangeRejectionReason = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {

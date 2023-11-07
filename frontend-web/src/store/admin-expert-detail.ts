@@ -48,7 +48,10 @@ export class AdminExpertDetailModel {
   public fetch = async (expertId: number) => {
     try {
       const response = await getExpertInfo(expertId);
-      this.expertDetail = response.data.data;
+      this.expertDetail = {
+        ...response.data.data,
+        type: response.data.data.type === "DOCTOR" ? EJob.DOCTOR : EJob.PHARMACIST,
+      };
     } catch (e) {
       this.expertDetail = null;
     }

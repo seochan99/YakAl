@@ -10,7 +10,7 @@ import { TExpertListSort } from "@store/admin-expert-list.ts";
 import { EExpertField } from "@type/enum/expert-field.ts";
 import { TAdminFacilityDetail } from "@type/response/facility-info.ts";
 import { TExpertDetail } from "@store/admin-expert-detail.ts";
-import { TDenyReq } from "@type/response/deny-req.ts";
+import { TApprovalReq, TDenyReq } from "@type/response/deny-req.ts";
 import { EJob } from "@type/enum/job.ts";
 
 export const getFacilityRequestList = async <T = CommonResponse<TAdminFacilityList>>(
@@ -92,6 +92,18 @@ export const denyExpert = async <T = CommonResponse<null>>(
       isApproval,
       department,
       job,
+    },
+  );
+};
+
+export const denyFacility = async <T = CommonResponse<null>>(
+  medicalEstablishmentID: number,
+  isApproval: boolean,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.patch<T, AxiosResponse<T>, TApprovalReq>(
+    `/admins/medical-establishments/${medicalEstablishmentID}`,
+    {
+      isApproval,
     },
   );
 };

@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { usePathId } from "@hooks/use-path-id.ts";
 import { denyExpert } from "@api/auth/admin.ts";
 import { EJob } from "@type/enum/job.ts";
+import { useNavigate } from "react-router-dom";
 
 export const useAdminExpertDetailViewController = () => {
   AdminExpertDetailViewModel.use();
@@ -13,6 +14,8 @@ export const useAdminExpertDetailViewController = () => {
 
   const { getState, fetch } = AdminExpertDetailViewModel;
   const { expertDetail, isLoading } = getState();
+
+  const navigate = useNavigate();
 
   const expertId = usePathId();
 
@@ -41,20 +44,17 @@ export const useAdminExpertDetailViewController = () => {
     denyExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
       setRejectionDialogOpen(false);
       setRejectionReason("");
+      navigate("/admin");
     });
-  }, [expertId]);
+  }, [expertId, navigate]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
-    denyExpert(
-      expertId,
-      false,
-      "",
-      expertDetail!.belongInfo.type === "HOSPITAL" ? EJob.DOCTOR : EJob.PHARMACIST,
-    ).finally(() => {
+    denyExpert(expertId, false, "", expertDetail!.type as EJob).finally(() => {
       setRejectionDialogOpen(false);
       setRejectionReason("");
+      navigate("/admin");
     });
-  }, [expertDetail, expertId]);
+  }, [expertDetail, expertId, navigate]);
 
   const onChangeRejectionReason = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
