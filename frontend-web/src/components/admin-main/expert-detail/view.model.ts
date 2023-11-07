@@ -18,10 +18,10 @@ export class AdminExpertDetailViewModel {
     [this.updater, this.setState] = useState<boolean>(false);
   };
 
-  public static fetch = async () => {
+  public static fetch = async (expertId: number) => {
     this.adminExpertDetailModel.invalidate();
     this.flush();
-    await this.adminExpertDetailModel.fetch();
+    await this.adminExpertDetailModel.fetch(expertId);
     this.flush();
   };
 

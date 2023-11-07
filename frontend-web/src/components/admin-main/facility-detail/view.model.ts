@@ -18,10 +18,10 @@ export class AdminFacilityDetailViewModel {
     [this.updater, this.setState] = useState<boolean>(false);
   };
 
-  public static fetch = async () => {
+  public static fetch = async (facilityId: number) => {
     this.adminFacilityDetailModel.invalidate();
     this.flush();
-    await this.adminFacilityDetailModel.fetch();
+    await this.adminFacilityDetailModel.fetch(facilityId);
     this.flush();
   };
 

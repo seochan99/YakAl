@@ -8,7 +8,6 @@ import Screening from "./child/screening/view.tsx";
 import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
 import getAge from "@util/get-age.ts";
 import { formatTel } from "@util/format-tel.ts";
-import LoadingBarrier from "@/components/loading-barrier/view.tsx";
 
 function PatientPage() {
   const {
@@ -65,8 +64,8 @@ function PatientPage() {
               <S.InfoTextDiv>
                 <S.NameSexBirthDiv>
                   <S.NameSpan>
-                    {protector.realName.substring(0, 4)}
-                    {protector.realName.length > 4 ? "..." : ""}
+                    {protector.name.substring(0, 4)}
+                    {protector.name.length > 4 ? "..." : ""}
                   </S.NameSpan>
                 </S.NameSexBirthDiv>
                 <S.NormalSpan>{`Tel. ${protector.tel}`}</S.NormalSpan>
@@ -94,7 +93,7 @@ function PatientPage() {
           {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
           {currentTab === EPatientInfoTab.SCREENING && <Screening />}
         </S.InnerDiv>
-        {isLoading && <LoadingBarrier />}
+        {/*{isLoading && <LoadingBarrier />}*/}
       </S.BodyDiv>
     </S.OuterDiv>
   );

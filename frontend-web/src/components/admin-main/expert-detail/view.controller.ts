@@ -1,6 +1,9 @@
 import { AdminExpertDetailViewModel } from "@components/admin-main/expert-detail/view.model.ts";
 import React, { useCallback, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { usePathId } from "@hooks/use-path-id.ts";
+import { denyExpert } from "@api/auth/admin.ts";
+import { EJob } from "@type/enum/job.ts";
+import { useNavigate } from "react-router-dom";
 
 export const useAdminExpertDetailViewController = () => {
   AdminExpertDetailViewModel.use();
@@ -9,13 +12,15 @@ export const useAdminExpertDetailViewController = () => {
   const [rejectionDialogOpen, setRejectionDialogOpen] = useState<boolean>(false);
   const [rejectionReason, setRejectionReason] = useState<string>("");
 
-  const expertId = useLoaderData();
-
   const { getState, fetch } = AdminExpertDetailViewModel;
   const { expertDetail, isLoading } = getState();
 
+  const navigate = useNavigate();
+
+  const expertId = usePathId();
+
   useEffect(() => {
-    // fetch(expertId);
+    fetch(expertId);
   }, [expertId, fetch]);
 
   const openApprovalDialog = useCallback(() => {
@@ -36,13 +41,20 @@ export const useAdminExpertDetailViewController = () => {
   }, [setRejectionDialogOpen]);
 
   const onClickOkayOnApprovalDialog = useCallback(() => {
-    setApprovalDialogOpen(false);
-  }, [setApprovalDialogOpen]);
+    denyExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
+      setRejectionDialogOpen(false);
+      setRejectionReason("");
+      navigate("/admin");
+    });
+  }, [expertId, navigate]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
-    setRejectionDialogOpen(false);
-    setRejectionReason("");
-  }, [setRejectionDialogOpen]);
+    denyExpert(expertId, false, "", expertDetail!.type as EJob).finally(() => {
+      setRejectionDialogOpen(false);
+      setRejectionReason("");
+      navigate("/admin");
+    });
+  }, [expertDetail, expertId, navigate]);
 
   const onChangeRejectionReason = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {

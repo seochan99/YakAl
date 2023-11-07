@@ -43,7 +43,7 @@ function AdminFacilityDetail() {
   return (
     <S.OuterDiv>
       <S.HeaderDiv>
-        <S.BackLink to="/admin/main">
+        <S.BackLink to="/admin">
           <S.StyledLinkIconSvg />
           목록으로
         </S.BackLink>
