@@ -8,7 +8,8 @@ import LocalHotelOutlinedIcon from "@mui/icons-material/LocalHotelOutlined";
 function AdminMain() {
   const navList = [
     { path: "/admin", name: "유저 관리", icon: DashboardOutlinedIcon },
-    { path: `/admin/statics`, name: "통계", icon: LocalHotelOutlinedIcon },
+    { path: `/admin/statics/dose`, name: "약 통계", icon: LocalHotelOutlinedIcon },
+    { path: `/admin/statics/compliance`, name: "복약 순응도", icon: LocalHotelOutlinedIcon },
   ];
 
   return (

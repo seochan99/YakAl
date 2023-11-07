@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, forwardRef, ButtonHTMLAttributes } from "react";
 import * as S from "./style.ts";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the styles for react-datepicker
@@ -7,6 +7,12 @@ import { authAxios } from "@/api/auth/instance.ts";
 
 import { Chart, registerables } from "chart.js";
 Chart.register(...registerables);
+
+// CustomInput props 타입을 선언합니다.
+interface CustomInputProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+  value?: string;
+  onClick?: () => void;
+}
 
 type Medicine = {
   name: string;
@@ -34,17 +40,19 @@ function AdminStatisticDetail() {
   // 약물 목록 fetch하기
   const fetchMedicineList = async (startDate: String, endDate: String) => {
     try {
-      const response = await authAxios.get(`admin/doses/between?startDate=${startDate}&endDate=${endDate}`);
-      console.log(response.data.data.result);
-      if (response.data.success) {
-        setMedicineList(response.data.data.result);
-      }
+      // 호출하기
+      //   const response = await authAxios.get(`admin/doses/between?startDate=${startDate}&endDate=${endDate}`);
+      //   console.log(response.data.data.result);
+      //   if (response.data.success) {
+      //     setMedicineList(response.data.data.result);
+      //   }
 
+      // 더미데이터
       const dummyData: Medicine[] = [
-        { name: "타이레놀", cnt: 50, kdCode: "1234" },
-        { name: "크앙", cnt: 40, kdCode: "1234" },
-        { name: "크허ㅓㅎ엉", cnt: 30, kdCode: "1234" },
-        { name: "푸하앙", cnt: 20, kdCode: "1234" },
+        { name: "강우빈", cnt: 50, kdCode: "1234" },
+        { name: "손형준", cnt: 40, kdCode: "1234" },
+        { name: "김도훈", cnt: 30, kdCode: "1234" },
+        { name: "나찬진", cnt: 20, kdCode: "1234" },
         { name: "우아악", cnt: 18, kdCode: "1234" },
         { name: "므먕ㅁ", cnt: 17, kdCode: "1234" },
         { name: "먀먕", cnt: 15, kdCode: "1234" },
@@ -65,6 +73,22 @@ function AdminStatisticDetail() {
     )}, ${o})`;
   }
 
+  // 사용자 정의 입력 컴포넌트
+  const StartCustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(({ value, onClick }, ref) => (
+    <S.CalendarDateBtn onClick={onClick} ref={ref}>
+      {value || "시작 날짜 선택"} {/* value가 없으면 placeholder 텍스트 표시 */}
+    </S.CalendarDateBtn>
+  ));
+
+  const EndCustomInput = forwardRef<HTMLButtonElement, CustomInputProps>(({ value, onClick }, ref) => (
+    <S.CalendarDateBtn onClick={onClick} ref={ref}>
+      {value || "종료 날짜 선택"} {/* value가 없으면 placeholder 텍스트 표시 */}
+    </S.CalendarDateBtn>
+  ));
+
+  //
+  StartCustomInput.displayName = "CustomInput";
+  EndCustomInput.displayName = "CustomInput";
   // 막대 그래프 데이터셋 설정
   const datasets = [
     {
@@ -88,7 +112,6 @@ function AdminStatisticDetail() {
           type: "bar",
           data: {
             labels: medicineList.map((med) => `${med.name} (${med.kdCode})`),
-
             datasets: datasets,
           },
           options: {
@@ -115,6 +138,7 @@ function AdminStatisticDetail() {
     }
   };
 
+  //  검색 결과 렌더링
   const renderMedicineChart = () => {
     return medicineList.length > 0 ? (
       <S.SearchResultContainer>
@@ -142,6 +166,7 @@ function AdminStatisticDetail() {
               startDate={startDate}
               minDate={new Date("2023-10-01")}
               maxDate={endDate}
+              customInput={<StartCustomInput />}
               placeholderText="시작 날짜"
             />
           </S.ColCalendar>
@@ -157,6 +182,7 @@ function AdminStatisticDetail() {
               endDate={endDate}
               minDate={startDate}
               maxDate={new Date()}
+              customInput={<EndCustomInput />}
               placeholderText="끝 날짜"
             />
           </S.ColCalendar>

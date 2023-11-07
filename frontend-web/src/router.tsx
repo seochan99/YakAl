@@ -26,6 +26,7 @@ import { loader as adminFacilityDetailLoader } from "@components/admin-main/faci
 import AdminApprovalList from "@components/admin-main/approval-list/view.tsx";
 import AdminFacilityDetail from "@components/admin-main/facility-detail/view.tsx";
 import AdminStatisticDetail from "./components/admin-main/statistic-list/view";
+import AdminComplianceList from "./components/admin-main/compilance-list/view";
 
 export const router = createBrowserRouter([
   {
@@ -90,9 +91,12 @@ export const router = createBrowserRouter([
             loader: adminExpertDetailLoader,
           },
           {
-            path: "statics",
+            path: "statics/dose",
             element: <AdminStatisticDetail />,
-            loader: adminExpertDetailLoader,
+          },
+          {
+            path: "statics/compliance",
+            element: <AdminComplianceList />,
           },
           {
             path: "facility/:facilityId",
