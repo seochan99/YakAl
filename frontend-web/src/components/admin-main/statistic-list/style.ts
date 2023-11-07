@@ -59,12 +59,28 @@ export const SearchResultContainer = styled.div`
   align-items: center;
   gap: 0.5rem;
 `;
-
+export const ColCalendar = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 // SearchButton
 export const SearchButton = styled.button`
-  /* Style */
-  width: var(--IconSize);
-  height: var(--IconSize);
+  background-color: var(--MainColor, #00a8ff);
+  color: var(--White1, #ffffff);
+  // main color border
+  border: 0.125rem solid var(--MainColor, #00a8ff);
+  &:hover {
+    background-color: var(--White1, #ffffff);
+    color: var(--MainColor, #00a8ff);
+    cursor: pointer;
+  }
+
+  padding: 0.5rem 1rem;
+`;
+
+export const CalendarLabel = styled.p`
+  color: var(--Black1, #1b1b1b);
+  font-size: 1rem;
 `;
 
 // SearchMedicineList

@@ -34,10 +34,12 @@ function AdminStatisticDetail() {
   // 약물 목록 fetch하기
   const fetchMedicineList = async (startDate: String, endDate: String) => {
     try {
-      // const response = await authAxios.get(`admin/doses/between?startDate=${startDate}&endDate=${endDate}`);
-      // if (response.data.success) {
-      //   setMedicineList(response.data.data.result);
-      // }
+      const response = await authAxios.get(`admin/doses/between?startDate=${startDate}&endDate=${endDate}`);
+      console.log(response.data.data.result);
+      if (response.data.success) {
+        setMedicineList(response.data.data.result);
+      }
+
       const dummyData: Medicine[] = [
         { name: "타이레놀", cnt: 50, kdCode: "1234" },
         { name: "크앙", cnt: 40, kdCode: "1234" },
@@ -126,31 +128,38 @@ function AdminStatisticDetail() {
   return (
     <>
       <S.MedicineListContainer>
-        <S.HeaderTitle>유저가 많이 복용한 약물</S.HeaderTitle>
+        <S.HeaderTitle>💊 유저가 많이 복용한 약물</S.HeaderTitle>
         {/* ----------------날짜 컨테이너 ----------------*/}
         <S.DateContainer>
-          <ReactDatePicker
-            selected={startDate}
-            dateFormat="yyyy.MM.dd" // Display format
-            onChange={(date) => setStartDate(date)}
-            selectsStart
-            shouldCloseOnSelect
-            startDate={startDate}
-            minDate={new Date("2023-10-01")}
-            maxDate={endDate}
-            placeholderText="시작 날짜"
-          />
-          <ReactDatePicker
-            selected={endDate}
-            dateFormat="yyyy.MM.dd" // Display format
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            shouldCloseOnSelect
-            endDate={endDate}
-            minDate={startDate}
-            maxDate={new Date()}
-            placeholderText="끝 날짜"
-          />
+          <S.ColCalendar>
+            {/* <S.CalendarLabel>시작 일자</S.CalendarLabel> */}
+            <ReactDatePicker
+              selected={startDate}
+              dateFormat="yyyy.MM.dd" // Display format
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              shouldCloseOnSelect
+              startDate={startDate}
+              minDate={new Date("2023-10-01")}
+              maxDate={endDate}
+              placeholderText="시작 날짜"
+            />
+          </S.ColCalendar>
+
+          <S.ColCalendar>
+            {/* <S.CalendarLabel>끝 일자</S.CalendarLabel> */}
+            <ReactDatePicker
+              selected={endDate}
+              dateFormat="yyyy.MM.dd" // Display format
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              shouldCloseOnSelect
+              endDate={endDate}
+              minDate={startDate}
+              maxDate={new Date()}
+              placeholderText="끝 날짜"
+            />
+          </S.ColCalendar>
         </S.DateContainer>
         {/* ----------------검색 버튼 ----------------*/}
         <S.SearchButton onClick={handleSearch}>검색</S.SearchButton>
