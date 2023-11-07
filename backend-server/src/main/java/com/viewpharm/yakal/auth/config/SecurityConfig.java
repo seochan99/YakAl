@@ -49,7 +49,7 @@ public class SecurityConfig{
                 .authorizeHttpRequests(requestMatcherRegistry -> requestMatcherRegistry
                         .requestMatchers(Constants.NO_NEED_AUTH_URLS).permitAll()
                         .requestMatchers("/api/v1/admin/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/api/v1/experts/**").hasAnyRole("DOCTOR", "PHARMACY", "ADMIN")
+                        .requestMatchers("/api/v1/experts/**").hasAnyRole("DOCTOR", "PHARMACY")
                         .requestMatchers("/api/v1/**").hasAnyRole("USER", "DOCTOR", "PHARMACY", "ADMIN")
                         .anyRequest().authenticated())
 
