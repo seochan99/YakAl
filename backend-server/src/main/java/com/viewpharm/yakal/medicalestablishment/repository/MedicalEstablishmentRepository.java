@@ -33,7 +33,7 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
             "           WHERE me.is_register = false",
             countQuery = "SELECT COUNT(distinctrow me.id, me.name, me.`type`, me.chief_name, me.chief_tel, me.created_at) " +
                     "           From medical_establishments me " +
-                    "           WHERE me.is_register = false", nativeQuery = true)
+                    "           WHERE me.is_register is null", nativeQuery = true)
     Page<MedicalEstablishmentInfo> findMedicalEstablishmentInfo(Pageable pageable);
 
     @Query(value = "SELECT distinctrow me.id as ID, me.name as NAME, me.`type` as MedicalType, me.chief_name as CHIEFNAME, me.chief_tel as TEL, me.created_at as DATE " +
@@ -41,7 +41,7 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
             "           WHERE me.is_register = false and em.name = :name",
             countQuery = "SELECT COUNT(distinctrow me.id, me.name, me.`type`, me.chief_name, me.chief_tel, me.created_at) " +
                     "           From medical_establishments me " +
-                    "           WHERE me.is_register = false and em.name = :name", nativeQuery = true)
+                    "           WHERE me.is_register is null and em.name = :name", nativeQuery = true)
     Page<MedicalEstablishmentInfo> findMedicalEstablishmentInfoByName(@Param("name") String name, Pageable pageable);
 
     interface MedicalEstablishmentInfo {

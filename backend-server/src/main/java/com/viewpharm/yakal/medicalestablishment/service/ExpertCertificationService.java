@@ -133,9 +133,19 @@ public class ExpertCertificationService {
         if (me == null) throw new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT);
 
         MedicalEstablishmentForExpertDto medicalEstablishmentForExpertDto =
-                new MedicalEstablishmentForExpertDto(me.getType().toString(), me.getChiefName(), me.getChiefTel(), me.getName(),
-                        me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(), me.getTel(), me.getClinicHours()
-                        , me.getFeatures());
+                new MedicalEstablishmentForExpertDto(
+                        me.getType().toString(),
+                        me.getChiefName(),
+                        me.getChiefTel(),
+                        me.getName(),
+                        me.getEstablishmentNumber(),
+                        me.getZipCode(),
+                        me.getAddress(),
+                        me.getBusinessNumber(),
+                        me.getTel(),
+                        me.getClinicHours(),
+                        me.getFeatures());
+
         return new ExpertCertificationDetailDto(
                 medicalEstablishmentForExpertDto,
                 ec.getUser().getName(),
