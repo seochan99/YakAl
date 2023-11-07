@@ -103,7 +103,7 @@ public class MedicalEstablishmentService {
 
         Page<MedicalEstablishmentRepository.MedicalEstablishmentInfo> medicalEstablishmentList;
 
-        if (name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             medicalEstablishmentList = medicalEstablishmentRepository.findMedicalEstablishmentInfo(paging);
         } else {
             medicalEstablishmentList = medicalEstablishmentRepository.findMedicalEstablishmentInfoByName(name, paging);
@@ -129,7 +129,7 @@ public class MedicalEstablishmentService {
 
     // 의료 기관 신청 상세 조회
     public MedicalEstablishmentDetailDto readMedicalEstablishmentDetail(Long medicalId) {
-        MedicalEstablishment me = medicalEstablishmentRepository.findById(medicalId)
+        MedicalEstablishment me = medicalEstablishmentRepository.findMEByIdAndIsRegister(medicalId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
         return new MedicalEstablishmentDetailDto(
@@ -150,7 +150,7 @@ public class MedicalEstablishmentService {
 
     // 의료 기관 신청 승인/거부
     public Boolean approveMedicalEstablishment(Long medicalEstablishmentId, MedicalEstablishmentApproveDto approveDto) {
-        MedicalEstablishment me = medicalEstablishmentRepository.findById(medicalEstablishmentId)
+        MedicalEstablishment me = medicalEstablishmentRepository.findMEByIdAndIsRegister(medicalEstablishmentId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
         //등록 승인

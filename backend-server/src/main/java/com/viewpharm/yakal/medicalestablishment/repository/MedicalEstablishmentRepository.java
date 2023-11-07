@@ -17,6 +17,9 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
 
     Optional<MedicalEstablishment> findByEstablishmentNumberAndIsRegister(String establishmentNumber, Boolean isRegister);
 
+    @Query("select m from MedicalEstablishment m where m.id = :id and m.isRegister is null")
+    Optional<MedicalEstablishment> findMEByIdAndIsRegister(Long id);
+
     Optional<MedicalEstablishment> findByIdAndIsRegister(Long id, Boolean isRegister);
 
     @Query("select m from MedicalEstablishment m where m.type = :eType and m.name like %:searchWord% and m.isRegister = true")
@@ -30,7 +33,7 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
 
     @Query(value = "SELECT distinctrow me.id as ID, me.name as NAME, me.`type` as MedicalType, me.chief_name as CHIEFNAME, me.chief_tel as TEL, me.created_at as DATE " +
             "           From medical_establishments me " +
-            "           WHERE me.is_register = false",
+            "           WHERE me.is_register is null",
             countQuery = "SELECT COUNT(distinctrow me.id, me.name, me.`type`, me.chief_name, me.chief_tel, me.created_at) " +
                     "           From medical_establishments me " +
                     "           WHERE me.is_register is null", nativeQuery = true)
@@ -38,10 +41,10 @@ public interface MedicalEstablishmentRepository extends JpaRepository<MedicalEst
 
     @Query(value = "SELECT distinctrow me.id as ID, me.name as NAME, me.`type` as MedicalType, me.chief_name as CHIEFNAME, me.chief_tel as TEL, me.created_at as DATE " +
             "           From medical_establishments me " +
-            "           WHERE me.is_register = false and em.name = :name",
+            "           WHERE me.is_register is null and me.name like %:name%",
             countQuery = "SELECT COUNT(distinctrow me.id, me.name, me.`type`, me.chief_name, me.chief_tel, me.created_at) " +
                     "           From medical_establishments me " +
-                    "           WHERE me.is_register is null and em.name = :name", nativeQuery = true)
+                    "           WHERE me.is_register is null and me.name like %:name%", nativeQuery = true)
     Page<MedicalEstablishmentInfo> findMedicalEstablishmentInfoByName(@Param("name") String name, Pageable pageable);
 
     interface MedicalEstablishmentInfo {
