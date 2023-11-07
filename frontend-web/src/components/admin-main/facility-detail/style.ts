@@ -120,7 +120,18 @@ export const ImgDiv = styled.div`
 `;
 
 export const InnerImgDiv = styled.div`
-  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  padding: 2rem;
+`;
+
+export const InnerImg = styled.img`
+  width: 80%;
+  object-fit: contain;
 `;
 
 export const BottomButtonDiv = styled.div`

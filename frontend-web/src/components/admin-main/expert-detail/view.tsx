@@ -4,6 +4,7 @@ import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import ApprovalDialog from "@components/admin-main/approval-dialog/view.tsx";
 import { EJob } from "@type/enum/job.ts";
 import { EFacilityType } from "@type/enum/facility-type.ts";
+import { formatTel } from "@util/format-tel.ts";
 
 function AdminExpertDetail() {
   const {
@@ -73,7 +74,7 @@ function AdminExpertDetail() {
         </S.OneItemSpan>
         <S.OneItemSpan>
           <S.NameSpan>{"연락처"}</S.NameSpan>
-          <S.NormalSpan>{expertTel}</S.NormalSpan>
+          <S.NormalSpan>{formatTel(expertTel)}</S.NormalSpan>
         </S.OneItemSpan>
         <S.OneItemSpan>
           <S.NameSpan>{"직종"}</S.NameSpan>
@@ -101,7 +102,7 @@ function AdminExpertDetail() {
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관장 연락처"}</S.NameSpan>
-              <S.NormalSpan>{chiefTel}</S.NormalSpan>
+              <S.NormalSpan>{formatTel(chiefTel)}</S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 우편번호"}</S.NameSpan>
@@ -119,15 +120,21 @@ function AdminExpertDetail() {
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 연락처"}</S.NameSpan>
-              <S.NormalSpan>{facilityTel ?? "기관 연락처 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {facilityTel === null || facilityTel === "" ? "기관 연락처 정보가 없습니다." : formatTel(facilityTel)}
+              </S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"운영 시간"}</S.NameSpan>
-              <S.NormalSpan>{clinicHours ?? "운영 시간 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {clinicHours === null || clinicHours === "" ? "운영 시간 정보가 없습니다." : clinicHours}
+              </S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 특징"}</S.NameSpan>
-              <S.NormalSpan>{features ?? "기관 특징 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {features === null || features === "" ? "기관 특징 정보가 없습니다." : features}
+              </S.NormalSpan>
             </S.OneItemSpan>
           </S.BelongInnerDiv>
         </S.BelongInfoDiv>
@@ -135,10 +142,12 @@ function AdminExpertDetail() {
         <S.HeaderSpan>{"전문가 인증 정보"}</S.HeaderSpan>
         <S.ImgDiv>
           <S.InnerImgDiv>
-            <img alt={"certificateImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${certificateImg}`} />
+            <S.NameSpan>{"면허증 사진"}</S.NameSpan>
+            <S.InnerImg alt={"certificateImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${certificateImg}`} />
           </S.InnerImgDiv>
           <S.InnerImgDiv>
-            <img alt={"affiliationImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${affiliationImg}`} />
+            <S.NameSpan>{"소속 증명 사진"}</S.NameSpan>
+            <S.InnerImg alt={"affiliationImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${affiliationImg}`} />
           </S.InnerImgDiv>
         </S.ImgDiv>
         <S.OneItemSpan>
