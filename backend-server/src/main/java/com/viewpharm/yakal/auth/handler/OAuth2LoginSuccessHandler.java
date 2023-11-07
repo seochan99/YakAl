@@ -43,7 +43,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
         userRepository.updateRefreshToken(user.getId(), jwtTokenDto.refreshToken());
 
-        final String FRONTEND_HOST = "https://localhost:5173"; // Front Server Host -> 배포 시 변경
+        final String FRONTEND_HOST = "https://yakal.dcs-hyungjoon.com"; // Front Server Host -> 배포 시 변경
 
         final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.refreshToken());
         refreshTokenSecureCookie.setPath("/");
