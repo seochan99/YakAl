@@ -4,6 +4,7 @@ import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentApproveDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
+import com.viewpharm.yakal.survey.repository.AnswerRepository;
 import com.viewpharm.yakal.user.dto.request.ExpertCertificationApproveDto;
 import com.viewpharm.yakal.prescription.service.DoseService;
 import com.viewpharm.yakal.survey.service.SurveyService;
@@ -83,7 +84,7 @@ public class AdminController {
 
     @GetMapping("statistic/arms")
     @Operation(summary = "arms")
-    public ResponseDto<List<Long>> getArmsRanges(){
+    public ResponseDto<List<AnswerRepository.RangeInfo>> getArmsRanges(){
         return ResponseDto.ok(surveyService.getSurveyRangesCnt());
     }
 }
