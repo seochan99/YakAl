@@ -1,63 +1,77 @@
 import * as S from "./style.ts";
 import { usePatientPageViewController } from "./view.controller.ts";
-import { ESex } from "@type/sex.ts";
-import getAge from "@util/get-age.ts";
-import MaleOutlinedIcon from "@mui/icons-material/MaleOutlined";
-import FemaleOutlinedIcon from "@mui/icons-material/FemaleOutlined";
 import Summary from "./child/summary/view.tsx";
-import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 import Medication from "./child/medication/view.tsx";
 import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";
+import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
+import getAge from "@util/get-age.ts";
+import { formatTel } from "@util/format-tel.ts";
 
 function PatientPage() {
   const {
+    isLoading,
     patientInfo,
     tab: { currentTab, tabInfos, onClickTab },
   } = usePatientPageViewController();
 
-  if (patientInfo.base === null) {
-    return <></>;
-  }
-
-  const {
-    base: { name, profileImg, birthday, sex, tel },
-  } = patientInfo;
+  const { base, protector } = patientInfo;
 
   return (
     <S.OuterDiv>
       <S.HeaderDiv>
         <S.BackLink to="/expert/patient">
           <S.StyledLinkIconSvg />
-          환자 목록으로
+          {"환자 목록으로"}
         </S.BackLink>
         <S.BaseInfoDiv>
-          <S.SelfBaseTitle>
-            <span>본인</span>
-          </S.SelfBaseTitle>
-          <S.PatientImg src={profileImg === "" ? "/assets/icons/no-profile-icon.png" : profileImg} />
-          <S.InfoTextDiv>
-            <S.NameSexBirthDiv>
-              <S.NameSpan>
-                {name.substring(0, 4)}
-                {name.length > 4 ? "..." : ""}
-              </S.NameSpan>
-              <S.IconContainedSpan>
-                {`${birthday[0]}. ${birthday[1] < 10 ? "0" : ""}${birthday[1]}. ${birthday[2] < 10 ? "0" : ""}${
-                  birthday[2]
-                }.`}
-                {`(${getAge(new Date(birthday[0], birthday[1] - 1, birthday[2]))}세)`}
-              </S.IconContainedSpan>
-              <S.IconContainedSpan>
-                {sex === ESex.MALE ? "남성" : "여성"}
-                {sex === ESex.MALE ? <MaleOutlinedIcon /> : <FemaleOutlinedIcon />}
-              </S.IconContainedSpan>
-            </S.NameSexBirthDiv>
-            <S.NormalSpan>{`Tel. ${tel}`}</S.NormalSpan>
-          </S.InfoTextDiv>
+          {base === null ? (
+            <></>
+          ) : base.name === "" ? (
+            <S.CenterDiv>{"환자 정보를 받아올 수 없습니다."}</S.CenterDiv>
+          ) : (
+            <>
+              <S.SelfBaseTitle>
+                <span>{"본인"}</span>
+              </S.SelfBaseTitle>
+              <S.InfoTextDiv>
+                <S.NameSexBirthDiv>
+                  <S.NameSpan>
+                    {base.name.substring(0, 4)}
+                    {base.name.length > 4 ? "..." : ""}
+                  </S.NameSpan>
+                  <S.IconContainedSpan>
+                    {getDateStringFromArray(base.birthday)}
+                    {`(${getAge(new Date(base.birthday[0], base.birthday[1] - 1, base.birthday[2]))}세)`}
+                  </S.IconContainedSpan>
+                </S.NameSexBirthDiv>
+                <S.NormalSpan>{`Tel. ${formatTel(base.tel)}`}</S.NormalSpan>
+              </S.InfoTextDiv>
+            </>
+          )}
         </S.BaseInfoDiv>
         <S.BaseInfoDiv>
-          <S.NokComingSoonDiv>{"보호자 기능 추가 예정입니다."}</S.NokComingSoonDiv>
+          {protector === null ? (
+            <></>
+          ) : protector.id === -1 ? (
+            <S.CenterDiv>{"보호자 정보가 존재하지 않습니다."}</S.CenterDiv>
+          ) : (
+            <>
+              <S.SelfBaseTitle>
+                <span>{"보호자"}</span>
+              </S.SelfBaseTitle>
+              <S.InfoTextDiv>
+                <S.NameSexBirthDiv>
+                  <S.NameSpan>
+                    {protector.name.substring(0, 4)}
+                    {protector.name.length > 4 ? "..." : ""}
+                  </S.NameSpan>
+                </S.NameSexBirthDiv>
+                <S.NormalSpan>{`Tel. ${protector.tel}`}</S.NormalSpan>
+              </S.InfoTextDiv>
+            </>
+          )}
         </S.BaseInfoDiv>
       </S.HeaderDiv>
       <S.BodyDiv>
@@ -79,6 +93,7 @@ function PatientPage() {
           {currentTab === EPatientInfoTab.GERIATRIC_SYNDROME && <GeriatricSyndrome />}
           {currentTab === EPatientInfoTab.SCREENING && <Screening />}
         </S.InnerDiv>
+        {/*{isLoading && <LoadingBarrier />}*/}
       </S.BodyDiv>
     </S.OuterDiv>
   );

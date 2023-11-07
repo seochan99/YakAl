@@ -13,7 +13,7 @@ export const NonLinkOuter = styled.div`
   padding: 2rem;
 `;
 
-export const CoomingSoonTitle = styled.div`
+export const ComingSoonTitle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -31,7 +31,7 @@ export const CoomingSoonIcon = styled.img`
   height: 6rem;
 `;
 
-export const CoomingSoonDescription = styled.div`
+export const ComingSoonDescription = styled.div`
   & {
     display: flex;
     flex-direction: column;
@@ -56,10 +56,9 @@ export const Outer = styled(Link)`
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    border: 1px solid;
     text-decoration: none;
     border-radius: 0.5rem;
-    border: 0.15rem solid #2666f6;
+    border: 0.15rem solid var(--Main, #2666f6);
     background-color: #fff;
     padding: 2rem;
   }

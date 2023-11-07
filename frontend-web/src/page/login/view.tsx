@@ -1,27 +1,21 @@
 import * as S from "./style.ts";
-import Footer from "../../layout/footer/view.tsx";
-import Header from "../../layout/header/view.tsx";
-import { useMediaQuery } from "react-responsive";
+import Footer from "@layout/footer/view.tsx";
+import Header from "@layout/header/view.tsx";
 import { Outlet } from "react-router-dom";
+import { useLoginPageViewController } from "@page/login/view.controller.ts";
+import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 
 export function LoginPage() {
-  const isWideMobile = useMediaQuery({ query: "(max-width: 768px)" });
-
-  if (isWideMobile) {
-    return (
-      <S.CenteringOuterDiv>
-        <Outlet />
-      </S.CenteringOuterDiv>
-    );
-  }
+  const { isLoading } = useLoginPageViewController();
 
   return (
     <S.OuterDiv>
-      <Header to={"/expert/login"} />
+      <Header to={"/"} />
       <S.CenteringMain>
         <Outlet />
       </S.CenteringMain>
       <Footer />
+      {isLoading && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }

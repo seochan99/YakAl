@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/widgets/Base/circle_widget.dart';
 
 import '../../models/Home/e_taking_time.dart';
 import '../../models/Home/pill_todo_children.dart';
 
 class PillTodoChildrenItem extends StatefulWidget {
+  final bool isDetail;
   final DateTime todoDate;
   final ETakingTime eTakingTime;
   final PillTodoChildren pillTodoChildren;
@@ -17,7 +19,8 @@ class PillTodoChildrenItem extends StatefulWidget {
   final bool isModal;
 
   const PillTodoChildrenItem(
-      {required this.todoDate,
+      {required this.isDetail,
+      required this.todoDate,
       required this.eTakingTime,
       required this.pillTodoChildren,
       required this.onClickChildrenCheckBox,
@@ -31,6 +34,7 @@ class PillTodoChildrenItem extends StatefulWidget {
 }
 
 class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
+  late final bool isDetail;
   late final DateTime todoDate;
   late final ETakingTime eTakingTime;
   late final PillTodoChildren pillTodoChildren;
@@ -43,6 +47,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    isDetail = widget.isDetail;
     todoDate = widget.todoDate;
     eTakingTime = widget.eTakingTime;
     pillTodoChildren = widget.pillTodoChildren;
@@ -93,8 +98,8 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  pillTodoChildren.name.length > 16
-                      ? '${pillTodoChildren.name.substring(0, 11)}...'
+                  pillTodoChildren.name.length > 11
+                      ? '${pillTodoChildren.name.substring(0, 10)}...'
                       : pillTodoChildren.name,
                   style: const TextStyle(
                     fontSize: 16,
@@ -114,11 +119,15 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
               ],
             ),
             const Spacer(),
+            // 위험도 마다 색깔 다르게
+            if (isDetail) _riskWidget(pillTodoChildren.atcCode.score),
+            SizedBox.fromSize(size: const Size(10, 10)),
             if (!isModal)
               InkWell(
                 onTap: () {
                   // 3일 이상 지난 경우
-                  if (DateTime.now().isAfter(todoDate.add(Duration(days: 3)))) {
+                  if (DateTime.now()
+                      .isAfter(todoDate.add(const Duration(days: 3)))) {
                     Get.snackbar(
                       '복약 기록',
                       '3일이 지나면 수정이 불가능해요!',
@@ -131,7 +140,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                   }
                   // 미래의 날짜인 경우
                   else if (DateTime.now().isBefore(todoDate)) {
-                    print("${DateTime.now()} ${todoDate}");
+                    print("${DateTime.now()} $todoDate");
                     Get.snackbar(
                       '복약 기록',
                       '미래의 복약 기록을 작성하는 것은 불가능해요.',
@@ -166,5 +175,14 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
         ),
       ),
     );
+  }
+
+  CircleWidget _riskWidget(int score) {
+    return switch (pillTodoChildren.atcCode.score) {
+      1 => const CircleWidget(width: 10, height: 10, color: ColorStyles.green),
+      2 => const CircleWidget(width: 10, height: 10, color: ColorStyles.yellow),
+      3 => const CircleWidget(width: 10, height: 10, color: ColorStyles.red),
+      _ => const CircleWidget(width: 10, height: 10, color: ColorStyles.white),
+    };
   }
 }

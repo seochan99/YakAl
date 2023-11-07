@@ -1,20 +1,17 @@
 import * as S from "../style.ts";
-import { useSummaryViewController } from "./view.controller.ts";
-import SummaryGeriatricSyndrome from "./children/geriatric-syndrome.tsx";
-import SummaryScreening from "./children/screening.tsx";
-import SummaryMedication from "./children/medication.tsx";
+import SummaryGeriatricSyndrome from "./geriatric-syndrome.tsx";
+import SummaryScreening from "./screening.tsx";
+import SummaryMedication from "./medication.tsx";
 
 function Summary() {
-  const { medication, geriatricSyndrome, screeningDetail } = useSummaryViewController();
-
   return (
     <S.OuterDiv>
       <S.ColumnDiv>
-        <SummaryMedication etcList={medication.etc.list} />
-        <SummaryGeriatricSyndrome geriatricSyndrome={geriatricSyndrome} />
+        <SummaryMedication />
+        <SummaryGeriatricSyndrome />
       </S.ColumnDiv>
       <S.ColumnDiv>
-        <SummaryScreening screeningDetail={screeningDetail} />
+        <SummaryScreening />
       </S.ColumnDiv>
     </S.OuterDiv>
   );

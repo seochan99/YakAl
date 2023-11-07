@@ -1,47 +1,19 @@
-import { useCallback } from "react";
-import useSnackbar from "../../../hooks/use-snackbar.tsx";
-import { useNavigate } from "react-router-dom";
+import { useCallback, useState } from "react";
 
 export const useLoginMainPageViewController = () => {
-  const { open, onClose, openSnackbar } = useSnackbar();
-
-  const navigate = useNavigate();
+  const [open, setOpen] = useState<boolean>(false);
 
   const onKakaoLoginClick = useCallback(async () => {
-    navigate("/expert");
-    // try {
-    //   const response = await getKakaoRedirectUrl();
-    //
-    //   if (response.status === HttpStatusCode.Ok) {
-    //     setOpen(false);
-    //     window.location.href = response.data.data.url;
-    //   }
-    // } catch (error) {
-    //   if (isAxiosError(error)) {
-    //     openSnackbar();
-    //   }
-    // }
-  }, [navigate]);
+    window.location.href = `${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/oauth2/authorization/kakao`;
+  }, []);
 
   const onGoogleLoginClick = useCallback(async () => {
-    navigate("/expert");
-    // try {
-    //   const response = await getGoogleRedirectUrl();
-    //
-    //   if (response.status === HttpStatusCode.Ok) {
-    //     setOpen(false);
-    //     window.location.href = response.data.data.url;
-    //   }
-    // } catch (error) {
-    //   if (isAxiosError(error)) {
-    //     openSnackbar();
-    //   }
-    // }
-  }, [navigate]);
+    window.location.href = `${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/oauth2/authorization/google`;
+  }, []);
 
   return {
     onKakaoLoginClick,
     onGoogleLoginClick,
-    snackbarController: { open, onClose, openSnackbar },
+    snackbarController: { open, setOpen },
   };
 };

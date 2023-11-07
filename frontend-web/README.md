@@ -1,66 +1,77 @@
-# 약알 전문가 / 관리자 웹 어플리케이션
-
-## 로컬 서버로 시작하기
+## 약 알 전문가 / 관리자 웹 어플리케이션
 
 ---
 
-1. 의존성 패키지 다운로드
-
-```shell
-npm i
-```
-
-2. 로컬 개발 서버 가동
-
-```shell
-npm run dev
-```
-
-3. 네트워크 개발 서버 가동
-
-```shell
-npm run dev -- --host
-```
-
-## Cooperation Rule
+### 👋 Introduction
 
 ---
 
-### Commit Convention
+약 알(Yak-al)은 다제약물 복용을 완화하고자 하는 복용 도우미 서비스입니다.
+모바일 앱 서비스는 환자가 본인의 복용 스케줄을 입력하고 관리하는 것을 돕는 플랫폼이라면
+웹 서비스는 환자가 입력한 정보를 조회할 수 있는 플랫폼입니다. 모바일에서 환자는 원하는 전문가에게
+자신의 정보를 전송할 수 있고 전문가는 웹을 통해 그 정보를 열람합니다. 현재 우리나라는 짧은 진료
+시간으로 인해 의사와 같은 전문가들이 환자의 상태를 온전히 파악하기 어렵습니다. 이로 인해 환자에게 과하게
+약이 처방되는 다제약물 문제가 발생합니다. 전문가 웹은 환자와 의사 간의 정보 불균형을 완화하여 다제약물 문제를
+완화할 수 있는 방법를 제시합니다.
 
-- feat : 새로운 기능 추가
-- fix : 버그 수정
-- docs : 문서 수정
-- style : 코드 포맷팅, 세미콜론 누락, 코드 변경이 없는 경우
-- refactor: 코드 리펙토링
-- test: 테스트 코드, 리펙토링 테스트 코드 추가
-- chore : 빌드 업무 수정, 패키지 매니저 수정
+### ⚒️ Tech Stack
 
-### Pull Request Convention
+---
 
-| 아이콘 | 코드                         | 설명              |
-|-----|----------------------------|-----------------|
-| 🎨  | :art                       | 코드의 구조/형태 개선    |
-| ⚡️  | :zap                       | 성능 개선           |
-| 🔥  | :fire                      | 코드/파일 삭제        |
-| 🐛  | :bug                       | 버그 수정           |
-| 🚑  | :ambulance                 | 긴급 수정           |
-| ✨   | :sparkles                  | 새 기능            |
-| 💄  | :lipstick                  | UI/스타일 파일 추가/수정 |
-| ⏪   | :rewind                    | 변경 내용 되돌리기      |
-| 🔀  | :twisted_rightwards_arrows | 브랜치 합병          |
-| 💡  | :bulb                      | 주석 추가/수정        |
-| 🗃  | :card_file_box             | 데이버베이스 관련 수정    |
+#### Function
 
-## Design Pattern
+<a href="https://github.com/facebook/react">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black"/>
+</a>
 
-* 소수의 컴포넌트에 종속된 로컬 데이터는 MVVM 패턴을 적용하여 데이터와 뷰를 분리
-* 다수의 컴포넌트에 종속된 글로벌 데이터는 Redux를 활용한 MVI 패턴을 이용하여 데이터의 변화를 쉽게 반영할 수 있도록 함
+<a href="https://github.com/remix-run/react-router">
+<img src="https://img.shields.io/badge/react router dom-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white"/>
+</a>
 
-## Styling Rule
+<a href="https://github.com/axios/axios">
+<img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"/>
+</a>
 
-* 본 프로젝트는 Styled-Component를 이용해 컴포넌트에 독립적으로 스타일링을 한다.
-* `import * as S from "./global_style.ts"`의 형식으로 스타일 ts 파일을 import한다.
-* 이로 인해 Styled Component와 Non-Styled Component가 구별된다.
-* 또한 스타일된 HTMl 태그는 이름 맨 뒤에 어떤 태그인지 표시해야 한다.
-* ex) `S.OuterFooter`는 스타일링된 `<footer>`, `WarningPage`는 일반 컴포넌트
+#### Style
+
+<a href="https://github.com/mui/material-ui">
+<img src="https://img.shields.io/badge/MUI-007FFF?style=for-the-badge&logo=mui&logoColor=white"/>
+</a>
+
+<a href="https://github.com/styled-components/styled-components">
+<img src="https://img.shields.io/badge/styled components-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white"/>
+</a>
+
+#### Development
+
+<a href="https://github.com/prettier/prettier">
+<img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"/>
+</a>
+
+<a href="https://github.com/microsoft/TypeScript">
+<img src="https://img.shields.io/badge/typescript-3178C6?style=for-the-badge&logo=typescript&logoColor=white"/>
+</a>
+
+<a href="https://github.com/vitejs/vite">
+<img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/>
+</a>
+
+### 👣 How To Start Project
+
+---
+
+1. `npm i`: download node package dependency module.
+2. configure `.env` file.
+
+```
+VITE_SERVER_HOST = <Backend API Server Host>
+VITE_MERCHANDISE_ID = <iamport kg inicis identification MID>
+```
+
+3. `npm run dev`: run local vite-react server.
+4. `npm run dev -- --host`: or run local network server.
+5. `npm run build`: build project.
+
+### 👁️ Functions
+
+---

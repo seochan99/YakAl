@@ -1,141 +1,21 @@
-import { ESex } from "@type/sex.ts";
-import { EOrder } from "@type/order.ts";
-import { EPatientField } from "@type/patient-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EPatientField } from "@type/enum/patient-field.ts";
+import { getPatientList, toggleIsFavorite } from "@api/auth/experts.ts";
+import { isAxiosError } from "axios";
 
 type TPatientItem = {
   id: number;
-  profileImg: string;
   name: string;
   birthday: number[];
-  sex: ESex;
   lastQuestionnaireDate: number[];
   tel: string;
-  isManaged: boolean;
+  isFavorite: boolean;
 };
 
-// Dummy
-const patientList = [
-  {
-    id: 1,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: true,
-  },
-  {
-    id: 2,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: true,
-  },
-  {
-    id: 3,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: true,
-  },
-  {
-    id: 4,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: true,
-  },
-  {
-    id: 5,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 6,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 7,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 8,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 9,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 10,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 11,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-  {
-    id: 12,
-    profileImg: "",
-    name: "홍길동",
-    birthday: [1992, 12, 12],
-    sex: ESex.MALE,
-    lastQuestionnaireDate: [2022, 12, 12],
-    tel: "010-1111-1111",
-    isManaged: false,
-  },
-];
+export type TSortBy = {
+  order: EOrder;
+  field: EPatientField;
+};
 
 export class PatientListModel {
   /* CONSTANTS */
@@ -147,7 +27,7 @@ export class PatientListModel {
 
   private pageNumber = 1;
 
-  private sortBy = {
+  private sortBy: TSortBy = {
     order: EOrder.DESC,
     field: EPatientField.LAST_QUESTIONNAIRE_DATE,
   };
@@ -172,18 +52,31 @@ export class PatientListModel {
     return PatientListModel.instance;
   };
 
+  public invalidate = () => {
+    this.patientList = null;
+    this.totalCount = 0;
+  };
+
   /* PUBLIC METHOD */
   public fetch = async () => {
-    // Dummy
-    this.patientList = null;
-    if (this.isOnlyManaged) {
-      this.patientList = patientList.filter((patientItem) => patientItem.isManaged);
-    } else {
-      this.patientList = patientList;
+    try {
+      const response = await getPatientList(this.sortBy, this.pageNumber, this.nameQuery, this.isOnlyManaged);
+
+      this.patientList = (response.data.data! as { datalist: TPatientItem[] }).datalist;
+      this.totalCount = (
+        response.data.data! as {
+          pageInfo: {
+            page: number;
+            size: number;
+            totalElements: number;
+            totalPages: number;
+          };
+        }
+      ).pageInfo.totalElements;
+    } catch (error) {
+      this.patientList = [];
+      this.totalCount = 0;
     }
-    this.totalCount = this.patientList.length;
-    if (this.pageNumber === 1) this.patientList = this.patientList.slice(0, 10);
-    else this.patientList = this.patientList.slice(10, 12);
   };
 
   public isLoading = () => {
@@ -244,18 +137,30 @@ export class PatientListModel {
     await this.fetch();
   };
 
-  public setIsManaged = async (patientId: number, isManaged: boolean) => {
-    if (!this.patientList) {
+  public toggleIsManaged = async (patientId: number) => {
+    if (this.patientList === null) {
       return;
     }
 
-    const patient = this.patientList.findLast((patientItem) => patientItem.id === patientId);
+    try {
+      await toggleIsFavorite(patientId);
 
-    if (!patient) {
-      return;
+      if (this.isOnlyManaged) {
+        await this.fetch();
+        return;
+      }
+
+      const target = this.patientList.findLast((patientItem) => patientItem.id === patientId);
+
+      if (!target) {
+        return;
+      }
+
+      target.isFavorite = !target.isFavorite;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return;
+      }
     }
-
-    patient.isManaged = isManaged;
-    await this.fetch();
   };
 }

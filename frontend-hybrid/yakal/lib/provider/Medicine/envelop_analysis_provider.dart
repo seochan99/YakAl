@@ -1,66 +1,36 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:http_parser/http_parser.dart';
-import 'package:uuid/uuid.dart';
+import 'package:yakal/models/Medication/dose_name_code_model.dart';
 
 class EnvelopAnalysisProvider {
-  Future<List<String>> getTextFromImage(String imagePath) async {
+  Future<List<DoseNameCodeModel>> getDoseInfoFromImage(String imagePath) async {
     var dio = Dio();
-
-    var lastIndexOfDot = imagePath.lastIndexOf(".");
-    var imageType = imagePath.substring(lastIndexOfDot + 1);
-
-    var requestBody = <String, dynamic>{
-      "version": "V1",
-      "requestId": const Uuid().v4(),
-      "timestamp": 0,
-      "lang": "ko",
-      "images": [
-        {
-          "format": imageType,
-          "name": "medicine_envelop",
-        },
-      ],
-    };
 
     var formData = FormData.fromMap(
       {
-        "file": await MultipartFile.fromFile(imagePath),
-        "message": MultipartFile.fromString(
-          jsonEncode(requestBody),
-          contentType: MediaType.parse('application/json'),
-        ),
+        "image": await MultipartFile.fromFile(imagePath),
       },
       ListFormat.multiCompatible,
     );
 
     try {
       var response = await dio.post(
-        dotenv.get("CLOVA_OCR_URL"),
+        dotenv.get("OCR_SERVER_HOST"),
         data: formData,
         options: Options(
           headers: {
             "content-Type": "multipart/form-data",
-            "X-OCR-SECRET": dotenv.get("CLOVA_OCR_SECRET_KEY"),
           },
         ),
       );
 
-      var inferList = response.data["images"][0]["fields"];
-      var textList = <String>[];
+      final doseMapList = response.data["data"] as List<dynamic>;
 
-      // 80% 이상의 신뢰도를 가진 string만 취함
-      for (var infer in inferList) {
-        if (infer["inferConfidence"] >= 0.8) {
-          textList.add(infer["inferText"]);
-        }
-      }
-
-      return textList;
-    } on DioException catch (error) {
-      return <String>[];
+      return doseMapList
+          .map((doseItem) => DoseNameCodeModel.fromJson(doseItem))
+          .toList();
+    } on DioException catch (_) {
+      return <DoseNameCodeModel>[];
     }
   }
 }

@@ -63,7 +63,6 @@ export const SelectButton = styled.button`
 
   & svg {
     height: 1.5rem;
-    transition: 0.3s;
   }
 
   & span {
@@ -77,7 +76,7 @@ export const SelectButton = styled.button`
     line-height: 1rem;
   }
 
-  &.open svg {
+  &.asc svg {
     transform: rotate(180deg);
   }
 
@@ -136,7 +135,21 @@ export const ListDiv = styled.div`
   flex-direction: column;
   justify-content: start;
   gap: 0.5rem;
-  height: 40.7rem;
+  flex: 1;
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
 `;
 
 export const TableHeaderDiv = styled.div`

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:yakal/utilities/api/api.dart';
+import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
+import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
+import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 import 'package:yakal/widgets/Setting/setting_mode_widget.dart';
 import 'package:yakal/widgets/Setting/setting_time_selection_widget.dart';
 
@@ -12,18 +15,19 @@ class SettingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white, // Set the background color to white
-
-      appBar: AppBar(
-        surfaceTintColor: Colors.white,
-        backgroundColor: Colors.white,
-        title: const Text('앱 설정'),
-        leading: IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(kToolbarHeight),
+        child: CustomizedBackAppBar(
+            title: "앱 설정",
+            onPressed: () {
+              final MyBottomNavigationBarController
+                  mybottomNavigationBarController =
+                  Get.put(MyBottomNavigationBarController(), permanent: true);
+              mybottomNavigationBarController.changeTabIndex(1);
+              Get.offAllNamed("/");
+            }),
       ),
+
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -55,7 +59,7 @@ class SettingScreen extends StatelessWidget {
                     color: Color(0xff626272),
                     fontWeight: FontWeight.w500),
               ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 16),
               const SettingTimeSelectionWidget(),
               /* -------------- 계정 설정  -------------- */
               const SizedBox(
@@ -72,97 +76,50 @@ class SettingScreen extends StatelessWidget {
                 title: const Text('로그아웃',
                     style: TextStyle(fontSize: 16, color: Color(0xff151515))),
                 onTap: () {
-                  showCustomDialog(context);
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+                    builder: (BuildContext context) {
+                      return MedicineAddCancelDialog(
+                        question: "로그아웃 하시겠습니까?",
+                        confirmLabel: "로그아웃",
+                        cancelLabel: "아니요",
+                        onConfirm: () async {
+                          UserApi.instance.logout().then((_) {
+                            authDioWithContext().then((dio) {
+                              dio
+                                  .patch('/auth/logout?platform=MOBILE')
+                                  .then((_) {
+                                Get.offAllNamed('/login');
+                              }).catchError((_) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('로그아웃에 실패했습니다.'),
+                                  ),
+                                );
+                                Get.offAllNamed('/');
+                              });
+                            });
+                          });
+                        },
+                      );
+                    },
+                  );
                 },
               ),
-              ListTile(
-                contentPadding: EdgeInsets.zero,
-                title: const Text('회원탈퇴',
-                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
-                onTap: () {
-                  Get.toNamed('/signout');
-                },
-              ),
+              // ListTile(
+              //   contentPadding: EdgeInsets.zero,
+              //   title: const Text('회원탈퇴',
+              //       style: TextStyle(fontSize: 16, color: Color(0xff151515))),
+              //   onTap: () {
+              //     Get.toNamed('/signout');
+              //   },
+              // ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  // 로그아웃 다이얼로그
-  void showCustomDialog(BuildContext context) {
-    Get.defaultDialog(
-      // padding
-
-      title: '로그아웃',
-      titleStyle: const TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.w700,
-      ),
-      // 배경
-      // subtitle none
-      content: const Text(
-        '로그아웃 하시겠습니까?',
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w500,
-          color: Color(0xff464655),
-        ),
-      ),
-
-      confirm: TextButton(
-        onPressed: () async {
-          try {
-            Get.offAllNamed('/login');
-            await UserApi.instance.logout();
-          } catch (e) {
-            //error
-          }
-          //
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: const Color(0xff2666F6),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-            child: Text(
-              '로그아웃',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xffffffff),
-              ),
-            ),
-          ),
-        ),
-      ),
-      cancel: TextButton(
-        onPressed: () {
-          Get.back();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-            color: const Color(0xffffffff),
-          ),
-          child: const Padding(
-            padding: EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-            child: Text(
-              '아니요',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-                color: Color(0xff464655),
-              ),
-            ),
-          ),
-        ),
-      ),
-      confirmTextColor: Colors.black,
-      onCancel: () {},
     );
   }
 }

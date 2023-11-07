@@ -1,5 +1,5 @@
 import * as S from "./style.ts";
-import { EFacilityType } from "@type/facility-type.ts";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
 import ApprovalDialog from "@components/admin-main/approval-dialog/view.tsx";
 import { useAdminFacilityDetailViewController } from "@components/admin-main/facility-detail/view.controller.ts";
@@ -43,7 +43,7 @@ function AdminFacilityDetail() {
   return (
     <S.OuterDiv>
       <S.HeaderDiv>
-        <S.BackLink to="/admin/main">
+        <S.BackLink to="/admin">
           <S.StyledLinkIconSvg />
           목록으로
         </S.BackLink>
@@ -106,7 +106,7 @@ function AdminFacilityDetail() {
         <S.HeaderSpan>{"전문가 인증 정보"}</S.HeaderSpan>
         <S.ImgDiv>
           <S.InnerImgDiv>
-            <img alt={"certificateImg"} />
+            <img alt={"certificateImg"} src={certificateImg} />
           </S.InnerImgDiv>
         </S.ImgDiv>
         <S.OneItemSpan>

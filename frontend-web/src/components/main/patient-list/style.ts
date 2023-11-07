@@ -6,9 +6,11 @@ import { ReactComponent as SearchIconSvg } from "/public/assets/icons/magnifying
 export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   width: 45rem;
   margin: 2rem 0;
   gap: 0.1rem;
+  flex: 1;
 `;
 
 export const InnerDiv = styled.div`
@@ -18,6 +20,7 @@ export const InnerDiv = styled.div`
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
   padding: 2rem;
   gap: 1.5rem;
+  height: 57rem;
 `;
 
 export const TabBarDiv = styled.div`
@@ -131,7 +134,6 @@ export const SelectButton = styled.button`
 
   & svg {
     height: 1.5rem;
-    transition: 0.3s;
   }
 
   & span {
@@ -145,7 +147,7 @@ export const SelectButton = styled.button`
     line-height: 1rem;
   }
 
-  &.open svg {
+  &.asc svg {
     transform: rotate(180deg);
   }
 
@@ -169,6 +171,7 @@ export const SelectList = styled.ul`
   border: 0.1rem solid var(--Gray3, #c6c6cf);
   right: 0;
   width: 7.1rem;
+  z-index: 100;
 `;
 
 export const SelectItem = styled.li`
@@ -203,7 +206,7 @@ export const ListDiv = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  height: 51rem;
+  height: 49rem;
 `;
 
 export const TableHeaderDiv = styled.div`
@@ -211,7 +214,7 @@ export const TableHeaderDiv = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 3rem;
+  padding: 0.6rem calc(2.5rem + 16px) 0.6rem 1rem;
   border: 0;
   color: var(--Gray4, #90909f);
   font-family: SUIT, serif;
@@ -236,6 +239,24 @@ export const TelephoneSpan = styled.span`
 
 export const LastQuestionnaireDateSpan = styled.span`
   width: calc(100% / 2);
+`;
+
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+`;
+
+export const NotFoundSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.2rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.2rem;
+  text-align: center;
 `;
 
 export const PaginationDiv = styled.div`
@@ -300,4 +321,14 @@ export const PaginationDiv = styled.div`
   & ul.pagination li.active a {
     color: white;
   }
+`;
+
+export const IsNotExpertSpan = styled.span`
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.6rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.6rem;
+  text-align: center;
 `;

@@ -1,124 +1,27 @@
-import { EOrder } from "@type/order.ts";
-import { EFacilityType } from "@type/facility-type.ts";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
+import { getFacilityRequestList } from "@api/auth/admin.ts";
+import { TAdminFacilityItem } from "@type/response/admin-facility-item.ts";
+import { isAxiosError } from "axios";
+import { EFacilityType } from "@type/enum/facility-type.ts";
 
-export type TFacilityItem = {
-  id: number;
-  name: string;
-  representative: string;
-  representativeTel: string;
-  facilityType: EFacilityType;
-  requestedAt: Date;
-};
-
-type TFacilityListSortType = {
+export type TFacilityListSortType = {
   order: EOrder;
   field: EFacilityField;
 };
-
-const facilityList: TFacilityItem[] = [
-  {
-    id: 1,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 2,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원2",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 3,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원3",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 4,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원4",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 5,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원5",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 6,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원6",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 7,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원7",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 8,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원8",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 9,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원9",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 10,
-    facilityType: EFacilityType.HOSPITAL,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원10",
-    requestedAt: new Date("2023-09-01"),
-  },
-  {
-    id: 11,
-    facilityType: EFacilityType.PHARMACY,
-    representativeTel: "010-2832-1945",
-    representative: "홍길동",
-    name: "분당 차병원11",
-    requestedAt: new Date("2023-09-01"),
-  },
-];
 
 export class AdminFacilityListModel {
   /* CONSTANTS */
   public static readonly FACILITY_COUNT_PER_PAGE = 10;
 
   /* PRIVATE MEMBER VARIABLE */
-  private facilityList: TFacilityItem[] | null = null;
+  private facilityList: TAdminFacilityItem[] | null = null;
   private totalCount: number | null = null;
 
   private pageNumber = 1;
 
   private sortBy: TFacilityListSortType = {
-    order: EOrder.DESC,
+    order: EOrder.ASC,
     field: EFacilityField.NAME,
   };
 
@@ -142,15 +45,28 @@ export class AdminFacilityListModel {
 
   /* PUBLIC METHOD */
   public fetch = async () => {
+    try {
+      const response = await getFacilityRequestList(this.nameQuery, this.sortBy, this.pageNumber - 1);
+      this.facilityList = response.data.data.datalist.map((item) => {
+        return {
+          ...item,
+          type: item.type === "HOSPITAL" ? EFacilityType.HOSPITAL : EFacilityType.PHARMACY,
+        };
+      });
+      this.totalCount = response.data.data.pageInfo.totalElements;
+      this.pageNumber = response.data.data.pageInfo.page + 1;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        this.facilityList = [];
+        this.totalCount = 0;
+        this.pageNumber = 1;
+      }
+    }
+  };
+
+  public invalidate = () => {
     this.facilityList = null;
-
-    // Dummy async communication
-    this.facilityList = facilityList.slice(
-      (this.pageNumber - 1) * AdminFacilityListModel.FACILITY_COUNT_PER_PAGE,
-      this.pageNumber * AdminFacilityListModel.FACILITY_COUNT_PER_PAGE,
-    );
-
-    this.totalCount = facilityList.length;
+    this.totalCount = 0;
   };
 
   public isLoading = () => this.facilityList == null;

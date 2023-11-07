@@ -3,8 +3,9 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import { useAdminFacilityListViewController } from "@components/admin-main/facility-list/view.controller.ts";
 import Pagination from "react-js-pagination";
 import FacilityItem from "@components/admin-main/facility-item/view.tsx";
-import { EFacilityField } from "@type/facility-field.ts";
+import { EFacilityField } from "@type/enum/facility-field.ts";
 import { AdminFacilityListModel } from "@store/admin-facility-list.ts";
+import { EOrder } from "@type/enum/order.ts";
 
 function AdminFacilityList() {
   const {
@@ -34,7 +35,7 @@ function AdminFacilityList() {
         </S.SearchBarDiv>
         <S.SelectDiv data-role="selectbox">
           <S.SelectButton
-            className={sortingOptionOpen ? "open" : ""}
+            className={sorting.order === EOrder.ASC ? "asc" : ""}
             onClick={() => setSortingOptionOpen(!sortingOptionOpen)}
           >
             <ArrowDropDownIcon />
@@ -64,9 +65,11 @@ function AdminFacilityList() {
           <S.TelephoneSpan>{`기관장 전화번호`}</S.TelephoneSpan>
           <S.RequestDateSpan>{`신청일`}</S.RequestDateSpan>
         </S.TableHeaderDiv>
-        {facilityList.map((facilityItem) => (
-          <FacilityItem key={facilityItem.id} facilityInfo={facilityItem} />
-        ))}
+        {facilityList.length === 0 ? (
+          <S.CenterDiv>{"등록 신청한 기관이 존재하지 않습니다."}</S.CenterDiv>
+        ) : (
+          facilityList.map((facilityItem) => <FacilityItem key={facilityItem.id} facilityInfo={facilityItem} />)
+        )}
       </S.ListDiv>
       <S.PaginationDiv>
         <Pagination

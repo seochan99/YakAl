@@ -1,5 +1,4 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yakal/models/Profile/special_note_model.dart';
 import 'package:yakal/utilities/api/api.dart';
@@ -7,6 +6,7 @@ import 'package:yakal/utilities/api/api.dart';
 class User {
   String nickName;
   bool mode;
+  bool isIdentified;
   bool? isAgreedMarketing;
   bool notiIsAllowed;
   String breakfastTime;
@@ -15,6 +15,7 @@ class User {
   Guardian? guardian;
   HospitalRecordList? hospitalRecordList;
   SpecialNote? specialNote;
+
   String get deviceToken => _deviceToken;
   String _deviceToken;
 
@@ -37,14 +38,12 @@ class User {
     final prefs = await SharedPreferences.getInstance();
     nickName = prefs.getString("NICKNAME") ?? "";
     mode = prefs.getBool("MODE") ?? true;
+    isIdentified = prefs.getBool("IS_IDENTIFICATION") ?? false;
+    isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING");
     notiIsAllowed = prefs.getBool("NOTI_IS_ALLOWED") ?? true;
     breakfastTime = prefs.getString("BREAKFAST_TIME") ?? "";
     lunchTime = prefs.getString("LUNCH_TIME") ?? "";
     dinnerTime = prefs.getString("DINNER_TIME") ?? "";
-
-    if (prefs.getBool("IS_AGREED_MARKETING") != null) {
-      isAgreedMarketing = prefs.getBool("IS_AGREED_MARKETING")!;
-    }
   }
 
   // 유저 정보 초기화, 토큰은 그대로 남아있음
@@ -60,19 +59,30 @@ class User {
   }
 
   // 유저 이름과 모드를 서버에서 가져옴
-  Future<void> fetch(BuildContext context) async {
-    final dio = await authDio(context);
+  Future<void> fetchLoginInfo() async {
+    final dio = await authDioWithContext();
 
-    final response = await dio.get("/user");
+    final response = await dio.get("/users/check/register");
 
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
 
-      nickName = response.data["data"]["nickname"];
+      nickName = response.data["data"]["isRegistered"]["name"] as String;
       prefs.setString("NICKNAME", nickName);
 
-      mode = response.data["data"]["isDetail"] as bool;
+      mode = response.data["data"]["isRegistered"]["isDetail"] as bool;
       prefs.setBool("MODE", mode);
+
+      isAgreedMarketing =
+          response.data["data"]["isRegistered"]["isOptionalAgreementAccepted"];
+      if (isAgreedMarketing != null) {
+        prefs.setBool("MODE", mode);
+      } else {
+        prefs.remove("MODE");
+      }
+
+      isIdentified = response.data["data"]["isRegistered"]["isIdentified"];
+      prefs.setBool("IS_IDENTIFICATION", isIdentified);
     }
   }
 
@@ -101,9 +111,9 @@ class User {
     nickName = data['nickname'] ?? "";
     mode = data['isDetail'] ?? true;
     notiIsAllowed = data['notiIsAllowed'] ?? true;
-    breakfastTime = data['breakfastTime'] ?? "8:00";
-    lunchTime = data['lunchTime'] ?? "12:00";
-    dinnerTime = data['dinnerTime'] ?? "19:00";
+    breakfastTime = data['breakfastTime'] ?? "7:00";
+    lunchTime = data['lunchTime'] ?? "11:00";
+    dinnerTime = data['dinnerTime'] ?? "17:00";
     prefs.setString("NICKNAME", nickName);
     prefs.setBool("MODE", mode);
     prefs.setBool("NOTI_IS_ALLOWED", notiIsAllowed);
@@ -112,7 +122,7 @@ class User {
     prefs.setString("DINNER_TIME", dinnerTime);
   }
 
-  Future<void> setIsiAgreedMarketing(bool isAgreed) async {
+  Future<void> setIsAgreedMarketing(bool isAgreed) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("IS_AGREED_MARKETING", isAgreed);
     isAgreedMarketing = isAgreed;
@@ -121,12 +131,13 @@ class User {
   Future<void> setIsIdentified(bool isIdentified) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setBool("IS_IDENTIFIED", isIdentified);
-    isIdentified = isIdentified;
+    this.isIdentified = isIdentified;
   }
 
   User({
     this.nickName = "약알",
     this.mode = true,
+    this.isIdentified = false,
     this.guardian,
     this.notiIsAllowed = true,
     this.breakfastTime = "8:00",
@@ -156,24 +167,65 @@ class User {
 
 // 보호자
 class Guardian {
+  int id;
   String name;
-  DateTime? birthDate;
+  String birthDate;
 
   Guardian({
+    required this.id,
     required this.name,
-    this.birthDate,
+    required this.birthDate,
   });
+
+  factory Guardian.fromJson(Map<dynamic, dynamic> json) {
+    return Guardian(
+      id: json['id'],
+      name: json['name'],
+      birthDate: json['birthday'],
+    );
+  }
+}
+
+// 전문가
+class Expert {
+  int id;
+  String name;
+  String medicalEstablishment;
+
+  Expert({
+    required this.id,
+    required this.name,
+    required this.medicalEstablishment,
+  });
+
+  factory Expert.fromJson(Map<dynamic, dynamic> json) {
+    return Expert(
+      id: json['id'],
+      name: json['name'],
+      medicalEstablishment: json['medicalEstablishment'],
+    );
+  }
 }
 
 // 병원 기록
 class HospitalRecord {
-  DateTime date;
+  int id;
+  dynamic date;
   String location;
 
   HospitalRecord({
+    required this.id,
     required this.date,
     required this.location,
   });
+
+  factory HospitalRecord.fromJson(Map<dynamic, dynamic> json) {
+    return HospitalRecord(
+      id: json['id'],
+      date: json['recodeDate'],
+      location: json['hospitalName'],
+    );
+  }
 }
 
 // 병원 기록 리스트

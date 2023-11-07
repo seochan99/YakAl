@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PatientListModel } from "@store/patient-list.ts";
-import { EOrder } from "@type/order.ts";
-import { EPatientField } from "@type/patient-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EPatientField } from "@type/enum/patient-field.ts";
 
 export class PatientListViewModel {
   private static updater: boolean;
@@ -26,9 +26,12 @@ export class PatientListViewModel {
   };
 
   public static getStates = () => {
+    const patientList = this.patientListModel.getPatientList();
+
     return {
       isLoading: this.patientListModel.isLoading(),
-      patientList: this.patientListModel.getPatientList(),
+      isEmpty: patientList ? patientList.length === 0 : 0,
+      patientList,
       paging: this.patientListModel.getPagingInfo(),
       sorting: this.patientListModel.getSortingInfo(),
       nameQuery: this.patientListModel.getNameQuery(),
@@ -56,8 +59,8 @@ export class PatientListViewModel {
     this.flush();
   };
 
-  public static setIsManaged = async (patientId: number, isManaged: boolean) => {
-    await this.patientListModel.setIsManaged(patientId, isManaged);
+  public static setIsManaged = async (patientId: number) => {
+    await this.patientListModel.toggleIsManaged(patientId);
     this.flush();
   };
 }

@@ -4,7 +4,6 @@ import 'package:yakal/models/Home/pill_todo_parent.dart';
 import 'package:yakal/repository/Home/pill_todo_repository.dart';
 
 import '../../models/Home/e_taking_time.dart';
-import '../../models/Home/overlap_info.dart';
 import '../../provider/Home/pill_todo_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
 
@@ -12,34 +11,38 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
   final PillTodoRepository _pillTodoRepository =
       PillTodoRepository(pillTodoProvider: PillTodoProvider());
 
+  late final bool _isDetail;
   final RxBool _isExpanded = false.obs;
   late final Rx<DateTime> _todoDate = DateTime.now().obs;
   final Rx<CountModel> _countModel =
       CountModel(totalCount: 0, takenCount: 0).obs;
   final RxBool _isLoaded = false.obs;
   final RxList<Rx<PillTodoParent>> _pillTodoParents = RxList.empty();
-  final RxMap<String, List<OverlapInfo>> _overlapInfoMap =
-      RxMap<String, List<OverlapInfo>>();
 
   bool get isExpanded => _isExpanded.value;
 
   @override
+  bool get isDetail => _isDetail;
+
+  @override
   DateTime get todoDate => _todoDate.value;
+
   @override
   CountModel get countModel => _countModel.value;
+
   @override
   bool get isLoaded => _isLoaded.value;
+
   @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
-  @override
-  Map<String, List<OverlapInfo>> get overlapInfoMap => _overlapInfoMap;
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     updatePillTodoAndDate();
+    fetchIsDetail();
   }
 
   @override
@@ -182,5 +185,13 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
 
   void onClickPillAddButton() {
     _isExpanded.value = !_isExpanded.value;
+  }
+
+  void onClickOutOfPillAddMenu() {
+    _isExpanded.value = false;
+  }
+
+  void fetchIsDetail() {
+    _pillTodoRepository.getIsDetail().then((value) => _isDetail = value);
   }
 }

@@ -1,6 +1,6 @@
-import { PatientModel } from "./model.ts";
+import { PatientModel } from "@store/patient.ts";
 import React, { useState } from "react";
-import { EPatientInfoTab } from "../../../type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 
 export class PatientPageViewModel {
   private static updater = false;
@@ -23,6 +23,13 @@ export class PatientPageViewModel {
     this.patientPageModel.invalidateBase();
     this.flush();
     await this.patientPageModel.fetchBase(patientId);
+    this.flush();
+  };
+
+  public static fetchProtector = async (patientId: number) => {
+    this.patientPageModel.invalidateProtector();
+    this.flush();
+    await this.patientPageModel.fetchProtector(patientId);
     this.flush();
   };
 
@@ -77,6 +84,7 @@ export class PatientPageViewModel {
 
   public static getStates = () => {
     return {
+      isLoading: this.patientPageModel.isLoading(),
       patientInfo: this.patientPageModel.getPatientInfo(),
       currentTab: this.patientPageModel.getCurrentTab(),
       tabInfos: this.patientPageModel.getTabInfos(),

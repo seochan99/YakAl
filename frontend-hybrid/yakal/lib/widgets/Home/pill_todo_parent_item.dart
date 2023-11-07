@@ -10,6 +10,7 @@ import 'package:yakal/widgets/Home/pill_overlap_modal_view.dart';
 import 'package:yakal/widgets/Home/pill_todo_chidren_item.dart';
 
 class PillTodoParentItem extends StatefulWidget {
+  final bool isDetail;
   final DateTime todoDate;
   final PillTodoParent pillTodoParent;
   final bool isOverLap;
@@ -19,7 +20,8 @@ class PillTodoParentItem extends StatefulWidget {
   final Function(String, String)? onClickChildrenItemView;
 
   const PillTodoParentItem(
-      {required this.todoDate,
+      {required this.isDetail,
+      required this.todoDate,
       required this.pillTodoParent,
       required this.isOverLap,
       required this.onClickParentCheckBox,
@@ -34,6 +36,7 @@ class PillTodoParentItem extends StatefulWidget {
 }
 
 class _PillTodoParentItemState extends State<PillTodoParentItem> {
+  late final bool isDetail;
   late final DateTime todoDate;
   late bool isOverLap;
   late final PillTodoParent pillTodoParent;
@@ -46,6 +49,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    isDetail = widget.isDetail;
     todoDate = widget.todoDate;
     isOverLap = widget.isOverLap;
     pillTodoParent = widget.pillTodoParent;
@@ -162,7 +166,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                 onTap: () {
                                   // 3일 이상 지난 경우
                                   if (DateTime.now().isAfter(
-                                      todoDate.add(Duration(days: 3)))) {
+                                      todoDate.add(const Duration(days: 3)))) {
                                     Get.snackbar(
                                       '복약 기록',
                                       '3일이 지나면 수정이 불가능해요!',
@@ -177,7 +181,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                   }
                                   // 미래의 날짜인 경우
                                   else if (DateTime.now().isBefore(todoDate)) {
-                                    print("${DateTime.now()} ${todoDate}");
+                                    print("${DateTime.now()} $todoDate");
                                     Get.snackbar(
                                       '복약 기록',
                                       '미래의 복약 기록을 작성하는 것은 불가능해요.',
@@ -192,7 +196,6 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                                   }
                                   // 조건을 만족하는 경우
                                   else {
-                                    print("${DateTime.now()} ${todoDate}");
                                     onClickParentCheckBox(
                                         pillTodoParent.eTakingTime);
                                   }
@@ -267,6 +270,7 @@ class _PillTodoParentItemState extends State<PillTodoParentItem> {
                               itemCount: pillTodoParent.todos.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return PillTodoChildrenItem(
+                                  isDetail: isDetail,
                                   todoDate: todoDate,
                                   eTakingTime: pillTodoParent.eTakingTime,
                                   pillTodoChildren: pillTodoParent.todos[index],

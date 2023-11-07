@@ -1,152 +1,53 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:string_similarity/string_similarity.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
-import 'package:yakal/models/Medication/dose_name_code_model.dart';
-import 'package:yakal/models/Medication/search_medicine_model.dart';
-import 'package:yakal/provider/Medicine/add_modicine_provider.dart';
+import 'package:yakal/provider/Medicine/add_medicine_provider.dart';
 import 'package:yakal/provider/Medicine/envelop_analysis_provider.dart';
-import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
-import 'package:yakal/repository/Medicine/medicne_code_repository.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 
-class DoseListViewModel extends GetxController {
-  final MedicationDirectProvider _medicationDirectProvider =
-      MedicationDirectProvider();
+class AddDoseViewModel extends GetxController {
   final AddMedicineProvider _addMedicineProvider = AddMedicineProvider();
   final EnvelopAnalysisProvider _envelopAnalysisProvider =
       EnvelopAnalysisProvider();
-  final MedicineCodeRepository _medicineCodeRepository =
-      MedicineCodeRepository();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
   final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
 
   Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
-    var textList = await _envelopAnalysisProvider.getTextFromImage(imagePath);
+    final medicationList =
+        await _envelopAnalysisProvider.getDoseInfoFromImage(imagePath);
 
-    if (kDebugMode) {
-      print("🎑 [OCR Log] textList: $textList");
-    }
-
-    if (textList.isEmpty) {
+    if (medicationList.isEmpty) {
       return false;
     }
 
-    var medicinesName = await _medicineCodeRepository.getMedicinesName();
+    final futuresForImage = <Future<String?>>[];
 
-    if (kDebugMode) {
-      print(
-          "🎑 [OCR Log] medicinesName[0:10]: ${medicinesName.sublist(0, 10)}");
-    }
-
-    var futures = <Future<List<SearchMedicineModel>>>[];
-    var names = <String>[];
-
-    for (var text in textList) {
-      // 공백문자 제거
-      var nonSpaceText = text.replaceAll(RegExp(r"\s"), "");
-
-      // 한글, 숫자, 'm', 'g' 외의 모든 문자 제거
-      var korText = nonSpaceText.replaceAll(RegExp(r"[^가-힣0-9mg]"), "");
-
-      // 전처리 결과가 empty string이면 고려하지 않음
-      if (korText == "") {
-        continue;
-      }
-
-      // 전처리 결과와 가장 유사한 약 이름 검색
-      var bestMatch = StringSimilarity.findBestMatch(korText, medicinesName);
-
-      if (kDebugMode) {
-        print(
-            "🎑 [OCR Log] $korText -> ${bestMatch.bestMatch.target!} / Similarity: ${bestMatch.bestMatch.rating!}");
-      }
-
-      // 유사도가 70% 이상인 경우만 고려
-      if (bestMatch.bestMatch.rating! >= 0.7) {
-        // 있다면 해당 약을 추가
-        names.add(bestMatch.bestMatch.target!);
-
-        // kims code 검색 대기열 추가
-        futures.add(
-          _medicationDirectProvider.searchMedicine(bestMatch.bestMatch.target!),
-        );
-      }
-    }
-
-    List<List<SearchMedicineModel>> searchList = await Future.wait(futures);
-    var doseNameCodeList = <Map<String, String>>[];
-
-    for (var i = 0; i < searchList.length; ++i) {
-      var searchItem = searchList[i];
-
-      if (searchItem.isEmpty) {
-        if (kDebugMode) {
-          print("🎑 [OCR Log] ${names[i]} Has No Picture...");
-        }
-
-        doseNameCodeList.add({
-          "name": names[i],
-          "code": "",
-        });
-      } else {
-        if (kDebugMode) {
-          print("🎑 [OCR Log] ${names[i]} Has Picture.");
-        }
-
-        doseNameCodeList.add({
-          "name": names[i],
-          "code": searchItem[0].code,
-        });
-      }
-    }
-
-    var doseNameCodeListWithoutOverlap = <Map<String, String>>[];
-
-    outerLoop:
-    for (var element in doseNameCodeList) {
-      for (var newElement in doseNameCodeListWithoutOverlap) {
-        if (newElement["name"] == element["name"]) {
-          continue outerLoop;
-        }
-      }
-      doseNameCodeListWithoutOverlap.add(element);
-    }
-
-    if (kDebugMode) {
-      print(
-          "🎑 [OCR Log] Medicine Search Result: $doseNameCodeListWithoutOverlap");
-    }
-
-    if (doseNameCodeListWithoutOverlap.isEmpty) {
-      return false;
-    }
-
-    setGroupList(doseNameCodeListWithoutOverlap);
-
-    return true;
-  }
-
-  void setGroupList(List<Map<String, String>> doseNameCodeList) {
-    var doseList = <DoseItemModel>[];
-
-    for (var nameCode in doseNameCodeList) {
-      doseList.add(
-        DoseItemModel(
-          name: nameCode["name"] as String,
-          kimsCode: nameCode["code"] as String,
-        ),
+    for (var medication in medicationList) {
+      futuresForImage.add(
+        _addMedicineProvider.getBase64ImageFromName(medication.name),
       );
+    }
+
+    final base64Images = await Future.wait(futuresForImage);
+    final doseItemList = <DoseItemModel>[];
+
+    for (var i = 0; i < base64Images.length; ++i) {
+      doseItemList.add(DoseItemModel(
+        name: medicationList[i].name,
+        kdCode: medicationList[i].kdCode,
+        atcCode: medicationList[i].atcCode,
+        base64Image: base64Images[i] ?? "",
+      ));
     }
 
     _groupList.clear();
     _groupList.add(
       DoseGroupModel(
-        doseList: doseList,
+        doseList: doseItemList,
         takingTime: [
           true,
           true,
@@ -157,6 +58,8 @@ class DoseListViewModel extends GetxController {
     );
 
     _groupList.refresh();
+
+    return true;
   }
 
   void clear() {
@@ -297,89 +200,6 @@ class DoseListViewModel extends GetxController {
   bool getHasCode(int groupIndex, int itemIndex) {
     var item = _groupList[groupIndex].doseList[itemIndex];
     return item.kdCode != "" && item.atcCode != "";
-  }
-
-  Future<void> getImages() async {
-    List<Future<String?>> futures = [];
-    List<DoseItemModel> doseList = [];
-
-    for (var group in _groupList) {
-      for (var dose in group.doseList) {
-        doseList.add(dose);
-        futures.add(dose.kimsCode == ""
-            ? Future<String?>.value("")
-            : _addMedicineProvider.getMedicineBase64Image(dose.kimsCode));
-      }
-    }
-
-    List<String?> base64images = await Future.wait(futures);
-
-    for (var i = 0; i < base64images.length; ++i) {
-      doseList[i].base64Image = base64images[i] == "" ? null : base64images[i];
-    }
-
-    _groupList.refresh();
-  }
-
-  Future<void> getCode() async {
-    List<Future<DoseNameCodeModel?>> futures = [];
-    List<DoseItemModel> doseList = [];
-
-    for (var group in _groupList) {
-      for (var dose in group.doseList) {
-        doseList.add(dose);
-        futures.add(_medicineCodeRepository.getKDCodeAndATCCode(dose.name));
-      }
-    }
-
-    List<DoseNameCodeModel?> codeList = await Future.wait(futures);
-
-    if (kDebugMode) {
-      print("📛 [Result Of Searching Medicine Code] $codeList");
-    }
-
-    for (var i = 0; i < codeList.length; ++i) {
-      if (codeList[i] != null) {
-        doseList[i].atcCode = codeList[i]!.atcCode;
-        doseList[i].kdCode = codeList[i]!.kdCode;
-      } else {
-        doseList[i].atcCode = "";
-        doseList[i].kdCode = "";
-      }
-    }
-
-    _notAddableList.clear();
-
-    var newGroupList = <DoseGroupModel>[];
-    for (var group in _groupList) {
-      var newGroup = DoseGroupModel(
-        doseList: [],
-        takingTime: group.takingTime.toList(),
-      );
-
-      newGroupList.add(newGroup);
-
-      var doseList = <DoseItemModel>[];
-      for (var dose in group.doseList) {
-        if (dose.atcCode == "" || dose.kdCode == "") {
-          _notAddableList.add(dose);
-        } else {
-          doseList.add(dose);
-        }
-      }
-
-      if (doseList.isEmpty) {
-        newGroupList.remove(newGroup);
-      } else {
-        newGroup.doseList = doseList;
-      }
-    }
-
-    _groupList.clear();
-    _groupList.addAll(newGroupList);
-
-    _groupList.refresh();
-    _notAddableList.refresh();
   }
 
   Future<EAddScheduleResult> addSchedule(DateTime start, DateTime end) async {

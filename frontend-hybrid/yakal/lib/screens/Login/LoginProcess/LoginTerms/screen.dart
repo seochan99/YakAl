@@ -1,95 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:yakal/provider/Login/login_terms_provider.dart';
 import 'package:yakal/screens/Login/LoginProcess/LoginTerms/TermsDetail/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/LoginTerms/style.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/utilities/enum/terms.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/auth_check_button.dart';
 
-class LoginTermsScreen extends StatelessWidget {
+class LoginTermsScreen extends StatefulWidget {
+  const LoginTermsScreen({super.key});
+
+  @override
+  State<LoginTermsScreen> createState() => _LoginTermsScreenState();
+}
+
+class _LoginTermsScreenState extends State<LoginTermsScreen> {
   final userViewModel = Get.find<UserViewModel>();
   final routeController = Get.find<LoginRouteController>();
   final termsCheckedController = Get.put(_TermsCheckedController());
 
-  static const List<Map<String, Object>> terms = [
-    {
-      "isRequired": true,
-      "title": "서비스 이용약관",
-      "content": """
-1. 개인정보의 수집 및 이용 동의서
-- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용 하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
+  final loginTermsProvider = LoginTermsProvider();
 
-① 개인정보 수집 항목 및 수집• 이용 목적
-가) 수집 항목 (필수항목)
-- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전 화), 사진, 이메일, 나이. 재학정보, 병역사항, 외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원 신청서에 기재된 정보 또는 신청자가 제공한 정보 나) 수집 및 이용 목적
+  void onPressedNextButton() {
+    var isAgreedMarketing = termsCheckedController.isChecked[3];
 
-② 개인정보 보유 및 이용기간
-- 수집• 이용 동의일로부터 개인정보의 수집 • 이용목적을 달성할 때까지
+    userViewModel.updateMarketingAgreement(isAgreedMarketing).then(
+      (_) {
+        routeController.goto(LoginRoute.identifyEntry);
+      },
+    ).catchError(
+      (_) {
+        if (!context.mounted) {
+          return;
+        }
 
-③ 동의거부관리
-- 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하 여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우 에 장학생 선발 과정에 있어 불이익이 발생할 수 있음을 알려드립니다.
-      """,
-    },
-    {
-      "isRequired": true,
-      "title": "위치기반 서비스 이용약관 동의",
-      "content": """
-1. 개인정보의 수집 및 이용 동의서
-- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용 하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            content: Text("약관 동의 여부 설정에 실패했습니다."),
+            duration: Duration(seconds: 3),
+          ),
+        );
+      },
+    );
+  }
 
-① 개인정보 수집 항목 및 수집• 이용 목적
-가) 수집 항목 (필수항목)
-- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전 화), 사진, 이메일, 나이. 재학정보, 병역사항, 외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원 신청서에 기재된 정보 또는 신청자가 제공한 정보 나) 수집 및 이용 목적
-
-② 개인정보 보유 및 이용기간
-- 수집• 이용 동의일로부터 개인정보의 수집 • 이용목적을 달성할 때까지
-
-③ 동의거부관리
-- 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하 여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우 에 장학생 선발 과정에 있어 불이익이 발생할 수 있음을 알려드립니다.
-      """,
-    },
-    {
-      "isRequired": true,
-      "title": "개인정보 수집 및 이용 동의",
-      "content": """
-1. 개인정보의 수집 및 이용 동의서
-- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용 하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
-
-① 개인정보 수집 항목 및 수집• 이용 목적
-가) 수집 항목 (필수항목)
-- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전 화), 사진, 이메일, 나이. 재학정보, 병역사항, 외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원 신청서에 기재된 정보 또는 신청자가 제공한 정보 나) 수집 및 이용 목적
-
-② 개인정보 보유 및 이용기간
-- 수집• 이용 동의일로부터 개인정보의 수집 • 이용목적을 달성할 때까지
-
-③ 동의거부관리
-- 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하 여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우 에 장학생 선발 과정에 있어 불이익이 발생할 수 있음을 알려드립니다.
-      """,
-    },
-    {
-      "isRequired": false,
-      "title": "마케팅 정보 활용 동의",
-      "content": """
-1. 개인정보의 수집 및 이용 동의서
-- 이용자가 제공한 모든 정보는 다음의 목적을 위해 활용 하며, 하기 목적 이외의 용도로는 사용되지 않습니다.
-
-① 개인정보 수집 항목 및 수집• 이용 목적
-가) 수집 항목 (필수항목)
-- 성명(국문), 주민등록번호, 주소, 전화번호(자택, 휴대전 화), 사진, 이메일, 나이. 재학정보, 병역사항, 외국어 점수, 가족관계, 재산정도, 수상내역, 사회활동, 타 장학금 수혜현황, 요식업 종사 현황 등 지원 신청서에 기재된 정보 또는 신청자가 제공한 정보 나) 수집 및 이용 목적
-
-② 개인정보 보유 및 이용기간
-- 수집• 이용 동의일로부터 개인정보의 수집 • 이용목적을 달성할 때까지
-
-③ 동의거부관리
-- 귀하께서는 본 안내에 따른 개인정보 수집, 이용에 대하 여 동의를 거부하실 권리가 있습니다. 다만, 귀하가 개인정보의 수집/이용에 동의를 거부하시는 경우 에 장학생 선발 과정에 있어 불이익이 발생할 수 있음을 알려드립니다.
-      """,
-    },
-  ];
-
-  LoginTermsScreen({super.key});
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +102,7 @@ class LoginTermsScreen extends StatelessWidget {
                 height: 32,
               ),
               ...List.generate(
-                terms.length,
+                ETerms.values.length,
                 (index) => Column(
                   children: [
                     Row(
@@ -161,13 +124,13 @@ class LoginTermsScreen extends StatelessWidget {
                               width: 16,
                             ),
                             Text(
-                              "(${terms[index]["isRequired"] as bool ? "필수" : "선택"})",
-                              style: (terms[index]["isRequired"] as bool
+                              "(${ETerms.values[index].isRequired ? "필수" : "선택"})",
+                              style: (ETerms.values[index].isRequired
                                   ? LoginTermsStyle.checkedRequired
                                   : LoginTermsStyle.checkedOptional),
                             ),
                             Text(
-                              " ${terms[index]["title"] as String}",
+                              " ${ETerms.values[index].title}",
                               style: LoginTermsStyle.checkedRequired,
                             ),
                           ],
@@ -198,8 +161,8 @@ class LoginTermsScreen extends StatelessWidget {
                               pageBuilder:
                                   (context, animation, secondaryAnimation) {
                                 return TermsDetailScreen(
-                                  title: terms[index]["title"] as String,
-                                  content: terms[index]["content"] as String,
+                                  terms: ETerms.values[index],
+                                  loginTermsProvider: loginTermsProvider,
                                 );
                               },
                             );
@@ -229,15 +192,7 @@ class LoginTermsScreen extends StatelessWidget {
                         termsCheckedController.isCheckedRequiredAll();
 
                     return TextButton(
-                      onPressed: canMoveNext
-                          ? () {
-                              var isAgreedMarketing =
-                                  termsCheckedController.isChecked[3];
-                              userViewModel
-                                  .updateMarketingAgreement(isAgreedMarketing);
-                              routeController.goto(LoginRoute.identifyEntry);
-                            }
-                          : null,
+                      onPressed: canMoveNext ? onPressedNextButton : null,
                       style: TextButton.styleFrom(
                         backgroundColor:
                             canMoveNext ? ColorStyles.main : ColorStyles.gray2,

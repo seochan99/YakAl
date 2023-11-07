@@ -51,34 +51,19 @@ export const BackLink = styled(Link)`
 export const BaseInfoDiv = styled.div`
   /* Variable */
   --WidthPadding: 1.5rem;
-  --HeightPadding: 1rem;
+  --HeightPadding: 1.3rem;
 
   /* Style */
   display: flex;
   flex-direction: row;
   justify-content: start;
-  align-items: center;
+  align-items: stretch;
   gap: 1.5rem;
   width: calc(30rem - var(--WidthPadding) * 2);
   height: calc(6rem - var(--HeightPadding) * 2);
   padding: var(--HeightPadding) var(--WidthPadding);
   border-radius: 0.5rem;
   background: var(--White, #fff);
-`;
-
-export const NokComingSoonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  justify-self: center;
-  width: 100%;
-  color: var(--Gray4, #90909f);
-  font-family: SUIT, serif;
-  font-size: 1.2rem;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.2rem;
 `;
 
 export const SelfBaseTitle = styled.div`
@@ -93,9 +78,22 @@ export const SelfBaseTitle = styled.div`
   height: 100%;
 `;
 
+export const CenterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  color: var(--Gray4, #90909f);
+  font-family: SUIT, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.25rem;
+`;
+
 export const PatientImg = styled.img`
-  width: 4rem;
-  height: 4rem;
+  object-fit: contain;
 `;
 
 export const InfoTextDiv = styled.div`
@@ -103,7 +101,6 @@ export const InfoTextDiv = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
-  gap: 1rem;
 `;
 
 export const NameSexBirthDiv = styled.div`

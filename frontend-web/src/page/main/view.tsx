@@ -1,17 +1,16 @@
 import * as S from "./style.ts";
 import { Outlet } from "react-router-dom";
-
-import Footer from "../../layout/footer/view.tsx";
-import Header from "../../layout/header/view.tsx";
-import Profile from "../../components/main/profile/view.tsx";
-
+import Footer from "@layout/footer/view.tsx";
+import Header from "@layout/header/view.tsx";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { EJob } from "@type/job.ts";
 import { useMainPageViewController } from "./view.controller.ts";
-import { EXPERT_HOME } from "../../router.tsx";
+import Profile from "@components/main/profile/view.tsx";
+import LoadingSpinner from "@components/loading-spinner/view.tsx";
 
 export function MainPage() {
   const {
+    expertUser,
+    isLoading,
     nav: { navList, currentNavItem },
     mobileNav: { isWideMobile, mobileNavOpen, onClickMobileNavTitle, closeMobileNavList },
   } = useMainPageViewController();
@@ -25,7 +24,7 @@ export function MainPage() {
               <S.ItemNavLink
                 key={navItem.path + "_" + navItem.name}
                 to={navItem.path}
-                end={navItem.path === EXPERT_HOME}
+                end={navItem.path === "/expert"}
                 className={({ isActive, isPending }) => (isActive ? "active" : isPending ? "pending" : "")}
               >
                 {navItem.name}
@@ -33,13 +32,14 @@ export function MainPage() {
             ))}
           </S.NavOuterDiv>
         )}
-        <Profile
-          job={EJob.DOCTOR}
-          department={"가정의학과"}
-          belong={"중앙대학교 부속병원"}
-          name={"홍길동"}
-          imgSrc="https://mui.com/static/images/avatar/1.jpg"
-        />
+        {expertUser === null ? null : (
+          <Profile
+            job={expertUser.job}
+            department={expertUser.department}
+            belong={expertUser.belong}
+            name={expertUser.name}
+          />
+        )}
       </Header>
       {isWideMobile && currentNavItem && (
         <S.MobileNavOuterDiv>
@@ -54,7 +54,7 @@ export function MainPage() {
             <S.MobileNavListDiv className={mobileNavOpen ? "open" : ""}>
               {navList.map((navItem) => (
                 <S.MobileItemNavLink
-                  end={navItem.path === EXPERT_HOME}
+                  end={navItem.path === "/expert"}
                   key={navItem.path + "_" + navItem.name}
                   to={navItem.path}
                   onClick={closeMobileNavList}
@@ -68,10 +68,12 @@ export function MainPage() {
           </S.DrawableListDiv>
         </S.MobileNavOuterDiv>
       )}
-      <S.MainDiv>
-        <Outlet />
+      {/* Date.now() : force re-rendering */}
+      <S.MainDiv key={Date.now()}>
+        <Outlet key={Date.now()} />
       </S.MainDiv>
       <Footer />
+      {isLoading && <LoadingSpinner />}
     </S.OuterDiv>
   );
 }

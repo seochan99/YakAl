@@ -8,6 +8,6 @@ declare global {
   }
 }
 
-document.cookie = "SameSite=None; Secure";
+document.cookie = "SameSite=None;";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(<App />);

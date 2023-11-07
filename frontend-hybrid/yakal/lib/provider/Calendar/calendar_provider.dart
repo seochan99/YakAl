@@ -12,7 +12,7 @@ class CalendarProvider {
     var dio = await authDioWithContext();
 
     var responseJson =
-        await dio.get("/dose/between", queryParameters: <String, dynamic>{
+        await dio.get("/doses/between", queryParameters: <String, dynamic>{
       "startDate": DateFormat('yyyy-MM-dd').format(startDateTime),
       "endDate": DateFormat('yyyy-MM-dd').format(endDateTime),
     });

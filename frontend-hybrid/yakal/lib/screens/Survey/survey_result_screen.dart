@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
+import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_screen.dart';
 import 'package:yakal/viewModels/Profile/user_view_model.dart';
 
 class SurveyResultController extends GetxController {
@@ -14,11 +15,13 @@ class SurveyResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isNarrow = MediaQuery.of(context).size.width < 380;
     SurveyModel survey = (Get.arguments as Map<dynamic, dynamic>)['survey'];
+    bool isSenior = (Get.arguments as Map<dynamic, dynamic>)['isSenior'];
+
     UserViewModel userViewModel = Get.put(UserViewModel());
 
     // comment 설정
-    survey.setComment(survey.totalScore);
 
     return Scaffold(
       appBar: AppBar(
@@ -47,29 +50,63 @@ class SurveyResultScreen extends StatelessWidget {
                     )),
               ),
               const Spacer(),
-              TextButton(
-                  style: TextButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 15, horizontal: 28),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            backgroundColor:
+                                const Color.fromARGB(255, 100, 147, 255),
+                            foregroundColor: const Color(0xffffffff),
+                          ),
+                          onPressed: () {
+                            Get.to(() => SurveyDetailType1Screen(
+                                  survey: survey,
+                                  isSenior: isSenior,
+                                ));
+                          },
+                          child: Text(
+                            "다시 하기",
+                            style: TextStyle(
+                                fontSize: isNarrow ? 18 : 20,
+                                fontWeight: FontWeight.w700),
+                          )),
                     ),
-                    backgroundColor: const Color(0xff2666F6),
-                    foregroundColor: const Color(0xffffffff),
-                  ),
-                  onPressed: () {
-                    Get.offAllNamed('/seniorSurvey');
-                    // issue : bottomNavigation이 사라짐.. 고민 중...
-                    // Get.back();
-                    // Get.back();
-                    // Popuntill
-
-                    // 이러면 새로고침해야지 완료로 바뀜..고민중..
-                  },
-                  child: const Text(
-                    "다른 테스트 하기",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-                  )),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: TextButton(
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            backgroundColor: const Color(0xff2666F6),
+                            foregroundColor: const Color(0xffffffff),
+                          ),
+                          onPressed: () {
+                            Get.offAllNamed(
+                                isSenior ? '/seniorSurvey' : '/normalSurvey');
+                          },
+                          child: Text(
+                            "목록으로 가기",
+                            style: TextStyle(
+                                fontSize: isNarrow ? 18 : 20,
+                                fontWeight: FontWeight.w700),
+                          )),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(
                 height: 100,
               )
@@ -108,6 +145,7 @@ class SurveyResultHeader extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 24),
+          // sruvey type
           Text(
             survey.resultComment,
             style: const TextStyle(

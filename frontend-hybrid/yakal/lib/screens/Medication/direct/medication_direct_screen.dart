@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
-import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
+import 'package:yakal/provider/Medicine/add_medicine_provider.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
@@ -18,11 +19,11 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   String selectedMedicineCode = '';
   bool isLoading = false;
 
-  final _medicationDirectProvider = MedicationDirectProvider();
+  final _addMedicineProvider = AddMedicineProvider();
   final TextEditingController medicinController = TextEditingController();
   List<SearchMedicineModel> medicines = [];
   final BehaviorSubject<String> _searchSubject = BehaviorSubject<String>();
-  final doseListViewModel = Get.put(DoseListViewModel());
+  final doseListViewModel = Get.put(AddDoseViewModel());
 
   _MedicationAddScreenState() {
     _searchSubject
@@ -40,7 +41,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
     try {
       List<SearchMedicineModel> fetchedMedicines =
-      await _medicationDirectProvider.searchMedicine(keyword);
+          await _addMedicineProvider.searchMedicine(keyword);
       setState(() {
         medicines = fetchedMedicines;
         // 로딩 끝
@@ -69,12 +70,12 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
   void _handleButtonPress() {
     // 약 정보는 ViewModel을 통해 넘김
-    doseListViewModel.setGroupList([
-      {
-        "name": medicinController.text,
-        "code": selectedMedicineCode,
-      },
-    ]);
+    // doseListViewModel.setGroupList([
+    //   {
+    //     "name": medicinController.text,
+    //     "code": selectedMedicineCode,
+    //   },
+    // ]);
 
     Get.toNamed(
       "/pill/add/final",
@@ -122,38 +123,35 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                         Column(
                           children: isLoading
                               ? [
-                            Center(
-                                child: Column(
-                                  children: [
-                                    SizedBox(
-                                      // 화면 절반 길이
-                                      height:
-                                      MediaQuery
-                                          .of(context)
-                                          .size
-                                          .height /
-                                          4,
-                                    ),
-                                    const CircularProgressIndicator(),
-                                  ],
-                                ))
-                          ]
+                                  Center(
+                                      child: Column(
+                                    children: [
+                                      SizedBox(
+                                        // 화면 절반 길이
+                                        height:
+                                            MediaQuery.of(context).size.height /
+                                                4,
+                                      ),
+                                      const CircularProgressIndicator(),
+                                    ],
+                                  ))
+                                ]
                               : medicines.map((medicine) {
-                            return ListTile(
-                              // medicinController.text와 같다면 배경색
-                              tileColor:
-                              medicine.name == medicinController.text
-                                  ? const Color(0xff2666f6)
-                                  : Colors.white,
-                              title: Text(medicine.name),
-                              subtitle: Text(medicine.code),
-                              onTap: () {
-                                selectedMedicineName = medicine.name;
-                                selectedMedicineCode = medicine.code;
-                                medicinController.text = medicine.name;
-                              },
-                            );
-                          }).toList(),
+                                  return ListTile(
+                                    // medicinController.text와 같다면 배경색
+                                    textColor:
+                                        medicine.name == medicinController.text
+                                            ? ColorStyles.main
+                                            : ColorStyles.black,
+
+                                    title: Text(medicine.name),
+                                    onTap: () {
+                                      selectedMedicineName = medicine.name;
+                                      selectedMedicineCode = medicine.code;
+                                      medicinController.text = medicine.name;
+                                    },
+                                  );
+                                }).toList(),
                         )
                       ],
                     ),
@@ -183,9 +181,9 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    onPressed: _handleButtonPress,
+                    onPressed: isButtonEnabled ? _handleButtonPress : null,
                     child:
-                    const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
+                        const Text("추가 하기", style: TextStyle(fontSize: 20.0)),
                   );
                 },
               ),

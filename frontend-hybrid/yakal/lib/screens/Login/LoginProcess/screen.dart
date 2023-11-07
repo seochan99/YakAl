@@ -4,6 +4,7 @@ import 'package:yakal/screens/Login/LoginProcess/ModeSelection/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/NicknameInput/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Login/animated_indexed_stack.dart';
 import 'package:yakal/widgets/Login/login_app_bar.dart';
 
@@ -11,6 +12,7 @@ class LoginProcess extends StatelessWidget {
   final routeController = Get.put(LoginRouteController());
   final nicknameLoadingController = Get.put(NicknameInputLoadingController());
   final modeLoadingController = Get.put(ModeSelectionLoadingController());
+  final userViewModel = Get.put(UserViewModel(), permanent: true);
 
   LoginProcess({super.key});
 

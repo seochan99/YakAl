@@ -30,7 +30,7 @@ export const BackButton = styled(Link)`
     align-items: center;
     gap: 0.5rem;
     border-radius: 0.5rem;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 1rem;
     font-weight: 600;
@@ -58,12 +58,10 @@ export const MainSection = styled.div`
   background-color: #fff;
 `;
 
-export const InnerBox = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  row-gap: 2rem;
-  column-gap: 3rem;
+export const InnerDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
   margin: 1rem 0;
 `;
 
@@ -87,7 +85,7 @@ export const UnverifiedIcon = styled.img`
 `;
 
 export const VerifiedText = styled.span`
-  color: var(--color-surface-100);
+  color: var(--Black, #151515);
   font-size: 1.1rem;
   font-weight: 500;
   line-height: 1.1rem;
@@ -104,39 +102,30 @@ export const Title = styled.span`
   line-height: 1.5rem;
 `;
 
-export const InputBox = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
+export const OneItemSpan = styled.span`
+  display: inline-flex;
+  flex-direction: row;
+  align-items: start;
+  gap: 1rem;
+`;
+
+export const NormalSpan = styled.span`
+  color: var(--Gray5, #626272);
+  font-family: SUIT, serif;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.1rem;
   flex: 1;
 `;
 
-export const BelongInputBox = styled(InputBox)`
-  grid-column: 1 / span 2;
-`;
-
-export const StyledInputLabel = styled.span`
-  color: var(--color-surface-500);
-  font-size: 0.9rem;
-  font-weight: 500;
-  line-height: 0.9rem;
-`;
-
-export const StyledInput = styled.input`
-  & {
-    color: #151515;
-    text-align: left;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1rem;
-    height: 1rem;
-    border: 0.15rem solid var(--color-surface-900);
-    border-radius: 0.25rem;
-    padding: 0.5rem;
-    outline: none;
-  }
-
-  &:focus {
-    border: 0.15rem solid var(--color-primary-100);
-  }
+export const NameSpan = styled.span`
+  color: var(--Black, #151515);
+  font-family: SUIT, serif;
+  font-size: 1.1rem;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 1.1rem;
+  white-space: nowrap;
+  width: 8rem;
 `;

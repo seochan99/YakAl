@@ -11,9 +11,11 @@ import 'package:yakal/widgets/Survey/survey_header_widget.dart';
 
 class SurveyDetailType1Screen extends StatelessWidget {
   final SurveyModel survey;
+  final bool isSenior;
   final SurveyDetailBokyakController controller;
 
-  SurveyDetailType1Screen({Key? key, required this.survey})
+  SurveyDetailType1Screen(
+      {Key? key, required this.survey, required this.isSenior})
       : controller = Get.put(SurveyDetailBokyakController(surveyModel: survey)),
         super(key: key);
 
@@ -72,7 +74,9 @@ class SurveyDetailType1Screen extends StatelessWidget {
                         ),
                       ),
                       onPressed: controller.isCompletionEnabled()
-                          ? controller.handleButtonPress
+                          ? () {
+                              controller.handleButtonPress(isSenior);
+                            }
                           : null,
                       child: const Text("완료", style: TextStyle(fontSize: 20.0)),
                     );

@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Survey/survey_model.dart';
 import 'package:yakal/screens/Survey/SurveyDetail/survey_detail_screen.dart';
+import 'package:yakal/viewModels/Survey/survey_list_controller.dart';
 
 class SurveySeniorScreen extends StatelessWidget {
   const SurveySeniorScreen({Key? key}) : super(key: key);
@@ -11,21 +12,21 @@ class SurveySeniorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          centerTitle: true,
-          surfaceTintColor: Colors.white,
-          backgroundColor: Colors.white,
-          title: const Text(
-            '자가 진단 테스트 (65세 이상)',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-          ),
-          leading: IconButton(
-            icon: const Icon(Icons.chevron_left,
-                size: 32, color: Color(0xff151515)),
-            onPressed: () {
-              // Get.back();
-              Get.offAndToNamed('/');
-            },
-          )),
+        centerTitle: true,
+        surfaceTintColor: Colors.white,
+        backgroundColor: Colors.white,
+        title: const Text(
+          '자가 진단 테스트 (65세 이상)',
+          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.chevron_left,
+              size: 32, color: Color(0xff151515)),
+          onPressed: () {
+            Get.offAndToNamed('/');
+          },
+        ),
+      ),
       body: Container(
         color: Colors.white,
         child: SingleChildScrollView(
@@ -62,69 +63,81 @@ class SurveSenioryList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int completedCount = tests.where((test) => test.isCompleted).length;
-
-    return Column(
-      children: [
-        for (int index = 0; index < tests.length; index++)
-          if (tests[index].isSenior == 0 || tests[index].isSenior == 2)
-            InkWell(
-              onTap: () {
-                // test type별로 별도 view구성 처리하기
-                if (!tests[index].isCompleted) {
-                  Get.to(() => SurveyDetailType1Screen(
-                        survey: tests[index],
-                      ));
-                }
-              },
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                margin: const EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                  color: tests[index].isCompleted
-                      ? const Color(0xFFF5F5F9)
-                      : const Color(0xFFFFFFFF),
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(
-                    color: tests[index].isCompleted
-                        ? const Color(0xFFF5F5F9)
-                        : const Color(0xFFE9E9EE),
-                    width: 1.0,
+    final SurveyListController surveyListController =
+        Get.put(SurveyListController(tests: tests));
+    return GetBuilder<SurveyListController>(
+        init: surveyListController,
+        initState: (_) {
+          surveyListController.onInit();
+        },
+        builder: (context) {
+          return Column(
+            children: [
+              for (int index = 0; index < tests.length; index++)
+                if (tests[index].isSenior == 0 || tests[index].isSenior == 2)
+                  InkWell(
+                    onTap: () {
+                      // test type별로 별도 view구성 처리하기
+                      if (!tests[index].isCompleted) {
+                        Get.to(() => SurveyDetailType1Screen(
+                            survey: tests[index], isSenior: true));
+                      } else {
+                        // result Screen that survey
+                        Get.toNamed('/survey/result', arguments: {
+                          'survey': tests[index],
+                          'isSenior': true
+                        });
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      margin: const EdgeInsets.only(bottom: 12),
+                      decoration: BoxDecoration(
+                        color: tests[index].isCompleted
+                            ? const Color(0xFFF5F5F9)
+                            : const Color(0xFFFFFFFF),
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(
+                          color: tests[index].isCompleted
+                              ? const Color(0xFFF5F5F9)
+                              : const Color(0xFFE9E9EE),
+                          width: 1.0,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(
+                            tests[index].iconPath,
+                            width: 40,
+                            height: 40,
+                          ),
+                          const SizedBox(width: 12),
+                          Text(
+                            tests[index].title,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: tests[index].isCompleted
+                                  ? const Color(0xffC6C6CF)
+                                  : const Color(0xff151515),
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            tests[index].isCompleted ? '완료' : '미완료',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: tests[index].isCompleted
+                                  ? const Color(0xffC6C6CF)
+                                  : const Color(0xff5588FD),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      tests[index].iconPath,
-                      width: 40,
-                      height: 40,
-                    ),
-                    const SizedBox(width: 12),
-                    Text(
-                      tests[index].title,
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: tests[index].isCompleted
-                            ? const Color(0xffC6C6CF)
-                            : const Color(0xff151515),
-                      ),
-                    ),
-                    const Spacer(),
-                    Text(
-                      tests[index].isCompleted ? '완료' : '미완료',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: tests[index].isCompleted
-                            ? const Color(0xffC6C6CF)
-                            : const Color(0xff5588FD),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-        const SizedBox(height: 16),
-      ],
-    );
+              const SizedBox(height: 16),
+            ],
+          );
+        });
   }
 }

@@ -1,11 +1,11 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -15,10 +15,11 @@ import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
-import 'package:yakal/screens/Login/KakaoLogin/screen.dart';
-import 'package:yakal/screens/Login/LoginEntry/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
+import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
+import 'package:yakal/screens/Medication/Prescription/screem.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
 import 'package:yakal/screens/Medication/ocrEnvelop/EnvelopAnalysis/screen.dart';
@@ -40,39 +41,27 @@ import 'package:yakal/screens/Survey/survey_result_screen.dart';
 import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
-// device 토큰 저장
-Future<void> sendDeviceToken(String deviceToken, bool isIos) async {
-  try {
-    Map<String, dynamic> requestBody = {
-      'device_token': deviceToken,
-      'is_ios': false
-    };
-
-    var dio = await authDioWithContext();
-    var response = await dio.put("/user/device", data: requestBody);
-
-    if (response.statusCode == 200) {
-      print('sendDeviceToken - Success');
-    } else {
-      print('sendDeviceToken - Failure: ${response.statusCode}');
-    }
-  } catch (error) {}
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
 
 void main() async {
-  await dotenv.load(fileName: "assets/config/.env");
+  HttpOverrides.global = MyHttpOverrides();
 
-  // await Firebase.initializeApp();
+  await dotenv.load(fileName: "assets/config/.env");
 
   // kakao sdk init
   KakaoSdk.init(nativeAppKey: '${dotenv.env['KAKAO_NATIVE_APP_KEY']}');
 
-  // String deviceToken = await getDeviceToken(); // fetch the device token
-  // bool isIos = Platform.isIOS; // check if the platform is iOS
-  // await sendDeviceToken(deviceToken, isIos); // send the device token
-
   // Setup splash
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   const storage = FlutterSecureStorage();
@@ -84,13 +73,58 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  // initializeNotification();
+  late String initialRoute = "/login";
+  final routeController = Get.put(LoginRouteController());
 
-  // final token = await FirebaseMessaging.instance.getToken();
-  // print("FCM TOKEN : $token ");
-  // locator init
-  initializeDateFormatting().then((value) =>
-      runApp(MyApp(initialRoute: accessToken != null ? '/' : '/login')));
+  if (accessToken != null) {
+    final dio = await authDioWithContext();
+
+    try {
+      final response = await dio.get("/users/check/register");
+
+      if (response.data["data"]["isRegistered"]
+              ["isOptionalAgreementAccepted"] ==
+          null) {
+        if (kDebugMode) {
+          print(
+              "🚨 [User Terms Agreement Is Not Finished] Redirect To Terms Page.");
+        }
+
+        routeController.goto(LoginRoute.terms);
+        initialRoute = "/login/process";
+      } else if (response.data["data"]["isRegistered"]["isIdentified"] ==
+          false) {
+        if (kDebugMode) {
+          print(
+              "🚨 [User Identification Is Not Finished] Redirect To Identification Entry Page.");
+        }
+
+        routeController.goto(LoginRoute.identifyEntry);
+        initialRoute = "/login/process";
+      } else {
+        if (kDebugMode) {
+          print("🎉 [User Do All Login Process] Redirect To Home Page.");
+        }
+
+        initialRoute = "/";
+      }
+    } catch (e) {
+      initialRoute = "/login";
+
+      if (kDebugMode) {
+        print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
+      }
+
+      storage.deleteAll();
+    }
+  } else {
+    if (kDebugMode) {
+      print("🚨 [Access Token Is Not Found] Redirect To Login Entry Page.");
+    }
+  }
+
+  initializeDateFormatting()
+      .then((value) => runApp(MyApp(initialRoute: initialRoute)));
 }
 
 class MyApp extends StatelessWidget {
@@ -106,10 +140,20 @@ class MyApp extends StatelessWidget {
     // 앱 실행
     return GetMaterialApp(
       title: '약 알',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('ko', 'KR'),
+        // include country code too
+      ],
       theme: ThemeData(
         fontFamily: 'Pretendard',
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
+
         // colorScheme:
         //   const ColorScheme(
         //     brightness: Brightness.light,
@@ -131,8 +175,7 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      // initialRoute: initialRoute,
-      initialRoute: "/pill/add/ocrEnvelop",
+      initialRoute: initialRoute,
       // 라우팅 설정
       getPages: [
         GetPage(
@@ -140,6 +183,7 @@ class MyApp extends StatelessWidget {
           page: () => const MyBottomNavigationBar(),
         ),
         GetPage(name: '/home', page: () => const HomeScreen()),
+        // 만약, 민감정보가 fasle이면 민감정보 동의 페이지로 true이면 profile 페이지로
         GetPage(name: '/profile', page: () => ProfileScreen()),
         GetPage(
           name: "/profile/boho",
@@ -159,16 +203,12 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: '/login',
-          page: () => const LoginEntryScreen(),
+          page: () => const SocialLoginScreen(),
           children: [
             GetPage(
               name: '/process',
               page: () => LoginProcess(),
               transition: Transition.noTransition,
-            ),
-            GetPage(
-              name: '/kakao',
-              page: () => const KakaoLoginScreen(),
             ),
             GetPage(
               name: '/identify/process',
@@ -239,6 +279,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/pill/add/final",
           page: () => AddMedicineScreen(),
+        ),
+        GetPage(
+          name: "/pill/add/prescription",
+          page: () => const PrescriptionScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],

@@ -14,7 +14,7 @@ class EnvelopAnalysisScreen extends StatefulWidget {
 }
 
 class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
-  final doseListViewModel = Get.put(DoseListViewModel());
+  final doseListViewModel = Get.put(AddDoseViewModel());
 
   @override
   void initState() {
