@@ -24,7 +24,7 @@ public class AdminController {
 
     @GetMapping("/medical-establishments")
     @Operation(summary = "의료기관 신청 목록 조회", description = "관리자가 의료기관 신청 목록을 조회한다")
-    public ResponseDto<?> readMedicalEstablishments(@RequestParam(value = "name") String name,
+    public ResponseDto<?> readMedicalEstablishments(@RequestParam(value = "name", required = false) String name,
                                                     @RequestParam(value = "sort") String sort,
                                                     @RequestParam(value = "order") String order,
                                                     @RequestParam(value = "num") Long num
@@ -47,7 +47,7 @@ public class AdminController {
 
     @GetMapping("/expert-certifications")
     @Operation(summary = "전문가 신청 목록 조회", description = "관리자가 전문가 신청 목록을 조회한다")
-    public ResponseDto<?> readExpertCertifications(@RequestParam("name") String name,
+    public ResponseDto<?> readExpertCertifications(@RequestParam(value = "name", required = false) String name,
                                                    @RequestParam("sort") String sort,
                                                    @RequestParam("order") String order,
                                                    @RequestParam("num") Long num) {
@@ -56,7 +56,7 @@ public class AdminController {
 
     @GetMapping("/expert-certifications/{expertCertificationId}")
     @Operation(summary = "전문가 신청 상세 조회", description = "관리자가 전문가 신청 상세 정보를 조회한다")
-    public ResponseDto<?> readExpertCertificationDetail(@RequestParam("expertCertificationId") Long expertCertificationId) {
+    public ResponseDto<?> readExpertCertificationDetail(@PathVariable("expertCertificationId") Long expertCertificationId) {
         return ResponseDto.ok(expertCertificationService.readExpertCertificationDetail(expertCertificationId));
     }
 

@@ -119,7 +119,7 @@ public class ExpertController {
     @Operation(summary = "환자 처방약 조회", description = "환자 모든 처방약 조회")
     public ResponseDto<DoseAllDto> readAllDoses(@UserId Long userId,
                                                 @PathVariable Long patientId,
-                                                @RequestParam("page") Long page) {
+                                                @RequestParam(value = "page") Long page) {
         return ResponseDto.ok(doseService.readAllDoses(userId, patientId, page));
     }
 

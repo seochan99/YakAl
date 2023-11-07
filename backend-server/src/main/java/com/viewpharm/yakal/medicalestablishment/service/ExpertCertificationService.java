@@ -95,7 +95,7 @@ public class ExpertCertificationService {
 
         Page<ExpertCertificationRepository.ExpertCertificationInfo> expertCertificationList;
 
-        if (name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             expertCertificationList = expertCertificationRepository.findExpertCertificationInfo(paging);
         } else {
             expertCertificationList = expertCertificationRepository.findExpertCertificationInfoByName(name, paging);
@@ -158,7 +158,7 @@ public class ExpertCertificationService {
 
     // 전문가 신청 승인/거부
     public Boolean updateExpertCertification(Long expertCertificationId, ExpertCertificationApproveDto approveDto) {
-        ExpertCertification ec = expertCertificationRepository.findById(expertCertificationId)
+        ExpertCertification ec = expertCertificationRepository.findExpertCertificationInfoById(expertCertificationId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT_CERTIFICATION));
 
         // 전문가 신청 승인/거부

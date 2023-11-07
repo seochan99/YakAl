@@ -20,34 +20,35 @@ public interface ExpertCertificationRepository extends JpaRepository<ExpertCerti
 
     Optional<ExpertCertification> findByUserAndIsProcessed(User user, Boolean isProcessed);
 
-    @Query(value = "SELECT distinctrow u.id as ID, u.name as NAME, u.job as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
+    @Query(value = "SELECT distinctrow ec.id as ID, u.name as NAME, u.role as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
             "From expert_certifications ec " +
             "inner join users u on u.id = ec.user_id " +
             "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
-            "where me.is_processed is null",
-            countQuery = "SELECT COUNT(distinctrow u.id, u.name, u.job, me.name, u.tel, ec.created_at) " +
+            "where ec.is_processed is null",
+            countQuery = "SELECT COUNT(distinctrow ec.id, u.name, u.role, me.name, u.tel, ec.created_at) " +
                     "From expert_certifications ec " +
                     "inner join users u on u.id = ec.user_id " +
                     "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
-                    "where me.is_processed is null,", nativeQuery = true)
+                    "where me.is_processed is null", nativeQuery = true)
+
     Page<ExpertCertificationInfo> findExpertCertificationInfo(Pageable pageable);
 
-    @Query(value = "SELECT distinctrow u.id as ID, u.name as NAME, u.job as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
+    @Query(value = "SELECT distinctrow ec.id as ID, u.name as NAME, u.role as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
             "From expert_certifications ec " +
             "inner join users u on u.id = ec.user_id " +
             "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
             "where u.name like %:name% " +
-            "and me.is_processed is null",
-            countQuery = "SELECT COUNT(distinctrow u.id, u.name, u.job, me.name, u.tel, ec.created_at) " +
+            "and ec.is_processed is null",
+            countQuery = "SELECT COUNT(distinctrow ec.id, u.name, u.role, me.name, u.tel, ec.created_at) " +
                     "From expert_certifications ec " +
                     "inner join users u on u.id = ec.user_id " +
                     "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
                     "where u.name like %:name% " +
-                    "and me.is_processed is null", nativeQuery = true)
+                    "and ec.is_processed is null", nativeQuery = true)
     Page<ExpertCertificationInfo> findExpertCertificationInfoByName(@Param("name") String name, Pageable pageable);
 
 
-    @Query("select ec from ExpertCertification ec join fetch ec.user where ec.id = :ecId")
+    @Query("select ec from ExpertCertification ec join fetch ec.user where ec.id = :ecId and ec.isProcessed is null")
     Optional<ExpertCertification> findExpertCertificationInfoById(@Param("ecId") Long ecId);
 
     interface ExpertCertificationInfo {

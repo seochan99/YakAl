@@ -83,21 +83,21 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     List<doseInfo> findTop5ByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId);
 
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt From doses d join dosenames dn on d.dosename_id  = dn.id " +
-            "join risk r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+            "join risks r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
             "where d.user_id = :userId AND d.is_deleted = false",
             countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at) From doses d join dosenames dn on d.dosename_id  = dn.id " +
-                    "join risk r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+                    "join risks r on d.risk_id = r.id AND r.properties = 1 " +
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt, r.score as Score From doses d " +
             "join dosenames dn on d.dosename_id  = dn.id " +
-            "join risk r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+            "join risks r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
             "where d.user_id = :userId AND d.is_deleted = false",
             countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at, r.score) From doses d " +
                     "join dosenames dn on d.dosename_id  = dn.id " +
-                    "join risk r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+                    "join risks r on d.risk_id = r.id AND r.properties = 0 " +
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<anticholinergicDoseInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
