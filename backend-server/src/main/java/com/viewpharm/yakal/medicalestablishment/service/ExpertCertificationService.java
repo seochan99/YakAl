@@ -146,7 +146,7 @@ public class ExpertCertificationService {
                 ec.getUser().getName(),
                 ec.getUser().getTel(),
                 ec.getCreatedDate(),
-                ec.getUser().getRole().toString(),
+                ec.getType().toString(),
                 ec.getLicenseImg(),
                 ec.getAffiliationImg());
     }
@@ -156,15 +156,17 @@ public class ExpertCertificationService {
         ExpertCertification ec = expertCertificationRepository.findExpertCertificationInfoById(expertCertificationId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT_CERTIFICATION));
 
-        // 전문가 신청 승인/거부
-        User expert = ec.getUser();
-        expert.updateDepartment(approveDto.getDepartment());
-        expert.setMedicalEstablishment(ec.getMedicalEstablishment());
-        userRepository.flush();
-
         // 등록 처리 완료
         ec.updateIsProcessed(approveDto.getIsApproval());
         expertCertificationRepository.flush();
+
+        if (approveDto.getIsApproval()) {
+            // 전문가 신청 승인/거부
+            User expert = ec.getUser();
+            expert.updateDepartment(approveDto.getDepartment());
+            expert.setMedicalEstablishment(ec.getMedicalEstablishment());
+            userRepository.flush();
+        }
 
         return Boolean.TRUE;
     }
