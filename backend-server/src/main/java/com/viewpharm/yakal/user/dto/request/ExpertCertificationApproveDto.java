@@ -5,6 +5,7 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 @Getter
@@ -14,8 +15,7 @@ public class ExpertCertificationApproveDto {
     @NotNull
     private Boolean isApproval;
 
-    @NotNull
-    @Min(1)
+    @NotNull @Size(min = 1)
     private String department;
 
     @Enumerated(EnumType.STRING)
