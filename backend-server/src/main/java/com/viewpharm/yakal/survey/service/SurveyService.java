@@ -219,4 +219,8 @@ public class SurveyService {
 
         return null;
     }
+
+    public List<Long> getSurveyRangesCnt(){
+        return surveyRepository.getSurveyRangesCnt();
+    }
 }

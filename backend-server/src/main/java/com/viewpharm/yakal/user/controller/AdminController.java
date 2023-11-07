@@ -8,6 +8,8 @@ import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmen
 import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
+import com.viewpharm.yakal.prescription.service.DoseService;
+import com.viewpharm.yakal.survey.service.SurveyService;
 import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,6 +20,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -30,6 +34,8 @@ public class AdminController {
     private final UserService userService;
     private final ExpertCertificationService expertCertificationService;
     private final MedicalEstablishmentService medicalEstablishmentService;
+    private final DoseService doseService;
+    private final SurveyService surveyService;
 
 
     @GetMapping("/medical/update")
@@ -104,5 +110,17 @@ public class AdminController {
     public ResponseDto<?> approveMedicalEstablishment(@RequestBody ExpertCertificationForResisterDto requestDto) {
         expertCertificationService.approveExpertCertification(requestDto);
         return ResponseDto.ok(null);
+    }
+
+    @GetMapping("doses/between")
+    @Operation(summary = "가장 많이 먹은 약 통계")
+    public ResponseDto<List<?>> getMostDoses(@RequestParam LocalDate startDate,@RequestParam LocalDate endDate){
+        return ResponseDto.ok(doseService.findDosesTop10(startDate,endDate));
+    }
+
+    @GetMapping("statistic/arms")
+    @Operation(summary = "arms")
+    public ResponseDto<List<Long>> getArmsRanges(){
+        return ResponseDto.ok(surveyService.getSurveyRangesCnt());
     }
 }
