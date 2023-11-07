@@ -45,14 +45,9 @@ public class ExpertCertificationService {
         MedicalEstablishment medicalEstablishment = medicalEstablishmentRepository.findByIdAndIsRegister(requestDto.getFacilityId(), true)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
-        expertCertificationRepository.findByUserAndIsProcessed(user, Boolean.TRUE)
+        expertCertificationRepository.findByUser(user)
                 .ifPresent(expertCertification -> {
                     throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATION);
-                });
-
-        expertCertificationRepository.findByUserAndMedicalEstablishmentAndIsProcessed(user, medicalEstablishment, Boolean.FALSE)
-                .ifPresent(expertCertification -> {
-                    throw new CommonException(ErrorCode.EXIST_EXPERT_CERTIFICATIONING);
                 });
 
         String licenseImg = imageUtil.uploadImage(imgFile);

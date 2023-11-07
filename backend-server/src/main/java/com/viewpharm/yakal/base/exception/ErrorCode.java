@@ -37,7 +37,7 @@ public enum ErrorCode {
     DUPLICATION_TITLE("4002", HttpStatus.BAD_REQUEST, "Duplication Title"),
     DUPLICATION_NAME("4003", HttpStatus.BAD_REQUEST, "Duplication Name"),
     EXIST_ENTITY_REQUEST("4004", HttpStatus.BAD_REQUEST, "Exist Entity Request"),
-    EXIST_EXPERT_CERTIFICATION("4005", HttpStatus.BAD_REQUEST, "이미 전문가 인증을 진행하였습니다."),
+    EXIST_EXPERT_CERTIFICATION("4005", HttpStatus.BAD_REQUEST, "이미 전문가 인증을 진행했거나 완료 하였습니다."),
     NOT_EXIST_ENTITY_REQUEST("4005", HttpStatus.BAD_REQUEST, "Not Exist Entity Request"),
     NOT_EXIST_PARAMETER("4006", HttpStatus.BAD_REQUEST, "Not Exist Parameter Request"),
     PAYMENT_FAIL("4007", HttpStatus.BAD_REQUEST, "InValid Payment Information Request"),
