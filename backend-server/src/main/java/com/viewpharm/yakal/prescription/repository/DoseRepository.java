@@ -109,6 +109,13 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
+    @Query(value = "select dose_name as name,dosename_id as kdCode, count(*) as cnt " +
+            "from doses join dosenames d on doses.dosename_id = d.id " +
+            "where doses.date >= :start and doses.date <= :end " +
+            "group by dosename_id order by cnt desc limit 10"
+            ,nativeQuery = true)
+    List<mostDoseInfo> findDosesTop10(LocalDate start,LocalDate end);
+
     interface doseAntiInfo {
         String getDoseName();
 
@@ -152,5 +159,11 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
         Timestamp getPrescribedAt();
 
         Integer getScore();
+    }
+
+    interface mostDoseInfo{
+        String getName();
+        String getkdCode();
+        Long getCnt();
     }
 }

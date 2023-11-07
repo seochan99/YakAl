@@ -538,4 +538,8 @@ public class DoseService {
                 .pageInfo(pageInfo)
                 .build();
     }
+
+    public List<DoseRepository.mostDoseInfo> findDosesTop10(LocalDate start,LocalDate end){
+        return doseRepository.findDosesTop10(start,end);
+    }
 }
