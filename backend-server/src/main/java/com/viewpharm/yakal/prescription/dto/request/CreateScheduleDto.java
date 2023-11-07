@@ -13,8 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 public class CreateScheduleDto {
 
-    @Min(1)
-    @NotNull
     private Long prescriptionId;
 
     @Valid

@@ -343,7 +343,7 @@ public class DoseService {
         }
     }
 
-    public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto, String inputName) {
+    public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
@@ -355,8 +355,7 @@ public class DoseService {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
 
-            DoseName doseName = (KDCode != null && ATCCode != null) ? doseNameRepository.findById(KDCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSENAME))
-                    : doseNameRepository.findByDoseNameSimilar(inputName).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+            DoseName doseName = doseNameRepository.findById(KDCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
             Risk risk = riskRepository.findById(ATCCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_RISK));
 
             for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
@@ -375,9 +374,9 @@ public class DoseService {
                     isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistDefaultTrue(userId, doseName, oneScheduleDto.getDate());
                 }
                 isInserted.add(!isOverlapped);
-                log.info("create!");
+
                 if (!isOverlapped) {
-                    log.info(doseName.getDoseName());
+
                     final Dose dose = Dose.builder()
                             .KDCode(doseName)
                             .ATCCode(risk)
