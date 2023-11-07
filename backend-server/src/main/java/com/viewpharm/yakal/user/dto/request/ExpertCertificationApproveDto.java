@@ -15,7 +15,7 @@ public class ExpertCertificationApproveDto {
     @NotNull
     private Boolean isApproval;
 
-    @NotNull @Size(min = 1)
+    @NotNull
     private String department;
 
     @Enumerated(EnumType.STRING)
