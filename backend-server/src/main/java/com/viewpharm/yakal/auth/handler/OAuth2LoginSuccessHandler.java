@@ -62,7 +62,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         if (user.getRole() != ERole.ADMIN) {
             response.sendRedirect(FRONTEND_HOST + "/login/social");
         } else {
-            response.sendRedirect(FRONTEND_HOST + "/admin/social");
+            response.sendRedirect(FRONTEND_HOST + "/admin");
         }
     }
 }
