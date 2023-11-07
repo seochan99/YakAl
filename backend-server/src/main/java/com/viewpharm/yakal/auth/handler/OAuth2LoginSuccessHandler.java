@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
@@ -27,6 +28,8 @@ import java.io.IOException;
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
     private final JwtProvider jwtProvider;
     private final UserRepository userRepository;
+    @Value("${server.https-address}")
+    private String httpsAddress;
 
     @Override
     @Transactional
@@ -43,7 +46,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         JwtTokenDto jwtTokenDto = jwtProvider.createTotalToken(user.getId(), user.getRole());
         userRepository.updateRefreshToken(user.getId(), jwtTokenDto.refreshToken());
 
-        final String FRONTEND_HOST = "https://yakal.dcs-hyungjoon.com"; // Front Server Host -> 배포 시 변경
+        final String FRONTEND_HOST = httpsAddress; // Front Server Host -> 배포 시 변경
 
         final Cookie refreshTokenSecureCookie = new Cookie("refreshToken", jwtTokenDto.refreshToken());
         refreshTokenSecureCookie.setPath("/");
