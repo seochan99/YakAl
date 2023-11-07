@@ -41,8 +41,8 @@ public class ExpertCertification {
     private String affiliationImg;
 
     // 처리 상태
-    @Column(name = "is_processed", nullable = false)
-    private Boolean isProcessed = Boolean.FALSE;
+    @Column(name = "is_processed", nullable = true)
+    private Boolean isProcessed = null;
 
     @Column(name = "created_at")
     private LocalDate createdDate;

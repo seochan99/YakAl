@@ -132,9 +132,20 @@ public class MedicalEstablishmentService {
         MedicalEstablishment me = medicalEstablishmentRepository.findById(medicalId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
-        return new MedicalEstablishmentDetailDto(me.getType().toString(), me.getChiefName(), me.getChiefTel(), me.getName()
-                , me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(),
-                me.getChiefLicenseImg(), me.getTel(), me.getClinicHours(), me.getFeatures(), me.getCreatedDate());
+        return new MedicalEstablishmentDetailDto(
+                me.getType().toString(),
+                me.getChiefName(),
+                me.getChiefTel(),
+                me.getName(),
+                me.getEstablishmentNumber(),
+                me.getZipCode(),
+                me.getAddress(),
+                me.getBusinessNumber(),
+                me.getChiefLicenseImg(),
+                me.getTel(),
+                me.getClinicHours(),
+                me.getFeatures(),
+                me.getCreatedDate());
     }
 
     // 의료 기관 신청 승인/거부
