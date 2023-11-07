@@ -8,6 +8,10 @@ import { TAdminFacilityList } from "@type/response/admin-facility-list.ts";
 import { TAdminExpertList } from "@type/response/admin-expert-list.ts";
 import { TExpertListSort } from "@store/admin-expert-list.ts";
 import { EExpertField } from "@type/enum/expert-field.ts";
+import { TAdminFacilityDetail } from "@type/response/facility-info.ts";
+import { TExpertDetail } from "@store/admin-expert-detail.ts";
+import { TDenyReq } from "@type/response/deny-req.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export const getFacilityRequestList = async <T = CommonResponse<TAdminFacilityList>>(
   nameQuery: string,
@@ -32,10 +36,16 @@ export const getFacilityRequestList = async <T = CommonResponse<TAdminFacilityLi
   }
 
   return await authAxios.get<T, AxiosResponse<T>>(
-    `/admin/medical/register/request?name=${nameQuery}&sort=${sortCrit}&order=${
+    `/admins/medical-establishments?name=${nameQuery}&sort=${sortCrit}&order=${
       sortBy.order === EOrder.DESC ? "desc" : "asc"
     }&num=${pageNum}`,
   );
+};
+
+export const getFacilityInfo = async <T = CommonResponse<TAdminFacilityDetail>>(
+  medicalEstablishmentID: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/admins/medical-establishments/${medicalEstablishmentID}`);
 };
 
 export const getExpertRequestList = async <T = CommonResponse<TAdminExpertList>>(
@@ -58,8 +68,30 @@ export const getExpertRequestList = async <T = CommonResponse<TAdminExpertList>>
   }
 
   return await authAxios.get<T, AxiosResponse<T>>(
-    `/admin/expert/register/request?name=${nameQuery}&sort=${sortCrit}&order=${
+    `/admins/expert-certifications?name=${nameQuery}&sort=${sortCrit}&order=${
       sortBy.order === EOrder.DESC ? "desc" : "asc"
     }&num=${pageNum}`,
+  );
+};
+
+export const getExpertInfo = async <T = CommonResponse<TExpertDetail>>(
+  expertCertificationID: number,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.get<T, AxiosResponse<T>>(`/admins/expert-certifications/${expertCertificationID}`);
+};
+
+export const denyExpert = async <T = CommonResponse<null>>(
+  expertCertificationID: number,
+  isApproval: boolean,
+  department: string,
+  job: EJob,
+): Promise<AxiosResponse<T>> => {
+  return await authAxios.patch<T, AxiosResponse<T>, TDenyReq>(
+    `/admins/expert-certifications/${expertCertificationID}`,
+    {
+      isApproval,
+      department,
+      job,
+    },
   );
 };

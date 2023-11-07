@@ -1,6 +1,8 @@
 import { AdminExpertDetailViewModel } from "@components/admin-main/expert-detail/view.model.ts";
 import React, { useCallback, useEffect, useState } from "react";
-import { useLoaderData } from "react-router-dom";
+import { usePathId } from "@hooks/use-path-id.ts";
+import { denyExpert } from "@api/auth/admin.ts";
+import { EJob } from "@type/enum/job.ts";
 
 export const useAdminExpertDetailViewController = () => {
   AdminExpertDetailViewModel.use();
@@ -9,13 +11,13 @@ export const useAdminExpertDetailViewController = () => {
   const [rejectionDialogOpen, setRejectionDialogOpen] = useState<boolean>(false);
   const [rejectionReason, setRejectionReason] = useState<string>("");
 
-  const expertId = useLoaderData();
-
   const { getState, fetch } = AdminExpertDetailViewModel;
   const { expertDetail, isLoading } = getState();
 
+  const expertId = usePathId();
+
   useEffect(() => {
-    // fetch(expertId);
+    fetch(expertId);
   }, [expertId, fetch]);
 
   const openApprovalDialog = useCallback(() => {
@@ -36,13 +38,23 @@ export const useAdminExpertDetailViewController = () => {
   }, [setRejectionDialogOpen]);
 
   const onClickOkayOnApprovalDialog = useCallback(() => {
-    setApprovalDialogOpen(false);
-  }, [setApprovalDialogOpen]);
+    denyExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
+      setRejectionDialogOpen(false);
+      setRejectionReason("");
+    });
+  }, [expertId]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
-    setRejectionDialogOpen(false);
-    setRejectionReason("");
-  }, [setRejectionDialogOpen]);
+    denyExpert(
+      expertId,
+      false,
+      "",
+      expertDetail!.belongInfo.type === "HOSPITAL" ? EJob.DOCTOR : EJob.PHARMACIST,
+    ).finally(() => {
+      setRejectionDialogOpen(false);
+      setRejectionReason("");
+    });
+  }, [expertDetail, expertId]);
 
   const onChangeRejectionReason = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {

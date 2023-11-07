@@ -6,7 +6,6 @@ import {
   getGeneralSurvey,
   getGeriatricSyndromeSurvey,
   getLatestDoses,
-  getPatientBaseInfo,
   getProtectorInfo,
 } from "@api/auth/experts.ts";
 import { isAxiosError } from "axios";
@@ -207,9 +206,14 @@ export class PatientModel {
 
   public static fetchBase = async (patientId: number) => {
     try {
-      const response = await getPatientBaseInfo(patientId);
+      // const response = await getPatientBaseInfo(patientId);
 
-      this.patientInfo.base = response.data.data;
+      // this.patientInfo.base = response.data.data;
+      this.patientInfo.base = {
+        name: "홍길동",
+        birthday: [1998, 12, 15],
+        tel: "01088888888",
+      };
     } catch (error) {
       if (isAxiosError(error)) {
         this.patientInfo.base = {
@@ -225,12 +229,16 @@ export class PatientModel {
     try {
       const response = await getProtectorInfo(patientId);
 
-      this.patientInfo.protector = response.data.data;
+      this.patientInfo.protector = {
+        id: response.data.data.id,
+        name: response.data.data.name,
+        tel: response.data.data.tel,
+      };
     } catch (error) {
       if (isAxiosError(error)) {
         this.patientInfo.protector = {
           id: -1,
-          realName: "",
+          name: "",
           tel: "",
         };
       }

@@ -1,5 +1,5 @@
 export type TProtectorInfo = {
   id: number;
-  realName: string;
+  name: string;
   tel: string;
 };
