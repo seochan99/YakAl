@@ -10,12 +10,13 @@ import lombok.*;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateAdminRequestDto {
+public class ExpertCertificationApproveDto {
     @NotNull
-    private Boolean isAllow;
+    private Boolean isApproval;
 
+    @NotNull
     @Min(1)
-    private Long registrationId;
+    private String department;
 
     @Enumerated(EnumType.STRING)
     private EJob job;
