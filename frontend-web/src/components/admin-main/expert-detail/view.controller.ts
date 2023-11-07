@@ -10,7 +10,7 @@ export const useAdminExpertDetailViewController = () => {
 
   const [approvalDialogOpen, setApprovalDialogOpen] = useState<boolean>(false);
   const [rejectionDialogOpen, setRejectionDialogOpen] = useState<boolean>(false);
-  const [rejectionReason, setRejectionReason] = useState<string>("");
+  const [department, setDepartment] = useState<string>("");
 
   const { getState, fetch } = AdminExpertDetailViewModel;
   const { expertDetail, isLoading } = getState();
@@ -37,30 +37,30 @@ export const useAdminExpertDetailViewController = () => {
 
   const onCloseRejectionDialog = useCallback(() => {
     setRejectionDialogOpen(false);
-    setRejectionReason("");
+    setDepartment("");
   }, [setRejectionDialogOpen]);
 
   const onClickOkayOnApprovalDialog = useCallback(() => {
-    approveExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
+    approveExpert(expertId, true, department, EJob.DOCTOR).finally(() => {
       setRejectionDialogOpen(false);
-      setRejectionReason("");
+      setDepartment("");
       navigate("/admin");
     });
-  }, [expertId, navigate]);
+  }, [department, expertId, navigate]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
     approveExpert(expertId, false, "", expertDetail!.type as EJob).finally(() => {
       setRejectionDialogOpen(false);
-      setRejectionReason("");
+      setDepartment("");
       navigate("/admin");
     });
   }, [expertDetail, expertId, navigate]);
 
   const onChangeRejectionReason = useCallback(
-    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setRejectionReason(event.target.value);
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setDepartment(event.target.value);
     },
-    [setRejectionReason],
+    [setDepartment],
   );
 
   return {
@@ -74,7 +74,7 @@ export const useAdminExpertDetailViewController = () => {
     rejectionDialogOpen,
     onCloseRejectionDialog,
     onClickOkayOnRejectionDialog,
-    rejectionReason,
+    rejectionReason: department,
     onChangeRejectionReason,
   };
 };

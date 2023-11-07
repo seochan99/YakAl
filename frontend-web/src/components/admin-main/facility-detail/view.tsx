@@ -16,8 +16,6 @@ function AdminFacilityDetail() {
     rejectionDialogOpen,
     onCloseRejectionDialog,
     onClickOkayOnRejectionDialog,
-    rejectionReason,
-    onChangeRejectionReason,
   } = useAdminFacilityDetailViewController();
 
   if (isLoading || facilityDetail == null) {
@@ -127,16 +125,14 @@ function AdminFacilityDetail() {
         isOpen={approvalDialogOpen}
         onClose={onCloseApprovalDialog}
         onClickOkay={onClickOkayOnApprovalDialog}
-        hasReasonForm={false}
+        hasDepartment={false}
       />
       <ApprovalDialog
         title={"정말 본 기관 등록 신청을 거절하시겠습니까?"}
         isOpen={rejectionDialogOpen}
         onClose={onCloseRejectionDialog}
         onClickOkay={onClickOkayOnRejectionDialog}
-        hasReasonForm={true}
-        reason={rejectionReason}
-        onChangeReason={onChangeRejectionReason}
+        hasDepartment={false}
       />
     </S.OuterDiv>
   );

@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { logOnDev } from "@util/log-on-dev.ts";
 import { Cookies } from "react-cookie";
 import { authAxios } from "@api/auth/instance.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 export function useAfterSocialLoginViewController() {
   const navigate = useNavigate();
@@ -24,6 +25,6 @@ export function useAfterSocialLoginViewController() {
 
     cookies.remove("accessToken", { path: "/" });
 
-    navigate("/login/terms");
+    ExpertUserViewModel.fetch();
   }, [navigate]);
 }
