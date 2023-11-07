@@ -3,7 +3,7 @@ package com.viewpharm.yakal.user.service;
 import com.nimbusds.jose.shaded.gson.JsonObject;
 import com.nimbusds.jose.shaded.gson.JsonParser;
 import com.viewpharm.yakal.user.domain.User;
-import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
+import com.viewpharm.yakal.user.dto.request.ExpertCertificationApproveDto;
 import com.viewpharm.yakal.user.dto.request.UpdateNotificationTimeDto;
 import com.viewpharm.yakal.user.dto.request.UserDeviceRequestDto;
 import com.viewpharm.yakal.user.dto.response.ExpertListDto;
@@ -186,14 +186,6 @@ public class UserService {
         if (isUpdated == 0) {
             throw new CommonException(ErrorCode.NOT_FOUND_USER);
         }
-    }
-
-    public void updateIsCertified(final Long userId, final UpdateAdminRequestDto updateAdminRequestDto) {
-//        final Integer isUpdated = userRepository.updateIsCertified(userId, updateAdminRequestDto.getIsAllow(), updateAdminRequestDto.getJob());
-//
-//        if (isUpdated == 0) {
-//            throw new CommonException(ErrorCode.NOT_FOUND_USER);
-//        }
     }
 
     public Long countAnswer(final User user) {

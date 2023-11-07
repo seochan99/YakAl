@@ -19,7 +19,6 @@ import CertificationPage from "@components/main/certification/view.tsx";
 import RegistrationResultPage from "@components/main/registration-result/view.tsx";
 import CertificationResultPage from "@components/main/certification-result/view.tsx";
 import SocialLoginNotYetPage from "@components/login/social-login-not-yet/view.tsx";
-import AdminLogin from "@page/admin-login/view.tsx";
 import AdminMain from "@page/admin-main/view.tsx";
 import AdminExpertDetail from "@components/admin-main/expert-detail/view.tsx";
 import { loader as adminExpertDetailLoader } from "@components/admin-main/expert-detail/loader.ts";
@@ -77,15 +76,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AdminLogin />,
-      },
-      {
-        path: "/admin",
         element: <AdminMain />,
         errorElement: <NotFoundPage />,
         children: [
           {
-            path: "main",
+            path: "",
             element: <AdminApprovalList />,
           },
           {

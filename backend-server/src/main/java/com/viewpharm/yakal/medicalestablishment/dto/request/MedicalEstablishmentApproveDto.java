@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MedicalEstablishmentForResisterDto {
-    private Long id;
+public class MedicalEstablishmentApproveDto {
     private Boolean isApproval;
 }

@@ -23,23 +23,27 @@ public interface ExpertCertificationRepository extends JpaRepository<ExpertCerti
     @Query(value = "SELECT distinctrow u.id as ID, u.name as NAME, u.job as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
             "From expert_certifications ec " +
             "inner join users u on u.id = ec.user_id " +
-            "inner join medical_establishments me on me.id = ec.medical_establishment_id",
+            "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
+            "where me.is_processed is null",
             countQuery = "SELECT COUNT(distinctrow u.id, u.name, u.job, me.name, u.tel, ec.created_at) " +
                     "From expert_certifications ec " +
                     "inner join users u on u.id = ec.user_id " +
-                    "inner join medical_establishments me on me.id = ec.medical_establishment_id", nativeQuery = true)
+                    "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
+                    "where me.is_processed is null,", nativeQuery = true)
     Page<ExpertCertificationInfo> findExpertCertificationInfo(Pageable pageable);
 
     @Query(value = "SELECT distinctrow u.id as ID, u.name as NAME, u.job as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
             "From expert_certifications ec " +
             "inner join users u on u.id = ec.user_id " +
             "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
-            "where u.name like %:name%",
+            "where u.name like %:name% " +
+            "and me.is_processed is null",
             countQuery = "SELECT COUNT(distinctrow u.id, u.name, u.job, me.name, u.tel, ec.created_at) " +
                     "From expert_certifications ec " +
                     "inner join users u on u.id = ec.user_id " +
                     "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
-                    "where u.name like %:name%", nativeQuery = true)
+                    "where u.name like %:name% " +
+                    "and me.is_processed is null", nativeQuery = true)
     Page<ExpertCertificationInfo> findExpertCertificationInfoByName(@Param("name") String name, Pageable pageable);
 
 

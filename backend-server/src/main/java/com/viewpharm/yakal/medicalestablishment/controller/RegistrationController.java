@@ -21,7 +21,7 @@ public class RegistrationController {
     private final ExpertCertificationService expertCertificationService;
 
     @PostMapping(value = "/medical-establishments", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    @Operation(summary = "의료기관 등록", description = "의료기관 등록")
+    @Operation(summary = "의료 기관 등록", description = "의료기관 등록")
     public ResponseDto<?> createMedicalEstablishment(@RequestPart(value = "message") MedicalEstablishmentDto requestDto,
                                                      @RequestPart(value = "file") MultipartFile imgFile) {
         return ResponseDto.ok(medicalEstablishmentService.createMedicalEstablishment(requestDto, imgFile));
