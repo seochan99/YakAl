@@ -35,7 +35,7 @@ public interface AnswerRepository extends JpaRepository<Answer, Long> {
             "GROUP BY ScoreRange", nativeQuery = true)
     List<RangeInfo> getSurveyRangesCnt();
 
-    interface RangeInfo{
+    interface RangeInfo {
         String getScoreRange();
 
         Long getCountScore();
