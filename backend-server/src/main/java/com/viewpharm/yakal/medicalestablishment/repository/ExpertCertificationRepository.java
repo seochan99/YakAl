@@ -29,7 +29,8 @@ public interface ExpertCertificationRepository extends JpaRepository<ExpertCerti
                     "From expert_certifications ec " +
                     "inner join users u on u.id = ec.user_id " +
                     "inner join medical_establishments me on me.id = ec.medical_establishment_id " +
-                    "where ec.is_processed is null", nativeQuery = true)
+                    "where me.is_processed is null", nativeQuery = true)
+
     Page<ExpertCertificationInfo> findExpertCertificationInfo(Pageable pageable);
 
     @Query(value = "SELECT distinctrow ec.id as ID, u.name as NAME, u.role as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
