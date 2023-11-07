@@ -5,11 +5,16 @@ import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishment
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
 import com.viewpharm.yakal.user.dto.request.ExpertCertificationApproveDto;
+import com.viewpharm.yakal.prescription.service.DoseService;
+import com.viewpharm.yakal.survey.service.SurveyService;
+import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
+import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -19,8 +24,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/api/v1/admins")
 @Tag(name = "Admin", description = "관리자 전용 페이지 관련 API 제공")
 public class AdminController {
+    private final UserService userService;
     private final ExpertCertificationService expertCertificationService;
     private final MedicalEstablishmentService medicalEstablishmentService;
+    private final DoseService doseService;
+    private final SurveyService surveyService;
 
     @GetMapping("/medical-establishments")
     @Operation(summary = "의료기관 신청 목록 조회", description = "관리자가 의료기관 신청 목록을 조회한다")
@@ -65,5 +73,17 @@ public class AdminController {
     public ResponseDto<?> approveExpertCertification(@PathVariable Long expertCertificationId,
                                                      @RequestBody @Valid ExpertCertificationApproveDto approveDto) {
         return ResponseDto.ok(expertCertificationService.updateExpertCertification(expertCertificationId, approveDto));
+    }
+
+    @GetMapping("doses/between")
+    @Operation(summary = "가장 많이 먹은 약 통계")
+    public ResponseDto<List<?>> getMostDoses(@RequestParam LocalDate startDate,@RequestParam LocalDate endDate){
+        return ResponseDto.ok(doseService.findDosesTop10(startDate,endDate));
+    }
+
+    @GetMapping("statistic/arms")
+    @Operation(summary = "arms")
+    public ResponseDto<List<Long>> getArmsRanges(){
+        return ResponseDto.ok(surveyService.getSurveyRangesCnt());
     }
 }

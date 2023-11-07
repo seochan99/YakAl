@@ -215,4 +215,8 @@ public class SurveyService {
 
         return answerMap;
     }
+
+    public List<Long> getSurveyRangesCnt(){
+        return surveyRepository.getSurveyRangesCnt();
+    }
 }
