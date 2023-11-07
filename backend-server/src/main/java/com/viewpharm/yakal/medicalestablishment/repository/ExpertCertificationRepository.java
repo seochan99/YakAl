@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface ExpertCertificationRepository extends JpaRepository<ExpertCertification, Long> {
     Optional<ExpertCertification> findByUserAndMedicalEstablishmentAndIsProcessed(User user, MedicalEstablishment medicalEstablishment, Boolean isProcessed);
 
-    Optional<ExpertCertification> findByUserAndIsProcessed(User user, Boolean isProcessed);
+    Optional<ExpertCertification> findByUser(User user);
 
     @Query(value = "SELECT distinctrow ec.id as ID, u.name as NAME, u.role as JOB, me.name as MEDICALNAME, u.tel as TEL, ec.created_at as DATE " +
             "From expert_certifications ec " +
