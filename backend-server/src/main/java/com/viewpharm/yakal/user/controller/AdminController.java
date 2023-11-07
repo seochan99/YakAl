@@ -7,16 +7,12 @@ import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentServ
 import com.viewpharm.yakal.user.dto.request.ExpertCertificationApproveDto;
 import com.viewpharm.yakal.prescription.service.DoseService;
 import com.viewpharm.yakal.survey.service.SurveyService;
-import com.viewpharm.yakal.user.dto.request.UpdateAdminRequestDto;
 import com.viewpharm.yakal.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
