@@ -90,15 +90,19 @@ function AdminFacilityDetail() {
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 연락처"}</S.NameSpan>
-              <S.NormalSpan>{tel ?? "기관 연락처 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>{tel === null || tel === "" ? "기관 연락처 정보가 없습니다." : tel}</S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"운영 시간"}</S.NameSpan>
-              <S.NormalSpan>{clinicHours ?? "운영 시간 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {clinicHours === null || clinicHours === "" ? "운영 시간 정보가 없습니다." : clinicHours}
+              </S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 특징"}</S.NameSpan>
-              <S.NormalSpan>{features ?? "기관 특징 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {features === null || features === "" ? "기관 특징 정보가 없습니다." : features}
+              </S.NormalSpan>
             </S.OneItemSpan>
           </S.BelongInnerDiv>
         </S.BelongInfoDiv>

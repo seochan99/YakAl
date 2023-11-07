@@ -1,13 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import * as S from "./style.ts";
-
-import { authAxios } from "@/api/auth/instance.ts";
-
 import { Chart, registerables } from "chart.js";
+
 Chart.register(...registerables);
 
 function AdminComplianceList() {
-  const [complianceList, setComplianceList] = useState<Number[]>([]);
+  const [complianceList, setComplianceList] = useState<number[]>([]);
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const labelData = ["0~20", "21~40", "41~60", "61~80", "81~100"];
@@ -23,7 +21,7 @@ function AdminComplianceList() {
       //   }
 
       // 더미데이터
-      const dummyData: Number[] = [40, 10, 30, 20, 50];
+      const dummyData: number[] = [40, 10, 30, 20, 50];
 
       setComplianceList(dummyData);
     } catch (e) {
