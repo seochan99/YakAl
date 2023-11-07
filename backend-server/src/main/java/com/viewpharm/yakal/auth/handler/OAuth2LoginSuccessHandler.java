@@ -5,6 +5,7 @@ import com.viewpharm.yakal.auth.info.factory.OAuth2UserInfoFactory;
 import com.viewpharm.yakal.auth.dto.response.JwtTokenDto;
 import com.viewpharm.yakal.auth.util.JwtProvider;
 import com.viewpharm.yakal.base.type.ELoginProvider;
+import com.viewpharm.yakal.base.type.ERole;
 import com.viewpharm.yakal.user.domain.User;
 import com.viewpharm.yakal.user.repository.UserRepository;
 import jakarta.servlet.http.Cookie;
@@ -21,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
@@ -37,7 +37,6 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         OidcUser oidcUser = (OidcUser) authentication.getPrincipal();
         OAuth2UserInfo userInfo = OAuth2UserInfoFactory.getOAuth2UserInfo(provider, oidcUser.getAttributes());
 
-        log.info("OAuth2User: {}", userInfo.getId());
         User user = userRepository.findBySocialIdAndLoginProvider(userInfo.getId(), provider)
                 .orElseThrow(IllegalArgumentException::new);
 
@@ -58,6 +57,12 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         response.addCookie(refreshTokenSecureCookie);
         response.addCookie(accessTokenCookie);
 
-        response.sendRedirect(FRONTEND_HOST + "/login/social");
+        // 전문가면 /login/social로 redirect
+        // 관리자면 /admin/social으로 redirect
+        if (user.getRole() != ERole.ADMIN) {
+            response.sendRedirect(FRONTEND_HOST + "/login/social");
+        } else {
+            response.sendRedirect(FRONTEND_HOST + "/admin");
+        }
     }
 }

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode, InternalAxiosRequestConfig } from "axios";
 import { logOnDev } from "@util/log-on-dev.ts";
 import { redirect } from "react-router-dom";
-import { reissueToken } from "@api/noauth/auth/api.ts";
+import { reissueToken } from "@api/noauth/auth.ts";
 
 export const authAxios = axios.create({
   baseURL: import.meta.env.VITE_SERVER_HOST,
@@ -43,7 +43,7 @@ authAxios.interceptors.response.use(
 
       const originalRequest = error.config as InternalAxiosRequestConfig;
 
-      if (error.response.status === HttpStatusCode.Forbidden || error.response.status === HttpStatusCode.Unauthorized) {
+      if (error.response.status === HttpStatusCode.Unauthorized) {
         /* Reissue Token */
         logOnDev(`♻️ [${method?.toUpperCase()}] ${url}`);
 

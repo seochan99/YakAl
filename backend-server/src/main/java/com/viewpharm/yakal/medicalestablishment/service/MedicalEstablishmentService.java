@@ -7,14 +7,10 @@ import com.viewpharm.yakal.base.exception.CommonException;
 import com.viewpharm.yakal.base.exception.ErrorCode;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentDto;
-import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentForResisterDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentAllDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentDetailDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListDto;
-import com.viewpharm.yakal.medicalestablishment.dto.response.MedicalEstablishmentListForAdminDto;
+import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentApproveDto;
+import com.viewpharm.yakal.medicalestablishment.dto.response.*;
 import com.viewpharm.yakal.medicalestablishment.repository.MedicalEstablishmentRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 @RequiredArgsConstructor
 public class MedicalEstablishmentService {
@@ -71,7 +66,8 @@ public class MedicalEstablishmentService {
         return Map.of("pageInfo", pageInfo, "dataList", list);
     }
 
-    public MedicalEstablishmentAllDto getMedicalEstablishments(String name, String sorting, String ordering, Long pageIndex) {
+    // 의료 기관 신청 목록 조회
+    public MedicalEstablishmentAllDto readProposalMedicalEstablishments(String name, String sorting, String ordering, Long pageIndex) {
         Sort.Direction order;
 
         if (ordering.equals("desc")) {
@@ -107,7 +103,7 @@ public class MedicalEstablishmentService {
 
         Page<MedicalEstablishmentRepository.MedicalEstablishmentInfo> medicalEstablishmentList;
 
-        if (name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             medicalEstablishmentList = medicalEstablishmentRepository.findMedicalEstablishmentInfo(paging);
         } else {
             medicalEstablishmentList = medicalEstablishmentRepository.findMedicalEstablishmentInfoByName(name, paging);
@@ -131,21 +127,36 @@ public class MedicalEstablishmentService {
                 .build();
     }
 
-    public MedicalEstablishmentDetailDto getMedicalEstablishmentDetail(Long medicalId) {
-        MedicalEstablishment me = medicalEstablishmentRepository.findById(medicalId)
+    // 의료 기관 신청 상세 조회
+    public MedicalEstablishmentDetailDto readMedicalEstablishmentDetail(Long medicalId) {
+        MedicalEstablishment me = medicalEstablishmentRepository.findMEByIdAndIsRegister(medicalId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
 
-        return new MedicalEstablishmentDetailDto(me.getType().toString(), me.getChiefName(), me.getChiefTel(), me.getName()
-                , me.getEstablishmentNumber(), me.getZipCode(), me.getAddress(), me.getBusinessNumber(),
-                me.getChiefLicenseImg(), me.getTel(), me.getClinicHours(), me.getFeatures(), me.getCreatedDate());
+        return new MedicalEstablishmentDetailDto(
+                me.getType().toString(),
+                me.getChiefName(),
+                me.getChiefTel(),
+                me.getName(),
+                me.getEstablishmentNumber(),
+                me.getZipCode(),
+                me.getAddress(),
+                me.getBusinessNumber(),
+                me.getChiefLicenseImg(),
+                me.getTel(),
+                me.getClinicHours(),
+                me.getFeatures(),
+                me.getCreatedDate());
     }
 
-    public Boolean approveMedicalEstablishment(MedicalEstablishmentForResisterDto request) {
-        MedicalEstablishment me = medicalEstablishmentRepository.findById(request.getId())
+    // 의료 기관 신청 승인/거부
+    public Boolean approveMedicalEstablishment(Long medicalEstablishmentId, MedicalEstablishmentApproveDto approveDto) {
+        MedicalEstablishment me = medicalEstablishmentRepository.findMEByIdAndIsRegister(medicalEstablishmentId)
                 .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_ESTABLISHMENT));
+
         //등록 승인
-        me.updateIsRegister(request.getIsApproval());
+        me.updateIsRegister(approveDto.getIsApproval());
         medicalEstablishmentRepository.flush();
+
         return Boolean.TRUE;
     }
 }

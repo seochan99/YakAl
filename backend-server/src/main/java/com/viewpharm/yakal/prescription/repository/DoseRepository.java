@@ -61,7 +61,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             "case when d.isEveningTaken = true then 1 else 0 end + " +
             "case when d.isDefaultTaken = true then 1 else 0 end) as take, d.date as date " +
             "from Dose d where d.user.id = :userId and d.date between :start and :end group by d.date")
-    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(Long userId, LocalDate start, LocalDate end);
+    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(@Param("userId")Long userId, @Param("start")LocalDate start, @Param("end")LocalDate end);
 
     @Modifying(clearAutomatically = true)
     @Query("update Dose d set d.pillCnt = :pillCnt, d.isHalf = :isHalf where d.id = :doseId")
@@ -83,21 +83,21 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     List<doseInfo> findTop5ByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId);
 
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt From doses d join dosenames dn on d.dosename_id  = dn.id " +
-            "join risk r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+            "join risks r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
             "where d.user_id = :userId AND d.is_deleted = false",
             countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at) From doses d join dosenames dn on d.dosename_id  = dn.id " +
-                    "join risk r on d.risk_id = r.id AND (r.properties = 1 OR r.properties = 2) " +
+                    "join risks r on d.risk_id = r.id AND r.properties = 1 " +
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedAndIsBeersOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
     @Query(value = "SELECT distinctrow dn.dose_name as Name, d.created_at as PrescribedAt, r.score as Score From doses d " +
             "join dosenames dn on d.dosename_id  = dn.id " +
-            "join risk r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+            "join risks r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
             "where d.user_id = :userId AND d.is_deleted = false",
             countQuery = "SELECT count(distinctrow dn.dose_name, d.created_at, r.score) From doses d " +
                     "join dosenames dn on d.dosename_id  = dn.id " +
-                    "join risk r on d.risk_id = r.id AND (r.properties = 0 OR r.properties = 2) " +
+                    "join risks r on d.risk_id = r.id AND r.properties = 0 " +
                     "where d.user_id = :userId AND d.is_deleted = false",
             nativeQuery = true)
     Page<anticholinergicDoseInfo> findByUserAndIsDeletedAndIsAnticholinergicOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);

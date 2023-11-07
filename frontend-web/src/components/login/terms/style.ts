@@ -40,7 +40,7 @@ export const TermsContentDiv = styled.div`
 export const Bar = styled.hr`
   border: 0;
   height: 1px;
-  background: var(--color-surface-900);
+  background: var(--Gray2, #e9e9ee);
   margin: 1.5rem 0;
 `;
 
@@ -72,7 +72,7 @@ export const NextButton = styled.button`
   & {
     border-radius: 0.5rem;
     border: 0;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-size: 1.25rem;
     font-weight: 600;

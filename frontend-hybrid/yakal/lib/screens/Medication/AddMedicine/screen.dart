@@ -9,7 +9,6 @@ import 'package:yakal/utilities/enum/add_schedule_result.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
-import 'package:yakal/widgets/Base/customized_back_app_bar.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
@@ -17,7 +16,7 @@ import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
 class AddMedicineScreen extends StatefulWidget {
-  final doseListViewModel = Get.find<DoseListViewModel>();
+  final doseListViewModel = Get.find<AddDoseViewModel>();
   final doseAddCalendarController = Get.put(DoseAddCalenderController());
 
   AddMedicineScreen({super.key});
@@ -28,7 +27,7 @@ class AddMedicineScreen extends StatefulWidget {
 
 class _AddMedicineScreenState extends State<AddMedicineScreen> {
   bool _isModificationMode = false;
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   void _switchMode() {
     setState(() {
@@ -124,10 +123,10 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                                       borderRadius: BorderRadius.circular(8.0),
                                       color: ColorStyles.gray2,
                                     ),
-                                    child: notAddableItem.base64Image != null
+                                    child: notAddableItem.base64Image != ""
                                         ? Image.memory(
                                             base64Decode(
-                                              notAddableItem.base64Image!,
+                                              notAddableItem.base64Image,
                                             ),
                                             fit: BoxFit.cover,
                                           )
@@ -200,10 +199,10 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                               color: ColorStyles.gray2,
                             ),
-                            child: oneMedicine.base64Image != null
+                            child: oneMedicine.base64Image != ""
                                 ? Image.memory(
                                     base64Decode(
-                                      oneMedicine.base64Image!,
+                                      oneMedicine.base64Image,
                                     ),
                                     fit: BoxFit.cover,
                                   )
@@ -321,22 +320,6 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
         height: 24,
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    List<Future<void>> futures = [
-      widget.doseListViewModel.getImages(),
-      widget.doseListViewModel.getCode(),
-    ];
-
-    Future.wait(futures).then((value) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
   }
 
   @override

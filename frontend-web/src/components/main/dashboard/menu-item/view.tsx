@@ -1,8 +1,8 @@
 import { TMenuInfo } from "../view.tsx";
 import {
-  CoomingSoonDescription,
+  ComingSoonDescription,
+  ComingSoonTitle,
   CoomingSoonIcon,
-  CoomingSoonTitle,
   Description,
   ImgBox,
   NonLinkOuter,
@@ -21,8 +21,8 @@ function DashboardMenuItem({ menuInfo }: TDashboardMenuItemProps) {
         <ImgBox>
           <CoomingSoonIcon />
         </ImgBox>
-        <CoomingSoonTitle>{menuInfo.title}</CoomingSoonTitle>
-        <CoomingSoonDescription>{menuInfo.description}</CoomingSoonDescription>
+        <ComingSoonTitle>{menuInfo.title}</ComingSoonTitle>
+        <ComingSoonDescription>{menuInfo.description}</ComingSoonDescription>
       </NonLinkOuter>
     );
   }

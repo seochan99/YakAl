@@ -3,7 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:yakal/models/Medication/dose_name_code_model.dart';
 
 class EnvelopAnalysisProvider {
-  Future<List<DoseNameCodeModel>> getTextFromImage(String imagePath) async {
+  Future<List<DoseNameCodeModel>> getDoseInfoFromImage(String imagePath) async {
     var dio = Dio();
 
     var formData = FormData.fromMap(
@@ -24,9 +24,13 @@ class EnvelopAnalysisProvider {
         ),
       );
 
-      return response.data;
-    } on DioException catch (error) {
-      return [];
+      final doseMapList = response.data["data"] as List<dynamic>;
+
+      return doseMapList
+          .map((doseItem) => DoseNameCodeModel.fromJson(doseItem))
+          .toList();
+    } on DioException catch (_) {
+      return <DoseNameCodeModel>[];
     }
   }
 }

@@ -19,19 +19,19 @@ import org.springframework.web.bind.annotation.*;
 public class SurveyController {
     private final SurveyService surveyService;
 
-    @PostMapping("/{surveyId}/answer")
+    @PostMapping("/{surveyId}/answers")
     @Operation(summary = "설문 작성", description = "설문 작성")
     public ResponseDto<?> createAnswer(@UserId Long id, @PathVariable Long surveyId, @RequestBody @Valid AnswerRequestDto requestDto) {
         return ResponseDto.ok(surveyService.createAnswer(id, surveyId, requestDto));
     }
 
-    @GetMapping("/answer")
+    @GetMapping("/answers")
     @Operation(summary = "설문 목록 가져오기", description = "설문 목록 가져오기")
     public ResponseDto<?> readAnswer(@UserId Long userId) {
         return ResponseDto.ok(surveyService.readAnswers(userId));
     }
 
-    @DeleteMapping("/{surveyId}/answer")
+    @DeleteMapping("/{surveyId}/answers")
     @Operation(summary = "설문 삭제", description = "특정 설문 삭제")
     public ResponseDto<?> deleteAnswer(@UserId Long id, @PathVariable Long surveyId) {
         return ResponseDto.ok(surveyService.deleteAnswer(id, surveyId));

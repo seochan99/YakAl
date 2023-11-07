@@ -1,6 +1,6 @@
 import * as S from "./style.ts";
 import { useTermsPageViewController } from "@components/login/terms/view.controller.ts";
-import { ESnackbarType } from "@type/snackbar-type.ts";
+import { ESnackbarType } from "@type/enum/snackbar-type.ts";
 import YakalSnackbar from "@components/snackbar/view.tsx";
 
 function TermsPage() {
@@ -9,7 +9,7 @@ function TermsPage() {
   return (
     <S.OuterDiv>
       <S.TermsDiv>
-        <S.TermsHeader>약관을 확인해주세요</S.TermsHeader>
+        <S.TermsHeader>{"약관을 확인해주세요."}</S.TermsHeader>
         <S.TermsContentDiv>
           {`1. 개인정보의 수집 및 이용 동의서`}
           <br />
@@ -38,10 +38,10 @@ function TermsPage() {
         </S.TermsContentDiv>
         <S.Bar />
         <S.AgreementCheckInput type="checkbox" id="agreement" checked={isAgreed} onChange={onClickIsAgreed} />
-        <label htmlFor="agreement">개인정보 수집 및 이용 동의</label>
+        <label htmlFor="agreement">{"개인정보 수집 및 이용 동의"}</label>
       </S.TermsDiv>
       <S.NextButton className={isAgreed ? "is-agreed" : ""} disabled={!isAgreed} onClick={onClickNextButton}>
-        다음
+        {"다음"}
       </S.NextButton>
       <YakalSnackbar open={snackbarOpen} setOpen={setSnackbarOpen} type={ESnackbarType.TERMS_AGREEMENT_FAILED} />
     </S.OuterDiv>

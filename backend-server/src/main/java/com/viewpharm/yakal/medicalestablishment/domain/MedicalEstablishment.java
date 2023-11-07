@@ -64,8 +64,8 @@ public class MedicalEstablishment {
     @Column(name = "chief_license_img", nullable = false)
     private String chiefLicenseImg;
 
-    @Column(name = "is_register", nullable = false)
-    private Boolean isRegister = false;
+    @Column(name = "is_register", nullable = true)
+    private Boolean isRegister = null;
 
     @OneToMany(mappedBy = "medicalEstablishment", fetch = FetchType.LAZY)
     private List<User> users = new ArrayList<>();

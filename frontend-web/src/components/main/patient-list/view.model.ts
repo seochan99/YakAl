@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { PatientListModel } from "@store/patient-list.ts";
-import { EOrder } from "@type/order.ts";
-import { EPatientField } from "@type/patient-field.ts";
+import { EOrder } from "@type/enum/order.ts";
+import { EPatientField } from "@type/enum/patient-field.ts";
 
 export class PatientListViewModel {
   private static updater: boolean;

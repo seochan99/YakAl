@@ -23,36 +23,6 @@ export const StyledDialog = styled(Dialog)`
   }
 `;
 
-export const ReasonInput = styled.textarea`
-  & {
-    resize: none;
-    margin: 0;
-    padding: 0.8rem 1rem;
-    border-radius: 8px;
-    border: 2px solid var(--Gray2, #e9e9ee);
-    color: var(--Black, #151515);
-    font-family: SUIT, serif;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1.2rem;
-  }
-
-  &:focus {
-    outline: none;
-    border: 2px solid var(--Sub1, #5588fd);
-  }
-
-  &::placeholder {
-    color: var(--Gray3, #151515);
-    font-family: SUIT, serif;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 1rem;
-  }
-`;
-
 const BottomButtonCss = css`
   & {
     display: inline-flex;

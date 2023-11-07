@@ -5,7 +5,7 @@ export const OuterFooter = styled.footer`
   flex-direction: row;
   align-items: center;
   padding: 1rem 0;
-  background-color: var(--color-surface-900);
+  background-color: var(--Gray2, #e9e9ee);
 `;
 
 export const IconImg = styled.img`

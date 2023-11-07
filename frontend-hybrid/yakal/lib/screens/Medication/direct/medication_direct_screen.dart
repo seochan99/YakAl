@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
-import 'package:yakal/provider/Medicine/medication_direct_provider.dart';
+import 'package:yakal/provider/Medicine/add_medicine_provider.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
@@ -19,11 +19,11 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   String selectedMedicineCode = '';
   bool isLoading = false;
 
-  final _medicationDirectProvider = MedicationDirectProvider();
+  final _addMedicineProvider = AddMedicineProvider();
   final TextEditingController medicinController = TextEditingController();
   List<SearchMedicineModel> medicines = [];
   final BehaviorSubject<String> _searchSubject = BehaviorSubject<String>();
-  final doseListViewModel = Get.put(DoseListViewModel());
+  final doseListViewModel = Get.put(AddDoseViewModel());
 
   _MedicationAddScreenState() {
     _searchSubject
@@ -41,7 +41,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
     try {
       List<SearchMedicineModel> fetchedMedicines =
-          await _medicationDirectProvider.searchMedicine(keyword);
+          await _addMedicineProvider.searchMedicine(keyword);
       setState(() {
         medicines = fetchedMedicines;
         // 로딩 끝
@@ -70,12 +70,12 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
 
   void _handleButtonPress() {
     // 약 정보는 ViewModel을 통해 넘김
-    doseListViewModel.setGroupList([
-      {
-        "name": medicinController.text,
-        "code": selectedMedicineCode,
-      },
-    ]);
+    // doseListViewModel.setGroupList([
+    //   {
+    //     "name": medicinController.text,
+    //     "code": selectedMedicineCode,
+    //   },
+    // ]);
 
     Get.toNamed(
       "/pill/add/final",

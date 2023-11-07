@@ -146,7 +146,7 @@ export const DetailProfileBox = styled.div`
 export const Bar = styled.hr`
   border: 0;
   height: 0.125rem;
-  background: var(--color-surface-900);
+  background: vvar(--Gray2, #e9e9ee);
   margin: 0;
 `;
 
@@ -195,7 +195,7 @@ export const DetailJob = styled.span`
 `;
 
 export const Red = styled.span`
-  color: var(--red-500);
+  color: var(--Red, #fb5d5d);
 `;
 
 export const DetailBelong = styled.span`
@@ -241,7 +241,7 @@ export const AlertClearButton = styled.div`
     justify-content: center;
     align-items: center;
     border-radius: 0.5rem;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     color: #151515;
     font-family: Pretendard;
     font-size: 0.8rem;
@@ -293,7 +293,7 @@ export const AlertItem = styled.div`
     height: 1rem;
     width: 1rem;
     padding: 0.2rem;
-    background-color: var(--color-surface-900);
+    background-color: var(--Gray2, #e9e9ee);
     border-radius: 1rem;
   }
 `;

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
-import { EOrder } from "@type/order.ts";
+import { EOrder } from "@type/enum/order.ts";
 import { AdminExpertListViewModel } from "@components/admin-main/expert-list/view.model.ts";
-import { EExpertField } from "@type/expert-field.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
 
 export const useAdminExpertListViewController = () => {
   AdminExpertListViewModel.use();
 
   const { fetch, getStates, setPageNumber, setSortBy, setNameQuery } = AdminExpertListViewModel;
-  const { isLoading, expertList, paging, sorting } = getStates();
+  const { isLoading, expertList, paging, sorting, nameQuery } = getStates();
 
   const [sortingOptionOpen, setSortingOptionOpen] = useState<boolean>(false);
   const [nameQueryCache, setNameQueryCache] = useState<string>("");
@@ -37,16 +37,38 @@ export const useAdminExpertListViewController = () => {
   }, [sortingOptionOpen, setSortingOptionOpen]);
 
   const onSelectSortingOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    setSortBy(EOrder.DESC, e.currentTarget.value as EExpertField);
     setSortingOptionOpen(false);
+
+    const currentField = e.currentTarget.value as EExpertField;
+    if (sorting.field === currentField) {
+      if (sorting.order === EOrder.DESC) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    } else {
+      if (currentField === EExpertField.NAME || currentField === EExpertField.BELONG_NAME) {
+        setSortBy(EOrder.ASC, currentField);
+      } else {
+        setSortBy(EOrder.DESC, currentField);
+      }
+    }
   };
 
   const onChangePage = (pageNumber: number) => {
+    if (pageNumber === paging.pageNumber) {
+      return;
+    }
+
     setPageNumber(pageNumber);
   };
 
   const onSearchBarEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && event.nativeEvent.isComposing === false) {
+      if (nameQuery === nameQueryCache) {
+        return;
+      }
+
       setNameQuery(nameQueryCache);
     }
   };

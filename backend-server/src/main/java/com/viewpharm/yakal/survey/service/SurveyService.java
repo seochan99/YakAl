@@ -127,97 +127,93 @@ public class SurveyService {
     }
 
     public Map<String, Object> getAllSeniorAnswerListForExpert(Long expertId, Long patientId) {
-//        userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-//
-//        final User patient = userRepository.findById(patientId)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-//
-//        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), true);
-//
-//        final Map<String, Object> answerMap =  answers.stream()
-//                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
-//
-//        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
-//            switch (entry.getKey()) {
-//                case "mna" -> {
-//                    if (entry.getValue() == null) {
-//                        entry.setValue(Collections.emptyList());
-//                    } else {
-//                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
-//                    }
-//                }
-//                case "adl", "delirium" -> {
-//                    if (entry.getValue() == null) {
-//                        entry.setValue(Collections.emptyList());
-//                    } else {
-//                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
-//                    }
-//                }
-//                case "audiovisual" -> {
-//                    final Map<String, Boolean> audiovisualAnswerMap = new HashMap<>(2);
-//
-//                    if (entry.getValue() == null) {
-//                        audiovisualAnswerMap.put("useGlasses", null);
-//                        audiovisualAnswerMap.put("useHearingAid", null);
-//                    } else {
-//                        final List<Boolean> audiovisualAnswerList = surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue());
-//                        audiovisualAnswerMap.put("useGlasses", audiovisualAnswerList.get(0));
-//                        audiovisualAnswerMap.put("useHearingAid", audiovisualAnswerList.get(1));
-//                    }
-//
-//                    entry.setValue(audiovisualAnswerMap);
-//                }
-//            }
-//        }
-//
-//        final List<Fall> falls = fallRepository.findAllByUserOrderByDateDesc(patient);
-//
-//        final List<LocalDate> fallDateList = falls.stream()
-//                .map(f -> f.getDate().toLocalDate())
-//                .toList();
-//
-//        answerMap.put("fall", fallDateList);
-//
-//        return answerMap;
+        userRepository.findExpertById(expertId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        return null;
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), true);
+
+        final Map<String, Object> answerMap =  answers.stream()
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
+
+        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
+            switch (entry.getKey()) {
+                case "mna" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "adl", "delirium" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "audiovisual" -> {
+                    final Map<String, Boolean> audiovisualAnswerMap = new HashMap<>(2);
+
+                    if (entry.getValue() == null) {
+                        audiovisualAnswerMap.put("useGlasses", null);
+                        audiovisualAnswerMap.put("useHearingAid", null);
+                    } else {
+                        final List<Boolean> audiovisualAnswerList = surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue());
+                        audiovisualAnswerMap.put("useGlasses", audiovisualAnswerList.get(0));
+                        audiovisualAnswerMap.put("useHearingAid", audiovisualAnswerList.get(1));
+                    }
+
+                    entry.setValue(audiovisualAnswerMap);
+                }
+            }
+        }
+
+        final List<Fall> falls = fallRepository.findAllByUserOrderByDateDesc(patient);
+
+        final List<LocalDate> fallDateList = falls.stream()
+                .map(f -> f.getDate().toLocalDate())
+                .toList();
+
+        answerMap.put("fall", fallDateList);
+
+        return answerMap;
     }
 
     public Map<String, Object> getAllNotSeniorAnswerListForExpert(Long expertId, Long patientId) {
-//        userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-//
-//        final User patient = userRepository.findById(patientId)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-//
-//        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), false);
-//
-//        final Map<String, Object> answerMap =  answers.stream()
-//                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
-//
-//        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
-//            switch (entry.getKey()) {
-//                case "arms", "phqNine", "drinking", "dementia", "insomnia", "smoking" -> {
-//                    if (entry.getValue() == null) {
-//                        entry.setValue(Collections.emptyList());
-//                    } else {
-//                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
-//                    }
-//                }
-//                case "gds", "frailty", "osa" -> {
-//                    if (entry.getValue() == null) {
-//                        entry.setValue(Collections.emptyList());
-//                    } else {
-//                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
-//                    }
-//                }
-//            }
-//        }
-//
-//        return answerMap;
+        userRepository.findExpertById(expertId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
 
-        return null;
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
+
+        final List<AnswerRepository.answerInfo> answers = answerRepository.findSurveyByUserIdAndIsSenior(patient.getId(), false);
+
+        final Map<String, Object> answerMap =  answers.stream()
+                .collect(HashMap::new, (m1, m2) -> m1.put(m2.getMiniTitle(), m2.getContent()), HashMap::putAll);
+
+        for (Map.Entry<String, Object> entry : answerMap.entrySet()) {
+            switch (entry.getKey()) {
+                case "arms", "phqNine", "drinking", "dementia", "insomnia", "smoking" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToIntArrayOrNull((String) entry.getValue()));
+                    }
+                }
+                case "gds", "frailty", "osa" -> {
+                    if (entry.getValue() == null) {
+                        entry.setValue(Collections.emptyList());
+                    } else {
+                        entry.setValue(surveyParseUtil.parseStringToBooleanArrayOrNull((String) entry.getValue()));
+                    }
+                }
+            }
+        }
+
+        return answerMap;
     }
 
     public List<Long> getSurveyRangesCnt(){

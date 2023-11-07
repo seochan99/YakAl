@@ -1,14 +1,14 @@
 import * as S from "./style.ts";
 import { usePatientPageViewController } from "./view.controller.ts";
 import Summary from "./child/summary/view.tsx";
-import { EPatientInfoTab } from "@type/patient-info-tab.ts";
+import { EPatientInfoTab } from "@type/enum/patient-info-tab.ts";
 import Medication from "./child/medication/view.tsx";
 import GeriatricSyndrome from "./child/geriatric-syndrome/view.tsx";
 import Screening from "./child/screening/view.tsx";
 import { getDateStringFromArray } from "@/util/get-date-string-from-array.ts";
 import getAge from "@util/get-age.ts";
 import { formatTel } from "@util/format-tel.ts";
-import LoadingBarrier from "@components/loading-barrier/view.tsx";
+import LoadingBarrier from "@/components/loading-barrier/view.tsx";
 
 function PatientPage() {
   const {

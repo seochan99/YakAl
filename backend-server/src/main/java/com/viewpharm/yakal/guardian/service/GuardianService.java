@@ -51,7 +51,7 @@ public class GuardianService {
         return users.stream()
                 .map(u -> GuardianDto.builder().
                         id(u.getId())
-                        .birthDay(u.getBirthday().toString())
+                        .birthday(u.getBirthday().toString())
                         .tel(u.getTel())
                         .name(u.getNickname()).build())
                 .collect(Collectors.toList());
@@ -65,9 +65,9 @@ public class GuardianService {
 
         return GuardianDto.builder()
                 .id(resentGuardian.getId())
-                .birthDay(resentGuardian.getBirthday().toString())
+                .birthday(resentGuardian.getBirthday().toString())
                 .tel(resentGuardian.getTel())
-                .name(resentGuardian.getNickname()).build();
+                .name(resentGuardian.getName()).build();
     }
 
 

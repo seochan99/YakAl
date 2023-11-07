@@ -1,21 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { checkIsAgreed, checkIsIdentified } from "@api/auth/user/api.ts";
+import { checkIsAgreed, checkIsIdentified } from "@api/auth/users.ts";
 import { isAxiosError } from "axios";
-import { logOnDev } from "@util/log-on-dev.ts";
 
 export function useLoginPageViewController() {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const redirectToSocialLoginNotYeyPage = useCallback(() => {
-    setIsLoading(false);
-    logOnDev(
-      `🚨 [Unauthorized Access] User Is About To Do Identification Without Social Login. Redirect To Failure Page...`,
-    );
-    navigate("/login/social/not-yet");
-  }, [navigate]);
 
   const checkIsIdentifiedCallback = useCallback(() => {
     checkIsIdentified()
@@ -31,10 +22,11 @@ export function useLoginPageViewController() {
       })
       .catch((error) => {
         if (isAxiosError(error)) {
-          redirectToSocialLoginNotYeyPage();
+          setIsLoading(false);
+          navigate("/");
         }
       });
-  }, [navigate, redirectToSocialLoginNotYeyPage]);
+  }, [navigate]);
 
   const checkIsDoneCallback = useCallback(() => {
     checkIsAgreed()
@@ -50,10 +42,11 @@ export function useLoginPageViewController() {
       })
       .catch((error) => {
         if (isAxiosError(error)) {
-          redirectToSocialLoginNotYeyPage();
+          setIsLoading(false);
+          navigate("/");
         }
       });
-  }, [checkIsIdentifiedCallback, navigate, redirectToSocialLoginNotYeyPage]);
+  }, [checkIsIdentifiedCallback, navigate]);
 
   useEffect(() => {
     setIsLoading(true);

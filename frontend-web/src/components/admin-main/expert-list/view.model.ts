@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { EOrder } from "@type/order.ts";
+import { EOrder } from "@type/enum/order.ts";
 import { AdminExpertListModel } from "@store/admin-expert-list.ts";
-import { EExpertField } from "@type/expert-field.ts";
+import { EExpertField } from "@type/enum/expert-field.ts";
 
 export class AdminExpertListViewModel {
   private static updater: boolean;
