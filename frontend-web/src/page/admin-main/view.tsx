@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import { Cookies } from "react-cookie";
 import { authAxios } from "@api/auth/instance.ts";
 import { logout } from "@api/auth/auth.ts";
+import { ExpertUserViewModel } from "@page/main/view.model.ts";
 
 function AdminMain() {
   const navList = [
@@ -23,6 +24,8 @@ function AdminMain() {
     const accessToken = cookies.get("accessToken");
     cookies.remove("accessToken", { path: "/" });
     authAxios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+    ExpertUserViewModel.fetch();
   }, [navigate]);
 
   return (

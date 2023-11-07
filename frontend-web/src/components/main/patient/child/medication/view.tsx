@@ -105,24 +105,34 @@ function Medication() {
         </S.CardDiv>
       </S.ColumnDiv>
       <S.ColumnDiv>
-        {medication.armsProgress ? (
-          <S.CardDiv>
-            <S.HeaderDiv>
-              <S.LeftTitleDiv>
-                <S.TitleSpan>{"복약 순응도"}</S.TitleSpan>
-                <S.SubtitleSpan>{"ARMS"}</S.SubtitleSpan>
-              </S.LeftTitleDiv>
-            </S.HeaderDiv>
-            <S.MedicationGraphContentDiv>
-              <S.CenterDiv>{"추후 제공될 예정입니다."}</S.CenterDiv>
-              {/*<S.GraphDiv>*/}
-              {/*  <ARMSGraph arms={medication.armsProgress} />*/}
-              {/*</S.GraphDiv>*/}
-            </S.MedicationGraphContentDiv>
-          </S.CardDiv>
-        ) : (
-          <></>
-        )}
+        <S.CardDiv>
+          <S.HeaderDiv>
+            <S.LeftTitleDiv>
+              <S.TitleSpan>{"복약 순응도"}</S.TitleSpan>
+              <S.SubtitleSpan>{"ARMS"}</S.SubtitleSpan>
+            </S.LeftTitleDiv>
+          </S.HeaderDiv>
+          <S.MedicationGraphContentDiv>
+            <S.CenterDiv>{"추후 제공될 예정입니다."}</S.CenterDiv>
+          </S.MedicationGraphContentDiv>
+        </S.CardDiv>
+        {/*{medication.armsProgress ? (*/}
+        {/*  <S.CardDiv>*/}
+        {/*    <S.HeaderDiv>*/}
+        {/*      <S.LeftTitleDiv>*/}
+        {/*        <S.TitleSpan>{"복약 순응도"}</S.TitleSpan>*/}
+        {/*        <S.SubtitleSpan>{"ARMS"}</S.SubtitleSpan>*/}
+        {/*      </S.LeftTitleDiv>*/}
+        {/*    </S.HeaderDiv>*/}
+        {/*    <S.MedicationGraphContentDiv>*/}
+        {/*      <S.GraphDiv>*/}
+        {/*        <ARMSGraph arms={medication.armsProgress} />*/}
+        {/*      </S.GraphDiv>*/}
+        {/*    </S.MedicationGraphContentDiv>*/}
+        {/*  </S.CardDiv>*/}
+        {/*) : (*/}
+        {/*  <></>*/}
+        {/*)}*/}
         <S.CardDiv>
           <S.HeaderDiv>
             <S.LeftTitleDiv>

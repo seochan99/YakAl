@@ -47,9 +47,9 @@ export const usePatientListPageViewController = () => {
   const onSelectSortingOption = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (sorting.field === (e.currentTarget.value as EPatientField)) {
       if (sorting.order === EOrder.DESC) {
-        setSortBy(EOrder.ASC, e.currentTarget.value as EPatientField);
+        setSortBy(EOrder.ASC, sorting.field);
       } else {
-        setSortBy(EOrder.DESC, e.currentTarget.value as EPatientField);
+        setSortBy(EOrder.DESC, sorting.field);
       }
     } else {
       if ((e.currentTarget.value as EPatientField) === EPatientField.LAST_QUESTIONNAIRE_DATE) {
