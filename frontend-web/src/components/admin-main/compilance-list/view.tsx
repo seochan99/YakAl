@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import * as S from "./style.ts";
 import { Chart, registerables } from "chart.js";
+import { authAxios } from "@api/auth/instance.ts";
 
 Chart.register(...registerables);
 
@@ -13,19 +14,18 @@ function AdminComplianceList() {
   // 약물 목록 fetch하기
   const fetchComplianceList = async () => {
     try {
-      // 호출하기
-      //   const response = await authAxios.get(`admin/statistic/arms`);
-      //   console.log(response.data.data.result);
-      //   if (response.data.success) {
-      //     setcomplianceList(response.data.data.result);
-      //   }
-
-      // 더미데이터
-      const dummyData: number[] = [40, 10, 30, 20, 50];
-
-      setComplianceList(dummyData);
+      const response = await authAxios.get(`/admins/statistic/arms`);
+      let responseList = response.data.data;
+      if (responseList.length < 5) {
+        for (let i = 0; i < 5 - responseList.length; ++i) {
+          responseList = responseList.concat([0]);
+        }
+        setComplianceList(responseList);
+      } else {
+        setComplianceList(responseList);
+      }
     } catch (e) {
-      console.log(e);
+      setComplianceList([]);
     }
   };
 
@@ -90,7 +90,7 @@ function AdminComplianceList() {
         return () => chart.destroy();
       }
     }
-  }, [complianceList]);
+  }, [complianceList, labelData]);
 
   //  검색 결과 렌더링
   const renderCompliance = () => {
