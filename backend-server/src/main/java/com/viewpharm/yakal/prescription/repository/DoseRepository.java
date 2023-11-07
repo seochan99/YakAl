@@ -61,7 +61,7 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             "case when d.isEveningTaken = true then 1 else 0 end + " +
             "case when d.isDefaultTaken = true then 1 else 0 end) as take, d.date as date " +
             "from Dose d where d.user.id = :userId and d.date between :start and :end group by d.date")
-    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(@Param("userId")Long userId, @Param("start")LocalDate start, @Param("end")LocalDate end);
+    List<oneDaySummary> countTotalAndTakenByUserIdInPeriod(@Param("userId") Long userId, @Param("start") LocalDate start, @Param("end") LocalDate end);
 
     @Modifying(clearAutomatically = true)
     @Query("update Dose d set d.pillCnt = :pillCnt, d.isHalf = :isHalf where d.id = :doseId")
@@ -109,12 +109,12 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
             nativeQuery = true)
     Page<doseInfo> findByUserAndIsDeletedOrderByCreatedDesc(@Param("userId") Long userId, Pageable pageable);
 
-    @Query(value = "select dose_name as name,dosename_id as kdCode, count(*) as cnt " +
+    @Query(value = "select atc_code as name,dosename_id as kdCode, count(*) as cnt " +
             "from doses join dosenames d on doses.dosename_id = d.id " +
             "where doses.date >= :start and doses.date <= :end " +
             "group by dosename_id order by cnt desc limit 10"
-            ,nativeQuery = true)
-    List<mostDoseInfo> findDosesTop10(LocalDate start,LocalDate end);
+            , nativeQuery = true)
+    List<mostDoseInfo> findDosesTop10(@Param("start") LocalDate start, @Param("end") LocalDate end);
 
     interface doseAntiInfo {
         String getDoseName();
@@ -161,9 +161,11 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
         Integer getScore();
     }
 
-    interface mostDoseInfo{
+    interface mostDoseInfo {
         String getName();
+
         String getkdCode();
+
         Long getCnt();
     }
 }
