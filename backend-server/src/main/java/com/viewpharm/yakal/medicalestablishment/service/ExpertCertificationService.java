@@ -146,7 +146,7 @@ public class ExpertCertificationService {
                 ec.getUser().getName(),
                 ec.getUser().getTel(),
                 ec.getCreatedDate(),
-                ec.getUser().getRole().toString(),
+                ec.getType().toString(),
                 ec.getLicenseImg(),
                 ec.getAffiliationImg());
     }
