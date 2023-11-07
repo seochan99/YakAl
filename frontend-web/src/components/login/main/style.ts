@@ -83,8 +83,8 @@ export const LogoDiv = styled.div`
 export const LogoImg = styled.img`
   content: url("/assets/yakal-logo.png");
   z-index: 1;
-  width: 12.78538rem;
-  height: 7.53425rem;
+  width: 8.5rem;
+  height: 7rem;
   flex-shrink: 0;
 `;
 
