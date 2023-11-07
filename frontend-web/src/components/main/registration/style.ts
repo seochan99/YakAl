@@ -188,7 +188,7 @@ export const CertPostcodeInputBox = styled.div`
   grid-column: 1 / span 2;
   border-radius: 0.25rem;
   border: 0.15rem solid var(--Gray2, #e9e9ee);
-  padding: 1rem;
+  padding: 1.5rem;
 `;
 
 export const CertAddressFooter = styled.div`
@@ -208,8 +208,8 @@ export const CertImgBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
-  grid-row: 6 / span 3;
-  grid-column: 2 / span 1;
+  grid-row: 7 / span 4;
+  grid-column: 1 / span 2;
   border-radius: 0.25rem;
   border: 0.15rem solid var(--Gray2, #e9e9ee);
   padding: 1rem;
@@ -223,7 +223,7 @@ export const CertImgPreview = styled.img`
   align-items: center;
   width: 90%;
   margin: 1rem;
-  height: 8rem;
+  height: 20rem;
   object-fit: contain;
 `;
 
@@ -268,7 +268,7 @@ export const CertInput = styled.input`
     height: 1rem;
     border: 0.15rem solid var(--Gray2, #e9e9ee);
     border-radius: 0.25rem;
-    padding: 0.5rem;
+    padding: 0.8rem;
     outline: none;
   }
 
@@ -286,7 +286,7 @@ export const CertTextarea = styled.textarea`
     border: 0.15rem solid var(--Gray2, #e9e9ee);
     border-radius: 0.25rem;
     resize: none;
-    padding: 0.5rem;
+    padding: 0.8rem;
     flex: 1;
   }
 
@@ -349,55 +349,6 @@ export const CertInputImgBox = styled.div`
   }
 `;
 
-export const InfoTakeRadioBox = styled.div`
-  & {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    flex: 1;
-  }
-
-  & label {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 0.3rem;
-  }
-
-  & input[type="radio"] {
-    appearance: none;
-    border: 0.1rem solid gray;
-    border-radius: 50%;
-    width: 1rem;
-    height: 1rem;
-    transition: border 0.2s ease-in-out;
-    margin-bottom: 0.2rem;
-  }
-
-  & [type="radio"]:checked {
-    border: 0.3rem solid var(--Main, #2666f6);
-  }
-
-  & [type="radio"]:focus-visible {
-    outline: 0.1rem dotted var(--Main, #2666f6);
-    outline-offset: max(2px, 0.1em);
-  }
-
-  & [type="radio"]:hover {
-    box-shadow: 0 0 0 0.2rem lightgray;
-    cursor: pointer;
-  }
-
-  & [type="radio"]:hover + span {
-    cursor: pointer;
-    color: #151515;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1rem;
-  }
-`;
-
 export const CertInputBoxHours = styled.div`
   display: flex;
   flex-direction: column;
@@ -412,7 +363,6 @@ export const CertInputBoxFeatures = styled.div`
   gap: 0.6rem;
   flex: 1;
   grid-column: 1 / span 2;
-  grid-row: 10 / span 2;
 `;
 
 export const NextButton = styled.button`

@@ -1,7 +1,7 @@
 import { AdminExpertDetailViewModel } from "@components/admin-main/expert-detail/view.model.ts";
 import React, { useCallback, useEffect, useState } from "react";
 import { usePathId } from "@hooks/use-path-id.ts";
-import { denyExpert } from "@api/auth/admin.ts";
+import { approveExpert } from "@api/auth/admin.ts";
 import { EJob } from "@type/enum/job.ts";
 import { useNavigate } from "react-router-dom";
 
@@ -41,7 +41,7 @@ export const useAdminExpertDetailViewController = () => {
   }, [setRejectionDialogOpen]);
 
   const onClickOkayOnApprovalDialog = useCallback(() => {
-    denyExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
+    approveExpert(expertId, true, "", EJob.DOCTOR).finally(() => {
       setRejectionDialogOpen(false);
       setRejectionReason("");
       navigate("/admin");
@@ -49,7 +49,7 @@ export const useAdminExpertDetailViewController = () => {
   }, [expertId, navigate]);
 
   const onClickOkayOnRejectionDialog = useCallback(() => {
-    denyExpert(expertId, false, "", expertDetail!.type as EJob).finally(() => {
+    approveExpert(expertId, false, "", expertDetail!.type as EJob).finally(() => {
       setRejectionDialogOpen(false);
       setRejectionReason("");
       navigate("/admin");

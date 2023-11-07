@@ -185,20 +185,18 @@ public class MedicalAppointmentService {
     }
 
     public PatientBaseInfoDto readPatientBaseInfo(final Long expertId, final Long patientId) {
-//        final User expert = userRepository.findByIdAndJobOrJob(expertId, EJob.DOCTOR, EJob.PHARMACIST)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
-//        final User patient = userRepository.findById(patientId)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-//
-//        final MedicalAppointment medicalAppointment = medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
-//                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
-//
-//        return PatientBaseInfoDto.builder()
-//                .name(patient.getName())
-//                .birthday(patient.getBirthday())
-//                .tel(patient.getTel())
-//                .build();
+        final User expert = userRepository.findExpertById(expertId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_EXPERT));
+        final User patient = userRepository.findById(patientId)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
 
-        return null;
+        medicalAppointmentRepository.findByExpertAndPatientAndIsDeleted(expert, patient, false)
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_MEDICAL_APPOINTMENT));
+
+        return PatientBaseInfoDto.builder()
+                .name(patient.getName())
+                .birthday(patient.getBirthday())
+                .tel(patient.getTel())
+                .build();
     }
 }
