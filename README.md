@@ -61,6 +61,57 @@
 
 ---
 
+## 3. 시연영상
+
+## 회원가입화면/로그인화면
+<div style="display: flex;">
+   <img width="50%" src = "documents/회원가입.gif"><img width="50%" src ="documents/카카오로그인.gif">
+</div>
+
+---
+
+## 오늘/약 세부정보/다른 날짜 복약정보   
+<div style="display: flex;">
+    <img width="33%" src = "documents/홈화면_메인.gif"><img width="33%" src = "documents/홈화면_약 세부정보.gif"><img width="33%" src = "documents/홈화면_다른날짜 복약정보.gif">
+</div>
+
+---
+## 약 직접/OCR 추가
+   <div style="display: flex;">
+    <img width="50%" src = "documents/홈화면_약 직접 추가.gif"/><img width="50%" src = "documents/홈화면_약봉투 추가.gif"/>
+      </div>
+
+---
+
+
+  ## 닉네임 수정
+<img width="50%" src = "documents/내정보_이름 수정.gif"/>
+
+   ---
+
+## 자가진단 테스트
+   <div style="display: flex;">
+       <img width="50%" src = "documents/내정보_자가진단 테스트.gif" /><img width="50%" src = "documents/내정보_자가진단 테스트(65세이상).gif"/>
+    </div>
+
+   ---
+
+## 병원 기록/특이사항
+<div style="display: flex;">
+<img width="50%" src = "documents/내정보_병원기록.gif" /><img width="50%" src ="documents/내정보_특이사항.gif" />
+</div>
+
+---
+
+## 앱 설정
+   <div style="display: flex;">
+      <img width="33%" src = "documents/내정보_라이트모드 변경.gif" /><img width="33%" src ="documents/내정보_앱 설정(시간 변경).gif" /><img width="33%" src ="documents/내정보_로그아웃.gif" />
+      
+   </div>
+
+## 약알에게 바라는 점
+<img width="50%" src = "documents/내정보_약알에게 바라는 점.gif" />
+
 ## 🎯 Commit Convention
 
 -   feat : 새로운 기능 추가
@@ -86,6 +137,14 @@
 | 🔀     | :twisted_rightwards_arrows | 브랜치 합병              |
 | 💡     | :bulb                      | 주석 추가/수정           |
 | 🗃      | :card_file_box             | 데이버베이스 관련 수정   |
+
+## How to Contribute
+
+YAKAI에 기여 해주시고 싶은 분들은 <a href="https://github.com/View-Pharm/YakAl/wiki/Contribute-Guide#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%EC%97%AC-%EA%B0%80%EC%9D%B4%EB%93%9C">WIKI</a>를 참고해주세요!
+
+## Infra Architecture
+
+<img src = "documents/infra_architecture.png" />
 
 ## Lisence
 GNU GENERAL PUBLIC LICENSE
