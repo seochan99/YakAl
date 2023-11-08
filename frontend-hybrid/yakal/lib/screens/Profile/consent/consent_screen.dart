@@ -77,7 +77,7 @@ class MingamDetailScreen extends StatelessWidget {
                 // 바꾸기
                 mingamController.setMingamStatus(true);
                 // 이동
-                Get.off(() => const AppointmentScreen());
+                Get.off(() => AppointmentScreen());
               },
               child: const Text("동의", style: TextStyle(fontSize: 20.0)),
             ),

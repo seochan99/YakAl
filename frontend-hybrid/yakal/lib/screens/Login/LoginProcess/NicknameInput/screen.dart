@@ -33,7 +33,7 @@ class _NicknameInputScreenState extends State<NicknameInputScreen> {
 
     try {
       var response =
-          await dio.patch("/user/name", data: {"nickname": _username});
+          await dio.patch("/users/name", data: {"nickname": _username});
 
       widget.userViewModel.updateNickName(_username);
     } on DioException {
