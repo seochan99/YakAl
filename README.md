@@ -142,6 +142,10 @@
 
 YAKAI에 기여 해주시고 싶은 분들은 <a href="https://github.com/View-Pharm/YakAl/wiki/Contribute-Guide#%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EA%B8%B0%EC%97%AC-%EA%B0%80%EC%9D%B4%EB%93%9C">WIKI</a>를 참고해주세요!
 
+## infra Architecture
+
+<img src = "documents/infra_architecture.png" />
+
 ## Lisence
 GNU GENERAL PUBLIC LICENSE
 Version 3, 29 June 2007
