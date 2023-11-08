@@ -345,8 +345,14 @@ public class DoseService {
 
     public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
+        final Prescription prescription = prescriptionRepository.save(
+                Prescription.builder()
+                        .user(user)
+                        .pharmacyName("ㅇㅇㅇㅇ")
+                        .prescribedDate(LocalDate.now())
+                        .isAllow(true)
+                        .build()
+        );
 
         final List<Boolean> isInserted = new ArrayList<>();
         final List<Dose> willSave = new ArrayList<>();
