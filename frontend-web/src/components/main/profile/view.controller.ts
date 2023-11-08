@@ -40,7 +40,7 @@ export function useProfileViewController({ job, department, belong, name }: TPro
 
   return {
     layout: { isMobile, iOS },
-    data: { name, belong, job, jobDetail, alertList },
+    data: { name, belong, job, jobDetail, alertList, department },
     toggleDrawer,
     handleLogoutClick,
     isLoading,
