@@ -59,7 +59,7 @@ function Profile(props: TProfileProps) {
               ) : null}
               <S.DetailJob>
                 {job ? job === "의사" ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
-                {jobDetail ? (
+                {jobDetail === "" ? (
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")
                   ) : (

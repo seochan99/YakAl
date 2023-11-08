@@ -143,11 +143,17 @@ function AdminExpertDetail() {
         <S.ImgDiv>
           <S.InnerImgDiv>
             <S.NameSpan>{"면허증 사진"}</S.NameSpan>
-            <S.InnerImg alt={"certificateImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${certificateImg}`} />
+            <S.InnerImg
+              alt={"certificateImg"}
+              src={`${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/images/${certificateImg}`}
+            />
           </S.InnerImgDiv>
           <S.InnerImgDiv>
             <S.NameSpan>{"소속 증명 사진"}</S.NameSpan>
-            <S.InnerImg alt={"affiliationImg"} src={`${import.meta.env.VITE_IMAGE_URL}/images/${affiliationImg}`} />
+            <S.InnerImg
+              alt={"affiliationImg"}
+              src={`${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/images/${affiliationImg}`}
+            />
           </S.InnerImgDiv>
         </S.ImgDiv>
         <S.OneItemSpan>

@@ -32,13 +32,17 @@ export class ExpertUserModel {
 
       if (isOptionalAgreementAccepted === null) {
         this.invalidate();
-        window.location.replace("/login/terms");
+        if (window.location.pathname !== "/login/terms") {
+          window.location.replace("/login/terms");
+        }
         return;
       }
 
       if (!isIdentified) {
         this.invalidate();
-        window.location.replace("/login/identify");
+        if (window.location.pathname !== "/login/identify") {
+          window.location.replace("/login/identify");
+        }
         return;
       }
 
