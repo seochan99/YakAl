@@ -25,7 +25,7 @@ class AddMedicineProvider {
 
       String image = jsonResponse['DrugInfo']['IdentaImage'] ?? "";
       return image;
-    } on DioException catch (error) {
+    } on DioException {
       return null;
     }
   }
@@ -34,7 +34,7 @@ class AddMedicineProvider {
     var dio = await authDioWithContext();
 
     try {
-      var response = await dio.get("/prescription");
+      var response = await dio.get("/prescriptions");
 
       if (response.statusCode == 200) {
         return response.data["data"][0]["id"];
@@ -42,15 +42,17 @@ class AddMedicineProvider {
         assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
         return -1;
       }
-    } on DioException catch (error) {
+    } on DioException {
       return -1;
     }
   }
 
-  Future<EAddScheduleResult> addSchedule(List<DoseGroupModel> groupList,
-      int prescriptionId,
-      DateTime start,
-      DateTime end,) async {
+  Future<EAddScheduleResult> addSchedule(
+    List<DoseGroupModel> groupList,
+    int prescriptionId,
+    DateTime start,
+    DateTime end,
+  ) async {
     var requestBody = <String, dynamic>{
       "prescriptionId": prescriptionId,
       "medicines": [],
@@ -59,14 +61,12 @@ class AddMedicineProvider {
     for (var group in groupList) {
       for (var dose in group.doseList) {
         var schedule = <String, dynamic>{
-          "KDCode": "${dose.kdCode}",
-          "ATCCode": "${dose.atcCode}",
+          "KDCode": dose.kdCode,
+          "ATCCode": dose.atcCode,
           "schedules": [],
         };
 
-        for (var i = 0; i < end
-            .difference(start)
-            .inDays + 1; ++i) {
+        for (var i = 0; i < end.difference(start).inDays + 1; ++i) {
           var now = start.add(Duration(days: i));
           for (var j = 0; j < 4; ++j) {
             if (group.takingTime[j]) {
@@ -90,7 +90,7 @@ class AddMedicineProvider {
     var dio = await authDioWithContext();
 
     try {
-      var response = await dio.post("/dose", data: requestBody);
+      var response = await dio.post("/doses", data: requestBody);
 
       if (response.statusCode == 201) {
         var resultList = response.data["data"];
@@ -106,7 +106,7 @@ class AddMedicineProvider {
         assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
         return EAddScheduleResult.FAIL;
       }
-    } on DioException catch (error) {
+    } on DioException {
       return EAddScheduleResult.FAIL;
     }
   }
@@ -147,7 +147,7 @@ class AddMedicineProvider {
       } else {
         return [];
       }
-    } on DioException catch (error) {
+    } on DioException {
       return [];
     }
   }

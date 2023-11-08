@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Profile/appointment_controller.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/input_horizontal_text_field_widget.dart';
 
 class AppointmentScreen extends StatefulWidget {
   // viewmodel가져오기
-  // final UserViewModel userViewModel = Get.put(UserViewModel());
+  final UserViewModel userViewModel = Get.put(UserViewModel());
 
-  const AppointmentScreen({super.key});
+  AppointmentScreen({Key? key}) : super(key: key);
 
   @override
   _AppointmentScreenState createState() => _AppointmentScreenState();
