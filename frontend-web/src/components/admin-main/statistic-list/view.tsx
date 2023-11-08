@@ -24,9 +24,6 @@ function AdminStatisticDetail() {
   const [endDate, setEndDate] = useState<Date | null>(null);
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
-  // 날짜 목록에 따라 약물 리스트 가져오기
-  useEffect(() => {}, [medicineList]);
-
   // 날짜 포멧 스티링으로 셋팅
   const formatDate = (date: Date): string => {
     const year = date.getFullYear();
@@ -128,6 +125,13 @@ function AdminStatisticDetail() {
       <S.SearchResultContainer>검색버튼을 통해 복용통계를 확인해보세요!</S.SearchResultContainer>
     );
   };
+
+  // 날짜 목록에 따라 약물 리스트 가져오기
+  useEffect(() => {
+    if (startDate !== null && endDate !== null) {
+      fetchMedicineList(formatDate(startDate), formatDate(endDate));
+    }
+  }, [endDate, medicineList, startDate]);
 
   return (
     <>

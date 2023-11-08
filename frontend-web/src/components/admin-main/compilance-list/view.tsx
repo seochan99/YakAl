@@ -15,15 +15,10 @@ function AdminComplianceList() {
   const fetchComplianceList = async () => {
     try {
       const response = await authAxios.get(`/admins/statistic/arms`);
-      let responseList = response.data.data;
-      if (responseList.length < 5) {
-        for (let i = 0; i < 5 - responseList.length; ++i) {
-          responseList = responseList.concat([0]);
-        }
-        setComplianceList(responseList);
-      } else {
-        setComplianceList(responseList);
+      if (response.data.data.result === null || response.data.data.result.length !== 5) {
+        setComplianceList([]);
       }
+      setComplianceList(response.data.data.result);
     } catch (e) {
       setComplianceList([]);
     }
