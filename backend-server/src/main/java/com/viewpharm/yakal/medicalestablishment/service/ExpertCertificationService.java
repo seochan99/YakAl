@@ -163,6 +163,7 @@ public class ExpertCertificationService {
         if (approveDto.getIsApproval()) {
             // 전문가 신청 승인/거부
             User expert = ec.getUser();
+            expert.setRole(approveDto.getJob().toEole());
             expert.updateDepartment(approveDto.getDepartment());
             expert.setMedicalEstablishment(ec.getMedicalEstablishment());
             userRepository.flush();
