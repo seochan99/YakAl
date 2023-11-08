@@ -36,7 +36,7 @@ function AdminStatisticDetail() {
   const fetchMedicineList = async (startDate: string, endDate: string) => {
     try {
       const response = await authAxios.get(`/admins/doses/between?startDate=${startDate}&endDate=${endDate}`);
-      setMedicineList(response.data.data);
+      setMedicineList(response.data.data.result);
     } catch (e) {
       setMedicineList([]);
     }
