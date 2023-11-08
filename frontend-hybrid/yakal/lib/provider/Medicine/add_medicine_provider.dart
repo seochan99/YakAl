@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
-import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/utilities/api/api.dart';
@@ -67,17 +66,12 @@ class AddMedicineProvider {
 
         for (var i = 0; i < end.difference(start).inDays + 1; ++i) {
           var now = start.add(Duration(days: i));
-          for (var j = 0; j < 4; ++j) {
-            if (group.takingTime[j]) {
-              schedule["schedules"].add(<String, dynamic>{
-                "date": DateFormat('yyyy-MM-dd').format(now),
-                "time": ETakingTime.values[j]
-                    .toString()
-                    .substring("ETakingTime.".length),
-                "count": 1.0,
-              });
-            }
-          }
+
+          schedule["schedules"].add(<String, dynamic>{
+            "date": DateFormat('yyyy-MM-dd').format(now),
+            "time": group.takingTime,
+            "count": 1.0,
+          });
         }
 
         if (schedule["schedules"].isNotEmpty) {

@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import * as S from "./style.ts";
 import { Chart, registerables } from "chart.js";
-import { authAxios } from "@api/auth/instance.ts";
 
 Chart.register(...registerables);
 
@@ -14,28 +13,29 @@ function AdminComplianceList() {
   // 약물 목록 fetch하기
   const fetchComplianceList = async () => {
     try {
-      const response = await authAxios.get(`/admins/statistic/arms`);
-
-      const arr = [0, 0, 0, 0, 0];
-
-      for (const scoreItem of response.data.data.result as {
-        countScore: number;
-        scoreRange: string;
-      }[]) {
-        if (scoreItem.scoreRange === "0~20") {
-          arr[0] = scoreItem.countScore;
-        } else if (scoreItem.scoreRange === "20~40") {
-          arr[1] = scoreItem.countScore;
-        } else if (scoreItem.scoreRange === "40~60") {
-          arr[2] = scoreItem.countScore;
-        } else if (scoreItem.scoreRange === "60~80") {
-          arr[3] = scoreItem.countScore;
-        } else {
-          arr[4] = scoreItem.countScore;
-        }
-      }
-
-      setComplianceList(arr);
+      // const response = await authAxios.get(`/admins/statistic/arms`);
+      //
+      // const arr = [0, 0, 0, 0, 0];
+      //
+      // for (const scoreItem of response.data.data.result as {
+      //   countScore: number;
+      //   scoreRange: string;
+      // }[]) {
+      //   if (scoreItem.scoreRange === "0~20") {
+      //     arr[0] = scoreItem.countScore;
+      //   } else if (scoreItem.scoreRange === "20~40") {
+      //     arr[1] = scoreItem.countScore;
+      //   } else if (scoreItem.scoreRange === "40~60") {
+      //     arr[2] = scoreItem.countScore;
+      //   } else if (scoreItem.scoreRange === "60~80") {
+      //     arr[3] = scoreItem.countScore;
+      //   } else {
+      //     arr[4] = scoreItem.countScore;
+      //   }
+      // }
+      //
+      // setComplianceList(arr);
+      setComplianceList([9, 12, 3, 14, 26]);
     } catch (e) {
       setComplianceList([]);
     }
