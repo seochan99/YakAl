@@ -93,11 +93,11 @@ public class Dose {
     private Risk ATCCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "prescription_id", nullable = false)
+    @JoinColumn(name = "prescription_id", nullable = true)
     private Prescription prescription;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     @Builder
