@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.checkerframework.checker.units.qual.N;
 
 @Getter
 @NoArgsConstructor
@@ -18,6 +19,7 @@ public class ExpertCertificationApproveDto {
     @NotNull
     private String department;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     private EJob job;
 }

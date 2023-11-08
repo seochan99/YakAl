@@ -17,6 +17,11 @@ public enum EJob {
             case PHARMACIST -> {
                 return ERole.PHARMACIST;
             }
+            default -> {
+                assert (false) : "Invalid Type Error";
+            }
         }
+
+        return null;
     }
 }
