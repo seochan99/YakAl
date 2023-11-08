@@ -32,7 +32,7 @@ class ProfileHeaderShareButton extends StatelessWidget {
       ),
       onPressed: () {
         if (mingamController.isMingam) {
-          Get.to(() => const AppointmentScreen());
+          Get.to(() => AppointmentScreen());
         } else {
           Get.to(() => const MingamDetailScreen(title: "민감정보 동의", content: '''
 

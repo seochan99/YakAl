@@ -19,7 +19,7 @@ class _SetModeScreenState extends State<SetModeScreen> {
   Future<void> _setMode() async {
     var dio = await authDio(context);
 
-    var response = await dio.patch("/user/detail",
+    var response = await dio.patch("/users/detail",
         data: {"isDetail": EMode.values[Get.arguments] == EMode.LITE});
     var isSuccess = response.statusCode == 200;
 

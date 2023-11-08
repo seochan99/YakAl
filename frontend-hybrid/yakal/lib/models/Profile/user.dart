@@ -67,7 +67,7 @@ class User {
     if (response.statusCode == 200) {
       final prefs = await SharedPreferences.getInstance();
 
-      nickName = response.data["data"]["isRegistered"]["name"] as String;
+      nickName = response.data["data"]["isRegistered"]["name"] as String? ?? "";
       prefs.setString("NICKNAME", nickName);
 
       mode = response.data["data"]["isRegistered"]["isDetail"] as bool;
