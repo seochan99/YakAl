@@ -17,7 +17,7 @@ export const usePatientPageViewController = () => {
     PatientPageViewModel.fetchGeriatricSyndrome(patientId);
     PatientPageViewModel.fetchScreening(patientId);
     PatientPageViewModel.fetchETC(patientId);
-    PatientPageViewModel.fetchARMS(patientId);
+    // PatientPageViewModel.fetchARMS(patientId);
     PatientPageViewModel.fetchBeersList(patientId);
     PatientPageViewModel.fetchAnticholinergic(patientId);
   }, [patientId]);

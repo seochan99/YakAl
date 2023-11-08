@@ -61,12 +61,12 @@ export class PatientPageViewModel {
     this.flush();
   };
 
-  public static fetchARMS = async (patientId: number) => {
-    this.patientPageModel.invalidateARMS();
-    this.flush();
-    await this.patientPageModel.fetchARMS(patientId);
-    this.flush();
-  };
+  // public static fetchARMS = async (patientId: number) => {
+  //   this.patientPageModel.invalidateARMS();
+  //   this.flush();
+  //   await this.patientPageModel.fetchARMS(patientId);
+  //   this.flush();
+  // };
 
   public static fetchGeriatricSyndrome = async (patientId: number) => {
     this.patientPageModel.invalidateGeriatricSyndrome();

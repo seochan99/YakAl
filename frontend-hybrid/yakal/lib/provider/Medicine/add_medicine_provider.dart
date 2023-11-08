@@ -49,12 +49,11 @@ class AddMedicineProvider {
 
   Future<EAddScheduleResult> addSchedule(
     List<DoseGroupModel> groupList,
-    int prescriptionId,
     DateTime start,
     DateTime end,
   ) async {
     var requestBody = <String, dynamic>{
-      "prescriptionId": prescriptionId,
+      "prescriptionId": null,
       "medicines": [],
     };
 
@@ -90,22 +89,17 @@ class AddMedicineProvider {
     var dio = await authDioWithContext();
 
     try {
-      var response = await dio.post("/doses", data: requestBody);
+      var response = await dio.post("/prescriptions/doses", data: requestBody);
 
-      if (response.statusCode == 201) {
-        var resultList = response.data["data"];
+      var resultList = response.data["data"];
 
-        for (var resultItem in resultList) {
-          if (!resultItem) {
-            return EAddScheduleResult.PARTIALLY_SUCCESS;
-          }
+      for (var resultItem in resultList) {
+        if (!resultItem) {
+          return EAddScheduleResult.PARTIALLY_SUCCESS;
         }
-
-        return EAddScheduleResult.SUCCESS;
-      } else {
-        assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-        return EAddScheduleResult.FAIL;
       }
+
+      return EAddScheduleResult.SUCCESS;
     } on DioException {
       return EAddScheduleResult.FAIL;
     }

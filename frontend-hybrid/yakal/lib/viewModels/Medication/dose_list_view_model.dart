@@ -203,17 +203,7 @@ class AddDoseViewModel extends GetxController {
   }
 
   Future<EAddScheduleResult> addSchedule(DateTime start, DateTime end) async {
-    var prescriptionId = await _addMedicineProvider.getDefaultPrescriptionId();
-
-    if (kDebugMode) {
-      print("[Read Prescription Id] $prescriptionId");
-    }
-
-    if (prescriptionId == -1) {
-      return EAddScheduleResult.FAIL;
-    }
-
-    var result = _addMedicineProvider.addSchedule(_groupList, 4, start, end);
+    var result = _addMedicineProvider.addSchedule(_groupList, start, end);
 
     if (kDebugMode) {
       print("[Result Of Adding Schedule] $result");

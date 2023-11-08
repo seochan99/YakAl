@@ -14,7 +14,7 @@ import LoadingSpinner from "@/components/loading-spinner/view.tsx";
 function Profile(props: TProfileProps) {
   const {
     layout: { isMobile, iOS },
-    data: { name, belong, job, jobDetail, alertList },
+    data: { name, belong, job, jobDetail, department, alertList },
     toggleDrawer,
     isLoading,
     handleLogoutClick,
@@ -59,7 +59,7 @@ function Profile(props: TProfileProps) {
               ) : null}
               <S.DetailJob>
                 {job ? job === "의사" ? <LocalHospitalIcon /> : <LocalPharmacyIcon /> : <LocalHospitalIcon />}
-                {jobDetail ? (
+                {department === "" ? (
                   jobDetail.replace(" ", "").length > 12 ? (
                     jobDetail.slice(0, 12).concat("...")
                   ) : (

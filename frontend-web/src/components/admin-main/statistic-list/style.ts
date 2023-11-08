@@ -46,22 +46,24 @@ export const StyledSearchIconSvg = styled(SearchIconSvg)`
 export const MedicineListContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: stretch;
   gap: 1rem;
 `;
 
 // HeaderTitle
-export const HeaderTitle = styled.div`
+export const HeaderTitle = styled.span`
   font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.5rem;
-  color: var(--Black1, #1b1b1b);
+  text-align: center;
+  color: var(--Black1, #151515);
 `;
 
 // DateContainer
 export const DateContainer = styled.div`
   display: flex;
   flex-direction: row;
-
+  justify-content: center;
   gap: 0.5rem;
 `;
 // SearchResultContainer
@@ -74,6 +76,8 @@ export const SearchResultContainer = styled.div`
 export const ColCalendar = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
 `;
 // SearchButton
 export const SearchButton = styled.button`
@@ -81,6 +85,7 @@ export const SearchButton = styled.button`
   color: var(--White1, #ffffff);
   // main color border
   border: 0.125rem solid var(--MainColor, #00a8ff);
+
   &:hover {
     background-color: var(--White1, #ffffff);
     color: var(--MainColor, #00a8ff);
@@ -90,9 +95,10 @@ export const SearchButton = styled.button`
   padding: 0.5rem 1rem;
 `;
 
-export const CalendarLabel = styled.p`
+export const CalendarLabel = styled.span`
   color: var(--Black1, #1b1b1b);
   font-size: 1rem;
+  text-align: center;
 `;
 
 // SearchMedicineList

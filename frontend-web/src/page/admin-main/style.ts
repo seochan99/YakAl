@@ -51,3 +51,29 @@ export const ItemNavLink = styled(NavLink)`
     background-color: var(--Gray2, #e9e9ee);
   }
 `;
+
+export const LogoutButton = styled.div`
+  & {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0.65rem 2.25rem;
+    border: 0;
+    border-radius: 0.25rem;
+    font-size: 0.9rem;
+    line-height: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #c61a24;
+  }
+
+  &:hover {
+    background-color: #b7141f;
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: #cf5658;
+  }
+`;

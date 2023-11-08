@@ -36,11 +36,11 @@ export function useProfileViewController({ job, department, belong, name }: TPro
       });
   };
 
-  const jobDetail: string | undefined = department && job ? department + " " + (job ?? "") : undefined;
+  const jobDetail = job === "의사" ? `${department} ${job}` : "약사";
 
   return {
     layout: { isMobile, iOS },
-    data: { name, belong, job, jobDetail, alertList },
+    data: { name, belong, job, jobDetail, alertList, department },
     toggleDrawer,
     handleLogoutClick,
     isLoading,

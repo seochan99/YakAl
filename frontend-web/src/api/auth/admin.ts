@@ -10,8 +10,9 @@ import { TExpertListSort } from "@store/admin-expert-list.ts";
 import { EExpertField } from "@type/enum/expert-field.ts";
 import { TAdminFacilityDetail } from "@type/response/facility-info.ts";
 import { TExpertDetail } from "@store/admin-expert-detail.ts";
-import { TApprovalReq, TDenyReq } from "@type/response/deny-req.ts";
+import { TApproveExpertRequest } from "@type/request/approve-expert-request.ts";
 import { EJob } from "@type/enum/job.ts";
+import { TApprovalFacilityRequest } from "@type/request/approval-facility-request.ts";
 
 export const getFacilityRequestList = async <T = CommonResponse<TAdminFacilityList>>(
   nameQuery: string,
@@ -80,13 +81,13 @@ export const getExpertInfo = async <T = CommonResponse<TExpertDetail>>(
   return await authAxios.get<T, AxiosResponse<T>>(`/admins/expert-certifications/${expertCertificationID}`);
 };
 
-export const denyExpert = async <T = CommonResponse<null>>(
+export const approveExpert = async <T = CommonResponse<null>>(
   expertCertificationID: number,
   isApproval: boolean,
   department: string,
   job: EJob,
 ): Promise<AxiosResponse<T>> => {
-  return await authAxios.patch<T, AxiosResponse<T>, TDenyReq>(
+  return await authAxios.patch<T, AxiosResponse<T>, TApproveExpertRequest>(
     `/admins/expert-certifications/${expertCertificationID}`,
     {
       isApproval,
@@ -96,11 +97,11 @@ export const denyExpert = async <T = CommonResponse<null>>(
   );
 };
 
-export const denyFacility = async <T = CommonResponse<null>>(
+export const approveFacility = async <T = CommonResponse<null>>(
   medicalEstablishmentID: number,
   isApproval: boolean,
 ): Promise<AxiosResponse<T>> => {
-  return await authAxios.patch<T, AxiosResponse<T>, TApprovalReq>(
+  return await authAxios.patch<T, AxiosResponse<T>, TApprovalFacilityRequest>(
     `/admins/medical-establishments/${medicalEstablishmentID}`,
     {
       isApproval,

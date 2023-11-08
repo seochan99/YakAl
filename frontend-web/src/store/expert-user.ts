@@ -28,16 +28,39 @@ export class ExpertUserModel {
       const response = await getExpertUserInfo();
 
       this.expertUser = response.data.data;
-      const { isOptionalAgreementAccepted, isIdentified } = this.expertUser;
+      const { isOptionalAgreementAccepted, isIdentified, job } = this.expertUser;
 
-      if (isOptionalAgreementAccepted === null || !isIdentified) {
+      if (isOptionalAgreementAccepted === null) {
         this.invalidate();
-        window.location.replace("/");
+        if (window.location.pathname !== "/login/terms") {
+          window.location.replace("/login/terms");
+        }
+        return;
+      }
+
+      if (!isIdentified) {
+        this.invalidate();
+        if (window.location.pathname !== "/login/identify") {
+          window.location.replace("/login/identify");
+        }
+        return;
+      }
+
+      if (job === "관리자") {
+        if (window.location.pathname !== "/admin") {
+          window.location.replace("/admin");
+        }
+      } else {
+        if (window.location.pathname !== "/expert") {
+          window.location.replace("/expert");
+        }
       }
     } catch (error) {
       if (isAxiosError(error)) {
         this.invalidate();
-        window.location.replace("/");
+        if (window.location.pathname !== "/") {
+          window.location.replace("/");
+        }
       }
     }
   };

@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import * as S from "./style.ts";
-
-import { authAxios } from "@/api/auth/instance.ts";
-
 import { Chart, registerables } from "chart.js";
+import { authAxios } from "@api/auth/instance.ts";
+
 Chart.register(...registerables);
 
 function AdminComplianceList() {
-  const [complianceList, setComplianceList] = useState<Number[]>([]);
+  const [complianceList, setComplianceList] = useState<number[]>([]);
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   const labelData = ["0~20", "21~40", "41~60", "61~80", "81~100"];
@@ -15,19 +14,30 @@ function AdminComplianceList() {
   // 약물 목록 fetch하기
   const fetchComplianceList = async () => {
     try {
-      // 호출하기
-      //   const response = await authAxios.get(`admin/statistic/arms`);
-      //   console.log(response.data.data.result);
-      //   if (response.data.success) {
-      //     setcomplianceList(response.data.data.result);
-      //   }
+      const response = await authAxios.get(`/admins/statistic/arms`);
 
-      // 더미데이터
-      const dummyData: Number[] = [40, 10, 30, 20, 50];
+      const arr = [0, 0, 0, 0, 0];
 
-      setComplianceList(dummyData);
+      for (const scoreItem of response.data.data.result as {
+        countScore: number;
+        scoreRange: string;
+      }[]) {
+        if (scoreItem.scoreRange === "0~20") {
+          arr[0] = scoreItem.countScore;
+        } else if (scoreItem.scoreRange === "20~40") {
+          arr[1] = scoreItem.countScore;
+        } else if (scoreItem.scoreRange === "40~60") {
+          arr[2] = scoreItem.countScore;
+        } else if (scoreItem.scoreRange === "60~80") {
+          arr[3] = scoreItem.countScore;
+        } else {
+          arr[4] = scoreItem.countScore;
+        }
+      }
+
+      setComplianceList(arr);
     } catch (e) {
-      console.log(e);
+      setComplianceList([]);
     }
   };
 
@@ -92,7 +102,7 @@ function AdminComplianceList() {
         return () => chart.destroy();
       }
     }
-  }, [complianceList]);
+  }, [complianceList, labelData]);
 
   //  검색 결과 렌더링
   const renderCompliance = () => {

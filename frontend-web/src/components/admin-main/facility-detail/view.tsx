@@ -16,8 +16,6 @@ function AdminFacilityDetail() {
     rejectionDialogOpen,
     onCloseRejectionDialog,
     onClickOkayOnRejectionDialog,
-    rejectionReason,
-    onChangeRejectionReason,
   } = useAdminFacilityDetailViewController();
 
   if (isLoading || facilityDetail == null) {
@@ -90,15 +88,19 @@ function AdminFacilityDetail() {
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 연락처"}</S.NameSpan>
-              <S.NormalSpan>{tel ?? "기관 연락처 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>{tel === null || tel === "" ? "기관 연락처 정보가 없습니다." : tel}</S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"운영 시간"}</S.NameSpan>
-              <S.NormalSpan>{clinicHours ?? "운영 시간 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {clinicHours === null || clinicHours === "" ? "운영 시간 정보가 없습니다." : clinicHours}
+              </S.NormalSpan>
             </S.OneItemSpan>
             <S.OneItemSpan>
               <S.NameSpan>{"기관 특징"}</S.NameSpan>
-              <S.NormalSpan>{features ?? "기관 특징 정보가 없습니다."}</S.NormalSpan>
+              <S.NormalSpan>
+                {features === null || features === "" ? "기관 특징 정보가 없습니다." : features}
+              </S.NormalSpan>
             </S.OneItemSpan>
           </S.BelongInnerDiv>
         </S.BelongInfoDiv>
@@ -106,7 +108,10 @@ function AdminFacilityDetail() {
         <S.HeaderSpan>{"전문가 인증 정보"}</S.HeaderSpan>
         <S.ImgDiv>
           <S.InnerImgDiv>
-            <img alt={"certificateImg"} src={certificateImg} />
+            <S.InnerImg
+              alt={"certificateImg"}
+              src={`${import.meta.env.VITE_SERVER_HOST_WITHOUT_API}/images/${certificateImg}`}
+            />
           </S.InnerImgDiv>
         </S.ImgDiv>
         <S.OneItemSpan>
@@ -123,16 +128,14 @@ function AdminFacilityDetail() {
         isOpen={approvalDialogOpen}
         onClose={onCloseApprovalDialog}
         onClickOkay={onClickOkayOnApprovalDialog}
-        hasReasonForm={false}
+        hasDepartment={false}
       />
       <ApprovalDialog
         title={"정말 본 기관 등록 신청을 거절하시겠습니까?"}
         isOpen={rejectionDialogOpen}
         onClose={onCloseRejectionDialog}
         onClickOkay={onClickOkayOnRejectionDialog}
-        hasReasonForm={true}
-        reason={rejectionReason}
-        onChangeReason={onChangeRejectionReason}
+        hasDepartment={false}
       />
     </S.OuterDiv>
   );

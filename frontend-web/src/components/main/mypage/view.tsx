@@ -9,9 +9,7 @@ function MyPage() {
     return <></>;
   }
 
-  const jobDetail: string | undefined =
-    expertUser.department && expertUser.job ? expertUser.department + " " + (expertUser.job ?? "") : undefined;
-
+  const jobDetail = expertUser.job === "의사" ? `${expertUser.department} ${expertUser.job}` : "약사";
   const formattedTel = expertUser.tel?.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
 
   return (
@@ -26,7 +24,7 @@ function MyPage() {
         <S.MainHeader>
           <S.Title>{"내 정보"}</S.Title>
           <S.VerifiedText>
-            {jobDetail && expertUser.belong ? (
+            {expertUser.belong ? (
               <>
                 <S.VerifiedIcon />
                 {"전문가 인증이 완료된 사용자입니다."}

@@ -6,6 +6,7 @@ import {
   getGeneralSurvey,
   getGeriatricSyndromeSurvey,
   getLatestDoses,
+  getPatientBaseInfo,
   getProtectorInfo,
 } from "@api/auth/experts.ts";
 import { isAxiosError } from "axios";
@@ -206,14 +207,8 @@ export class PatientModel {
 
   public static fetchBase = async (patientId: number) => {
     try {
-      // const response = await getPatientBaseInfo(patientId);
-
-      // this.patientInfo.base = response.data.data;
-      this.patientInfo.base = {
-        name: "홍길동",
-        birthday: [1998, 12, 15],
-        tel: "01088888888",
-      };
+      const response = await getPatientBaseInfo(patientId);
+      this.patientInfo.base = response.data.data;
     } catch (error) {
       if (isAxiosError(error)) {
         this.patientInfo.base = {
@@ -228,12 +223,7 @@ export class PatientModel {
   public static fetchProtector = async (patientId: number) => {
     try {
       const response = await getProtectorInfo(patientId);
-
-      this.patientInfo.protector = {
-        id: response.data.data.id,
-        name: response.data.data.name,
-        tel: response.data.data.tel,
-      };
+      this.patientInfo.protector = response.data.data;
     } catch (error) {
       if (isAxiosError(error)) {
         this.patientInfo.protector = {
@@ -248,7 +238,6 @@ export class PatientModel {
   public static fetchLastETC = async (patientId: number) => {
     try {
       const response = await getLatestDoses(patientId);
-
       this.patientInfo.medication.etc = { list: response.data.data, page: 1, total: response.data.data.length };
     } catch (error) {
       if (isAxiosError(error)) {
@@ -264,7 +253,6 @@ export class PatientModel {
   public static fetchETC = async (patientId: number) => {
     try {
       const response = await getDoses(patientId, this.patientInfo.medication.etc.page);
-
       this.patientInfo.medication.etc = {
         list: response.data.data.datalist,
         page: response.data.data.pageInfo.page + 1,
@@ -284,7 +272,6 @@ export class PatientModel {
   public static fetchBeersList = async (patientId: number) => {
     try {
       const response = await getBeersDoses(patientId, this.patientInfo.medication.beersCriteriaMedicines.page);
-
       this.patientInfo.medication.beersCriteriaMedicines = {
         list: response.data.data.datalist,
         page: response.data.data.pageInfo.page + 1,
@@ -304,7 +291,6 @@ export class PatientModel {
   public static fetchAnticholinergic = async (patientId: number) => {
     try {
       const response = await getAnticholinergicDoses(patientId, this.patientInfo.medication.anticholinergicDrugs.page);
-
       this.patientInfo.medication.anticholinergicDrugs = {
         list: response.data.data.datalist,
         page: response.data.data.pageInfo.page + 1,
@@ -321,16 +307,14 @@ export class PatientModel {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  public static fetchARMS = async (patientId: number) => {
-    this.patientInfo.medication.armsProgress = [
-      { score: 40, createdAt: [2023, 1, 1] },
-      { score: 36, createdAt: [2023, 4, 1] },
-      { score: 42, createdAt: [2023, 7, 1] },
-      { score: 46, createdAt: [2023, 10, 1] },
-    ];
-  };
+  // public static fetchARMS = async (patientId: number) => {
+  //   this.patientInfo.medication.armsProgress = [
+  //     { score: 40, createdAt: [2023, 1, 1] },
+  //     { score: 36, createdAt: [2023, 4, 1] },
+  //     { score: 42, createdAt: [2023, 7, 1] },
+  //     { score: 46, createdAt: [2023, 10, 1] },
+  //   ];
+  // };
 
   public static fetchGeriatricSyndrome = async (patientId: number) => {
     try {

@@ -49,6 +49,35 @@ const BottomButtonCss = css`
   }
 `;
 
+export const DepartmentInput = styled.input`
+  & {
+    border-radius: 8px;
+    border: 2px solid;
+    border-color: var(--Gray2, #e9e9ee);
+    color: var(--Black, #151515);
+    font-family: Pretendard, serif;
+    font-size: 1.1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2rem;
+    outline: none;
+    padding: 0.6rem 1rem;
+  }
+
+  &::placeholder {
+    color: var(--Gray3, #c6c6cf);
+    font-family: Pretendard, serif;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 2rem;
+  }
+
+  &:focus {
+    border-color: var(--Sub1, #5588fd);
+  }
+`;
+
 export const OkayButton = styled.button`
   ${BottomButtonCss}
   & {

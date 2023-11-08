@@ -18,11 +18,7 @@ export function DashboardPage() {
       path: "/expert/patient",
       icon: <S.PatientIcon />,
       title: "환자 정보",
-      description: (
-        <span>
-          <S.Blue>{"홍길동"}</S.Blue>님께 테스트 결과를 보냈거나 상담을 요청한 환자들의 정보를 열람합니다.
-        </span>
-      ),
+      description: "전문가님께 테스트 결과를 보냈거나 상담을 요청한 환자들의 정보를 열람합니다.",
     },
     {
       title: "출시 예정",

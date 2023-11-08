@@ -5,6 +5,7 @@ import LocalPharmacyIcon from "@mui/icons-material/LocalPharmacy";
 import Tooltip from "@mui/material/Tooltip";
 import { TAdminExpertItem } from "@type/response/admin-expert-item.ts";
 import { getDateStringFromArray } from "@util/get-date-string-from-array.ts";
+import { formatTel } from "@util/format-tel.ts";
 
 type TExpertItemProps = {
   expertInfo: TAdminExpertItem;
@@ -35,7 +36,7 @@ function AdminExpertItem({ expertInfo }: TExpertItemProps) {
         <Tooltip title={belong} followCursor>
           <S.FacilityNameSpan>{belong}</S.FacilityNameSpan>
         </Tooltip>
-        <S.TelephoneSpan>{tel}</S.TelephoneSpan>
+        <S.TelephoneSpan>{formatTel(tel)}</S.TelephoneSpan>
         <S.RequestDateSpan>{getDateStringFromArray(requestedAt)}</S.RequestDateSpan>
       </S.StyledLink>
     </S.OuterDiv>

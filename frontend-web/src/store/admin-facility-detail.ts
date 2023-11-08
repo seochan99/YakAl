@@ -26,6 +26,16 @@ export class AdminFacilityDetailModel {
     try {
       const response = await getFacilityInfo(facilityId);
       this.facilityDetail = response.data.data;
+
+      if (response.data.data.tel !== null) {
+        this.facilityDetail.tel = response.data.data.tel.trim();
+      }
+      if (response.data.data.clinicHours !== null) {
+        this.facilityDetail.clinicHours = response.data.data.clinicHours.trim();
+      }
+      if (response.data.data.features !== null) {
+        this.facilityDetail.features = response.data.data.features.trim();
+      }
     } catch (e) {
       this.facilityDetail = null;
     }
