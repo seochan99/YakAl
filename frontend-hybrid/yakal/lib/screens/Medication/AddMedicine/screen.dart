@@ -13,12 +13,17 @@ import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 
-class AddMedicineScreen extends StatelessWidget {
+class AddMedicineScreen extends StatefulWidget {
+  const AddMedicineScreen({super.key});
+
+  @override
+  State<AddMedicineScreen> createState() => _AddMedicineScreenState();
+}
+
+class _AddMedicineScreenState extends State<AddMedicineScreen> {
   final addDoseViewModel = Get.find<AddDoseViewModel>();
   final addDoseReviewViewModel = Get.put(AddDoseReviewViewModel());
   final doseAddCalendarController = Get.put(DoseAddCalenderController());
-
-  AddMedicineScreen({super.key});
 
   void Function() _onTapSend(
       BuildContext context, DateTime start, DateTime end) {
@@ -27,7 +32,9 @@ class AddMedicineScreen extends StatelessWidget {
 
       context.loaderOverlay.show();
 
-      addDoseViewModel.addSchedule(start, end).then((value) {
+      addDoseViewModel
+          .addSchedule(start, end, addDoseReviewViewModel.isOcr.value)
+          .then((value) {
         addDoseReviewViewModel.setIsLoading(false);
 
         context.loaderOverlay.hide();
@@ -62,6 +69,15 @@ class AddMedicineScreen extends StatelessWidget {
         Get.offAllNamed("/");
       });
     };
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    addDoseReviewViewModel.setIsOcr(
+      Get.arguments["isOcr"] as bool,
+    );
   }
 
   @override

@@ -220,8 +220,13 @@ class AddDoseViewModel extends GetxController {
     return item.kdCode != "" && item.atcCode != "";
   }
 
-  Future<EAddScheduleResult> addSchedule(DateTime start, DateTime end) async {
-    var result = _addMedicineProvider.addSchedule(_groupList, start, end);
+  Future<EAddScheduleResult> addSchedule(
+    DateTime start,
+    DateTime end,
+    bool isOcr,
+  ) async {
+    var result =
+        _addMedicineProvider.addSchedule(_groupList, start, end, isOcr);
 
     if (kDebugMode) {
       print("[Result Of Adding Schedule] $result");

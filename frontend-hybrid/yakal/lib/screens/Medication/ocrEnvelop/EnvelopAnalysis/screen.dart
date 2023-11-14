@@ -46,6 +46,9 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
         if (isSuccess) {
           Get.offNamed(
             "/pill/add/final",
+            arguments: {
+              "isOcr": true,
+            },
             preventDuplicates: false,
           );
         } else {

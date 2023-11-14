@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
@@ -50,9 +51,28 @@ class AddMedicineProvider {
     List<DoseGroupModel> groupList,
     DateTime start,
     DateTime end,
+    bool isOcr,
   ) async {
+    int? prescriptionId;
+
+    if (!isOcr) {
+      final dio = await authDioWithContext();
+      final response = await dio.get("/prescriptions");
+      final responseList = response.data["data"] as List;
+
+      if (responseList.isNotEmpty) {
+        prescriptionId = responseList[0].id;
+      } else {
+        if (kDebugMode) {
+          print("🚨 [Add Medicine Error] Prescription Is Not Found.");
+        }
+
+        return EAddScheduleResult.FAIL;
+      }
+    }
+
     var requestBody = <String, dynamic>{
-      "prescriptionId": null,
+      "prescriptionId": prescriptionId,
       "medicines": [],
     };
 
@@ -80,12 +100,20 @@ class AddMedicineProvider {
       }
     }
 
-    var dio = await authDioWithContext();
+    if (kDebugMode) {
+      print("🛫 [Add Medicine Request Body] $requestBody");
+    }
+
+    final dio = await authDioWithContext();
 
     try {
       var response = await dio.post("/prescriptions/doses", data: requestBody);
 
       var resultList = response.data["data"];
+
+      if (kDebugMode) {
+        print("🛬 [Add Medicine Response Body] $resultList");
+      }
 
       for (var resultItem in resultList) {
         if (!resultItem) {
