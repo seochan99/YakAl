@@ -20,32 +20,50 @@ class _EnvelopAnalysisScreenState extends State<EnvelopAnalysisScreen> {
   void initState() {
     super.initState();
 
-    var imagePath = Get.arguments["imagePath"];
+    final imagePath = Get.arguments["imagePath"];
 
     if (kDebugMode) {
       print("🎑 [Received Image Path] $imagePath");
     }
 
-    doseListViewModel.getMedicineInfoFromImagePath(imagePath).then((isSuccess) {
-      File(imagePath).delete();
-
-      if (isSuccess) {
-        Get.offNamed(
-          "/pill/add/final",
-          preventDuplicates: false,
+    doseListViewModel.getMedicineInfoFromImagePath(imagePath).then(
+      (isSuccess) {
+        File(imagePath).delete().then(
+          (_) {
+            if (kDebugMode) {
+              print("🗑️ Image File Dose Successfully Removed.");
+            }
+          },
+        ).onError(
+          (error, stackTrace) {
+            if (kDebugMode) {
+              print("❌ [Image File Removal Failure] $error");
+              print("StackTrace : $stackTrace");
+            }
+          },
         );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            content: Text('약 정보를 불러오는데 실패했습니다.'),
-            duration: Duration(seconds: 3),
-          ),
-        );
 
-        Get.offAllNamed("/");
-      }
-    });
+        if (isSuccess) {
+          Get.offNamed(
+            "/pill/add/final",
+            arguments: {
+              "isOcr": true,
+            },
+            preventDuplicates: false,
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              behavior: SnackBarBehavior.floating,
+              content: Text('약 정보를 불러오는데 실패했습니다.'),
+              duration: Duration(seconds: 3),
+            ),
+          );
+
+          Get.offAllNamed("/");
+        }
+      },
+    );
   }
 
   @override

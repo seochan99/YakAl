@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
 import 'package:yakal/models/Medication/dose_item_model.dart';
+import 'package:yakal/models/Medication/dose_modification_model.dart';
 import 'package:yakal/provider/Medicine/add_medicine_provider.dart';
 import 'package:yakal/provider/Medicine/envelop_analysis_provider.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
@@ -14,7 +15,6 @@ class AddDoseViewModel extends GetxController {
       EnvelopAnalysisProvider();
 
   final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
-  final RxList<DoseItemModel> _notAddableList = <DoseItemModel>[].obs;
 
   Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
     final medicationList =
@@ -62,17 +62,39 @@ class AddDoseViewModel extends GetxController {
     return true;
   }
 
+  Future<void> setOneItem(String name, String kimsCode) async {
+    final base64Image =
+        await _addMedicineProvider.getMedicineBase64Image(kimsCode);
+
+    _groupList.clear();
+    _groupList.add(
+      DoseGroupModel(
+        doseList: [
+          DoseItemModel(
+            name: name,
+            kdCode: "",
+            atcCode: "",
+            base64Image: base64Image ?? "",
+          ),
+        ],
+        takingTime: [
+          true,
+          true,
+          true,
+          false,
+        ],
+      ),
+    );
+
+    _groupList.refresh();
+  }
+
   void clear() {
     _groupList.clear();
-    _notAddableList.clear();
   }
 
   List<DoseGroupModel> getGroupList() {
     return _groupList;
-  }
-
-  DoseItemModel getNotAddableItem(int index) {
-    return _notAddableList[index];
   }
 
   bool canSend() {
@@ -97,10 +119,6 @@ class AddDoseViewModel extends GetxController {
 
   int getGroupCount() {
     return _groupList.length;
-  }
-
-  int getNotAddableCount() {
-    return _notAddableList.length;
   }
 
   void toggle(
@@ -144,21 +162,22 @@ class AddDoseViewModel extends GetxController {
     _groupList.refresh();
   }
 
-  List<dynamic> getModificationList() {
-    var groupList = _groupList;
-    var modificationList = [];
+  List<DoseModificationItemModel> getModificationList() {
+    var modificationList = <DoseModificationItemModel>[];
 
     var groupIndex = 0;
     var itemIndex = 0;
 
-    for (var groupItem in groupList) {
+    for (var groupItem in _groupList) {
       for (var doseItem in groupItem.doseList) {
-        modificationList.add({
-          "item": doseItem,
-          "groupIndex": groupIndex,
-          "itemIndex": itemIndex,
-          "takingTime": groupItem.takingTime.toList(),
-        });
+        modificationList.add(
+          DoseModificationItemModel(
+            item: doseItem,
+            groupIndex: groupIndex,
+            itemIndex: itemIndex,
+            takingTime: groupItem.takingTime.toList(),
+          ),
+        );
 
         ++itemIndex;
       }
@@ -166,8 +185,7 @@ class AddDoseViewModel extends GetxController {
       itemIndex = 0;
     }
 
-    modificationList.sort((e1, e2) =>
-        (e1["item"].name as String).compareTo(e2["item"].name as String));
+    modificationList.sort((e1, e2) => (e1.item.name).compareTo(e2.item.name));
 
     return modificationList;
   }
@@ -202,8 +220,13 @@ class AddDoseViewModel extends GetxController {
     return item.kdCode != "" && item.atcCode != "";
   }
 
-  Future<EAddScheduleResult> addSchedule(DateTime start, DateTime end) async {
-    var result = _addMedicineProvider.addSchedule(_groupList, start, end);
+  Future<EAddScheduleResult> addSchedule(
+    DateTime start,
+    DateTime end,
+    bool isOcr,
+  ) async {
+    var result =
+        _addMedicineProvider.addSchedule(_groupList, start, end, isOcr);
 
     if (kDebugMode) {
       print("[Result Of Adding Schedule] $result");

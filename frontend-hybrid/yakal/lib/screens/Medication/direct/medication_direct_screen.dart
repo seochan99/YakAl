@@ -20,17 +20,19 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   bool isLoading = false;
 
   final _addMedicineProvider = AddMedicineProvider();
-  final TextEditingController medicinController = TextEditingController();
+  final TextEditingController medicineController = TextEditingController();
   List<SearchMedicineModel> medicines = [];
   final BehaviorSubject<String> _searchSubject = BehaviorSubject<String>();
   final doseListViewModel = Get.put(AddDoseViewModel());
 
   _MedicationAddScreenState() {
-    _searchSubject
-        .debounceTime(const Duration(milliseconds: 500))
-        .listen((keyword) {
-      if (keyword.isNotEmpty) _searchMedicines(keyword);
-    });
+    _searchSubject.debounceTime(const Duration(milliseconds: 500)).listen(
+      (keyword) {
+        if (keyword.isNotEmpty) {
+          _searchMedicines(keyword);
+        }
+      },
+    );
   }
 
   // 약 검색
@@ -57,8 +59,8 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   @override
   void initState() {
     super.initState();
-    medicinController.addListener(() {
-      _searchSubject.add(medicinController.text);
+    medicineController.addListener(() {
+      _searchSubject.add(medicineController.text);
     });
   }
 
@@ -69,22 +71,28 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   }
 
   void _handleButtonPress() {
-    // 약 정보는 ViewModel을 통해 넘김
-    // doseListViewModel.setGroupList([
-    //   {
-    //     "name": medicinController.text,
-    //     "code": selectedMedicineCode,
-    //   },
-    // ]);
+    setState(() {
+      isLoading = true;
+    });
 
-    Get.toNamed(
-      "/pill/add/final",
-      preventDuplicates: false,
-    );
+    doseListViewModel
+        .setOneItem(medicineController.text, selectedMedicineCode)
+        .then((_) {
+      medicineController.clear();
 
-    // 약 추가 후 초기화
-    medicinController.clear();
-    selectedMedicineCode = "";
+      setState(() {
+        isLoading = false;
+        selectedMedicineCode = "";
+      });
+
+      Get.toNamed(
+        "/pill/add/final",
+        arguments: {
+          "isOcr": false,
+        },
+        preventDuplicates: false,
+      );
+    });
   }
 
   @override
@@ -109,7 +117,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                       children: [
                         // 약 이름 입력
                         TextField(
-                          controller: medicinController,
+                          controller: medicineController,
                           decoration: InputDecoration(
                             labelText: "약 이름",
                             border: OutlineInputBorder(
@@ -140,7 +148,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                                   return ListTile(
                                     // medicinController.text와 같다면 배경색
                                     textColor:
-                                        medicine.name == medicinController.text
+                                        medicine.name == medicineController.text
                                             ? ColorStyles.main
                                             : ColorStyles.black,
 
@@ -148,7 +156,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                                     onTap: () {
                                       selectedMedicineName = medicine.name;
                                       selectedMedicineCode = medicine.code;
-                                      medicinController.text = medicine.name;
+                                      medicineController.text = medicine.name;
                                     },
                                   );
                                 }).toList(),
@@ -167,7 +175,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
                 30,
               ),
               child: ValueListenableBuilder<TextEditingValue>(
-                valueListenable: medicinController,
+                valueListenable: medicineController,
                 builder: (context, value, child) {
                   final isButtonEnabled =
                       value.text.isNotEmpty && value.text.length > 1;
