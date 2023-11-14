@@ -62,6 +62,33 @@ class AddDoseViewModel extends GetxController {
     return true;
   }
 
+  Future<void> setOneItem(String name, String kimsCode) async {
+    final base64Image =
+        await _addMedicineProvider.getMedicineBase64Image(kimsCode);
+
+    _groupList.clear();
+    _groupList.add(
+      DoseGroupModel(
+        doseList: [
+          DoseItemModel(
+            name: name,
+            kdCode: "",
+            atcCode: "",
+            base64Image: base64Image ?? "",
+          ),
+        ],
+        takingTime: [
+          true,
+          true,
+          true,
+          false,
+        ],
+      ),
+    );
+
+    _groupList.refresh();
+  }
+
   void clear() {
     _groupList.clear();
     _notAddableList.clear();

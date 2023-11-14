@@ -22,7 +22,7 @@ class AddMedicineProvider {
 
       Map<String, dynamic> jsonResponse = response.data;
 
-      String image = jsonResponse['DrugInfo']['IdentaImage'] ?? "";
+      String? image = jsonResponse['DrugInfo']['IdentaImage'];
       return image;
     } on DioException {
       return null;
