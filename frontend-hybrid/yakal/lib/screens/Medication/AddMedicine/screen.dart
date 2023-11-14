@@ -13,26 +13,22 @@ import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
 
-class AddMedicineScreen extends StatefulWidget {
+class AddMedicineScreen extends StatelessWidget {
   final addDoseViewModel = Get.find<AddDoseViewModel>();
   final addDoseReviewViewModel = Get.put(AddDoseReviewViewModel());
   final doseAddCalendarController = Get.put(DoseAddCalenderController());
 
   AddMedicineScreen({super.key});
 
-  @override
-  State<AddMedicineScreen> createState() => _AddMedicineScreenState();
-}
-
-class _AddMedicineScreenState extends State<AddMedicineScreen> {
-  void Function() _onTapSend(DateTime start, DateTime end) {
+  void Function() _onTapSend(
+      BuildContext context, DateTime start, DateTime end) {
     return () {
-      widget.addDoseReviewViewModel.setIsLoading(true);
+      addDoseReviewViewModel.setIsLoading(true);
 
       context.loaderOverlay.show();
 
-      widget.addDoseViewModel.addSchedule(start, end).then((value) {
-        widget.addDoseReviewViewModel.setIsLoading(false);
+      addDoseViewModel.addSchedule(start, end).then((value) {
+        addDoseReviewViewModel.setIsLoading(false);
 
         context.loaderOverlay.hide();
 
@@ -62,7 +58,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           ),
         );
 
-        widget.addDoseViewModel.clear();
+        addDoseViewModel.clear();
         Get.offAllNamed("/");
       });
     };
@@ -70,6 +66,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
 
   @override
   Widget build(BuildContext context) {
+    /* 로딩 상태를 표현하기 위한 LoaderOverlay */
     return LoaderOverlay(
       child: OuterFrame(
         outOfSafeAreaColor: ColorStyles.white,
@@ -82,6 +79,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           padding: const EdgeInsets.all(30.0),
           child: Column(
             children: [
+              /* 최상단 안내 문구 */
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -99,74 +97,98 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               const SizedBox(
                 height: 36,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (widget.addDoseReviewViewModel.isModificationMode.value)
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 8.0,
-                          horizontal: 10.0,
-                        ),
-                        splashFactory: NoSplash.splashFactory,
-                        foregroundColor: ColorStyles.gray4,
-                        backgroundColor: ColorStyles.gray1,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () {
-                        showModalBottomSheet(
-                          context: context,
-                          isScrollControlled: true,
-                          barrierColor: const Color.fromRGBO(98, 98, 114, 0.20),
-                          builder: (context) {
-                            return Container(
-                              width: MediaQuery.of(context).size.width,
+              /* 안내 문구 바로 아래의 버튼 바 */
+              Obx(() {
+                /* duration: 선택한 기간 일수 */
+                final duration = doseAddCalendarController.getDuration();
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    addDoseReviewViewModel.isModificationMode.value
+                        ?
+                        /* 수정 모드인 경우 'XX일 복용' 버튼을 누르면 캘린더 출현 */
+                        TextButton(
+                            style: TextButton.styleFrom(
                               padding: const EdgeInsets.symmetric(
-                                vertical: 30.0,
-                                horizontal: 20.0,
+                                vertical: 8.0,
+                                horizontal: 10.0,
                               ),
-                              decoration: const BoxDecoration(
-                                color: ColorStyles.white,
-                                borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(20.0),
-                                  topRight: Radius.circular(20.0),
-                                ),
+                              splashFactory: NoSplash.splashFactory,
+                              foregroundColor: ColorStyles.gray4,
+                              backgroundColor: ColorStyles.gray1,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  const DoseAddCalendar(),
-                                  const SizedBox(
-                                    height: 24,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: BottomButton(
-                                          "완료",
-                                          onPressed: () {
-                                            Get.back();
-                                          },
-                                          backgroundColor: ColorStyles.main,
-                                          color: ColorStyles.white,
-                                        ),
+                            ),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                context: context,
+                                isScrollControlled: true,
+                                barrierColor:
+                                    const Color.fromRGBO(98, 98, 114, 0.20),
+                                builder: (context) {
+                                  return Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 30.0,
+                                      horizontal: 20.0,
+                                    ),
+                                    decoration: const BoxDecoration(
+                                      color: ColorStyles.white,
+                                      borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(20.0),
+                                        topRight: Radius.circular(20.0),
                                       ),
-                                    ],
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const DoseAddCalendar(),
+                                        const SizedBox(
+                                          height: 24,
+                                        ),
+                                        Row(
+                                          children: [
+                                            Expanded(
+                                              child: BottomButton(
+                                                "완료",
+                                                onPressed: () {
+                                                  Get.back();
+                                                },
+                                                backgroundColor:
+                                                    ColorStyles.main,
+                                                color: ColorStyles.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            child: Obx(
+                              () {
+                                var duration =
+                                    doseAddCalendarController.getDuration();
+                                return Text(
+                                  duration == 0
+                                      ? "기간을 정해야 합니다."
+                                      : "$duration일 복약",
+                                  style: const TextStyle(
+                                    color: ColorStyles.gray5,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    height: 1,
                                   ),
-                                ],
-                              ),
-                            );
-                          },
-                        );
-                      },
-                      child: Obx(
-                        () {
-                          var duration =
-                              widget.doseAddCalendarController.getDuration();
-                          return Text(
+                                );
+                              },
+                            ),
+                          )
+                        :
+                        /* 수정 모드가 아닌 경우 'XX일 복용' 은 버튼이 아닌 일반 텍스트 */
+                        Text(
                             duration == 0 ? "기간을 정해야 합니다." : "$duration일 복약",
                             style: const TextStyle(
                               color: ColorStyles.gray5,
@@ -174,91 +196,73 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                               fontWeight: FontWeight.w700,
                               height: 1,
                             ),
-                          );
-                        },
-                      ),
-                    )
-                  else
-                    Obx(
-                      () {
-                        var duration =
-                            widget.doseAddCalendarController.getDuration();
-                        return Text(
-                          duration == 0 ? "기간을 정해야 합니다." : "$duration일 복약",
-                          style: const TextStyle(
-                            color: ColorStyles.gray5,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w700,
-                            height: 1,
                           ),
-                        );
-                      },
-                    ),
-                  widget.addDoseReviewViewModel.isModificationMode.value
-                      ? Container()
-                      : TextButton(
-                          style: TextButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 8.0,
-                              horizontal: 10.0,
+                    /* 수정 모드가 아닐 경우만 기간/시간 수정 버튼 출혅 */
+                    addDoseReviewViewModel.isModificationMode.value
+                        ? Container()
+                        : TextButton(
+                            style: TextButton.styleFrom(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8.0,
+                                horizontal: 10.0,
+                              ),
+                              splashFactory: NoSplash.splashFactory,
+                              foregroundColor: ColorStyles.sub1,
+                              backgroundColor: ColorStyles.sub3,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
                             ),
-                            splashFactory: NoSplash.splashFactory,
-                            foregroundColor: ColorStyles.sub1,
-                            backgroundColor: ColorStyles.sub3,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
+                            onPressed: addDoseReviewViewModel.switchMode,
+                            child: const Text(
+                              "기간/시간 수정",
+                              style: TextStyle(
+                                color: ColorStyles.main,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                          onPressed: widget.addDoseReviewViewModel.switchMode,
-                          child: Text(
-                            widget.addDoseReviewViewModel.isModificationMode
-                                    .value
-                                ? ""
-                                : "기간/시간 수정",
-                            style: const TextStyle(
-                              color: ColorStyles.main,
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                ],
-              ),
+                  ],
+                );
+              }),
               const SizedBox(
                 height: 24,
               ),
+              /* 모드에 따라 적절한 위젯을 보여줌. 수정 모드 -> DoseModificationWidget, 일반 모드 -> DoseListWidget */
               Expanded(
-                child: Obx(() {
-                  return (widget.addDoseReviewViewModel.isModificationMode.value
-                      ? DoseModificationWidget()
-                      : DoseListWidget());
-                }),
+                child: Obx(
+                  () {
+                    return (addDoseReviewViewModel.isModificationMode.value
+                        ? DoseModificationWidget()
+                        : DoseListWidget());
+                  },
+                ),
               ),
               const SizedBox(
                 height: 24,
               ),
+              /* 최하단 버튼 바 */
               Obx(
                 () {
-                  var start = widget.doseAddCalendarController.rangeStart.value;
-                  var end = widget.doseAddCalendarController.rangeEnd.value;
+                  var start = doseAddCalendarController.rangeStart.value;
+                  var end = doseAddCalendarController.rangeEnd.value;
 
-                  var disabled =
-                      widget.doseAddCalendarController.getDuration() == 0 ||
-                          start == null ||
-                          end == null ||
-                          !widget.addDoseViewModel.canSend() ||
-                          widget
-                              .addDoseReviewViewModel.isModificationMode.value;
+                  var disabled = doseAddCalendarController.getDuration() == 0 ||
+                      start == null ||
+                      end == null ||
+                      !addDoseViewModel.canSend() ||
+                      addDoseReviewViewModel.isModificationMode.value;
 
                   return Row(
                     children: [
+                      /* 취소 버튼 */
                       Flexible(
                         flex: 1,
                         fit: FlexFit.tight,
                         child: BottomButton(
                           "취소",
-                          onPressed: widget
-                                  .addDoseReviewViewModel.isLoading.value
+                          onPressed: addDoseReviewViewModel.isLoading.value
                               ? null
                               : () {
                                   showDialog(
@@ -285,24 +289,22 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                       const SizedBox(
                         width: 16,
                       ),
+                      /* 수정 완료 및 추가하기 버튼 */
                       Flexible(
                         flex: 2,
                         fit: FlexFit.tight,
                         child: BottomButton(
-                          widget.addDoseReviewViewModel.isModificationMode.value
+                          addDoseReviewViewModel.isModificationMode.value
                               ? "수정 완료"
                               : "추가하기",
-                          // onPressed: _isModificationMode || _isLoading
-                          //     ? _switchMode
-                          //     : _onTapSend(start, end),
-                          onPressed: disabled ||
-                                  widget.addDoseReviewViewModel.isLoading.value
-                              ? widget.addDoseReviewViewModel.switchMode
-                              : _onTapSend(start, end),
-                          backgroundColor: widget.addDoseReviewViewModel
-                                  .isModificationMode.value
-                              ? ColorStyles.sub1
-                              : ColorStyles.main,
+                          onPressed:
+                              disabled || addDoseReviewViewModel.isLoading.value
+                                  ? addDoseReviewViewModel.switchMode
+                                  : _onTapSend(context, start, end),
+                          backgroundColor:
+                              addDoseReviewViewModel.isModificationMode.value
+                                  ? ColorStyles.sub1
+                                  : ColorStyles.main,
                           color: ColorStyles.white,
                         ),
                       ),
