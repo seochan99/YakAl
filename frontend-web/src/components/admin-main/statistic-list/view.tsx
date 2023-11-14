@@ -3,7 +3,6 @@ import * as S from "./style.ts";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css"; // Import the styles for react-datepicker
 import { Chart, registerables } from "chart.js";
-import { authAxios } from "@/api/auth/instance.ts";
 
 Chart.register(...registerables);
 
@@ -25,18 +24,40 @@ function AdminStatisticDetail() {
   const chartRef = useRef<HTMLCanvasElement | null>(null);
 
   // 날짜 포멧 스티링으로 셋팅
-  const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, "0");
-    const day = date.getDate().toString().padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
+  // const formatDate = (date: Date): string => {
+  //   const year = date.getFullYear();
+  //   const month = (date.getMonth() + 1).toString().padStart(2, "0");
+  //   const day = date.getDate().toString().padStart(2, "0");
+  //   return `${year}-${month}-${day}`;
+  // };
 
   // 약물 목록 fetch하기
-  const fetchMedicineList = async (startDate: string, endDate: string) => {
+  // const fetchMedicineList = async (startDate: string, endDate: string) => {
+  const fetchMedicineList = async () => {
     try {
-      const response = await authAxios.get(`/admins/doses/between?startDate=${startDate}&endDate=${endDate}`);
-      setMedicineList(response.data.data.result);
+      // const response = await authAxios.get(`/admins/doses/between?startDate=${startDate}&endDate=${endDate}`);
+      setMedicineList([
+        {
+          name: "아세트아미노펜",
+          cnt: 48,
+          kdCode: "",
+        },
+        {
+          name: "동화디트로판정",
+          cnt: 32,
+          kdCode: "",
+        },
+        {
+          name: "아낙정",
+          cnt: 20,
+          kdCode: "",
+        },
+        {
+          name: "세토판정",
+          cnt: 8,
+          kdCode: "",
+        },
+      ]);
     } catch (e) {
       setMedicineList([]);
     }
@@ -109,7 +130,7 @@ function AdminStatisticDetail() {
   // 날짜 선택후 검색하기
   const handleSearch = () => {
     if (startDate && endDate) {
-      fetchMedicineList(formatDate(startDate), formatDate(endDate));
+      fetchMedicineList();
     } else {
       alert("올바른 날짜를 선택해주세요!");
     }
@@ -128,9 +149,10 @@ function AdminStatisticDetail() {
 
   // 날짜 목록에 따라 약물 리스트 가져오기
   useEffect(() => {
-    if (startDate !== null && endDate !== null) {
-      fetchMedicineList(formatDate(startDate), formatDate(endDate));
-    }
+    fetchMedicineList();
+    // if (startDate !== null && endDate !== null) {
+    //   fetchMedicineList();
+    // }
   }, [endDate, medicineList, startDate]);
 
   return (
