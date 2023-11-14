@@ -230,40 +230,44 @@ Future<Dio> authDioWithContext() async {
           final refreshToken = await storage.read(key: 'REFRESH_TOKEN');
           refreshDio.options.headers['Authorization'] = 'Bearer $refreshToken';
 
-          final refreshResponse = await refreshDio.post('/auth/reissue');
+          try {
+            final refreshResponse = await refreshDio.post('/auth/reissue');
 
-          if (kDebugMode) {
-            print("🎉 Token Refresh Successes!");
+            if (kDebugMode) {
+              print("🎉 Token Refresh Successes!");
+            }
+
+            final newAccessToken =
+                refreshResponse.data["data"]['accessToken']! as String;
+            final newRefreshToken =
+                refreshResponse.data["data"]['refreshToken']! as String;
+
+            await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
+            await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
+
+            error.requestOptions.headers['Authorization'] =
+                'Bearer $newAccessToken';
+
+            final againDio = Dio(BaseOptions(
+              baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
+              connectTimeout: const Duration(milliseconds: 5000),
+              receiveTimeout: const Duration(milliseconds: 3000),
+            ));
+
+            final clonedRequest = await againDio.request(
+              error.requestOptions.path,
+              options: Options(
+                method: error.requestOptions.method,
+                headers: error.requestOptions.headers,
+              ),
+              data: error.requestOptions.data,
+              queryParameters: error.requestOptions.queryParameters,
+            );
+
+            return handler.resolve(clonedRequest);
+          } on DioException catch (error) {
+            return handler.next(error);
           }
-
-          final newAccessToken =
-              refreshResponse.data["data"]['accessToken']! as String;
-          final newRefreshToken =
-              refreshResponse.data["data"]['refreshToken']! as String;
-
-          await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
-          await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
-
-          error.requestOptions.headers['Authorization'] =
-              'Bearer $newAccessToken';
-
-          final againDio = Dio(BaseOptions(
-            baseUrl: '${dotenv.env['YAKAL_SERVER_HOST']}',
-            connectTimeout: const Duration(milliseconds: 5000),
-            receiveTimeout: const Duration(milliseconds: 3000),
-          ));
-
-          final clonedRequest = await againDio.request(
-            error.requestOptions.path,
-            options: Options(
-              method: error.requestOptions.method,
-              headers: error.requestOptions.headers,
-            ),
-            data: error.requestOptions.data,
-            queryParameters: error.requestOptions.queryParameters,
-          );
-
-          return handler.resolve(clonedRequest);
         }
         return handler.next(error);
       },
