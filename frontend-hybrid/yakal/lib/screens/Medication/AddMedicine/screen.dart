@@ -1,22 +1,21 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:loader_overlay/loader_overlay.dart';
-import 'package:yakal/models/Home/e_taking_time.dart';
+import 'package:yakal/screens/Medication/AddMedicine/children/list_widget.dart';
+import 'package:yakal/screens/Medication/AddMedicine/children/modification_widget.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Medication/add_dose_review_view_model.dart';
 import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
 import 'package:yakal/widgets/Medication/dose_add_calendar.dart';
 import 'package:yakal/widgets/Medication/medicine_add_cancel_dialog.dart';
-import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
 class AddMedicineScreen extends StatefulWidget {
-  final doseListViewModel = Get.find<AddDoseViewModel>();
+  final addDoseViewModel = Get.find<AddDoseViewModel>();
+  final addDoseReviewViewModel = Get.put(AddDoseReviewViewModel());
   final doseAddCalendarController = Get.put(DoseAddCalenderController());
 
   AddMedicineScreen({super.key});
@@ -26,27 +25,14 @@ class AddMedicineScreen extends StatefulWidget {
 }
 
 class _AddMedicineScreenState extends State<AddMedicineScreen> {
-  bool _isModificationMode = false;
-  bool _isLoading = false;
-
-  void _switchMode() {
-    setState(() {
-      _isModificationMode = !_isModificationMode;
-    });
-  }
-
   void Function() _onTapSend(DateTime start, DateTime end) {
     return () {
-      setState(() {
-        _isLoading = true;
-      });
+      widget.addDoseReviewViewModel.setIsLoading(true);
 
       context.loaderOverlay.show();
 
-      widget.doseListViewModel.addSchedule(start, end).then((value) {
-        setState(() {
-          _isLoading = false;
-        });
+      widget.addDoseViewModel.addSchedule(start, end).then((value) {
+        widget.addDoseReviewViewModel.setIsLoading(false);
 
         context.loaderOverlay.hide();
 
@@ -64,7 +50,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
             break;
           default:
             assert(
-                false, "[Assertion Failed] Invaild EAddScheduleResult Value.");
+                false, "[Assertion Failed] Invalid EAddScheduleResult Value.");
             break;
         }
 
@@ -76,250 +62,10 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           ),
         );
 
-        widget.doseListViewModel.clear();
+        widget.addDoseViewModel.clear();
         Get.offAllNamed("/");
       });
     };
-  }
-
-  Widget _getListView() {
-    return ListView.separated(
-      itemCount: widget.doseListViewModel.getGroupCount() + 1,
-      itemBuilder: (context, groupIndex) {
-        if (groupIndex == widget.doseListViewModel.getGroupCount()) {
-          return widget.doseListViewModel.getNotAddableCount() == 0
-              ? Container()
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      "추가 불가 약물",
-                      style: TextStyle(
-                        color: ColorStyles.red,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    ListView.separated(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: widget.doseListViewModel.getNotAddableCount(),
-                      itemBuilder: (context, index) {
-                        var notAddableItem =
-                            widget.doseListViewModel.getNotAddableItem(index);
-
-                        return Column(
-                          children: [
-                            Row(
-                              children: [
-                                Container(
-                                    width: 64,
-                                    height: 32,
-                                    clipBehavior: Clip.hardEdge,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8.0),
-                                      color: ColorStyles.gray2,
-                                    ),
-                                    child: notAddableItem.base64Image != ""
-                                        ? Image.memory(
-                                            base64Decode(
-                                              notAddableItem.base64Image,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          )
-                                        : SvgPicture.asset(
-                                            "assets/icons/img-mainpill-default.svg",
-                                            width: 64,
-                                            height: 32,
-                                          )),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  notAddableItem.name,
-                                  style: const TextStyle(
-                                    color: ColorStyles.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) => const SizedBox(
-                        height: 16,
-                      ),
-                    ),
-                  ],
-                );
-        }
-
-        final String groupTime =
-            widget.doseListViewModel.getGroupTimeString(groupIndex);
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              groupTime,
-              style: const TextStyle(
-                color: ColorStyles.gray5,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount:
-                  widget.doseListViewModel.getItemCountOnGroup(groupIndex),
-              itemBuilder: (context, itemIndex) {
-                var oneMedicine = widget.doseListViewModel
-                    .getOneMedicine(groupIndex, itemIndex);
-                return Column(
-                  children: [
-                    Row(
-                      children: [
-                        Container(
-                            width: 64,
-                            height: 32,
-                            clipBehavior: Clip.hardEdge,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              color: ColorStyles.gray2,
-                            ),
-                            child: oneMedicine.base64Image != ""
-                                ? Image.memory(
-                                    base64Decode(
-                                      oneMedicine.base64Image,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  )
-                                : SvgPicture.asset(
-                                    "assets/icons/img-mainpill-default.svg",
-                                    width: 64,
-                                    height: 32,
-                                  )),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          oneMedicine.name,
-                          style: const TextStyle(
-                            color: ColorStyles.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => const SizedBox(
-                height: 16,
-              ),
-            ),
-          ],
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 48,
-      ),
-    );
-  }
-
-  Widget _getModificationView() {
-    var modificationList = widget.doseListViewModel.getModificationList();
-
-    return ListView.separated(
-      itemCount: modificationList.length,
-      itemBuilder: (context, index) {
-        var modificationElement = modificationList[index];
-        return Column(
-          children: [
-            Row(
-              children: [
-                Container(
-                    width: 64,
-                    height: 32,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: ColorStyles.gray2,
-                    ),
-                    child: modificationElement["item"].base64Image != null
-                        ? Image.memory(
-                            base64Decode(
-                              modificationElement["item"].base64Image!,
-                            ),
-                            fit: BoxFit.cover,
-                          )
-                        : SvgPicture.asset(
-                            "assets/icons/img-mainpill-default.svg",
-                            width: 64,
-                            height: 32,
-                          )),
-                const SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  modificationElement["item"].name,
-                  style: const TextStyle(
-                    color: ColorStyles.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: List.generate(
-                ETakingTime.values.sublist(0, 4).length,
-                (index) {
-                  return Row(
-                    children: [
-                      TakingTimeButton(
-                        onChanged: () {
-                          widget.doseListViewModel.toggle(
-                            modificationElement["groupIndex"],
-                            modificationElement["itemIndex"],
-                            ETakingTime.values[index],
-                            !modificationElement["takingTime"][index],
-                          );
-                        },
-                        isTaking: modificationElement["takingTime"][index],
-                        takingTime: ETakingTime.values[index],
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            )
-          ],
-        );
-      },
-      separatorBuilder: (context, index) => const SizedBox(
-        height: 24,
-      ),
-    );
   }
 
   @override
@@ -356,7 +102,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if (_isModificationMode)
+                  if (widget.addDoseReviewViewModel.isModificationMode.value)
                     TextButton(
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.symmetric(
@@ -448,7 +194,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         );
                       },
                     ),
-                  _isModificationMode
+                  widget.addDoseReviewViewModel.isModificationMode.value
                       ? Container()
                       : TextButton(
                           style: TextButton.styleFrom(
@@ -463,9 +209,12 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          onPressed: _switchMode,
+                          onPressed: widget.addDoseReviewViewModel.switchMode,
                           child: Text(
-                            _isModificationMode ? "" : "기간/시간 수정",
+                            widget.addDoseReviewViewModel.isModificationMode
+                                    .value
+                                ? ""
+                                : "기간/시간 수정",
                             style: const TextStyle(
                               color: ColorStyles.main,
                               fontSize: 16,
@@ -480,9 +229,9 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               ),
               Expanded(
                 child: Obx(() {
-                  return (_isModificationMode
-                      ? _getModificationView()
-                      : _getListView());
+                  return (widget.addDoseReviewViewModel.isModificationMode.value
+                      ? DoseModificationWidget()
+                      : DoseListWidget());
                 }),
               ),
               const SizedBox(
@@ -497,8 +246,9 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                       widget.doseAddCalendarController.getDuration() == 0 ||
                           start == null ||
                           end == null ||
-                          !widget.doseListViewModel.canSend() ||
-                          _isModificationMode;
+                          !widget.addDoseViewModel.canSend() ||
+                          widget
+                              .addDoseReviewViewModel.isModificationMode.value;
 
                   return Row(
                     children: [
@@ -507,7 +257,8 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         fit: FlexFit.tight,
                         child: BottomButton(
                           "취소",
-                          onPressed: _isLoading
+                          onPressed: widget
+                                  .addDoseReviewViewModel.isLoading.value
                               ? null
                               : () {
                                   showDialog(
@@ -538,14 +289,18 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                         flex: 2,
                         fit: FlexFit.tight,
                         child: BottomButton(
-                          _isModificationMode ? "수정 완료" : "추가하기",
+                          widget.addDoseReviewViewModel.isModificationMode.value
+                              ? "수정 완료"
+                              : "추가하기",
                           // onPressed: _isModificationMode || _isLoading
                           //     ? _switchMode
                           //     : _onTapSend(start, end),
-                          onPressed: disabled || _isLoading
-                              ? _switchMode
+                          onPressed: disabled ||
+                                  widget.addDoseReviewViewModel.isLoading.value
+                              ? widget.addDoseReviewViewModel.switchMode
                               : _onTapSend(start, end),
-                          backgroundColor: _isModificationMode
+                          backgroundColor: widget.addDoseReviewViewModel
+                                  .isModificationMode.value
                               ? ColorStyles.sub1
                               : ColorStyles.main,
                           color: ColorStyles.white,
