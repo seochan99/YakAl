@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 
 class DoseListWidget extends StatelessWidget {
   final AddDoseViewModel addDoseViewModel = Get.find<AddDoseViewModel>();

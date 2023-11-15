@@ -89,6 +89,11 @@ class AddDoseViewModel extends GetxController {
     _groupList.refresh();
   }
 
+  void deleteItem(int groupIndex, int itemIndex) {
+    _groupList[groupIndex].doseList.removeAt(itemIndex);
+    _groupList.refresh();
+  }
+
   void clear() {
     _groupList.clear();
   }

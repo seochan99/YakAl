@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/provider/Medicine/add_medicine_provider.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
 class MedicationAddScreen extends StatefulWidget {

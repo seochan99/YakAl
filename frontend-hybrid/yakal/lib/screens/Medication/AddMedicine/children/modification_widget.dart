@@ -5,18 +5,18 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
 class DoseModificationWidget extends StatelessWidget {
-  final AddDoseViewModel addDoseViewModel = Get.find<AddDoseViewModel>();
+  final AddDoseViewModel _addDoseViewModel = Get.find<AddDoseViewModel>();
 
   DoseModificationWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
     /* 현재 약 목록에서 그룹 안에 존재하는 중첩 아이템들을 하나의 배열로 평탄화 */
-    final modificationList = addDoseViewModel.getModificationList();
+    final modificationList = _addDoseViewModel.getModificationList();
 
     /* 현재 약 목록의 복용 시간을 수정 가능하도록 출력 */
     return ListView.separated(
@@ -27,39 +27,64 @@ class DoseModificationWidget extends StatelessWidget {
           children: [
             /* 약 목록 하나를 출력하는 Row */
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                /* 약 사진 (64 by 32) */
-                Container(
-                    width: 64,
-                    height: 32,
-                    clipBehavior: Clip.hardEdge,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.0),
-                      color: ColorStyles.gray2,
-                    ),
-                    child: modificationElement.item.base64Image.isNotEmpty
-                        ? Image.memory(
-                            base64Decode(
-                              modificationElement.item.base64Image,
+                Row(
+                  children: [
+                    /* 약 사진 (64 by 32) */
+                    Container(
+                      width: 64,
+                      height: 32,
+                      clipBehavior: Clip.hardEdge,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        color: ColorStyles.gray2,
+                      ),
+                      child: modificationElement.item.base64Image.isNotEmpty
+                          ? Image.memory(
+                              base64Decode(
+                                modificationElement.item.base64Image,
+                              ),
+                              fit: BoxFit.cover,
+                            )
+                          : SvgPicture.asset(
+                              "assets/icons/img-mainpill-default.svg",
+                              width: 64,
+                              height: 32,
                             ),
-                            fit: BoxFit.cover,
-                          )
-                        : SvgPicture.asset(
-                            "assets/icons/img-mainpill-default.svg",
-                            width: 64,
-                            height: 32,
-                          )),
-                const SizedBox(
-                  width: 10,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    /* 약 이름 */
+                    Text(
+                      modificationElement.item.name,
+                      style: const TextStyle(
+                        color: ColorStyles.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
                 ),
-                /* 약 이름 */
-                Text(
-                  modificationElement.item.name,
-                  style: const TextStyle(
-                    color: ColorStyles.black,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
+                /* 삭제 버튼 */
+                IconButton(
+                  style: IconButton.styleFrom(
+                    splashFactory: NoSplash.splashFactory,
                   ),
+                  padding: const EdgeInsets.all(0.0),
+                  icon: SvgPicture.asset(
+                    "assets/icons/icon-bin.svg",
+                    width: 20,
+                    height: 20,
+                  ),
+                  color: ColorStyles.main,
+                  onPressed: () {
+                    _addDoseViewModel.deleteItem(
+                      modificationElement.groupIndex,
+                      modificationElement.itemIndex,
+                    );
+                  },
                 ),
               ],
             ),
@@ -73,7 +98,7 @@ class DoseModificationWidget extends StatelessWidget {
                       /* 복용 시간 수정 버튼 */
                       TakingTimeButton(
                         onChanged: () {
-                          addDoseViewModel.toggle(
+                          _addDoseViewModel.toggle(
                             modificationElement.groupIndex,
                             modificationElement.itemIndex,
                             ETakingTime.values[index],

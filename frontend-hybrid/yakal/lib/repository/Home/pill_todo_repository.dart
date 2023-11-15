@@ -85,8 +85,10 @@ class PillTodoRepository {
         dateTime, takingTime, isTaken);
   }
 
-  Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
-    return await _pillTodoProvider.updatePillTodoChildren(doseId, isTaken);
+  Future<bool> updatePillTodoChildren(
+      int doseId, ETakingTime takingTime, bool isTaken) async {
+    return await _pillTodoProvider.updatePillTodoChildren(
+        doseId, takingTime, isTaken);
   }
 
   Future<bool> getIsDetail() async {

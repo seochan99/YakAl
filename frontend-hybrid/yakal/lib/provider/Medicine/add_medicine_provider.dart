@@ -24,7 +24,7 @@ class AddMedicineProvider {
       Map<String, dynamic> jsonResponse = response.data;
 
       String? image = jsonResponse['DrugInfo']['IdentaImage'];
-      return image;
+      return image == "" ? null : image;
     } on DioException {
       return null;
     }
@@ -170,6 +170,11 @@ class AddMedicineProvider {
 
   Future<String?> getBase64ImageFromName(String name) async {
     final searchResponse = await searchMedicine(name);
+
+    if (kDebugMode) {
+      print(
+          "[Medicine Search List] ${searchResponse.map((element) => element.name)}");
+    }
 
     if (searchResponse.isEmpty) {
       return null;

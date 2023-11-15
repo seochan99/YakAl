@@ -163,10 +163,15 @@ Future<Dio> authDioWithContext() async {
           (RequestOptions options, RequestInterceptorHandler handler) async {
         /* Set Access Token to Bearer Auth Header */
         final accessToken = await storage.read(key: 'ACCESS_TOKEN');
-        print("ACCESS_TOKEN $accessToken");
+
         if (accessToken == null) {
           get_x.Get.offAllNamed("/login");
           return;
+        }
+
+        /* Already Exist Token */
+        if (kDebugMode) {
+          print('🔑 [Already Exist Token] $accessToken');
         }
 
         options.headers['Authorization'] = 'Bearer $accessToken';
@@ -184,6 +189,8 @@ Future<Dio> authDioWithContext() async {
         if (kDebugMode) {
           print(
               '🛬 [${response.requestOptions.method}] ${response.requestOptions.path} | SUCCESS (${response.statusCode})');
+          print(
+              '🛬 [${response.requestOptions.method}] ${response.requestOptions.path} | BODY : ${response.data}');
         }
 
         return handler.next(response);
@@ -244,6 +251,11 @@ Future<Dio> authDioWithContext() async {
 
             await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
             await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
+
+            /* New Token */
+            if (kDebugMode) {
+              print('🔑 [New Token] $newAccessToken');
+            }
 
             error.requestOptions.headers['Authorization'] =
                 'Bearer $newAccessToken';

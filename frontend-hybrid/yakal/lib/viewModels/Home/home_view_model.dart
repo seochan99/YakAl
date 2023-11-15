@@ -146,7 +146,7 @@ class HomeViewModel extends GetxController implements PillTodoViewModel {
         .isTaken;
 
     _pillTodoRepository
-        .updatePillTodoChildren(todoId, !isTaken)
+        .updatePillTodoChildren(todoId, eTakingTime, !isTaken)
         .then((value) => {
               _pillTodoParents.value = _pillTodoParents.map((parent) {
                 if (parent.value.eTakingTime == eTakingTime) {
