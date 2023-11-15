@@ -52,6 +52,11 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
 
     Boolean existsByUserIdAndKDCodeAndDateAndExistDefaultTrue(Long userId, DoseName KDCode, LocalDate date);
 
+    Boolean existsByUserIdAndCustomNameAndDateAndExistMorningTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistAfternoonTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistEveningTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistDefaultTrue(Long userId,String customName, LocalDate date);
+
 
     @Query("select sum(case when d.existMorning = true then 1 else 0 end + " +
             "case when d.existAfternoon = true then 1 else 0 end + " +
