@@ -89,7 +89,7 @@ class PillTodoProvider {
       "/doses/taken/$doseId",
       data: {
         "isTaken": isTaken,
-        "dosingTime": takingTime.time,
+        "dosingTime": takingTime.toString().split(".").last,
       },
     );
 
