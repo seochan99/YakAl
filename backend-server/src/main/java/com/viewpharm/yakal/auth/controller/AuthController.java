@@ -9,7 +9,6 @@ import com.viewpharm.yakal.auth.service.AuthService;
 import com.viewpharm.yakal.base.dto.ResponseDto;
 import com.viewpharm.yakal.base.type.ELoginProvider;
 import com.viewpharm.yakal.base.type.EPlatform;
-import com.viewpharm.yakal.base.utils.OAuth2Util;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.Cookie;

@@ -201,7 +201,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/profile/wish",
-          page: () => const ProfileWishScreen(),
+          page: () => ProfileWishScreen(),
         ),
         GetPage(
           name: '/login',

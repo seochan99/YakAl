@@ -80,7 +80,8 @@ public enum ErrorCode {
     TOKEN_UNKNOWN_ERROR("4018", HttpStatus.UNAUTHORIZED, "알 수 없는 토큰입니다."),
 
     // Access Denied Error
-    ACCESS_DENIED_ERROR("4030", HttpStatus.FORBIDDEN, "액세스 권한이 없습니다.");
+    ACCESS_DENIED_ERROR("4030", HttpStatus.FORBIDDEN, "액세스 권한이 없습니다."),
+    AWS_S3_ERROR("4031", HttpStatus.FORBIDDEN, "AWS S3 오류입니다.");
 
     private final String code;
     private final HttpStatus httpStatus;
