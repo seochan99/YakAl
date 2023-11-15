@@ -1,5 +1,6 @@
 package com.viewpharm.yakal.user.domain;
 
+import com.viewpharm.yakal.desire.domain.Desire;
 import com.viewpharm.yakal.medicalestablishment.domain.ExpertCertification;
 import com.viewpharm.yakal.medicalestablishment.domain.MedicalEstablishment;
 import com.viewpharm.yakal.survey.domain.Answer;
@@ -145,6 +146,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Answer> answers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Desire> desires = new ArrayList<>();
 
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     private List<Guardian> protectedPerson;

@@ -1,6 +1,5 @@
 package com.viewpharm.yakal.prescription.domain;
 
-import com.viewpharm.yakal.base.type.EDosingTime;
 import com.viewpharm.yakal.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -80,6 +79,9 @@ public class Dose {
     @Column(name = "is_default_taken")
     private Boolean isDefaultTaken = false;
 
+    @Column(name ="custom_name")
+    private String customName;
+
     /**
      * MANY-TO-ONE RELATION
      */
@@ -103,7 +105,7 @@ public class Dose {
     @Builder
     public Dose(LocalDate date, Long pillCnt, Boolean isHalf, Boolean existMorning,
                 Boolean existAfternoon, Boolean existEvening, Boolean existDefault,
-                DoseName KDCode, Risk ATCCode, Prescription prescription, User user) {
+                DoseName KDCode, Risk ATCCode, Prescription prescription, User user,String customName) {
         this.date = date;
         this.pillCnt = pillCnt;
         this.isHalf = isHalf;
@@ -117,6 +119,7 @@ public class Dose {
         this.user = user;
         this.isDeleted = false;
         this.created = new Timestamp(System.currentTimeMillis());
+        this.customName = customName;
     }
 
     public void updateMorningTaken(final boolean isMorningTaken) {

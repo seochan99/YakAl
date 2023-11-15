@@ -1,6 +1,7 @@
 package com.viewpharm.yakal.prescription.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -20,6 +21,9 @@ public class OneMedicineScheduleDto {
 
     @JsonProperty("ATCCode")
     private String ATCCode;
+
+    @Nullable
+    private String customName;
 
     @Valid
     @NotNull

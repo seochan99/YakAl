@@ -11,6 +11,7 @@ public class OneTimeScheduleDto {
     final Long id;
     final String KDCode;
     final String dosename;
+    final String customname;
     final Risk ATCCode;
     final Boolean isTaken;
     final Boolean isOverlap;

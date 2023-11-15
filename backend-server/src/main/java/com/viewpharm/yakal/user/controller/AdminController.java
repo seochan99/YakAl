@@ -1,6 +1,8 @@
 package com.viewpharm.yakal.user.controller;
 
 import com.viewpharm.yakal.base.dto.ResponseDto;
+import com.viewpharm.yakal.desire.dto.response.DesireAllDto;
+import com.viewpharm.yakal.desire.service.DesireService;
 import com.viewpharm.yakal.medicalestablishment.dto.request.MedicalEstablishmentApproveDto;
 import com.viewpharm.yakal.medicalestablishment.service.ExpertCertificationService;
 import com.viewpharm.yakal.medicalestablishment.service.MedicalEstablishmentService;
@@ -14,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,6 +33,7 @@ public class AdminController {
     private final MedicalEstablishmentService medicalEstablishmentService;
     private final DoseService doseService;
     private final SurveyService surveyService;
+    private final DesireService desireService;
 
     @GetMapping("/medical-establishments")
     @Operation(summary = "의료기관 신청 목록 조회", description = "관리자가 의료기관 신청 목록을 조회한다")
@@ -78,13 +82,20 @@ public class AdminController {
 
     @GetMapping("doses/between")
     @Operation(summary = "가장 많이 먹은 약 통계")
-    public ResponseDto<List<?>> getMostDoses(@RequestParam LocalDate startDate,@RequestParam LocalDate endDate){
-        return ResponseDto.ok(doseService.findDosesTop10(startDate,endDate));
+    public ResponseDto<List<?>> getMostDoses(@RequestParam LocalDate startDate, @RequestParam LocalDate endDate) {
+        return ResponseDto.ok(doseService.findDosesTop10(startDate, endDate));
     }
 
     @GetMapping("statistic/arms")
     @Operation(summary = "arms")
-    public ResponseDto<List<AnswerRepository.RangeInfo>> getArmsRanges(){
+    public ResponseDto<List<AnswerRepository.RangeInfo>> getArmsRanges() {
         return ResponseDto.ok(surveyService.getSurveyRangesCnt());
     }
+
+    @GetMapping("/desires")
+    @Operation(summary = "약알에게 바라는점 목록 가져오기")
+    public ResponseDto<DesireAllDto> getDesireList(@RequestParam("order") String order, @RequestParam("num") Long num) {
+        return ResponseDto.ok(desireService.getDesireList(order, num));
+    }
+
 }
