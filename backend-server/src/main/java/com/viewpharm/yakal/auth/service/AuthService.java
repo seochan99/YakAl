@@ -25,14 +25,10 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
     private final OAuth2Util oAuth2Util;
     private final PrescriptionRepository prescriptionRepository;
-
-    @Value("${spring.image.path}")
-    private String FOLDER_PATH;
 
     public Map<String, String> getRedirectUrl(final ELoginProvider loginProvider) {
         String url = null;

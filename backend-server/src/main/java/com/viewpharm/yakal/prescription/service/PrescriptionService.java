@@ -66,6 +66,7 @@ public class PrescriptionService {
     public List<Boolean> createSchedules(final Long userId, final CreateScheduleDto createScheduleDto) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
         final Prescription prescription = new Prescription(user,"약국이름 입력",LocalDate.now(),true);
+        prescriptionRepository.saveAndFlush(prescription);
 
         final List<Boolean> isInserted = new ArrayList<>();
         final List<Dose> willSave = new ArrayList<>();
