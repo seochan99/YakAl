@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 
 class EnvelopAnalysisScreen extends StatefulWidget {
   const EnvelopAnalysisScreen({super.key});

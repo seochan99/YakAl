@@ -81,12 +81,17 @@ class PillTodoProvider {
     }
   }
 
-  Future<bool> updatePillTodoChildren(int doseId, bool isTaken) async {
+  Future<bool> updatePillTodoChildren(
+      int doseId, ETakingTime takingTime, bool isTaken) async {
     var dio = await authDioWithContext();
 
-    var response = await dio.patch("/doses/taken/$doseId", data: {
-      "isTaken": isTaken,
-    });
+    var response = await dio.patch(
+      "/doses/taken/$doseId",
+      data: {
+        "isTaken": isTaken,
+        "dosingTime": takingTime.time,
+      },
+    );
 
     if (response.statusCode == 200) {
       return true;

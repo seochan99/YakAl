@@ -9,7 +9,6 @@ import 'package:yakal/repository/Home/pill_todo_repository.dart';
 import '../../../models/Home/e_taking_time.dart';
 import '../../models/Calendar/calendar_day.dart';
 import '../../models/Calendar/count_model.dart';
-import '../../models/Home/overlap_info.dart';
 import '../../provider/Calendar/calendar_provider.dart';
 import '../Base/pill_todo_viewmodel.dart';
 import '../Home/home_view_model.dart';
@@ -37,18 +36,23 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
 
   // public getter
   CalendarDate get calendarDate => _calendarDate.value;
+
   @override
   DateTime get todoDate => _todoDate.value;
+
   @override
   CountModel get countModel => _countModel.value;
 
   bool get isLoadedCalendar => _isLoadedCalendar.value;
+
   Map<String, Rx<CalendarDay>> get calendarDays => _calendarDays;
 
   @override
   bool get isDetail => _isDetail;
+
   @override
   bool get isLoaded => _isLoaded.value;
+
   @override
   List<PillTodoParent> get pillTodoParents =>
       _pillTodoParents.map((e) => e.value).toList();
@@ -196,7 +200,7 @@ class CalendarViewModel extends GetxController implements PillTodoViewModel {
         .isTaken;
 
     _pillTodoRepository
-        .updatePillTodoChildren(todoId, !isTaken)
+        .updatePillTodoChildren(todoId, eTakingTime, !isTaken)
         .then((value) => {
               _pillTodoParents.value = _pillTodoParents.map((parent) {
                 if (parent.value.eTakingTime == eTakingTime) {

@@ -15,7 +15,7 @@ class EnvelopAnalysisProvider {
 
     try {
       var response = await dio.post(
-        dotenv.get("OCR_SERVER_HOST"),
+        "${dotenv.get("YAKAL_MEDICINE_HOST")}/ocr",
         data: formData,
         options: Options(
           headers: {

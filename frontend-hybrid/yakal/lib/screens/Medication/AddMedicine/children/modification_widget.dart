@@ -5,7 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:yakal/models/Home/e_taking_time.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
 class DoseModificationWidget extends StatelessWidget {

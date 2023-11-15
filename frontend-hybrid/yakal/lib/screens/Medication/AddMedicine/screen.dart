@@ -6,7 +6,7 @@ import 'package:yakal/screens/Medication/AddMedicine/children/modification_widge
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/add_dose_review_view_model.dart';
-import 'package:yakal/viewModels/Medication/dose_list_view_model.dart';
+import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 import 'package:yakal/widgets/Base/bottom_button.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 import 'package:yakal/widgets/Base/outer_frame.dart';
