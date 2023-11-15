@@ -85,7 +85,7 @@ public class PrescriptionService {
                     isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistMorningTrue(userId, doseName, oneScheduleDto.getDate());
                 }
                 if (oneScheduleDto.getTime().get(1) && !isOverlapped) {
-                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistMorningTrue(userId, doseName, oneScheduleDto.getDate());
+                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistAfternoonTrue(userId, doseName, oneScheduleDto.getDate());
                 }
                 if (oneScheduleDto.getTime().get(2) && !isOverlapped) {
                     isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistEveningTrue(userId, doseName, oneScheduleDto.getDate());

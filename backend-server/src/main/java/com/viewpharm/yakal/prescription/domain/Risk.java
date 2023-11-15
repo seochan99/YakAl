@@ -26,5 +26,6 @@ public class Risk {
     private int score;
 
     @Column(name = "properties")
+    @Enumerated(EnumType.STRING)
     private EMedicalProperties properties;
 }

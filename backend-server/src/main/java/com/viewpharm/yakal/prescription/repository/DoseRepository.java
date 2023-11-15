@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface DoseRepository extends JpaRepository<Dose, Long> {
 
-    @Query("select d from Dose d join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
+    @Query("select d from Dose d left join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
     List<Dose> findByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
 
     @Query(value = "SELECT * FROM (SELECT  date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risk_id, date) overlap where count > 1 order by count desc ", nativeQuery = true)
@@ -51,6 +51,11 @@ public interface DoseRepository extends JpaRepository<Dose, Long> {
     Boolean existsByUserIdAndKDCodeAndDateAndExistEveningTrue(Long userId, DoseName KDCode, LocalDate date);
 
     Boolean existsByUserIdAndKDCodeAndDateAndExistDefaultTrue(Long userId, DoseName KDCode, LocalDate date);
+
+    Boolean existsByUserIdAndCustomNameAndDateAndExistMorningTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistAfternoonTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistEveningTrue(Long userId,String customName, LocalDate date);
+    Boolean existsByUserIdAndCustomNameAndDateAndExistDefaultTrue(Long userId,String customName, LocalDate date);
 
 
     @Query("select sum(case when d.existMorning = true then 1 else 0 end + " +

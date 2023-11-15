@@ -93,67 +93,54 @@ public class DoseService {
         long totalCnt = 0L;
 
         for (final Dose result : getDoses) {
+            String doseName = null;
+            String KDCode = null;
+            String customName = null;
+            Risk risk = null;
+            String ATCCode = null;
 
-            if (result.getExistMorning()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsMorningTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.MORNING).add(oneTimeScheduleDto);
+            if(result.getKDCode() == null){
+                customName = result.getCustomName();
+            } else {
+                doseName = result.getKDCode().getDoseName();
+                KDCode = result.getKDCode().getKdCode();
+                risk = result.getATCCode();
+                ATCCode = risk.getAtcCode();
             }
 
-            if (result.getExistAfternoon()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
+            if (result.getExistMorning() || result.getExistAfternoon() || result.getExistEvening() || result.getExistDefault()) {
+                final OneTimeScheduleDto.OneTimeScheduleDtoBuilder builder = OneTimeScheduleDto.builder()
                         .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsAfternoonTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
+                        .KDCode(KDCode)
+                        .dosename(doseName)
+                        .customname(customName)
+                        .ATCCode(risk)
+                        .isOverlap(overlapMap.containsKey(ATCCode))
                         .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.AFTERNOON).add(oneTimeScheduleDto);
-            }
+                        .prescriptionId(result.getPrescription().getId());
 
-            if (result.getExistEvening()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsEveningTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.EVENING).add(oneTimeScheduleDto);
-            }
+                if (result.getExistMorning()) {
+                    builder.isTaken(result.getIsMorningTaken());
+                    scheduleMap.get(EDosingTime.MORNING).add(builder.build());
+                }
 
-            if (result.getExistDefault()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsDefaultTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.DEFAULT).add(oneTimeScheduleDto);
-            }
+                if (result.getExistAfternoon()) {
+                    builder.isTaken(result.getIsAfternoonTaken());
+                    scheduleMap.get(EDosingTime.AFTERNOON).add(builder.build());
+                }
 
+                if (result.getExistEvening()) {
+                    builder.isTaken(result.getIsEveningTaken());
+                    scheduleMap.get(EDosingTime.EVENING).add(builder.build());
+                }
+
+                if (result.getExistDefault()) {
+                    builder.isTaken(result.getIsDefaultTaken());
+                    scheduleMap.get(EDosingTime.DEFAULT).add(builder.build());
+                }
+
+                totalCnt += builder.build().getCount().longValue();
+            }
         }
 
         final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date.toString(), totalCnt, scheduleMap, overlapMap);
@@ -345,14 +332,9 @@ public class DoseService {
 
     public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        final Prescription prescription = prescriptionRepository.save(
-                Prescription.builder()
-                        .user(user)
-                        .pharmacyName("ㅇㅇㅇㅇ")
-                        .prescribedDate(LocalDate.now())
-                        .isAllow(true)
-                        .build()
-        );
+        final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
+                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
+
 
         final List<Boolean> isInserted = new ArrayList<>();
         final List<Dose> willSave = new ArrayList<>();
@@ -360,46 +342,87 @@ public class DoseService {
         for (final OneMedicineScheduleDto oneMedicineScheduleDto : createScheduleDto.getMedicines()) {
             final String KDCode = oneMedicineScheduleDto.getKDCode();
             final String ATCCode = oneMedicineScheduleDto.getATCCode();
+            final String customName = oneMedicineScheduleDto.getCustomName();
 
-            DoseName doseName = doseNameRepository.findById(KDCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
-            Risk risk = riskRepository.findById(ATCCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_RISK));
+            if (KDCode != null && ATCCode != null) {
 
-            for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
+                DoseName doseName = doseNameRepository.findById(KDCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_DOSENAME));
+                Risk risk = riskRepository.findById(ATCCode).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_RISK));
 
-                Boolean isOverlapped = false;
-                if (oneScheduleDto.getTime().get(0)) {
-                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistMorningTrue(userId, doseName, oneScheduleDto.getDate());
+                for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
+
+                    Boolean isOverlapped = false;
+                    if (oneScheduleDto.getTime().get(0)) {
+                        isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistMorningTrue(userId, doseName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(1) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistAfternoonTrue(userId, doseName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(2) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistEveningTrue(userId, doseName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(3) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistDefaultTrue(userId, doseName, oneScheduleDto.getDate());
+                    }
+                    isInserted.add(!isOverlapped);
+
+                    if (!isOverlapped) {
+
+                        final Dose dose = Dose.builder()
+                                .KDCode(doseName)
+                                .ATCCode(risk)
+                                .date(oneScheduleDto.getDate())
+                                .pillCnt(oneScheduleDto.getCount().longValue())
+                                .isHalf(oneScheduleDto.getCount().toString().endsWith(".5"))
+                                .prescription(prescription)
+                                .user(user)
+                                .existMorning(oneScheduleDto.getTime().get(0))
+                                .existAfternoon(oneScheduleDto.getTime().get(1))
+                                .existEvening(oneScheduleDto.getTime().get(2))
+                                .existDefault(oneScheduleDto.getTime().get(3))
+                                .build();
+
+                        willSave.add(dose);
+                    }
                 }
-                if (oneScheduleDto.getTime().get(1) && !isOverlapped) {
-                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistMorningTrue(userId, doseName, oneScheduleDto.getDate());
-                }
-                if (oneScheduleDto.getTime().get(2) && !isOverlapped) {
-                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistEveningTrue(userId, doseName, oneScheduleDto.getDate());
-                }
-                if (oneScheduleDto.getTime().get(3) && !isOverlapped) {
-                    isOverlapped = doseRepository.existsByUserIdAndKDCodeAndDateAndExistDefaultTrue(userId, doseName, oneScheduleDto.getDate());
-                }
-                isInserted.add(!isOverlapped);
+            } else {
+                for (final OneScheduleDto oneScheduleDto : oneMedicineScheduleDto.getSchedules()) {
 
-                if (!isOverlapped) {
+                    Boolean isOverlapped = false;
 
-                    final Dose dose = Dose.builder()
-                            .KDCode(doseName)
-                            .ATCCode(risk)
-                            .date(oneScheduleDto.getDate())
-                            .pillCnt(oneScheduleDto.getCount().longValue())
-                            .isHalf(oneScheduleDto.getCount().toString().endsWith(".5"))
-                            .prescription(prescription)
-                            .user(user)
-                            .existMorning(oneScheduleDto.getTime().get(0))
-                            .existAfternoon(oneScheduleDto.getTime().get(1))
-                            .existEvening(oneScheduleDto.getTime().get(2))
-                            .existDefault(oneScheduleDto.getTime().get(3))
-                            .build();
+                    if (oneScheduleDto.getTime().get(0)) {
+                        isOverlapped = doseRepository.existsByUserIdAndCustomNameAndDateAndExistMorningTrue(userId, customName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(1) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndCustomNameAndDateAndExistAfternoonTrue(userId, customName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(2) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndCustomNameAndDateAndExistEveningTrue(userId, customName, oneScheduleDto.getDate());
+                    }
+                    if (oneScheduleDto.getTime().get(3) && !isOverlapped) {
+                        isOverlapped = doseRepository.existsByUserIdAndCustomNameAndDateAndExistDefaultTrue(userId, customName, oneScheduleDto.getDate());
+                    }
 
-                    willSave.add(dose);
+                    isInserted.add(!isOverlapped);
+
+                    if (!isOverlapped) {
+
+                        final Dose dose = Dose.builder()
+                                .customName(customName)
+                                .date(oneScheduleDto.getDate())
+                                .pillCnt(oneScheduleDto.getCount().longValue())
+                                .isHalf(oneScheduleDto.getCount().toString().endsWith(".5"))
+                                .prescription(prescription)
+                                .user(user)
+                                .existMorning(oneScheduleDto.getTime().get(0))
+                                .existAfternoon(oneScheduleDto.getTime().get(1))
+                                .existEvening(oneScheduleDto.getTime().get(2))
+                                .existDefault(oneScheduleDto.getTime().get(3))
+                                .build();
+
+                        willSave.add(dose);
+                    }
                 }
-
             }
         }
 
@@ -545,7 +568,7 @@ public class DoseService {
                 .build();
     }
 
-    public List<DoseRepository.mostDoseInfo> findDosesTop10(LocalDate start,LocalDate end){
-        return doseRepository.findDosesTop10(start,end);
+    public List<DoseRepository.mostDoseInfo> findDosesTop10(LocalDate start, LocalDate end) {
+        return doseRepository.findDosesTop10(start, end);
     }
 }
