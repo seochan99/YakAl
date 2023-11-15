@@ -199,7 +199,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/profile/wish",
-          page: () => const ProfileWishScreen(),
+          page: () => ProfileWishScreen(),
         ),
         GetPage(
           name: '/login',
@@ -278,7 +278,7 @@ class MyApp extends StatelessWidget {
         ),
         GetPage(
           name: "/pill/add/final",
-          page: () => AddMedicineScreen(),
+          page: () => const AddMedicineScreen(),
         ),
         GetPage(
           name: "/pill/add/prescription",
