@@ -17,6 +17,7 @@ import 'package:yakal/screens/Login/Identification/screen.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
+import 'package:yakal/screens/Medication/DoseRemoval/screen.dart';
 import 'package:yakal/screens/Medication/Prescription/screem.dart';
 import 'package:yakal/screens/Medication/direct/DirectResult/direct_result.dart';
 import 'package:yakal/screens/Medication/direct/medication_direct_screen.dart';
@@ -284,6 +285,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/pill/manage/prescription",
           page: () => const PrescriptionScreen(),
+        ),
+        GetPage(
+          name: "/pill/manage/dose",
+          page: () => const DoseRemovalScreen(),
         ),
         GetPage(name: "/pill/detail", page: () => const PillDetailScreen()),
       ],

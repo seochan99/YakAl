@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 
 class PrescriptionCard extends StatelessWidget {
@@ -16,7 +17,7 @@ class PrescriptionCard extends StatelessWidget {
           if (kDebugMode) {
             print("Selected Prescription Id: $id");
           }
-          // Get.toNamed("/pill/manage/dose");
+          Get.toNamed("/pill/manage/dose", arguments: {"id": id});
         },
         child: Container(
           height: 40.0,
