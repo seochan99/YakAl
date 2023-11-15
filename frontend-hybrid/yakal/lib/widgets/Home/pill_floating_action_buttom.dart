@@ -62,7 +62,7 @@ class PillFloatingActionButton extends StatelessWidget {
                               color: const Color(0xFFE9E9EE),
                             ),
                             _floatItem("manage/prescription", '약 제거',
-                                'assets/icons/icon-bin.svg'),
+                                'assets/icons/minus-bottle.svg'),
                           ],
                         ),
                       ),

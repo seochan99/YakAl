@@ -51,11 +51,10 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
               onRefresh: () => Future.sync(
                 () => prescriptionViewModel.pagingController.refresh(),
               ),
-              child: PagedListView<int, int>(
+              child: PagedListView<int, int>.separated(
                 pagingController: prescriptionViewModel.pagingController,
                 builderDelegate: PagedChildBuilderDelegate<int>(
                   animateTransitions: true,
-                  transitionDuration: const Duration(milliseconds: 500),
                   itemBuilder: (context, item, index) => PrescriptionCard(
                     id: item,
                   ),
@@ -78,6 +77,8 @@ class _PrescriptionScreenState extends State<PrescriptionScreen> {
                   // newPageProgressIndicatorBuilder: (_) =>
                   //     NewPageProgressIndicator(),
                 ),
+                separatorBuilder: (BuildContext context, int index) =>
+                    const SizedBox(height: 16),
               ),
             ),
           ),

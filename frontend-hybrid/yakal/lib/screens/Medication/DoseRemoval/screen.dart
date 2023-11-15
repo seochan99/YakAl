@@ -128,7 +128,7 @@ class _DoseRemovalScreenState extends State<DoseRemovalScreen> {
                     );
                   },
                   separatorBuilder: (context, index) => const SizedBox(
-                    height: 24,
+                    height: 16,
                   ),
                 );
               },

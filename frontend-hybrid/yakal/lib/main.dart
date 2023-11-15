@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -14,6 +15,7 @@ import 'package:yakal/screens/Calender/calender_screen.dart';
 import 'package:yakal/screens/Detail/screen.dart';
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Login/Identification/screen.dart';
+import 'package:yakal/screens/Login/LoginProcess/login_route.dart';
 import 'package:yakal/screens/Login/LoginProcess/screen.dart';
 import 'package:yakal/screens/Login/SocialLogin/screen.dart';
 import 'package:yakal/screens/Medication/AddMedicine/screen.dart';
@@ -37,6 +39,7 @@ import 'package:yakal/screens/Setting/setting_signout_screen.dart';
 import 'package:yakal/screens/Survey/survery_senior_screen.dart';
 import 'package:yakal/screens/Survey/survey_normal_screen.dart';
 import 'package:yakal/screens/Survey/survey_result_screen.dart';
+import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/widgets/Base/my_bottom_navigation_bar.dart';
 
 class MyHttpOverrides extends HttpOverrides {
@@ -71,61 +74,58 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  initializeDateFormatting().then((value) =>
-      runApp(const MyApp(initialRoute: "/pill/manage/prescription")));
+  late String initialRoute = "/login";
+  final routeController = Get.put(LoginRouteController());
 
-  // late String initialRoute = "/login";
-  // final routeController = Get.put(LoginRouteController());
-  //
-  // if (accessToken != null) {
-  //   final dio = await authDioWithContext();
-  //
-  //   try {
-  //     final response = await dio.get("/users/check/register");
-  //
-  //     if (response.data["data"]["isRegistered"]
-  //             ["isOptionalAgreementAccepted"] ==
-  //         null) {
-  //       if (kDebugMode) {
-  //         print(
-  //             "🚨 [User Terms Agreement Is Not Finished] Redirect To Terms Page.");
-  //       }
-  //
-  //       routeController.goto(LoginRoute.terms);
-  //       initialRoute = "/login/process";
-  //     } else if (response.data["data"]["isRegistered"]["isIdentified"] ==
-  //         false) {
-  //       if (kDebugMode) {
-  //         print(
-  //             "🚨 [User Identification Is Not Finished] Redirect To Identification Entry Page.");
-  //       }
-  //
-  //       routeController.goto(LoginRoute.identifyEntry);
-  //       initialRoute = "/login/process";
-  //     } else {
-  //       if (kDebugMode) {
-  //         print("🎉 [User Do All Login Process] Redirect To Home Page.");
-  //       }
-  //
-  //       initialRoute = "/";
-  //     }
-  //   } catch (e) {
-  //     initialRoute = "/login";
-  //
-  //     if (kDebugMode) {
-  //       print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
-  //     }
-  //
-  //     storage.deleteAll();
-  //   }
-  // } else {
-  //   if (kDebugMode) {
-  //     print("🚨 [Access Token Is Not Found] Redirect To Login Entry Page.");
-  //   }
-  // }
-  //
-  // initializeDateFormatting()
-  //     .then((value) => runApp(MyApp(initialRoute: initialRoute)));
+  if (accessToken != null) {
+    final dio = await authDioWithContext();
+
+    try {
+      final response = await dio.get("/users/check/register");
+
+      if (response.data["data"]["isRegistered"]
+              ["isOptionalAgreementAccepted"] ==
+          null) {
+        if (kDebugMode) {
+          print(
+              "🚨 [User Terms Agreement Is Not Finished] Redirect To Terms Page.");
+        }
+
+        routeController.goto(LoginRoute.terms);
+        initialRoute = "/login/process";
+      } else if (response.data["data"]["isRegistered"]["isIdentified"] ==
+          false) {
+        if (kDebugMode) {
+          print(
+              "🚨 [User Identification Is Not Finished] Redirect To Identification Entry Page.");
+        }
+
+        routeController.goto(LoginRoute.identifyEntry);
+        initialRoute = "/login/process";
+      } else {
+        if (kDebugMode) {
+          print("🎉 [User Do All Login Process] Redirect To Home Page.");
+        }
+
+        initialRoute = "/";
+      }
+    } catch (e) {
+      initialRoute = "/login";
+
+      if (kDebugMode) {
+        print("🚨 [User Info Check Error] Redirect To Login Entry Page.");
+      }
+
+      storage.deleteAll();
+    }
+  } else {
+    if (kDebugMode) {
+      print("🚨 [Access Token Is Not Found] Redirect To Login Entry Page.");
+    }
+  }
+
+  initializeDateFormatting()
+      .then((value) => runApp(MyApp(initialRoute: initialRoute)));
 }
 
 class MyApp extends StatelessWidget {
@@ -176,8 +176,7 @@ class MyApp extends StatelessWidget {
         //   ),
         scaffoldBackgroundColor: const Color(0xFFf6f6f8),
       ),
-      // initialRoute: initialRoute,
-      initialRoute: "/pill/manage/prescription",
+      initialRoute: initialRoute,
       // 라우팅 설정
       getPages: [
         GetPage(

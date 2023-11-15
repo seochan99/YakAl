@@ -74,6 +74,7 @@ class DoseDeleteDialog extends StatelessWidget {
                       height: 56,
                       child: TextButton(
                         onPressed: () {
+                          // API 삭제
                           Get.back();
                         },
                         style: TextButton.styleFrom(
