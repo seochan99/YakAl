@@ -93,67 +93,54 @@ public class DoseService {
         long totalCnt = 0L;
 
         for (final Dose result : getDoses) {
+            String doseName = null;
+            String KDCode = null;
+            String customName = null;
+            Risk risk = null;
+            String ATCCode = null;
 
-            if (result.getExistMorning()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsMorningTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.MORNING).add(oneTimeScheduleDto);
+            if(result.getKDCode() == null){
+                customName = result.getCustomName();
+            } else {
+                doseName = result.getKDCode().getDoseName();
+                KDCode = result.getKDCode().getKdCode();
+                risk = result.getATCCode();
+                ATCCode = risk.getAtcCode();
             }
 
-            if (result.getExistAfternoon()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
+            if (result.getExistMorning() || result.getExistAfternoon() || result.getExistEvening() || result.getExistDefault()) {
+                final OneTimeScheduleDto.OneTimeScheduleDtoBuilder builder = OneTimeScheduleDto.builder()
                         .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsAfternoonTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
+                        .KDCode(KDCode)
+                        .dosename(doseName)
+                        .customname(customName)
+                        .ATCCode(risk)
+                        .isOverlap(overlapMap.containsKey(ATCCode))
                         .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.AFTERNOON).add(oneTimeScheduleDto);
-            }
+                        .prescriptionId(result.getPrescription().getId());
 
-            if (result.getExistEvening()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsEveningTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.EVENING).add(oneTimeScheduleDto);
-            }
+                if (result.getExistMorning()) {
+                    builder.isTaken(result.getIsMorningTaken());
+                    scheduleMap.get(EDosingTime.MORNING).add(builder.build());
+                }
 
-            if (result.getExistDefault()) {
-                final OneTimeScheduleDto oneTimeScheduleDto = OneTimeScheduleDto.builder()
-                        .id(result.getId())
-                        .KDCode(result.getKDCode().getKdCode())
-                        .dosename(result.getKDCode().getDoseName())
-                        .ATCCode(result.getATCCode())
-                        .isTaken(result.getIsDefaultTaken())
-                        .isOverlap(overlapMap.containsKey(result.getATCCode().getAtcCode()))
-                        .count(result.getPillCnt() + (result.getIsHalf() ? 0.5 : 0))
-                        .prescriptionId(result.getPrescription().getId())
-                        .build();
-                totalCnt += oneTimeScheduleDto.getCount().longValue();
-                scheduleMap.get(EDosingTime.DEFAULT).add(oneTimeScheduleDto);
-            }
+                if (result.getExistAfternoon()) {
+                    builder.isTaken(result.getIsAfternoonTaken());
+                    scheduleMap.get(EDosingTime.AFTERNOON).add(builder.build());
+                }
 
+                if (result.getExistEvening()) {
+                    builder.isTaken(result.getIsEveningTaken());
+                    scheduleMap.get(EDosingTime.EVENING).add(builder.build());
+                }
+
+                if (result.getExistDefault()) {
+                    builder.isTaken(result.getIsDefaultTaken());
+                    scheduleMap.get(EDosingTime.DEFAULT).add(builder.build());
+                }
+
+                totalCnt += builder.build().getCount().longValue();
+            }
         }
 
         final OneDayScheduleDto oneDayScheduleDto = new OneDayScheduleDto(date.toString(), totalCnt, scheduleMap, overlapMap);

@@ -18,7 +18,7 @@ import java.util.List;
 @Repository
 public interface DoseRepository extends JpaRepository<Dose, Long> {
 
-    @Query("select d from Dose d join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
+    @Query("select d from Dose d left join fetch d.ATCCode where d.user.id = :userId and d.date = :date ")
     List<Dose> findByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
 
     @Query(value = "SELECT * FROM (SELECT  date, COUNT(*) as count FROM doses WHERE user_id = :userId AND date >= :startDate AND date <= :endDate GROUP BY risk_id, date) overlap where count > 1 order by count desc ", nativeQuery = true)
