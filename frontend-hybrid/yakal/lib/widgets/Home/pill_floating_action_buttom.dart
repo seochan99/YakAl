@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import '../../viewModels/Home/home_view_model.dart';
 class PillFloatingActionButton extends StatelessWidget {
   static const duration = Duration(milliseconds: 300);
   final HomeViewModel viewModel;
+
   const PillFloatingActionButton(this.viewModel, {super.key});
 
   @override
@@ -47,15 +47,22 @@ class PillFloatingActionButton extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _floatItem('ocrEnvelop', '약 봉투',
+                            _floatItem('add/ocrEnvelop', '약 봉투',
                                 'assets/icons/icon-envelope.svg'),
                             Container(
                               width: double.infinity,
                               height: 1,
                               color: const Color(0xFFE9E9EE),
                             ),
-                            // _floatItem("direct", '직접 입력',
-                            //     'assets/icons/icon-pencil-box.svg'),
+                            _floatItem("add/direct", '직접 입력',
+                                'assets/icons/icon-pencil-box.svg'),
+                            Container(
+                              width: double.infinity,
+                              height: 1,
+                              color: const Color(0xFFE9E9EE),
+                            ),
+                            _floatItem("manage/prescription", '약 제거',
+                                'assets/icons/icon-bin.svg'),
                           ],
                         ),
                       ),
@@ -116,7 +123,7 @@ class PillFloatingActionButton extends StatelessWidget {
 _floatItem(String type, String title, String imagePath) {
   return InkWell(
     onTap: () {
-      Get.toNamed('/pill/add/$type');
+      Get.toNamed('/pill/$type');
     },
     child: Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
