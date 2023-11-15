@@ -127,7 +127,6 @@ class SocialLoginProvider {
   Future<String?> requestAppleAccessToken(
       AuthorizationCredentialAppleID credential) async {
     return null;
-
     // return await _loginByAccessToken(credential, ELoginPlatform.APPLE);
   }
 

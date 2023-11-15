@@ -85,7 +85,23 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
       lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: const ColorScheme.light(
+              primary: Colors.white, // header background color
+              onPrimary: Colors.black, // header text color
+              surface: Colors.white, // background color
+              onSurface: Colors.black, // body text color
+            ),
+            dialogBackgroundColor:
+                Colors.white, // background color for the DatePicker
+          ),
+          child: child!,
+        );
+      },
     );
+
     if (picked != null && picked != _selectedBirthDate) {
       setState(() {
         _selectedBirthDate = picked;

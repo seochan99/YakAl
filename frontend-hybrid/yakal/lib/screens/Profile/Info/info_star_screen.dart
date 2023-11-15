@@ -132,10 +132,28 @@ class _InfoStarScreenState extends State<InfoStarScreen> {
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(1900),
                                     lastDate: DateTime.now(),
-                                    // color white
-
-                                    // background color white
+                                    builder:
+                                        (BuildContext context, Widget? child) {
+                                      return Theme(
+                                        data: ThemeData.light().copyWith(
+                                          colorScheme: const ColorScheme.light(
+                                            primary: Colors
+                                                .white, // header background color
+                                            onPrimary: Colors
+                                                .black, // header text color
+                                            surface: Colors
+                                                .white, // background color
+                                            onSurface:
+                                                Colors.black, // body text color
+                                          ),
+                                          dialogBackgroundColor: Colors
+                                              .white, // background color for the DatePicker
+                                        ),
+                                        child: child!,
+                                      );
+                                    },
                                   );
+
                                   if (picked != null) {
                                     setState(() {
                                       item = picked;
