@@ -252,6 +252,11 @@ Future<Dio> authDioWithContext() async {
             await storage.write(key: 'ACCESS_TOKEN', value: newAccessToken);
             await storage.write(key: 'REFRESH_TOKEN', value: newRefreshToken);
 
+            /* New Token */
+            if (kDebugMode) {
+              print('🔑 [New Token] $newAccessToken');
+            }
+
             error.requestOptions.headers['Authorization'] =
                 'Bearer $newAccessToken';
 

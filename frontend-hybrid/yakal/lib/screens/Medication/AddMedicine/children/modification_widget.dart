@@ -27,6 +27,7 @@ class DoseModificationWidget extends StatelessWidget {
           children: [
             /* 약 목록 하나를 출력하는 Row */
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -74,8 +75,8 @@ class DoseModificationWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(0.0),
                   icon: SvgPicture.asset(
                     "assets/icons/icon-bin.svg",
-                    width: 32,
-                    height: 32,
+                    width: 20,
+                    height: 20,
                   ),
                   color: ColorStyles.main,
                   onPressed: () {

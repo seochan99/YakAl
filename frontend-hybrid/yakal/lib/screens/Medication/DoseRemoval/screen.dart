@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -18,6 +20,10 @@ class _DoseRemovalScreenState extends State<DoseRemovalScreen> {
 
   final DoseManagementProvider doseManagementProvider =
       DoseManagementProvider();
+
+  void refresh() {
+    setState(() {});
+  }
 
   @override
   void initState() {
@@ -69,20 +75,19 @@ class _DoseRemovalScreenState extends State<DoseRemovalScreen> {
                                     borderRadius: BorderRadius.circular(8.0),
                                     color: ColorStyles.gray2,
                                   ),
-                                  child:
-                                      // modificationElement.base64Image.isNotEmpty
-                                      //     ? Image.memory(
-                                      //         base64Decode(
-                                      //           modificationElement
-                                      //               .item.base64Image,
-                                      //         ),
-                                      //         fit: BoxFit.cover,
-                                      //       )
-                                      SvgPicture.asset(
-                                    "assets/icons/img-mainpill-default.svg",
-                                    width: 64,
-                                    height: 32,
-                                  ),
+                                  child: modificationElement["base64Image"] !=
+                                          null
+                                      ? Image.memory(
+                                          base64Decode(
+                                            modificationElement["base64Image"],
+                                          ),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : SvgPicture.asset(
+                                          "assets/icons/img-mainpill-default.svg",
+                                          width: 64,
+                                          height: 32,
+                                        ),
                                 ),
                                 const SizedBox(
                                   width: 10,
@@ -117,6 +122,7 @@ class _DoseRemovalScreenState extends State<DoseRemovalScreen> {
                                   builder: (BuildContext context) {
                                     return DoseDeleteDialog(
                                       id: modificationElement["id"],
+                                      refresh: refresh,
                                     );
                                   },
                                 );

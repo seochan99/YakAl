@@ -4,10 +4,12 @@ import 'package:yakal/utilities/style/color_styles.dart';
 
 class DoseDeleteDialog extends StatelessWidget {
   final int id;
+  final void Function() refresh;
 
   const DoseDeleteDialog({
     super.key,
     required this.id,
+    required this.refresh,
   });
 
   @override
@@ -76,6 +78,7 @@ class DoseDeleteDialog extends StatelessWidget {
                         onPressed: () {
                           // API 삭제
                           Get.back();
+                          refresh();
                         },
                         style: TextButton.styleFrom(
                           backgroundColor: ColorStyles.red,
