@@ -55,6 +55,20 @@ class UserViewModel extends GetxController {
     }
   }
 
+//
+
+  // 일반 모드, 라이트 모드
+  Future<void> postWish(String content) async {
+    var dio = await authDioWithContext();
+
+    var response = await dio.post("/desires", data: {"content": content});
+
+    if (response.statusCode == 200 && response.data['success']) {
+      print("$content보내기 성공");
+      // 보내기 성공
+    }
+  }
+
   // 일반 모드, 라이트 모드
   Future<void> updateMode(bool newMode) async {
     var dio = await authDioWithContext();

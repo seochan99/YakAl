@@ -103,6 +103,21 @@ class _SettingTimeSelectionWidgetState
         // 타임피커 열림
         showTimePicker(
           context: context,
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: const ColorScheme.light(
+                  primary: Color(0xFF424242), // Dark grey for body text
+                  onPrimary: Color(0xFF0D47A1), // Darker blue for header text
+                  surface: Color(0xFFF5F5F5), // Light grey for background
+                  onSurface: Color(0xFF424242), // Dark grey for body text
+                ),
+                dialogBackgroundColor: const Color(
+                    0xFFF5F5F5), // Light grey for the TimePicker background
+              ),
+              child: child!,
+            );
+          },
           initialTime: TimeOfDay.now(),
         ).then((value) {
           if (value != null) {
