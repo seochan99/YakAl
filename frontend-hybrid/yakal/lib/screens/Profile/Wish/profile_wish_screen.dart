@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:yakal/screens/Profile/Wish/profile_wish_done.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
+import 'package:yakal/viewModels/Profile/user_view_model.dart';
 import 'package:yakal/widgets/Base/default_back_appbar.dart';
 
 class ProfileWishScreen extends StatefulWidget {
-  const ProfileWishScreen({super.key});
-
+  final UserViewModel userViewModel = Get.put(UserViewModel(), permanent: true);
+  ProfileWishScreen({super.key});
   @override
   State<ProfileWishScreen> createState() => _ProfileWishScreenState();
 }
@@ -23,6 +24,8 @@ class _ProfileWishScreenState extends State<ProfileWishScreen> {
   void handleButtonPress() {
     final String opinion = _opinionController.text;
     // opinion server에 전송
+    widget.userViewModel.postWish(opinion);
+    //
     _opinionController.clear();
 
     // ProfileWishDone Screen 으로 이동
