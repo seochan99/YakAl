@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:yakal/models/Medication/dose_group_model.dart';
+import 'package:yakal/models/Medication/dose_name_code_model.dart';
 import 'package:yakal/models/Medication/search_medicine_model.dart';
 import 'package:yakal/utilities/api/api.dart';
 import 'package:yakal/utilities/enum/add_schedule_result.dart';
@@ -30,20 +31,91 @@ class AddMedicineProvider {
     }
   }
 
-  Future<int> getDefaultPrescriptionId() async {
-    var dio = await authDioWithContext();
+  // Future<int> getDefaultPrescriptionId() async {
+  //   var dio = await authDioWithContext();
+  //
+  //   try {
+  //     var response = await dio.get("/prescriptions");
+  //
+  //     if (response.statusCode == 200) {
+  //       return response.data["data"][0]["id"];
+  //     } else {
+  //       assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
+  //       return -1;
+  //     }
+  //   } on DioException {
+  //     return -1;
+  //   }
+  // }
+
+  Future<DoseNameCodeModel> getCodeFromName(String name) async {
+    final dio = Dio();
 
     try {
-      var response = await dio.get("/prescriptions");
+      final response = await dio
+          .get("${dotenv.env['YAKAL_MEDICINE_HOST']}/direct?name=$name");
 
-      if (response.statusCode == 200) {
-        return response.data["data"][0]["id"];
-      } else {
-        assert(false, "🚨 [Status Code Is Wrong] Check called API is correct.");
-        return -1;
+      return DoseNameCodeModel.fromJson(response.data["data"]);
+    } catch (error) {
+      return DoseNameCodeModel(name: name, kdCode: "", atcCode: "");
+    }
+  }
+
+  Future<EAddScheduleResult> addDirectOneSchedule(
+    bool isFoundCode,
+    DoseGroupModel doseGroupModel,
+    DateTime start,
+    DateTime end,
+  ) async {
+    var requestBody = <String, dynamic>{
+      "medicines": [],
+    };
+
+    var schedule = <String, dynamic>{
+      "KDCode": isFoundCode ? doseGroupModel.doseList[0].kdCode : null,
+      "ATCCode": isFoundCode ? doseGroupModel.doseList[0].atcCode : null,
+      "customName": isFoundCode ? null : doseGroupModel.doseList[0].name,
+      "schedules": [],
+    };
+
+    for (var i = 0; i < end.difference(start).inDays + 1; ++i) {
+      var now = start.add(Duration(days: i));
+
+      schedule["schedules"].add(<String, dynamic>{
+        "date": DateFormat('yyyy-MM-dd').format(now),
+        "time": doseGroupModel.takingTime,
+        "count": 1.0,
+      });
+    }
+
+    if (schedule["schedules"].isNotEmpty) {
+      requestBody["medicines"].add(schedule);
+    }
+
+    if (kDebugMode) {
+      print("🛫 [Add Medicine Request Body] $requestBody");
+    }
+
+    final dio = await authDioWithContext();
+
+    try {
+      var response = await dio.post("/doses", data: requestBody);
+
+      var resultList = response.data["data"];
+
+      if (kDebugMode) {
+        print("🛬 [Add Medicine Response Body] $resultList");
       }
+
+      for (var resultItem in resultList) {
+        if (!resultItem) {
+          return EAddScheduleResult.PARTIALLY_SUCCESS;
+        }
+      }
+
+      return EAddScheduleResult.SUCCESS;
     } on DioException {
-      return -1;
+      return EAddScheduleResult.FAIL;
     }
   }
 
@@ -51,28 +123,8 @@ class AddMedicineProvider {
     List<DoseGroupModel> groupList,
     DateTime start,
     DateTime end,
-    bool isOcr,
   ) async {
-    int? prescriptionId;
-
-    if (!isOcr) {
-      final dio = await authDioWithContext();
-      final response = await dio.get("/prescriptions");
-      final responseList = response.data["data"] as List;
-
-      if (responseList.isNotEmpty) {
-        prescriptionId = responseList[0].id;
-      } else {
-        if (kDebugMode) {
-          print("🚨 [Add Medicine Error] Prescription Is Not Found.");
-        }
-
-        return EAddScheduleResult.FAIL;
-      }
-    }
-
     var requestBody = <String, dynamic>{
-      "prescriptionId": prescriptionId,
       "medicines": [],
     };
 

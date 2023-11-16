@@ -23,7 +23,7 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
   final TextEditingController medicineController = TextEditingController();
   List<SearchMedicineModel> medicines = [];
   final BehaviorSubject<String> _searchSubject = BehaviorSubject<String>();
-  final doseListViewModel = Get.put(AddDoseViewModel());
+  final doseListViewModel = Get.put(AddDoseViewModel(), permanent: true);
 
   _MedicationAddScreenState() {
     _searchSubject.debounceTime(const Duration(milliseconds: 500)).listen(
@@ -90,7 +90,6 @@ class _MedicationAddScreenState extends State<MedicationAddScreen> {
         arguments: {
           "isOcr": false,
         },
-        preventDuplicates: false,
       );
     });
   }

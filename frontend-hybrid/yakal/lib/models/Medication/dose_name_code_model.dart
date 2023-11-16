@@ -16,7 +16,7 @@ class DoseNameCodeModel {
 
   factory DoseNameCodeModel.fromJson(Map<String, dynamic> json) {
     return DoseNameCodeModel(
-      name: json["name"],
+      name: json["doseName"],
       atcCode: json["atcCode"],
       kdCode: json["kdCode"],
     );

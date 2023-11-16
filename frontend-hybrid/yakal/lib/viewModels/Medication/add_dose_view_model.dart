@@ -90,8 +90,14 @@ class AddDoseViewModel extends GetxController {
   }
 
   void deleteItem(int groupIndex, int itemIndex) {
-    _groupList[groupIndex].doseList.removeAt(itemIndex);
-    _groupList.refresh();
+    if (groupIndex < _groupList.length &&
+        itemIndex < _groupList[groupIndex].doseList.length) {
+      _groupList[groupIndex].doseList.removeAt(itemIndex);
+
+      if (_groupList[groupIndex].doseList.isEmpty) {
+        _groupList.removeAt(groupIndex);
+      }
+    }
   }
 
   void clear() {
@@ -230,8 +236,29 @@ class AddDoseViewModel extends GetxController {
     DateTime end,
     bool isOcr,
   ) async {
-    var result =
-        _addMedicineProvider.addSchedule(_groupList, start, end, isOcr);
+    late EAddScheduleResult result;
+
+    if (isOcr) {
+      result = await _addMedicineProvider.addSchedule(_groupList, start, end);
+    } else {
+      final codeNameModel = await _addMedicineProvider
+          .getCodeFromName(_groupList[0].doseList[0].name);
+
+      result = await _addMedicineProvider.addDirectOneSchedule(
+          codeNameModel.atcCode != "" && codeNameModel.kdCode != "",
+          DoseGroupModel(
+            doseList: [
+              DoseItemModel(
+                  name: _groupList[0].doseList[0].name,
+                  kdCode: codeNameModel.kdCode,
+                  atcCode: codeNameModel.atcCode,
+                  base64Image: _groupList[0].doseList[0].base64Image)
+            ],
+            takingTime: _groupList[0].takingTime,
+          ),
+          start,
+          end);
+    }
 
     if (kDebugMode) {
       print("[Result Of Adding Schedule] $result");

@@ -65,7 +65,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
           ),
         );
 
-        addDoseViewModel.clear();
+        Get.delete<AddDoseViewModel>(force: true);
         Get.offAllNamed("/");
       });
     };
@@ -247,13 +247,15 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
               ),
               /* 모드에 따라 적절한 위젯을 보여줌. 수정 모드 -> DoseModificationWidget, 일반 모드 -> DoseListWidget */
               Expanded(
-                child: Obx(
-                  () {
-                    return (addDoseReviewViewModel.isModificationMode.value
-                        ? DoseModificationWidget()
-                        : DoseListWidget());
-                  },
-                ),
+                child: Obx(() {
+                  if (addDoseViewModel.getGroupList().isEmpty) {
+                    return Container();
+                  }
+
+                  return addDoseReviewViewModel.isModificationMode.value
+                      ? DoseModificationWidget()
+                      : DoseListWidget();
+                }),
               ),
               const SizedBox(
                 height: 24,
@@ -268,7 +270,8 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                       start == null ||
                       end == null ||
                       !addDoseViewModel.canSend() ||
-                      addDoseReviewViewModel.isModificationMode.value;
+                      addDoseReviewViewModel.isModificationMode.value ||
+                      addDoseViewModel.getGroupCount() == 0;
 
                   return Row(
                     children: [
@@ -281,6 +284,7 @@ class _AddMedicineScreenState extends State<AddMedicineScreen> {
                           onPressed: addDoseReviewViewModel.isLoading.value
                               ? null
                               : () {
+                                  Get.delete<AddDoseViewModel>(force: true);
                                   showDialog(
                                     context: context,
                                     barrierDismissible: true,
