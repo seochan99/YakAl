@@ -12,7 +12,7 @@ class AtcCode {
       );
     } else {
       return AtcCode(
-        code: data['code'],
+        code: data['atcCode'],
         score: data['score'],
       );
     }
