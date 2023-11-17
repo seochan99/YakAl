@@ -59,35 +59,43 @@ public class DoseService {
 
 
         for (DoseRepository.overlapDetail overlapDetail : doseRepository.findOverlapDetailMorning(userId, date)) {
-            final OverlapDto overlapDto = OverlapDto.builder()
-                    .ATCCode(overlapDetail.getATCCode())
-                    .KDCodes(overlapDetail.getKDCodes())
-                    .build();
-            overlapMap.get(EDosingTime.MORNING).add(overlapDto);
+            if(overlapDetail.getATCCode()!=null && overlapDetail.getKDCodes() != null){
+                final OverlapDto overlapDto = OverlapDto.builder()
+                        .ATCCode(overlapDetail.getATCCode())
+                        .KDCodes(overlapDetail.getKDCodes())
+                        .build();
+                overlapMap.get(EDosingTime.MORNING).add(overlapDto);
+            }
         }
 
         for (DoseRepository.overlapDetail overlapDetail : doseRepository.findOverlapDetailAfternoon(userId, date)) {
-            final OverlapDto overlapDto = OverlapDto.builder()
-                    .ATCCode(overlapDetail.getATCCode())
-                    .KDCodes(overlapDetail.getKDCodes())
-                    .build();
-            overlapMap.get(EDosingTime.AFTERNOON).add(overlapDto);
+            if(overlapDetail.getATCCode()!=null && overlapDetail.getKDCodes() != null){
+                final OverlapDto overlapDto = OverlapDto.builder()
+                        .ATCCode(overlapDetail.getATCCode())
+                        .KDCodes(overlapDetail.getKDCodes())
+                        .build();
+                overlapMap.get(EDosingTime.AFTERNOON).add(overlapDto);
+            }
         }
 
         for (DoseRepository.overlapDetail overlapDetail : doseRepository.findOverlapDetailEvening(userId, date)) {
-            final OverlapDto overlapDto = OverlapDto.builder()
-                    .ATCCode(overlapDetail.getATCCode())
-                    .KDCodes(overlapDetail.getKDCodes())
-                    .build();
-            overlapMap.get(EDosingTime.EVENING).add(overlapDto);
+            if(overlapDetail.getATCCode()!=null && overlapDetail.getKDCodes() != null){
+                final OverlapDto overlapDto = OverlapDto.builder()
+                        .ATCCode(overlapDetail.getATCCode())
+                        .KDCodes(overlapDetail.getKDCodes())
+                        .build();
+                overlapMap.get(EDosingTime.EVENING).add(overlapDto);
+            }
         }
 
         for (DoseRepository.overlapDetail overlapDetail : doseRepository.findOverlapDetailDefault(userId, date)) {
-            final OverlapDto overlapDto = OverlapDto.builder()
-                    .ATCCode(overlapDetail.getATCCode())
-                    .KDCodes(overlapDetail.getKDCodes())
-                    .build();
-            overlapMap.get(EDosingTime.DEFAULT).add(overlapDto);
+            if(overlapDetail.getATCCode()!=null && overlapDetail.getKDCodes() != null){
+                final OverlapDto overlapDto = OverlapDto.builder()
+                        .ATCCode(overlapDetail.getATCCode())
+                        .KDCodes(overlapDetail.getKDCodes())
+                        .build();
+                overlapMap.get(EDosingTime.DEFAULT).add(overlapDto);
+            }
         }
 
         long totalCnt = 0L;
