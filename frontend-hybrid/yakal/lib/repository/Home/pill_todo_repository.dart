@@ -25,7 +25,10 @@ class PillTodoRepository {
       List<dynamic> tempData =
           response['schedule'][eTakingTime.toString().split(".").last];
 
-      kdCodeSet.addAll(tempData.map((e) => e['kdcode']));
+      kdCodeSet.addAll(tempData
+          .map((e) => e['kdCode'])
+          .where((element) => element != null)
+          .map((e) => e.toString()));
     }
 
     // Kims 통신

@@ -332,8 +332,7 @@ public class DoseService {
 
     public List<Boolean> createSchedule(final Long userId, final CreateScheduleDto createScheduleDto) {
         final User user = userRepository.findById(userId).orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_USER));
-        final Prescription prescription = prescriptionRepository.findById(createScheduleDto.getPrescriptionId())
-                .orElseThrow(() -> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
+        final Prescription prescription = prescriptionRepository.findTop1ByUserId(userId).orElseThrow(()-> new CommonException(ErrorCode.NOT_FOUND_PRESCRIPTION));
 
 
         final List<Boolean> isInserted = new ArrayList<>();
