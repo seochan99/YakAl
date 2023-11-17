@@ -30,9 +30,9 @@ class PillTodoChildren {
     return PillTodoChildren(
       id: data['id'],
       base64Image: base64ImageMap[data['kdcode']] ?? "",
-      name: data['dosename'],
+      name: data['dosename'] ?? data['customname'],
       effect: data['effect'] ?? "",
-      kdCode: data['kdcode'],
+      kdCode: data['kdcode'] ?? "",
       atcCode: AtcCode.fromJson(data['atccode']),
       count: data['count'].toString(),
       isOverLap: data['isOverlap'],

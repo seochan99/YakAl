@@ -4,10 +4,17 @@ class AtcCode {
 
   AtcCode({required this.code, required this.score});
 
-  factory AtcCode.fromJson(Map<String, dynamic> data) {
-    return AtcCode(
-      code: data['atcCode'],
-      score: data['score'],
-    );
+  factory AtcCode.fromJson(Map<String, dynamic>? data) {
+    if (data == null) {
+      return AtcCode(
+        code: "",
+        score: 0,
+      );
+    } else {
+      return AtcCode(
+        code: data['code'],
+        score: data['score'],
+      );
+    }
   }
 }
