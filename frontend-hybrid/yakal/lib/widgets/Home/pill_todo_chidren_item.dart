@@ -74,7 +74,7 @@ class _PillTodoChildrenItemState extends State<PillTodoChildrenItem> {
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
                 child: pillTodoChildren.base64Image.isEmpty
                     ? SvgPicture.asset(
-                        'assets/icons/icon-check-on-36.svg',
+                        'assets/icons/img-mainpill-default.svg',
                         width: 80,
                         height: 40,
                       )
