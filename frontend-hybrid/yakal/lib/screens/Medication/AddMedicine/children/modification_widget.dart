@@ -63,7 +63,7 @@ class _DoseModificationWidgetState extends State<DoseModificationWidget> {
                     ),
                     /* 약 이름 */
                     Text(
-                      "${modificationElement.item.name.length > 15 ? "..." : ""}${modificationElement.item.name.length > 15 ? modificationElement.item.name.substring(0, 15) : modificationElement.item.name}",
+                      "${modificationElement.item.name.length > 15 ? modificationElement.item.name.substring(0, 15) : modificationElement.item.name}${modificationElement.item.name.length > 15 ? "..." : ""}",
                       style: const TextStyle(
                         color: ColorStyles.black,
                         fontSize: 14,

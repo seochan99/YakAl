@@ -14,7 +14,7 @@ class AddDoseViewModel extends GetxController {
   final EnvelopAnalysisProvider _envelopAnalysisProvider =
       EnvelopAnalysisProvider();
 
-  final RxList<DoseGroupModel> _groupList = <DoseGroupModel>[].obs;
+  final RxList<DoseGroupModel> groupList = <DoseGroupModel>[].obs;
 
   Future<bool> getMedicineInfoFromImagePath(String imagePath) async {
     final medicationList =
@@ -44,8 +44,8 @@ class AddDoseViewModel extends GetxController {
       ));
     }
 
-    _groupList.clear();
-    _groupList.add(
+    groupList.clear();
+    groupList.add(
       DoseGroupModel(
         doseList: doseItemList,
         takingTime: [
@@ -57,7 +57,7 @@ class AddDoseViewModel extends GetxController {
       ),
     );
 
-    _groupList.refresh();
+    groupList.refresh();
 
     return true;
   }
@@ -66,8 +66,8 @@ class AddDoseViewModel extends GetxController {
     final base64Image =
         await _addMedicineProvider.getMedicineBase64Image(kimsCode);
 
-    _groupList.clear();
-    _groupList.add(
+    groupList.clear();
+    groupList.add(
       DoseGroupModel(
         doseList: [
           DoseItemModel(
@@ -86,30 +86,27 @@ class AddDoseViewModel extends GetxController {
       ),
     );
 
-    _groupList.refresh();
+    groupList.refresh();
   }
 
   void deleteItem(int groupIndex, int itemIndex) {
-    if (groupIndex < _groupList.length &&
-        itemIndex < _groupList[groupIndex].doseList.length) {
-      _groupList[groupIndex].doseList.removeAt(itemIndex);
+    groupList[groupIndex].doseList.removeAt(itemIndex);
 
-      if (_groupList[groupIndex].doseList.isEmpty) {
-        _groupList.removeAt(groupIndex);
-      }
+    if (groupList[groupIndex].doseList.isEmpty) {
+      groupList.removeAt(groupIndex);
     }
   }
 
   void clear() {
-    _groupList.clear();
+    groupList.clear();
   }
 
   List<DoseGroupModel> getGroupList() {
-    return _groupList;
+    return groupList;
   }
 
   bool canSend() {
-    for (var group in _groupList) {
+    for (var group in groupList) {
       for (var i = 0; i < 4; ++i) {
         if (group.takingTime[i] && group.doseList.isNotEmpty) {
           return true;
@@ -121,56 +118,56 @@ class AddDoseViewModel extends GetxController {
   }
 
   int getItemCountOnGroup(int index) {
-    if (index < 0 || _groupList.length <= index) {
+    if (index < 0 || groupList.length <= index) {
       return -1;
     }
 
-    return _groupList[index].doseList.length;
+    return groupList[index].doseList.length;
   }
 
   int getGroupCount() {
-    return _groupList.length;
+    return groupList.length;
   }
 
   void toggle(
       int groupIndex, int itemIndex, ETakingTime takingTime, bool toBeTake) {
-    var isTaking = _groupList[groupIndex].takingTime[takingTime.index];
+    var isTaking = groupList[groupIndex].takingTime[takingTime.index];
 
     if (isTaking == toBeTake) {
       return;
     }
 
-    var takingTimes = _groupList[groupIndex].takingTime.toList();
+    var takingTimes = groupList[groupIndex].takingTime.toList();
     takingTimes[takingTime.index] = toBeTake;
 
     Function deepEq = const DeepCollectionEquality().equals;
 
     var item =
-        DoseItemModel.copyWith(_groupList[groupIndex].doseList[itemIndex]);
+        DoseItemModel.copyWith(groupList[groupIndex].doseList[itemIndex]);
 
-    _groupList[groupIndex].doseList.removeAt(itemIndex);
+    groupList[groupIndex].doseList.removeAt(itemIndex);
 
-    if (_groupList[groupIndex].doseList.isEmpty) {
-      _groupList.removeAt(groupIndex);
+    if (groupList[groupIndex].doseList.isEmpty) {
+      groupList.removeAt(groupIndex);
     }
 
-    for (var groupItem in _groupList) {
+    for (var groupItem in groupList) {
       if (deepEq(groupItem.takingTime, takingTimes)) {
         groupItem.doseList.add(item);
 
-        _groupList.refresh();
+        groupList.refresh();
         return;
       }
     }
 
-    _groupList.add(
+    groupList.add(
       DoseGroupModel(
         doseList: [item],
         takingTime: takingTimes,
       ),
     );
 
-    _groupList.refresh();
+    groupList.refresh();
   }
 
   List<DoseModificationItemModel> getModificationList() {
@@ -179,7 +176,7 @@ class AddDoseViewModel extends GetxController {
     var groupIndex = 0;
     var itemIndex = 0;
 
-    for (var groupItem in _groupList) {
+    for (var groupItem in groupList) {
       for (var doseItem in groupItem.doseList) {
         modificationList.add(
           DoseModificationItemModel(
@@ -202,7 +199,7 @@ class AddDoseViewModel extends GetxController {
   }
 
   String getGroupTimeString(int groupIndex) {
-    final group = _groupList[groupIndex];
+    final group = groupList[groupIndex];
 
     final totalTimeList = ETakingTime.values.sublist(0, 4);
 
@@ -223,11 +220,11 @@ class AddDoseViewModel extends GetxController {
   }
 
   DoseItemModel getOneMedicine(int groupIndex, int itemIndex) {
-    return _groupList[groupIndex].doseList[itemIndex];
+    return groupList[groupIndex].doseList[itemIndex];
   }
 
   bool getHasCode(int groupIndex, int itemIndex) {
-    var item = _groupList[groupIndex].doseList[itemIndex];
+    var item = groupList[groupIndex].doseList[itemIndex];
     return item.kdCode != "" && item.atcCode != "";
   }
 
@@ -239,22 +236,22 @@ class AddDoseViewModel extends GetxController {
     late EAddScheduleResult result;
 
     if (isOcr) {
-      result = await _addMedicineProvider.addSchedule(_groupList, start, end);
+      result = await _addMedicineProvider.addSchedule(groupList, start, end);
     } else {
       final codeNameModel = await _addMedicineProvider
-          .getCodeFromName(_groupList[0].doseList[0].name);
+          .getCodeFromName(groupList[0].doseList[0].name);
 
       result = await _addMedicineProvider.addDirectOneSchedule(
           codeNameModel.atcCode != "" && codeNameModel.kdCode != "",
           DoseGroupModel(
             doseList: [
               DoseItemModel(
-                  name: _groupList[0].doseList[0].name,
+                  name: groupList[0].doseList[0].name,
                   kdCode: codeNameModel.kdCode,
                   atcCode: codeNameModel.atcCode,
-                  base64Image: _groupList[0].doseList[0].base64Image)
+                  base64Image: groupList[0].doseList[0].base64Image)
             ],
-            takingTime: _groupList[0].takingTime,
+            takingTime: groupList[0].takingTime,
           ),
           start,
           end);

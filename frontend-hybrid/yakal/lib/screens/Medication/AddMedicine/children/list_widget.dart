@@ -79,7 +79,7 @@ class _DoseListWidgetState extends State<DoseListWidget> {
                         ),
                         /* 약 이름 */
                         Text(
-                          "${oneMedicine.name.length > 15 ? "..." : ""}${oneMedicine.name.length > 15 ? oneMedicine.name.substring(0, 15) : oneMedicine.name}",
+                          "${oneMedicine.name.length > 15 ? oneMedicine.name.substring(0, 15) : oneMedicine.name}${oneMedicine.name.length > 15 ? "..." : ""}",
                           style: const TextStyle(
                             color: ColorStyles.black,
                             fontSize: 14,
