@@ -26,7 +26,7 @@ class PillTodoRepository {
           response['schedule'][eTakingTime.toString().split(".").last];
 
       kdCodeSet.addAll(tempData
-          .map((e) => e['kdCode'])
+          .map((e) => e['kdcode'])
           .where((element) => element != null)
           .map((e) => e.toString()));
     }
