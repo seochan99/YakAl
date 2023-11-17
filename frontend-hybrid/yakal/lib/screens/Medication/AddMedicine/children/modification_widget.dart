@@ -8,15 +8,20 @@ import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 import 'package:yakal/widgets/Medication/taking_time_button.dart';
 
-class DoseModificationWidget extends StatelessWidget {
-  final AddDoseViewModel _addDoseViewModel = Get.find<AddDoseViewModel>();
+class DoseModificationWidget extends StatefulWidget {
+  final AddDoseViewModel addDoseViewModel = Get.find<AddDoseViewModel>();
 
   DoseModificationWidget({super.key});
 
   @override
+  State<DoseModificationWidget> createState() => _DoseModificationWidgetState();
+}
+
+class _DoseModificationWidgetState extends State<DoseModificationWidget> {
+  @override
   Widget build(BuildContext context) {
     /* 현재 약 목록에서 그룹 안에 존재하는 중첩 아이템들을 하나의 배열로 평탄화 */
-    final modificationList = _addDoseViewModel.getModificationList();
+    final modificationList = widget.addDoseViewModel.getModificationList();
 
     /* 현재 약 목록의 복용 시간을 수정 가능하도록 출력 */
     return ListView.separated(
@@ -58,7 +63,7 @@ class DoseModificationWidget extends StatelessWidget {
                     ),
                     /* 약 이름 */
                     Text(
-                      modificationElement.item.name,
+                      "${modificationElement.item.name.length > 15 ? modificationElement.item.name.substring(0, 15) : modificationElement.item.name}${modificationElement.item.name.length > 15 ? "..." : ""}",
                       style: const TextStyle(
                         color: ColorStyles.black,
                         fontSize: 14,
@@ -80,7 +85,7 @@ class DoseModificationWidget extends StatelessWidget {
                   ),
                   color: ColorStyles.main,
                   onPressed: () {
-                    _addDoseViewModel.deleteItem(
+                    widget.addDoseViewModel.deleteItem(
                       modificationElement.groupIndex,
                       modificationElement.itemIndex,
                     );
@@ -98,7 +103,7 @@ class DoseModificationWidget extends StatelessWidget {
                       /* 복용 시간 수정 버튼 */
                       TakingTimeButton(
                         onChanged: () {
-                          _addDoseViewModel.toggle(
+                          widget.addDoseViewModel.toggle(
                             modificationElement.groupIndex,
                             modificationElement.itemIndex,
                             ETakingTime.values[index],

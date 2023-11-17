@@ -6,23 +6,28 @@ import 'package:get/get.dart';
 import 'package:yakal/utilities/style/color_styles.dart';
 import 'package:yakal/viewModels/Medication/add_dose_view_model.dart';
 
-class DoseListWidget extends StatelessWidget {
+class DoseListWidget extends StatefulWidget {
   final AddDoseViewModel addDoseViewModel = Get.find<AddDoseViewModel>();
 
   DoseListWidget({super.key});
 
   @override
+  State<DoseListWidget> createState() => _DoseListWidgetState();
+}
+
+class _DoseListWidgetState extends State<DoseListWidget> {
+  @override
   Widget build(BuildContext context) {
     /* 먼저 그룹 단위로 목록을 출력, 그룹은 같은 복용 시간의 약들의 그룹임 (e.g. 아침, 저녁 복용 약물의 모임) */
     return ListView.separated(
-      itemCount: addDoseViewModel.getGroupCount(),
+      itemCount: widget.addDoseViewModel.getGroupCount(),
       itemBuilder: (context, groupIndex) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             /* 복용 시간에 따른 그룹 제목 스트링 출력 (e.g. "아침, 저녁") */
             Text(
-              addDoseViewModel.getGroupTimeString(groupIndex),
+              widget.addDoseViewModel.getGroupTimeString(groupIndex),
               style: const TextStyle(
                 color: ColorStyles.gray5,
                 fontSize: 16,
@@ -38,10 +43,11 @@ class DoseListWidget extends StatelessWidget {
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
               /* --------------------------------------------------- */
-              itemCount: addDoseViewModel.getItemCountOnGroup(groupIndex),
+              itemCount:
+                  widget.addDoseViewModel.getItemCountOnGroup(groupIndex),
               itemBuilder: (context, itemIndex) {
-                var oneMedicine =
-                    addDoseViewModel.getOneMedicine(groupIndex, itemIndex);
+                var oneMedicine = widget.addDoseViewModel
+                    .getOneMedicine(groupIndex, itemIndex);
                 return Column(
                   children: [
                     /* 약 하나의 정보를 보여 주는 Row */
@@ -73,7 +79,7 @@ class DoseListWidget extends StatelessWidget {
                         ),
                         /* 약 이름 */
                         Text(
-                          oneMedicine.name,
+                          "${oneMedicine.name.length > 15 ? oneMedicine.name.substring(0, 15) : oneMedicine.name}${oneMedicine.name.length > 15 ? "..." : ""}",
                           style: const TextStyle(
                             color: ColorStyles.black,
                             fontSize: 14,
