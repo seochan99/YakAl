@@ -79,10 +79,23 @@ class _HomePillTodoViewState extends State<HomePillTodoView> {
                         viewModel.onClickChildrenCheckBox(eTakingTime, todoId);
                       },
                       onClickChildrenItemView: (String name, String kdCode) {
-                        Get.toNamed('/pill/detail', arguments: {
-                          'name': name,
-                          'kdCode': kdCode,
-                        });
+                        if (kdCode.isNotEmpty) {
+                          Get.toNamed('/pill/detail', arguments: {
+                            'name': name,
+                            'kdCode': kdCode,
+                          });
+                        } else {
+                          Get.snackbar(
+                            '약 상세 정보',
+                            '약알에 등록된 전문의약품이 아닙니다.',
+                            margin: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                            duration:
+                                const Duration(seconds: 1, milliseconds: 500),
+                            snackPosition: SnackPosition.TOP,
+                            backgroundColor: ColorStyles.gray1,
+                            colorText: Colors.black,
+                          );
+                        }
                       },
                     );
                   }
