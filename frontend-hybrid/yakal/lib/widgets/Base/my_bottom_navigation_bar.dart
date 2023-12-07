@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart'; // Import GetX
 import 'package:yakal/screens/Home/home_screen.dart';
 import 'package:yakal/screens/Profile/profile_screen.dart';
+import 'package:yakal/utilities/style/color_styles.dart';
 
 class MyBottomNavigationBar extends StatelessWidget {
   const MyBottomNavigationBar({Key? key}) : super(key: key);
@@ -52,6 +53,7 @@ class MyBottomNavBar extends StatelessWidget {
         () {
           // GetX를 사용하여 컨트롤러의 currentIndex를 가져옴
           return BottomNavigationBar(
+            selectedItemColor: ColorStyles.main,
             currentIndex: mybottomNavigationBarController.currentIndex.value,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
