@@ -89,13 +89,17 @@ class _InfoBohoScreenState extends State<InfoBohoScreen> {
         return Theme(
           data: ThemeData.light().copyWith(
             colorScheme: const ColorScheme.light(
-              primary: Colors.white, // header background color
-              onPrimary: Colors.black, // header text color
-              surface: Colors.white, // background color
-              onSurface: Colors.black, // body text color
+              primary: Colors.white,
+              onPrimary: Colors.black,
+              surface: Colors.white,
+              onSurface: Colors.black,
             ),
-            dialogBackgroundColor:
-                Colors.white, // background color for the DatePicker
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.black,
+              ),
+            ),
+            dialogBackgroundColor: Colors.white,
           ),
           child: child!,
         );

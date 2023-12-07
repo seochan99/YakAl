@@ -13,6 +13,9 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final MyBottomNavigationBarController controller =
+        Get.put(MyBottomNavigationBarController());
+
     return Scaffold(
       backgroundColor: Colors.white, // Set the background color to white
       appBar: PreferredSize(
@@ -86,6 +89,13 @@ class SettingScreen extends StatelessWidget {
                         confirmLabel: "로그아웃",
                         cancelLabel: "아니요",
                         onConfirm: () async {
+                          authDioWithContext().then((dio) {
+                            dio
+                                .patch("/auth/logout?platform=MOBILE")
+                                .then((value) => Get.offAllNamed('/login'));
+                          });
+                          controller.changeTabIndex(0);
+                          //
                           UserApi.instance.logout().then((_) {
                             authDioWithContext().then((dio) {
                               dio
@@ -93,12 +103,45 @@ class SettingScreen extends StatelessWidget {
                                   .then((_) {
                                 Get.offAllNamed('/login');
                               }).catchError((_) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('로그아웃에 실패했습니다.'),
-                                  ),
-                                );
-                                Get.offAllNamed('/');
+                                Get.offAllNamed('/login');
+                              });
+                            });
+                          });
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
+              ListTile(
+                contentPadding: EdgeInsets.zero,
+                title: const Text('회원 탈퇴',
+                    style: TextStyle(fontSize: 16, color: Color(0xff151515))),
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: true,
+                    barrierColor: const Color.fromRGBO(98, 98, 114, 0.4),
+                    builder: (BuildContext context) {
+                      return MedicineAddCancelDialog(
+                        question: "회원탈퇴 하시겠습니까?",
+                        confirmLabel: "회원탈퇴",
+                        cancelLabel: "아니요",
+                        onConfirm: () async {
+                          authDioWithContext().then((dio) {
+                            dio
+                                .patch("/auth/logout?platform=MOBILE")
+                                .then((value) => Get.offAllNamed('/login'));
+                          });
+                          controller.changeTabIndex(0);
+                          UserApi.instance.logout().then((_) {
+                            authDioWithContext().then((dio) {
+                              dio
+                                  .patch('/auth/logout?platform=MOBILE')
+                                  .then((_) {
+                                Get.offAllNamed('/login');
+                              }).catchError((_) {
+                                Get.offAllNamed('/login');
                               });
                             });
                           });

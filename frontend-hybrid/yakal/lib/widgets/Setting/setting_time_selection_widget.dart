@@ -107,13 +107,21 @@ class _SettingTimeSelectionWidgetState
             return Theme(
               data: ThemeData.light().copyWith(
                 colorScheme: const ColorScheme.light(
-                  primary: Color(0xFF424242), // Dark grey for body text
-                  onPrimary: Color(0xFF0D47A1), // Darker blue for header text
-                  surface: Color(0xFFF5F5F5), // Light grey for background
-                  onSurface: Color(0xFF424242), // Dark grey for body text
+                  primary: ColorStyles.black,
+                  onPrimary: Colors.white,
+                  surface: Colors.white,
+                  onSurfaceVariant: ColorStyles.black,
+                  onPrimaryContainer: ColorStyles.black,
+                  primaryContainer: ColorStyles.gray3,
+                  onSurface: ColorStyles.black,
+                  tertiary: ColorStyles.gray3,
+                  background: Colors.white,
                 ),
-                dialogBackgroundColor: const Color(
-                    0xFFF5F5F5), // Light grey for the TimePicker background
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(
+                    foregroundColor: ColorStyles.black,
+                  ),
+                ),
               ),
               child: child!,
             );
@@ -134,7 +142,7 @@ class _SettingTimeSelectionWidgetState
                 duration: const Duration(milliseconds: 1500),
                 snackPosition: SnackPosition.TOP,
                 backgroundColor: ColorStyles.gray1,
-                colorText: Colors.black,
+                colorText: ColorStyles.black,
               );
               return;
             }
